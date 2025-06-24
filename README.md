@@ -6,7 +6,6 @@ This documentation provides a comprehensive overview of our self-evolving operat
 
 The Bible is organized into chapters covering different aspects of the system:
 
-- [Complete Bible](Bible.html) - The full document with all chapters
 - [Chapter 0: Glossary](chapters/00.%20glossary.html) - Key terms and definitions
 - [Chapter 1: Vibes & Their Manifestations](chapters/01.%20vibes.html) - Fundamental units and their implementations
   - [Vibes Examples](chapters/01.%20vibes.examples.html)
