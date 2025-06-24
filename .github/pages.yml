@@ -1,2 +1,10 @@
 build:
   skip: true # Skip GitHub's default build process since we're using our own
+
+# Explicitly set the branch to deploy from
+source:
+  branch: gh-pages
+
+# Explicitly set the publishing source
+publish:
+  source: /
