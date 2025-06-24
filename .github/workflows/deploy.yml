@@ -30,8 +30,14 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Pre-render for static hosting
+        run: npx vike prerender
+
       - name: Add .nojekyll file
         run: touch dist/.nojekyll
+
+      - name: List dist directory contents
+        run: ls -la dist
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -39,7 +45,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'
+          path: './dist/client'
 
       - name: Deploy to GitHub Pages
         id: deployment

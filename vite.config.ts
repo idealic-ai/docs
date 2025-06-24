@@ -4,7 +4,12 @@ import { defineConfig } from 'vite';
 
 // Using a simpler approach to avoid type errors
 export default defineConfig({
-  plugins: [react(), vike()],
+  plugins: [
+    react(),
+    vike({
+      prerender: true,
+    }),
+  ],
   build: {
     target: 'es2022',
   },
