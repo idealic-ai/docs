@@ -17,6 +17,27 @@ async function pushToDocsRepo() {
     console.log('Created .nojekyll file');
   }
 
+  // Create index.html file if it doesn't exist (fallback)
+  const indexPath = path.join(distDir, 'index.html');
+  if (!fs.existsSync(indexPath)) {
+    console.log('Warning: No index.html found in dist. Creating a simple redirect.');
+    fs.writeFileSync(
+      indexPath,
+      `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta http-equiv="refresh" content="0;url=/docs/chapter/complete">
+          <title>Redirecting...</title>
+        </head>
+        <body>
+          <p>Redirecting to documentation...</p>
+        </body>
+      </html>
+    `
+    );
+  }
+
   try {
     // Initialize git in the dist directory
     await git.cwd(distDir);
@@ -46,8 +67,8 @@ async function pushToDocsRepo() {
     await git.addRemote('origin', 'https://github.com/augceo/docs.git');
     console.log('Set remote origin');
 
-    // Force push to main branch
-    await git.push('origin', 'main', ['--force']);
+    // Force push to gh-pages branch (changed from main to gh-pages)
+    await git.push('origin', 'gh-pages', ['--force']);
     console.log('Pushed to docs repository successfully!');
   } catch (error) {
     console.error('Error pushing to docs repository:', error);

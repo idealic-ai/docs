@@ -1,53 +1,32 @@
-Generated with [vike.dev/new](https://vike.dev/new) ([version 450](https://www.npmjs.com/package/create-vike/v/0.0.450)) using this command:
+# AI System Bible Documentation
 
-```sh
-npm create vike@latest --- --react
-```
+This documentation provides a comprehensive overview of our self-evolving operating system architecture, serving as the authoritative reference for system design, principles, and components.
 
-## Contents
+## Documentation Structure
 
-* [React](#react)
+The Bible is organized into chapters covering different aspects of the system:
 
-  * [`/pages/+config.ts`](#pagesconfigts)
-  * [Routing](#routing)
-  * [`/pages/_error/+Page.jsx`](#pages_errorpagejsx)
-  * [`/pages/+onPageTransitionStart.ts` and `/pages/+onPageTransitionEnd.ts`](#pagesonpagetransitionstartts-and-pagesonpagetransitionendts)
-  * [SSR](#ssr)
-  * [HTML Streaming](#html-streaming)
+- [Complete Bible](Bible.md) - The full document with all chapters
+- [Chapter 0: Glossary](chapters/00.%20glossary.md) - Key terms and definitions
+- [Chapter 1: Vibes & Their Manifestations](chapters/01.%20vibes.md) - Fundamental units and their implementations
+  - [Vibes Examples](chapters/01.%20vibes.examples.md)
+- [Chapter 2: Instructions](chapters/02.%20instructions.md) - Guidance and directives
+  - [Instructions Examples](chapters/02.%20instructions.examples.md)
+  - [Instructions Guidance](chapters/02.%20instructions.guidance.md)
+- [Chapter 4: Refinements](chapters/04.%20refinements.md) - Evolution and improvement mechanisms
+  - [Refinements Examples](chapters/04.%20refinements.examples.md)
+- [Chapter 5: Exchange](chapters/05.%20exchange.md) - Communication and interaction protocols
+- [Chapter 6: Budgets](chapters/06.%20budgets.md) - Resource allocation and management
+  - [Budgets Examples](chapters/06.%20budgets.examples.md)
+  - [Budgets Statistics](chapters/06.%20budgets.stats.md)
+- [Chapter 8: Processes](chapters/08.%20processes.md) - Execution and workflow management
+- [Chapter 11: Isolation](chapters/11.%20isolation.md) - Containment and security principles
+- [Chapter 12: Determinism](chapters/12.%20determinism.md) - Controlling unpredictability
 
-## React
+## LLM-Readable Sections
 
-This app is ready to start. It's powered by [Vike](https://vike.dev) and [React](https://react.dev/learn).
+Throughout this documentation, you'll find sections marked with ```llm blocks that are specifically designed for Large Language Model comprehension. These sections follow the principles outlined in the LLM Translation Guidance section.
 
-### `/pages/+config.ts`
+## Validation Schema
 
-Such `+` files are [the interface](https://vike.dev/config) between Vike and your code. It defines:
-
-* A default [`<Layout>` component](https://vike.dev/Layout) (that wraps your [`<Page>` components](https://vike.dev/Page)).
-* A default [`title`](https://vike.dev/title).
-* Global [`<head>` tags](https://vike.dev/head-tags).
-
-### Routing
-
-[Vike's built-in router](https://vike.dev/routing) lets you choose between:
-
-* [Filesystem Routing](https://vike.dev/filesystem-routing) (the URL of a page is determined based on where its `+Page.jsx` file is located on the filesystem)
-* [Route Strings](https://vike.dev/route-string)
-* [Route Functions](https://vike.dev/route-function)
-
-### `/pages/_error/+Page.jsx`
-
-The [error page](https://vike.dev/error-page) which is rendered when errors occur.
-
-### `/pages/+onPageTransitionStart.ts` and `/pages/+onPageTransitionEnd.ts`
-
-The [`onPageTransitionStart()` hook](https://vike.dev/onPageTransitionStart), together with [`onPageTransitionEnd()`](https://vike.dev/onPageTransitionEnd), enables you to implement page transition animations.
-
-### SSR
-
-SSR is enabled by default. You can [disable it](https://vike.dev/ssr) for all your pages or only for some pages.
-
-### HTML Streaming
-
-You can enable/disable [HTML streaming](https://vike.dev/stream) for all your pages, or only for some pages while still using it for others.
-
+Each chapter includes validation questions in a standardized JSON schema format to verify LLM comprehension. The validation questions test conceptual understanding rather than implementation details.
