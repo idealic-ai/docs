@@ -7,6 +7,6 @@ export default defineConfig({
   build: {
     target: 'es2022',
   },
-  // For standalone docs repository
-  base: '/',
+  // For GitHub Pages with /docs/ repository
+  base: '/docs/',
 });
