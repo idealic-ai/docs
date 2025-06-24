@@ -6,7 +6,6 @@
     "deploy": "npm run build && touch dist/.nojekyll && node scripts/push-to-docs-repo.js"
   },
   "dependencies": {
-    "@vitejs/plugin-react": "^4.6.0",
     "marked": "^15.0.12",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

@@ -1,18 +1,12 @@
-import react from '@vitejs/plugin-react';
-import vike from 'vike/plugin';
-import { defineConfig } from 'vite';
+import vikeReact from 'vike-react/config';
+import { Config } from 'vike/types';
 
 // Using a simpler approach to avoid type errors
-export default defineConfig({
-  plugins: [
-    react(),
-    vike({
-      prerender: true,
-    }),
-  ],
+export default {
+  extends: [vikeReact],
   build: {
     target: 'es2022',
   },
   // For GitHub Pages with /docs/ repository
   base: '/docs/',
-});
+} as Config;
