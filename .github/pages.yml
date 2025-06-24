@@ -1,0 +1,2 @@
+build:
+  skip: true # Skip GitHub's default build process since we're using our own
