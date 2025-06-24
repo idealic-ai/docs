@@ -1,13 +1,17 @@
-name: Deploy to GitHub Pages
+name: Build GitHub Pages Site
 
 on:
   push:
     branches:
-      - main
+      - gh-pages
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -26,9 +30,14 @@ jobs:
       - name: Add .nojekyll file
         run: touch dist/.nojekyll
 
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
         with:
-          branch: gh-pages
-          folder: dist
-          clean: true
+          path: './dist'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
