@@ -1,0 +1,81 @@
+{
+  "input": [],
+
+  "schema": {
+    "$id": "aug:/types/capability",
+    "$revision": 1,
+    "title": "Base Capability Vibe Structure",
+    "description": "Defines the structure for capabilities that include both authorization and resource allocation.",
+    "allOf": [
+      {
+        "$ref": "aug:/types/vibe",
+        "$comment": "Inherits base vibe structure."
+      },
+      {
+        "$ref": "aug:/types/capability",
+        "$comment": "Inherits base capability structure."
+      },
+      {
+        "type": "object",
+        "properties": {
+          "targets": {
+            "type": "array",
+            "title": "Targets",
+            "description": "The targets of this capability.",
+            "items": {
+              "$ref": "aug:articles/some-article",
+              "$comment": "The article to edit."
+            },
+            "additionalItems": false
+          },
+          "instructions": {
+            "type": "array",
+            "title": "Instructions",
+            "description": "The instructions of this capability.",
+            "items": false,
+            "$comment": "No instructions are required for this capability."
+          },
+          "capabilities": {
+            "type": "array",
+            "title": "Capabilities",
+            "description": "The enabling capabilities.",
+            "items": {
+              "$ref": "aug:capabilities/editing-article",
+              "$comment": "The editing capability."
+            }
+          }
+        },
+        "required": [
+          "displayName",
+          "description",
+          "createdAt",
+          "lastModified",
+          "grantedBy",
+          "scope"
+        ]
+      }
+    ]
+  },
+
+  "solution": {
+    "metadata": {
+      "id": "aug:some-capability",
+      "type": "capability",
+      "revision": 1,
+      "branches": [],
+      "createdAt": "2025-01-01T00:00:00Z",
+      "updatedAt": "2025-01-01T00:00:00Z",
+      "title": "Administrator capability",
+      "description": "Example of a capability vibe."
+    },
+
+    "details": {
+      "expiresAt": "2026-01-01T00:00:00Z",
+      "branches": []
+    },
+
+    "targets": [],
+    "instructions": [],
+    "capabilities": []
+  }
+}

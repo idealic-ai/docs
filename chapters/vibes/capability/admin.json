@@ -1,0 +1,114 @@
+{
+  "input": [
+    {
+      "type": "query",
+      "query": "Create an administrative capability that grants comprehensive authority for all system operations"
+    }
+  ],
+  "schema": {
+    "title": "Administrative Capability",
+    "description": "A capability that grants comprehensive administrative authority for all system operations.",
+    "allOf": [
+      {
+        "$ref": "aug:/schemas/Vibe",
+        "$comment": "Base Vibe structure"
+      },
+      {
+        "$ref": "aug:/schemas/CapabilityVibe",
+        "$comment": "Base CapabilityVibe structure"
+      },
+      {
+        "type": "object",
+        "title": "Administrative Authority Structure",
+        "description": "Defines comprehensive administrative permissions and unlimited resource access",
+        "properties": {
+          "authority": {
+            "type": "object",
+            "title": "Administrative Authority",
+            "description": "Comprehensive system-wide administrative authority",
+            "properties": {
+              "grantedBy": {
+                "type": "string",
+                "title": "Granting Authority",
+                "description": "The system or entity granting this administrative capability"
+              },
+              "scope": {
+                "type": "string",
+                "enum": ["system", "organization", "department", "project", "personal"],
+                "title": "Authority Scope"
+              },
+              "expiresAt": {
+                "type": "string",
+                "format": "date-time",
+                "title": "Authority Expiration"
+              }
+            },
+            "required": ["grantedBy", "scope"]
+          },
+          "permissions": {
+            "type": "object",
+            "title": "Administrative Permissions",
+            "description": "Comprehensive permissions for all system operations",
+            "properties": {
+              "canModifyAnyVibe": {
+                "type": "boolean",
+                "title": "Can Modify Any Vibe",
+                "description": "Permission to modify any vibe in the system"
+              },
+              "canCreateAnyVibe": {
+                "type": "boolean",
+                "title": "Can Create Any Vibe",
+                "description": "Permission to create vibes of any type"
+              },
+              "canDeleteAnyVibe": {
+                "type": "boolean",
+                "title": "Can Delete Any Vibe",
+                "description": "Permission to delete any vibe in the system"
+              },
+              "canGrantCapabilities": {
+                "type": "boolean",
+                "title": "Can Grant Capabilities",
+                "description": "Permission to create and grant new capabilities to others"
+              },
+              "canAccessAllResources": {
+                "type": "boolean",
+                "title": "Can Access All Resources",
+                "description": "Permission to access all system resources without restriction"
+              }
+            },
+            "required": [
+              "canModifyAnyVibe",
+              "canCreateAnyVibe",
+              "canDeleteAnyVibe",
+              "canGrantCapabilities",
+              "canAccessAllResources"
+            ]
+          }
+        },
+        "required": ["authority", "permissions"]
+      }
+    ]
+  },
+  "solution": {
+    "$type": "CapabilityVibe",
+    "$id": "aug:capabilities/admin-comprehensive-2025",
+    "$revision": 1,
+    "createdAt": "2025-01-25T00:00:00Z",
+    "lastModified": "2025-01-25T00:00:00Z",
+    "displayName": "Comprehensive Administrative Authority",
+    "description": "Administrative capability granting unlimited authority for all system operations",
+
+    "authority": {
+      "grantedBy": "aug:system/root",
+      "scope": "system"
+    },
+
+    "permissions": {
+      "canModifyAnyVibe": true,
+      "canCreateAnyVibe": true,
+      "canDeleteAnyVibe": true,
+      "canGrantCapabilities": true,
+      "canAccessAllResources": true
+    }
+  }
+}
