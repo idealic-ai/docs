@@ -6,21 +6,24 @@ This documentation provides a comprehensive overview of our self-evolving operat
 
 The Bible is organized into chapters covering different aspects of the system:
 
-- [Chapter 0: Glossary](chapters/00.%20glossary.html) - Key terms and definitions
-- [Chapter 1: Vibes & Their Manifestations](chapters/01.%20vibes.html) - Fundamental units and their implementations
-  - [Vibes Examples](chapters/01.%20vibes.examples.html)
-- [Chapter 2: Instructions](chapters/02.%20instructions.html) - Guidance and directives
-  - [Instructions Examples](chapters/02.%20instructions.examples.html)
-  - [Instructions Guidance](chapters/02.%20instructions.guidance.html)
-- [Chapter 4: Refinements](chapters/04.%20refinements.html) - Evolution and improvement mechanisms
-  - [Refinements Examples](chapters/04.%20refinements.examples.html)
-- [Chapter 5: Exchange](chapters/05.%20exchange.html) - Communication and interaction protocols
-- [Chapter 6: Budgets](chapters/06.%20budgets.html) - Resource allocation and management
-  - [Budgets Examples](chapters/06.%20budgets.examples.html)
-  - [Budgets Statistics](chapters/06.%20budgets.stats.html)
-- [Chapter 8: Processes](chapters/08.%20processes.html) - Execution and workflow management
-- [Chapter 11: Isolation](chapters/11.%20isolation.html) - Containment and security principles
-- [Chapter 12: Determinism](chapters/12.%20determinism.html) - Controlling unpredictability
+- [Chapter 0: Architecture](chapters/00.%20architecture.md) - System architecture overview
+- [Chapter 0: Glossary](chapters/00.%20glossary.md) - Key terms and definitions
+- [Chapter 0: References](chapters/00.%20references.md) - Associated reading
+- [Chapter 1: Vibes & Their Manifestations](chapters/01.%20vibes.md) - Fundamental units and their implementations
+  - [Vibes Examples](chapters/01.%20vibes.examples.md)
+  - [Vibes Database](chapters/01.%20vibes.database.md)
+- [Chapter 2: Instructions](chapters/02.%20instructions.md) - Guidance and directives
+  - [Instructions Examples](chapters/02.%20instructions.examples.md)
+  - [Instructions Guidance](chapters/02.%20instructions.guidance.md)
+- [Chapter 4: Refinements](chapters/04.%20refinements.md) - Evolution and improvement mechanisms
+  - [Refinements Examples](chapters/04.%20refinements.examples.md)
+- [Chapter 5: Exchange](chapters/05.%20exchange.md) - Communication and interaction protocols
+- [Chapter 6: Budgets](chapters/06.%20budgets.md) - Resource allocation and management
+  - [Budgets Examples](chapters/06.%20budgets.examples.md)
+  - [Budgets Statistics](chapters/06.%20budgets.stats.md)
+- [Chapter 7: Processes](chapters/07.%20processes.md) - Execution and workflow management
+- [Chapter 8: Branches](chapters/08.%20branches.md) - Branching and versioning strategies
+- [Chapter 12: Determinism](chapters/12.%20determinism.md) - Controlling unpredictability
 
 ## LLM-Readable Sections
 
