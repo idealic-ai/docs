@@ -6,7 +6,6 @@ This documentation provides a comprehensive overview of our self-evolving operat
 
 The Bible is organized into chapters covering different aspects of the system:
 
-- [Chapter 0: Architecture](chapters/00.%20architecture.md) - System architecture overview
 - [Chapter 0: Glossary](chapters/00.%20glossary.md) - Key terms and definitions
 - [Chapter 0: References](chapters/00.%20references.md) - Associated reading
 - [Chapter 1: Vibes & Their Manifestations](chapters/01.%20vibes.md) - Fundamental units and their implementations
