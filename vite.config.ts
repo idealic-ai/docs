@@ -1,12 +1,17 @@
 import vikeReact from 'vike-react/config';
 import { Config } from 'vike/types';
+import { UserConfig } from 'vite';
 
 // Using a simpler approach to avoid type errors
-export default {
+const config: UserConfig & { extends: Config[] } = {
   extends: [vikeReact],
   build: {
     target: 'es2022',
+    rollupOptions: {
+      external: [/^node:/, 'path', 'fs'],
+    },
   },
-  // For GitHub Pages with /docs/ repository
-  base: '/docs/',
-} as Config;
+  base: '/',
+};
+
+export default config;
