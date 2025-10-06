@@ -7,10 +7,8 @@ This documentation provides a comprehensive overview of our self-evolving operat
 The Bible is organized into chapters covering different aspects of the system:
 
 - [Chapter 0: Glossary](chapters/00.%20glossary.html) - Key terms and definitions
-- [Chapter 0: References](chapters/00.%20references.html) - Associated reading
 - [Chapter 1: Vibes & Their Manifestations](chapters/01.%20vibes.html) - Fundamental units and their implementations
   - [Vibes Examples](chapters/01.%20vibes.examples.html)
-  - [Vibes Database](chapters/01.%20vibes.database.html)
 - [Chapter 2: Instructions](chapters/02.%20instructions.html) - Guidance and directives
   - [Instructions Examples](chapters/02.%20instructions.examples.html)
   - [Instructions Guidance](chapters/02.%20instructions.guidance.html)
@@ -20,8 +18,8 @@ The Bible is organized into chapters covering different aspects of the system:
 - [Chapter 6: Budgets](chapters/06.%20budgets.html) - Resource allocation and management
   - [Budgets Examples](chapters/06.%20budgets.examples.html)
   - [Budgets Statistics](chapters/06.%20budgets.stats.html)
-- [Chapter 7: Processes](chapters/07.%20processes.html) - Execution and workflow management
-- [Chapter 8: Branches](chapters/08.%20branches.html) - Branching and versioning strategies
+- [Chapter 8: Processes](chapters/08.%20processes.html) - Execution and workflow management
+- [Chapter 11: Isolation](chapters/11.%20isolation.html) - Containment and security principles
 - [Chapter 12: Determinism](chapters/12.%20determinism.html) - Controlling unpredictability
 
 ## LLM-Readable Sections
