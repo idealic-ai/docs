@@ -62,7 +62,7 @@ async function getChaptersForDocument(document: string): Promise<Chapter[]> {
           name: chapterName,
           slug: slug,
           path: dirent.name,
-          url: `/${document}/${slug}/`,
+          url: `/${document}/${slug}.md`,
         };
         chapters.push(chapter);
       }

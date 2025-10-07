@@ -7,9 +7,10 @@ export async function onBeforePrerenderStart() {
   for (const doc in sitemap) {
     const chapters = sitemap[doc];
     for (const chapter of chapters) {
-      urls.push(`/${doc}/${chapter.slug}/`);
+      urls.push(chapter.url);
     }
   }
 
+  console.log(urls);
   return urls;
 }
