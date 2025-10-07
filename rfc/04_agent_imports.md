@@ -1,12 +1,12 @@
 # The Imports Protocol
 
-The [Call Protocol](./02. agent_calls.md) defines the high-level controls for `Call` execution: **Scope** (Inline vs. Module) and **Method** (Explicit vs. Latent). The **Imports Protocol** explains how to combine these controls and manage the context for each resulting execution pattern.
+The [Call Protocol](./03_agent_calls.md) defines the high-level controls for `Call` execution: **Scope** (Inline vs. Module) and **Method** (Explicit vs. Latent). The **Imports Protocol** explains how to combine these controls and manage the context for each resulting execution pattern.
 
 ## Combining Scope and Method
 
 1.  **Inline Explicit (`_activity`)**: This is the classic tool-use pattern. The LLM generates `params`, and a local function is immediately executed by the host. `_imports` are not typically used here as the Method is not Latent.
 
-2.  **Inline Latent (no `_activity`)**: The LLM generates both `params` and `output` in a single turn. The `_imports` property can be used here to focus the LLM's attention on specific parts of the context, preventing it from being influenced by irrelevant information.
+2.  **Inline Latent (no `_activity`)**: The LLM generates both `params` and `_output` in a single turn. The `_imports` property can be used here to focus the LLM's attention on specific parts of the context, preventing it from being influenced by irrelevant information.
 
 3.  **Modular Explicit (`_module` + `_activity`)**: The LLM generates `params`. The system then invokes the specified Activity (`_activity`) from the resolved `_module` in a new, isolated context. If `_imports` are specified, that filtered context is passed as an additional argument to the Activity code.
 

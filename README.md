@@ -25,11 +25,12 @@ This document outlines a vision for a new digital ecosystem based on decentraliz
 
 - [Glossary](./rfc/00_glossary.md)
 - [Protocol Ideas](./rfc/01_protocol_ideas.md)
-- [Agent Calls](./rfc/02_agent_calls.md)
-- [Agent Imports](./rfc/03_agent_imports.md)
-- [Agent Instancing](./rfc/04_agent_instancing.md)
-- [System Reactor](./rfc/05_system_reactor.md)
-- [Agent Input](./rfc/06_agent_input.md)
+- [Agent Tools](./rfc/02_agent_tools.md)
+- [Agent Calls](./rfc/03_agent_calls.md)
+- [Agent Imports](./rfc/04_agent_imports.md)
+- [Agent Instancing](./rfc/05_agent_instancing.md)
+- [System Reactor](./rfc/06_system_reactor.md)
+- [Agent Input](./rfc/07_agent_input.md)
 
 ## AI System Bible
 
