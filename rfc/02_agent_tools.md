@@ -4,18 +4,20 @@ _For definitions of key terms used in this document, please refer to the [Glossa
 
 This document describes the Tool Protocol - the foundational schema-driven interface that enables agents to understand and use structured capabilities.
 
-## From Ideas to Tools: Building the Foundation
+## What Are Tools?
 
-In our exploration of computational agents ([Idea Protocol](01_protocol_ideas.md)), we established the **Idea** as our fundamental computational primitive - pure knowledge and potential. Now, we introduce **Tools** - the first structural building block that transforms Ideas into agent-usable capabilities.
+**Tools are the cornerstone** of agent action systems. They enable a new type of capability: **action selection in context** - allowing agents to choose and execute appropriate behaviors based on the situation at hand.
 
-**Tools are the cornerstone** upon which agent action systems are built. They provide:
+Tools provide:
 
 - **Structured Interfaces**: Schema-defined capabilities that agents can discover and understand
 - **Type Safety**: Clear contracts for inputs and outputs
 - **Composability**: Building blocks that combine into complex agent behaviors
 - **LLM Integration**: Schemas that language models can reason about and select
 
-Tools transform Ideas into structured, schema-defined interfaces that agents can call. When an agent fills specific parameters for a Tool, it creates a **Call** - an instance of a Tool with all required parameters filled, representing a concrete request for execution (see [Call Protocol](03_agent_calls.md) for details on Call execution, Scope, and Method controls).
+When an agent fills specific parameters for a Tool, it creates a **Call** - an instance of a Tool with all required parameters filled, representing a concrete request for execution (see [Call Protocol](03_agent_calls.md) for details on Call execution, Scope, and Method controls).
+
+> **Note**: While any LLM request can be represented as an Idea (which works well for simple structured content generation), Tools provide the mechanism for more complex scenarios requiring dynamic action selection. For details on how Ideas can be transformed into Tools through input schemas, see [Agent Input RFC](07_agent_input.md).
 
 ## When to Use Tool Protocol
 
