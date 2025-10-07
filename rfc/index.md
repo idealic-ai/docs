@@ -32,7 +32,7 @@ These documents serve as normative specifications that articulate our team's con
 
 > Sidenote: Describes the core primitives of ideas.
 
-### Idea Types
+### Ideas
 
 - [201: Idea/Record](./201_idea_record.md)
 - [202: Idea/Vessel](./202_idea_vessel.md)
