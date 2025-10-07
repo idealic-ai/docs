@@ -153,29 +153,15 @@ Tool schemas are composed into a `calls` array for LLM consumption. Each schema 
 
 This allows the LLM to select from available tools and generate multiple Calls in a single request.
 
-## Practical Applications
+## Why Dual Registries Matter
 
-The dual registry architecture enables several powerful patterns:
+Without separating Tool schemas from Activity implementations, changing execution modes requires rewriting agent code. If you want to switch from LLM reasoning to an external API, you'd need to modify every agent that uses that capability.
 
-**Progressive Enhancement**: Start with latent execution (no Activity) for rapid prototyping, then register an Activity when ready for production without changing the Tool schema.
+The dual registry architecture solves this by keeping tool interfaces stable while implementations evolve. Agents always interact with the same Tool schema, whether it executes via LLM reasoning or external code. This means:
 
-**Environment-Specific Implementations**: Register different Activities for the same Tool based on environment (e.g., real API in production, mock in development).
-
-**Testing Isolation**: Replace real Activities with test doubles in unit tests, enabling fast, reliable testing without external dependencies.
-
-Example:
-
-```typescript
-// Tool definition (unchanged across environments)
-Tool.register('sendEmail', {
-  /* recipient, subject, _output: { sent: boolean } */
-});
-
-// Swap implementations by environment
-if (isProd) Activity.register('sendEmail', call => emailService.send(call));
-else if (isDev) Activity.register('sendEmail', call => ({ sent: true })); // mock
-// No Activity in prototype phase: LLM fills _output using latent execution
-```
+- **Implementation changes don't break agents** - Switch from latent to explicit execution without touching agent code
+- **A/B testing execution strategies** - Compare LLM reasoning vs external APIs for the same capability
+- **Gradual rollouts** - Deploy new implementations to subset of agents while others use the old one
 
 ## Tools as Foundation
 
