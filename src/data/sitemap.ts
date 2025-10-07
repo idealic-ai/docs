@@ -16,7 +16,7 @@ export interface Sitemap {
   [key: string]: Chapter[];
 }
 
-const DOC_FOLDERS = ['manifesto', 'rfc', 'blueprint'];
+const DOC_FOLDERS = ['manifesto', 'edict', 'rfc', 'blueprint'];
 
 async function getChaptersForDocument(document: string): Promise<Chapter[]> {
   const COMPILED_DIR = path.resolve(process.cwd(), `./${document}`);
