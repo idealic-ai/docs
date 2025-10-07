@@ -46,7 +46,11 @@ nav > div:not(:last-child):after {
 }
 
 p > code,
-li > code {
+li > code,
+h1 > code,
+h2 > code,
+h3 > code,
+h4 > code {
   background: rgba(0, 0, 0, 0.05);
   padding: 0.2em 0.4em;
   border-radius: 8px;
