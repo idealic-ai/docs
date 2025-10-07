@@ -2,10 +2,10 @@
 
 > Sidenote:
 >
-> - Requires: [The Idea Protocol](./01_protocol_ideas.md), [Protocol: Ideators](./10_protocol_ideators.md)
+> - Requires: [The Idea Protocol](./001_protocol_ideas.md), [Protocol: Ideators](./003_protocol_ideators.md)
 > - Enables: Practical deployment of the ecosystem.
 
-_For definitions of key terms used in this document, please refer to the [Glossary](./00_glossary.md)._
+_For definitions of key terms used in this document, please refer to the [Glossary](./000_glossary.md)._
 
 ## 1. Introduction
 
@@ -15,7 +15,7 @@ This model is the practical bridge between an abstract `Ideator` and a concrete,
 
 ## 2. The Layered Architecture
 
-The ecosystem is structured in five distinct layers (1-5), each building upon the foundational **Decentralized Identity** layer defined in the [Idea Protocol](./01_protocol_ideas.md). This model allows creators to participate at the level that suits their needs, from a simple, decentralized identity to a fully-featured, managed web service.
+The ecosystem is structured in five distinct layers (1-5), each building upon the foundational **Decentralized Identity** layer defined in the [Idea Protocol](./001_protocol_ideas.md). This model allows creators to participate at the level that suits their needs, from a simple, decentralized identity to a fully-featured, managed web service.
 
 It's helpful to view this model as a spectrum of autonomy. At one end lies a managed service that provides convenience. At the other end lies **full sovereignty**: using a custom domain and self-hosting all services, effectively becoming one's own provider. The managed layers serve as an optional, progressive bridge between these two states.
 

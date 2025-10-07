@@ -1,6 +1,6 @@
 # The Imports Protocol
 
-The [Call Protocol](./03_agent_calls.md) defines the high-level controls for `Call` execution: **Scope** (Inline vs. Module) and **Method** (Explicit vs. Latent). The **Imports Protocol** explains how to combine these controls and manage the context for each resulting execution pattern.
+The [Call Protocol](./102_agent_calls.md) defines the high-level controls for `Call` execution: **Scope** (Inline vs. Module) and **Method** (Explicit vs. Latent). The **Imports Protocol** explains how to combine these controls and manage the context for each resulting execution pattern.
 
 ## Combining Scope and Method
 

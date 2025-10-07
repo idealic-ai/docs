@@ -1,10 +1,10 @@
 # RFC 07: System: Storage
 
-_For definitions of key terms used in this document, please refer to the [Glossary](./00_glossary.md)._
+_For definitions of key terms used in this document, please refer to the [Glossary](./000_glossary.md)._
 
 ## 1. Introduction
 
-This document defines **System: Storage**, a core utility service within the Idea ecosystem. The Storage service functions as a specialized **Idea Transformer** whose primary purpose is to provide a persistent, content-addressable repository for `Ideas`. It is the foundational layer for memory and recall, allowing `Ideas` to be saved and versioned for later use by other services, such as [System: Resolver](./08_system_resolver.md).
+This document defines **System: Storage**, a core utility service within the Idea ecosystem. The Storage service functions as a specialized **Idea Transformer** whose primary purpose is to provide a persistent, content-addressable repository for `Ideas`. It is the foundational layer for memory and recall, allowing `Ideas` to be saved and versioned for later use by other services, such as [System: Resolver](./202_system_resolver.md).
 
 ## 2. Core Concept: Storage as an Idea Transformer
 
