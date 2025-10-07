@@ -3,7 +3,7 @@ build:
 
 # Explicitly set the branch to deploy from
 source:
-  branch: gh-pages
+  branch: main
 
 # Explicitly set the publishing source
 publish:
