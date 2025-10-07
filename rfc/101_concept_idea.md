@@ -1,9 +1,10 @@
-# 001: Concept: Idea
+# 101: Concept/Idea
 
 > Sidenote:
 >
-> - Requires: [Glossary](./000_glossary.md), [Agent: Request](./101_agent_request.md)
-> - Enables: [Protocol: Ideators](./003_concept_ideator.md)
+> - Requires:
+>   - [Agent: Request](./001_agent_request.md)
+> - Enables: [Protocol: Ideators](./103_concept_ideator.md)
 
 > **Idea:** A self-contained, stateful data triplet (`schema`, `solution`, `context`) representing a unit of knowledge. It's a persistent, computational primitive, not an ephemeral prompt.
 >
@@ -11,7 +12,7 @@
 
 This document outlines the architecture for a decentralized web of living documents. It covers the protocol's core data structure (the **Idea**) and the decentralized discovery mechanism for publishing and resolving them via **DNS**.
 
-For details on how `Ideas` become executable services, see [RFC 10: Protocol: Ideators](./003_concept_ideator.md). For details on the spectrum of hosting models, see [RFC 11: Protocol: Sovereignty](./002_concept_sovereignty.md).
+For details on how `Ideas` become executable services, see [RFC 10: Protocol: Ideators](./103_concept_ideator.md). For details on the spectrum of hosting models, see [RFC 11: Protocol: Sovereignty](./102_concept_sovereignty.md).
 
 ## The Mechanics of a Living Web
 
@@ -54,25 +55,15 @@ The `solution` is the state. Because every `solution` must conform to its `schem
 
 ### Immutability
 
-An `Idea` with a different `context` or `schema` is a different `Idea`. An `Idea` is considered backward-compatible if it adds new fields to the `schema`. An `Idea` that changes the `schema` requires bumping the version.
+An `Idea` with a different `context` or `schema` is a different `Idea`. An `Idea`
+is considered backward-compatible if it adds new fields to the `schema`. An `Idea` that changes the `schema` requires bumping the version.
 
 ## Publication & Discovery: Decentralized Identity via DNS
 
 DNS provides a globally unique, resolvable name for any Idea, establishing a decentralized identity that decouples the Idea from its storage location. This is the bedrock of the entire system.
 
-For details on the progressive hosting layers that build on top of this foundation, see [RFC 11: Protocol: Sovereignty](./002_concept_sovereignty.md).
+For details on the progressive hosting layers that build on top of this foundation, see [RFC 11: Protocol: Sovereignty](./102_concept_sovereignty.md).
 
 ### The DNS Identity Mechanism
 
 - **How It Works:** An Idea is given a unique domain name. A `TXT` record is created for that domain containing an `idea` key that points to the canonical Idea JSON document. This document defines the Idea's complete interface.
-- **Path to Sovereignty**: This mechanism supports both ease of use and full user control. A provider can manage a domain (e.g., `ideators.network`) and delegate subdomains (e.g., `my-tool.ideators.network`) to users. For full sovereignty, a user can use their own custom domain and simply point its `NS` records to the required services, taking complete control of their identity.
-- **Purpose:** This provides a globally unique, resolvable name for any component, allowing for a fully self-describing system where any service can be understood by fetching a single definition file.
-
-### DNS `TXT` Record Specification
-
-The `TXT` record is a simple pointer to the Idea's full definition.
-
-- `idea=<url>`: **(Required)** The URL pointing to the canonical Idea JSON document.
-- `page=<url>`: **(Optional)** A URL to a human-readable landing page.
-
-_Example TXT record content:_ `"idea=https://.../commenter.json page=.../docs"`

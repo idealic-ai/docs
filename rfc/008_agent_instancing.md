@@ -1,8 +1,12 @@
-# 108: Agent: Instancing
+# 008: Agent/Instancing
 
 > Sidenote:
 >
-> - Requires: [Agent: State](./107_agent_state.md)
+> - Requires: [Agent: State](./007_agent_state.md)
+> - Compatible:
+>   - [Agent: Input](./005_agent_input.md)
+>   - [Agent: Imports](./006_agent_imports.md)
+>   - [Agent: Plan](./009_agent_plan.md)
 
 > **Instancing:** The process of handling multiple, independent `Instances` (each with its own `State Object` and unique identifier) within a single agent request.
 >

@@ -1,13 +1,13 @@
-# 105: Agent: Input
+# 005: Agent/Input
 
 > Sidenote:
 >
-> - Requires: [The Idea Protocol](./001_protocol_ideas.md)
-> - Enables: [Protocol: Ideators](./003_protocol_ideators.md)
+> - Requires: [The Idea Protocol](./101_concept_idea.md)
+> - Enables: [Protocol: Ideators](./103_concept_ideator.md)
 
 > **Input Message:** A context message containing a `schema` and `input` data. Its presence transforms an `Idea` into an `Ideator` by defining its expected inputs.
 >
-> — [Glossary](./000_glossry.md)
+> — [Glossary](./000_glossary.md)
 
 This document describes the **Input Protocol**, a system for defining structured inputs for `Ideas`. This protocol introduces a special message type that, when included in an `Idea`'s context, transforms it from a static piece of knowledge into an executable, function-like entity known as an **Ideator**.
 
@@ -28,11 +28,11 @@ A significant advantage of this protocol is its ability to enable automatic user
 
 ## From Idea to Ideator
 
-As described in the [Idea Protocol](./001_concept_idea.md), the presence of an `Input` message in an `Idea`'s context is the definitive signal that it is an **Ideator**—an `Idea` that performs work. It becomes a reproducible function.
+As described in the [Idea Protocol](./101_concept_idea.md), the presence of an `Input` message in an `Idea`'s context is the definitive signal that it is an **Ideator**—an `Idea` that performs work. It becomes a reproducible function.
 
 ## Interaction with the Instancing Protocol
 
-The `Input` message is fully compatible with the [Instancing Protocol](./108_agent_instancing.md), allowing for sophisticated data-sourcing strategies when processing multiple instances at once. It can operate in two distinct modes:
+The `Input` message is fully compatible with the [Instancing Protocol](./008_agent_instancing.md), allowing for sophisticated data-sourcing strategies when processing multiple instances at once. It can operate in two distinct modes:
 
 1.  **Global Input**: If an `Input` message is provided in the agent's context without an `_instance` property, its `input` data is treated as a global value. It is implicitly available to every instance being processed in the request. This is useful for providing shared configuration, prompts, or parameters that apply to all instances uniformly.
 
@@ -47,6 +47,6 @@ While an `Ideator` is a self-contained, executable concept, to integrate it into
 An `Idea` is a triplet defined by its output `schema` and `solution`:
 `{ context, schema, solution }`
 
-To convert it into a `Tool`, we look inside its `context` for the `Input` message. The primary step of inversion is to **promote** the `input`'s schema properties to become the top-level parameter properties for the `Tool` (see [Tool System](./102_agent_tool.md) for details on Tool schema structure).
+To convert it into a `Tool`, we look inside its `context` for the `Input` message. The primary step of inversion is to **promote** the `input`'s schema properties to become the top-level parameter properties for the `Tool` (see [Tool System](./002_agent_tool.md) for details on Tool schema structure).
 
 This creates a `Tool` definition, which is essentially a function signature ready to be registered in an agent's system, ready to be used in a `Call`.

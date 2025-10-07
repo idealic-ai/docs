@@ -32,4 +32,8 @@ This document provides definitions for the key concepts used in the Idea Protoco
 
 - **Plan**: A directed acyclic graph (DAG) of `Tool Calls`. It defines a sequence of actions, with dependencies determined by tools reading from and writing to the `State Object`.
 
-- **Instancing**: The process of handling multiple, independent `
+- **Instancing**: The process of handling multiple, independent `Instances` (each with its own `State Object` and unique identifier) within a single agent request.
+
+- **Instance**: A single, uniquely identified state object and its associated context, processed as one of many within an `Instancing` operation.
+
+- **Reactor**: A specific `Idea Transformer` designed as a universal runtime for stateful, turn-based agent interactions. It takes a game/process state (`Idea`) and produces the next state (`Idea`).

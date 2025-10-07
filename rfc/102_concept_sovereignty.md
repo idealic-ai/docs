@@ -1,8 +1,10 @@
-# 002: Concept: Sovereignty
+# 102: Concept/Sovereignty
 
 > Sidenote:
 >
-> - Requires: [The Idea Protocol](./001_concept_idea.md), [Protocol: Ideators](./003_concept_ideator.md)
+> - Requires:
+>   - [The Idea Protocol](./101_concept_idea.md)
+>   - [Protocol: Ideators](./103_concept_ideator.md)
 > - Enables: Practical deployment of the ecosystem.
 
 ## 1. Introduction
@@ -13,7 +15,7 @@ This model is the practical bridge between an abstract `Ideator` and a concrete,
 
 ## 2. The Layered Architecture
 
-The ecosystem is structured in five distinct layers (1-5), each building upon the foundational **Decentralized Identity** layer defined in the [Idea Protocol](./001_concept_idea.md). This model allows creators to participate at the level that suits their needs, from a simple, decentralized identity to a fully-featured, managed web service.
+The ecosystem is structured in five distinct layers (1-5), each building upon the foundational **Decentralized Identity** layer defined in the [Idea Protocol](./101_concept_idea.md). This model allows creators to participate at the level that suits their needs, from a simple, decentralized identity to a fully-featured, managed web service.
 
 It's helpful to view this model as a spectrum of autonomy. At one end lies a managed service that provides convenience. At the other end lies **full sovereignty**: using a custom domain and self-hosting all services, effectively becoming one's own provider. The managed layers serve as an optional, progressive bridge between these two states.
 

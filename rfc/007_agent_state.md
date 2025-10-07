@@ -1,8 +1,8 @@
-# 107: Agent: State
+# 007: Agent/State
 
 > Sidenote:
 >
-> - Requires: [Agent: Tool](./102_agent_tool.md)
+> - Requires: [Agent: Tool](./002_agent_tool.md)
 
 > **State Message:** A context message containing a `state` object and an optional `schema`. It represents a persistent state maintained between ticks of an agent's execution loop.
 >

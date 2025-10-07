@@ -1,11 +1,11 @@
-# 104: Agent: Loop
+# 004: Agent/Loop
 
 > Sidenote:
 >
 > - Requires:
->   - [Agent: Request](./101_agent_request.md)
->   - [Agent: Tool](./102_agent_tool.md)
->   - [Agent: Call](./103_agent_call.md)
+>   - [Agent: Request](./001_agent_request.md)
+>   - [Agent: Tool](./002_agent_tool.md)
+>   - [Agent: Call](./003_agent_call.md)
 
 > **Loop:** A sequence of `Request`s aimed at achieving a goal. The agent continues to invoke `Request`s, process the resulting `Call`s, and feed the output back into the context of the next `Request` until no more `Call`s are generated.
 >
@@ -18,8 +18,8 @@ This document describes the **Loop Protocol**, which enables an agent to perform
 The Agent Loop is the primary mechanism for autonomous, multi-step execution. It operates as follows:
 
 1.  **Context Assembly:** The loop begins by assembling the initial context, which may include the user's goal, the current `State`, and other relevant information.
-2.  **Request Invocation:** It invokes the **[Agent: Request](./101_agent_request.md)** protocol with the current context and a schema of available `Tools`.
-3.  **Call Processing:** The `Request` returns a `solution` containing an array of zero or more **[Agent: Call](./103_agent_call.md)s**.
+2.  **Request Invocation:** It invokes the **[Agent: Request](./001_agent_request.md)** protocol with the current context and a schema of available `Tools`.
+3.  **Call Processing:** The `Request` returns a `solution` containing an array of zero or more **[Agent: Call](./003_agent_call.md)s**.
 4.  **Execution & Feedback:**
     - If the `solution` contains `Call`s, the loop executes them. For `Explicit` `Call`s, this involves invoking the corresponding `Activity` code.
     - The results of these `Call`s are then added back into the context for the next iteration.
@@ -32,4 +32,4 @@ A key feature of the Agent Loop is its natural support for human oversight. Beca
 - **Approval:** Before executing the `Call`s, the system can present them to a user for approval.
 - **Correction:** The user can modify the parameters of a `Call` or even replace it with a different one.
 
-This capability is critical for safety and for collaborative tasks where the agent acts as an assistant. User adjustments and feedback can be leveraged by the **[Agent: Plan](./109_agent_plan.md)**, allowing the agent to refine its strategy based on human input.
+This capability is critical for safety and for collaborative tasks where the agent acts as an assistant. User adjustments and feedback can be leveraged by the **[Agent: Plan](./009_agent_plan.md)**, allowing the agent to refine its strategy based on human input.

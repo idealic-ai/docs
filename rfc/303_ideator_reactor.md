@@ -1,4 +1,4 @@
-# 203: Ideator: Reactor
+# 303: Ideator/Reactor
 
 > **Reactor:** A specific `Idea Transformer` designed as a universal runtime for stateful, turn-based agent interactions. It takes a game/process state (`Idea`) and produces the next state (`Idea`).
 >

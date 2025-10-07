@@ -1,8 +1,8 @@
-# 102: Agent: Tool
+# 002: Agent: Tool
 
 > Sidenote:
 >
-> - Requires: [Agent: Request](./101_agent_request.md)
+> - Requires: [Agent: Request](./001_agent_request.md)
 
 > **Tool**: A schema that defines a capability an agent can use. It is presented to an LLM as part of a request, acting as a structured interface for a potential action. The LLM activates the tool by generating a `Call` with specific parameters, which is then executed either latently by the LLM or explicitly by a registered code function (`Activity`).
 >
@@ -21,9 +21,9 @@ Tools provide:
 - **Composability**: Building blocks that combine into complex agent behaviors
 - **LLM Integration**: Schemas that language models can reason about and select
 
-When an agent fills specific parameters for a Tool, it creates a **Call** - an instance of a Tool with all required parameters filled, representing a concrete request for execution (see [Call Protocol](./102_agent_calls.md) for details on Call execution, Scope, and Method controls).
+When an agent fills specific parameters for a Tool, it creates a **Call** - an instance of a Tool with all required parameters filled, representing a concrete request for execution (see [Call Protocol](./002_agent_calls.md) for details on Call execution, Scope, and Method controls).
 
-> **Note**: While any LLM request can be represented as an Idea (which works well for simple structured content generation), Tools provide the mechanism for more complex scenarios requiring dynamic action selection. For details on how Ideas can be transformed into Tools through input schemas, see [Agent Input RFC](./103_agent_input.md).
+> **Note**: While any LLM request can be represented as an Idea (which works well for simple structured content generation), Tools provide the mechanism for more complex scenarios requiring dynamic action selection. For details on how Ideas can be transformed into Tools through input schemas, see [Agent Input RFC](./003_agent_input.md).
 
 ## When to Use the Tool System
 
@@ -75,7 +75,7 @@ The Tool System handles:
 - Execution Routing (latent vs explicit determination)
 - Activity Management (implementation registration and invocation)
 
-Higher-level protocols (like the [Call Protocol](./102_agent_calls.md)) build workflow orchestration, state management, and execution policies on top of these primitives.
+Higher-level protocols (like the [Call Protocol](./002_agent_calls.md)) build workflow orchestration, state management, and execution policies on top of these primitives.
 
 ## Tool Definition and Registration
 
@@ -171,4 +171,4 @@ The dual registry architecture solves this by keeping tool interfaces stable whi
 
 ## Tools as Foundation
 
-Tools represent the **first building block** of the agent action system - they define _what can be done_ through pure schema interfaces. The next layer, [Call Protocol](./102_agent_calls.md), builds upon this foundation to define _how things are executed_ through Scope and Method controls, enabling sophisticated multi-tool workflows and execution strategies.
+Tools represent the **first building block** of the agent action system - they define _what can be done_ through pure schema interfaces. The next layer, [Call Protocol](./002_agent_calls.md), builds upon this foundation to define _how things are executed_ through Scope and Method controls, enabling sophisticated multi-tool workflows and execution strategies.
