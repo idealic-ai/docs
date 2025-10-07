@@ -12,7 +12,7 @@ The [Call Protocol](./02. agent_calls.md) defines the high-level controls for `C
 
 4.  **Modular Latent (`_module`, no `_activity`)**: The LLM generates `params`. The system then initiates a new, isolated LLM call, using the `Idea` specified in `_module` as the guide. The context for this new call is constructed _only_ from the data specified in `_imports`, ensuring a clean, sandboxed environment.
 
-## `_imports`: Focusing the Field of View
+## Focusing the Field of View
 
 The `_imports` property is the primary mechanism for controlling the context available to a `Call`. It acts as an allow-list, filtering the parent environment to provide a focused, limited field of view for the execution.
 
