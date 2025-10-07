@@ -24,7 +24,7 @@ When an agent fills specific parameters for a Tool, it creates a **Call** - an i
 The Tool System is particularly valuable when you need:
 
 - **Multiple Implementations**: Different search engines (Google, Bing, local) for the same search tool
-- **Mixed Execution**: Some tools use LLM reasoning, others use APIs
+- **Mixed Execution**: Some tools use LLM reasoning, others use explicit logic
 - **Runtime Flexibility**: Swap implementations without code changes
 - **Testing Isolation**: Mock external dependencies easily
 - **Progressive Enhancement**: Start simple, add complexity gradually
