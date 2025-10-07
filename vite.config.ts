@@ -8,7 +8,6 @@ const config: UserConfig & { extends: Config[] } = {
   build: {
     target: 'es2022',
   },
-
   server: {
     fs: {
       deny: ['rfc', 'blueprint', 'manifesto'],
