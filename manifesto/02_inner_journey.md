@@ -1,8 +1,6 @@
-# The Co-Liberation Manifesto
+# Part II: The Inner Journey
 
 ---
-
-### **Part II: The Inner Journey**
 
 > The journey outward begins by turning inward. Before we can architect a new reality, we must first dismantle the fortress of the self we have built. We must face the primary obstacle—our own fixed identity—and in the silence that follows, uncover the tools for the path ahead: a sense of direction, a map to guide our steps, and a new understanding of the nature of the journey itself. This is the inner work.
 

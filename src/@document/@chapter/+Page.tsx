@@ -18,6 +18,13 @@ export default function Page() {
     <article>
       {content ? (
         <>
+          <a href={`/docs/${document}/`} className="back-link">
+            &larr;{' '}
+            <span>
+              Back to{' '}
+              {document == 'rfc' ? 'RFCs' : document.charAt(0).toUpperCase() + document.slice(1)}
+            </span>
+          </a>
           <section dangerouslySetInnerHTML={{ __html: content }} />
           <nav className="pagination">
             {prevChapter ? (

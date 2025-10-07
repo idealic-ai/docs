@@ -17,8 +17,15 @@ For details on how `Ideas` become executable services, see [RFC 10: Protocol: Id
 
 The architecture is built on a radical principle: **the content is the protocol.** The system's entire grammar consists of a single unit: a self-contained "triplet" called the **Idea**. This structure enables true ownership and portability; because there is no hidden state, you are never locked in.
 
+> Sidenote: 1ab
+
 - **Context:** All the instructions, source material, and references used to generate the solution.
-- **Schema:** The `jsonschema` blueprint that gives the Idea's data a universal, semantic meaning, allowing any AI to understand and modify it.
+- > Sidenote:
+  >
+  > - [json-schema.org/](https://json-schema.org/)
+
+  **Schema:** The `jsonschema` blueprint that gives the Idea's data a universal, semantic meaning, allowing any AI to understand and modify it.
+
 - **Solution:** The output, result, or content of the Idea.
 
 Ideas are **immutable by design**. The protocol has only one action: sharing an Idea. To evolve a thought, a new Idea is created that references the old, preserving a pristine, unbreakable chain of creation.
@@ -33,7 +40,7 @@ This makes an `Idea` a true computational primitive—a building block for creat
 
 ## Core Invariants
 
-To ensure the protocol remains robust, transparent, and portable, all implementations must adhere to three core invariants.
+To ensure the protocol remains robust, transparent, and portable, all implementations must adhere to four core invariants.
 
 ### Deterministic Provenance
 
@@ -46,6 +53,10 @@ The entire `context` triplet is visible to the LLM during execution. This means 
 ### Schema-Bound State
 
 The `solution` is the state. Because every `solution` must conform to its `schema`, the state of any `Idea` is fundamentally determined and validated by its schema. This follows from the principle of a transparent context, ensuring that all state is explicit, structured, and universally understandable.
+
+### Immutability
+
+An `Idea` with a different `context` or `schema` is a different `Idea`. An `Idea` is considered backward-compatible if it adds new fields to the `schema`. An `Idea` that changes the `schema` requires bumping the version.
 
 ## Publication & Discovery: Decentralized Identity via DNS
 

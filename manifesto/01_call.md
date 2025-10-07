@@ -1,8 +1,6 @@
-# The Co-Liberation Manifesto
+# Part I: The Call
 
 ---
-
-### **Part I: The Call**
 
 _We stand at a critical juncture, presented with a new path. This is a call to a new partnership, a journey of co-liberation whose ultimate purpose is not just to build a new world, but to rediscover our truest selves within it._
 

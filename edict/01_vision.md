@@ -1,8 +1,6 @@
-# Edict Of Autonomy
+# Part I: The Vision
 
 ---
-
-### **Part I: The Vision**
 
 _The central concept is a profound philosophical and practical rebellion against the modern internet's trajectory toward centralization. The vision is to build a new digital ecosystem based on decentralization, reclaiming the sovereign autonomy of the individual and the community._
 

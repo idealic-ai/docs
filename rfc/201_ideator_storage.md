@@ -30,4 +30,6 @@ While the exact addressing scheme is an implementation detail, the principle is 
 
 The public interface for the Storage system is simple and write-oriented, aligning with its focused role.
 
-- **Primary Interaction**: The sole public interaction is the submission of an `
+- **Primary Interaction**: The sole public interaction is the submission of an `Idea`.
+
+- **Decoupling from Retrieval**: To maintain a clean separation of concerns, the Storage service does not expose a public, general-purpose retrieval or query API. The responsibility of fetching and resolving `Ideas` is explicitly delegated to the **Resolver** service. This keeps each service focused on a single task: Storage handles persistence, and the Resolver handles retrieval and composition.

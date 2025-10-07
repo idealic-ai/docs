@@ -1,8 +1,6 @@
-# The Co-Liberation Manifesto
+# Part III: The Outer Work
 
 ---
-
-### **Part III: The Outer Work**
 
 _With our inner orientation set and a moral map in hand, the transformed individual is ready to create. But the craft of this new era is not one of hammering metal or laying stone; it is a more subtle art. The following chapters describe this outer work: a path that begins with the **discovery** of an idea, moves to its **liberation** into the world as a partner in its own right, and culminates in the **discipline** required to shape its source. This is how we build._
 

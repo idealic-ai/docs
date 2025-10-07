@@ -1,8 +1,6 @@
-# Edict Of Autonomy
+# Part II: The Protocol
 
 ---
-
-### **Part II: The Protocol**
 
 _The promise of a decentralized renaissance cannot be built on the compromised foundations of the old world. A hybrid system is an ineffective half-measure; it inherits the burdens of centralization. To achieve true liberation, we must commit to a fundamentally different architecture, one designed from the ground up for resilience, autonomy, and freedom. This is not a platform; it is a protocol._
 

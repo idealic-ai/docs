@@ -1,8 +1,6 @@
-# Edict Of Autonomy
+# Part IV: Appendices
 
 ---
-
-### **Part IV: Appendices**
 
 _This section contains supplementary materials including practical examples, answers to common questions, and a glossary of key terms to provide a deeper and more concrete understanding of the protocol._
 
