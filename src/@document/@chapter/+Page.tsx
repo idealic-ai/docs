@@ -22,7 +22,10 @@ export default function Page() {
             &larr;{' '}
             <span>
               Back to{' '}
-              {document == 'rfc' ? 'RFCs' : document.charAt(0).toUpperCase() + document.slice(1)}
+              {document == 'rfc'
+                ? 'list of RFCs'
+                : document.charAt(0).toUpperCase() + document.slice(1)}{' '}
+              table of contents
             </span>
           </a>
           <section dangerouslySetInnerHTML={{ __html: content }} />

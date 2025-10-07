@@ -21,7 +21,7 @@ This document outlines a vision for a new digital ecosystem based on decentraliz
 - [Part III: The Impact](./edict/03_impact.md)
 - [Part IV: Appendices](./edict/04_appendices.md)
 
-## RFCs (Request for Comments) {.my-custom-class}
+## Requests for Comments {.my-custom-class}
 
 - [Glossary](./rfc/00_glossary.md)
 - [Protocol Ideas](./rfc/01_protocol_ideas.md)
