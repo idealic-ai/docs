@@ -10,8 +10,8 @@ export default {
   Layout,
 
   // https://vike.dev/head-tags
-  title: 'My Vike App',
-  description: 'Demo showcasing Vike',
+  title: 'Idealic Documentation',
+  description: 'Repository of all the documents: Manifesto, Edict, RFCs, Blueprint',
 
   extends: vikeReact,
 
