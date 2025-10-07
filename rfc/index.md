@@ -13,3 +13,7 @@ These documents serve as normative specifications that articulate our team's con
 - [RFC 04: The Instancing Protocol](./04_agent_instancing.md)
 - [RFC 05: The Reactor](./05_system_reactor.md)
 - [RFC 06: The Input Protocol](./06_agent_input.md)
+- [RFC 07: System: Storage](./07_system_storage.md)
+- [RFC 08: System: Resolver](./08_system_resolver.md)
+- [RFC 10: Protocol: Ideators](./10_protocol_ideators.md)
+- [RFC 11: Protocol: Sovereignty](./11_protocol_sovereignty.md)

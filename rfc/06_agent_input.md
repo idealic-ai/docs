@@ -1,5 +1,10 @@
 # The Input Protocol
 
+> Sidenote:
+>
+> - Requires: [The Idea Protocol](./01_protocol_ideas.md)
+> - Enables: [Protocol: Ideators](./10_protocol_ideators.md)
+
 _For definitions of key terms used in this document, please refer to the [Glossary](./00_glossary.md)._
 
 This document describes the **Input Protocol**, a system for defining structured inputs for `Ideas`. This protocol introduces a special message type that, when included in an `Idea`'s context, transforms it from a static piece of knowledge into an executable, function-like entity known as an **Ideator**.

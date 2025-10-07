@@ -340,13 +340,11 @@ The referenced base schemas (`aug:/schemas/Vibe` and `aug:/schemas/RecordVibe`) 
 This enhanced Vibe represents an **Investment Advisor Vessel** that produces article-like output:
 
 - The `input` array contains:
-
   - System context
   - User query
   - State configuration with `specialization` and `analysisDepth` set to "quick"
 
 - The `schema` uses `allOf` composition with:
-
   - Base schemas for fundamental properties
   - **Narrative blocks** that structure the output:
     - `_IntroductionNarrative`: Generic opening that provides consistent report structure

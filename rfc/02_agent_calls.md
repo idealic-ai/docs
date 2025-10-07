@@ -1,4 +1,9 @@
-# From Ideas to Action: The Call Protocol
+# The Call Protocol
+
+> Sidenote:
+>
+> - Requires: [Protocol: Ideators](./10_protocol_ideators.md)
+> - Enables: [The Imports Protocol](./03_agent_imports.md), [The Instancing Protocol](./04_agent_instancing.md)
 
 _For definitions of key terms used in this document, please refer to the [Glossary](./00_glossary.md)._
 
