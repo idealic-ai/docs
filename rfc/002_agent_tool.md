@@ -120,7 +120,10 @@ Activity.register('weatherCheck', async call => {
 
 The Tool System supports two fundamentally different execution modes:
 
-**Latent Execution** uses the LLM's reasoning capabilities - the agent "thinks through" the problem and produces the output directly in the same invocation. This is knowledge-based execution, ideal for analysis, planning, or creative tasks where the LLM's training is sufficient.
+> Sidenote:
+>
+> - [RFC 104: Concept/Latent](../rfc/104_concept_latent.md)
+>   **Latent Execution** uses the LLM's reasoning capabilities - the agent "thinks through" the problem and produces the output directly in the same invocation. This is knowledge-based execution, ideal for analysis, planning, or creative tasks where the LLM's training is sufficient.
 
 **Explicit Execution** delegates to deterministic code - an Activity function is called to compute the output. This is code-based execution, essential for external API calls, database operations, or any task requiring precise, repeatable behavior.
 

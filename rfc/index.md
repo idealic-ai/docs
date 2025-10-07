@@ -29,6 +29,7 @@ These documents serve as normative specifications that articulate our team's con
 - [101: Concept/Idea](./101_concept_idea.md)
 - [102: Concept/Sovereignty](./102_concept_sovereignty.md)
 - [103: Concept/Ideator](./103_concept_ideator.md)
+- [104: Concept/Latent](./104_concept_latent.md)
 
 > Sidenote: Describes the core primitives of ideas.
 

@@ -10,6 +10,12 @@ _The promise of a decentralized renaissance cannot be built on the compromised f
 
 **An Operating System for Ideas**
 
+> Sidenote:
+>
+> - [RFC 201: Idea/Record](../rfc/201_idea_record.md)
+> - [RFC 202: Idea/Vessel](../rfc/202_idea_vessel.md)
+> - [RFC 203: Idea/Process](../rfc/203_idea_process.md)
+
 We are not building another monolithic service that demands your attention and data. We are creating an _operating system for ideas_—a foundational layer upon which countless worlds can be built. The goal is not to create a single, all-encompassing app, but to provide the rich soil where living ideas can be planted, evolve, and interconnect. Others can and should build their own clients and interpreters on this protocol. Some may be simple archives, others complex analytical engines. The ecosystem's health and richness will emerge from this diversity, not from a single, centrally-planned design.
 
 The protocol is inherently extensible. **Ideas** (living, self-contained documents that can be shared, remixed, and evolved) are not monolithic; they are specialized types with distinct meanings, such as `Record`, `Process`, or `Agent`. We provide a foundational set of core `Idea` types that serve as a base protocol, a robust starting point for building almost any system. However, the protocol is also open, allowing anyone to define new, custom `Idea` types. This flexibility does not require every client to understand every type of `Idea`. A simple client may only recognize `Records`, while a more advanced one could manage complex `Processes`. This ensures a modular and adaptable ecosystem where specialization is not only possible, but encouraged.
@@ -25,6 +31,8 @@ This architecture liberates the creator from the impossible burden of centralize
 ---
 
 ### (Chapter 5) The Mechanics of a Living Web
+
+> Sidenote: [RFC 101: Concept/Idea](../rfc/101_concept_idea.md)
 
 The architecture of liberation is built on a radical principle: **the content is the protocol.** There are no hidden APIs, proprietary back-ends, or complex commands. The system's entire grammar consists of a single unit: the **Idea**. Each Idea is a self-contained "triplet" composed of the **solution** (the content), the **schema** (a JSON Schema that defines the data's meaning and its potential for change), and the **context** (the lineage and instructions that produced it). These triplets are the messages, the inputs, and the effects—there is nothing else. This structure is what enables true ownership and portability; because there is no hidden state, you are never locked in and can take your entire universe of ideas with you at any time. The following mechanics are all emergent properties of this foundational design.
 
@@ -42,12 +50,14 @@ The architecture of liberation is built on a radical principle: **the content is
 
 The method's structure is inspired by the Unix philosophy and the compositional patterns of functional programming. At its core is a fundamental insight: an **Idea is not just data, but a computational container**. It bundles a core value (the **solution**) with its own rich context for computation (the **schema** and **context**). This makes every Idea a self-contained universe of meaning, ready to be processed.
 
-The agents that operate on these Ideas are called **Ideators**. They act as standardized functions for transforming these containers. An **Ideator** takes an `Idea` container as input, operates on the inner value based on its context, and always returns a new `Idea` container as output. This input/output contract is the bedrock of the system's stability.
+> Sidenote: [RFC 103: Concept/Ideator](../rfc/103_concept_ideator.md)
+> The agents that operate on these Ideas are called **Ideators**. They act as standardized functions for transforming these containers. An **Ideator** takes an `Idea` container as input, operates on the inner value based on its context, and always returns a new `Idea` container as output. This input/output contract is the bedrock of the system's stability.
 
 A powerful aspect of this design is its approach to validation. An **Ideator** does not need to understand the full, complex schema of a `SOURCE` Idea. It only needs to verify that the Idea’s context and solution conform to the specific structure it requires—a form of structural typing. For example, an "Idea Improver" **Ideator** might declare: _"I accept a `SOURCE` Idea whose solution has a `title` string."_ This allows for immense flexibility.
 
 This container model is what makes the entire system composable. Because every **Ideator** speaks the universal language of the `Idea` container, they can be chained together into sophisticated pipelines. The shared structure automatically handles the complex connections between steps, allowing an agentic planner to compose powerful workflows without getting lost in the details. This is not the only method of interaction, however. Any **Ideator** can also be exposed and called directly via standard protocols like HTTP, offering transparent and flexible API access.
 
-Imagine a pipeline of **Ideators**: an initial `Idea` is sent to a **Simulator** to explore potential outcomes, then to a **Critic** that provides feedback, then to an **Improver** that refines the `Idea` based on that critique, and finally to a **Publisher** that shares it with a specific circle. Each **Ideator** is a simple, independent tool, but together they form a powerful, emergent system for thought and creation.
+> Sidenote: [RFC 009: Agent/Plan](../rfc/009_agent_plan.md)
+> Imagine a pipeline of **Ideators**: an initial `Idea` is sent to a **Simulator** to explore potential outcomes, then to a **Critic** that provides feedback, then to an **Improver** that refines the `Idea` based on that critique, and finally to a **Publisher** that shares it with a specific circle. Each **Ideator** is a simple, independent tool, but together they form a powerful, emergent system for thought and creation.
 
 This is what gives rise to a **digital life**: an `Idea` survives and evolves by persuading other nodes and **Ideators** to grant it processing time. It travels through the network, being processed, remixed, and enhanced at each step, its relevance proven by its ability to continue its journey.

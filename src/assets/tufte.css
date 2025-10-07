@@ -460,7 +460,7 @@ img {
   padding-left: 0;
 }
 .marginnote > :first-child {
-  margin-top: -0.25rem;
+  margin-top: 0rem;
 }
 
 .back-link {
