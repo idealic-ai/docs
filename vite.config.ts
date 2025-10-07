@@ -15,8 +15,6 @@ const config: UserConfig & { extends: Config[] } = {
     },
   },
 
-  base: '/docs',
-
   publicDir: 'public',
 };
 
