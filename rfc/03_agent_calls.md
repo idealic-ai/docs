@@ -9,14 +9,14 @@ _For definitions of key terms used in this document, please refer to the [Glossa
 > - Enables
 >   - [RFC 9: Plan](/)
 
-The [Idea Protocol](./01_protocol_ideas.md) defines a powerful, self-contained data structure for representing knowledge and latent logic. The [Tool Protocol](./02_agent_tools.md) establishes the foundational schema-driven interface that enables agents to understand structured capabilities. This document describes the **Call Protocol**, which builds upon Tools to define how execution happens through Scope and Method controls.
+The [Idea Protocol](./01_protocol_ideas.md) defines a powerful, self-contained data structure for representing knowledge and latent logic. The [Tool System](./02_agent_tools.md) establishes the foundational schema-driven interface that enables agents to understand structured capabilities. This document describes the **Call Protocol**, which builds upon Tools to define how execution happens through Scope and Method controls.
 
 A **Call** is a concrete instance of a Tool with specific parameter values, ready for execution. Where Tools define _what can be done_, Calls define _how it gets executed_.
 
 ## The Idea-to-Call Pipeline
 
 1.  **Idea**: A self-contained, output-focused document representing knowledge or a process.
-2.  **Tool**: An `Idea` inverted into an interface-focused schema, registered in the agent's tool system (see [Tool Protocol](./02_agent_tools.md) for details on Tool schemas, registration, and the dual registry architecture).
+2.  **Tool**: An `Idea` inverted into an interface-focused schema, registered in the agent's tool system (see [Tool System](./02_agent_tools.md) for details on Tool schemas, registration, and the dual registry architecture).
 3.  **Call**: When the LLM decides to use a `Tool`, it fills in specific parameters, creating a **Call**. A `Call` is a single, concrete instance of a `Tool` being called.
 
 The core principle: **any Idea can be turned into a Tool, which can then be called as a Call.**

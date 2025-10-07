@@ -1,8 +1,8 @@
-# The Tool Protocol: Foundational Interface for Agent Capabilities
+# The Tool System: Foundational Interface for Agent Capabilities
 
 _For definitions of key terms used in this document, please refer to the [Glossary](./00_glossary.md)._
 
-This document describes the Tool Protocol - the foundational schema-driven interface that enables agents to understand and use structured capabilities.
+This document describes the Tool System - the foundational schema-driven interface that enables agents to understand and use structured capabilities.
 
 ## What Are Tools?
 
@@ -19,9 +19,9 @@ When an agent fills specific parameters for a Tool, it creates a **Call** - an i
 
 > **Note**: While any LLM request can be represented as an Idea (which works well for simple structured content generation), Tools provide the mechanism for more complex scenarios requiring dynamic action selection. For details on how Ideas can be transformed into Tools through input schemas, see [Agent Input RFC](07_agent_input.md).
 
-## When to Use Tool Protocol
+## When to Use the Tool System
 
-The Tool Protocol is particularly valuable when you need:
+The Tool System is particularly valuable when you need:
 
 - **Multiple Implementations**: Different behaviors for dev/test/prod
 - **Mixed Execution**: Some tools use LLM reasoning, others use APIs
@@ -29,11 +29,11 @@ The Tool Protocol is particularly valuable when you need:
 - **Testing Isolation**: Mock external dependencies easily
 - **Progressive Enhancement**: Start simple, add complexity gradually
 
-## The Tool Protocol Architecture
+## The Tool System Architecture
 
 ### Core Principle: Schema as Interface
 
-The Tool Protocol is built on a fundamental principle: **Tools are pure schemas** that define interfaces without mandating implementations. A Tool schema specifies:
+The Tool System is built on a fundamental principle: **Tools are pure schemas** that define interfaces without mandating implementations. A Tool schema specifies:
 
 - **What the tool does** (description)
 - **What it needs** (input parameters)
@@ -51,7 +51,7 @@ This schema-first approach enables:
 
 ### The Dual Registry Architecture
 
-The Tool Protocol employs two complementary registries:
+The Tool System employs two complementary registries:
 
 **Tool Registry**: Stores schema definitions (the interface)
 **Activity Registry**: Stores implementation functions (the execution)
@@ -71,14 +71,14 @@ These meta fields distinguish system-level concerns from user-defined parameters
 
 ### System Boundaries
 
-The Tool Protocol handles:
+The Tool System handles:
 
 - Tool Registration (schema definition and storage)
 - Parameter Filling (LLM-driven extraction from context)
 - Execution Routing (latent vs explicit determination)
 - Activity Management (implementation registration and invocation)
 
-Higher-level systems (like the [Call Protocol](03_agent_calls.md)) build workflow orchestration, state management, and execution policies on top of these primitives.
+Higher-level protocols (like the [Call Protocol](03_agent_calls.md)) build workflow orchestration, state management, and execution policies on top of these primitives.
 
 ## Tool Definition and Registration
 
@@ -121,7 +121,7 @@ Activity.register('weatherCheck', async call => {
 
 ## Activity Resolution Strategy
 
-The Tool Protocol supports two fundamentally different execution modes:
+The Tool System supports two fundamentally different execution modes:
 
 **Latent Execution** uses the LLM's reasoning capabilities - the agent "thinks through" the problem and produces the output directly in the same invocation. This is knowledge-based execution, ideal for analysis, planning, or creative tasks where the LLM's training is sufficient.
 
