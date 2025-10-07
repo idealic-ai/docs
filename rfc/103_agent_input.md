@@ -45,6 +45,6 @@ While an `Ideator` is a self-contained, executable concept, to integrate it into
 An `Idea` is a triplet defined by its output `schema` and `solution`:
 `{ context, schema, solution }`
 
-To convert it into a `Tool`, we look inside its `context` for the `Input` message. The primary step of inversion is to **promote** the `input`'s schema to become the top-level `params` schema for the `Tool`.
+To convert it into a `Tool`, we look inside its `context` for the `Input` message. The primary step of inversion is to **promote** the `input`'s schema properties to become the top-level parameter properties for the `Tool` (see [Tool System](./02_agent_tools.md) for details on Tool schema structure).
 
 This creates a `Tool` definition, which is essentially a function signature ready to be registered in an agent's system, ready to be used in a `Call`.

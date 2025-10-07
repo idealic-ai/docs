@@ -10,7 +10,7 @@ This document provides definitions for the key concepts used in the Idea Protoco
 
 - **Input Message**: A context message containing a `schema` and `input` data. Its presence transforms an `Idea` into an `Ideator` by defining its expected inputs.
 
-- **Tool**: An `Idea` inverted to be interface-focused. It's a function signature registered in an agent's system, ready to be invoked. Its schema defines `params` (inputs).
+- **Tool**: An `Idea` inverted to be interface-focused. It's a function signature registered in an agent's system, ready to be called. Its schema defines parameters (inputs) and `_output` (expected result).
 
 - **Call**: A concrete, executable instance of a `Tool`, with specific values for its `params`. It's an invocation-focused request for what _should be done_.
 
