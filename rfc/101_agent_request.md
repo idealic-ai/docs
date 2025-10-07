@@ -4,6 +4,7 @@
 >
 > — [Glossary](./000_glossary.md)
 
-This document describes the **Request Protocol**, which defines the fundamental unit of interaction with an LLM.
+> [!WARNING]
+> This RFC is currently a placeholder and will be expanded in the future.
 
-_This RFC is currently a placeholder and will be expanded in the future._
+This document describes the **Request Protocol**, which defines the fundamental unit of interaction with an LLM.

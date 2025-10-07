@@ -37,7 +37,7 @@ async function getChaptersForDocument(document: string): Promise<Chapter[]> {
           'utf-8'
         );
 
-        const titleMatch = markdownContent.match(/^(##|###) (.*)/m);
+        const titleMatch = markdownContent.match(/^(#|##) (.*)/m);
         let chapterName: string;
         if (document === 'rfc' && titleMatch) {
           chapterName = titleMatch[2].replace(/Part \w+: /i, '').trim();

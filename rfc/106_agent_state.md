@@ -8,7 +8,7 @@
 >
 > — [Glossary](./000_glossary.md)
 
-This document describes the **State Protocol**, a system for managing persistent state within an agent.
-
 > [!WARNING]
-> _This RFC is currently a placeholder and will be expanded in the future._
+> This RFC is currently a placeholder and will be expanded in the future.
+
+This document describes the **State Protocol**, a system for managing persistent state within an agent.

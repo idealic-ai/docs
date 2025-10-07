@@ -11,6 +11,6 @@
 > — [Glossary](./000_glossary.md)
 
 > [!WARNING]
-> This RFC is currently a placeholder and will be expanded in the future. It outlines the foundational concepts of Plans and Plots as a higher-level abstraction built upon the State and Call systems.\_
+> This RFC is currently a placeholder and will be expanded in the future. It outlines the foundational concepts of Plans and Plots as a higher-level abstraction built upon the State and Call systems.
 
 This document describes the **Plan Protocol**, a system for creating and executing complex, multi-step workflows as a graph of `Tool Calls`.
