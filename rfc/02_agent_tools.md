@@ -51,14 +51,14 @@ This separation enables tools to exist without implementations (for LLM reasonin
 
 ### Tool Schema Meta Fields
 
-Tools use meta fields (prefixed with underscore) to define system-level properties:
+Tool schemas use meta fields (prefixed with underscore) to define system-level properties:
 
 - **\_tool**: Unique identifier for the tool (required)
-- **\_activity**: Execution mode specification (auto-determined or explicit)
-- **\_output**: Expected output structure (required)
-- **\_reasoningForCall**: Agent's explanation for why this Call was created (optional)
+- **\_activity**: Execution mode specification (auto-determined if not specified)
+- **\_output**: Expected output structure (made nullable by system)
+- **\_reasoningForCall**: Agent's explanation for why this Call was created (added by system)
 
-These meta fields distinguish system-level concerns from user-defined parameters. Any field without an underscore prefix is considered a tool parameter. Meta fields always appear first in the schema composition order, providing consistent structure for LLM understanding.
+Users define these meta fields in their tool definitions, and the Tool System enhances them during schema composition: resolving `_activity` if not specified, making `_output` nullable, and adding `_reasoningForCall`. Any field without an underscore prefix is considered a tool parameter. Meta fields always appear first in the schema composition order, providing consistent structure for LLM understanding.
 
 ### System Boundaries
 
