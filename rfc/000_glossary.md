@@ -1,4 +1,4 @@
-# 000: Glossary of Terms
+# Glossary of Terms
 
 This document provides definitions for the key concepts used in the Idea Protocol and its related systems.
 

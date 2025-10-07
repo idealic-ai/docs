@@ -17,8 +17,6 @@ For details on how `Ideas` become executable services, see [RFC 10: Protocol: Id
 
 The architecture is built on a radical principle: **the content is the protocol.** The system's entire grammar consists of a single unit: a self-contained "triplet" called the **Idea**. This structure enables true ownership and portability; because there is no hidden state, you are never locked in.
 
-> Sidenote: 1ab
-
 - **Context:** All the instructions, source material, and references used to generate the solution.
 - > Sidenote:
   >
