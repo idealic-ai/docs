@@ -26,7 +26,7 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
           return (
             <div key={doc}>
               <strong>
-                <a href={`/${doc}/`}>
+                <a href={`/docs/${doc}/`}>
                   {doc == 'rfc' ? 'RFCs' : doc.charAt(0).toUpperCase() + doc.slice(1)}
                 </a>
               </strong>
@@ -35,7 +35,7 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
                   {': '}
                   {chapters.map((chapter: Chapter, index: number) => (
                     <span key={chapter.id}>
-                      <a href={chapter.url}>{chapter.name}</a>
+                      <a href={'/docs' + chapter.url}>{chapter.name}</a>
                       {index < chapters.length - 1 && ' | '}
                     </span>
                   ))}

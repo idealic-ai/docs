@@ -11,6 +11,5 @@ export async function onBeforePrerenderStart() {
     }
   }
 
-  console.log(urls);
   return urls;
 }
