@@ -21,13 +21,12 @@ When an agent fills specific parameters for a Tool, it creates a **Call** - an i
 
 ## When to Use the Tool System
 
-The Tool System is particularly valuable when you need:
+Use the Tool System when you need agents to:
 
-- **Multiple Implementations**: Different search engines (Google, Bing, local) for the same search tool
-- **Mixed Execution**: Some tools use LLM reasoning, others use explicit logic
-- **Runtime Flexibility**: Swap implementations without code changes
-- **Testing Isolation**: Mock external dependencies easily
-- **Progressive Enhancement**: Start simple, add complexity gradually
+- **Select actions dynamically** based on context and situation
+- **Choose between multiple capabilities** to accomplish a goal
+- **Execute different implementations** of the same capability (e.g., different search engines)
+- **Mix LLM reasoning with explicit logic** in their decision-making process
 
 ## The Tool System Architecture
 
