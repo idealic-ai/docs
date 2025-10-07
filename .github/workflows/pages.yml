@@ -33,7 +33,7 @@ jobs:
       # Upload the folder you want to publish (change 'dist' if needed)
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: dist/client
 
   deploy:
     needs: build

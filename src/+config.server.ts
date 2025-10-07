@@ -15,7 +15,7 @@ export default {
 
   extends: vikeReact,
 
-  ssr: false,
+  ssr: true,
   trailingSlash: true,
 
   // See https://vike.dev/prerender

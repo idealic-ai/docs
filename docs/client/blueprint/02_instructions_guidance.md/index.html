@@ -14,7 +14,159 @@
       </head>
       <body>
         
-        <div id="root"></div>
+        <div id="root"><div><nav><div><strong><a href="/docs/manifesto/">Manifesto</a></strong>: <span><a href="/docs/manifesto/01_call.md">Call</a> | </span><span><a href="/docs/manifesto/02_inner_journey.md">Inner Journey</a> | </span><span><a href="/docs/manifesto/03_outer_work.md">Outer Work</a></span></div><div><strong><a href="/docs/rfc/">RFCs</a></strong></div><div><strong><a href="/docs/blueprint/">Blueprint</a></strong></div></nav><main><article><section><h1>Chapter 2.2: Instruction Guidance</h1>
+<p>This document explains the key concepts and mechanisms behind the Instruction system demonstrated in the examples. It covers how context switches are handled, how Instructions can be composed like macros, and how data flows between steps.</p>
+<h2>Context Switching with Execution Environments</h2>
+<h3>Understanding Context Suffixes</h3>
+<p>The Instruction system uses naming conventions to signal which execution environment should handle a particular step:</p>
+<ul>
+<li><strong>Base name (e.g., <code>IdentifyParticipants</code>)</strong>: Executed in the LLM context by default</li>
+<li><strong><code>_Activity</code> suffix (e.g., <code>FetchAvailability_Activity</code>)</strong>: Executed on the server</li>
+<li><strong><code>_User</code> suffix (e.g., <code>ConfirmInvitation_User</code>)</strong>: Requires user interaction</li>
+</ul>
+<p>These suffixes provide clear visual signals in the code about where execution will happen and help the system route operations to the appropriate environment.</p>
+<pre><code class="language-ts">// LLM operation (default)
+const participants = IdentifyParticipants(prompt);
+
+// LLM operation to prepare parameters
+const availabilityParams = FetchAvailability(participants);
+
+// Server operation
+const availabilityData = FetchAvailability_Activity(availabilityParams);
+
+// User interaction
+const approval = ConfirmInvitation_User(invitation);
+</code></pre>
+<h3>Context Containers</h3>
+<p>In the flattened representation, we explicitly group operations by their execution context:</p>
+<pre><code class="language-ts">Process(
+  // LLM operations
+  LLM_Context({
+    participants: IdentifyParticipants(prompt),
+    availabilityParams: FetchAvailability({ participants }),
+  }),
+
+  // Server operations
+  Server_Context({
+    availabilityData: FetchAvailability_Activity({ availabilityParams }),
+  })
+
+  // More contexts...
+);
+</code></pre>
+<p>This structure creates a clear separation of concerns, ensuring that operations run in their appropriate environments while maintaining data flow between them.</p>
+<h2>Instruction Composition and Macros</h2>
+<p>Instructions can be composed like mixins, with one Instruction wrapping or enhancing another. This is accomplished through JSON Schema composition.</p>
+<h3>Schema Merging</h3>
+<p>When Instructions are composed, their schemas are merged following JSON Schema&#39;s <code>allOf</code> semantics. This preserves the structure and requirements of both schemas while combining them into a single, coherent interface.</p>
+<p>The key insight is that JSON Schema preserves property order, which enables mixin-like behavior:</p>
+<pre><code class="language-json">{
+  &quot;properties&quot;: {
+    &quot;_considerations&quot;: { &quot;type&quot;: &quot;string&quot; },
+    &quot;default&quot;: true, // This is a placeholder that gets replaced
+    &quot;_feedback&quot;: { &quot;type&quot;: &quot;string&quot; }
+  }
+}
+</code></pre>
+<p>When this schema composes with another, the <code>default</code> property acts as a slot that gets replaced by the other schema&#39;s properties. This creates a wrapper pattern where the mixin can inject properties before and after the wrapped schema&#39;s properties.</p>
+<h3>Creating Mixin Instructions</h3>
+<p>The <code>Introspect_Mixin</code> demonstrates this pattern:</p>
+<pre><code class="language-json">{
+  &quot;title&quot;: &quot;Introspection_Mixin&quot;,
+  &quot;properties&quot;: {
+    &quot;_considerations&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;description&quot;: &quot;Before performing the action, analyze the request and outline key considerations.&quot;
+    },
+    &quot;default&quot;: true, // Placeholder for the wrapped schema
+    &quot;_feedback&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;description&quot;: &quot;After completing the action, provide feedback about the decisions made.&quot;
+    }
+  }
+}
+</code></pre>
+<p>When applied to another Instruction, it injects cognitive steps before and after the main task:</p>
+<pre><code class="language-ts">Introspect_Mixin({
+  default: {
+    identifyParticipants: IdentifyParticipants(prompt),
+    fetchAvailability: FetchAvailability({ participants }),
+  },
+});
+</code></pre>
+<p>This composition creates a new schema that guides the LLM to:</p>
+<ol>
+<li>Think through considerations before acting</li>
+<li>Perform the main operations</li>
+<li>Reflect on the results afterward</li>
+</ol>
+<h2>Data Flow Between Instructions</h2>
+<h3>Implicit Parameter Passing</h3>
+<p>Instructions can implicitly pass data between steps through their descriptions and the LLM&#39;s understanding of context. This is shown in the examples where participant information flows from <code>identifyParticipants</code> to <code>fetchAvailability</code>.</p>
+<pre><code class="language-ts">fetchAvailability: {
+  organizerEmail: &#39;alice@example.com&#39;, // Reused from identifyParticipants
+  attendeeEmail: &#39;bob@example.com&#39;,    // Reused from identifyParticipants
+  timeRange: { /* ... */ }
+}
+</code></pre>
+<p>The description in the schema explicitly instructs this data reuse. The actual schema structure uses <code>allOf</code> to combine the base schema reference with additional instructions:</p>
+<pre><code class="language-json">&quot;fetchAvailability&quot;: {
+  &quot;allOf&quot;: [
+    { &quot;$ref&quot;: &quot;aug:processes/schedule-meeting:1#fetchAvailability&quot; },
+    { &quot;description&quot;: &quot;Retrieves calendar availability data for identified participants, reusing participant emails from the identification step to check their schedules&quot; }
+  ]
+}
+</code></pre>
+<p>This pattern allows us to:</p>
+<ol>
+<li>Reference the base functionality and structure from the process definition</li>
+<li>Extend it with contextual instructions specific to this usage</li>
+<li>Guide the LLM on how to reuse data between steps without requiring explicit parameter declarations</li>
+</ol>
+<h3>Explicit References</h3>
+<p>For more complex dependencies, Instructions can use explicit references to declare which previous steps they depend on:</p>
+<pre><code class="language-json">&quot;findCommonSlot&quot;: {
+  &quot;references&quot;: [
+    &quot;LLM_1.identifyParticipants&quot;,
+    &quot;SERVER_1.fetchAvailabilityOutput&quot;
+  ]
+}
+</code></pre>
+<p>These references serve multiple purposes:</p>
+<ol>
+<li>They document data dependencies clearly</li>
+<li>They guide the LLM in understanding which data to use</li>
+<li>They help the system ensure that referenced data is available when needed</li>
+</ol>
+<h2>Process Instantiation and Execution</h2>
+<h3>Process Prototypes</h3>
+<p>Processes are defined as &quot;vibes&quot; - reusable prototypes that can be instantiated:</p>
+<pre><code>aug:processes/schedule-meeting:1
+</code></pre>
+<p>These prototypes define the complete structure of a process, including all steps, contexts, and data dependencies.</p>
+<h3>Process Initiation</h3>
+<p>A process is instantiated when a vessel completes its first step:</p>
+<pre><code class="language-ts">StartProcess({
+  name: &#39;ScheduleMeeting&#39;,
+  LLM_1: {
+    // First step data...
+  },
+});
+</code></pre>
+<p>This creates a new instance of the process that will carry state through its lifecycle.</p>
+<h3>Process Continuation</h3>
+<p>After initiation, the process continues automatically through its defined steps, with each step having access to the data it needs from previous steps. The vessel carries the process state, ensuring continuity across context switches.</p>
+<h2>Best Practices for Instruction Design</h2>
+<ol>
+<li><strong>Use clear naming conventions</strong> for context switching (base, _Activity, _User)</li>
+<li><strong>Design modular Instructions</strong> that can be composed and reused</li>
+<li><strong>Use descriptions to guide data flow</strong> between steps</li>
+<li><strong>Explicitly document references</strong> for complex dependencies</li>
+<li><strong>Create macro Instructions</strong> for common patterns like introspection, validation, or error handling</li>
+<li><strong>Start with the minimal entry point</strong> needed to initiate a process</li>
+</ol>
+<p>By following these practices, you can create Instructions that are both powerful and flexible, enabling complex workflows that span multiple execution environments while maintaining clear data flow and dependencies.</p>
+</section></article></main></div></div>
         
         <script id="vike_pageContext" type="application/json">{"_urlRewrite":null,"pageId":"\\/src\\/@document\\/@chapter","routeParams":{"document":"blueprint","chapterSlug":"02_instructions_guidance"},"data":{"sitemap":{"manifesto":[{"id":"Call","number":1,"numberStr":"01","name":"Call","slug":"01_call","path":"01_call.md","url":"\\/manifesto\\/01_call.md"},{"id":"Inner Journey","number":2,"numberStr":"02","name":"Inner Journey","slug":"02_inner_journey","path":"02_inner_journey.md","url":"\\/manifesto\\/02_inner_journey.md"},{"id":"Outer Work","number":3,"numberStr":"03","name":"Outer Work","slug":"03_outer_work","path":"03_outer_work.md","url":"\\/manifesto\\/03_outer_work.md"}],"rfc":[{"id":"00_glossary","number":0,"numberStr":"00","name":"00_glossary","slug":"00_glossary","path":"00_glossary.md","url":"\\/rfc\\/00_glossary.md"},{"id":"The Mechanics of a Living Web","number":1,"numberStr":"01","name":"The Mechanics of a Living Web","slug":"01_protocol_ideas","path":"01_protocol_ideas.md","url":"\\/rfc\\/01_protocol_ideas.md"},{"id":"The Idea-to-Call Pipeline","number":2,"numberStr":"02","name":"The Idea-to-Call Pipeline","slug":"02_agent_calls","path":"02_agent_calls.md","url":"\\/rfc\\/02_agent_calls.md"},{"id":"Combining Scope and Method","number":3,"numberStr":"03","name":"Combining Scope and Method","slug":"03_agent_imports","path":"03_agent_imports.md","url":"\\/rfc\\/03_agent_imports.md"},{"id":"1. Foundational Requirement: The State System","number":4,"numberStr":"04","name":"1. Foundational Requirement: The State System","slug":"04_agent_instancing","path":"04_agent_instancing.md","url":"\\/rfc\\/04_agent_instancing.md"},{"id":"From Poker-Specific to Protocol-Driven","number":5,"numberStr":"05","name":"From Poker-Specific to Protocol-Driven","slug":"05_system_reactor","path":"05_system_reactor.md","url":"\\/rfc\\/05_system_reactor.md"},{"id":"The `Input` Message Type","number":6,"numberStr":"06","name":"The `Input` Message Type","slug":"06_agent_input","path":"06_agent_input.md","url":"\\/rfc\\/06_agent_input.md"}],"blueprint":[{"id":"Core Components","number":0,"numberStr":"00","name":"Core Components","slug":"00_architecture","path":"00_architecture.md","url":"\\/blueprint\\/00_architecture.md"},{"id":"B","number":0,"numberStr":"00","name":"B","slug":"00_glossary","path":"00_glossary.md","url":"\\/blueprint\\/00_glossary.md"},{"id":"New Ideas in This Chapter","number":0,"numberStr":"00","name":"New Ideas in This Chapter","slug":"00_references","path":"00_references.md","url":"\\/blueprint\\/00_references.md"},{"id":"New Ideas in This Chapter","number":1,"numberStr":"01","name":"New Ideas in This Chapter","slug":"01_vibes","path":"01_vibes.md","url":"\\/blueprint\\/01_vibes.md"},{"id":"Core Tables","number":1,"numberStr":"01","name":"Core Tables","slug":"01_vibes_database","path":"01_vibes_database.md","url":"\\/blueprint\\/01_vibes_database.md"},{"id":"Examples of Vibe Structures","number":1,"numberStr":"01","name":"Examples of Vibe Structures","slug":"01_vibes_examples","path":"01_vibes_examples.md","url":"\\/blueprint\\/01_vibes_examples.md"},{"id":"New Ideas in This Chapter","number":2,"numberStr":"02","name":"New Ideas in This Chapter","slug":"02_instructions","path":"02_instructions.md","url":"\\/blueprint\\/02_instructions.md"},{"id":"Example 1: Process Scheduling","number":2,"numberStr":"02","name":"Example 1: Process Scheduling","slug":"02_instructions_examples","path":"02_instructions_examples.md","url":"\\/blueprint\\/02_instructions_examples.md"},{"id":"Context Switching with Execution Environments","number":2,"numberStr":"02","name":"Context Switching with Execution Environments","slug":"02_instructions_guidance","path":"02_instructions_guidance.md","url":"\\/blueprint\\/02_instructions_guidance.md"},{"id":"New Ideas in This Chapter","number":4,"numberStr":"04","name":"New Ideas in This Chapter","slug":"04_refinements","path":"04_refinements.md","url":"\\/blueprint\\/04_refinements.md"},{"id":"Detailed Example: Evolving Record Vibe Schemas","number":4,"numberStr":"04","name":"Detailed Example: Evolving Record Vibe Schemas","slug":"04_refinements_examples","path":"04_refinements_examples.md","url":"\\/blueprint\\/04_refinements_examples.md"},{"id":"New Ideas in This Chapter","number":5,"numberStr":"05","name":"New Ideas in This Chapter","slug":"05_exchange","path":"05_exchange.md","url":"\\/blueprint\\/05_exchange.md"},{"id":"New Ideas in This Chapter","number":6,"numberStr":"06","name":"New Ideas in This Chapter","slug":"06_budgets","path":"06_budgets.md","url":"\\/blueprint\\/06_budgets.md"},{"id":"Self-Sustaining Startup Ecosystem","number":6,"numberStr":"06","name":"Self-Sustaining Startup Ecosystem","slug":"06_budgets_examples","path":"06_budgets_examples.md","url":"\\/blueprint\\/06_budgets_examples.md"},{"id":"New Ideas in This Chapter","number":6,"numberStr":"06","name":"New Ideas in This Chapter","slug":"06_budgets_stats","path":"06_budgets_stats.md","url":"\\/blueprint\\/06_budgets_stats.md"},{"id":"New Ideas in This Chapter","number":7,"numberStr":"07","name":"New Ideas in This Chapter","slug":"07_processes","path":"07_processes.md","url":"\\/blueprint\\/07_processes.md"},{"id":"New Ideas in This Chapter","number":8,"numberStr":"08","name":"New Ideas in This Chapter","slug":"08_branches","path":"08_branches.md","url":"\\/blueprint\\/08_branches.md"},{"id":"Navigating the Determinism Landscape","number":12,"numberStr":"12","name":"Navigating the Determinism Landscape","slug":"12_determinism","path":"12_determinism.md","url":"\\/blueprint\\/12_determinism.md"}]},"content":"\u003ch1>Chapter 2.2: Instruction Guidance\u003c\\/h1>\n\u003cp>This document explains the key concepts and mechanisms behind the Instruction system demonstrated in the examples. It covers how context switches are handled, how Instructions can be composed like macros, and how data flows between steps.\u003c\\/p>\n\u003ch2>Context Switching with Execution Environments\u003c\\/h2>\n\u003ch3>Understanding Context Suffixes\u003c\\/h3>\n\u003cp>The Instruction system uses naming conventions to signal which execution environment should handle a particular step:\u003c\\/p>\n\u003cul>\n\u003cli>\u003cstrong>Base name (e.g., \u003ccode>IdentifyParticipants\u003c\\/code>)\u003c\\/strong>: Executed in the LLM context by default\u003c\\/li>\n\u003cli>\u003cstrong>\u003ccode>_Activity\u003c\\/code> suffix (e.g., \u003ccode>FetchAvailability_Activity\u003c\\/code>)\u003c\\/strong>: Executed on the server\u003c\\/li>\n\u003cli>\u003cstrong>\u003ccode>_User\u003c\\/code> suffix (e.g., \u003ccode>ConfirmInvitation_User\u003c\\/code>)\u003c\\/strong>: Requires user interaction\u003c\\/li>\n\u003c\\/ul>\n\u003cp>These suffixes provide clear visual signals in the code about where execution will happen and help the system route operations to the appropriate environment.\u003c\\/p>\n\u003cpre>\u003ccode class=\"language-ts\">\\/\\/ LLM operation (default)\nconst participants = IdentifyParticipants(prompt);\n\n\\/\\/ LLM operation to prepare parameters\nconst availabilityParams = FetchAvailability(participants);\n\n\\/\\/ Server operation\nconst availabilityData = FetchAvailability_Activity(availabilityParams);\n\n\\/\\/ User interaction\nconst approval = ConfirmInvitation_User(invitation);\n\u003c\\/code>\u003c\\/pre>\n\u003ch3>Context Containers\u003c\\/h3>\n\u003cp>In the flattened representation, we explicitly group operations by their execution context:\u003c\\/p>\n\u003cpre>\u003ccode class=\"language-ts\">Process(\n  \\/\\/ LLM operations\n  LLM_Context({\n    participants: IdentifyParticipants(prompt),\n    availabilityParams: FetchAvailability({ participants }),\n  }),\n\n  \\/\\/ Server operations\n  Server_Context({\n    availabilityData: FetchAvailability_Activity({ availabilityParams }),\n  })\n\n  \\/\\/ More contexts...\n);\n\u003c\\/code>\u003c\\/pre>\n\u003cp>This structure creates a clear separation of concerns, ensuring that operations run in their appropriate environments while maintaining data flow between them.\u003c\\/p>\n\u003ch2>Instruction Composition and Macros\u003c\\/h2>\n\u003cp>Instructions can be composed like mixins, with one Instruction wrapping or enhancing another. This is accomplished through JSON Schema composition.\u003c\\/p>\n\u003ch3>Schema Merging\u003c\\/h3>\n\u003cp>When Instructions are composed, their schemas are merged following JSON Schema&#39;s \u003ccode>allOf\u003c\\/code> semantics. This preserves the structure and requirements of both schemas while combining them into a single, coherent interface.\u003c\\/p>\n\u003cp>The key insight is that JSON Schema preserves property order, which enables mixin-like behavior:\u003c\\/p>\n\u003cpre>\u003ccode class=\"language-json\">{\n  &quot;properties&quot;: {\n    &quot;_considerations&quot;: { &quot;type&quot;: &quot;string&quot; },\n    &quot;default&quot;: true, \\/\\/ This is a placeholder that gets replaced\n    &quot;_feedback&quot;: { &quot;type&quot;: &quot;string&quot; }\n  }\n}\n\u003c\\/code>\u003c\\/pre>\n\u003cp>When this schema composes with another, the \u003ccode>default\u003c\\/code> property acts as a slot that gets replaced by the other schema&#39;s properties. This creates a wrapper pattern where the mixin can inject properties before and after the wrapped schema&#39;s properties.\u003c\\/p>\n\u003ch3>Creating Mixin Instructions\u003c\\/h3>\n\u003cp>The \u003ccode>Introspect_Mixin\u003c\\/code> demonstrates this pattern:\u003c\\/p>\n\u003cpre>\u003ccode class=\"language-json\">{\n  &quot;title&quot;: &quot;Introspection_Mixin&quot;,\n  &quot;properties&quot;: {\n    &quot;_considerations&quot;: {\n      &quot;type&quot;: &quot;string&quot;,\n      &quot;description&quot;: &quot;Before performing the action, analyze the request and outline key considerations.&quot;\n    },\n    &quot;default&quot;: true, \\/\\/ Placeholder for the wrapped schema\n    &quot;_feedback&quot;: {\n      &quot;type&quot;: &quot;string&quot;,\n      &quot;description&quot;: &quot;After completing the action, provide feedback about the decisions made.&quot;\n    }\n  }\n}\n\u003c\\/code>\u003c\\/pre>\n\u003cp>When applied to another Instruction, it injects cognitive steps before and after the main task:\u003c\\/p>\n\u003cpre>\u003ccode class=\"language-ts\">Introspect_Mixin({\n  default: {\n    identifyParticipants: IdentifyParticipants(prompt),\n    fetchAvailability: FetchAvailability({ participants }),\n  },\n});\n\u003c\\/code>\u003c\\/pre>\n\u003cp>This composition creates a new schema that guides the LLM to:\u003c\\/p>\n\u003col>\n\u003cli>Think through considerations before acting\u003c\\/li>\n\u003cli>Perform the main operations\u003c\\/li>\n\u003cli>Reflect on the results afterward\u003c\\/li>\n\u003c\\/ol>\n\u003ch2>Data Flow Between Instructions\u003c\\/h2>\n\u003ch3>Implicit Parameter Passing\u003c\\/h3>\n\u003cp>Instructions can implicitly pass data between steps through their descriptions and the LLM&#39;s understanding of context. This is shown in the examples where participant information flows from \u003ccode>identifyParticipants\u003c\\/code> to \u003ccode>fetchAvailability\u003c\\/code>.\u003c\\/p>\n\u003cpre>\u003ccode class=\"language-ts\">fetchAvailability: {\n  organizerEmail: &#39;alice@example.com&#39;, \\/\\/ Reused from identifyParticipants\n  attendeeEmail: &#39;bob@example.com&#39;,    \\/\\/ Reused from identifyParticipants\n  timeRange: { \\/* ... *\\/ }\n}\n\u003c\\/code>\u003c\\/pre>\n\u003cp>The description in the schema explicitly instructs this data reuse. The actual schema structure uses \u003ccode>allOf\u003c\\/code> to combine the base schema reference with additional instructions:\u003c\\/p>\n\u003cpre>\u003ccode class=\"language-json\">&quot;fetchAvailability&quot;: {\n  &quot;allOf&quot;: [\n    { &quot;$ref&quot;: &quot;aug:processes\\/schedule-meeting:1#fetchAvailability&quot; },\n    { &quot;description&quot;: &quot;Retrieves calendar availability data for identified participants, reusing participant emails from the identification step to check their schedules&quot; }\n  ]\n}\n\u003c\\/code>\u003c\\/pre>\n\u003cp>This pattern allows us to:\u003c\\/p>\n\u003col>\n\u003cli>Reference the base functionality and structure from the process definition\u003c\\/li>\n\u003cli>Extend it with contextual instructions specific to this usage\u003c\\/li>\n\u003cli>Guide the LLM on how to reuse data between steps without requiring explicit parameter declarations\u003c\\/li>\n\u003c\\/ol>\n\u003ch3>Explicit References\u003c\\/h3>\n\u003cp>For more complex dependencies, Instructions can use explicit references to declare which previous steps they depend on:\u003c\\/p>\n\u003cpre>\u003ccode class=\"language-json\">&quot;findCommonSlot&quot;: {\n  &quot;references&quot;: [\n    &quot;LLM_1.identifyParticipants&quot;,\n    &quot;SERVER_1.fetchAvailabilityOutput&quot;\n  ]\n}\n\u003c\\/code>\u003c\\/pre>\n\u003cp>These references serve multiple purposes:\u003c\\/p>\n\u003col>\n\u003cli>They document data dependencies clearly\u003c\\/li>\n\u003cli>They guide the LLM in understanding which data to use\u003c\\/li>\n\u003cli>They help the system ensure that referenced data is available when needed\u003c\\/li>\n\u003c\\/ol>\n\u003ch2>Process Instantiation and Execution\u003c\\/h2>\n\u003ch3>Process Prototypes\u003c\\/h3>\n\u003cp>Processes are defined as &quot;vibes&quot; - reusable prototypes that can be instantiated:\u003c\\/p>\n\u003cpre>\u003ccode>aug:processes\\/schedule-meeting:1\n\u003c\\/code>\u003c\\/pre>\n\u003cp>These prototypes define the complete structure of a process, including all steps, contexts, and data dependencies.\u003c\\/p>\n\u003ch3>Process Initiation\u003c\\/h3>\n\u003cp>A process is instantiated when a vessel completes its first step:\u003c\\/p>\n\u003cpre>\u003ccode class=\"language-ts\">StartProcess({\n  name: &#39;ScheduleMeeting&#39;,\n  LLM_1: {\n    \\/\\/ First step data...\n  },\n});\n\u003c\\/code>\u003c\\/pre>\n\u003cp>This creates a new instance of the process that will carry state through its lifecycle.\u003c\\/p>\n\u003ch3>Process Continuation\u003c\\/h3>\n\u003cp>After initiation, the process continues automatically through its defined steps, with each step having access to the data it needs from previous steps. The vessel carries the process state, ensuring continuity across context switches.\u003c\\/p>\n\u003ch2>Best Practices for Instruction Design\u003c\\/h2>\n\u003col>\n\u003cli>\u003cstrong>Use clear naming conventions\u003c\\/strong> for context switching (base, _Activity, _User)\u003c\\/li>\n\u003cli>\u003cstrong>Design modular Instructions\u003c\\/strong> that can be composed and reused\u003c\\/li>\n\u003cli>\u003cstrong>Use descriptions to guide data flow\u003c\\/strong> between steps\u003c\\/li>\n\u003cli>\u003cstrong>Explicitly document references\u003c\\/strong> for complex dependencies\u003c\\/li>\n\u003cli>\u003cstrong>Create macro Instructions\u003c\\/strong> for common patterns like introspection, validation, or error handling\u003c\\/li>\n\u003cli>\u003cstrong>Start with the minimal entry point\u003c\\/strong> needed to initiate a process\u003c\\/li>\n\u003c\\/ol>\n\u003cp>By following these practices, you can create Instructions that are both powerful and flexible, enabling complex workflows that span multiple execution environments while maintaining clear data flow and dependencies.\u003c\\/p>\n","currentChapter":"Context Switching with Execution Environments"}}</script>
         <script id="vike_globalContext" type="application/json">{}</script>

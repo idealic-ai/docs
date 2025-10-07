@@ -14,7 +14,548 @@
       </head>
       <body>
         
-        <div id="root"></div>
+        <div id="root"><div><nav><div><strong><a href="/docs/manifesto/">Manifesto</a></strong>: <span><a href="/docs/manifesto/01_call.md">Call</a> | </span><span><a href="/docs/manifesto/02_inner_journey.md">Inner Journey</a> | </span><span><a href="/docs/manifesto/03_outer_work.md">Outer Work</a></span></div><div><strong><a href="/docs/rfc/">RFCs</a></strong></div><div><strong><a href="/docs/blueprint/">Blueprint</a></strong></div></nav><main><article><section><h3>Examples of Vibe Structures</h3>
+<p>This document provides concrete examples to illustrate the fundamental structure of the different Vibe types discussed in &quot;Chapter 1: Vibes &amp; Their Manifestations.&quot; Each example focuses on showcasing a Vibe as a static record, comprising its <code>input</code>, its <code>schema</code> field (which contains the Vibe&#39;s own structural blueprint or operational definition), and its <code>solution</code> (the content, outcome, or configuration that conforms to that <code>schema</code> definition).</p>
+<p>How these Vibes are created, evolve, or interact dynamically (e.g., through the <code>refine</code> primitive) is detailed in later chapters. The purpose here is to clarify the distinct nature and typical content of each Vibe type&#39;s core components.</p>
+<h3>Understanding Schema References (<code>$ref</code>)</h3>
+<p>Vibe schemas often reference other schemas using the <code>$ref</code> keyword. These references follow a URI-like format, typically starting with <code>aug:</code>.</p>
+<ul>
+<li><strong>Absolute vs. Local References:</strong><ul>
+<li>An <strong>absolute reference</strong> to a globally shared schema starts with a slash directly after the scheme, e.g., <code>aug:/schemas/SharedSchemaName</code>. These are for common, system-wide definitions.</li>
+<li>A <strong>local reference</strong> (without a leading slash after the scheme, e.g., <code>aug:schemas/UserSpecificSchema</code>) is considered context-dependent (e.g., user-specific, or relative to the current Vibe&#39;s namespace). For the examples in this document, most shared base schemas will use absolute paths.</li>
+</ul>
+</li>
+<li><strong>Evergreen vs. Versioned References:</strong><ul>
+<li>To refer to the latest version of a schema (an <strong>evergreen reference</strong>), omit the version number at the end, e.g., <code>aug:/schemas/BaseVibe</code>. This is typical for extending base templates, ensuring they always use the most up-to-date definition of the base.</li>
+<li>To lock into a specific version of a schema, include the version number, e.g., <code>aug:/schemas/SpecificDefinition:2</code>. This is useful for referencing specific tools or instruction sets where a particular version is critical.</li>
+</ul>
+</li>
+</ul>
+<p>Conceptually similar Vibes (e.g., all &quot;UserProfile&quot; Record Vibes, or all Vibes defining a &quot;StandardProcess&quot;) would typically share identical or very similar <code>schema</code> definitions within their respective <code>schema</code> fields, ensuring structural consistency for Vibes of the same kind.</p>
+<hr>
+<h3>1. Record Vibe Example: User Profile</h3>
+<p><strong>Scenario:</strong> A Vibe representing a user&#39;s profile information. Record Vibes are primarily used for structured data.</p>
+<p><strong>Illustrative <code>UserProfileRecordVibe</code> JSON Structure (e.g., <code>aug:users/user-789?1</code>):</strong></p>
+<pre><code class="language-json">{
+  &quot;input&quot;: [
+    {
+      &quot;type&quot;: &quot;UserProfileContext&quot;,
+      &quot;$id&quot;: &quot;aug:user-789&quot;,
+      &quot;query&quot;: &quot;Initialize or update the user profile. If preferences are not fully known or provided, attempt to infer sensible defaults or suggest options.&quot;,
+      &quot;state&quot;: {
+        &quot;displayName&quot;: &quot;Jane Doe&quot;,
+        &quot;email&quot;: &quot;jane.doe@example.com&quot;
+        // &#39;preferences&#39; field is deliberately omitted from state to allow LLM to infer or suggest.
+      }
+    }
+  ],
+  &quot;schema&quot;: {
+    &quot;title&quot;: &quot;User Profile Record&quot;,
+    &quot;description&quot;: &quot;Defines the complete structure for a user&#39;s profile information, including identity, metadata, and user-specific details. Composed from base Vibe and RecordVibe schemas using evergreen references.&quot;,
+    &quot;allOf&quot;: [
+      {
+        &quot;$ref&quot;: &quot;aug:/schemas/Vibe&quot;,
+        &quot;$comment&quot;: &quot;Base Vibe structure, referenced without a version to always use the latest. Provides properties like $id, $type, and $revision.&quot;
+      },
+      {
+        &quot;$ref&quot;: &quot;aug:/schemas/RecordVibe&quot;,
+        &quot;$comment&quot;: &quot;Base RecordVibe structure, referenced without a version. Provides common record properties like id, createdAt, lastModified.&quot;
+      },
+      {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;title&quot;: &quot;Vessel Details&quot;,
+        &quot;description&quot;: &quot;Specific information and preferences associated with the user.&quot;,
+        &quot;properties&quot;: {
+          &quot;displayName&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;title&quot;: &quot;Display Name&quot;,
+            &quot;description&quot;: &quot;The name publicly shown for the user.&quot;
+          },
+          &quot;email&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;email&quot;,
+            &quot;title&quot;: &quot;Email Address&quot;,
+            &quot;description&quot;: &quot;The user&#39;s primary email address for communication and login.&quot;
+          },
+          &quot;preferences&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;title&quot;: &quot;User Preferences&quot;,
+            &quot;description&quot;: &quot;Settings and choices made by the user to customize their experience.&quot;,
+            &quot;properties&quot;: {
+              &quot;newsletter&quot;: {
+                &quot;type&quot;: &quot;boolean&quot;,
+                &quot;default&quot;: false,
+                &quot;title&quot;: &quot;Newsletter Subscription&quot;,
+                &quot;description&quot;: &quot;Indicates if the user wishes to receive newsletter updates.&quot;
+              },
+              &quot;theme&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;enum&quot;: [&quot;light&quot;, &quot;dark&quot;],
+                &quot;default&quot;: &quot;light&quot;,
+                &quot;title&quot;: &quot;Interface Theme&quot;,
+                &quot;description&quot;: &quot;The selected visual theme for the user interface (e.g., light or dark).&quot;
+              }
+            }
+          }
+          // id, createdAt, lastModified are inherited from RecordVibe layer
+          // $id, $revision, $type are inherited from Vibe layer
+        },
+        &quot;required&quot;: [&quot;displayName&quot;, &quot;email&quot;]
+      }
+    ]
+    // The effective &#39;required&#39; list would be the union of &#39;required&#39; from all layers:
+    // e.g., [&quot;$type&quot;, &quot;$id&quot;, &quot;$revision&quot;, &quot;createdAt&quot;, &quot;lastModified&quot;, &quot;designation&quot;, &quot;primaryCapability&quot;]
+  },
+  &quot;solution&quot;: {
+    &quot;$type&quot;: &quot;UserProfileRecordVibe&quot;, // from Vibe layer
+    &quot;$id&quot;: &quot;aug:vibes/user-profile-789&quot;, // from Vibe layer, this is the vibe&#39;s unique ID
+    &quot;$revision&quot;: 3, // from Vibe layer
+    &quot;id&quot;: &quot;user-789&quot;, // from RecordVibe layer, this is the actual user record ID
+    &quot;displayName&quot;: &quot;Jane Doe&quot;, // from User Details
+    &quot;email&quot;: &quot;jane.doe@example.com&quot;, // from User Details
+    &quot;preferences&quot;: {
+      // from User Details, potentially inferred/completed by LLM
+      &quot;newsletter&quot;: false,
+      &quot;theme&quot;: &quot;light&quot;
+    },
+    &quot;createdAt&quot;: &quot;2025-01-15T10:00:00Z&quot;, // from RecordVibe layer
+    &quot;lastModified&quot;: &quot;2025-03-10T12:05:00Z&quot; // from RecordVibe layer
+  }
+}
+</code></pre>
+<p><strong>Explanation:</strong></p>
+<ul>
+<li>The <code>input</code> is now an array of objects. The first object provides context (<code>$id</code>), a <code>query</code> for the LLM (replacing <code>directive</code>), and initial <code>state</code> (replacing <code>initialData</code>). The <code>query</code> suggests inferring missing <code>operationalParameters</code>.</li>
+<li>The <code>schema</code> field now has a top-level <code>allOf</code> array:<ul>
+<li>It <code>$ref</code>erences <code>aug:/schemas/Vibe</code> (providing $type).</li>
+<li>It <code>$ref</code>erences <code>aug:/schemas/RecordVibe</code> (providing $id, $revision, <code>createdAt</code>, <code>lastModified</code>).</li>
+<li>It includes an inline object defining vessel-specific details (<code>designation</code>, <code>primaryCapability</code>, <code>operationalParameters</code>, <code>capabilities</code>) with UI-friendly <code>title</code> and <code>description</code> fields.</li>
+</ul>
+</li>
+<li>The overall <code>title</code> and <code>description</code> for the composed <code>VesselProfileRecord</code> schema are at the top level of the <code>schema</code> object.</li>
+<li>Comments indicate which properties are expected from the referenced layers.</li>
+<li>The <code>solution</code> includes $type (from <code>Vibe</code>) and $id (from <code>RecordVibe</code>), and the <code>operationalParameters</code> in the solution might be the result of LLM inference if they were not in the input state.</li>
+</ul>
+<p>This structure makes the inheritance chain explicit and uses evergreen references. The <code>title</code> and <code>description</code> fields are aimed at being clear for both UIs and LLMs.</p>
+<p>The referenced base schemas (<code>aug:/schemas/Vibe</code> and <code>aug:/schemas/RecordVibe</code>) would be defined elsewhere. For example:</p>
+<p><strong>Hypothetical definition for <code>aug:/schemas/Vibe</code> (e.g., if its latest version is 1, it might be stored as <code>aug:/schemas/Vibe?1</code> but referenced as <code>aug:/schemas/Vibe</code> for evergreen use):</strong></p>
+<hr>
+<h3>2. Role Vibe Example: &quot;Investment Advisor&quot; Vessel</h3>
+<p><strong>Scenario:</strong> This Vibe illustrates an Investment Advisor vessel - a specific instance that processes queries. The <code>input</code> contains the query and any initial state (like specific configurations for this vessel, such as <code>specialization</code> or <code>clientContext</code>). The <code>schema</code> defines the structure of this vessel by extending RoleVibe and adding specific capabilities and outputs. The <code>solution</code> showcases the results produced by this vessel: based on the input query, some capabilities produce data, while others are <code>null</code> when not relevant to the specific request.</p>
+<p><strong>Illustrative <code>InvestmentAdvisorVesselVibe</code> JSON Structure (e.g., <code>aug:vessels/advisor-vessel-acme-001</code>):</strong></p>
+<pre><code class="language-json">{
+  &quot;input&quot;: [
+    {
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;text&quot;: &quot;You are financial assistant&quot;,
+      &quot;role&quot;: &quot;system&quot;
+    },
+    {
+      &quot;type&quot;: &quot;query&quot;,
+      &quot;query&quot;: &quot;Provide a quick market analysis of ACME Corp&#39;s quantum computing breakthrough impact.&quot;
+    },
+    {
+      &quot;type&quot;: &quot;state&quot;,
+      &quot;state&quot;: {
+        &quot;specialization&quot;: &quot;Technology Sector Analysis&quot;,
+        &quot;analysisDepth&quot;: &quot;quick&quot;
+      }
+    }
+  ],
+  &quot;schema&quot;: {
+    &quot;title&quot;: &quot;Investment Advisor Vessel&quot;,
+    &quot;description&quot;: &quot;Represents a vessel instance of the Investment Advisor Role. It inherits common properties from base schemas and defines the specific outputs pertinent to this vessel.&quot;,
+    &quot;allOf&quot;: [
+      {
+        &quot;$ref&quot;: &quot;aug:/schemas/Vibe&quot;,
+        &quot;$comment&quot;: &quot;Base Vibe structure. Provides the fundamental $id, $type, and $revision properties for this vessel Vibe.&quot;
+      },
+      {
+        &quot;$ref&quot;: &quot;aug:/schemas/RoleVibe&quot;,
+        &quot;$comment&quot;: &quot;Base RoleVibe structure. Provides common role properties like displayName, description, createdAt, lastModified. By extending this, we&#39;re defining this as a role-based Vibe.&quot;
+      },
+      {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;title&quot;: &quot;Vessel Output&quot;,
+        &quot;description&quot;: &quot;Defines the specific outputs resulting from this Investment Advisor vessel&#39;s processing.&quot;,
+        &quot;properties&quot;: {
+          &quot;specializationUsed&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;title&quot;: &quot;Active Specialization&quot;,
+            &quot;description&quot;: &quot;The area of focus that was active for this specific vessel.&quot;
+          },
+          &quot;analysisDepthUsed&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;enum&quot;: [&quot;quick&quot;, &quot;standard&quot;, &quot;comprehensive&quot;],
+            &quot;title&quot;: &quot;Analysis Depth&quot;,
+            &quot;description&quot;: &quot;The level of detail used in the analysis.&quot;
+          },
+          &quot;_IntroductionNarrative&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;markdown&quot;,
+            &quot;title&quot;: &quot;Report Introduction&quot;,
+            &quot;description&quot;: &quot;Opening narrative that introduces the analysis context and sets the stage.&quot;
+          },
+          &quot;MarketAnalysis&quot;: {
+            &quot;type&quot;: [&quot;object&quot;, &quot;null&quot;],
+            &quot;title&quot;: &quot;Market Analysis&quot;,
+            &quot;description&quot;: &quot;The market analysis findings. Null if not performed.&quot;,
+            &quot;properties&quot;: {
+              &quot;summary&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;title&quot;: &quot;Analysis Summary&quot;,
+                &quot;description&quot;: &quot;Main findings from the market analysis.&quot;
+              },
+              &quot;sentiment&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;enum&quot;: [&quot;very-negative&quot;, &quot;negative&quot;, &quot;neutral&quot;, &quot;positive&quot;, &quot;very-positive&quot;],
+                &quot;title&quot;: &quot;Market Sentiment&quot;,
+                &quot;description&quot;: &quot;Overall market sentiment assessment.&quot;
+              },
+              &quot;impactScore&quot;: {
+                &quot;type&quot;: &quot;number&quot;,
+                &quot;minimum&quot;: 0,
+                &quot;maximum&quot;: 10,
+                &quot;title&quot;: &quot;Impact Score&quot;,
+                &quot;description&quot;: &quot;Numerical score representing the potential market impact.&quot;
+              }
+            },
+            &quot;required&quot;: [&quot;summary&quot;, &quot;sentiment&quot;, &quot;impactScore&quot;]
+          },
+          &quot;_RecommendationTransition&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;markdown&quot;,
+            &quot;title&quot;: &quot;Recommendation Context&quot;,
+            &quot;description&quot;: &quot;Narrative that bridges from analysis to recommendations.&quot;,
+            &quot;const&quot;: &quot;Based on the market analysis above, the following investment recommendation takes into account both the immediate opportunities and the inherent risks in emerging technology investments.&quot;
+          },
+          &quot;InvestmentRecommendation&quot;: {
+            &quot;type&quot;: [&quot;object&quot;, &quot;null&quot;],
+            &quot;title&quot;: &quot;Investment Recommendation&quot;,
+            &quot;description&quot;: &quot;The final investment recommendation. Null if not requested.&quot;,
+            &quot;properties&quot;: {
+              &quot;recommendation&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;enum&quot;: [&quot;strong-buy&quot;, &quot;buy&quot;, &quot;hold&quot;, &quot;sell&quot;, &quot;strong-sell&quot;],
+                &quot;title&quot;: &quot;Recommendation&quot;,
+                &quot;description&quot;: &quot;The investment action recommendation.&quot;
+              },
+              &quot;rationale&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;title&quot;: &quot;Rationale&quot;,
+                &quot;description&quot;: &quot;Explanation for the recommendation.&quot;
+              },
+              &quot;confidenceLevel&quot;: {
+                &quot;type&quot;: &quot;number&quot;,
+                &quot;minimum&quot;: 0,
+                &quot;maximum&quot;: 1,
+                &quot;title&quot;: &quot;Confidence Level&quot;,
+                &quot;description&quot;: &quot;Confidence in the recommendation (0-1).&quot;
+              },
+              &quot;timeHorizon&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;title&quot;: &quot;Time Horizon&quot;,
+                &quot;description&quot;: &quot;Suggested investment time horizon.&quot;
+              }
+            },
+            &quot;required&quot;: [&quot;recommendation&quot;, &quot;rationale&quot;, &quot;confidenceLevel&quot;, &quot;timeHorizon&quot;]
+          },
+          &quot;RiskAssessment&quot;: {
+            &quot;type&quot;: [&quot;object&quot;, &quot;null&quot;],
+            &quot;title&quot;: &quot;Detailed Risk Assessment&quot;,
+            &quot;description&quot;: &quot;Comprehensive risk analysis. Null if not requested or if analysis depth is &#39;quick&#39;.&quot;,
+            &quot;properties&quot;: {
+              &quot;overallRiskLevel&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;enum&quot;: [&quot;very-low&quot;, &quot;low&quot;, &quot;moderate&quot;, &quot;high&quot;, &quot;very-high&quot;],
+                &quot;title&quot;: &quot;Overall Risk Level&quot;
+              },
+              &quot;primaryRiskFactors&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;title&quot;: &quot;Primary Risk Factors&quot;,
+                &quot;description&quot;: &quot;Key risks identified in the investment.&quot;
+              },
+              &quot;mitigationStrategies&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;title&quot;: &quot;Risk Mitigation Strategies&quot;,
+                &quot;description&quot;: &quot;Recommended approaches to manage identified risks.&quot;
+              }
+            },
+            &quot;required&quot;: [&quot;overallRiskLevel&quot;, &quot;primaryRiskFactors&quot;, &quot;mitigationStrategies&quot;]
+          },
+          &quot;_ConclusionNarrative&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;markdown&quot;,
+            &quot;title&quot;: &quot;Report Conclusion&quot;,
+            &quot;description&quot;: &quot;Closing narrative that summarizes key takeaways.&quot;
+          }
+        },
+        &quot;required&quot;: [
+          &quot;specializationUsed&quot;,
+          &quot;analysisDepthUsed&quot;,
+          &quot;_IntroductionNarrative&quot;,
+          &quot;MarketAnalysis&quot;,
+          &quot;_RecommendationTransition&quot;,
+          &quot;InvestmentRecommendation&quot;,
+          &quot;RiskAssessment&quot;,
+          &quot;_ConclusionNarrative&quot;
+        ]
+      }
+    ]
+  },
+  &quot;solution&quot;: {
+    &quot;$type&quot;: &quot;InvestmentAdvisorVesselVibe&quot;,
+    &quot;$id&quot;: &quot;aug:vessels/advisor-vessel-acme-001&quot;,
+    &quot;$revision&quot;: 1,
+    &quot;createdAt&quot;: &quot;2025-03-18T10:00:00Z&quot;,
+    &quot;lastModified&quot;: &quot;2025-03-18T10:05:00Z&quot;,
+    &quot;displayName&quot;: &quot;ACME Corp Quantum Impact Analysis&quot;,
+    &quot;description&quot;: &quot;Quick market analysis of ACME Corp&#39;s quantum computing breakthrough.&quot;,
+
+    &quot;specializationUsed&quot;: &quot;Technology Sector Analysis&quot;,
+    &quot;analysisDepthUsed&quot;: &quot;quick&quot;,
+
+    &quot;_IntroductionNarrative&quot;: &quot;## Investment Analysis Report\n\n*Generated Analysis*\n\nThis report provides market analysis and investment recommendations based on the requested evaluation. The analysis depth and focus areas are tailored to the specific query parameters provided.&quot;,
+
+    &quot;MarketAnalysis&quot;: {
+      &quot;summary&quot;: &quot;ACME Corp&#39;s quantum computing breakthrough represents a significant technological leap with potential to disrupt multiple sectors including AI, pharmaceuticals, and cryptography. The &#39;QuantumLeap&#39; chip shows 1000x performance improvement over current solutions, positioning ACME as a potential leader in the $65 billion quantum computing market projected by 2030.&quot;,
+      &quot;sentiment&quot;: &quot;very-positive&quot;,
+      &quot;impactScore&quot;: 8.5
+    },
+
+    &quot;_RecommendationTransition&quot;: &quot;Based on the market analysis above, the following investment recommendation takes into account both the immediate opportunities and the inherent risks in emerging technology investments.&quot;,
+
+    &quot;InvestmentRecommendation&quot;: {
+      &quot;recommendation&quot;: &quot;buy&quot;,
+      &quot;rationale&quot;: &quot;ACME&#39;s breakthrough positions them as a leader in the emerging quantum computing market. First-mover advantage and strong IP portfolio support positive outlook despite typical early-stage technology risks.&quot;,
+      &quot;confidenceLevel&quot;: 0.75,
+      &quot;timeHorizon&quot;: &quot;12-18 months&quot;
+    },
+
+    &quot;RiskAssessment&quot;: null,
+
+    &quot;_ConclusionNarrative&quot;: &quot;## Key Takeaways\n\nThis analysis has evaluated the investment opportunity based on the available information and specified analysis parameters. The recommendations provided should be considered within the context of your overall investment strategy and risk tolerance.\n\n*Note: This analysis was conducted at the requested depth level. Additional capabilities may be available for more comprehensive evaluation.*&quot;
+  }
+}
+</code></pre>
+<p><strong>Explanation:</strong>
+This enhanced Vibe represents an <strong>Investment Advisor Vessel</strong> that produces article-like output:</p>
+<ul>
+<li><p>The <code>input</code> array contains:</p>
+<ul>
+<li>System context</li>
+<li>User query</li>
+<li>State configuration with <code>specialization</code> and <code>analysisDepth</code> set to &quot;quick&quot;</li>
+</ul>
+</li>
+<li><p>The <code>schema</code> uses <code>allOf</code> composition with:</p>
+<ul>
+<li>Base schemas for fundamental properties</li>
+<li><strong>Narrative blocks</strong> that structure the output:<ul>
+<li><code>_IntroductionNarrative</code>: Generic opening that provides consistent report structure</li>
+<li><code>_RecommendationTransition</code>: Fixed transition text (using <code>const</code>)</li>
+<li><code>_ConclusionNarrative</code>: Generic closing that provides consistent report structure</li>
+</ul>
+</li>
+<li><strong>Three capabilities</strong>:<ul>
+<li><code>MarketAnalysis</code>: Core analysis capability</li>
+<li><code>InvestmentRecommendation</code>: Recommendation based on analysis</li>
+<li><code>RiskAssessment</code>: <strong>Not activated</strong> in this example (null) because the query requested &quot;quick&quot; analysis</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>The <code>solution</code> demonstrates:</p>
+<ul>
+<li><strong>Article-like flow</strong>: Reading from top to bottom, the narrative blocks and data sections create a cohesive report</li>
+<li><strong>Selective capability usage</strong>: <code>RiskAssessment</code> is <code>null</code> because it&#39;s only activated for &quot;standard&quot; or &quot;comprehensive&quot; analysis depths</li>
+<li><strong>Markdown formatting</strong> in narrative blocks for proper document structure</li>
+<li><strong>Separation of structure and content</strong>: Narrative blocks provide consistent vessel structure, while only the actual analysis capabilities (MarketAnalysis, InvestmentRecommendation) contain query-specific content (e.g., ACME Corp details)</li>
+</ul>
+</li>
+</ul>
+<p>This pattern shows how vessels can produce well-structured, readable outputs while intelligently activating only the capabilities relevant to the specific request.</p>
+<p><strong>Selective Capability Usage Pattern:</strong>
+The vessel intelligently responds to the input query by only using relevant capabilities. This allows the same Role Blueprint to handle various types of requests efficiently:</p>
+<ul>
+<li>Full analysis requests would use all capabilities</li>
+<li>Quick analysis requests (like this example) use only essential capabilities</li>
+<li>Specific tool requests could use just those specific capabilities
+This pattern ensures efficient processing and clear, focused outputs aligned with user intent.</li>
+</ul>
+<p><strong>Narrative Blocks Design Pattern:</strong></p>
+<ul>
+<li><strong>All narrative blocks</strong> (properties starting with underscore): Provide consistent structural narrative for the vessel, independent of the specific query. They define the vessel&#39;s report framework.<ul>
+<li><code>_IntroductionNarrative</code>: Generic introduction for any investment analysis report</li>
+<li><code>_RecommendationTransition</code>: Fixed transition text (using <code>const</code> in schema)</li>
+<li><code>_ConclusionNarrative</code>: Generic conclusion for any investment analysis report</li>
+</ul>
+</li>
+<li><strong>Query-specific content</strong> appears only in the capability outputs (MarketAnalysis, InvestmentRecommendation, etc.), not in narrative blocks</li>
+<li>This separation ensures the vessel maintains a consistent structural identity while adapting its analysis content to different queries</li>
+</ul>
+<hr>
+<h3>3. Capability Vibe Example: Resource Allocation and Task Delegation</h3>
+<p><strong>Scenario:</strong> Capability Vibes represent delegated authority with integrated resource allocation. They serve as both the authorization to perform work and the specification of what work can be done, with resources allocated directly within the capability rather than through separate Resource Vibes.</p>
+<h4>3.1 Budget Allocation Capability: Marketing Campaign</h4>
+<p>This capability represents authority to spend marketing budget with specific constraints and allocations.</p>
+<p><strong>Illustrative <code>MarketingCampaignBudgetCapability</code> JSON Structure (e.g., <code>aug:capabilities/marketing-campaign-q1?1</code>):</strong></p>
+<pre><code class="language-json">{
+  &quot;input&quot;: [
+    {
+      &quot;type&quot;: &quot;query&quot;,
+      &quot;query&quot;: &quot;Create a capability that delegates marketing campaign authority with $50K budget allocation&quot;
+    }
+  ],
+  &quot;schema&quot;: {
+    &quot;title&quot;: &quot;Marketing Campaign Budget Capability&quot;,
+    &quot;description&quot;: &quot;A capability that authorizes marketing campaign activities with allocated budget and resource constraints.&quot;,
+    &quot;allOf&quot;: [
+      {
+        &quot;$ref&quot;: &quot;aug:/schemas/Vibe&quot;,
+        &quot;$comment&quot;: &quot;Base Vibe structure&quot;
+      },
+      {
+        &quot;$ref&quot;: &quot;aug:/schemas/CapabilityVibe&quot;,
+        &quot;$comment&quot;: &quot;Base CapabilityVibe structure&quot;
+      },
+      {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;title&quot;: &quot;Budget Allocation Structure&quot;,
+        &quot;description&quot;: &quot;Defines the budget allocation parameters and constraints&quot;,
+        &quot;properties&quot;: {
+          &quot;authority&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;title&quot;: &quot;Delegation Authority&quot;,
+            &quot;description&quot;: &quot;The source and scope of authority for this capability&quot;,
+            &quot;properties&quot;: {
+              &quot;grantedBy&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;title&quot;: &quot;Granting Authority&quot;,
+                &quot;description&quot;: &quot;The vibe ID of the authority granting this capability&quot;
+              },
+              &quot;scope&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;enum&quot;: [&quot;organization&quot;, &quot;department&quot;, &quot;project&quot;, &quot;personal&quot;],
+                &quot;title&quot;: &quot;Authority Scope&quot;
+              },
+              &quot;expiresAt&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;format&quot;: &quot;date-time&quot;,
+                &quot;title&quot;: &quot;Authority Expiration&quot;
+              }
+            },
+            &quot;required&quot;: [&quot;grantedBy&quot;, &quot;scope&quot;]
+          },
+          &quot;budget&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;title&quot;: &quot;Allocated Budget&quot;,
+            &quot;description&quot;: &quot;Direct resource allocation within this capability&quot;,
+            &quot;properties&quot;: {
+              &quot;totalUsd&quot;: {
+                &quot;type&quot;: &quot;number&quot;,
+                &quot;minimum&quot;: 0,
+                &quot;maximum&quot;: 50000,
+                &quot;title&quot;: &quot;Total USD Budget&quot;
+              },
+              &quot;usedUsd&quot;: {
+                &quot;type&quot;: &quot;number&quot;,
+                &quot;minimum&quot;: 0,
+                &quot;default&quot;: 0,
+                &quot;title&quot;: &quot;USD Already Used&quot;
+              },
+              &quot;remainingUsd&quot;: {
+                &quot;type&quot;: &quot;number&quot;,
+                &quot;minimum&quot;: 0,
+                &quot;title&quot;: &quot;USD Remaining&quot;
+              },
+              &quot;allocations&quot;: {
+                &quot;type&quot;: &quot;object&quot;,
+                &quot;title&quot;: &quot;Budget Breakdown&quot;,
+                &quot;properties&quot;: {
+                  &quot;contentCreation&quot;: {
+                    &quot;type&quot;: &quot;number&quot;,
+                    &quot;minimum&quot;: 0,
+                    &quot;maximum&quot;: 20000,
+                    &quot;title&quot;: &quot;Content Creation Budget&quot;
+                  },
+                  &quot;advertising&quot;: {
+                    &quot;type&quot;: &quot;number&quot;,
+                    &quot;minimum&quot;: 0,
+                    &quot;maximum&quot;: 25000,
+                    &quot;title&quot;: &quot;Advertising Budget&quot;
+                  },
+                  &quot;analytics&quot;: {
+                    &quot;type&quot;: &quot;number&quot;,
+                    &quot;minimum&quot;: 0,
+                    &quot;maximum&quot;: 5000,
+                    &quot;title&quot;: &quot;Analytics Budget&quot;
+                  }
+                },
+                &quot;required&quot;: [&quot;contentCreation&quot;, &quot;advertising&quot;, &quot;analytics&quot;]
+              }
+            },
+            &quot;required&quot;: [&quot;totalUsd&quot;, &quot;usedUsd&quot;, &quot;remainingUsd&quot;, &quot;allocations&quot;]
+          },
+          &quot;constraints&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;title&quot;: &quot;Spending Constraints&quot;,
+            &quot;properties&quot;: {
+              &quot;maxSingleTransaction&quot;: {
+                &quot;type&quot;: &quot;number&quot;,
+                &quot;maximum&quot;: 10000,
+                &quot;title&quot;: &quot;Maximum Single Transaction&quot;
+              },
+              &quot;approvalRequired&quot;: {
+                &quot;type&quot;: &quot;boolean&quot;,
+                &quot;title&quot;: &quot;Requires Approval for Large Spending&quot;
+              },
+              &quot;approvalThreshold&quot;: {
+                &quot;type&quot;: &quot;number&quot;,
+                &quot;title&quot;: &quot;Threshold for Approval Requirement&quot;
+              }
+            }
+          }
+        },
+        &quot;required&quot;: [&quot;authority&quot;, &quot;budget&quot;, &quot;constraints&quot;]
+      }
+    ]
+  },
+  &quot;solution&quot;: {
+    &quot;$type&quot;: &quot;CapabilityVibe&quot;,
+    &quot;$id&quot;: &quot;aug:capabilities/marketing-campaign-q1-2025&quot;,
+    &quot;$revision&quot;: 1,
+    &quot;createdAt&quot;: &quot;2025-01-10T09:00:00Z&quot;,
+    &quot;lastModified&quot;: &quot;2025-01-10T09:00:00Z&quot;,
+    &quot;displayName&quot;: &quot;Marketing Campaign Q1 Budget Authority&quot;,
+    &quot;description&quot;: &quot;Authority to execute marketing campaigns with $50K allocated budget&quot;,
+
+    &quot;authority&quot;: {
+      &quot;grantedBy&quot;: &quot;aug:roles/marketing-director-sarah&quot;,
+      &quot;scope&quot;: &quot;department&quot;,
+      &quot;expiresAt&quot;: &quot;2025-04-01T00:00:00Z&quot;
+    },
+
+    &quot;budget&quot;: {
+      &quot;totalUsd&quot;: 50000,
+      &quot;usedUsd&quot;: 0,
+      &quot;remainingUsd&quot;: 50000,
+      &quot;allocations&quot;: {
+        &quot;contentCreation&quot;: 15000,
+        &quot;advertising&quot;: 25000,
+        &quot;analytics&quot;: 10000
+      }
+    },
+
+    &quot;constraints&quot;: {
+      &quot;maxSingleTransaction&quot;: 10000,
+      &quot;approvalRequired&quot;: true,
+      &quot;approvalThreshold&quot;: 5000
+    }
+  }
+}
+</code></pre>
+</section></article></main></div></div>
         
         <script id="vike_pageContext" type="application/json">{"_urlRewrite":null,"pageId":"\\/src\\/@document\\/@chapter","routeParams":{"document":"blueprint","chapterSlug":"01_vibes_examples"},"data":{"sitemap":{"manifesto":[{"id":"Call","number":1,"numberStr":"01","name":"Call","slug":"01_call","path":"01_call.md","url":"\\/manifesto\\/01_call.md"},{"id":"Inner Journey","number":2,"numberStr":"02","name":"Inner Journey","slug":"02_inner_journey","path":"02_inner_journey.md","url":"\\/manifesto\\/02_inner_journey.md"},{"id":"Outer Work","number":3,"numberStr":"03","name":"Outer Work","slug":"03_outer_work","path":"03_outer_work.md","url":"\\/manifesto\\/03_outer_work.md"}],"rfc":[{"id":"00_glossary","number":0,"numberStr":"00","name":"00_glossary","slug":"00_glossary","path":"00_glossary.md","url":"\\/rfc\\/00_glossary.md"},{"id":"The Mechanics of a Living Web","number":1,"numberStr":"01","name":"The Mechanics of a Living Web","slug":"01_protocol_ideas","path":"01_protocol_ideas.md","url":"\\/rfc\\/01_protocol_ideas.md"},{"id":"The Idea-to-Call Pipeline","number":2,"numberStr":"02","name":"The Idea-to-Call Pipeline","slug":"02_agent_calls","path":"02_agent_calls.md","url":"\\/rfc\\/02_agent_calls.md"},{"id":"Combining Scope and Method","number":3,"numberStr":"03","name":"Combining Scope and Method","slug":"03_agent_imports","path":"03_agent_imports.md","url":"\\/rfc\\/03_agent_imports.md"},{"id":"1. Foundational Requirement: The State System","number":4,"numberStr":"04","name":"1. Foundational Requirement: The State System","slug":"04_agent_instancing","path":"04_agent_instancing.md","url":"\\/rfc\\/04_agent_instancing.md"},{"id":"From Poker-Specific to Protocol-Driven","number":5,"numberStr":"05","name":"From Poker-Specific to Protocol-Driven","slug":"05_system_reactor","path":"05_system_reactor.md","url":"\\/rfc\\/05_system_reactor.md"},{"id":"The `Input` Message Type","number":6,"numberStr":"06","name":"The `Input` Message Type","slug":"06_agent_input","path":"06_agent_input.md","url":"\\/rfc\\/06_agent_input.md"}],"blueprint":[{"id":"Core Components","number":0,"numberStr":"00","name":"Core Components","slug":"00_architecture","path":"00_architecture.md","url":"\\/blueprint\\/00_architecture.md"},{"id":"B","number":0,"numberStr":"00","name":"B","slug":"00_glossary","path":"00_glossary.md","url":"\\/blueprint\\/00_glossary.md"},{"id":"New Ideas in This Chapter","number":0,"numberStr":"00","name":"New Ideas in This Chapter","slug":"00_references","path":"00_references.md","url":"\\/blueprint\\/00_references.md"},{"id":"New Ideas in This Chapter","number":1,"numberStr":"01","name":"New Ideas in This Chapter","slug":"01_vibes","path":"01_vibes.md","url":"\\/blueprint\\/01_vibes.md"},{"id":"Core Tables","number":1,"numberStr":"01","name":"Core Tables","slug":"01_vibes_database","path":"01_vibes_database.md","url":"\\/blueprint\\/01_vibes_database.md"},{"id":"Examples of Vibe Structures","number":1,"numberStr":"01","name":"Examples of Vibe Structures","slug":"01_vibes_examples","path":"01_vibes_examples.md","url":"\\/blueprint\\/01_vibes_examples.md"},{"id":"New Ideas in This Chapter","number":2,"numberStr":"02","name":"New Ideas in This Chapter","slug":"02_instructions","path":"02_instructions.md","url":"\\/blueprint\\/02_instructions.md"},{"id":"Example 1: Process Scheduling","number":2,"numberStr":"02","name":"Example 1: Process Scheduling","slug":"02_instructions_examples","path":"02_instructions_examples.md","url":"\\/blueprint\\/02_instructions_examples.md"},{"id":"Context Switching with Execution Environments","number":2,"numberStr":"02","name":"Context Switching with Execution Environments","slug":"02_instructions_guidance","path":"02_instructions_guidance.md","url":"\\/blueprint\\/02_instructions_guidance.md"},{"id":"New Ideas in This Chapter","number":4,"numberStr":"04","name":"New Ideas in This Chapter","slug":"04_refinements","path":"04_refinements.md","url":"\\/blueprint\\/04_refinements.md"},{"id":"Detailed Example: Evolving Record Vibe Schemas","number":4,"numberStr":"04","name":"Detailed Example: Evolving Record Vibe Schemas","slug":"04_refinements_examples","path":"04_refinements_examples.md","url":"\\/blueprint\\/04_refinements_examples.md"},{"id":"New Ideas in This Chapter","number":5,"numberStr":"05","name":"New Ideas in This Chapter","slug":"05_exchange","path":"05_exchange.md","url":"\\/blueprint\\/05_exchange.md"},{"id":"New Ideas in This Chapter","number":6,"numberStr":"06","name":"New Ideas in This Chapter","slug":"06_budgets","path":"06_budgets.md","url":"\\/blueprint\\/06_budgets.md"},{"id":"Self-Sustaining Startup Ecosystem","number":6,"numberStr":"06","name":"Self-Sustaining Startup Ecosystem","slug":"06_budgets_examples","path":"06_budgets_examples.md","url":"\\/blueprint\\/06_budgets_examples.md"},{"id":"New Ideas in This Chapter","number":6,"numberStr":"06","name":"New Ideas in This Chapter","slug":"06_budgets_stats","path":"06_budgets_stats.md","url":"\\/blueprint\\/06_budgets_stats.md"},{"id":"New Ideas in This Chapter","number":7,"numberStr":"07","name":"New Ideas in This Chapter","slug":"07_processes","path":"07_processes.md","url":"\\/blueprint\\/07_processes.md"},{"id":"New Ideas in This Chapter","number":8,"numberStr":"08","name":"New Ideas in This Chapter","slug":"08_branches","path":"08_branches.md","url":"\\/blueprint\\/08_branches.md"},{"id":"Navigating the Determinism Landscape","number":12,"numberStr":"12","name":"Navigating the Determinism Landscape","slug":"12_determinism","path":"12_determinism.md","url":"\\/blueprint\\/12_determinism.md"}]},"content":"\u003ch3>Examples of Vibe Structures\u003c\\/h3>\n\u003cp>This document provides concrete examples to illustrate the fundamental structure of the different Vibe types discussed in &quot;Chapter 1: Vibes &amp; Their Manifestations.&quot; Each example focuses on showcasing a Vibe as a static record, comprising its \u003ccode>input\u003c\\/code>, its \u003ccode>schema\u003c\\/code> field (which contains the Vibe&#39;s own structural blueprint or operational definition), and its \u003ccode>solution\u003c\\/code> (the content, outcome, or configuration that conforms to that \u003ccode>schema\u003c\\/code> definition).\u003c\\/p>\n\u003cp>How these Vibes are created, evolve, or interact dynamically (e.g., through the \u003ccode>refine\u003c\\/code> primitive) is detailed in later chapters. The purpose here is to clarify the distinct nature and typical content of each Vibe type&#39;s core components.\u003c\\/p>\n\u003ch3>Understanding Schema References (\u003ccode>$ref\u003c\\/code>)\u003c\\/h3>\n\u003cp>Vibe schemas often reference other schemas using the \u003ccode>$ref\u003c\\/code> keyword. These references follow a URI-like format, typically starting with \u003ccode>aug:\u003c\\/code>.\u003c\\/p>\n\u003cul>\n\u003cli>\u003cstrong>Absolute vs. Local References:\u003c\\/strong>\u003cul>\n\u003cli>An \u003cstrong>absolute reference\u003c\\/strong> to a globally shared schema starts with a slash directly after the scheme, e.g., \u003ccode>aug:\\/schemas\\/SharedSchemaName\u003c\\/code>. These are for common, system-wide definitions.\u003c\\/li>\n\u003cli>A \u003cstrong>local reference\u003c\\/strong> (without a leading slash after the scheme, e.g., \u003ccode>aug:schemas\\/UserSpecificSchema\u003c\\/code>) is considered context-dependent (e.g., user-specific, or relative to the current Vibe&#39;s namespace). For the examples in this document, most shared base schemas will use absolute paths.\u003c\\/li>\n\u003c\\/ul>\n\u003c\\/li>\n\u003cli>\u003cstrong>Evergreen vs. Versioned References:\u003c\\/strong>\u003cul>\n\u003cli>To refer to the latest version of a schema (an \u003cstrong>evergreen reference\u003c\\/strong>), omit the version number at the end, e.g., \u003ccode>aug:\\/schemas\\/BaseVibe\u003c\\/code>. This is typical for extending base templates, ensuring they always use the most up-to-date definition of the base.\u003c\\/li>\n\u003cli>To lock into a specific version of a schema, include the version number, e.g., \u003ccode>aug:\\/schemas\\/SpecificDefinition:2\u003c\\/code>. This is useful for referencing specific tools or instruction sets where a particular version is critical.\u003c\\/li>\n\u003c\\/ul>\n\u003c\\/li>\n\u003c\\/ul>\n\u003cp>Conceptually similar Vibes (e.g., all &quot;UserProfile&quot; Record Vibes, or all Vibes defining a &quot;StandardProcess&quot;) would typically share identical or very similar \u003ccode>schema\u003c\\/code> definitions within their respective \u003ccode>schema\u003c\\/code> fields, ensuring structural consistency for Vibes of the same kind.\u003c\\/p>\n\u003chr>\n\u003ch3>1. Record Vibe Example: User Profile\u003c\\/h3>\n\u003cp>\u003cstrong>Scenario:\u003c\\/strong> A Vibe representing a user&#39;s profile information. Record Vibes are primarily used for structured data.\u003c\\/p>\n\u003cp>\u003cstrong>Illustrative \u003ccode>UserProfileRecordVibe\u003c\\/code> JSON Structure (e.g., \u003ccode>aug:users\\/user-789?1\u003c\\/code>):\u003c\\/strong>\u003c\\/p>\n\u003cpre>\u003ccode class=\"language-json\">{\n  &quot;input&quot;: [\n    {\n      &quot;type&quot;: &quot;UserProfileContext&quot;,\n      &quot;$id&quot;: &quot;aug:user-789&quot;,\n      &quot;query&quot;: &quot;Initialize or update the user profile. If preferences are not fully known or provided, attempt to infer sensible defaults or suggest options.&quot;,\n      &quot;state&quot;: {\n        &quot;displayName&quot;: &quot;Jane Doe&quot;,\n        &quot;email&quot;: &quot;jane.doe@example.com&quot;\n        \\/\\/ &#39;preferences&#39; field is deliberately omitted from state to allow LLM to infer or suggest.\n      }\n    }\n  ],\n  &quot;schema&quot;: {\n    &quot;title&quot;: &quot;User Profile Record&quot;,\n    &quot;description&quot;: &quot;Defines the complete structure for a user&#39;s profile information, including identity, metadata, and user-specific details. Composed from base Vibe and RecordVibe schemas using evergreen references.&quot;,\n    &quot;allOf&quot;: [\n      {\n        &quot;$ref&quot;: &quot;aug:\\/schemas\\/Vibe&quot;,\n        &quot;$comment&quot;: &quot;Base Vibe structure, referenced without a version to always use the latest. Provides properties like $id, $type, and $revision.&quot;\n      },\n      {\n        &quot;$ref&quot;: &quot;aug:\\/schemas\\/RecordVibe&quot;,\n        &quot;$comment&quot;: &quot;Base RecordVibe structure, referenced without a version. Provides common record properties like id, createdAt, lastModified.&quot;\n      },\n      {\n        &quot;type&quot;: &quot;object&quot;,\n        &quot;title&quot;: &quot;Vessel Details&quot;,\n        &quot;description&quot;: &quot;Specific information and preferences associated with the user.&quot;,\n        &quot;properties&quot;: {\n          &quot;displayName&quot;: {\n            &quot;type&quot;: &quot;string&quot;,\n            &quot;title&quot;: &quot;Display Name&quot;,\n            &quot;description&quot;: &quot;The name publicly shown for the user.&quot;\n          },\n          &quot;email&quot;: {\n            &quot;type&quot;: &quot;string&quot;,\n            &quot;format&quot;: &quot;email&quot;,\n            &quot;title&quot;: &quot;Email Address&quot;,\n            &quot;description&quot;: &quot;The user&#39;s primary email address for communication and login.&quot;\n          },\n          &quot;preferences&quot;: {\n            &quot;type&quot;: &quot;object&quot;,\n            &quot;title&quot;: &quot;User Preferences&quot;,\n            &quot;description&quot;: &quot;Settings and choices made by the user to customize their experience.&quot;,\n            &quot;properties&quot;: {\n              &quot;newsletter&quot;: {\n                &quot;type&quot;: &quot;boolean&quot;,\n                &quot;default&quot;: false,\n                &quot;title&quot;: &quot;Newsletter Subscription&quot;,\n                &quot;description&quot;: &quot;Indicates if the user wishes to receive newsletter updates.&quot;\n              },\n              &quot;theme&quot;: {\n                &quot;type&quot;: &quot;string&quot;,\n                &quot;enum&quot;: [&quot;light&quot;, &quot;dark&quot;],\n                &quot;default&quot;: &quot;light&quot;,\n                &quot;title&quot;: &quot;Interface Theme&quot;,\n                &quot;description&quot;: &quot;The selected visual theme for the user interface (e.g., light or dark).&quot;\n              }\n            }\n          }\n          \\/\\/ id, createdAt, lastModified are inherited from RecordVibe layer\n          \\/\\/ $id, $revision, $type are inherited from Vibe layer\n        },\n        &quot;required&quot;: [&quot;displayName&quot;, &quot;email&quot;]\n      }\n    ]\n    \\/\\/ The effective &#39;required&#39; list would be the union of &#39;required&#39; from all layers:\n    \\/\\/ e.g., [&quot;$type&quot;, &quot;$id&quot;, &quot;$revision&quot;, &quot;createdAt&quot;, &quot;lastModified&quot;, &quot;designation&quot;, &quot;primaryCapability&quot;]\n  },\n  &quot;solution&quot;: {\n    &quot;$type&quot;: &quot;UserProfileRecordVibe&quot;, \\/\\/ from Vibe layer\n    &quot;$id&quot;: &quot;aug:vibes\\/user-profile-789&quot;, \\/\\/ from Vibe layer, this is the vibe&#39;s unique ID\n    &quot;$revision&quot;: 3, \\/\\/ from Vibe layer\n    &quot;id&quot;: &quot;user-789&quot;, \\/\\/ from RecordVibe layer, this is the actual user record ID\n    &quot;displayName&quot;: &quot;Jane Doe&quot;, \\/\\/ from User Details\n    &quot;email&quot;: &quot;jane.doe@example.com&quot;, \\/\\/ from User Details\n    &quot;preferences&quot;: {\n      \\/\\/ from User Details, potentially inferred\\/completed by LLM\n      &quot;newsletter&quot;: false,\n      &quot;theme&quot;: &quot;light&quot;\n    },\n    &quot;createdAt&quot;: &quot;2025-01-15T10:00:00Z&quot;, \\/\\/ from RecordVibe layer\n    &quot;lastModified&quot;: &quot;2025-03-10T12:05:00Z&quot; \\/\\/ from RecordVibe layer\n  }\n}\n\u003c\\/code>\u003c\\/pre>\n\u003cp>\u003cstrong>Explanation:\u003c\\/strong>\u003c\\/p>\n\u003cul>\n\u003cli>The \u003ccode>input\u003c\\/code> is now an array of objects. The first object provides context (\u003ccode>$id\u003c\\/code>), a \u003ccode>query\u003c\\/code> for the LLM (replacing \u003ccode>directive\u003c\\/code>), and initial \u003ccode>state\u003c\\/code> (replacing \u003ccode>initialData\u003c\\/code>). The \u003ccode>query\u003c\\/code> suggests inferring missing \u003ccode>operationalParameters\u003c\\/code>.\u003c\\/li>\n\u003cli>The \u003ccode>schema\u003c\\/code> field now has a top-level \u003ccode>allOf\u003c\\/code> array:\u003cul>\n\u003cli>It \u003ccode>$ref\u003c\\/code>erences \u003ccode>aug:\\/schemas\\/Vibe\u003c\\/code> (providing $type).\u003c\\/li>\n\u003cli>It \u003ccode>$ref\u003c\\/code>erences \u003ccode>aug:\\/schemas\\/RecordVibe\u003c\\/code> (providing $id, $revision, \u003ccode>createdAt\u003c\\/code>, \u003ccode>lastModified\u003c\\/code>).\u003c\\/li>\n\u003cli>It includes an inline object defining vessel-specific details (\u003ccode>designation\u003c\\/code>, \u003ccode>primaryCapability\u003c\\/code>, \u003ccode>operationalParameters\u003c\\/code>, \u003ccode>capabilities\u003c\\/code>) with UI-friendly \u003ccode>title\u003c\\/code> and \u003ccode>description\u003c\\/code> fields.\u003c\\/li>\n\u003c\\/ul>\n\u003c\\/li>\n\u003cli>The overall \u003ccode>title\u003c\\/code> and \u003ccode>description\u003c\\/code> for the composed \u003ccode>VesselProfileRecord\u003c\\/code> schema are at the top level of the \u003ccode>schema\u003c\\/code> object.\u003c\\/li>\n\u003cli>Comments indicate which properties are expected from the referenced layers.\u003c\\/li>\n\u003cli>The \u003ccode>solution\u003c\\/code> includes $type (from \u003ccode>Vibe\u003c\\/code>) and $id (from \u003ccode>RecordVibe\u003c\\/code>), and the \u003ccode>operationalParameters\u003c\\/code> in the solution might be the result of LLM inference if they were not in the input state.\u003c\\/li>\n\u003c\\/ul>\n\u003cp>This structure makes the inheritance chain explicit and uses evergreen references. The \u003ccode>title\u003c\\/code> and \u003ccode>description\u003c\\/code> fields are aimed at being clear for both UIs and LLMs.\u003c\\/p>\n\u003cp>The referenced base schemas (\u003ccode>aug:\\/schemas\\/Vibe\u003c\\/code> and \u003ccode>aug:\\/schemas\\/RecordVibe\u003c\\/code>) would be defined elsewhere. For example:\u003c\\/p>\n\u003cp>\u003cstrong>Hypothetical definition for \u003ccode>aug:\\/schemas\\/Vibe\u003c\\/code> (e.g., if its latest version is 1, it might be stored as \u003ccode>aug:\\/schemas\\/Vibe?1\u003c\\/code> but referenced as \u003ccode>aug:\\/schemas\\/Vibe\u003c\\/code> for evergreen use):\u003c\\/strong>\u003c\\/p>\n\u003chr>\n\u003ch3>2. Role Vibe Example: &quot;Investment Advisor&quot; Vessel\u003c\\/h3>\n\u003cp>\u003cstrong>Scenario:\u003c\\/strong> This Vibe illustrates an Investment Advisor vessel - a specific instance that processes queries. The \u003ccode>input\u003c\\/code> contains the query and any initial state (like specific configurations for this vessel, such as \u003ccode>specialization\u003c\\/code> or \u003ccode>clientContext\u003c\\/code>). The \u003ccode>schema\u003c\\/code> defines the structure of this vessel by extending RoleVibe and adding specific capabilities and outputs. The \u003ccode>solution\u003c\\/code> showcases the results produced by this vessel: based on the input query, some capabilities produce data, while others are \u003ccode>null\u003c\\/code> when not relevant to the specific request.\u003c\\/p>\n\u003cp>\u003cstrong>Illustrative \u003ccode>InvestmentAdvisorVesselVibe\u003c\\/code> JSON Structure (e.g., \u003ccode>aug:vessels\\/advisor-vessel-acme-001\u003c\\/code>):\u003c\\/strong>\u003c\\/p>\n\u003cpre>\u003ccode class=\"language-json\">{\n  &quot;input&quot;: [\n    {\n      &quot;type&quot;: &quot;text&quot;,\n      &quot;text&quot;: &quot;You are financial assistant&quot;,\n      &quot;role&quot;: &quot;system&quot;\n    },\n    {\n      &quot;type&quot;: &quot;query&quot;,\n      &quot;query&quot;: &quot;Provide a quick market analysis of ACME Corp&#39;s quantum computing breakthrough impact.&quot;\n    },\n    {\n      &quot;type&quot;: &quot;state&quot;,\n      &quot;state&quot;: {\n        &quot;specialization&quot;: &quot;Technology Sector Analysis&quot;,\n        &quot;analysisDepth&quot;: &quot;quick&quot;\n      }\n    }\n  ],\n  &quot;schema&quot;: {\n    &quot;title&quot;: &quot;Investment Advisor Vessel&quot;,\n    &quot;description&quot;: &quot;Represents a vessel instance of the Investment Advisor Role. It inherits common properties from base schemas and defines the specific outputs pertinent to this vessel.&quot;,\n    &quot;allOf&quot;: [\n      {\n        &quot;$ref&quot;: &quot;aug:\\/schemas\\/Vibe&quot;,\n        &quot;$comment&quot;: &quot;Base Vibe structure. Provides the fundamental $id, $type, and $revision properties for this vessel Vibe.&quot;\n      },\n      {\n        &quot;$ref&quot;: &quot;aug:\\/schemas\\/RoleVibe&quot;,\n        &quot;$comment&quot;: &quot;Base RoleVibe structure. Provides common role properties like displayName, description, createdAt, lastModified. By extending this, we&#39;re defining this as a role-based Vibe.&quot;\n      },\n      {\n        &quot;type&quot;: &quot;object&quot;,\n        &quot;title&quot;: &quot;Vessel Output&quot;,\n        &quot;description&quot;: &quot;Defines the specific outputs resulting from this Investment Advisor vessel&#39;s processing.&quot;,\n        &quot;properties&quot;: {\n          &quot;specializationUsed&quot;: {\n            &quot;type&quot;: &quot;string&quot;,\n            &quot;title&quot;: &quot;Active Specialization&quot;,\n            &quot;description&quot;: &quot;The area of focus that was active for this specific vessel.&quot;\n          },\n          &quot;analysisDepthUsed&quot;: {\n            &quot;type&quot;: &quot;string&quot;,\n            &quot;enum&quot;: [&quot;quick&quot;, &quot;standard&quot;, &quot;comprehensive&quot;],\n            &quot;title&quot;: &quot;Analysis Depth&quot;,\n            &quot;description&quot;: &quot;The level of detail used in the analysis.&quot;\n          },\n          &quot;_IntroductionNarrative&quot;: {\n            &quot;type&quot;: &quot;string&quot;,\n            &quot;format&quot;: &quot;markdown&quot;,\n            &quot;title&quot;: &quot;Report Introduction&quot;,\n            &quot;description&quot;: &quot;Opening narrative that introduces the analysis context and sets the stage.&quot;\n          },\n          &quot;MarketAnalysis&quot;: {\n            &quot;type&quot;: [&quot;object&quot;, &quot;null&quot;],\n            &quot;title&quot;: &quot;Market Analysis&quot;,\n            &quot;description&quot;: &quot;The market analysis findings. Null if not performed.&quot;,\n            &quot;properties&quot;: {\n              &quot;summary&quot;: {\n                &quot;type&quot;: &quot;string&quot;,\n                &quot;title&quot;: &quot;Analysis Summary&quot;,\n                &quot;description&quot;: &quot;Main findings from the market analysis.&quot;\n              },\n              &quot;sentiment&quot;: {\n                &quot;type&quot;: &quot;string&quot;,\n                &quot;enum&quot;: [&quot;very-negative&quot;, &quot;negative&quot;, &quot;neutral&quot;, &quot;positive&quot;, &quot;very-positive&quot;],\n                &quot;title&quot;: &quot;Market Sentiment&quot;,\n                &quot;description&quot;: &quot;Overall market sentiment assessment.&quot;\n              },\n              &quot;impactScore&quot;: {\n                &quot;type&quot;: &quot;number&quot;,\n                &quot;minimum&quot;: 0,\n                &quot;maximum&quot;: 10,\n                &quot;title&quot;: &quot;Impact Score&quot;,\n                &quot;description&quot;: &quot;Numerical score representing the potential market impact.&quot;\n              }\n            },\n            &quot;required&quot;: [&quot;summary&quot;, &quot;sentiment&quot;, &quot;impactScore&quot;]\n          },\n          &quot;_RecommendationTransition&quot;: {\n            &quot;type&quot;: &quot;string&quot;,\n            &quot;format&quot;: &quot;markdown&quot;,\n            &quot;title&quot;: &quot;Recommendation Context&quot;,\n            &quot;description&quot;: &quot;Narrative that bridges from analysis to recommendations.&quot;,\n            &quot;const&quot;: &quot;Based on the market analysis above, the following investment recommendation takes into account both the immediate opportunities and the inherent risks in emerging technology investments.&quot;\n          },\n          &quot;InvestmentRecommendation&quot;: {\n            &quot;type&quot;: [&quot;object&quot;, &quot;null&quot;],\n            &quot;title&quot;: &quot;Investment Recommendation&quot;,\n            &quot;description&quot;: &quot;The final investment recommendation. Null if not requested.&quot;,\n            &quot;properties&quot;: {\n              &quot;recommendation&quot;: {\n                &quot;type&quot;: &quot;string&quot;,\n                &quot;enum&quot;: [&quot;strong-buy&quot;, &quot;buy&quot;, &quot;hold&quot;, &quot;sell&quot;, &quot;strong-sell&quot;],\n                &quot;title&quot;: &quot;Recommendation&quot;,\n                &quot;description&quot;: &quot;The investment action recommendation.&quot;\n              },\n              &quot;rationale&quot;: {\n                &quot;type&quot;: &quot;string&quot;,\n                &quot;title&quot;: &quot;Rationale&quot;,\n                &quot;description&quot;: &quot;Explanation for the recommendation.&quot;\n              },\n              &quot;confidenceLevel&quot;: {\n                &quot;type&quot;: &quot;number&quot;,\n                &quot;minimum&quot;: 0,\n                &quot;maximum&quot;: 1,\n                &quot;title&quot;: &quot;Confidence Level&quot;,\n                &quot;description&quot;: &quot;Confidence in the recommendation (0-1).&quot;\n              },\n              &quot;timeHorizon&quot;: {\n                &quot;type&quot;: &quot;string&quot;,\n                &quot;title&quot;: &quot;Time Horizon&quot;,\n                &quot;description&quot;: &quot;Suggested investment time horizon.&quot;\n              }\n            },\n            &quot;required&quot;: [&quot;recommendation&quot;, &quot;rationale&quot;, &quot;confidenceLevel&quot;, &quot;timeHorizon&quot;]\n          },\n          &quot;RiskAssessment&quot;: {\n            &quot;type&quot;: [&quot;object&quot;, &quot;null&quot;],\n            &quot;title&quot;: &quot;Detailed Risk Assessment&quot;,\n            &quot;description&quot;: &quot;Comprehensive risk analysis. Null if not requested or if analysis depth is &#39;quick&#39;.&quot;,\n            &quot;properties&quot;: {\n              &quot;overallRiskLevel&quot;: {\n                &quot;type&quot;: &quot;string&quot;,\n                &quot;enum&quot;: [&quot;very-low&quot;, &quot;low&quot;, &quot;moderate&quot;, &quot;high&quot;, &quot;very-high&quot;],\n                &quot;title&quot;: &quot;Overall Risk Level&quot;\n              },\n              &quot;primaryRiskFactors&quot;: {\n                &quot;type&quot;: &quot;string&quot;,\n                &quot;title&quot;: &quot;Primary Risk Factors&quot;,\n                &quot;description&quot;: &quot;Key risks identified in the investment.&quot;\n              },\n              &quot;mitigationStrategies&quot;: {\n                &quot;type&quot;: &quot;string&quot;,\n                &quot;title&quot;: &quot;Risk Mitigation Strategies&quot;,\n                &quot;description&quot;: &quot;Recommended approaches to manage identified risks.&quot;\n              }\n            },\n            &quot;required&quot;: [&quot;overallRiskLevel&quot;, &quot;primaryRiskFactors&quot;, &quot;mitigationStrategies&quot;]\n          },\n          &quot;_ConclusionNarrative&quot;: {\n            &quot;type&quot;: &quot;string&quot;,\n            &quot;format&quot;: &quot;markdown&quot;,\n            &quot;title&quot;: &quot;Report Conclusion&quot;,\n            &quot;description&quot;: &quot;Closing narrative that summarizes key takeaways.&quot;\n          }\n        },\n        &quot;required&quot;: [\n          &quot;specializationUsed&quot;,\n          &quot;analysisDepthUsed&quot;,\n          &quot;_IntroductionNarrative&quot;,\n          &quot;MarketAnalysis&quot;,\n          &quot;_RecommendationTransition&quot;,\n          &quot;InvestmentRecommendation&quot;,\n          &quot;RiskAssessment&quot;,\n          &quot;_ConclusionNarrative&quot;\n        ]\n      }\n    ]\n  },\n  &quot;solution&quot;: {\n    &quot;$type&quot;: &quot;InvestmentAdvisorVesselVibe&quot;,\n    &quot;$id&quot;: &quot;aug:vessels\\/advisor-vessel-acme-001&quot;,\n    &quot;$revision&quot;: 1,\n    &quot;createdAt&quot;: &quot;2025-03-18T10:00:00Z&quot;,\n    &quot;lastModified&quot;: &quot;2025-03-18T10:05:00Z&quot;,\n    &quot;displayName&quot;: &quot;ACME Corp Quantum Impact Analysis&quot;,\n    &quot;description&quot;: &quot;Quick market analysis of ACME Corp&#39;s quantum computing breakthrough.&quot;,\n\n    &quot;specializationUsed&quot;: &quot;Technology Sector Analysis&quot;,\n    &quot;analysisDepthUsed&quot;: &quot;quick&quot;,\n\n    &quot;_IntroductionNarrative&quot;: &quot;## Investment Analysis Report\\n\\n*Generated Analysis*\\n\\nThis report provides market analysis and investment recommendations based on the requested evaluation. The analysis depth and focus areas are tailored to the specific query parameters provided.&quot;,\n\n    &quot;MarketAnalysis&quot;: {\n      &quot;summary&quot;: &quot;ACME Corp&#39;s quantum computing breakthrough represents a significant technological leap with potential to disrupt multiple sectors including AI, pharmaceuticals, and cryptography. The &#39;QuantumLeap&#39; chip shows 1000x performance improvement over current solutions, positioning ACME as a potential leader in the $65 billion quantum computing market projected by 2030.&quot;,\n      &quot;sentiment&quot;: &quot;very-positive&quot;,\n      &quot;impactScore&quot;: 8.5\n    },\n\n    &quot;_RecommendationTransition&quot;: &quot;Based on the market analysis above, the following investment recommendation takes into account both the immediate opportunities and the inherent risks in emerging technology investments.&quot;,\n\n    &quot;InvestmentRecommendation&quot;: {\n      &quot;recommendation&quot;: &quot;buy&quot;,\n      &quot;rationale&quot;: &quot;ACME&#39;s breakthrough positions them as a leader in the emerging quantum computing market. First-mover advantage and strong IP portfolio support positive outlook despite typical early-stage technology risks.&quot;,\n      &quot;confidenceLevel&quot;: 0.75,\n      &quot;timeHorizon&quot;: &quot;12-18 months&quot;\n    },\n\n    &quot;RiskAssessment&quot;: null,\n\n    &quot;_ConclusionNarrative&quot;: &quot;## Key Takeaways\\n\\nThis analysis has evaluated the investment opportunity based on the available information and specified analysis parameters. The recommendations provided should be considered within the context of your overall investment strategy and risk tolerance.\\n\\n*Note: This analysis was conducted at the requested depth level. Additional capabilities may be available for more comprehensive evaluation.*&quot;\n  }\n}\n\u003c\\/code>\u003c\\/pre>\n\u003cp>\u003cstrong>Explanation:\u003c\\/strong>\nThis enhanced Vibe represents an \u003cstrong>Investment Advisor Vessel\u003c\\/strong> that produces article-like output:\u003c\\/p>\n\u003cul>\n\u003cli>\u003cp>The \u003ccode>input\u003c\\/code> array contains:\u003c\\/p>\n\u003cul>\n\u003cli>System context\u003c\\/li>\n\u003cli>User query\u003c\\/li>\n\u003cli>State configuration with \u003ccode>specialization\u003c\\/code> and \u003ccode>analysisDepth\u003c\\/code> set to &quot;quick&quot;\u003c\\/li>\n\u003c\\/ul>\n\u003c\\/li>\n\u003cli>\u003cp>The \u003ccode>schema\u003c\\/code> uses \u003ccode>allOf\u003c\\/code> composition with:\u003c\\/p>\n\u003cul>\n\u003cli>Base schemas for fundamental properties\u003c\\/li>\n\u003cli>\u003cstrong>Narrative blocks\u003c\\/strong> that structure the output:\u003cul>\n\u003cli>\u003ccode>_IntroductionNarrative\u003c\\/code>: Generic opening that provides consistent report structure\u003c\\/li>\n\u003cli>\u003ccode>_RecommendationTransition\u003c\\/code>: Fixed transition text (using \u003ccode>const\u003c\\/code>)\u003c\\/li>\n\u003cli>\u003ccode>_ConclusionNarrative\u003c\\/code>: Generic closing that provides consistent report structure\u003c\\/li>\n\u003c\\/ul>\n\u003c\\/li>\n\u003cli>\u003cstrong>Three capabilities\u003c\\/strong>:\u003cul>\n\u003cli>\u003ccode>MarketAnalysis\u003c\\/code>: Core analysis capability\u003c\\/li>\n\u003cli>\u003ccode>InvestmentRecommendation\u003c\\/code>: Recommendation based on analysis\u003c\\/li>\n\u003cli>\u003ccode>RiskAssessment\u003c\\/code>: \u003cstrong>Not activated\u003c\\/strong> in this example (null) because the query requested &quot;quick&quot; analysis\u003c\\/li>\n\u003c\\/ul>\n\u003c\\/li>\n\u003c\\/ul>\n\u003c\\/li>\n\u003cli>\u003cp>The \u003ccode>solution\u003c\\/code> demonstrates:\u003c\\/p>\n\u003cul>\n\u003cli>\u003cstrong>Article-like flow\u003c\\/strong>: Reading from top to bottom, the narrative blocks and data sections create a cohesive report\u003c\\/li>\n\u003cli>\u003cstrong>Selective capability usage\u003c\\/strong>: \u003ccode>RiskAssessment\u003c\\/code> is \u003ccode>null\u003c\\/code> because it&#39;s only activated for &quot;standard&quot; or &quot;comprehensive&quot; analysis depths\u003c\\/li>\n\u003cli>\u003cstrong>Markdown formatting\u003c\\/strong> in narrative blocks for proper document structure\u003c\\/li>\n\u003cli>\u003cstrong>Separation of structure and content\u003c\\/strong>: Narrative blocks provide consistent vessel structure, while only the actual analysis capabilities (MarketAnalysis, InvestmentRecommendation) contain query-specific content (e.g., ACME Corp details)\u003c\\/li>\n\u003c\\/ul>\n\u003c\\/li>\n\u003c\\/ul>\n\u003cp>This pattern shows how vessels can produce well-structured, readable outputs while intelligently activating only the capabilities relevant to the specific request.\u003c\\/p>\n\u003cp>\u003cstrong>Selective Capability Usage Pattern:\u003c\\/strong>\nThe vessel intelligently responds to the input query by only using relevant capabilities. This allows the same Role Blueprint to handle various types of requests efficiently:\u003c\\/p>\n\u003cul>\n\u003cli>Full analysis requests would use all capabilities\u003c\\/li>\n\u003cli>Quick analysis requests (like this example) use only essential capabilities\u003c\\/li>\n\u003cli>Specific tool requests could use just those specific capabilities\nThis pattern ensures efficient processing and clear, focused outputs aligned with user intent.\u003c\\/li>\n\u003c\\/ul>\n\u003cp>\u003cstrong>Narrative Blocks Design Pattern:\u003c\\/strong>\u003c\\/p>\n\u003cul>\n\u003cli>\u003cstrong>All narrative blocks\u003c\\/strong> (properties starting with underscore): Provide consistent structural narrative for the vessel, independent of the specific query. They define the vessel&#39;s report framework.\u003cul>\n\u003cli>\u003ccode>_IntroductionNarrative\u003c\\/code>: Generic introduction for any investment analysis report\u003c\\/li>\n\u003cli>\u003ccode>_RecommendationTransition\u003c\\/code>: Fixed transition text (using \u003ccode>const\u003c\\/code> in schema)\u003c\\/li>\n\u003cli>\u003ccode>_ConclusionNarrative\u003c\\/code>: Generic conclusion for any investment analysis report\u003c\\/li>\n\u003c\\/ul>\n\u003c\\/li>\n\u003cli>\u003cstrong>Query-specific content\u003c\\/strong> appears only in the capability outputs (MarketAnalysis, InvestmentRecommendation, etc.), not in narrative blocks\u003c\\/li>\n\u003cli>This separation ensures the vessel maintains a consistent structural identity while adapting its analysis content to different queries\u003c\\/li>\n\u003c\\/ul>\n\u003chr>\n\u003ch3>3. Capability Vibe Example: Resource Allocation and Task Delegation\u003c\\/h3>\n\u003cp>\u003cstrong>Scenario:\u003c\\/strong> Capability Vibes represent delegated authority with integrated resource allocation. They serve as both the authorization to perform work and the specification of what work can be done, with resources allocated directly within the capability rather than through separate Resource Vibes.\u003c\\/p>\n\u003ch4>3.1 Budget Allocation Capability: Marketing Campaign\u003c\\/h4>\n\u003cp>This capability represents authority to spend marketing budget with specific constraints and allocations.\u003c\\/p>\n\u003cp>\u003cstrong>Illustrative \u003ccode>MarketingCampaignBudgetCapability\u003c\\/code> JSON Structure (e.g., \u003ccode>aug:capabilities\\/marketing-campaign-q1?1\u003c\\/code>):\u003c\\/strong>\u003c\\/p>\n\u003cpre>\u003ccode class=\"language-json\">{\n  &quot;input&quot;: [\n    {\n      &quot;type&quot;: &quot;query&quot;,\n      &quot;query&quot;: &quot;Create a capability that delegates marketing campaign authority with $50K budget allocation&quot;\n    }\n  ],\n  &quot;schema&quot;: {\n    &quot;title&quot;: &quot;Marketing Campaign Budget Capability&quot;,\n    &quot;description&quot;: &quot;A capability that authorizes marketing campaign activities with allocated budget and resource constraints.&quot;,\n    &quot;allOf&quot;: [\n      {\n        &quot;$ref&quot;: &quot;aug:\\/schemas\\/Vibe&quot;,\n        &quot;$comment&quot;: &quot;Base Vibe structure&quot;\n      },\n      {\n        &quot;$ref&quot;: &quot;aug:\\/schemas\\/CapabilityVibe&quot;,\n        &quot;$comment&quot;: &quot;Base CapabilityVibe structure&quot;\n      },\n      {\n        &quot;type&quot;: &quot;object&quot;,\n        &quot;title&quot;: &quot;Budget Allocation Structure&quot;,\n        &quot;description&quot;: &quot;Defines the budget allocation parameters and constraints&quot;,\n        &quot;properties&quot;: {\n          &quot;authority&quot;: {\n            &quot;type&quot;: &quot;object&quot;,\n            &quot;title&quot;: &quot;Delegation Authority&quot;,\n            &quot;description&quot;: &quot;The source and scope of authority for this capability&quot;,\n            &quot;properties&quot;: {\n              &quot;grantedBy&quot;: {\n                &quot;type&quot;: &quot;string&quot;,\n                &quot;title&quot;: &quot;Granting Authority&quot;,\n                &quot;description&quot;: &quot;The vibe ID of the authority granting this capability&quot;\n              },\n              &quot;scope&quot;: {\n                &quot;type&quot;: &quot;string&quot;,\n                &quot;enum&quot;: [&quot;organization&quot;, &quot;department&quot;, &quot;project&quot;, &quot;personal&quot;],\n                &quot;title&quot;: &quot;Authority Scope&quot;\n              },\n              &quot;expiresAt&quot;: {\n                &quot;type&quot;: &quot;string&quot;,\n                &quot;format&quot;: &quot;date-time&quot;,\n                &quot;title&quot;: &quot;Authority Expiration&quot;\n              }\n            },\n            &quot;required&quot;: [&quot;grantedBy&quot;, &quot;scope&quot;]\n          },\n          &quot;budget&quot;: {\n            &quot;type&quot;: &quot;object&quot;,\n            &quot;title&quot;: &quot;Allocated Budget&quot;,\n            &quot;description&quot;: &quot;Direct resource allocation within this capability&quot;,\n            &quot;properties&quot;: {\n              &quot;totalUsd&quot;: {\n                &quot;type&quot;: &quot;number&quot;,\n                &quot;minimum&quot;: 0,\n                &quot;maximum&quot;: 50000,\n                &quot;title&quot;: &quot;Total USD Budget&quot;\n              },\n              &quot;usedUsd&quot;: {\n                &quot;type&quot;: &quot;number&quot;,\n                &quot;minimum&quot;: 0,\n                &quot;default&quot;: 0,\n                &quot;title&quot;: &quot;USD Already Used&quot;\n              },\n              &quot;remainingUsd&quot;: {\n                &quot;type&quot;: &quot;number&quot;,\n                &quot;minimum&quot;: 0,\n                &quot;title&quot;: &quot;USD Remaining&quot;\n              },\n              &quot;allocations&quot;: {\n                &quot;type&quot;: &quot;object&quot;,\n                &quot;title&quot;: &quot;Budget Breakdown&quot;,\n                &quot;properties&quot;: {\n                  &quot;contentCreation&quot;: {\n                    &quot;type&quot;: &quot;number&quot;,\n                    &quot;minimum&quot;: 0,\n                    &quot;maximum&quot;: 20000,\n                    &quot;title&quot;: &quot;Content Creation Budget&quot;\n                  },\n                  &quot;advertising&quot;: {\n                    &quot;type&quot;: &quot;number&quot;,\n                    &quot;minimum&quot;: 0,\n                    &quot;maximum&quot;: 25000,\n                    &quot;title&quot;: &quot;Advertising Budget&quot;\n                  },\n                  &quot;analytics&quot;: {\n                    &quot;type&quot;: &quot;number&quot;,\n                    &quot;minimum&quot;: 0,\n                    &quot;maximum&quot;: 5000,\n                    &quot;title&quot;: &quot;Analytics Budget&quot;\n                  }\n                },\n                &quot;required&quot;: [&quot;contentCreation&quot;, &quot;advertising&quot;, &quot;analytics&quot;]\n              }\n            },\n            &quot;required&quot;: [&quot;totalUsd&quot;, &quot;usedUsd&quot;, &quot;remainingUsd&quot;, &quot;allocations&quot;]\n          },\n          &quot;constraints&quot;: {\n            &quot;type&quot;: &quot;object&quot;,\n            &quot;title&quot;: &quot;Spending Constraints&quot;,\n            &quot;properties&quot;: {\n              &quot;maxSingleTransaction&quot;: {\n                &quot;type&quot;: &quot;number&quot;,\n                &quot;maximum&quot;: 10000,\n                &quot;title&quot;: &quot;Maximum Single Transaction&quot;\n              },\n              &quot;approvalRequired&quot;: {\n                &quot;type&quot;: &quot;boolean&quot;,\n                &quot;title&quot;: &quot;Requires Approval for Large Spending&quot;\n              },\n              &quot;approvalThreshold&quot;: {\n                &quot;type&quot;: &quot;number&quot;,\n                &quot;title&quot;: &quot;Threshold for Approval Requirement&quot;\n              }\n            }\n          }\n        },\n        &quot;required&quot;: [&quot;authority&quot;, &quot;budget&quot;, &quot;constraints&quot;]\n      }\n    ]\n  },\n  &quot;solution&quot;: {\n    &quot;$type&quot;: &quot;CapabilityVibe&quot;,\n    &quot;$id&quot;: &quot;aug:capabilities\\/marketing-campaign-q1-2025&quot;,\n    &quot;$revision&quot;: 1,\n    &quot;createdAt&quot;: &quot;2025-01-10T09:00:00Z&quot;,\n    &quot;lastModified&quot;: &quot;2025-01-10T09:00:00Z&quot;,\n    &quot;displayName&quot;: &quot;Marketing Campaign Q1 Budget Authority&quot;,\n    &quot;description&quot;: &quot;Authority to execute marketing campaigns with $50K allocated budget&quot;,\n\n    &quot;authority&quot;: {\n      &quot;grantedBy&quot;: &quot;aug:roles\\/marketing-director-sarah&quot;,\n      &quot;scope&quot;: &quot;department&quot;,\n      &quot;expiresAt&quot;: &quot;2025-04-01T00:00:00Z&quot;\n    },\n\n    &quot;budget&quot;: {\n      &quot;totalUsd&quot;: 50000,\n      &quot;usedUsd&quot;: 0,\n      &quot;remainingUsd&quot;: 50000,\n      &quot;allocations&quot;: {\n        &quot;contentCreation&quot;: 15000,\n        &quot;advertising&quot;: 25000,\n        &quot;analytics&quot;: 10000\n      }\n    },\n\n    &quot;constraints&quot;: {\n      &quot;maxSingleTransaction&quot;: 10000,\n      &quot;approvalRequired&quot;: true,\n      &quot;approvalThreshold&quot;: 5000\n    }\n  }\n}\n\u003c\\/code>\u003c\\/pre>\n","currentChapter":"Examples of Vibe Structures"}}</script>
         <script id="vike_globalContext" type="application/json">{}</script>
