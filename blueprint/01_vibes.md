@@ -385,7 +385,7 @@ What are key outcomes or characteristics of the capability-based approach used b
 > **Alice:** "So the same fundamental Vibe structure (a Vibe with a Role `schema` definition in its `schema` field) supports different functions based on the tools it's configured with, leading to varied Vibes?"
 > **Bob:** "Precisely—it's a capability-based approach to creating an organizational structure through definable Roles actualized by Vessel instances, each determining Vibes according to its `schema` definition."
 
-_(See `01. vibes.examples.md` for detailed examples of Role Vibes.)_
+_(See `01_vibes_examples.md` for detailed examples of Role Vibes.)_
 
 ### Process Vibes: Sequential Deterministic Steps for Structured Solutions
 
@@ -414,7 +414,7 @@ Process `schema` definitions are ideal for predictable workflows that require bo
 > **Alice:** "So the Vibes from Workflow Runs, guided by a Process `schema` definition, contain `solutions` that bridge creative LLM work and traditional computing?"
 > **Bob:** "Exactly—combining the best of both worlds with strong typing and error handling, as specified in the Process `schema` definition, to determine a reliable `solution`."
 
-_(See `01. vibes.examples.md` for detailed examples of Process Vibes.)_
+_(See `01_vibes_examples.md` for detailed examples of Process Vibes.)_
 
 ```question
 Select all statements that correctly describe advantages or properties of Vibes generated from Process `schema` definitions (instantiated as Workflow Runs).
@@ -546,7 +546,7 @@ How does the unified Capability Vibe integrate permissions and resources?
 * [ ] The `cost` of an action is determined by the LLM at runtime, not defined in the permit.
 ```
 
-_(See `01. vibes.examples.md` for detailed examples of Capability Vibes.)_
+_(See `01_vibes_examples.md` for detailed examples of Capability Vibes.)_
 
 ## Unifying Principles
 

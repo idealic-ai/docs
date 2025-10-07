@@ -496,7 +496,7 @@ The true power of the `Budget` primitive emerges when we move beyond simple allo
 - **Environmental Guardians**: Schemas that enforce sustainability through hard constraints
 - **Meta-Economics**: Systems that fund the creation of better economic models
 
-For detailed examples of these advanced applications, including startup incubators with recursive funding, AI agent collectives with emergent specialization, regenerative agriculture networks, and planetary-scale climate coordination platforms, see [Chapter 6: Budget Examples](06.%20transactions.examples.md).
+For detailed examples of these advanced applications, including startup incubators with recursive funding, AI agent collectives with emergent specialization, regenerative agriculture networks, and planetary-scale climate coordination platforms, see [Chapter 6: Budget Examples](06_budgets_examples.md).
 
 ```question
 What types of resources can Budgets manage beyond traditional currency?

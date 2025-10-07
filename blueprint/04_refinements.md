@@ -110,7 +110,6 @@ The `refine(targets, instructions, budgets)` primitive requires existing Vibes t
 
 2.  **Initial `targets` (Base Templates):**
     The platform provides a set of minimal, "initial" template Vibes that serve as the initial `targets` (the first argument) for creating fundamental entities. These typically include:
-
     - `aug:/types/Vessel?1`: A very generic template for creating new Vessel types.
     - `aug:/types/Process?1`: A minimal template for defining new Process types.
     - `aug:/types/Data?1`: A basic template for new structured Record types (e.g., might only contain a root `id` field or basic metadata structure).
@@ -180,7 +179,6 @@ Here's how the system checks if a `refine` call is allowed when one or more `bud
 1.  **Iterate through `budgets`**: The system will examine each provided `Budget` Vibe one by one.
 
 2.  **For each `Budget`, perform checks**: For the `refine` call to be authorized by a specific `Budget`, all the following conditions must be met:
-
     - **Authority Check**: The `Budget`'s `schema` (its constitution) must permit the requested operation. This involves validating the provided `targets` and `instructions` against the rules defined in the `schema`.
     - **Balance Check**: If the operation requires spending resources (e.g., currency, tokens, credits), the `Budget`'s `solution` (its live balance) must contain sufficient funds.
     - **Solvability Check**: Committing the required funds must not leave the `Budget` in an "unsolvable" state, meaning it still must meet its own minimum financial or operational constraints defined in its `schema`.
@@ -362,7 +360,7 @@ What are the two main scenarios for evolving Record Vibe schemas as described?
 * [ ] Automatic Schema Generalization: The system automatically makes schemas less specific over time.
 ```
 
-_For detailed walkthroughs of these schema evolution scenarios, including `refine` call examples and JSON structures, please see the accompanying document: `04. refining.examples.md`._
+_For detailed walkthroughs of these schema evolution scenarios, including `refine` call examples and JSON structures, please see the accompanying document: `04_refinements_examples.md`._
 
 ---
 
@@ -393,6 +391,6 @@ How does the system ensure that when you `refine`, it is controlled and auditabl
 * [ ] By allowing any Vibe to be a `budget` as long as its name starts with "budget-".
 ```
 
-_For e-commerce examples illustrating practical permission management for various roles and tasks (e.g., Product Managers launching products, Inventory Managers adjusting stock), please see the accompanying document: `04. refining.examples.md`._
+_For e-commerce examples illustrating practical permission management for various roles and tasks (e.g., Product Managers launching products, Inventory Managers adjusting stock), please see the accompanying document: `04_refinements_examples.md`._
 
 This consistent way to `refine` schema allows the entire system, across all Vibe types, to evolve in a controlled, auditable, and progressively more **refined** (and `narrowed`) manner.

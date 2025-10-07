@@ -1,6 +1,6 @@
 # The Input Protocol
 
-_For definitions of key terms used in this document, please refer to the [Glossary](./00. glossary.md)._
+_For definitions of key terms used in this document, please refer to the [Glossary](./00_glossary.md)._
 
 This document describes the **Input Protocol**, a system for defining structured inputs for `Ideas`. This protocol introduces a special message type that, when included in an `Idea`'s context, transforms it from a static piece of knowledge into an executable, function-like entity known as an **Ideator**.
 
@@ -21,11 +21,11 @@ A significant advantage of this protocol is its ability to enable automatic user
 
 ## From Idea to Ideator
 
-As described in the [Idea Protocol](./01. protocol_ideas.md), the presence of an `Input` message in an `Idea`'s context is the definitive signal that it is an **Ideator**—an `Idea` that performs work. It becomes a reproducible function.
+As described in the [Idea Protocol](./01_protocol_ideas.md), the presence of an `Input` message in an `Idea`'s context is the definitive signal that it is an **Ideator**—an `Idea` that performs work. It becomes a reproducible function.
 
 ## Interaction with the Instancing Protocol
 
-The `Input` message is fully compatible with the [Instancing Protocol](./04. agent_instancing.md), allowing for sophisticated data-sourcing strategies when processing multiple instances at once. It can operate in two distinct modes:
+The `Input` message is fully compatible with the [Instancing Protocol](./04_agent_instancing.md), allowing for sophisticated data-sourcing strategies when processing multiple instances at once. It can operate in two distinct modes:
 
 1.  **Global Input**: If an `Input` message is provided in the agent's context without an `_instance` property, its `input` data is treated as a global value. It is implicitly available to every instance being processed in the request. This is useful for providing shared configuration, prompts, or parameters that apply to all instances uniformly.
 

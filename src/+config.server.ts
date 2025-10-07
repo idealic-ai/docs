@@ -1,6 +1,5 @@
 import vikeReact from 'vike-react/config';
 import type { Config } from 'vike/types';
-import { getChaptersWithSubtypes } from './@chapter/+data.server';
 import Layout from './layouts/LayoutDefault';
 
 // Default config (can be overridden by pages)
@@ -17,25 +16,8 @@ export default {
   extends: vikeReact,
 
   ssr: false,
+  trailingSlash: true,
 
   // See https://vike.dev/prerender
-  prerender: false,
-
-  // Generate URLs for pre-rendering
-  onBeforePrerenderStart: async () => {
-    const urls = ['/'];
-    const chapters = await getChaptersWithSubtypes();
-
-    for (const chapter of chapters) {
-      urls.push(`/chapter/${encodeURIComponent(chapter.name)}`);
-
-      for (const subtype in chapter.files) {
-        if (subtype !== 'chapter') {
-          urls.push(`/chapter/${encodeURIComponent(chapter.name)}/${encodeURIComponent(subtype)}`);
-        }
-      }
-    }
-
-    return urls;
-  },
+  prerender: true,
 } satisfies Config;

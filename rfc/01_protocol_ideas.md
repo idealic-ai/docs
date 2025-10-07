@@ -6,9 +6,7 @@ This document outlines the architecture for a decentralized web of living docume
 
 ## The Mechanics of a Living Web
 
-The architecture is built on a radical principle: **the content is the protocol.** The system's entire grammar consists of a single unit: the **Idea**.
-
-Each Idea is a self-contained "triplet" composed of the **solution** (the content), the **schema** (a JSON Schema that defines the data's meaning and its potential for change), and the **context** (the lineage and instructions that produced it). This structure enables true ownership and portability; because there is no hidden state, you are never locked in.
+The architecture is built on a radical principle: **the content is the protocol.** The system's entire grammar consists of a single unit: a self-contained "triplet" called the **Idea**. This structure enables true ownership and portability; because there is no hidden state, you are never locked in.
 
 - **Context:** All the instructions, source material, and references used to generate the solution.
 - **Schema:** The `jsonschema` blueprint that gives the Idea's data a universal, semantic meaning, allowing any AI to understand and modify it.

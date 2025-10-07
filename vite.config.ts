@@ -7,11 +7,17 @@ const config: UserConfig & { extends: Config[] } = {
   extends: [vikeReact],
   build: {
     target: 'es2022',
-    rollupOptions: {
-      external: [/^node:/, 'path', 'fs'],
+  },
+
+  server: {
+    fs: {
+      deny: ['rfc', 'blueprint', 'manifesto'],
     },
   },
+
   base: '/',
+
+  publicDir: 'public',
 };
 
 export default config;

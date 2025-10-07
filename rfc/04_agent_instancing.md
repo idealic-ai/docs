@@ -1,6 +1,6 @@
 # The Instancing Protocol
 
-_For definitions of key terms used in this document, please refer to the [Glossary](./00. glossary.md)._
+_For definitions of key terms used in this document, please refer to the [Glossary](./00_glossary.md)._
 
 This document outlines a protocol for processing multiple, independent instances within a single agent request, using a state-driven architecture.
 
