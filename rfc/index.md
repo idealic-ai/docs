@@ -1,8 +1,8 @@
-# RFC index
+# RFCs (Request for Comments)
 
 ---
 
-The RFC (Request for Comments) documents define the technical protocols of the system. They cover the core data structure ("The Idea Protocol"), how ideas are executed ("The Call Protocol"), and how context is managed ("Imports," "Input," and "Instancing" protocols). A key vision document outlines "The Reactor," a universal runtime for stateful agents.
+The RFC (Request for Comments) documents serve as normative specifications that articulate our team's confirmed intent for implementation. These documents are the authoritative reference for the system's technical protocols, establishing the standards we commit to following and building upon.
 
 ---
 
