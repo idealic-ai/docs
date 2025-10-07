@@ -17,6 +17,7 @@ export default {
 
   ssr: true,
   trailingSlash: false,
+  prefetchStaticAssets: false,
   disableUrlNormalization: true,
 
   // See https://vike.dev/prerender

@@ -95,6 +95,22 @@ Unlike a simple, ephemeral request to a chatbot, an `Idea` is a self-contained, 
 
 This makes an `Idea` a true computational primitive—a building block for creating complex, evolving systems. You don't just "run" an Idea; you can fork it, remix it, feed it into other Ideas, and build entire pipelines of logic, all without writing traditional code. It's a platform, not a prompt.
 
+## Core Invariants
+
+To ensure the protocol remains robust, transparent, and portable, all implementations must adhere to three core invariants.
+
+### Deterministic Provenance
+
+An `Idea` is designed for reproducibility. By feeding the same `context` and `schema` to a capable LLM, a comparable `solution` can be regenerated. This principle ensures that we are striving for a reproducible web of ideas. While variations from different providers or model settings are expected, the fundamental goal is that the output is a direct, traceable function of its inputs.
+
+### Transparent Context
+
+The entire `context` triplet is visible to the LLM during execution. This means it cannot be used as a container for arbitrary state unless that state is directly relevant to the computation and intended for the LLM to process. This constraint is critical to prevent indiscriminate use of the `context`, ensuring it remains a focused, purposeful part of the `Idea`.
+
+### Schema-Bound State
+
+The `solution` is the state. Because every `solution` must conform to its `schema`, the state of any `Idea` is fundamentally determined and validated by its schema. This follows from the principle of a transparent context, ensuring that all state is explicit, structured, and universally understandable.
+
 ## From Single Ideas to Stateful Systems: A Gaming Analogy
 
 To understand how `Ideas` compose into systems, consider a platform designed to host bots that can play _any_ game.
