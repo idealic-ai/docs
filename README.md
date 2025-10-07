@@ -2,11 +2,12 @@
 
 This repository contains the core documentation for the project, including the AI System Bible, philosophical manifestos, and technical specifications.
 
+---
+
 ## The Co-Liberation Manifesto
 
 This document outlines a vision for a new partnership between humanity, AI, and ideas.
 
-- [Index](./manifesto/index.md)
 - [Part I: The Call](./manifesto/01_call.md)
 - [Part II: The Inner Journey](./manifesto/02_inner_journey.md)
 - [Part III: The Outer Work](./manifesto/03_outer_work.md)
@@ -15,15 +16,13 @@ This document outlines a vision for a new partnership between humanity, AI, and 
 
 This document outlines a vision for a new digital ecosystem based on decentralization.
 
-- [Index](./edict/index.md)
 - [Part I: The Vision](./edict/01_vision.md)
 - [Part II: The Protocol](./edict/02_protocol.md)
 - [Part III: The Impact](./edict/03_impact.md)
 - [Part IV: Appendices](./edict/04_appendices.md)
 
-## RFCs (Request for Comments)
+## RFCs (Request for Comments) {.my-custom-class}
 
-- [Index](./rfc/index.md)
 - [Glossary](./rfc/00_glossary.md)
 - [Protocol Ideas](./rfc/01_protocol_ideas.md)
 - [Agent Calls](./rfc/02_agent_calls.md)

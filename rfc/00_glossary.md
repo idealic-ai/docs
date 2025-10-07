@@ -2,8 +2,6 @@
 
 This document provides definitions for the key concepts used in the Idea Protocol and its related systems.
 
-<span class="newthought">Test</span>
-
 - **Idea**: A self-contained, stateful data triplet (`schema`, `solution`, `context`) representing a unit of knowledge. It's a persistent, computational primitive, not an ephemeral prompt.
 
 - **Ideator**: An `Idea` that accepts input, signified by a context message of `type: "input"`. It acts as a function, transforming input to output.

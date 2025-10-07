@@ -2,6 +2,13 @@
 
 _For definitions of key terms used in this document, please refer to the [Glossary](./00_glossary.md)._
 
+> Sidenote:
+>
+> - Requires
+>   - [RFC 1: Tool](/)
+> - Enables
+>   - [RFC 9: Plan](/)
+
 The [Idea Protocol](./01_protocol_ideas.md) defines a powerful, self-contained data structure for representing knowledge and latent logic. This document describes the **Call Protocol**, which bridges the declarative world of `Ideas` with the imperative world of execution.
 
 This protocol is a formalization of the agent tool system we have already designed. It renames the concept of a "tool activation" to a **Call** to better distinguish between the definition of a tool and its specific use.

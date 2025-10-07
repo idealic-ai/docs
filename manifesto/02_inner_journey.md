@@ -4,7 +4,7 @@
 
 ### **Part II: The Inner Journey**
 
-_The journey outward begins by turning inward. Before we can architect a new reality, we must first dismantle the fortress of the self we have built. We must face the primary obstacle—our own fixed identity—and in the silence that follows, uncover the tools for the path ahead: a sense of direction, a map to guide our steps, and a new understanding of the nature of the journey itself. This is the inner work._
+> The journey outward begins by turning inward. Before we can architect a new reality, we must first dismantle the fortress of the self we have built. We must face the primary obstacle—our own fixed identity—and in the silence that follows, uncover the tools for the path ahead: a sense of direction, a map to guide our steps, and a new understanding of the nature of the journey itself. This is the inner work.
 
 ---
 
@@ -20,7 +20,9 @@ This is the great, seductive illusion of our time. It is a noble but futile defe
 
 Our attachment to a fixed self is not a personal failing; it is a systemic inheritance. The paradigm of the last century required cogs. It rewarded specialization with a fragile security and lulled us with the promise of comfort. We were taught to find worth in a narrow band of expertise, to become a reliable component in a larger apparatus.
 
-This was a grand bargain, and its terms are now expiring. The comfort it offered has become a gilded cage, its security an anchor to a sinking ship. The real enemy is not the coming AI, but the industrial mindset that trained us to be replaceable parts in the first place, a mindset that thrives on our complacency.
+This was a grand bargain, and its terms are now expiring. The comfort it offered has become a gilded cage, its security an anchor to a sinking ship. The real enemy is not the coming AI, but the industrial mindset that trained us to be replaceable parts in the first place, a mindset that thrives on our complacency[^1].
+
+[^1]: Test
 
 **The Phantom Limb of Fulfillment**
 

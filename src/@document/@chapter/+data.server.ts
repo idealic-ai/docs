@@ -2,7 +2,7 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import type { PageContextServer } from 'vike/types';
 import { data as getCommonData } from '../../+data';
-import { Sitemap } from '../../data/sitemap';
+import { Chapter, Sitemap } from '../../data/sitemap';
 import { processMarkdown } from '../../utils/markdown';
 
 interface PageData {
@@ -11,6 +11,8 @@ interface PageData {
   sitemap: Sitemap;
   title: string;
   description: string;
+  nextChapter: Chapter | null;
+  prevChapter: Chapter | null;
 }
 
 export async function data(pageContext: PageContextServer): Promise<PageData> {
@@ -25,12 +27,18 @@ export async function data(pageContext: PageContextServer): Promise<PageData> {
       ...commonData,
       content: null,
       currentChapter: null,
+      nextChapter: null,
+      prevChapter: null,
     };
   }
 
   try {
     const chapters = commonData.sitemap[document] || [];
-    const chapter = chapters.find(c => c.slug.toLowerCase() === chapterSlug.toLowerCase());
+    const chapterIndex = chapters.findIndex(
+      c => c.slug.toLowerCase() === chapterSlug.toLowerCase()
+    );
+    const chapter = chapters[chapterIndex];
+
     if (!chapter) {
       throw new Error(`Chapter ${chapterSlug} not found in ${document}`);
     }
@@ -56,12 +64,17 @@ export async function data(pageContext: PageContextServer): Promise<PageData> {
         .replace(/[*_`[\]()]/g, '')
         .substring(0, 160) + '...';
 
+    const nextChapter = chapterIndex < chapters.length - 1 ? chapters[chapterIndex + 1] : null;
+    const prevChapter = chapterIndex > 0 ? chapters[chapterIndex - 1] : null;
+
     return {
       ...commonData,
       content: htmlContent,
       currentChapter: chapter.name,
       title,
       description,
+      nextChapter: nextChapter ? nextChapter : null,
+      prevChapter: prevChapter ? prevChapter : null,
     };
   } catch (error) {
     console.error(`Error loading chapter ${chapterSlug} from ${document}:`, error);

@@ -2,7 +2,9 @@
 
 ---
 
-The Blueprint documents provide a detailed guide to the system's core concepts and implementation. They cover the fundamental "Vibe" data structure, the universal "refine" primitive for change, and the different types of Vibes like "Instructions," "Processes," and "Budgets." Key chapters also detail the economic "Exchange" model, the architecture for versioning and branching, and strategies for managing "Determinism."
+The Blueprint documents provide a detailed guide to the system's core concepts and implementation. They cover the fundamental "Vibe" data structure, the universal "refine" primitive for change, and the different types of Vibes like "Instructions," "Processes," and "Budgets." Key chapters also detail the economic "Exchange" model, the architecture for versioning and branching, and strategies for managing "Determinism."[^1]
+
+[^1]: Test
 
 ---
 
