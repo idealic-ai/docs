@@ -1,6 +1,10 @@
-# The Imports Protocol
+# 105: Agent: Imports
 
-The [Call Protocol](./102_agent_calls.md) defines the high-level controls for `Call` execution: **Scope** (Inline vs. Module) and **Method** (Explicit vs. Latent). The **Imports Protocol** explains how to combine these controls and manage the context for each resulting execution pattern.
+> **Import:** A key that identifies a piece of context from the parent environment to be made available (`imported`) to an execution. It can be used to focus an LLM's attention in a **Latent Inline** execution or to construct the entire context for a **Module Scope** execution. Controlled by the `_imports` property.
+>
+> — [Glossary](./000_glossary.md)
+
+The [Call Protocol](./103_agent_call.md) defines the high-level controls for `Call` execution: **Scope** (Inline vs. Module) and **Method** (Explicit vs. Latent). The **Imports Protocol** explains how to combine these controls and manage the context for each resulting execution pattern.
 
 ## Combining Scope and Method
 

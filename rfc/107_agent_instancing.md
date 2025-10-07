@@ -1,6 +1,12 @@
-# The Instancing Protocol
+# 107: Agent: Instancing
 
-_For definitions of key terms used in this document, please refer to the [Glossary](./00_glossary.md)._
+> Sidenote:
+>
+> - Requires: [Agent: State](./106_agent_state.md)
+
+> **Instancing:** The process of handling multiple, independent `Instances` (each with its own `State Object` and unique identifier) within a single agent request.
+>
+> — [Glossary](./000_glossary.md)
 
 This document outlines a protocol for processing multiple, independent instances within a single agent request, using a state-driven architecture.
 

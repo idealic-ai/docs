@@ -1,3 +1,4 @@
+import { rehypeGithubAlerts } from 'rehype-github-alerts';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeRewrite from 'rehype-rewrite';
 import rehypeStringify from 'rehype-stringify';
@@ -12,6 +13,8 @@ export async function processMarkdown(markdownContent: string): Promise<string> 
     .use(remarkGfm)
     .use(remarkRehype)
     .use(rehypeHighlight)
+    .use(rehypeGithubAlerts)
+
     .use(rehypeRewrite, {
       rewrite: (node, index, parent) => {
         if (node.type === 'element' && node.tagName === 'blockquote') {

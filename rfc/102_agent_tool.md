@@ -1,8 +1,14 @@
-# The Tool System: Foundational Interface for Agent Capabilities
+# 102: Agent: Tool
 
-_For definitions of key terms used in this document, please refer to the [Glossary](./000_glossary.md)._
+> Sidenote:
+>
+> - Requires: [Agent: Request](./101_agent_request.md)
 
-This document describes the Tool System - the foundational schema-driven interface that enables agents to understand and use structured capabilities.
+> **Tool**: A schema that defines a capability an agent can use. It is presented to an LLM as part of a request, acting as a structured interface for a potential action. The LLM activates the tool by generating a `Call` with specific parameters, which is then executed either latently by the LLM or explicitly by a registered code function (`Activity`).
+>
+> — [Glossary](./000_glossary.md)
+
+This document describes the Tool - the foundational schema-driven interface that enables agents to understand and use structured capabilities.
 
 ## What Are Tools?
 

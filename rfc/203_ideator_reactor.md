@@ -1,6 +1,8 @@
-# Vision: "The Reactor"
+# 203: Ideator: Reactor
 
-_For definitions of key terms used in this document, please refer to the [Glossary](./00_glossary.md)._
+> **Reactor:** A specific `Idea Transformer` designed as a universal runtime for stateful, turn-based agent interactions. It takes a game/process state (`Idea`) and produces the next state (`Idea`).
+>
+> — [Glossary](./000_glossary.md)
 
 This document outlines the vision for refactoring the existing poker runtime into **"The Reactor"**—a universal and extensible system for context management for real-time agents. This evolution transforms our powerful Temporal-based workflow system from a single-purpose application into a protocol for intelligent, autonomous agents to interact with any turn-based environment, be it a zero-sum game, a collaborative simulation, or a complex business process. The Reactor will be the first "reactor engine" for our broader idea network.
 

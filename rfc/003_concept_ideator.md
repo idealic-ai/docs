@@ -1,17 +1,19 @@
-# RFC 10: Protocol: Ideators
+# 003: Concept: Ideator
 
 > Sidenote:
 >
-> - Requires: [The Idea Protocol](./001_protocol_ideas.md), [The Input Protocol](./103_agent_input.md)
-> - Enables: [The Call Protocol](./102_agent_calls.md), [Protocol: Sovereignty](./002_protocol_sovereignty.md)
+> - Requires: [The Idea Protocol](./001_concept_idea.md), [The Input Protocol](./104_agent_input.md)
+> - Enables: [The Call Protocol](./103_agent_call.md), [Protocol: Sovereignty](./002_concept_sovereignty.md)
 
-_For definitions of key terms used in this document, please refer to the [Glossary](./000_glossary.md)._
+> **Ideator:** An `Idea` that accepts input, signified by a context message of `type: "input"`. It acts as a function, transforming input to output.
+>
+> — [Glossary](./000_glossary.md)
 
 ## 1. Introduction
 
-This document specifies the protocol for **Ideators** and **Idea Transformers** as executable, service-based components. It builds upon the foundational [Idea Protocol](./001_protocol_ideas.md), which defines the core data structure, and describes how an `Idea` is transformed into a functional, invocable entity.
+This document specifies the protocol for **Ideators** and **Idea Transformers** as executable, service-based components. It builds upon the foundational [Idea Protocol](./001_concept_idea.md), which defines the core data structure, and describes how an `Idea` is transformed into a functional, invocable entity.
 
-For details on the spectrum of hosting and deployment models, see [RFC 11: Protocol: Sovereignty](./002_protocol_sovereignty.md).
+For details on the spectrum of hosting and deployment models, see [RFC 11: Protocol: Sovereignty](./002_concept_sovereignty.md).
 
 ## 2. From Idea to Ideator
 
@@ -31,7 +33,7 @@ The architectural principles outlined in this document define a **behavioral con
 
 An Ideator service's contract is fulfilled by honoring its public API (accepting an `Idea` and returning another). This allows for multiple concrete implementations, each suited for different use cases:
 
-- **Managed Services**: A provider can offer hosting as a managed, cloud-based service, abstracting away the infrastructure, as described in the [Sovereignty Protocol](./002_protocol_sovereignty.md).
+- **Managed Services**: A provider can offer hosting as a managed, cloud-based service, abstracting away the infrastructure, as described in the [Sovereignty Protocol](./002_concept_sovereignty.md).
 - **Self-Hosted Instances**: A developer can run their own implementation of the service on their own infrastructure, giving them full control.
 - **In-Memory Implementations**: For local development and testing, an Ideator's execution logic can be run as a simple in-memory function, bypassing the network entirely while still honoring the core contract.
 

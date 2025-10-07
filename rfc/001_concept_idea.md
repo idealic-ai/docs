@@ -1,15 +1,17 @@
-# The Idea Protocol
+# 001: Concept: Idea
 
 > Sidenote:
 >
-> - Requires: [Glossary](./000_glossary.md)
-> - Enables: [Protocol: Ideators](./003_protocol_ideators.md)
+> - Requires: [Glossary](./000_glossary.md), [Agent: Request](./101_agent_request.md)
+> - Enables: [Protocol: Ideators](./003_concept_ideator.md)
 
-_For definitions of key terms used in this document, please refer to the [Glossary](./000_glossary.md)._
+> **Idea:** A self-contained, stateful data triplet (`schema`, `solution`, `context`) representing a unit of knowledge. It's a persistent, computational primitive, not an ephemeral prompt.
+>
+> — [Glossary](./000_glossary.md)
 
 This document outlines the architecture for a decentralized web of living documents. It covers the protocol's core data structure (the **Idea**) and the decentralized discovery mechanism for publishing and resolving them via **DNS**.
 
-For details on how `Ideas` become executable services, see [RFC 10: Protocol: Ideators](./003_protocol_ideators.md). For details on the spectrum of hosting models, see [RFC 11: Protocol: Sovereignty](./002_protocol_sovereignty.md).
+For details on how `Ideas` become executable services, see [RFC 10: Protocol: Ideators](./003_concept_ideator.md). For details on the spectrum of hosting models, see [RFC 11: Protocol: Sovereignty](./002_concept_sovereignty.md).
 
 ## The Mechanics of a Living Web
 
@@ -49,7 +51,7 @@ The `solution` is the state. Because every `solution` must conform to its `schem
 
 DNS provides a globally unique, resolvable name for any Idea, establishing a decentralized identity that decouples the Idea from its storage location. This is the bedrock of the entire system.
 
-For details on the progressive hosting layers that build on top of this foundation, see [RFC 11: Protocol: Sovereignty](./002_protocol_sovereignty.md).
+For details on the progressive hosting layers that build on top of this foundation, see [RFC 11: Protocol: Sovereignty](./002_concept_sovereignty.md).
 
 ### The DNS Identity Mechanism
 

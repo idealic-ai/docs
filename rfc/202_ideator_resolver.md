@@ -1,10 +1,8 @@
-# RFC 08: System: Resolver
-
-_For definitions of key terms used in this document, please refer to the [Glossary](./000_glossary.md)._
+# 202: Ideator: Resolver
 
 ## 1. Introduction
 
-This document defines **System: Resolver**, a powerful `Idea Transformer` that enables the composition and dynamic linking of `Ideas`. As a critical companion to [System: Storage](./201_system_storage.md), the Resolver's purpose is to take a high-level `Idea` containing references to other `Ideas` and transform it into a complete, self-contained, and executable `Idea` with all references resolved.
+This document defines **System: Resolver**, a powerful `Idea Transformer` that enables the composition and dynamic linking of `Ideas`. As a critical companion to [System: Storage](./201_ideator_storage.md), the Resolver's purpose is to take a high-level `Idea` containing references to other `Ideas` and transform it into a complete, self-contained, and executable `Idea` with all references resolved.
 
 This mechanism allows `Ideas` to become modular and reusable building blocks, preventing data duplication and enabling the creation of complex systems from simpler, versioned components.
 
