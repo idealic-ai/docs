@@ -128,7 +128,7 @@ The system automatically determines execution mode during schema composition:
 
 This convention-based approach means:
 
-- **Name your Activity the same as your Tool** for zero configuration
+- **Register your Activity under the same name as your Tool** for zero configuration
 - Missing activities automatically default to latent execution
 - Explicit `_activity` fields always take precedence
 
