@@ -26,14 +26,10 @@ This document provides definitions for the key concepts used in the Idea Protoco
 
 - **Import**: A key that identifies a piece of context from the parent environment to be made available (`imported`) to an execution. It can be used to focus an LLM's attention in a **Latent Inline** execution or to construct the entire context for a **Module Scope** execution. Controlled by the `_imports` property.
 
+- **Loop**: A sequence of `Request`s aimed at achieving a goal. The agent continues to invoke `Request`s, process the resulting `Call`s, and feed the output back into the context of the next `Request` until no more `Call`s are generated.
+
 - **State Message**: A context message containing a `state` object and an optional `schema`. It represents a persistent state maintained between ticks of an agent's execution loop.
 
 - **Plan**: A directed acyclic graph (DAG) of `Tool Calls`. It defines a sequence of actions, with dependencies determined by tools reading from and writing to the `State Object`.
 
-- **Plot**: A branching scenario within a `Plan` designed to handle unexpected or non-deterministic outcomes.
-
-- **Instancing**: The process of handling multiple, independent `Instances` (each with its own `State Object` and unique identifier) within a single agent request.
-
-- **Instance**: A single, uniquely identified state object and its associated context, processed as one of many within an `Instancing` operation.
-
-- **Reactor**: A specific `Idea Transformer` designed as a universal runtime for stateful, turn-based agent interactions. It takes a game/process state (`Idea`) and produces the next state (`Idea`).
+- **Instancing**: The process of handling multiple, independent `

@@ -1,4 +1,4 @@
-# 104: Agent: Input
+# 105: Agent: Input
 
 > Sidenote:
 >
@@ -32,7 +32,7 @@ As described in the [Idea Protocol](./001_concept_idea.md), the presence of an `
 
 ## Interaction with the Instancing Protocol
 
-The `Input` message is fully compatible with the [Instancing Protocol](./107_agent_instancing.md), allowing for sophisticated data-sourcing strategies when processing multiple instances at once. It can operate in two distinct modes:
+The `Input` message is fully compatible with the [Instancing Protocol](./108_agent_instancing.md), allowing for sophisticated data-sourcing strategies when processing multiple instances at once. It can operate in two distinct modes:
 
 1.  **Global Input**: If an `Input` message is provided in the agent's context without an `_instance` property, its `input` data is treated as a global value. It is implicitly available to every instance being processed in the request. This is useful for providing shared configuration, prompts, or parameters that apply to all instances uniformly.
 

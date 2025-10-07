@@ -2,7 +2,7 @@
 
 > Sidenote:
 >
-> - Requires: [The Idea Protocol](./001_concept_idea.md), [The Input Protocol](./104_agent_input.md)
+> - Requires: [The Idea Protocol](./001_concept_idea.md), [The Input Protocol](./105_agent_input.md)
 > - Enables: [The Call Protocol](./103_agent_call.md), [Protocol: Sovereignty](./002_concept_sovereignty.md)
 
 > **Ideator:** An `Idea` that accepts input, signified by a context message of `type: "input"`. It acts as a function, transforming input to output.

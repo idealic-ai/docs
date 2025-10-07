@@ -1,4 +1,4 @@
-# 105: Agent: Imports
+# 106: Agent: Imports
 
 > **Import:** A key that identifies a piece of context from the parent environment to be made available (`imported`) to an execution. It can be used to focus an LLM's attention in a **Latent Inline** execution or to construct the entire context for a **Module Scope** execution. Controlled by the `_imports` property.
 >
@@ -14,7 +14,7 @@ The [Call Protocol](./103_agent_call.md) defines the high-level controls for `Ca
 
 3.  **Modular Explicit (`_module` + `_activity`)**: The LLM generates `params`. The system then invokes the specified Activity (`_activity`) from the resolved `_module` in a new, isolated context. If `_imports` are specified, that filtered context is passed as an additional argument to the Activity code.
 
-4.  **Modular Latent (`_module`, no `_activity`)**: The LLM generates `params`. The system then initiates a new, isolated LLM call, using the `Idea` specified in `_module` as the guide. The context for this new call is constructed _only_ from the data specified in `_imports`, ensuring a clean, sandboxed environment.
+4.  **Modular Latent (`_module`, no `_activity`)**: The LLM generates `params`. The system then initiates a new, isolated LLM call, using the `Idea` specified in `_module` as the guide. The context for this new call is constructed by combining the module's own context with the data specified in `_imports`.
 
 ## Focusing the Field of View
 

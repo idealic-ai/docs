@@ -1,8 +1,8 @@
-# 107: Agent: Instancing
+# 108: Agent: Instancing
 
 > Sidenote:
 >
-> - Requires: [Agent: State](./106_agent_state.md)
+> - Requires: [Agent: State](./107_agent_state.md)
 
 > **Instancing:** The process of handling multiple, independent `Instances` (each with its own `State Object` and unique identifier) within a single agent request.
 >

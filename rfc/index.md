@@ -1,4 +1,4 @@
-# Requests for Comments
+# RFCs (Request for Comments)
 
 ---
 
@@ -23,11 +23,12 @@ These documents serve as normative specifications that articulate our team's con
 - [101: Agent: Request](./101_agent_request.md)
 - [102: Agent: Tool](./102_agent_tool.md)
 - [103: Agent: Call](./103_agent_call.md)
-- [104: Agent: Input](./104_agent_input.md)
-- [105: Agent: Imports](./105_agent_imports.md)
-- [106: Agent: State](./106_agent_state.md)
-- [107: Agent: Instancing](./107_agent_instancing.md)
-- [108: Agent: Plan](./108_agent_plan.md)
+- [104: Agent: Loop](./104_agent_loop.md)
+- [105: Agent: Input](./105_agent_input.md)
+- [106: Agent: Imports](./106_agent_imports.md)
+- [107: Agent: State](./107_agent_state.md)
+- [108: Agent: Instancing](./108_agent_instancing.md)
+- [109: Agent: Plan](./109_agent_plan.md)
 
 > Sidenote: Describes the core services and infrastructure that support the ecosystem.
 
