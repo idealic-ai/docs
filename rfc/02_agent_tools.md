@@ -40,14 +40,6 @@ The Tool System is built on a fundamental principle: **Tools are pure schemas** 
 - **How it's identified** (`_tool` name)
 - **How it's called** (`_activity` field - determines execution mode, see Activity Resolution Strategy below)
 
-This schema-first approach enables:
-
-1. **Interface Independence**: Tool definitions exist independently of implementations
-2. **Multiple Implementations**: Different behaviors for the same interface (dev/test/prod)
-3. **Execution Flexibility**: Same Tool can use LLM reasoning or external code
-4. **LLM Understanding**: Agents can reason about and select appropriate tools
-5. **Type Safety**: Clear contracts validated at both schema definition and runtime
-
 ### The Dual Registry Architecture
 
 The Tool System employs two complementary registries:
