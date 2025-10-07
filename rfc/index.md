@@ -2,7 +2,7 @@
 
 ---
 
-The RFC (Request for Comments) documents serve as normative specifications that articulate our team's confirmed intent for implementation. These documents are the authoritative reference for the system's technical protocols, establishing the standards we commit to following and building upon.
+These documents serve as normative specifications that articulate our team's confirmed intent for implementation. These documents are the authoritative reference for the system's technical protocols, establishing the standards we commit to following and building upon.
 
 ---
 
