@@ -9,8 +9,6 @@
 
 > **Latent:** The use of a Large Language Model's (LLM) internal knowledge and reasoning capabilities (its "latent space") to generate outputs without explicit, deterministic code.
 >
-> **Latent Space:** The vast, high-dimensional representation of knowledge and relationships that an LLM learns during its training. It is the source of the model's reasoning and generation capabilities.
->
 > — [Glossary](./000_glossary.md)
 
 ## 1. Introduction

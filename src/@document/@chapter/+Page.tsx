@@ -1,4 +1,5 @@
 import { usePageContext } from 'vike-react/usePageContext';
+import { A } from '../../components/A';
 import { Chapter } from '../../data/sitemap';
 
 interface PageData {
@@ -18,7 +19,7 @@ export default function Page() {
     <article>
       {content ? (
         <>
-          <a href={`/docs/${document}/`} className="back-link">
+          <A href={`/${document}/`} className="back-link">
             &larr;{' '}
             <span>
               Back to{' '}
@@ -27,20 +28,20 @@ export default function Page() {
                 : document.charAt(0).toUpperCase() + document.slice(1)}{' '}
               table of contents
             </span>
-          </a>
+          </A>
           <section dangerouslySetInnerHTML={{ __html: content }} />
           <nav className="pagination">
             {prevChapter ? (
-              <a href={'/docs' + prevChapter.url} className="prev">
+              <A href={prevChapter.url} className="prev">
                 &larr; {prevChapter.name}
-              </a>
+              </A>
             ) : (
               <span />
             )}
             {nextChapter ? (
-              <a href={'/docs' + nextChapter.url} className="next">
+              <A href={nextChapter.url} className="next">
                 {nextChapter.name} &rarr;
-              </a>
+              </A>
             ) : (
               <span />
             )}

@@ -697,6 +697,7 @@ label.margin-toggle:not(.sidenote-number) {
 }
 
 .markdown-alert {
+  margin-left: -10px;
   padding: calc(var(--rehype-github-alerts-default-space) / 2)
     var(--rehype-github-alerts-default-space);
   margin-bottom: var(--rehype-github-alerts-default-space);

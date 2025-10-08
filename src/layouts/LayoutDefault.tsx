@@ -1,5 +1,6 @@
 import { usePageContext } from 'vike-react/usePageContext';
 import '../assets/tufte.css';
+import { A } from '../components/A';
 import type { Chapter, Sitemap } from '../data/sitemap';
 
 export default function LayoutDefault({ children }: { children: React.ReactNode }) {
@@ -26,16 +27,16 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
           return (
             <div key={doc}>
               <strong>
-                <a href={`/docs/${doc}/`}>
+                <A href={`/${doc}/`}>
                   {doc == 'rfc' ? 'RFCs' : doc.charAt(0).toUpperCase() + doc.slice(1)}
-                </a>
+                </A>
               </strong>
               {isManifesto && (
                 <>
                   {': '}
                   {chapters.map((chapter: Chapter, index: number) => (
                     <span key={chapter.id}>
-                      <a href={'/docs' + chapter.url}>{chapter.name}</a>
+                      <A href={chapter.url}>{chapter.name}</A>
                       {index < chapters.length - 1 && ' | '}
                     </span>
                   ))}

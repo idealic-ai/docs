@@ -1,8 +1,9 @@
 import type { PageContext } from 'vike/types';
 
 export function route(pageContext: PageContext) {
-  const match = pageContext.urlPathname.match(/^\/(manifesto|rfc|blueprint|edict)\/([^/]+).md$/);
-  console.log(match, pageContext.urlPathname);
+  const match = pageContext.urlPathname.match(
+    /^\/(en|ru)\/(manifesto|rfc|blueprint|edict)\/([^/]+).md$/
+  );
 
   if (!match) {
     return false;
@@ -10,8 +11,9 @@ export function route(pageContext: PageContext) {
 
   return {
     routeParams: {
-      document: match[1],
-      chapterSlug: match[2],
+      lang: match[1],
+      document: match[2],
+      chapterSlug: match[3],
     },
   };
 }

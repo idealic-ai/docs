@@ -17,10 +17,11 @@ interface PageData {
 
 export async function data(pageContext: PageContextServer): Promise<PageData> {
   const commonData = await getCommonData();
-  const { document, chapterSlug } = (pageContext.routeParams as {
+  const { document, chapterSlug, lang } = (pageContext.routeParams as {
     document: string;
     chapterSlug: string;
-  }) || { document: '', chapterSlug: '' };
+    lang: string;
+  }) || { document: '', chapterSlug: '', lang: 'en' };
 
   if (!chapterSlug) {
     return {
@@ -43,13 +44,32 @@ export async function data(pageContext: PageContextServer): Promise<PageData> {
       throw new Error(`Chapter ${chapterSlug} not found in ${document}`);
     }
 
-    const COMPILED_DIR = path.resolve(process.cwd(), `./${document}`);
+    let markdownContent: string;
+    let isTranslated = true;
 
-    // Read the chapter content
-    const markdownContent = await fs.promises.readFile(
-      path.join(COMPILED_DIR, chapter.path),
-      'utf-8'
+    const translatedPath = path.resolve(
+      process.cwd(),
+      './translations',
+      lang,
+      document,
+      chapter.path
     );
+
+    try {
+      markdownContent = await fs.promises.readFile(translatedPath, 'utf-8');
+    } catch (e) {
+      isTranslated = false;
+      const originalPath = path.resolve(process.cwd(), `./${document}`, chapter.path);
+      markdownContent = await fs.promises.readFile(originalPath, 'utf-8');
+    }
+
+    if (!isTranslated) {
+      const warning = `> [!WARNING]
+> This document has not yet been translated into ${
+        lang === 'ru' ? 'Russian' : 'the selected language'
+      }. You are reading the original English version.`;
+      markdownContent = `${warning}\n\n${markdownContent}`;
+    }
 
     // Convert markdown to HTML
     const htmlContent = await processMarkdown(markdownContent);

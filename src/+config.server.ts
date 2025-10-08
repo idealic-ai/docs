@@ -9,6 +9,10 @@ export default {
   // https://vike.dev/Layout
   Layout,
 
+  redirects: {
+    '/': '/en',
+  },
+
   // https://vike.dev/head-tags
   title: 'Idealic Documentation',
   description: 'Repository of all the documents: Manifesto, Edict, RFCs, Blueprint',

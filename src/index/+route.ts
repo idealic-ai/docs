@@ -3,10 +3,12 @@ import type { PageContext } from 'vike/types';
 export { route };
 
 function route(pageContext: PageContext) {
-  // Match the root path
-  if (pageContext.urlPathname === '/' || pageContext.urlPathname === '') {
+  const match = pageContext.urlPathname.match(/^\/(en|ru)$/);
+  if (match) {
     return {
-      routeParams: {},
+      routeParams: {
+        lang: match[1],
+      },
     };
   }
   return false;
