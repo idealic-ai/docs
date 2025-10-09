@@ -10,6 +10,7 @@ export async function onBeforePrerenderStart() {
   LANGUAGES.forEach(lang => {
     urls.push(`/${lang}`);
     for (const docType of DOC_FOLDERS) {
+      urls.push(`/${lang}/${docType}/`);
       if (sitemap[docType]) {
         sitemap[docType].forEach(chapter => {
           const langPrefix = `/${lang}`;

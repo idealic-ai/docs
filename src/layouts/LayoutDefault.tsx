@@ -22,8 +22,12 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
     <div>
       <nav>
         <div>
-          <a href="/">
-            <strong>Docs</strong>
+          <a href="/en/">
+            <strong>En</strong>
+          </a>
+          {' / '}
+          <a href="/ru/">
+            <strong>Ru</strong>
           </a>
         </div>
         {Object.entries(sitemap).map(([doc, chapters]) => {

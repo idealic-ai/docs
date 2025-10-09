@@ -10,7 +10,7 @@ export default {
   Layout,
 
   redirects: {
-    '/': '/en',
+    '/': '/docs/en',
   },
 
   // https://vike.dev/head-tags
