@@ -39,9 +39,7 @@ async function translateFile(filePath: string, targetLangs: string[]) {
 }
 
 async function main() {
-  const defaultGlob = '{edict,manifesto,rfc,ui}/**/*.md';
-
-  //const defaultGlob = 'src/data/ui.json';
+  const defaultGlob = '{edict,manifesto,rfc}/**/*.md';
   const globPattern = process.argv[2] || defaultGlob;
 
   const files = await glob(globPattern, {
@@ -49,7 +47,13 @@ async function main() {
     absolute: true,
   });
 
-  await Promise.all(files.map(filePath => translateFile(filePath, ['simple-ru', 'simple-en'])));
+  //files.push('src/data/ui.json');
+
+  await Promise.all(
+    files.flatMap(filePath =>
+      ['simple-ru', 'simple-en', 'ru'].map(lang => translateFile(filePath, [lang]))
+    )
+  );
 }
 
 main().catch(console.error);

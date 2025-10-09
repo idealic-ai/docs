@@ -1,4 +1,4 @@
-# 003: Agent/Call
+# 004: Agent/Call
 
 > **Call:** A concrete, executable instance of a `Tool`, with specific values for its `params`. It's an invocation-focused request for what _should be done_.
 >
@@ -28,7 +28,7 @@ A **Call** is a concrete instance of a Tool with specific parameter values, read
 
 The core principle: **any Idea can be turned into a Tool, which can then be called as a Call.**
 
-For a detailed explanation of how an `Idea`'s input schema is inverted to become a `Tool`'s parameter schema, see the **[Input Protocol](./005_agent_input.md)**.
+For a detailed explanation of how an `Idea`'s input schema is inverted to become a `Tool`s parameter schema, see the **[Input Protocol](./007_agent_input.md)**.
 
 ## The Controls of Execution: Scope and Method
 

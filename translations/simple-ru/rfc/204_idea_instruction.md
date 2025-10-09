@@ -1,7 +1,17 @@
-Imagine an **Instruction** is like a super-detailed recipe for a computer.
+# 204: Идея/Инструкция
 
-You know how a cookbook recipe tells you exactly what ingredients to use and what steps to follow to bake a cake? An Instruction does the same thing, but it's a recipe for changing a piece of information. It gives the computer a clear guide on *how* to make a change, a process we call `refine` (which just means to improve or edit something).
+> **Идея-Инструкция:** Это как понятный, многоразовый «рецепт» для какого-то действия, записанный на специальном языке `JSON Schema`. Он даёт чёткое руководство для операции `refine` (то есть, для улучшения или изменения чего-либо), подробно объясняя, _как_ именно нужно сделать это изменение.
+>
+> — [Глоссарий](./000_glossary.md)
 
-This 'recipe' is written in a very strict, computer-friendly language (called JSON Schema) so there's no confusion. It's like telling a robot 'use exactly 2 cups of flour,' not just 'use some flour.'
+> [!WARNING]
+> Этот Нормативный Акт пока что является заготовкой и будет дополнен в будущем.
 
-The best part is that these recipes are reusable, like LEGO bricks. You can use a simple one for a small task (like fixing a typo), or you can combine many of these little recipes to build a huge, complex set of steps (`Process`), like automatically rewriting an entire paragraph. They are the core building blocks for making any kind of change, big or small.
+> Sidenote:
+>
+> - Требует:
+>   - [101: Концепция/Идея](./101_concept_idea.md)
+
+**Инструкция** — это как понятный и многоразовый «рецепт» для какого-либо действия. Этот рецепт записан на специальном языке `JSON Schema`, который работает как чертёж: он описывает, какая информация нужна и как её правильно оформить. 
+
+Он даёт чёткое пошаговое руководство для операции `refine` (улучшения), подробно объясняя, *как именно* нужно внести изменение. Это как деталька в конструкторе: из таких инструкций можно собирать как простые правки, так и большие, сложные проекты, которые называются `Процессы`.

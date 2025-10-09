@@ -1,4 +1,4 @@
-# 008: Agent/Instancing
+# 011: Agent/Instancing
 
 > **Instancing:** The process of handling multiple, independent `Instances` (each with its own `State Object` and unique identifier) within a single agent request.
 >
@@ -6,11 +6,11 @@
 
 > Sidenote:
 >
-> - Requires: [Agent: State](./007_agent_state.md)
+> - Requires: [Agent/State](./010_agent_state.md)
 > - Compatible:
->   - [Agent: Input](./005_agent_input.md)
->   - [Agent: Imports](./006_agent_imports.md)
->   - [Agent: Plan](./009_agent_plan.md)
+>   - [Agent/Input](./007_agent_input.md)
+>   - [Agent/Imports](./008_agent_imports.md)
+>   - [Agent/Plan](./012_agent_plan.md)
 
 This document outlines a protocol for processing multiple, independent instances within a single agent request, using a state-driven architecture.
 

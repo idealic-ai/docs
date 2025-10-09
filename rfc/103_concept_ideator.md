@@ -1,23 +1,21 @@
 # 103: Concept/Ideator
 
-> **Ideator:** An `Idea` that accepts input, signified by a context message of `type: "input"`. It acts as a function, transforming input to output.
->
-> — [Glossary](./000_glossary.md)
+> **Ideator:** An `Idea` that accepts input, signified by a context message of `type: "input"`. It acts as a function, transforming input to output. — [Glossary](./000_glossary.md)
 
 > Sidenote:
 >
 > - Requires:
->   - [The Idea Protocol](./101_concept_idea.md)
->   - [The Input Protocol](./005_agent_input.md)
+>   - [101: Concept/Idea](./101_concept_idea.md)
+>   - [007: Agent/Input](./007_agent_input.md)
 > - Enables:
->   - [The Call Protocol](./003_agent_call.md)
->   - [Protocol: Sovereignty](./102_concept_sovereignty.md)
+>   - [004: Agent/Call](./004_agent_call.md)
+>   - [102: Concept/Sovereignty](./102_concept_sovereignty.md)
 
 ## 1. Introduction
 
-This document specifies the protocol for **Ideators** and **Idea Transformers** as executable, service-based components. It builds upon the foundational [Idea Protocol](./101_concept_idea.md), which defines the core data structure, and describes how an `Idea` is transformed into a functional, invocable entity.
+This document specifies the protocol for **Ideators** and **Idea Transformers** as executable, service-based components. It builds upon the foundational [101: Concept/Idea](./101_concept_idea.md), which defines the core data structure, and describes how an `Idea` is transformed into a functional, invocable entity.
 
-For details on the spectrum of hosting and deployment models, see [RFC 11: Protocol: Sovereignty](./102_concept_sovereignty.md).
+For details on the spectrum of hosting and deployment models, see [102: Concept/Sovereignty](./102_concept_sovereignty.md).
 
 ## 2. From Idea to Ideator
 

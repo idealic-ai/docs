@@ -23,11 +23,27 @@ export default function Page() {
     <article>
       {content ? (
         <>
+          <nav className="pagination top">
+            {prevChapter ? (
+              <A href={prevChapter.url} className="prev">
+                &larr; {prevChapter.name}
+              </A>
+            ) : (
+              <span />
+            )}
+            {nextChapter ? (
+              <A href={nextChapter.url} className="next">
+                {nextChapter.name} &rarr;
+              </A>
+            ) : (
+              <span />
+            )}
+          </nav>
           <A href={`/${document}/`} className="back-link">
-            &larr; <span>{docStrings ? docStrings.toc_link : `Back to ${document}`}</span>
+            <span>{docStrings?.toc_link}</span>
           </A>
           <section dangerouslySetInnerHTML={{ __html: content }} />
-          <nav className="pagination">
+          <nav className="pagination bottom">
             {prevChapter ? (
               <A href={prevChapter.url} className="prev">
                 &larr; {prevChapter.name}

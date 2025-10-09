@@ -1,18 +1,16 @@
 # 101: Concept/Idea
 
-> **Idea:** A self-contained, stateful data triplet (`schema`, `solution`, `context`) representing a unit of knowledge. It's a persistent, computational primitive, not an ephemeral prompt.
->
-> — [Glossary](./000_glossary.md)
+> **Idea:** A self-contained, stateful data triplet (`schema`, `solution`, `context`) representing a unit of knowledge. It's a persistent, computational primitive, not an ephemeral prompt. — [Glossary](./000_glossary.md)
 
 > Sidenote:
 >
 > - Requires:
->   - [Agent: Request](./001_agent_request.md)
-> - Enables: [Protocol: Ideators](./103_concept_ideator.md)
+>   - [001: Agent/Request](./001_agent_request.md)
+> - Enables: [103: Concept/Ideator](./103_concept_ideator.md)
 
 This document outlines the architecture for a decentralized web of living documents. It covers the protocol's core data structure (the **Idea**) and the decentralized discovery mechanism for publishing and resolving them via **DNS**.
 
-For details on how `Ideas` become executable services, see [RFC 10: Protocol: Ideators](./103_concept_ideator.md). For details on the spectrum of hosting models, see [RFC 11: Protocol: Sovereignty](./102_concept_sovereignty.md).
+For details on how `Ideas` become executable services, see [103: Concept/Ideator](./103_concept_ideator.md). For details on the spectrum of hosting models, see [102: Concept/Sovereignty](./102_concept_sovereignty.md).
 
 ## The Mechanics of a Living Web
 
@@ -62,7 +60,7 @@ is considered backward-compatible if it adds new fields to the `schema`. An `Ide
 
 DNS provides a globally unique, resolvable name for any Idea, establishing a decentralized identity that decouples the Idea from its storage location. This is the bedrock of the entire system.
 
-For details on the progressive hosting layers that build on top of this foundation, see [RFC 11: Protocol: Sovereignty](./102_concept_sovereignty.md).
+For details on the progressive hosting layers that build on top of this foundation, see [102: Concept/Sovereignty](./102_concept_sovereignty.md).
 
 ### The DNS Identity Mechanism
 

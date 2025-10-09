@@ -11,19 +11,30 @@ _The central concept is a profound philosophical and practical rebellion against
 The entire ecosystem is built on a set of simple, powerful principles that ensure consistency and composability.
 
 - **Everything is an Idea.** At the heart of it, every piece of the system—whether it’s an app, a tool, a document, or a process—is just an Idea. This keeps the system elegant and unified.
+
   > Sidenote: [RFC 101: Concept/Idea](../rfc/101_concept_idea.md)
+
 - **Self-Contained and Self-Describing.** Every Idea carries its own schema and context, making it fully self-describing. This allows any client or LLM to understand and interact with it without prior knowledge.
+
   > Sidenote: [RFC 001: Agent/Request](../rfc/001_agent_request.md)
+
 - **Any Idea Can Have a Home.** Any Idea can be hosted at a unique domain, giving it a stable home and a default UI. If it’s a known type (like an article), it gets a tailored interface. If it’s an Ideator, it gets a flexible, universal interface.
+
   > Sidenote: [RFC 102: Concept/Sovereignty](../rfc/102_concept_sovereignty.md)
+
 - **Ideators are Ideas with Input.** An Ideator is an Idea that is configured to accept input, making it function like a callable process.
+
   > Sidenote:
   >
   > - [RFC 103: Concept/Ideator](../rfc/103_concept_ideator.md)
   > - [RFC 005: Agent/Input](../rfc/005_agent_input.md)
+
 - **Composable by Design.** The system is built for composition. Because some Ideators (called Idea Transformers) can transform other Ideas, they can be chained and orchestrated into complex workflows.
+
 - **The LLM is the Universal Interpreter.** By relying on a language model to interpret and execute Ideas based on their self-describing structure, the entire system becomes incredibly accessible and adaptable to novel use cases.
+
   > Sidenote: [RFC 104: Concept/Latent](../rfc/104_concept_latent_.md)
+
 - **A Protocol of Living Ideas.** We are not just sharing static data; we are exchanging living, evolving systems that can grow and adapt over time through collaboration and composition.
 
 ---

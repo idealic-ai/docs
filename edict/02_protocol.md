@@ -12,13 +12,13 @@ _The promise of a decentralized renaissance cannot be built on the compromised f
 
 We are not building another monolithic service that demands your attention and data. We are creating an _operating system for ideas_—a foundational layer upon which countless worlds can be built. The goal is not to create a single, all-encompassing app, but to provide the rich soil where living ideas can be planted, evolve, and interconnect. Others can and should build their own clients and interpreters on this protocol. Some may be simple archives, others complex analytical engines. The ecosystem's health and richness will emerge from this diversity, not from a single, centrally-planned design.
 
+The protocol is inherently extensible. **Ideas** (living, self-contained documents that can be shared, remixed, and evolved) are not monolithic; they are specialized types with distinct meanings, such as `Record`, `Process`, or `Agent`. We provide a foundational set of core `Idea` types that serve as a base protocol, a robust starting point for building almost any system. However, the protocol is also open, allowing anyone to define new, custom `Idea` types. This flexibility does not require every client to understand every type of `Idea`. A simple client may only recognize `Records`, while a more advanced one could manage complex `Processes`. This ensures a modular and adaptable ecosystem where specialization is not only possible, but encouraged.
+
 > Sidenote:
 >
 > - [RFC 201: Idea/Record](../rfc/201_idea_record.md)
 > - [RFC 202: Idea/Vessel](../rfc/202_idea_vessel.md)
 > - [RFC 203: Idea/Process](../rfc/203_idea_process.md)
-
-The protocol is inherently extensible. **Ideas** (living, self-contained documents that can be shared, remixed, and evolved) are not monolithic; they are specialized types with distinct meanings, such as `Record`, `Process`, or `Agent`. We provide a foundational set of core `Idea` types that serve as a base protocol, a robust starting point for building almost any system. However, the protocol is also open, allowing anyone to define new, custom `Idea` types. This flexibility does not require every client to understand every type of `Idea`. A simple client may only recognize `Records`, while a more advanced one could manage complex `Processes`. This ensures a modular and adaptable ecosystem where specialization is not only possible, but encouraged.
 
 **Privacy Through Private Nodes**
 

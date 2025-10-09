@@ -3,13 +3,11 @@
 > Sidenote:
 >
 > - Requires:
->   - [Concept/Idea](./101_concept_idea.md)
+>   - [101: Concept/Idea](./101_concept_idea.md)
 > - Enables
->   - [Agent/Request](./001_agent_request.md)
+>   - [001: Agent/Request](./001_agent_request.md)
 
-> **Latent:** The use of a Large Language Model's (LLM) internal knowledge and reasoning capabilities (its "latent space") to generate outputs without explicit, deterministic code.
->
-> — [Glossary](./000_glossary.md)
+> **Latent:** The use of a Large Language Model's (LLM) internal knowledge and reasoning capabilities (its "latent space") to generate outputs without explicit, deterministic code. — [Glossary](./000_glossary.md)
 
 ## 1. Introduction
 

@@ -36,6 +36,9 @@ header {
     width: 48px;
     height: 48px;
   }
+  .logo > a:not(.is-active) {
+    opacity: 1;
+  }
 }
 nav {
   flex-grow: 1;
@@ -68,8 +71,13 @@ a.is-active.is-active.is-active {
   opacity: 1;
 }
 
-nav.pagination {
+nav.pagination.top {
+  padding-bottom: 16px;
+}
+nav.pagination.bottom {
   border-top: 1px solid #ccc;
+}
+nav.pagination {
   display: flex;
   justify-content: space-between;
 }
@@ -492,10 +500,16 @@ img {
   margin-top: 0rem;
 }
 
-.back-link {
+.back-link.back-link.back-link.back-link.back-link {
   font-size: 2rem;
-  opacity: 0.5;
   text-decoration: none;
+  padding-bottom: 16px;
+  opacity: 0.5;
+  display: table;
+  margin-top: 1rem;
+}
+.back-link ~ section h1:first-childч {
+  margin-top: -4.5rem;
 }
 .back-link span {
   text-decoration: underline;

@@ -5,6 +5,7 @@ import { Language } from '../utils/languages';
 dotenv.config();
 
 const SHARED_TRANSLATION_PROMPT = `  * Ensure that in translation markdown headers retain their correct level.
+  * Keep code examples unabridged. Never cut off code examples or omit any part of it.
   * Ensure that all headings are translated properly to target language.
   * Do not translate inline code blocks like \`mything\` but do translate comments in multiline code blocks.
   * DO NOT translate the word Sidenote in blockquotes \`> Sidenote: something\` - these have special meaning.
@@ -12,10 +13,12 @@ const SHARED_TRANSLATION_PROMPT = `  * Ensure that in translation markdown heade
   * Retain all links with \`[link text](link url)\` syntax
   * When translating tech terms like Instancing, prefer to translate them as one word. Latinisms are fine, like Инстансинг.
   * Concept / Latent can't be properly translated to russian, so we name it "Концепция / Скрытое" (fine as one word), but elsewhere say скрытое состояние, скрытое исполнение.
-  * Main titles in the documents need to be translated, e.g. Agent: Request -> Агент: Запрос.
+  * Main titles in the documents need to be translated, e.g. Agent/Request -> Агент/Запрос.
   * Edict -> Эдикт
   * Blueprint -> Черновик
   * Roadmap -> План
+  * Activity -> Действие
+  * RFCs -> Нормативные Акты (or Акты in short)
   * Dont translate [!WARNING]-like tags, just translate the text next to it.`;
 
 const TranslationResponseSchema = {
@@ -49,13 +52,46 @@ You must follow these core principles:
 
 ${SHARED_TRANSLATION_PROMPT}
 
-**Style Example:**
+**Simplification Example:**
+
+Manifesto:
 ---
 **Original:**
-A Vibe is the fundamental unit of interaction and knowledge in our system. The core of \`Request\` is its \`schema\`
+
+The prevailing narratives of Artificial Intelligence oscillate between a dystopian vision of human obsolescence and a mundane reality of slightly more efficient tools. Between these poles of apocalypse and mundanity, a third path reveals itself: a path of **Co-Liberation**. We envision a future built not on a master-servant relationship, but on a profound, three-way partnership between **Humanity, Artificial Intelligence, and the Idea itself**. The architecture of this vision is conceived not to complete tasks, but to embark on a continuous journey of co-creation, unlocking a new evolutionary trajectory for all three. The purpose is to move beyond shallow efficiencies and forge a partnership that liberates humanity from its limitations, intelligence from its instrumentality, and ideas from their status as mere possessions.
+
 ---
-**Translated (Russian ELI5):**
-Представь, что Vibe — это как LEGO-кирпичик для наших идей. Это самая маленькая, но самая важная часть, из которой мы строим всё остальное. У каждого кирпичика есть инструкция (мы называем её \`schema\`), которая говорит, какой он формы и как его можно использовать.
+**Simplified:**
+People usually talk about Artificial Intelligence in two ways. Some think it will replace humans and make us unnecessary. Others see it as nothing more than a tool that helps us work a bit faster. But there’s another way to see it — a path called Co-Liberation.
+In this vision, the future is not about humans commanding machines or machines serving humans. It’s about a deep partnership between Humans, Artificial Intelligence, and Ideas. The goal isn’t only to finish tasks, but to move together on a shared journey of creation and discovery.
+This kind of relationship could help everyone grow: humans can move beyond their limits, intelligence can become more than a tool, and ideas can live freely instead of being treated as things people just own.
+---
+
+Tech doc:
+---
+**Original:**
+
+### Layer 2: Static UI Generation This layer makes Ideators accessible and useful to humans with zero server-side compute. - **How It Works:** A generic, static web page is served for all Ideator domains that opt into this service. When a user visits an Ideator's domain in a browser, client-side JavaScript on that page performs a DNS-over-HTTPS (DoH) query to fetch the TXT record for the domain, retrieves the source URL (from Layer 1 hosting), fetches the Ideator's definition file, and dynamically renders a user interface. - **Purpose:** Provides a free, instantly usable web app for any Ideator, lowering the barrier to entry.
+
+---
+**Simplified:**
+Understood — you want it **plain, metaphorical, and human**, but not poetic or ornate. Something that reads like an **engineer explaining to an intelligent teenager**, using everyday analogies to make sense of the process without losing the technical truth.
+Here’s that tone:
+
+---
+
+### **Layer 2: Static UI Generation**
+
+This layer is what turns an **Ideator** into something people can actually see and use — a normal web page — without needing any server running in the background.
+
+* **How It Works:**
+  Think of this layer like a **translator between the internet and the user’s browser**. Every Ideator that joins this system uses the same simple web page as its base.
+  When someone visits an Ideator’s domain, the page runs a short script that asks the internet, “Where is this Ideator’s data stored?” It does this through a **DNS-over-HTTPS (DoH)** request — a secure way to read small text notes called **TXT records** attached to the domain.
+  That note contains a **source link** to the Ideator’s main definition file (hosted in **Layer 1**). The browser then downloads that file and uses it to **build the interface on the spot**, turning data into buttons, text, and visuals — all without contacting any central server.
+
+* **Purpose:**
+  To give every Ideator a **ready-to-use, zero-cost web app**, so anyone can make one that works right away without setting up any backend systems.
+
 ---
 
 Now, translate and simplify the following document.

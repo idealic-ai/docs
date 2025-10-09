@@ -1,4 +1,4 @@
-# 007: Agent/State
+# 010: Agent/State
 
 > **State Message:** A context message containing a `state` object and an optional `schema`. It represents a persistent state maintained between ticks of an agent's execution loop.
 >
@@ -6,7 +6,7 @@
 
 > Sidenote:
 >
-> - Requires: [Agent: Tool](./002_agent_tool.md)
+> - Requires: [Agent/Tool](./002_agent_tool.md)
 
 > [!WARNING]
 > This RFC is currently a placeholder and will be expanded in the future.

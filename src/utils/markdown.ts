@@ -40,7 +40,7 @@ export async function processMarkdown(markdownContent: string): Promise<string> 
                 }
               }
 
-              if (parent && typeof index === 'number' && index > 0) {
+              if (parent && typeof index === 'number') {
                 let prevElementIndex = -1;
                 for (let i = index - 1; i >= 0; i--) {
                   if (parent.children[i].type === 'element') {
@@ -51,8 +51,38 @@ export async function processMarkdown(markdownContent: string): Promise<string> 
 
                 if (prevElementIndex !== -1) {
                   const prevElement = parent.children[prevElementIndex];
-                  parent.children[prevElementIndex] = node;
-                  parent.children[index] = prevElement;
+                  const blockTags = [
+                    'p',
+                    'li',
+                    'ul',
+                    'ol',
+                    'h1',
+                    'h2',
+                    'h3',
+                    'h4',
+                    'h5',
+                    'h6',
+                    'div',
+                    'blockquote',
+                    'table',
+                    'figure',
+                  ];
+
+                  if (
+                    prevElement &&
+                    prevElement.type === 'element' &&
+                    blockTags.includes(prevElement.tagName)
+                  ) {
+                    node.properties['data-anchor'] = prevElement.tagName;
+                    parent.children[prevElementIndex] = node;
+                    parent.children[index] = prevElement;
+                  } else {
+                    parent.children.splice(index, 1);
+                    parent.children.unshift(node);
+                  }
+                } else {
+                  parent.children.splice(index, 1);
+                  parent.children.unshift(node);
                 }
               }
             }

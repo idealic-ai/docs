@@ -1,23 +1,23 @@
 {
   "rfc": {
-    "short": "RFCs",
-    "long": "Request for Comments",
-    "toc_link": "Back to list of RFCs table of contents"
+    "short": "Acts",
+    "long": "Normative Acts",
+    "toc_link": "Normative Acts"
   },
   "edict": {
     "short": "Edict",
-    "long": "Edict",
-    "toc_link": "Back to Edict table of contents"
+    "long": "Edict of Autonomy",
+    "toc_link": "Edict of Autonomy"
   },
   "manifesto": {
     "short": "Manifesto",
-    "long": "Manifesto",
-    "toc_link": "Back to Manifesto table of contents"
+    "long": "Manifesto of Co-Liberation",
+    "toc_link": "Manifesto of Co-Liberation"
   },
   "blueprint": {
-    "short": "Blueprint",
-    "long": "Blueprint",
-    "toc_link": "Back to Blueprint table of contents"
+    "short": "Drafts",
+    "long": "Drafts",
+    "toc_link": "Drafts"
   },
   "nav": {
     "en": "En",

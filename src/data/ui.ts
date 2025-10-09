@@ -9,13 +9,7 @@ export interface UIStrings {
   };
 }
 
-let uiStrings: UIStrings;
-
 export async function getUiStrings(lang: string = 'en'): Promise<UIStrings> {
-  if (uiStrings && lang === 'en') {
-    return uiStrings;
-  }
-
   const filePath =
     lang === 'en'
       ? path.resolve(process.cwd(), './src/data/ui.json')
@@ -24,9 +18,7 @@ export async function getUiStrings(lang: string = 'en'): Promise<UIStrings> {
   try {
     const fileContent = await fs.readFile(filePath, 'utf-8');
     const strings = JSON.parse(fileContent);
-    if (lang === 'en') {
-      uiStrings = strings;
-    }
+
     return strings;
   } catch (error) {
     if (lang !== 'en') {

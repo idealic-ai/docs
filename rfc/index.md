@@ -14,13 +14,16 @@ These documents serve as normative specifications that articulate our team's con
 
 - [001: Agent/Request](./001_agent_request.md)
 - [002: Agent/Tool](./002_agent_tool.md)
-- [003: Agent/Call](./003_agent_call.md)
-- [004: Agent/Loop](./004_agent_loop.md)
-- [005: Agent/Input](./005_agent_input.md)
-- [006: Agent/Imports](./006_agent_imports.md)
-- [007: Agent/State](./007_agent_state.md)
-- [008: Agent/Instancing](./008_agent_instancing.md)
-- [009: Agent/Plan](./009_agent_plan.md)
+- [003: Agent/Activity](./003_agent_activity.md)
+- [004: Agent/Call](./004_agent_call.md)
+- [005: Agent/Loop](./005_agent_loop.md)
+- [006: Agent/Data](./006_agent_data.md)
+- [007: Agent/Input](./007_agent_input.md)
+- [008: Agent/Imports](./008_agent_imports.md)
+- [009: Agent/Module](./009_agent_module.md)
+- [010: Agent/State](./010_agent_state.md)
+- [011: Agent/Instancing](./011_agent_instancing.md)
+- [012: Agent/Plan](./012_agent_plan.md)
 
 ### Concept
 

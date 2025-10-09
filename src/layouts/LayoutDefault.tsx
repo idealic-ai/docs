@@ -28,7 +28,7 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
   return (
     <div>
       <header>
-        <div>
+        <div className="logo">
           <A href="/">
             <img src={logo} alt="Logo" />
           </A>

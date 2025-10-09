@@ -1,12 +1,11 @@
-# 002: Agent: Tool
+# 002: Agent/Tool
 
-> **Tool**: A schema that defines a capability an agent can use. It is presented to an LLM as part of a request, acting as a structured interface for a potential action. The LLM activates the tool by generating a `Call` with specific parameters, which is then executed either latently by the LLM or explicitly by a registered code function (`Activity`).
->
-> — [Glossary](./000_glossary.md)
+> **Tool**: A schema that defines a capability an agent can use. It is presented to an LLM as part of a request, acting as a structured interface for a potential action. The LLM activates the tool by generating a `Call` with specific parameters, which is then executed either latently by the LLM or explicitly by a registered code function (`Activity`). — [Glossary](./000_glossary.md)
 
 > Sidenote:
 >
-> - Requires: [Agent: Request](./001_agent_request.md)
+> - Requires: [001: Agent/Request](./001_agent_request.md)
+> - Complemented by: [003: Agent/Activity](./003_agent_activity.md)
 
 This document describes the Tool - the foundational schema-driven interface that enables agents to understand and use structured capabilities.
 
@@ -21,9 +20,9 @@ Tools provide:
 - **Composability**: Building blocks that combine into complex agent behaviors
 - **LLM Integration**: Schemas that language models can reason about and select
 
-When an agent fills specific parameters for a Tool, it creates a **Call** - an instance of a Tool with all required parameters filled, representing a concrete request for execution (see [Call Protocol](./002_agent_calls.md) for details on Call execution, Scope, and Method controls).
+When an agent fills specific parameters for a Tool, it creates a **Call** - an instance of a Tool with all required parameters filled, representing a concrete request for execution (see [004: Agent/Call](./004_agent_call.md) for details on Call execution).
 
-> **Note**: While any LLM request can be represented as an Idea (which works well for simple structured content generation), Tools provide the mechanism for more complex scenarios requiring dynamic action selection. For details on how Ideas can be transformed into Tools through input schemas, see [Agent Input RFC](./003_agent_input.md).
+> **Note**: While any LLM request can be represented as an Idea (which works well for simple structured content generation), Tools provide the mechanism for more complex scenarios requiring dynamic action selection. For details on how Ideas can be transformed into Tools through input schemas, see [007: Agent/Input](./007_agent_input.md).
 
 ## When to Use the Tool System
 
@@ -38,33 +37,26 @@ Use the Tool System when you need agents to:
 
 ### Core Principle: Schema as Interface
 
-The Tool System is built on a fundamental principle: **Tools are pure schemas** that define interfaces without mandating implementations. A Tool schema specifies:
+The Tool System is built on a fundamental principle: **Tools are pure schemas** that define interfaces without mandating implementations. A Tool's execution is handled by either the LLM's latent reasoning or by a concrete code implementation called an **[003: Agent/Activity](./003_agent_activity.md)**.
+
+A Tool schema specifies:
 
 - **What the tool does** (description)
 - **What it needs** (input parameters)
 - **What it produces** (`_output` structure)
 - **How it's identified** (`_tool` name)
-- **How it's called** (`_activity` field - determines execution mode, see Activity Resolution Strategy below)
-
-### The Dual Registry Architecture
-
-The Tool System employs two complementary registries:
-
-**Tool Registry**: Stores schema definitions (the interface)
-**Activity Registry**: Stores implementation functions (the execution)
-
-This separation enables tools to exist without implementations (for LLM reasoning) and implementations to be swapped at runtime (dev/prod environments).
+- **How it's executed** (`_activity` field, see [003: Agent/Activity](./003_agent_activity.md) for details)
 
 ### Tool Schema Meta Fields
 
 Tool schemas use meta fields (prefixed with underscore) to define system-level properties:
 
 - **\_tool**: Unique identifier for the tool (required)
-- **\_activity**: Execution mode specification (auto-determined if not specified)
+- **\_activity**: Specifies which, if any, `Activity` should execute this tool. See the [003: Agent/Activity](./003_agent_activity.md) for resolution strategy.
 - **\_output**: Expected output structure (made nullable by system)
 - **\_reasoningForCall**: Agent's explanation for why this Call was created (added by system)
 
-Users define these meta fields in their tool definitions, and the Tool System enhances them during schema composition: resolving `_activity` if not specified, making `_output` nullable, and adding `_reasoningForCall`. Any field without an underscore prefix is considered a tool parameter. Meta fields always appear first in the schema composition order, providing consistent structure for LLM understanding.
+Any field without an underscore prefix is considered a tool parameter. Meta fields always appear first in the schema composition order, providing consistent structure for LLM understanding.
 
 ### System Boundaries
 
@@ -72,16 +64,17 @@ The Tool System handles:
 
 - Tool Registration (schema definition and storage)
 - Parameter Filling (LLM-driven extraction from context)
-- Execution Routing (latent vs explicit determination)
-- Activity Management (implementation registration and invocation)
+- Execution Routing (determining whether to use latent execution or an `Activity`)
 
-Higher-level protocols (like the [Call Protocol](./002_agent_calls.md)) build workflow orchestration, state management, and execution policies on top of these primitives.
+Higher-level protocols (like the [004: Agent/Call](./004_agent_call.md)) build workflow orchestration, state management, and execution policies on top of these primitives.
 
 ## Tool Definition and Registration
 
 Tools are defined through JSON schemas that specify their complete interface:
 
-### Basic Tool Schema
+### Basic Tool Schema (Latent Execution)
+
+This `Tool` has no corresponding `Activity`, so it will be executed by the LLM.
 
 ```typescript
 Tool.register('sentimentAnalysis', {
@@ -101,76 +94,27 @@ Tool.register('sentimentAnalysis', {
 });
 ```
 
-### Tool with Activity Registration
+### Tool with an Activity (Explicit Execution)
+
+This `Tool` is designed to be implemented by an `Activity`. See the [003: Agent/Activity](./003_agent_activity.md) for details on how to register the corresponding implementation.
 
 ```typescript
-// Define tool schema (same as basic example)
-Tool.register('weatherCheck', {
-  /* ... */
-});
-
-// Register implementation - name matches tool for zero-config
-Activity.register('weatherCheck', async call => {
-  const data = await weatherAPI.get(call.location);
-  return { temperature: data.temp, conditions: data.desc };
-});
+// Define the tool schema
+// See docs/rfc/003_agent_activity.md
 ```
-
-## Activity Resolution Strategy
-
-The Tool System supports two fundamentally different execution modes:
-
-- **Latent Execution** uses the LLM's reasoning capabilities - the agent "thinks through" the problem and produces the output directly in the same invocation. This is knowledge-based execution, ideal for analysis, planning, or creative tasks where the LLM's training is sufficient.
-  > Sidenote:
-  >
-  > - [RFC 104: Concept/Latent](../rfc/104_concept_latent.md)
-- **Explicit Execution** delegates to deterministic code - an Activity function is called to compute the output. This is code-based execution, essential for external API calls, database operations, or any task requiring precise, repeatable behavior.
-
-### Zero-Configuration Activity Matching
-
-The system automatically determines execution mode during schema composition:
-
-1. **Explicit `_activity` Field**: If the tool definition includes `_activity`, use as-is
-2. **Same-Name Convention** (recommended): If `Activity.Names` includes the tool name, set `_activity` to tool name (explicit)
-3. **Latent Fallback**: Otherwise, set `_activity` to empty string (latent)
-
-This convention-based approach means:
-
-- **Register your Activity under the same name as your Tool** for zero configuration
-- Missing activities automatically default to latent execution
-- Explicit `_activity` fields always take precedence
 
 ### Schema Composition
 
-Tool schemas are composed into a `calls` array for LLM consumption. Each schema is enhanced with meta fields and execution mode information (determined via the rules above), then added using JSON Schema's `anyOf` pattern:
+Tool schemas are composed into a `calls` array for LLM consumption. Each schema is enhanced with meta fields and execution mode information, then added using JSON Schema's `anyOf` pattern. The `_activity` field is resolved according to the [Activity Resolution Strategy](./003_agent_activity.md#activity-resolution-strategy).
 
 ```typescript
 {
-  calls: {
-    type: 'array',
-    items: {
-      anyOf: [
-        { /* sentimentAnalysis tool schema with _activity: '' */ },
-        { /* weatherCheck tool schema with _activity: 'weatherCheck' */ },
-        // ... other registered tools
-      ]
-    }
-  }
+  // ... existing code ...
 }
 ```
 
 This allows the LLM to select from available tools and generate multiple Calls in a single request.
 
-## Why Dual Registries Matter
-
-Without separating Tool schemas from Activity implementations, changing execution modes requires rewriting agent code. If you want to switch from LLM reasoning to an external API, you'd need to modify every agent that uses that capability.
-
-The dual registry architecture solves this by keeping tool interfaces stable while implementations evolve. Agents always interact with the same Tool schema, whether it executes via LLM reasoning or external code. This means:
-
-- **Implementation changes don't break agents** - Switch from latent to explicit execution without touching agent code
-- **A/B testing execution strategies** - Compare LLM reasoning vs external APIs for the same capability
-- **Gradual rollouts** - Deploy new implementations to subset of agents while others use the old one
-
 ## Tools as Foundation
 
-Tools represent the **first building block** of the agent action system - they define _what can be done_ through pure schema interfaces. The next layer, [Call Protocol](./002_agent_calls.md), builds upon this foundation to define _how things are executed_ through Scope and Method controls, enabling sophisticated multi-tool workflows and execution strategies.
+Tools represent the **first building block** of the agent action system - they define _what can be done_ through pure schema interfaces. The [003: Agent/Activity](./003_agent_activity.md) defines _how code is executed_, and the [004: Agent/Call](./004_agent_call.md) builds upon this foundation to define _how things are orchestrated_, enabling sophisticated multi-tool workflows and execution strategies.
