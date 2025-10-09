@@ -1,52 +1,56 @@
-Imagine you're talking to a super-smart robot chef who can make anything you want. A 'Request' is the special and very clear way you give the robot your order.
+# 101: Агент: Запрос
 
-It’s not just shouting "Make a pizza!". A Request is like a complete recipe card that makes sure the robot chef (our AI) understands everything perfectly to create the final dish (we call this the `solution`).
+> **Запрос:** Это как одноразовое волшебное заклинание для нейросети (LLM). Оно берёт `контекст` (всю предысторию) и `схему` (чёткую инструкцию), чтобы создать `решение` (готовый ответ).
+>
+> — [Словарь](./000_glossary.md)
 
-### The Recipe-Making Steps
+> Sidenote: NPM: [https://www.npmjs.com/package/@augceo/agent](@idealic-ai/agent)
 
-Making a Request is like an assembly line with a few steps:
+Этот документ расскажет тебе о **Протоколе Запроса**. Это самый главный способ общения с нейросетью. Представь, что `Запрос` — это волшебный двигатель, который превращает абстрактную **[Концепцию: Идею](./001_concept_idea.md)** во что-то, что компьютер может понять и сделать. Для этого он использует её `контекст` и `схему`, чтобы в итоге получить `решение`.
 
-#### 1. Context: Your List of Ingredients and Ideas
+## Конвейер Запроса
 
-First, you give the robot all the background information, which we call the `context`. Think of it as a series of text messages that form a conversation. It's a list that might look like this:
+`Запрос` — это не просто вопрос, который ты задаёшь. Это целый сборочный конвейер, который берёт много разной информации и превращает её в один-единственный ответ от нейросети, сделанный строго по правилам.
 
-- **Message 1 (from you to the robot):** "You are a world-class pizza chef."
-- **Message 2 (from you to the robot):** "What's the best pizza to make for a party?"
+### 1. Контекст: Список Сообщений
 
-This gives the robot its role and your question.
+Всё начинается с `контекста`. Это как история вашей переписки, представленная в виде списка (`массива`) сообщений. Благодаря этому мы можем показать нейросети целый диалог, где у каждого была своя роль, и всё это будет аккуратно разложено по полочкам.
 
-#### 2. Custom Content Types: Magical Ingredients
+Простой пример `контекста`:
 
-Now for the cool part! Sometimes, your messages aren't just plain text. You can include a "magical ingredient."
+```json
+[
+  { "role": "system", "content": "Ты — полезный ассистент." },
+  { "role": "user", "content": "Какая столица у Франции?" }
+]
+```
 
-Instead of just writing "make it cheesy," you could give it a special object like `{ type: "SuperCheesy" }`.
+### 2. Особые Типы Содержимого
 
-When our system sees this magical ingredient, it's a secret code that automatically does a few things:
+Наша система круче, потому что сообщения могут содержать не только текст. Вместо обычной строчки `content` может быть целым объектом со своей структурой. Например, вот так: `{ "type": "state", "state": { ... } }`.
 
-- **It adjusts the robot's settings:** Like telling the oven to get extra hot.
-- **It updates the blueprint for the final dish:** It might add a new rule, like "The final pizza must have a perfectly golden, bubbly cheese topping."
-- **It adds to the conversation:** It might add a new message for the robot, like, "Remember, the user wants this to be the cheesiest pizza ever!"
+Представь, что ты отправляешь письмо. Обычно в нём просто слова. А теперь вообрази, что ты можешь вложить в письмо «магическую наклейку». Когда почтальон (наша система) видит эту наклейку, он делает что-то особенное. Эти наклейки — наши особые типы содержимого.
 
-This lets us give very powerful instructions without having to write out long sentences every time.
+Каждая такая «наклейка» может изменять три важные вещи в нашем запросе:
 
-#### 3. Schema: The Blueprint for the Final Dish
+- **Настройки нейросети**: Можно поменять модель, её «фантазию» (`temperature`) и другие параметры.
+- **Схему**: Можно на лету изменить инструкцию, по которой нейросеть должна дать ответ.
+- **Контекст**: Можно изменить сам список сообщений, например, превратив «наклейку» в понятный для нейросети текст или добавив новые сообщения.
 
-A `schema` is the blueprint. It tells the robot *exactly* what the final result must look like. It's a list of strict rules, like:
+Этот умный конвейер позволяет нам работать со сложными идеями, каждый раз идеально настраивая заклинание для нейросети.
 
-- The pizza must be a perfect circle.
-- It must have exactly 8 slices.
-- The only topping allowed is pepperoni.
+### 3. Схема: Инструкция для Ответа
 
-Our system is smart and gives this blueprint to the robot chef in the best way possible:
+`Схема` — это как чертёж или инструкция по сборке. Она очень точно говорит, как должен выглядеть готовый ответ (`решение`). Наша система `Запроса` смотрит на то, что умеет конкретная нейросеть, и выбирает лучший способ заставить её следовать этой инструкции:
 
-1.  **The Best Way (Using Special Tools):** If the robot has a special pizza pan that is already a perfect circle with 8 slice-guides, we use that. It's the most reliable way to get what you want.
-2.  **The Backup Plan (Using Regular Tools):** If the robot doesn't have the special pan, but has a generic "slicer" tool, we tell it: "Use your slicer tool to make 8 slices."
-3.  **The Last Resort (Just Asking Nicely):** If the robot has no special tools, we just add to the instructions in big letters: "PLEASE MAKE SURE THE FINAL PIZZA IS A CIRCLE WITH 8 SLICES." We have to trust it to follow the directions.
+1.  **Родной режим JSON Schema**: Если нейросеть очень современная, мы просто передаём ей нашу «инструкцию» напрямую. Это самый надёжный способ, как показать архитектору готовый чертёж.
+2.  **План Б: Вызов инструмента**: Если нейросеть не понимает чертежи, но умеет пользоваться инструментами, мы хитрим. Мы упаковываем нашу инструкцию в «инструмент» под названием `generate_response` и просим нейросеть его использовать.
+3.  **Крайний случай: Внедрение в подсказку**: Если нейросеть умеет только создавать текст в формате JSON, мы просто пишем ей в главной инструкции: «Сделай, пожалуйста, вот такой JSON», и вставляем туда нашу схему в виде текста.
 
-#### 4. The Solution: Your Perfect Pizza!
+### 4. Исполнение и Решение
 
-After all the instructions and ingredients are prepared, the robot chef gets to work. It takes everything you've given it and produces the final dish.
+После всей подготовки наш идеально собранный запрос отправляется нейросети. Она выполняет задание и создаёт ответ, который точно соответствует нашей схеме-инструкции.
 
-This finished dish—which perfectly follows your blueprint—is the `solution`. It's a perfectly structured answer, ready to be served.
+Система получает этот ответ и превращает его в красивый и понятный для программы объект. Этот объект и есть наше `решение`.
 
-This whole process, from a simple idea to a perfect, rule-following result, is what makes a `Request` so powerful.
+Весь этот процесс — от обработки сложной переписки до получения идеально структурированного ответа — и есть та магия, которая позволяет **Идее** быть главным строительным кирпичиком в нашей системе.

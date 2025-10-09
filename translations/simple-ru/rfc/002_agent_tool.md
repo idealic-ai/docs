@@ -1,44 +1,176 @@
-# Agent's Spellbook: Learning to Use Superpowers
+# 002: Агент: Инструмент
 
-Imagine our smart computer program, let's call it an 'Agent', is like a character in a video game. A **Tool** is like a spell in its spellbook or a gadget on its utility belt. It's a special power the Agent can use to get things done.
+> **Инструмент**: Это как инструкция для суперспособности, которой может пользоваться наш агент (умный помощник). Мы показываем эту инструкцию нашему главному «мозгу» (LLM) во время запроса. Она объясняет, что можно сделать и какие «кнопки нажать». «Мозг» может активировать эту способность, создав `Call` (команду) с нужными параметрами. А потом эта команда либо выполняется «в уме» самим «мозгом» (скрытое исполнение), либо запускает реальный кусочек кода (`Activity`).
+>
+> — [Словарь](./000_glossary.md)
 
-Each Tool comes with a simple instruction card (we call this a `schema`). This card tells the Agent everything it needs to know:
+> Sidenote:
+>
+> - Требуется: [Агент: Запрос](./001_agent_request.md)
 
-*   **What the power does**: Like "Tells you the weather."
-*   **What it needs to work**: Like "A city name."
-*   **What you get back**: Like "The temperature and if it's sunny."
+Этот документ рассказывает об Инструменте — самом главном способе, который помогает агентам понимать и использовать свои способности, как по инструкции.
 
-When our Agent decides to use a power—for example, it decides to check the weather in 'London'—it's making a **Call**. It's like the character shouting, "I cast Weather Spell on London!"
+## Что такое Инструменты?
 
-### When Does an Agent Need a Spellbook?
+**Инструменты — это как гаджеты** на поясе у супергероя. Они дают ему новую суперсилу: **выбирать правильное действие в нужный момент**. Это позволяет агентам решать, что делать, в зависимости от ситуации.
 
-This spellbook is super important when the Agent has to think on its feet and make choices. You'd use Tools when you want the Agent to:
+Что нам дают Инструменты:
 
-*   **Pick the right power for the job** based on what's happening.
-*   **Choose from many different spells** to solve a problem.
-*   **Do things in the real world**, not just talk about them, like looking up information or using a calculator.
+- **Понятные инструкции**: У каждого «гаджета» есть описание, чтобы агент понял, для чего он нужен.
+- **Надёжность**: В инструкции чётко сказано, что нужно «гаджету» для работы и что он выдаст в результате. Никаких сюрпризов!
+- **Возможность комбинировать**: Инструменты — как детальки LEGO. Их можно соединять вместе, чтобы агент мог выполнять сложные задачи.
+- **Помощь «мозгу» (LLM)**: Инструкции написаны так, что даже искусственный интеллект может их прочитать, подумать и выбрать подходящий инструмент.
 
-### How the Spellbook Works
+Когда агент заполняет все нужные поля для Инструмента, он создаёт **Вызов (Call)**. Представь, что это как нажать кнопку «Пуск» на гаджете, введя все настройки. Этот «Вызов» — это конкретная просьба что-то сделать (подробнее о том, как выполняются вызовы, можно прочитать в документе [Протокол вызовов](./002_agent_calls.md)).
 
-The whole system is built on a very simple but powerful idea: the Agent has two separate books.
+> **Заметка**: Хотя любой запрос к нашему «мозгу» можно представить как простую Идею (и это хорошо работает для создания текстов), Инструменты нужны для более сложных случаев. Например, когда агенту нужно самому выбрать, какое действие совершить. Чтобы узнать, как Идеи могут превращаться в Инструменты, загляни в документ [Входящие данные Агента](./003_agent_input.md).
 
-1.  **The Spellbook (`Tool Registry`)**: This book only contains the *instruction cards* for every spell. It's just a list of what the Agent *can* do, but not *how* to do it.
-2.  **The Book of Real Magic (`Activity Registry`)**: This book contains the actual, working magic—the computer code that makes things happen. When a spell from the Spellbook is used, the system looks for the matching magic here.
+## Когда использовать систему Инструментов
 
-This separation is really clever! It means we can give the Agent an instruction card for a new spell even before we've finished building the real magic for it. Or, we can update how a spell works in the Book of Real Magic without having to change the instruction card in the Spellbook.
+Используй систему Инструментов, когда хочешь, чтобы твои агенты могли:
 
-### Two Kinds of Magic: Mind Magic vs. Real Magic
+- **Выбирать действия на лету**, в зависимости от того, что происходит вокруг.
+- **Выбирать из нескольких разных способностей** ту, что лучше всего подходит для цели.
+- **Использовать разные способы для одного и того же дела** (например, искать информацию в Google или в другой поисковой системе).
+- **Совмещать размышления «мозга» (LLM) с чёткими командами** при принятии решений.
 
-When an Agent makes a Call, there are two ways the power can work:
+## Как устроена система Инструментов
 
-*   **Mind Magic (`Latent Execution`)**: Sometimes, the Agent is so smart it can figure out the answer just by thinking. If you ask it to analyze the mood of a sentence, it can use its own giant brain to give you the answer. It doesn't need to run any special code; it just knows. This is like a wizard solving a riddle just by thinking hard.
+### Главный принцип: Инструкция — это всё
 
-*   **Real Magic (`Explicit Execution`)**: Other times, the Agent needs to do something outside its own brain, like check the live score of a soccer game or find the current weather. For this, it needs Real Magic. It finds the right spell in the Book of Real Magic, which runs a piece of code to go out and get the information.
+Система Инструментов построена на одной простой идее: **Инструменты — это всего лишь инструкции (схемы)**. Они описывают, *что* можно сделать, но не говорят, *как* именно это делается. Инструкция к Инструменту указывает:
 
-**Best of all, the system is smart.** If you give a Tool and a piece of Real Magic the same name (like `weatherCheck`), the system automatically connects them. If it can't find any Real Magic for a Tool, it just assumes the Agent should use its Mind Magic to figure it out.
+- **Что он делает** (описание).
+- **Что ему нужно для работы** (входные параметры).
+- **Что он создаст в итоге** (структура `_output`).
+- **Как его зовут** (имя `_tool`).
+- **Как его запустить** (поле `_activity` — оно определяет, как будет выполнено действие, подробнее об этом ниже).
 
-### Why Having Two Books is a Big Deal
+### Архитектура с двумя библиотеками
 
-Because the instruction cards (Tools) and the real magic (Activities) are separate, we can switch things around without confusing the Agent. An Agent just needs to know what's in its Spellbook. We can change *how* a spell works behind the scenes—maybe we switch from one weather service to another—and the Agent's instruction card stays exactly the same. The Agent can keep doing its job without needing to be retrained.
+Система Инструментов использует две разные, но дополняющие друг друга «библиотеки»:
 
-Tools are the first and most important building block. They define **what an Agent can do**. Next, we'll see how the Agent learns **how and when to actually use these powers** to complete its quests!
+**Библиотека Инструментов (Tool Registry)**: Здесь хранятся только инструкции (схемы).
+**Библиотека Действий (Activity Registry)**: Здесь хранятся настоящие работающие программы (исполнения).
+
+Такое разделение очень удобно. Инструмент может существовать просто как идея (для размышлений «мозга»), даже без реальной программы. А программы можно легко менять (например, использовать одну для тестов, а другую — для настоящей работы), не переписывая саму инструкцию.
+
+### Специальные поля в инструкции Инструмента
+
+В инструкциях для Инструментов есть специальные поля (они начинаются с подчёркивания `_`), которые нужны системе:
+
+- **_tool**: Уникальное имя инструмента (обязательно).
+- **_activity**: Указание, как выполнить действие (если не указать, система решит сама).
+- **_output**: Ожидаемый результат (система делает его необязательным на всякий случай).
+- **_reasoningForCall**: Объяснение от агента, почему он решил использовать именно этот инструмент (добавляется системой).
+
+Пользователи определяют эти поля, когда создают свои инструменты. А система потом немного их улучшает: сама определяет `_activity`, если нужно, и добавляет поле `_reasoningForCall`. Поля без подчёркивания — это обычные параметры для инструмента. Специальные поля всегда идут первыми в инструкции, чтобы «мозгу» (LLM) было проще их понять.
+
+### Границы системы
+
+Система Инструментов отвечает за:
+
+- Регистрацию Инструментов (хранение их инструкций).
+- Заполнение параметров (когда «мозг» находит нужную информацию в тексте).
+- Выбор способа исполнения (будет ли «мозг» думать сам или запустит программу).
+- Управление Действиями (регистрацию и запуск настоящих программ).
+
+Более сложные вещи, такие как управление целыми цепочками задач и состоянием, строятся уже поверх этой системы (например, с помощью [Протокола вызовов](./002_agent_calls.md)).
+
+## Создание и регистрация Инструмента
+
+Инструменты создаются с помощью JSON-схем, которые полностью описывают их, как подробная инструкция:
+
+### Простая инструкция для Инструмента
+
+```typescript
+Tool.register('sentimentAnalysis', {
+  type: 'object',
+  description: 'Анализирует настроение текста',
+  properties: {
+    _tool: { type: 'string', const: 'sentimentAnalysis' },
+    text: { type: 'string', description: 'Текст для анализа' },
+    _output: {
+      type: 'object',
+      properties: {
+        sentiment: { type: 'string' },
+        confidence: { type: 'number' },
+      },
+    },
+  },
+});
+```
+
+### Инструмент с регистрацией Действия
+
+```typescript
+// Определяем инструкцию для инструмента (как в примере выше)
+Tool.register('weatherCheck', {
+  /* ... */
+});
+
+// Регистрируем настоящую программу. Имя совпадает с именем инструмента, поэтому всё заработает само
+Activity.register('weatherCheck', async call => {
+  const data = await weatherAPI.get(call.location);
+  return { temperature: data.temp, conditions: data.desc };
+});
+```
+
+## Как система выбирает способ выполнения
+
+Система Инструментов поддерживает два совершенно разных способа выполнения:
+
+- **Скрытое исполнение (Latent Execution)** использует способность «мозга» (LLM) рассуждать. Агент как бы «продумывает» задачу и сразу же выдаёт ответ. Это похоже на то, как человек отвечает на вопрос, ответ на который он и так знает. Идеально для анализа, планирования или творческих задач.
+  > Sidenote:
+  >
+  > - [RFC 104: Концепция / Скрытое](../rfc/104_concept_latent.md)
+- **Явное исполнение (Explicit Execution)** передаёт задачу настоящему коду. Вызывается специальная программа (Activity), которая и вычисляет результат. Это похоже на то, как человек использует калькулятор для сложного расчёта. Необходимо для работы с внешним миром, например, для запросов к сайтам, базам данных или для любых задач, где нужна точность и повторяемость.
+
+### Автоматический выбор действия без настроек
+
+Система сама решает, какой способ использовать, когда «собирает» все инструкции:
+
+1.  **Если поле `_activity` заполнено**: Система использует то, что указано.
+2.  **Совпадение по имени** (рекомендуемый способ): Если в библиотеке Действий есть программа с таким же именем, как у Инструмента, система автоматически их связывает (это будет явное исполнение).
+3.  **Запасной вариант — скрытое исполнение**: Если ничего из вышеперечисленного не подошло, система решает, что «мозг» должен справиться сам (это будет скрытое исполнение).
+
+Благодаря этому правилу:
+
+- **Называй свою программу (Activity) так же, как и свой Инструмент**, и всё заработает без лишних настроек.
+- Если для Инструмента нет готовой программы, он автоматически будет выполняться «в уме».
+- Если ты хочешь явно указать способ, поле `_activity` всегда будет главным.
+
+### Сборка инструкций
+
+Все инструкции для инструментов собираются в один большой список `calls`, который отправляется «мозгу». Каждая инструкция дополняется специальными полями и информацией о способе выполнения (определённой по правилам выше), а затем добавляется в общий список:
+
+```typescript
+{
+  calls: {
+    type: 'array',
+    items: {
+      anyOf: [
+        { /* Инструкция для sentimentAnalysis с _activity: '' (скрытое) */ },
+        { /* Инструкция для weatherCheck с _activity: 'weatherCheck' (явное) */ },
+        // ... и другие зарегистрированные инструменты
+      ]
+    }
+  }
+}
+```
+
+Это позволяет «мозгу» (LLM) выбирать из всех доступных инструментов и даже выполнять несколько команд за один раз.
+
+## Почему важны две разные библиотеки
+
+Если бы мы не разделяли инструкции (Tool) и реальные программы (Activity), то для смены способа выполнения пришлось бы переписывать код агента. Например, если ты захочешь вместо размышлений «мозга» использовать реальный сайт для получения данных, тебе пришлось бы изменять каждого агента, который использует эту способность.
+
+Архитектура с двумя библиотеками решает эту проблему. Инструкции остаются неизменными, а программы за ними могут меняться. Агент всегда работает с одной и той же инструкцией, неважно, выполняется ли она «в уме» или с помощью внешнего кода. Это значит:
+
+- **Изменения в программе не ломают агентов** — можно легко переключиться со скрытого на явное исполнение, не трогая код агента.
+- **Можно тестировать разные подходы** — например, сравнить, что работает лучше для одной и той же задачи: размышления «мозга» или запрос к внешнему сайту.
+- **Можно внедрять изменения постепенно** — запустить новую программу для части агентов, пока остальные используют старую.
+
+## Инструменты как фундамент
+
+Инструменты — это **первый и самый главный кирпичик** в системе действий агента. Они определяют, *что можно сделать*, с помощью простых инструкций. Следующий уровень, [Протокол вызовов](./002_agent_calls.md), строится на этом фундаменте и определяет, *как именно всё выполняется*, позволяя создавать сложные сценарии с использованием множества инструментов.

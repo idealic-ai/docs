@@ -1,36 +1,68 @@
-Imagine you have a magic seed. This isn't just any seed; it's a special package that contains everything needed to grow a specific, unique plant. We call this package an 'Idea'.
+# 101: Концепция / Идея
 
-It’s not just a fleeting thought you have, but a solid, real thing you can hold, share, and build with. Inside every 'Idea' package, there are three key parts:
+> **Идея:** Это как коробочка с сокровищем, в которой лежат три вещи: `схема`, `решение` и `контекст`. Вместе они составляют одну целую единицу знаний. Это не просто мимолётный вопрос, который ты задаёшь, а постоянный и умный строительный блок.
+>
+> — [Словарь](./000_glossary.md)
 
-1.  **The Blueprint (or DNA):** This is called the `Schema`. It's a super-strict set of rules that describes what the final plant must look like. For example: "The flower must have five petals," or "The leaves must be green." This blueprint makes sure anyone (even a robot or AI) can understand exactly what the Idea is supposed to create.
+> Sidenote:
+>
+> - Требует:
+>   - [Агент: Запрос](./001_agent_request.md)
+> - Открывает возможности для: [Протокол: Создатели Идей](./103_concept_ideator.md)
 
-2.  **The Ingredients & Instructions:** This is the `Context`. It’s all the materials and directions needed to grow the plant. It includes things like the soil, the water, and even stories or pictures that inspired this particular plant.
+Этот документ — план по созданию всемирной сети из «живых» документов. Мы разберёмся, из чего состоит её главный строительный блок (**Идея**) и как находить эти блоки в огромном интернете с помощью **DNS** (системы адресов в сети).
 
-3.  **The Finished Plant:** This is the `Solution`. It's the final result! It’s the beautiful flower, the strong tree, or the delicious fruit that grew when you followed the blueprint using the ingredients.
+Чтобы узнать, как «Идеи» превращаются в работающие программы, загляни в [RFC 10: Протокол: Создатели Идей](./103_concept_ideator.md). А о том, где и как эти «Идеи» могут «жить», читай в [RFC 11: Протокол: Суверенитет](./102_concept_sovereignty.md).
 
-### A Web of Living Things
+## Механика живой сети
 
-Here’s the coolest part: the entire system is built only from these 'Idea' packages. There are no other hidden parts. And once an Idea is created, it can never be changed. It’s set in stone.
+В основе нашей системы лежит очень крутой принцип: **содержимое и есть правила игры.** Вся наша вселенная состоит из одного-единственного элемента — самостоятельной «троицы», которую мы называем **Идея**. Такая структура даёт тебе настоящую свободу и владение своими творениями. Здесь нет никаких спрятанных деталей, так что тебя никто не сможет запереть в одной системе.
 
-So, what if you want to make a small change, like making the flower blue instead of red? You don't edit the old Idea. Instead, you create a *new* Idea that links back to the original one. It’s like creating a child plant from a parent plant, creating a beautiful and clear family tree of how every thought evolved.
+- **Контекст:** Представь, что это все ингредиенты для рецепта. Сюда входят все инструкции, исходные материалы и ссылки, которые помогли создать решение.
+- **Схема:** Это как чертёж или инструкция по сборке LEGO (`jsonschema`). Она объясняет, какую форму имеют данные в «Идее», чтобы любой искусственный интеллект (ИИ) мог понять, как с ней работать и изменять её.
 
-### More Than Just a Chat
+  > Sidenote:
+  >
+  > - [json-schema.org/](https://json-schema.org/)
 
-You might think this sounds a bit like asking a chatbot a question. But it's much more powerful.
+- **Решение:** Это результат, готовое блюдо или собранная модель из LEGO.
 
-Asking a chatbot is like having a quick chat that’s immediately forgotten. An 'Idea' is different. It’s a permanent, reusable artifact. It’s not just the question you asked; it’s the question, the complete recipe for the answer, and the answer itself, all bundled together in one neat package. You can save it, share it, or even plug it into other Ideas to create bigger and more complex systems, all without writing a single line of computer code. It’s a building block, not just a conversation.
+«Идеи» **неизменны по своей природе**. Единственное, что можно сделать, — это поделиться «Идеей». Если ты хочешь развить мысль, ты не меняешь старую «Идею», а создаёшь новую, которая ссылается на предыдущую. Так сохраняется идеальная и нерушимая цепочка творчества, как в фотоальбоме.
 
-### The Golden Rules
+## Больше, чем просто запрос: новый строительный блок
 
-To make sure this all works perfectly, every 'Idea' must follow four unbreakable rules:
+На первый взгляд может показаться, что `Идея` — это просто навороченный вопрос для умного чат-бота. Но это не так. Главное отличие в том, что мы переходим от одноразовых ответов к системе постоянных и взаимосвязанных сокровищ.
 
-1.  **Anyone Can Recreate It:** If you use the same Blueprint and the same Ingredients, you should always get a very similar Plant. The goal is to make it possible for anyone to trace the steps and see how a result was made.
-2.  **No Hidden Pockets:** The AI that grows the plant can see everything in the package. You can't hide secret tools or instructions. Everything must be transparent.
-3.  **The Blueprint is Law:** The finished Plant *must* perfectly follow the rules of its Blueprint. No exceptions! This keeps everything organized and predictable.
-4.  **A Change Means It's New:** If you change the Blueprint or the Ingredients, even just a little bit, you have created a brand-new Idea. You can't alter an existing one.
+В отличие от простого вопроса чат-боту, который исчезает, `Идея` — это самодостаточный артефакт, который всё помнит. Она упаковывает в одну переносимую коробочку `входные данные`, `результат` (`решение`), `правила` (`схему`) и весь `контекст` своего создания. Это не просто вопрос, а вопрос, ответ и полная формула, которая их связывает. Это позволяет строить целые системы, а не просто получать одноразовые ответы.
 
-### How Do You Find an Idea?
+Это делает `Идею` настоящим «вычислительным примитивом» — фундаментальным строительным блоком для создания сложных и развивающихся систем. Ты не просто «запускаешь» Идею; ты можешь её копировать, смешивать с другими, передавать в новые Идеи и строить целые логические цепочки, не написав ни строчки обычного кода. Это целая платформа, а не просто вопрос.
 
-So, with all these Ideas floating around, how do you find one? Simple! Every single Idea gets its own unique address on the internet, just like a website (like `www.mycoolidea.com`).
+## Главные правила
 
-This address acts as the Idea’s permanent identity. When you look up that address, a little signpost (called a DNS record) tells you exactly where on the internet the actual Idea package is stored. This means an Idea can be stored anywhere in the world, but you can always find it using its one, special name.
+Чтобы наша система оставалась надёжной, понятной и удобной, все должны следовать четырём главным правилам.
+
+### Воспроизводимое происхождение
+
+`Идея` создана так, чтобы её можно было воссоздать. Если взять тот же `контекст` и ту же `схему` и отдать их умному ИИ, он должен создать очень похожее `решение`. Этот принцип гарантирует, что мы стремимся к сети воспроизводимых идей. Конечно, результаты от разных ИИ могут немного отличаться, но главная цель в том, чтобы ответ всегда можно было проследить до его исходных данных.
+
+### Прозрачные ингредиенты
+
+Во время работы ИИ видит весь `контекст` целиком. Это значит, что нельзя прятать в «коробку с ингредиентами» что-то лишнее, если оно не нужно для создания решения. Это правило не позволяет использовать `контекст` как склад для всякого мусора и заставляет его быть полезной частью `Идеи`.
+
+### Результат по чертежу
+
+`Решение` — это и есть состояние. А поскольку каждое `решение` должно соответствовать своей `схеме` (чертежу), то и состояние любой `Идеи` полностью определяется и проверяется этим чертежом. Это вытекает из правила о прозрачности: всё должно быть чётким, структурированным и понятным для всех.
+
+### Неизменность
+
+`Идея` с другим `контекстом` или `схемой` — это уже другая `Идея`. `Идея` считается совместимой со старой версией, если в её `схему` просто добавили новые поля. А если `схему` серьёзно поменяли, то нужно обновлять и номер версии.
+
+## Публикация и поиск: Личный адрес через DNS
+
+DNS, или система доменных имён, — это как адресная книга интернета. Она даёт каждой Идее уникальное имя, по которому её можно найти. Это создаёт для Идеи личный «паспорт», который не зависит от того, где она хранится. Это фундамент всей нашей системы.
+
+Подробнее о разных способах хранения идей можно прочитать в [RFC 11: Протокол: Суверенитет](./102_concept_sovereignty.md).
+
+### Как работает адрес на основе DNS
+
+- **Как это устроено:** Каждой Идее присваивается уникальное доменное имя (например, `моя-супер-идея.ком`). Для этого имени создаётся специальная заметка (`TXT`-запись), в которой есть ключ `idea`, указывающий на главный файл Идеи в формате JSON. Этот файл и описывает Идею целиком.

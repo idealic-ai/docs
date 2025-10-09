@@ -1,33 +1,43 @@
-# Part I: Our Big Idea
+# Часть I: Наше видение
 
 ---
 
-_Imagine if the internet was like a giant city. Right now, a few huge companies own all the biggest buildings, parks, and streets. They make the rules, and everyone has to follow them. Our big idea is to build a brand new kind of city, where everyone can have their own land and build their own cool stuff, connecting with friends however they want. It’s about taking back control and making the internet a place for everyone, not just a few big players._
+_Представь, что сегодняшний интернет — это огромный город, в котором несколько больших корпораций построили все дома, дороги и магазины. Они решают, где тебе жить и с кем дружить. Наша главная идея — это бунт против этого! Мы хотим построить новый цифровой мир, где каждый сам себе хозяин и может строить свой собственный дом, где захочет. Это мир, где свобода и независимость каждого человека и его друзей — самое главное._
 
 ---
 
-### (Chapter 1) The Rules of Our New World
+### (Глава 1) Главная Идея и Правила
 
-To make this new city work, we have a few simple but super important rules.
+Вся наша система построена на нескольких простых, но очень мощных правилах. Они помогают всему работать слаженно и легко соединяться друг с другом, как детальки LEGO.
 
-- **Everything is an “Idea.”** Think of it like a LEGO brick. Whether you're building a simple wall, a car, or a giant spaceship, you always start with the same basic piece. In our world, everything—an app, a game, a drawing, or a to-do list—is just an 'Idea'.
-
-- **Every Idea Explains Itself.** Each LEGO brick (each Idea) comes with its own tiny instruction manual attached. This means anyone, or any smart computer, can pick it up and know exactly what it is and how to use it without needing to ask.
-
-- **Any Idea Can Have its Own Address.** Just like you can put your favorite LEGO creation on a special shelf with a nameplate, any Idea can get its own unique web address. This gives it a home on the internet for others to visit.
-
-- **Some Ideas are Like Machines.** We call these “Ideators.” They are Ideas that can *do* something when you give them an instruction. Imagine a LEGO vending machine: you put a coin in (that's the input), and it gives you a soda (that's the output).
-
-- **You Can Connect Everything.** Because everything is like a LEGO, you can snap different Ideas together to create bigger, more amazing things. You could connect a 'Calendar' Idea to a 'To-Do List' Idea to build your own amazing homework planner.
-
-- **A Super-Smart Helper.** We use smart AI (like a friendly robot) that acts as a universal translator. It can look at any Idea’s instruction manual and instantly understand how to use it, helping all the pieces work together perfectly.
-
-- **We’re Sharing Living Things, Not Just Pictures.** The Ideas we share aren't static and boring. They are alive! They can change, learn, and grow over time, just like a plant. We're building a world of living inventions.
+- **Всё — это Идея.** В самом сердце нашей системы всё, что ты видишь — будь то приложение, инструмент, документ или даже какое-то действие — это просто Идея. Это как если бы всё в мире было сделано из LEGO. Благодаря этому всё очень просто и понятно.
+  > Sidenote: [RFC 101: Концепция/Идея](../rfc/101_concept_idea.md)
+- **Самодостаточные и понятные.** Каждая Идея — это как игрушка в коробке, на которой уже нарисованы все инструкции. У неё есть своя `schema` (правила) и описание, так что любой компьютер или искусственный интеллект может сразу понять, что это такое и как с этим играть, даже если видит это впервые.
+  > Sidenote: [RFC 001: Агент/Запрос](../rfc/001_agent_request.md)
+- **У каждой Идеи может быть свой дом.** Любая Идея может жить по своему собственному адресу в интернете, как будто у неё есть своя страничка. Если это что-то знакомое, например, статья, то она будет выглядеть как статья. А если это что-то особенное, вроде Идеатора, у неё будет универсальный пульт управления.
+  > Sidenote: [RFC 102: Концепция/Независимость](../rfc/102_concept_sovereignty.md)
+- **Идеаторы — это Идеи, которые умеют слушать.** Идеатор — это особенная Идея, которая может получать от тебя команды. Представь LEGO-кирпичик с кнопкой: ты нажимаешь на неё, и он что-то делает. Вот так и работает Идеатор.
+  > Sidenote:
+  >
+  > - [RFC 103: Концепция/Идеатор](../rfc/103_concept_ideator.md)
+  > - [RFC 005: Агент/Ввод](../rfc/005_agent_input.md)
+- **Созданы, чтобы соединяться.** Вся система специально сделана так, чтобы Идеи можно было легко соединять. Некоторые Идеаторы (мы их называем «Преобразователи Идей») могут брать одну Идею и превращать её в другую. Их можно выстраивать в цепочку, чтобы создавать сложные и крутые штуки, как в конвейере на фабрике.
+- **Искусственный интеллект — наш универсальный переводчик.** Мы доверяем умному искусственному интеллекту (LLM) читать «инструкции» на коробке каждой Идеи и понимать, что с ней делать. Благодаря этому вся система становится очень гибкой и может легко придумывать новые способы использования Идей, о которых мы даже не думали. Это как иметь волшебника, который может заставить любую игрушку делать то, что ты хочешь.
+  > Sidenote: [RFC 104: Концепция / Скрытое](../rfc/104_concept_latent_.md)
+- **Мир живых Идей.** Мы делимся не просто картинками или текстом. Мы обмениваемся живыми, растущими системами. Представь, что ты можешь отправить другу не просто рисунок робота, а маленького робота, которого он сможет улучшить, и который будет развиваться со временем, пока вы играете вместе.
 
 ---
 
-### (Chapter 2) The Problem: The Awesome-Looking Trap
+### (Глава 2) Диагноз — Золотая клетка больших технологий
 
-So why do we need to do all this? Because the internet today is a bit like a beautiful cage. Big tech companies give us amazing free apps and fun social networks. It feels like a giant, super-fun amusement park. But there’s a catch.
+Главная проблема сегодня — это хитрая ловушка от гигантских технологических компаний. Сначала они заманили нас в свои социальные сети, пообещав, что мы сможем общаться со всем миром. Но внутри этих сетей они стали собирать наши данные и ограничивать наш выбор. Теперь они предлагают нам мощный искусственный интеллект, от которого трудно отказаться. Но за это удобство мы платим большую цену. Мы всё больше зависим от их платформ, и в итоге оказываемся в красивой «золотой клетке». В этой клетке мы не можем быть самими собой, а существуем лишь как часть их большой системы.
 
-To use their cool rides, you have to play by their rules. They collect your information, decide what you get to see, and make it very difficult to leave their park. The new and powerful AI tools they're building are just the newest, most exciting rollercoaster designed to keep you inside their walls. It's a 
+---
+
+### (Глава 3) Решение — Децентрализованное Возрождение
+
+Наше решение — не строить ещё один красивый сад с высоким забором, а выйти из всех садов и начать осваивать новое, открытое поле. Мы хотим вернуться к духу раннего интернета, где всё было свободно, но сделать его современным, с помощью искусственного интеллекта. Это «возрождение» стоит на двух китах: новой архитектуре для идей и новой философии общения.
+
+- **Видение свободы:** Мы предлагаем перейти от платформ (как Facebook или TikTok) к протоколу — общим правилам игры, как в футболе. Эти правила позволят обмениваться не просто текстом, а живыми, работающими идеями. Каждый будет использовать **искусственный интеллект прямо на своём компьютере** и общаться с другими **напрямую, без посредников**, как будто вы передаёте записки в классе. Так все твои данные и твоя цифровая жизнь останутся только у тебя. Наша цель — создать «операционную систему для идей», где умные системы (например, копилка, которая сама следит за деньгами, или план проекта, который сам обновляется) можно будет передавать друг другу так же легко, как обычный файл.
+
+- **Философия общения:** Такая система меняет сам способ нашего общения в сети. Вместо того чтобы вываливать всё подряд на всеобщее обозрение, мы возвращаемся к **осознанному и продуманному обмену** с теми, кому доверяем. Представь, что ты не кричишь на шумной площади, а разговариваешь с лучшими друзьями в вашей секретной штаб-квартире. В таком мире главной валютой становятся доверие, качество и настоящая дружба. Это позволяет каждому создавать свои «тайные миры» и полностью контролировать, с кем и какими идеями делиться.

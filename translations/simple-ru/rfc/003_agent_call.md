@@ -1,51 +1,99 @@
-Imagine you have a magical cookbook.
+# 003: Агент/Вызов
 
-An **Idea** is like a picture of a delicious cake in that cookbook. It shows the final, perfect result.
+> **Вызов:** Это как готовый к запуску приказ для `Инструмента`, в котором уже заполнены все нужные детали (`params`). Это просьба, сфокусированная на том, _что нужно сделать_ прямо сейчас.
+> 
+> — [Глоссарий](./000_glossary.md)
 
-A **Tool** is the recipe for that cake. It lists all the ingredients you *could* use, like flour, sugar, and eggs. It tells you what's possible.
+> Sidenote:
+> 
+> - Требуется: [Протокол: Идеаторы](./103_concept_ideator.md)
+> - Позволяет: [Протокол Импортов](./006_agent_imports.md), [Протокол Инстансинга](./008_agent_instancing.md)
 
-A **Call** is when you actually grab 1 cup of flour, 2 eggs, and a spoonful of vanilla and say, "Okay, let's make *this specific cake* right now!" A `Call` is the command to start doing something.
+Мы уже знаем, что [Протокол Идей](./101_concept_idea.md) — это способ хранить знания и разную логику. А [Система Инструментов](./002_agent_tool.md) — это набор правил, который помогает агентам понимать свои возможности. Этот документ описывает **Протокол Вызова** — он, как дирижёр, управляет тем, как именно будут работать наши Инструменты, используя Область и Метод.
 
-### The Journey: From Picture to Action
+> Sidenote:
+> 
+> - Требуется
+> - [RFC 1: Инструмент](/)
+> - Позволяет
+> - [RFC 9: План](/)
 
-1.  **Idea (The Picture):** We start with a picture of what we want, like that finished cake.
-2.  **Tool (The Recipe):** We turn that picture into a step-by-step recipe so our computer chef (the AI) knows the rules for making it.
-3.  **Call (The Command):** The AI decides to bake, picks out the exact ingredients, and shouts, "Let's go!" That starting command is the `Call`.
+**Вызов** — это как конкретный экземпляр Инструмента, у которого все настройки уже выставлены и он готов к работе. Если Инструменты определяют, _что можно сделать_, то Вызовы определяют, _как именно это будет сделано_.
 
-Any picture of a food (`Idea`) can be turned into a recipe (`Tool`), which can then be used to cook (`Call`).
+## Путь от Идеи к Вызову
 
-### Where and How to Cook?
+Представь себе, как мысль превращается в действие:
 
-When the AI gets a `Call` (a command to cook), it has to decide on two things:
+1.  **Идея**: Это просто мысль или знание. Например: «Было бы здорово послушать музыку».
+2.  **Инструмент**: Это Идея, которая превратилась в возможность. Например, приложение «Музыка» на твоём телефоне. У него есть разные кнопки и функции.
+3.  **Вызов**: Это когда нейросеть решает использовать `Инструмент` и нажимает на его кнопки. Например, она «нажимает» на `Инструмент` «Музыка» и указывает параметры: «включить весёлый плейлист». Это и есть **Вызов**.
 
-1.  **Scope: Where does the work happen?**
-    *   **Inline (In my kitchen):** The AI does the work right here, by itself.
-    *   **Module (At a friend's house):** The AI sends the task to a specialist helper who has a better kitchen for that specific job.
+Главный принцип: **любую Идею можно превратить в Инструмент, который затем можно использовать через Вызов.**
 
-2.  **Method: How is the work done?**
-    *   **Explicit (Robot Chef):** The AI follows the recipe *exactly*. Every step is pre-programmed, like a robot that can only do what its code says.
-    *   **Latent (Creative Chef):** The AI uses its own creativity. It looks at the ingredients and comes up with the best possible cake, like a master chef inventing something new.
+Чтобы узнать в деталях, как «входы» для `Идеи` превращаются в «параметры» для `Инструмента`, загляни в **[Протокол Ввода](./005_agent_input.md)**.
 
-### The Big Picture vs. The To-Do List
+## Управление исполнением: Область и Метод
 
-*   An **Idea** is focused on the **result**. It's the photo of the beautiful cake.
-*   A **Tool** is focused on the **instructions**. It's the recipe with all the steps.
-*   A **Call** is focused on the **action**. It's the command, "Start baking now!"
+Когда мы делаем `Вызов`, мы можем управлять им с помощью двух настроек: **Область** (где он работает) и **Метод** (как он работает). Эти настройки задаются специальными свойствами в схеме инструмента (`_module`, `_activity`, `_output`).
 
-### The Mission Briefing
+### Две оси исполнения
 
-When we want our AI to make a decision, we give it a "Mission Briefing." We call this a **Vessel Idea**. Think of it like a folder that contains two things:
+1.  **Область (Здесь или Там)**
+    Область определяет, будет ли действие выполнено прямо тут, внутри агента, или его нужно поручить кому-то вовне.
+    - **Здесь (Inline Scope)**: Это режим по умолчанию. `Вызов` выполняется на месте, как если бы ты сам собирал LEGO.
+    - **Там (Module Scope)**: Используется метка `_module`. Это как отдать инструкцию и детальки на специальную фабрику LEGO, которая соберёт всё за тебя и вернёт готовую модель.
 
-1.  **The Context:** All the important information. For example: "A friend is coming over who loves chocolate."
-2.  **The Schema (Your list of tools):** A list of all the recipes the AI is allowed to use right now. For example: "You can make a chocolate cake, chocolate cookies, or a fruit salad."
+2.  **Метод (По правилам или Творчески)**
+    Метод определяет, как будет создан результат: по чёткому алгоритму или с помощью фантазии нейросети.
+    - **По правилам (Explicit Method)**: Помечается свойством `_activity`. Результат создаётся кодом, который работает как калькулятор — всегда точно и предсказуемо.
+    - **Творчески (Latent Method)**: Это режим по умолчанию, когда `_activity` нет. Результат создаёт нейросеть. Это как попросить художника нарисовать «радость» — он поймёт идею и создаст что-то уникальное. Для этого ему нужна подсказка в виде свойства `_output`.
 
-The AI reads the mission briefing and makes a decision. Its answer is a list of commands, or `Calls`. For instance, it might decide: "I will make the chocolate cake!"
+Эти настройки можно смешивать, создавая разные способы выполнения задач. Подробнее о том, как это работает, можно прочитать в **[Протоколе Импортов](./008_agent_imports.md)**.
 
-### Different Ways to Get Things Done
+## Идея, Инструмент и Вызов: Разный фокус внимания
 
-If the AI decides to do multiple things (like "bake cake" and "make frosting"), we can tell it how to handle its to-do list:
+Чтобы понять, как всё связано, давай посмотрим, на чём сосредоточен каждый из этих трёх элементов.
 
-*   **One at a time:** Finish baking the cake completely, *then* start making the frosting.
-*   **All at once (`.all`):** Start making the cake and the frosting at the same time. Wait for both to be finished.
-*   **First one that works (`.any`):** Imagine you have two ways to make frosting. You tell the AI, "Try both recipes and stop as soon as one of them works!"
-*   **The fastest one (`.race`):** Tell the AI, "Start making both the cake and frosting. Let me know which one finishes first, I don't care if it's a success or a failure."
+-   **Идея** — **сосредоточена на результате**. Её главная цель — описать готовую мысль или итог. Это как написанный сценарий фильма, который рассказывает, что _было_ или что _могло бы быть_.
+
+-   **Инструмент** — **сосредоточен на возможностях**. Его схема описывает, какие у него есть «кнопки» (параметры) и какой будет структура ответа (`_output`). Это как пульт управления или камера — набор функций, которые ждут, когда их используют.
+
+-   **Вызов** — **сосредоточен на действии**. Это конкретный приказ использовать `Инструмент`. Он берёт «пульт управления» и «нажимает» на кнопки, задавая им конкретные значения. Это готовая к исполнению команда о том, что _нужно сделать_.
+
+## Идея-Контейнер: один момент принятия решения
+
+Когда агенту нужно что-то решить, весь его запрос к нейросети упаковывается в специальный тип `Идеи`, который мы называем **Идея-Контейнер**. Она представляет собой один-единственный момент принятия решения.
+
+Идея-Контейнер собирает вместе два ключевых элемента, которые нужны нейросети для выбора:
+
+1.  **Контекст**: Вся важная информация, которая есть у агента: просьба пользователя, его память, данные об окружении. Это как карта и погода для капитана корабля.
+2.  **Схема**: Для Идеи-Контейнера схема определяет сам «Контейнер» — то есть набор `Инструментов`, которые агенту разрешено использовать в данной ситуации. Это как список приказов, которые капитан может отдать команде: «Поднять паруса!», «Налево руля!».
+
+Нейросеть обрабатывает всю эту `Идею` целиком — и контекст, и доступные инструменты — и её решением (`solution`) становится список из одного или нескольких `Вызовов`, которые нужно исполнить.
+
+Такая структура позволяет одной простой `Идее` запустить сложное действие из нескольких шагов.
+
+## Шаблоны выполнения Вызовов
+
+Когда Идея-Контейнер создаёт несколько Вызовов, их можно выполнять по-разному, в зависимости от задачи:
+
+```typescript
+// Выполнить один Вызов
+const result = await Tool(call);
+
+// Выполнить все Вызовы, дождаться всех результатов
+const results = await Tool.all(calls);
+
+// Выполнять все Вызовы, но остановиться после первого успеха
+const result = await Tool.any(calls);
+
+// Выполнять все Вызовы, но остановиться после самого первого, который завершится (неважно, успешно или нет)
+const result = await Tool.race(calls);
+```
+
+Такие шаблоны позволяют:
+
+-   **Точно всё контролировать**: Выполнять Вызовы по одному, делая что-то между ними.
+-   **Работать пачками**: Запускать независимые Вызовы одновременно, чтобы было быстрее.
+-   **Быстро получать результат**: Останавливаться, как только найдётся первое удачное решение (`.any()`).
+-   **Действовать по принципу «всё или ничего»**: Убедиться, что все связанные Вызовы выполнились успешно (`.all()`), чтобы не нарушить логику.

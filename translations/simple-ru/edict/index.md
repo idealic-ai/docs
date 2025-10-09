@@ -1,14 +1,12 @@
-# A Declaration of Digital Independence
+# Эдикт Автономии
 
 ---
 
-Imagine the internet today is like a giant kingdom ruled by just a few powerful kings. They own all the land, make all the rules, and get to say what happens.
-
-This document is our big plan to change that. We want to help build a new kind of digital world where there are no kings. Instead, everyone gets to be the ruler of their own little plot of land. It's all about putting you and your friends back in charge of your own creations, messages, and online life.
+Этот документ — это наш большой план. Мы хотим создать совершенно новый цифровой мир, как новую вселенную в интернете. Главная идея — «децентрализация». Это значит, что в этом мире не будет одного главного короля или компании, которая всем управляет. Вместо этого, каждый человек и каждая группа друзей сами будут хозяевами своих данных и своей цифровой жизни. Мы хотим вернуть людям свободу и независимость в онлайне.
 
 ---
 
-* **Part I: Our Big Dream**
-* **Part II: The Secret Recipe (How it all works)**
-* **Part III: How This Changes Everything**
-* **Part IV: The Extra Details for Super Curious People**
+- [Часть I: Наше Видение](./01_vision.md)
+- [Часть II: Правила Игры (Протокол)](./02_protocol.md)
+- [Часть III: Как Это Всё Изменит](./03_impact.md)
+- [Часть IV: Дополнительные Материалы](./04_appendices.md)

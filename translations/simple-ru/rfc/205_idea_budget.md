@@ -1,142 +1,301 @@
-# The Smart Piggy Bank
+# 205: Идея/Бюджет
 
-Imagine a budget isn't just a boring number in a spreadsheet, but a smart piggy bank that has its own brain. This isn't just for holding money; it's a living machine that you give a mission and the resources to get it done.
+> **Идея-Бюджет:** Это такая Идея, которая объединяет в себе **разрешение** (право что-то делать, записанное в её `schema`) и **ресурсы** (деньги или другие ценности, которые можно тратить и которые отслеживаются в `solution`).
+>
+> — [Глоссарий](./000_glossary.md)
 
-We call this a **Budget Idea**. It combines **permission to act** (its rulebook) with **resources to spend** (the stuff inside it).
+**Идея-Бюджет** — это не просто скучный план расходов, а настоящий живой экономический моторчик. Представь, что это Идея, которая получила и **разрешение** действовать (её правила записаны в `schema`), и **ресурсы** для этого (например, деньги, которые хранятся в `solution`). Эта Идея управляет всеми важными изменениями в системе с помощью команды `refine`.
 
-Think of it this way: instead of just giving a team money and a to-do list, you're giving them a small, robotic company. This little company has its own rules, its own goals, and can even have its own special kind of money.
+> Sidenote:
+>
+> - Требуется:
+>   - [Концепция: Идея](./101_concept_idea.md)
 
-## The Living Budget
+Этот документ расскажет тебе об Идеях-Бюджетах — новом, почти волшебном способе думать о деньгах и экономике. Обычные бюджеты — это просто цифры на бумажке. А наши Идеи-Бюджеты — это живые экономические двигатели со своими правилами, целями и даже собственными валютами!
 
-A budget here is a **living economic engine**. It’s like the strategic brain for a whole project or company. You can design these little engines, give them fuel (money, time, or other resources), and send them off to achieve goals.
+## Живой Бюджет
 
-They can run tiny economies, complete with their own rules for success. This changes budgeting from a boring chore into a fun game of designing systems that create awesome things.
+В нашей системе **`Budget` — это не просто число, а живой экономический мотор.** Можно сказать, что Vibe-бюджет — это как **нервная система** для целой компании. Это живая модель бизнеса, которую можно выполнять как программу, а ещё её можно скопировать, перенести куда угодно и проверить каждую копейку.
 
-### The Rulebook (`schema`): The Plan & The Rules
+Используя команду `refine`, мы можем создавать, финансировать и запускать Vibe-бюджеты, которые работают как маленькие страны со своей экономикой. У них есть свои законы, цели и даже своя валюта. Это превращает скучное планирование бюджета в увлекательную игру, где потоками ценностей можно управлять динамично, децентрализованно и абсолютно прозрачно.
 
-The **`schema`** is the budget's **Constitution or Rulebook**. It’s a public document that everyone can see, so the whole team is on the same page. It answers questions like: What are we trying to build? What do we do if we're running out of resources? How do we celebrate when we succeed?
+```llm
+// Vibe-бюджет превращает скучный финансовый план в живой экономический моторчик.
+// Он разделяет планирование (schema задаёт правила), финансирование (кто и сколько денег дал)
+// и полномочия (кто и на что может тратить). Это позволяет создавать что угодно: от простого
+// счёта для безопасной сделки до сложной казны, которая сама решает, куда вложить прибыль.
+// Так рождаются динамичные системы для управления любыми измеряемыми ресурсами.
+```
 
-But it's smarter than just a list of goals. It adds wisdom. For example, instead of just saying "Get as many points as possible!", it can say, "Get 100 points, because that's 'good enough,' and then move on to the next level."
+### Конституция (`schema`): Стратегический План
 
-This rulebook prevents the team from going crazy trying to max out one goal while forgetting about everything else (like building a super-fast race car with no brakes). Changing this rulebook is a very big deal, because it's like changing the entire mission.
+**`schema`** — это как **Конституция** или главный свод правил. Это публичное обещание, которое помогает всей команде двигаться в одном направлении. В нём записаны правила, отношения и что самое важное. Он отвечает на вопросы: Какие у нас цели? Что делать, если что-то пойдёт не так? Как награждать за успехи? Но это не просто сухие цифры. `schema` объясняет **смысл** каждого показателя, превращая `Budget` в умного помощника для принятия решений.
 
-### The Snapshot (`solution`): A Photo of Right Now
+`schema` уточняет, *какими* должны быть цели. Некоторые показатели должны расти бесконечно. Другие, наоборот, нужно уменьшать. А ещё `schema` может сказать: «Вот этого уровня достаточно, больше не нужно».
 
-The **`solution`** is a **Real-Time Photo** of the budget's status. It shows exactly what the budget looks like right now, based on its rules and its resources. Taking a new photo is quick, easy, and doesn't change the main plan. It’s just a way to check in on progress.
+Кроме цифр, в `schema` может быть и словесное описание каждого показателя. `description` — это официальное объяснение, что эта цифра значит для компании. Менять это описание — всё равно что менять стратегию. Это позволяет компании расти и менять свои ценности, не ломая старые данные.
 
-### Can the Budget Work?
+Благодаря таким умным правилам, `schema` не даёт компании слепо гнаться за одной цифрой в ущерб всему остальному. Она даёт мудрость понять не только, что делать, но и когда цель достигнута и пора переключиться на что-то новое. Изменение этой «конституции» — это очень серьёзная операция `refine` высокого ранга, потому что она меняет саму суть бизнеса.
 
-Sometimes, a budget's rulebook might have a rule like, "You must have at least 10 wood planks to start building the treehouse." If the budget only has 5 planks, it's considered **unsolvable**.
+```llm
+// Schema — это как конституция для Бюджета. Она определяет не просто, что измерять,
+// а какой должна быть цель: растить показатель, уменьшать его или держать на определённом уровне.
+// Этот стратегический смысл не даёт слепо гнаться за одной метрикой. Он подсказывает, 
+// когда цель достигнута и пора направить ресурсы на другие задачи. Так бюджеты из
+// ограничителей превращаются в активных помощников для принятия решений.
+```
 
-This isn't a failure; it’s a feature! The budget is protecting the team from starting a project it can't finish. An unsolvable budget is a clear signal that says, "Hey! I'm a great plan, but I need 5 more wood planks to become a reality!" This makes asking for help clear and specific.
+### Моментальный Снимок (`solution`): Реальность в реальном времени
 
-## The Budget is a Team Goal
+`solution` — это как **моментальный снимок** или фотография твоего бюджета прямо сейчас. Это конкретный, понятный и публичный результат работы «решателя» (это может быть умная программа, нейросеть или даже человек), который посмотрел на правила в `schema` и свежие данные. Пересчитать этот снимок — дешёвая и безопасная операция низкого ранга. Это как проверить пульс системы, а не делать ей операцию на сердце.
 
-A budget is really a **plan** for the future. It doesn't need to have all its resources right away.
+### Решаемость Бюджета
 
-**A Budget's Life in Three Stages:**
+Не каждый `Budget` может выдать работающий `solution`. В его правилах-`schema` могут быть **жёсткие ограничения** — например, минимальная сумма денег, без которой он просто не может начать работать. Если эти условия не выполнены, `Budget` считается **нерешаемым**.
 
-1.  **The Dream Stage**: The budget exists only as a rulebook, with no resources. It's a shared dream the team can work on.
-2.  **Partially Funded Stage**: Resources start to arrive! Maybe someone adds money, and someone else promises to give their time. The budget might be able to start doing small things.
-3.  **Fully Working Stage**: The budget has everything it needs to achieve its main goal. It's running at full power!
+Но это не ошибка, а полезная функция! Нерешаемость защищает систему от пустых обещаний. Нерешаемый `Budget` всё ещё существует как **план** — чёткое описание того, что нужно сделать и сколько ресурсов для этого требуется. Он показывает всем, сколько именно денег или других ресурсов не хватает, чтобы перейти от мечты к делу. Это превращает сбор средств из просьбы «дайте денег» в точный и обоснованный запрос.
 
-The real goal of the team becomes working together to feed the budget everything it needs. And it can be fed all sorts of things, not just money:
+```llm
+// Решаемость бюджета — это способность выдать правильное решение на основе текущих ресурсов.
+// Жёсткие ограничения в schema определяют минимальный порог, ниже которого это невозможно.
+// Нерешаемые бюджеты остаются планами, которые чётко показывают, чего не хватает.
+// Это защищает от невыполнимых обещаний и даёт ясные цели для сбора средств.
+```
 
--   **Money:** From investors or sales.
--   **Time:** A promise of 40 hours of work from a programmer.
--   **Reputation:** A goal to get 10 good reviews for a product.
--   **Computer Power:** A budget for a science project might be funded with `Super-Computer-Hours`.
+## Бюджет как общая цель
 
-Each of these is a resource that fills up a specific need in the budget’s grand plan.
+`Budget` — это, по сути, **план** на будущее. И этот план может существовать ещё до того, как на него появятся деньги.
 
-## Superpowers of the Smart Budget
+**Три стадии жизни Бюджета:**
 
-This is where human creativity and smart computers work together.
+1.  **Стадия планирования**: `Budget` существует только как идея — `schema` без денег. Команды могут вместе работать над планом, проигрывать разные сценарии и договариваться.
+2.  **Стадия частичного финансирования**: Начинают поступать первые ресурсы. `Budget` может начать работать вполсилы, если выполнены минимальные требования.
+3.  **Полная активация**: Все жёсткие ограничения выполнены. `Budget` работает на полную мощность.
 
-### Planning and Playing "What If?"
+Настоящей целью компании становится **пополнить `Budget` со всех сторон**. Это не просто кошелёк, который нужно потратить, а цель, которую нужно достичь. Ресурсы могут приходить в разное время и в разной «валюте» от разных людей:
 
-Because the rulebook is a complete mini-economy, you can use it as a simulator. You can ask it questions like, "What would happen if our funding got cut in half?" or "What if we suddenly got twice as many resources?" The budget can figure out the smartest way to handle either situation before you have to deal with it in real life.
+- **Деньги:** Инвесторы или клиенты приносят деньги.
+- **Время и внимание:** `Budget` может требовать определённое количество человеко-часов и иметь крайний срок.
+- **Репутация:** В бюджете отдела маркетинга может быть цель получить определённое количество хороших отзывов в прессе.
+- **Помощь сообщества:** Бюджет команды, работающей с программистами, может пополняться за счёт принятых `pull request`.
+- **Вычислительные ресурсы:** Бюджет научного проекта может измеряться в `GPU-часах` или `LLM-токенах`.
 
-### Fractal Planning: Zooming In and Out on Time
+Каждый из этих пунктов — это измеряемый ресурс, который заполняет определённую строчку в большом плане `Budget`.
 
-This lets you treat time like a map. You can:
+```llm
+// Бюджеты проходят три стадии: планирование (мечта без денег), частичное финансирование
+// (ограниченная работа при достижении минимума) и полная активация (все условия выполнены).
+// Они собирают разные «валюты» в разное время, а schema определяет и мечты, и жёсткие
+// требования. Такой подход делает сбор средств прозрачным и измеряемым процессом.
+```
 
-1.  **Zoom In:** Look at a huge, year-long plan and have it automatically break down into what you need to do this month, this week, or even today.
-2.  **Zoom Out:** See how the small tasks you complete every day are adding up to achieve the big, year-long goal.
+## Стратегические Возможности
 
-It perfectly connects your big dreams to your daily actions.
+`Budget` — это место, где человеческий ум и искусственный интеллект вместе решают сложные бизнес-задачи.
 
-### Changing the Rules
+### Динамическое Планирование и Симуляция
 
-A budget's rulebook can be updated. This is a big, strategic move, like changing a law. It's usually done to add more detail, like splitting one giant "Company Budget" into smaller, dedicated budgets for the Art Team, the Programming Team, and the Music Team. This is how you create a **hierarchy of teamwork**.
+Поскольку `schema` — это самодостаточная экономическая модель, её можно использовать для симуляций. Представь, что это компьютерная игра, где можно проверить разные идеи или предсказать будущее, не рискуя настоящими деньгами. Бюджет легко справляется с колебаниями ресурсов:
 
-### Budgets create Mini-Economies
+- **Если денег не хватает**, он найдёт лучший компромисс и потратит то, что есть, на самое важное.
+- **Если денег в избытке**, он по-умному распределит их на рост, сбережения или премии.
 
-When a big budget gives a smaller budget to a team, it's not just giving them money. It's giving them a **mission**. The new rulebook defines what they get (e.g., `$1,000`) and what they are supposed to create (e.g., `10 new character designs`).
+Это позволяет командам экспериментировать с разными экономическими моделями и принимать решения, основанные на данных, а не догадках.
 
-This creates powerful incentives. The system tells a team what the organization cares about and gives them the tools to do it. You can even create special rewards, like giving `Bonus-Points` for finishing early that can be spent on new software.
+### Фрактальное Планирование: Масштабирование во Времени
 
-### Automated Growth
+Если к `Budget` добавить систему статистики, которая умеет работать со временем, он становится гибким во времени, позволяя **фрактальное планирование**.
 
-Here, any goal can become its own currency. Imagine a rule that says, "Every time a customer leaves a 5-star review, the Quality Team's budget automatically gets $10 added to it." Success in one area automatically fuels growth in another, creating engines that improve themselves over time.
+1.  **Приближение (Zoom In):** Большой, долгосрочный `Budget` можно автоматически разбить на маленькие, краткосрочные задачки. Годовой бюджет можно посмотреть по кварталам или месяцам.
+2.  **Отдаление (Zoom Out):** Ежедневные маленькие действия постоянно собираются наверх, показывая в реальном времени, как мы движемся к большим целям.
+3.  **Прогнозы и сценарии «А что, если...»:** Эта временная иерархия делает симуляции ещё мощнее, позволяя предсказывать будущее на основе текущих событий.
 
-### Private Team Economies
+```llm
+// Фрактальное планирование позволяет Бюджетам легко переключаться между разными
+// временными масштабами. Годовые планы превращаются в ежедневные задачи, а ежедневные
+// успехи складываются, чтобы показать общий прогресс. Вместе с иерархической статистикой
+// это создаёт идеальную связь между долгосрочным видением и сиюминутными действиями.
+// А ещё это даёт мощные возможности для симуляций.
+```
 
-A team can get a budget from the main company and manage it completely privately. The main company only sees that the team received its funding and, later, that it achieved its goal. Everything in between is the team's own business.
+### Эволюция через Улучшение
 
-## How it Works: Giving and Spending
+`schema` Бюджета может меняться с помощью команды `refine`. Изменить `schema` — это серьёзный стратегический шаг, как внести поправку в конституцию. Обычно изменения — это дополнения, которые не ломают старые правила (`narrowing`), чтобы программы, работавшие со старым бюджетом, не сломались.
 
-The whole system runs on two simple ideas: funding and permission.
+Главная причина для таких изменений — желание сделать бюджет более детальным. Например, разбить один большой `Budget` на несколько маленьких для разных отделов. Это основной способ создать **иерархию поручений**.
 
-### 1. Funding a Budget (Moving Money)
+### Иерархические Требования: Бюджеты как Двигатели Мотивации
 
-This is a real transaction. You take money from a main account and move it into a new, dedicated Smart Piggy Bank. That piggy bank now officially holds those funds.
+Когда родительский `Budget` поручает что-то дочернему, он выдаёт ему **устав для создания микроэкономики**. Этот устав и есть `schema` дочернего бюджета. В нём прописано, какие **ресурсы** он получает (например, `USD`) и какое **задание** он должен выполнить (например, достичь цели по `articles_written`).
 
-### 2. Giving Permission (Not Moving Money)
+Определяя цели вместе с ресурсами для их достижения, мы создаём мощные **стимулы и правила игры**. Мы говорим программам-агентам, о чём им нужно заботиться, и даём им средства для этого. Так система организует сложную работу, создавая спрос на определённые результаты.
 
-Once a piggy bank is funded, you can give people permission to use it. This is like giving your friend a special credit card that only works on that one piggy bank for a certain amount. **No money moves when you do this.** It's just creating a rule that says, "This person is allowed to spend from here."
+В `schema` также могут быть показатели вроде `positive_feedback_tokens` (жетоны за хорошую работу) для получения бонусов или `complaint_tokens` (жетоны жалоб) для запуска проверок. Это создаёт очень сильную систему мотивации.
 
-This two-step process—fund first, then give permission—gives you total control.
+#### Гибкие Бюджеты и Обратная Связь
 
-## Spending: The Two-Step Handshake
+Родительский `Budget` может дать дочернему бюджету гибкие рамки трат (например, `base_budget` и `overdraft_allowance`, то есть возможность потратить немного больше). В `schema` дочернего бюджета может быть правило, которое позволяет ему использовать эти дополнительные средства, если он показывает хорошие результаты. Это создаёт механизм «обратной связи», где успех открывает доступ к новым ресурсам.
 
-When it's time to actually spend, the system makes sure everything is safe and fair with two simple steps.
+#### Метрики «Снизу-Вверх» и Диалог
 
-### 1. Committing the Funds
+`Budget`, будучи живым экономическим мотором, сам создаёт свои показатели (например, `average_cost_per_article` — средняя цена одной статьи). Если эти показатели говорят, что первоначального бюджета недостаточно, эта информация передаётся наверх. Так начинается диалог для умной, основанной на данных, корректировки больших планов.
 
-When a manager posts a new task (like "Design a Logo for $100"), the system immediately checks three things:
+### Автоматический Рост и Собственные Валюты
 
-**a. Are you allowed to do this?** Does your permission slip let you spend this much?
-**b. Is there enough money?** Does the piggy bank actually have $100 in it?
-**c. Will this break the budget?** After paying for this logo, will the budget still have enough resources to finish its most important goals?
+В этой модели любая метрика может стать валютой. В `schema` записаны формулы, что делать, когда эти валюты появляются. Например, `Budget` может придумать `ProcessImprovementToken` (жетон улучшения процесса), который зарабатывается за создание качественных фич. Его можно «потратить», чтобы получить разрешение на улучшение кода (рефакторинг).
 
-If the answer to all three is yes, the system takes the $100 from the budget and puts it "in-flight," committed to that task. If any answer is no, the job can't be posted. This protects everyone—workers know that any job they see is a job that is 100% guaranteed to have the money ready for them.
+`Budget` можно настроить так, чтобы он периодически обновлял статистику и пересчитывал распределение ресурсов. `schema` затем автоматически распределяет результаты по своим правилам, создавая саморазвивающиеся двигатели роста.
 
-### 2. Paying Up
+```llm
+// Бюджеты запускают автоматические циклы роста, где любой показатель становится валютой.
+// Успех в одной области (например, довольные клиенты) автоматически открывает ресурсы
+// в другой (например, на улучшение качества). Schema определяет эти связи, создавая
+// прозрачные формулы, где достижения напрямую подпитывают будущие возможности.
+// Так бюджеты становятся саморазвивающимися моторами роста.
+```
 
-When the task is finished successfully, the system completes the handshake. It takes the money that was "in-flight" and gives it to the worker. The process is complete. If the task was cancelled, the money would simply go back to the budget it came from.
+### Децентрализованные и Вложенные Экономики
 
-## You Can Use This for Anything
+Модель `Budget` позволяет создавать децентрализованные системы — отдельные финансовые мирки, которые могут работать приватно, но при этом общаться с большой сетью. Компания может пополнить главный `Budget` в основной системе, а затем вести свой внутренний, закрытый учёт для управления этим бюджетом. Все внутренние операции будут невидимы для основной сети, которая видит только крупные транзакции пополнения и отчёта.
 
-This Smart Piggy Bank idea is a universal tool.
+## Финансирование и Полномочия: Как это работает
 
--   **Project Funding:** A video game team gets a budget of `$100,000`, with rules that split it between art, coding, and music.
--   **Sales Commissions:** A company budget automatically calculates profit and pays a percentage to the sales team as a bonus.
--   **Game Economies:** A player's inventory in a game is just a budget holding `Gold`, `Wood`, and `Healing Potions`.
--   **DAO Treasuries:** A community group manages its shared funds using a master budget whose rules are set by votes.
--   **Personal Growth:** You could create a budget for yourself to "Learn Python." You could fund it with `20 hours of study time` and `$50 for online courses`. The budget's job would be to turn those resources into a measurable `Python Skill Level`.
+Экономическая система построена на двух простых действиях, управляемых `refine`: финансирование (транзакция) и делегирование (без транзакции).
 
-You can even fund a budget with things that aren't money yet, like a promise of `Expert Knowledge`, and have a rule for how to turn that knowledge into a product that earns real money.
+### 1. Финансирование Бюджета (Транзакция)
 
-## The Technology Behind It All
+«Бюджет» — это отдельный Vibe `Budget`, который явно пополняется с какого-то счёта.
 
-How can the system do all this so quickly and safely?
+- Пользователь использует `refine` на шаблоне `Budget`, указывая сумму и откуда взять деньги.
+- Система проверяет, есть ли у пользователя право распоряжаться этим счётом.
+- В учётную книгу записывается транзакция: с исходного счёта деньги списываются, а на счёт нового `Budget` Vibe — зачисляются. Теперь у нового `Budget` есть эти средства.
 
-It uses two different kinds of notebooks:
+### 2. Делегирование Полномочий (Без Транзакции)
 
-1.  **The Stone Tablet (The Ledger):** This is the official history book where every single transaction is carved in stone. It is the absolute source of truth, but it's a little slow to write in.
-2.  **The Whiteboard (The Aggregator):** This is a huge, fast scoreboard that shows the current balance of every single budget. It gets its information instantly from the Stone Tablet. When the system needs to check if you have enough money, it just glances at the super-fast Whiteboard.
+Как только `Budget` пополнен, его владелец может дать право распоряжаться им другим, не создавая новых транзакций.
 
-This gives you the best of both worlds: the perfect, unchangeable safety of the Stone Tablet and the lightning speed of the Whiteboard.
+- Разрешение выдаётся с определёнными правилами (например, максимальная сумма траты, разрешённые покупки).
+- **Транзакция не создаётся.** Деньги никуда не перемещаются. Новое разрешение — это как «виртуальная карта», с которой можно тратить деньги из родительского `Budget`.
 
-Because every transaction is recorded on the Stone Tablet, you can also create a perfect audit trail. You can pick any dollar spent and trace its entire life story, all the way back to the moment it was first created.
+Этот двухшаговый процесс — сначала пополнить, потом разрешить — даёт максимальную гибкость и контроль.
+
+```llm
+// Экономическая система работает на двух действиях:
+// 1. Финансирование создаёт Vibe-Бюджет через транзакцию, перемещая деньги
+//    из источника в специальный фонд.
+// 2. Делегирование даёт право тратить без транзакций, как будто вы даёте
+//    виртуальную карту для этого фонда.
+// Такое разделение позволяет гибко и прозрачно управлять ценностями,
+// где пополнение и право тратить контролируются независимо.
+```
+
+## Траты: Транзакция из двух частей
+
+Окончательное перемещение денег из `Budget` происходит, когда задача публикуется и выполняется. Этот процесс состоит из двух простых, отдельных транзакций, которые гарантируют, что деньги будут зарезервированы и выплачены правильно.
+
+### 1. Резервирование Средств на Задачу
+
+Когда менеджер использует своё право, чтобы опубликовать задачу за счёт `Budget`, система `refine` проверяет запрос и создаёт одну транзакцию: **списание** с `Budget`. Теперь эти деньги считаются «в пути», они зарезервированы под эту задачу.
+
+Система `refine` проводит **три критически важные проверки**:
+
+**а. Проверка правил:** Позволяет ли выданное разрешение совершить это действие? Система сверяет трату с правилами этого конкретного разрешения.
+**б. Проверка баланса:** Хватит ли в `Budget` денег? Система проверяет текущий баланс `Budget` в реальном времени.
+**в. Проверка решаемости:** После этого списания, сможет ли `Budget` по-прежнему выполнять свои жёсткие ограничения?
+
+Если все три проверки пройдены, система записывает одну транзакцию списания в учётную книгу. Если хотя бы одна проверка не пройдена, биржа **полностью отклоняет публикацию задачи**. Это защищает работников от задач без денег и поддерживает честность всей экономической системы.
+
+```llm
+// Биржа обеспечивает три уровня защиты: проверка правил разрешения, проверка
+// баланса и проверка будущей «решаемости» бюджета. Публикация задачи будет
+// отклонена, если резервирование денег нарушит какое-либо правило или опустит
+// бюджет ниже минимально необходимого уровня. Это создаёт честный рынок, где
+// любая принятая работа имеет гарантированное финансирование, не вредящее бюджету.
+```
+
+### 2. Завершение Платежа
+
+После успешного выполнения задачи, вызывается последняя команда `refine`. Система создаёт вторую, балансирующую транзакцию: **зачисление** на счёт работника.
+
+Цикл завершён. Две простые транзакции — списание с `Budget` заказчика и зачисление на счёт исполнителя — это всё, что нужно. Если бы задачу отменили, деньги просто вернулись бы обратно в исходный `Budget`.
+
+```llm
+// Траты используют модель из двух транзакций: сначала публикация задачи создаёт
+// списание с Бюджета (резервирование). Затем выполнение задачи создаёт зачисление
+// работнику (оплата). Эта простая модель гарантирует, что средства зарезервированы
+// и баланс всегда сходится, без сложных систем удержания. Отменённые задачи
+// просто возвращают деньги обратно в исходный Бюджет.
+```
+
+## Универсальное Применение
+
+Vibe `Budget` — это гибкий кирпичик, из которого можно построить множество разных вещей.
+
+### Для Финансов и Бизнеса
+
+1.  **Обычный проект:** Проект по созданию программы получает `Budget`, в `schema` которого прописано: `"разработка": "60%", "дизайн": "20%", "тестирование": "20%"`.
+2.  **Безопасная сделка:** Для простой работы фрилансера создаётся `Budget` ровно на сумму этой работы, как будто деньги отдали на хранение третьему лицу.
+3.  **Управление подписками:** Ежемесячная плата пользователя пополняет его личный `Budget`. `schema` распределяет эти деньги на разные сервисы в зависимости от того, чем он пользуется.
+4.  **Расходы команды:** Отдел маркетинга получает квартальный `Budget`. Руководитель может давать разрешения на траты своим сотрудникам.
+5.  **Комиссии и бонусы:** `Budget` компании отслеживает `Прибыль`. Его `schema` определяет, как эта прибыль делится между расходами, вложениями в рост и премиями.
+
+### Продвинутые и неденежные примеры
+
+6.  **Торговый робот:** `Budget` робота-трейдера хранит активы. Его `schema` — это и есть торговая стратегия с правилами, когда покупать и продавать.
+7.  **Научные гранты:** Грант на исследование в университете управляется как `Budget`. Его `schema` следит за строгими правилами расходования денег, установленными грантодателем.
+8.  **Распределение ресурсов:** Команда по анализу данных может получить месячный `Budget` в `1000 GPU-часов` и `50М LLM-токенов`.
+9.  **Управление казной DAO:** DAO (децентрализованная организация) управляет своей казной как главным `Budget`. Его `schema` отражает решения о тратах, принятые всем сообществом.
+10. **Игровая экономика:** В видеоигре инвентарь игрока — это `Budget`, в котором хранятся `Золото`, `Дерево` и `Камень`.
+11. **Двигатель личного развития:** `Budget` человека отслеживает его усилия и навыки. Его можно пополнять временем и деньгами, а в `schema` прописать цели, например, повысить показатель `Знание-Python`. `Budget` превращает усилия и вложения в реальные, измеряемые навыки.
+
+### Управление Любыми Ресурсами
+
+`Budget` не обязательно пополнять деньгами. Его можно пополнить **потенциалом**, например, физическими вещами или даже знаниями. Тогда `Budget` становится планом по превращению этого потенциала во что-то ценное. В `schema` могут быть правила, как превратить «Опыт» в `Часы-Консультаций` (валюта), которые затем можно «продать» и получить `USD`.
+
+Учётная книга может работать с любыми измеряемыми ресурсами (`LLM-Токены`, `GPU-Часы`, `ГБ-Хранилища`, `API-Кредиты`, `Репутация-Разработчика` и т.д.).
+
+```llm
+// Учётная книга может работать с любыми измеряемыми ценностями.
+// Бюджеты можно пополнять потенциалом (вещами, опытом) и задавать правила их
+// превращения во что-то другое. Можно отслеживать всё: деньги, вычисления,
+// хранилище, репутацию. Команда refine позволяет обменивать одни ресурсы
+// на другие, создавая единую систему для всех видов обмена и трансформации.
+```
+
+## Техническая Основа
+
+В этом разделе мы заглянем под капот и посмотрим, какие технические компоненты делают систему `Budget` такой быстрой и надёжной.
+
+### Разделение для Скорости: Роль Слоя Агрегации
+
+Эта модель использует **отдельный, быстрый слой агрегации** (например, базу данных TimescaleDB), чтобы в реальном времени видеть балансы всех `Budget`.
+
+- **Учётная Книга — Источник Правды:** Система `refine` записывает каждую транзакцию в неизменяемую учётную книгу.
+- **События Питают Агрегатор:** Книга сообщает о каждой новой транзакции.
+- **Агрегатор Показывает Живые Балансы:** Слой агрегации слушает эти сообщения и постоянно обновляет информацию о балансах всех `Budget` с минимальной задержкой.
+- **Проверка Происходит на Быстром Слое:** Система запрашивает информацию у этого быстрого слоя, а не у медленной основной учётной книги.
+
+Такая архитектура сочетает надёжность неизменяемой учётной книги с высокой скоростью системы проверки балансов в реальном времени.
+
+### Аудит Потока: Родословная Транзакций
+
+Главное преимущество неизменяемой учётной книги — идеальная проверяемость. Поскольку каждая транзакция связана с `Budget`, который её оплатил, и разрешением, которое её одобрило, мы можем отследить полный путь любой копейки.
+
+Например, можно посмотреть историю любого платежа:
+
+- `ЗАЧИСЛЕНИЕ Баланс:Дизайнер-Джейн +1000$` `(Оплата за РекламнуюКампанию-123)`
+  - `└─ СПИСАНИЕ Бюджет:Маркетинг-2025 -1000$` `(Резерв под РекламнуюКампанию-123)`
+    - `   └─ ЗАЧИСЛЕНИЕ Бюджет:Маркетинг-2025 +200k$` `(Пополнение из Казны)`
+      - `      └─ СПИСАНИЕ Баланс:Казна-Компании -200k$` `(Для создания бюджета Маркетинга)`
+        - `         └─ ЗАЧИСЛЕНИЕ Баланс:Казна-Компании +1M$` `(Первоначальное пополнение)`
+
+Эта ясная, непрерывная цепочка даёт полную прозрачность того, как распределяются и тратятся средства.
+
+```llm
+// Техническая архитектура разделяет неизменяемую учётную книгу (источник
+// правды) и быстрый слой агрегации (для скорости). События текут из книги в
+// агрегатор, поддерживая балансы в реальном времени для быстрых проверок.
+// Каждая транзакция сохраняет полную «родословную», позволяя идеально
+// отследить путь денег от первого пополнения до финальной оплаты. Это даёт
+// одновременно и надёжность, и скорость.
+```

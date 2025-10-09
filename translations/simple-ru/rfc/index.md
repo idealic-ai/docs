@@ -1,48 +1,50 @@
-# The Grand Library of Blueprints
-
-Imagine we're building a massive, super-cool city made of LEGOs. Before anyone can start building, we need to agree on the rules, right? We need blueprints that show exactly how every single piece should work.
-
-That's what these documents are. We call them 'RFCs,' which is a fancy way of saying 'The Official Rulebook.' They are the master blueprints for our entire project. Every builder on our team uses this rulebook to make sure their part of the city fits perfectly with everyone else's.
+# Сборник правил и чертежей (RFCs)
 
 ---
 
-### The Robot Helpers (Agent)
+Представь, что мы строим огромный город из LEGO. Чтобы все детали подходили друг к другу и все строители понимали, что делать, нам нужны общие чертежи и правила. Эти документы — и есть наши главные чертежи. В них записано, как всё должно работать. Это наш официальный план, которому мы все следуем, чтобы наш «город» был крепким и работал правильно.
 
-> This section is all about our little robot workers. It explains what they can do and how they do their jobs.
+---
 
-- **001: Asking a Robot for Help:** How to give a robot a task.
-- **002: A Robot's Toolbox:** What tools each robot has to do its job.
-- **003: Using a Tool:** How a robot picks up and uses a specific tool.
-- **004: Doing a Task Over and Over:** How to tell a robot to repeat an action.
-- **005: Giving the Robot Information:** What kind of instructions or materials we can give our robots.
-- **006: Getting New Tools:** How a robot can download new skills or tools.
-- **007: A Robot's Memory:** How a robot remembers what it's in the middle of doing.
-- **008: Building a New Robot:** The instructions for creating a brand-new robot helper.
-- **009: Making a Plan:** How a robot thinks and creates a step-by-step plan for a big job.
+[Словарик](./000_glossary.md)
 
-### The Language and Building Blocks (Concept)
+### Агент
 
-> This section describes the most basic ABCs of our world. It defines the very 'atoms' everything is made of and the language they all speak.
+> Sidenote: Здесь мы говорим о том, что наши маленькие помощники умеют делать и как они выполняют задания.
 
-- **101: What is an 'Idea'?** Explaining the smallest piece of information, like a single thought or a word.
-- **102: Who Owns an Idea?** The rules about who gets to control or change an idea.
-- **103: The 'Idea-Maker':** Describing the part of our system that comes up with new ideas.
-- **104: Hidden Ideas:** About ideas that exist but haven't been 'unlocked' yet, like a seed waiting to grow.
+- [001: Агент/Запрос](./001_agent_request.md)
+- [002: Агент/Инструмент](./002_agent_tool.md)
+- [003: Агент/Вызов](./003_agent_call.md)
+- [004: Агент/Цикл](./004_agent_loop.md)
+- [005: Агент/Ввод](./005_agent_input.md)
+- [006: Агент/Импорт](./006_agent_imports.md)
+- [007: Агент/Состояние](./007_agent_state.md)
+- [008: Агент/Инстансинг](./008_agent_instancing.md)
+- [009: Агент/План](./009_agent_plan.md)
 
-### What Ideas Are Made Of (Ideas)
+### Концепция
 
-> This section is like putting an 'Idea' under a microscope. It shows what they're actually made of and all their different shapes and forms.
+> Sidenote: Здесь описаны самые главные идеи и правила, по которым «живёт» вся наша система. Это как законы физики в нашем мире.
 
-- **201: Writing an Idea Down:** How an idea is stored in memory, like writing a note in a notebook.
-- **202: The Container for an Idea:** The 'box' or 'bottle' that holds an idea to keep it safe.
-- **203: How an Idea Can Change:** The rules for how an idea can grow or transform into a new one.
-- **204: An Idea that is an Order:** A special type of idea that is a command, like a recipe or a set of instructions.
-- **205: An Idea's Energy:** The amount of power or effort an idea is allowed to use.
+- [101: Концепция/Идея](./101_concept_idea.md)
+- [102: Концепция/Суверенитет](./102_concept_sovereignty.md)
+- [103: Концепция/Идеатор](./103_concept_ideator.md)
+- [104: Концепция/Скрытое](./104_concept_latent.md)
 
-### The World They Live In (Ideator)
+### Идеи
 
-> This section describes the factory and the city itself. It's all about the background machinery that makes everything possible.
+> Sidenote: А здесь мы разбираем идеи на самые-самые маленькие «кирпичики», из которых они состоят.
 
-- **301: The Great Warehouse:** The giant library or computer memory where all ideas are stored.
-- **302: The Librarian:** The part of the system that can find any idea you're looking for, no matter where it's stored.
-- **303: The Action Taker:** The engine of the city that sees a new idea or instruction and makes something happen because of it.
+- [201: Идея/Запись](./201_idea_record.md)
+- [202: Идея/Сосуд](./202_idea_vessel.md)
+- [203: Идея/Процесс](./203_idea_process.md)
+- [204: Идея/Инструкция](./204_idea_instruction.md)
+- [205: Идея/Бюджет](./205_idea_budget.md)
+
+### Идеатор
+
+> Sidenote: Это описание главных «цехов» и «станков» на нашей фабрике идей. Они помогают всему работать как надо.
+
+- [301: Идеатор/Хранилище](./301_ideator_storage.md)
+- [302: Идеатор/Решатель](./302_ideator_resolver.md)
+- [303: Идеатор/Реактор](./303_ideator_reactor.md)

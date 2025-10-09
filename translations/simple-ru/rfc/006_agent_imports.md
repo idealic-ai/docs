@@ -1,34 +1,39 @@
-### Packing a Backpack for our AI Helper
+# 006: Агент/Импорты
 
-Imagine our computer program is like Mission Control, and it has a smart AI helper, like a little robot, that can do different jobs (we call these `Calls`).
+> **Импорт:** Это как специальный ключик, который открывает доступ к нужной информации из окружающего мира. Эту информацию можно «импортировать» (принести) для выполнения какой-то задачи. С помощью импорта можно помочь AI сфокусироваться на чём-то важном во время **скрытого исполнения** прямо здесь и сейчас, или собрать целый рюкзак с инструментами для большой задачи в отдельной «мастерской» (**модульное исполнение**). За всё это отвечает свойство `_imports`.
+>
+> — [Словарь](./000_glossary.md)
 
-Sometimes, Mission Control needs to send the robot on a mission. To do its job well, the robot needs the right information and tools. But we don't want to give it access to *everything* in Mission Control – that would be confusing and maybe even dangerous!
+Мы уже говорили о [Протоколе Вызова](./003_agent_call.md), который похож на выбор режима для нашего робота-помощника: он может работать **здесь и сейчас** (Inline) или уйти в **отдельную мастерскую** (Module), а также может **физически что-то сделать** (Explicit) или просто **подумать и выдать ответ** (Latent). «Протокол Импортов» — это инструкция, которая объясняет, как правильно снабжать робота нужной информацией и инструментами для каждого из этих режимов.
 
-This is where an **`Import`** comes in. Think of it as a special list Mission Control makes when it packs a backpack for the robot. The list tells the robot exactly which pieces of information it's allowed to take from the main room for its specific mission. It's like saying, "For this job, you only need the blueprint for the satellite and the weather report. Ignore everything else."
+## Совмещаем режимы работы
 
-#### Different Kinds of Missions
+1.  **Здесь и сейчас + Сделать (`_activity`)**: Это самый обычный способ использования инструмента. Представь, что AI — это калькулятор. Он получает от тебя числа (`params`), и тут же нажимаются кнопки для вычисления. Ему не нужна никакая дополнительная информация извне, поэтому `_imports` здесь обычно не используются.
 
-Our robot can do its job in a few different ways:
+2.  **Здесь и сейчас + Подумать (без `_activity`)**: А здесь AI не просто использует готовый инструмент, а сам думает и сразу выдаёт готовый ответ (`_output`). Свойство `_imports` здесь — это как твоя подсказка. Например, ты просишь друга: «Посоветуй мне фильм». Чтобы он не вспоминал всё подряд, ты уточняешь: «Думай только о комедиях». Эта подсказка помогает ему сфокусироваться и не отвлекаться на ненужное.
 
-1.  **Job on the Spot:** The robot does a simple task right there in the main room. It's like asking it to hand you a screwdriver that's already on the table. It doesn't need a special backpack for that.
+3.  **В мастерской + Сделать (`_module` + `_activity`)**: Это как отправить дрона с посылкой (`params`) на специальную фабрику (`_module`). На фабрике есть робот (`_activity`), который должен что-то с этой посылкой сделать. Фабрика — это чистое, изолированное место. Если нужно, с помощью `_imports` ты можешь положить в посылку нужные чертежи или детали из своего мира, чтобы робот на фабрике точно понял задачу.
 
-2.  **Mental Rehearsal:** The robot *imagines* doing a job and tells you the result. Here, the backpack is super useful! We can give it a backpack with just one or two items to help it focus. It's like saying, "Pretend you're fixing this radio. Here's the diagram for *just the radio*. Now, tell me the steps." This stops the robot from getting distracted by a TV in the corner.
+4.  **В мастерской + Подумать (`_module`, без `_activity`)**: Тут ты отправляешь на фабрику (`_module`) не просто посылку, а целое задание (`params`). На фабрике другой умный AI начинает над ним работать. Чтобы у него всё получилось, ты с помощью `_imports` отправляешь ему всю необходимую информацию — нужные книги, справочники и данные. Он использует их вместе с тем, что уже есть на фабрике, чтобы придумать решение.
 
-3.  **Job in a Special Workshop:** We send the robot to a separate, clean room (a `Module`) to do a specific task with a special tool. Mission Control packs its backpack (`_imports`), and those are the only things the robot can bring into the workshop.
+## Наводим фокус
 
-4.  **Creative Mission in a Workshop:** We send the robot to the workshop with a general goal, like "Figure out what this rock is made of." We pack its backpack with the rock sample and a microscope (`_imports`). The robot then uses its own smarts to complete the mission, but it can *only* use the tools we gave it and what's already in that workshop.
+Свойство `_imports` — это наш главный пульт управления информацией. Он работает как фейс-контроль в клубе: решает, какую информацию пропустить, а какую — оставить за дверью. Это создаёт для AI ограниченное поле зрения, чтобы он не отвлекался.
 
+- **Когда работаем «здесь и сейчас»**: `_imports` помогает AI сфокусировать внимание, как будто он надевает шоры, чтобы видеть только то, что прямо перед ним.
+- **Когда работаем «в мастерской»**: `_imports` определяет **вообще всё**, что будет в этой мастерской. Если чего-то нет в списке импорта, этого просто не будет в комнате.
 
-#### Who Packs the Backpack?
+## Дать заранее или спросить потом: Статические и Динамические импорты
 
-There are two ways the backpack can be packed:
+Представь, что `_imports` — это список вещей для похода. Этот список можно составить двумя способами.
 
-*   **Pre-Packed (Static Imports):** Imagine the mission is "Bake a Cake." The instructions are very strict and say, "You get flour and eggs. That's it." The backpack is packed ahead of time, and the robot has no say in what it gets. The person who designed the "Bake a Cake" tool decided what was needed.
+- **Статические импорты (выдать заранее)**: Это как если бы родители собрали тебе рюкзак в лагерь по строгому списку, который нельзя менять. Например, в правилах инструмента `const` прописано, что он может видеть только `["user_request"]` — запрос пользователя. Создатель инструмента заранее жёстко решил, что ему можно, а что нельзя.
 
-*   **Robot's Shopping List (Dynamic Imports):** Imagine the mission is "Explore a Cave." We give the robot a list of allowed items: a flashlight, a rope, a helmet. The robot then gets to say, "Okay, for this cave, I think I'll need the flashlight and the rope." It *requests* what it needs from the approved list. This is really cool because sometimes a person can check the robot's shopping list before handing over the tools, just to be safe.
+- **Динамические импорты (спросить потом)**: А это как если бы тебе дали список всего, что *можно* взять в поход (`enum`), и ты сам решаешь, что тебе понадобится в этот раз. AI смотрит на список доступных данных (например, `["session_memory"]` — память о прошлой беседе) и говорит: «О, мне это пригодится, дайте мне доступ!».
 
-#### Why is this Backpack Idea So Good?
+Этот динамический способ очень полезен, когда рядом есть человек. AI может что-то попросить, а ты посмотришь и решишь: «Хорошо, это я тебе разрешаю». Это даёт отличный контроль и понимание того, что происходит.
 
-1.  **It's Safer and Smarter:** By only giving the robot what it needs, we prevent it from accidentally stumbling into things it shouldn't, like the ship's self-destruct button! It also helps the robot concentrate, making it faster and more accurate.
+## Сила ограниченной информации
 
-2.  **We Can Reuse Our Tools:** We can design a "Fix-the-Engine" tool kit. This kit can be given to any robot and sent to any spaceship. As long as we pack the right engine blueprint in its backpack, it can do its job without needing to know anything else about the rest of the ship. This makes our tools super handy and reusable.
+- **Безопасность и Фокус**: Ограничивая поле зрения, импорты не дают AI случайно увидеть или рассказать что-то секретное. Это помогает ему сосредоточиться, работать точнее, быстрее и не тратить ресурсы впустую.
+- **Удобные «кубики» LEGO**: Благодаря импортам, наши модули (`Ideas` и `Activities`) становятся как отдельные, независимые наборы LEGO. У каждого есть своя инструкция и нужные детали, и их можно легко использовать для постройки самых разных вещей.

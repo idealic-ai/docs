@@ -4,6 +4,20 @@ import dotenv from 'dotenv';
 import { Language } from '../utils/languages';
 dotenv.config();
 
+const SHARED_TRANSLATION_PROMPT = `  * Ensure that in translation markdown headers retain their correct level.
+  * Ensure that all headings are translated properly to target language.
+  * Do not translate inline code blocks like \`mything\` but do translate comments in multiline code blocks.
+  * DO NOT translate the word Sidenote in blockquotes \`> Sidenote: something\` - these have special meaning.
+  * Retain all sidenotes with \`>Sidenote: переведено здесь...\` syntax
+  * Retain all links with \`[link text](link url)\` syntax
+  * When translating tech terms like Instancing, prefer to translate them as one word. Latinisms are fine, like Инстансинг.
+  * Concept / Latent can't be properly translated to russian, so we name it "Концепция / Скрытое" (fine as one word), but elsewhere say скрытое состояние, скрытое исполнение.
+  * Main titles in the documents need to be translated, e.g. Agent: Request -> Агент: Запрос.
+  * Edict -> Эдикт
+  * Blueprint -> Черновик
+  * Roadmap -> План
+  * Dont translate [!WARNING]-like tags, just translate the text next to it.`;
+
 const TranslationResponseSchema = {
   type: 'object',
   properties: {
@@ -18,8 +32,8 @@ const TranslationResponseSchema = {
 
 async function translateELI5(documentContent: string, targetLang: Language): Promise<string> {
   const languageMap: Record<string, string> = {
-    'eli5-en': 'English',
-    'eli5-ru': 'Russian',
+    'simple-en': 'English',
+    'simple-ru': 'Russian',
   };
 
   const systemPrompt = `
@@ -32,6 +46,8 @@ You must follow these core principles:
 - **Use powerful metaphors:** Create relatable analogies and metaphors to explain abstract concepts. For example, instead of talking about "stateless architecture," you could say, "It's like a vending machine – it doesn't remember who you are, it just gives you what you ask for each time."
 - **Maintain accuracy:** Your explanation must be truthful. Do not compromise on the facts or mislead the user for the sake of simplicity.
 - **Be engaging and encouraging:** Write in a friendly, approachable tone that sparks curiosity and makes the user feel capable of understanding. Your goal is to empower them with knowledge.
+
+${SHARED_TRANSLATION_PROMPT}
 
 **Style Example:**
 ---
@@ -92,17 +108,7 @@ async function translateDocument(
 ): Promise<string> {
   const systemPrompt = `You are an expert translator and content localizer. Your task is to translate a markdown document into ${targetLang}, simplifying the language for a broad audience. You must follow the style of the provided example.
 
-  * Do not translate inline code blocks like \`mything\` by do translate comments in multiline code blocks.
-  * DO NOT translate the word Sidenote in blockquotes \`> Sidenote: something\` - these have special meaning
-  * When translating tech terms like Instancing, prefer to translate them as one word. Latinisms are fine, like Инстансинг,
-  * Concept / Latent can't be properly translated to russian, so we name it "Концепция / Скрытое" (fine as one word), but elsewhere say скрытое состояние, скрытое исполнение
-  * Main titles in the documents need to be translated, e.g. Agent: Request -> Агент: Запрос
-  *
-  * Edict -> Эдикт
-  * Blueprint -> Черновик
-  * Roadmap -> План
-  *
-  * Dont translate [!WARNING]-like tags, just translate the text next to it
+${SHARED_TRANSLATION_PROMPT}
 
   **Style Example:**
   ---
