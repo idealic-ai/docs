@@ -1,10 +1,8 @@
 import { Request } from '@augceo/agent';
 import '@augceo/agent/provider/vertexai';
 import dotenv from 'dotenv';
+import { Language } from '../utils/languages';
 dotenv.config();
-
-export const LANGUAGES = ['en', 'ru'] as const;
-export type Language = (typeof LANGUAGES)[number];
 
 const TranslationResponseSchema = {
   type: 'object',

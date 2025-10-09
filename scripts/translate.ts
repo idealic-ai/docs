@@ -2,7 +2,8 @@ import 'dotenv/config';
 import fs from 'fs/promises';
 import { glob } from 'glob';
 import path from 'path';
-import { getAdaptedDocument, LANGUAGES } from '../src/data/translator';
+import { getAdaptedDocument } from '../src/data/translator';
+import { LANGUAGES } from '../src/utils/languages';
 
 async function translateFile(filePath: string) {
   const content = await fs.readFile(filePath, 'utf-8');

@@ -1,1 +1,1 @@
-export default '/:lang/@document';
+export default '/@lang/@document';

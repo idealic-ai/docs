@@ -1,6 +1,6 @@
 import type { PageContext } from 'vike/types';
+import { LANGUAGES } from '../../utils/languages';
 
-export const LANGUAGES = ['en', 'ru'] as const;
 export function route(pageContext: PageContext) {
   const langPattern = `/(${LANGUAGES.join('|')})`;
   const docPattern = `/(manifesto|rfc|blueprint|edict)/([^/]+)`;
