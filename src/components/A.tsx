@@ -3,16 +3,18 @@ import { usePageContext } from 'vike-react/usePageContext';
 
 export function A({
   href,
+  lang,
   children,
   ...props
 }: {
+  lang?: string;
   href: string;
   children: React.ReactNode;
   [key: string]: any;
 }) {
   const pageContext = usePageContext();
-  const lang = (pageContext.routeParams as { lang: string }).lang || 'en';
-  const newHref = `/${lang}${href.startsWith('/') ? '' : '/'}${href}`;
+  const linkLang = lang || (pageContext.routeParams as { lang: string }).lang || 'en';
+  const newHref = `/${linkLang}${href.startsWith('/') ? '' : '/'}${href}`;
 
   const { urlPathname } = pageContext;
   const isActive = href === '/' ? urlPathname === newHref : urlPathname.startsWith(newHref);

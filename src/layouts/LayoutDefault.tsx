@@ -22,11 +22,11 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
     <div>
       <nav>
         <div>
-          <A href="/en/">
+          <A href="/" lang="en">
             <strong>En</strong>
           </A>
           {' / '}
-          <A href="/ru/">
+          <A href="/" lang="ru">
             <strong>Ru</strong>
           </A>
         </div>
