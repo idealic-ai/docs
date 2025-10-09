@@ -49,7 +49,7 @@ async function main() {
     absolute: true,
   });
 
-  await Promise.all(files.map(filePath => translateFile(filePath, ['simple-ru'])));
+  await Promise.all(files.map(filePath => translateFile(filePath, ['simple-ru', 'simple-en'])));
 }
 
 main().catch(console.error);
