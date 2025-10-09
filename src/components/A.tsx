@@ -1,5 +1,6 @@
 import React from 'react';
 import { usePageContext } from 'vike-react/usePageContext';
+import { LANGUAGES } from '../utils/languages';
 
 export function A({
   href,
@@ -14,7 +15,9 @@ export function A({
   children: React.ReactNode;
   [key: string]: any;
 }) {
-  href = href.replace(/^\/[a-z]{2}\//, '/');
+  href = LANGUAGES.reduce((acc, lang) => {
+    return acc.replace(`/${lang}/`, '/');
+  }, href);
   const pageContext = usePageContext();
   const linkLang = lang || (pageContext.routeParams as { lang: string }).lang || 'en';
   const newHref = `/${linkLang}${href.startsWith('/') ? '' : '/'}${href}`;
