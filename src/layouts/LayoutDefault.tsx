@@ -46,7 +46,7 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
                   {chapters.map((chapter: Chapter, index: number) => (
                     <span key={chapter.id}>
                       <A href={chapter.url}>{chapter.name}</A>
-                      {index < chapters.length - 1 && ' | '}
+                      {index < chapters.length - 1 && ',  '}
                     </span>
                   ))}
                 </>
