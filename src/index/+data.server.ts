@@ -1,5 +1,6 @@
 import type { PageContextServer } from 'vike/types';
 import { getSitemap } from '../data/sitemap';
+import { getUiStrings } from '../data/ui';
 import { getMarkdownContent } from '../utils/i18n';
 import { processMarkdown } from '../utils/markdown';
 
@@ -16,7 +17,8 @@ function fixLinks(content: string, prefix: string): string {
 
 export async function data(pageContext: PageContextServer) {
   const { lang } = (pageContext.routeParams as { lang: string }) || { lang: 'en' };
-  let finalContent = `# Documentation\n\nThis repository contains the core documentation for the project, including the AI System Bible, philosophical manifestos, and technical specifications.`;
+  const { markdownContent: introContent } = await getMarkdownContent('ui', 'intro.md', lang);
+  let finalContent = introContent;
 
   for (const [title, docPath] of Object.entries(DYNAMIC_SECTIONS)) {
     const { markdownContent: indexContentRaw } = await getMarkdownContent(
@@ -36,11 +38,13 @@ export async function data(pageContext: PageContextServer) {
   const title = 'Index';
   const description = 'Index of all documents';
   const sitemap = await getSitemap(lang);
+  const uiStrings = await getUiStrings(lang);
 
   return {
     content,
     title,
     description,
     sitemap,
+    ui: uiStrings,
   };
 }

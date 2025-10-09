@@ -5,11 +5,12 @@ import path from 'path';
 import { getAdaptedDocument } from '../src/data/translator';
 import { LANGUAGES } from '../src/utils/languages';
 
-async function translateFile(filePath: string) {
+async function translateFile(filePath: string, targetLangs: string[]) {
   const isUiJson = filePath.endsWith('src/data/ui.json');
 
   for (const lang of LANGUAGES) {
     if (lang === 'en') continue;
+    if (!targetLangs.includes(lang)) continue;
 
     console.log(`Translating ${filePath} to ${lang}...`);
     try {
@@ -20,11 +21,12 @@ async function translateFile(filePath: string) {
 
       translatedContent = await getAdaptedDocument(content, lang);
       const relativePath = path.relative(path.resolve(process.cwd(), 'docs'), filePath);
+      console.log('relativePath', relativePath);
       destPath = path.resolve(
         process.cwd(),
         'translations',
         lang,
-        relativePath.replace(/\.\.\/src\//g, '')
+        relativePath.replace(/\.\.\/(src\/)?/g, '')
       );
 
       await fs.mkdir(path.dirname(destPath), { recursive: true });
@@ -37,7 +39,8 @@ async function translateFile(filePath: string) {
 }
 
 async function main() {
-  const defaultGlob = '{edict,manifesto,rfc}/**/*.md';
+  const defaultGlob = '{edict,manifesto,rfc,ui}/**/*.md';
+
   //const defaultGlob = 'src/data/ui.json';
   const globPattern = process.argv[2] || defaultGlob;
 
@@ -46,7 +49,7 @@ async function main() {
     absolute: true,
   });
 
-  await Promise.all(files.map(translateFile));
+  await Promise.all(files.map(filePath => translateFile(filePath, ['simple-ru'])));
 }
 
 main().catch(console.error);

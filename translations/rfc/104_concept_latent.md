@@ -1,61 +1,51 @@
-# 104: Концепт/Скрытое
+# The Computer's Imagination
 
-> Sidenote:
->
-> - Требуется:
->   - [Concept/Idea](./101_concept_idea.md)
-> - Включает:
->   - [Agent/Request](./001_agent_request.md)
+Imagine a computer with a giant brain, like a super-genius who has read every book, watched every movie, and learned everything there is to know. We call this brain an "LLM".
 
-> **Скрытое:** Использование внутренних знаний и способности к рассуждению Большой Языковой Модели (LLM) (её «скрытого пространства») для генерации результатов без явного, детерминированного кода.
->
-> — [Глоссарий](./000_glossary.md)
+This page is about a very cool idea called **Latent**, which is just a fancy word for using the computer's amazing imagination to solve problems without needing a step-by-step instruction manual.
 
-## 1. Введение
+## 1. The Ocean of Ideas
 
-Концепция **Скрытого** является фундаментальной для архитектуры системы, охватывая как процесс (**Скрытое Исполнение**), так и источник знаний (**Скрытое Пространство**). Это стандартный метод вычислений в системе, который полагается на Большую Языковую Модель (LLM) как на универсальный интерпретатор. Такой подход позволяет системе соединить входные данные `Idea` (`context`) с её выходными данными (`solution`), используя и организуя обширные внутренние знания LLM.
+The computer's brain isn't like a dictionary where it just looks up facts. It's more like a massive, magical ocean of ideas. In this ocean, everything is connected. The idea of "puppy" is floating very close to "loyal" and "playful," while the idea of "rocket ship" is way over on the other side. This ocean of connected ideas is called the **Latent Space**.
 
-Этот подход является основой гибкости системы, позволяя создавать и выполнять рабочие процессы, даже если для составляющих их задач не написан явный, детерминированный код.
+The cool part is that all the knowledge is already in there. The tricky part is knowing how to ask the right question to get the computer to swim to the perfect spot in the ocean and find the answer you need.
 
-## 2. Скрытое Пространство: Океан Знаний
+## 2. Waking Up the Imagination
 
-**Скрытое Пространство** — это обширное, многомерное представление знаний, закономерностей и взаимосвязей, которое LLM усваивает во время своего обучения. Это не база данных фактов, а сложная карта понятий, где близость и ориентация определяют смысловые связи. Большие языковые модели сильны именно благодаря богатству этого пространства, но их знания полезны только в том случае, если к ним можно эффективно получить доступ и направить их.
+So how do we get the computer to use its imagination? We call this **Latent Execution**.
 
-Основная проблема заключается не в существовании этих знаний, а в способности ориентироваться в них. Система разработана для решения этой задачи, предоставляя правильные вопросы и, что особенно важно, правильный контекст, чтобы направить LLM к нужным областям её скрытого пространства.
+It's what happens when we ask the computer to do something it has never been given an exact recipe for. Think of it like this:
 
-## 3. Скрытое Исполнение: Активация Скрытого Пространства
+1.  You ask the computer, "Invent a new kind of superhero!"
+2.  The computer checks its files and realizes nobody has ever written the exact code for "Invent a New Superhero."
+3.  So, instead of giving up, it turns to its giant imagination (the Latent Space).
+4.  It thinks about everything it knows about superheroes, powers, and cool stories. It uses all the clues you gave it—like maybe you said you wanted a hero who controls plants and is also a chef.
+5.  Finally, it creates a brand new hero, "Captain Photosynthesis," who fights crime with super-fast growing vines and defeats villains by baking them calming pastries.
 
-**Скрытое Исполнение** — это процесс активации скрытого пространства для выполнения задачи. Оно происходит, когда система по умолчанию использует LLM, потому что для обработки `Call` не зарегистрирован явный, детерминированный код (`Activity`).
+The computer just used its imagination to fulfill your request on the fly!
 
-Процесс выглядит следующим образом:
+## 3. Giving it the Best Clues
 
-1.  Происходит `Call` к `Tool` или `Idea`.
-2.  Система определяет, что для данного `Call` нет зарегистрированной `Activity`.
-3.  Система предоставляет LLM полный `context` и `schema` для желаемого `_output`.
-4.  Задача LLM — ориентироваться в своём скрытом пространстве, используя предоставленный контекст как руководство, и сгенерировать `solution`, которое соответствует выходной `schema`.
+The most important job we have is giving the computer's imagination a clear direction. We can't just shout into the ocean of ideas and hope for the best. We have to be like a great director guiding an actor.
 
-Это превращает LLM из простого генератора текста в динамический движок исполнения, способный на лету выполнять новые интерфейсы.
+We do this by giving it a perfect set of clues, which we call **context**:
 
-## 4. Управление Контекстом: Организация Скрытого Пространства
+*   **The Story So Far:** We remind it of everything we've talked about before so it knows what's going on.
+*   **A Blueprint for the Answer:** We give it an empty form to fill out. For our superhero, we might give it a form with empty boxes for "Name," "Powers," and "Weakness." This forces the computer to think in a structured way.
+*   **Special Lenses:** We can give it hints like, "Think like a comic book writer," which helps it focus on the right part of its brain for the job.
 
-Важнейшая функция системы — **оптимизировать организацию скрытого пространства** в рамках одного запроса. Она делает это с помощью продвинутого управления контекстом, используя различные «инструментальные трюки» для фокусировки внимания LLM и направления её рассуждений.
+By giving it the best clues, we turn that giant, messy ocean of ideas into a powerful and precise tool.
 
-- **Насыщенный Контекст**: Предоставляя структурированную историю сообщений, объектов состояния и запросов пользователя, система подготавливает LLM, давая ей необходимую основу для понимания задачи.
-- **Рассуждение на основе Схемы**: JSON Schema используется не только для проверки конечного результата, но и для направления самого процесса генерации. Она предоставляет черновик для желаемого `solution`, заставляя LLM структурировать свои рассуждения и ограничивать свой путь в скрытом пространстве.
-- **Инструкции и Инструменты**: `Instructions` и `Tools` действуют как мощные линзы, фокусируя LLM на конкретной возможности или схеме рассуждений. Это «трюки», которые помогают выбрать наиболее релевантный подраздел скрытого пространства для данной задачи.
+## 4. Imagination First, Recipes Later
 
-Эффективное управление контекстом — это то, что делает скрытое исполнение надёжным. Именно так система превращает огромный, неструктурированный океан знаний LLM в точный и полезный инструмент.
+Here’s the coolest part: our system always tries to use its imagination *first*. It's the default way it works.
 
-## 5. По умолчанию для Оптимистичной Композиции
+It believes that it can figure out almost any task if we just describe it well enough. Writing a specific, step-by-step recipe (what programmers call "code") is something we only do later as an upgrade, maybe for a task that needs to be super fast or extra reliable.
 
-Скрытое Исполнение — это не исключение, а поведение по умолчанию. Система работает по «оптимистичному» принципу: она предполагает, что любой определённый интерфейс может быть выполнен путём правильной организации скрытого пространства. `Activity` с детерминированным кодом рассматривается как постепенное улучшение — оптимизация для задач, требующих скорости, надёжности или доступа к внешним API.
+This means you can plan a huge project, like building a video game, by just creating a to-do list for the computer:
 
-Такой подход по умолчанию оказывает значительное влияние на разработку:
+1.  Design a brave main character.
+2.  Create a mysterious world for them to explore.
+3.  Write an exciting story with a surprise twist.
 
-- **Быстрое Прототипирование**: Разработчики могут определять и связывать воедино несколько `Tools` и `Ideas` в сложный `Plan`, не написав ни единой строчки кода реализации. LLM выполняет весь рабочий процесс скрыто.
-- **Бесшовная Композиция**: Это позволяет комбинировать `Ideas` и `Tools` от разных авторов и из разных источников, даже если их базовые реализации недоступны.
-- > Sidenote: Эта концепция более подробно рассматривается в [RFC 303: Ideator/Reactor](../rfc/303_ideator_reactor.md).
-
-  **Постепенная Кристаллизация**: Рабочий процесс может начать своё существование полностью в скрытом пространстве. По мере развития системы, узкие места в производительности или критические процессы могут быть выборочно «кристаллизованы» в `Activities` с явным кодом, не изменяя общую структуру рабочего процесса.
-
-Делая скрытое исполнение поведением по умолчанию, система отдаёт приоритет гибкости и скорости итераций, позволяя создавать сложное агентное поведение с первого дня.
+The computer will use its imagination to do all three steps. Later, you can go back and write a specific recipe just for how the character's special powers work. This lets us build amazing things incredibly fast, starting with just an idea and letting the computer's imagination do the heavy lifting.

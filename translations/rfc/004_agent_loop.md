@@ -1,35 +1,34 @@
-# 004: Агент/Цикл
+### The Smart Robot's Work Cycle
 
-> **Цикл:** Последовательность `Request`ов, направленная на достижение цели. Агент продолжает вызывать `Request`ы, обрабатывать полученные `Call`ы и передавать результат обратно в контекст для следующего `Request`а до тех пор, пока `Call`ы не перестанут генерироваться.
-> 
-> — [Глоссарий](./000_glossary.md)
+Imagine you have a super smart robot assistant, and you give it a big goal, like "Build me a LEGO castle!"
 
-> Sidenote:
-> 
-> - Требуется:
->   - [Агент: Запрос](./001_agent_request.md)
->   - [Агент: Инструмент](./002_agent_tool.md)
->   - [Агент: Вызов](./003_agent_call.md)
+The robot doesn't do it all at once. Instead, it works in a special cycle, or a **Loop**, to get the job done step-by-step. Here’s how its brain works:
 
-Этот документ описывает **Протокол Цикла**, который позволяет агенту выполнять многошаговые задачи, итеративно вызывая протокол `Request`.
+1.  **Look Around (Gathering Info):** First, the robot looks at everything. It sees your goal ("build a castle"), checks the LEGO pieces it has, and sees what parts of the castle are already built. This is its starting point.
 
-## Цикл Исполнения
+2.  **Think: "What's Next?" (The Request):** Based on everything it sees, the robot thinks and asks itself, "Okay, what is the single most important thing I should do right now?" It considers all its tools and possible moves.
 
-Цикл Агента — это основной механизм для автономного, многошагового исполнения. Он работает следующим образом:
+3.  **Make a To-Do List (The Plan):** The robot's thinking creates a short to-do list. This list might have one step, like "Find a big gray base piece," or a few steps, like "Pick up a red brick" and "Put it on the tower." If the castle is finished, the to-do list will be empty!
 
-1.  **Сборка Контекста:** Цикл начинается со сборки начального контекста, который может включать цель пользователя, текущее `State` и другую релевантную информацию.
-2.  **Вызов Запроса:** Он вызывает протокол **[Агент: Запрос](./001_agent_request.md)** с текущим контекстом и схемой доступных `Tools`.
-3.  **Обработка Вызовов:** `Request` возвращает `solution`, содержащее массив из нуля или более **[Агент: Вызов](./003_agent_call.md)ов**.
-4.  **Исполнение и Обратная Связь:**
-    - Если `solution` содержит `Call`ы, цикл исполняет их. Для `Explicit` `Call`ов это включает вызов соответствующего кода `Activity`.
-    - Результаты этих `Call`ов затем добавляются обратно в контекст для следующей итерации.
-5.  **Завершение:** Если `solution` не содержит `Call`ов, агент считает свою цель достигнутой, и цикл завершается.
+4.  **Do The Work (Action & Update):**
+    *   The robot then does everything on its little to-do list.
+    *   After it finishes, it looks again. "Okay, the base piece is now on the table. What's next?" The result of its actions becomes new information for the next cycle.
 
-## Человек-в-цикле (Human-in-the-Loop, HITL)
+5.  **Repeat or Finish? (The Loop):**
+    *   If the to-do list had actions, the robot goes back to Step 1 and starts the cycle again with its new, updated view of the world.
+    *   If the to-do list was empty, the robot knows its job is done! The loop stops, and it can show you the finished castle.
 
-Ключевой особенностью Цикла Агента является его естественная поддержка контроля со стороны человека. Поскольку цикл разделяет генерацию `Call`ов и их исполнение, это создает для пользователя возможность вмешаться:
+### You're the Boss: Human in the Loop
 
-- **Одобрение:** Перед исполнением `Call`ов система может представить их пользователю для одобрения.
-- **Коррекция:** Пользователь может изменить параметры `Call` или даже заменить его другим.
+Here’s a really cool feature. The robot is smart, but you're still in charge.
 
-Эта возможность критически важна для безопасности и совместных задач, где агент выступает в роли ассистента. Корректировки и обратная связь от пользователя могут быть использованы **[Агентом: План](./009_agent_plan.md)**, что позволяет агенту уточнять свою стратегию на основе человеческого вклада.
+Between Step 3 (making the to-do list) and Step 4 (doing the work), the robot can pause and show you its plan.
+
+Imagine it says, "My plan is to put the blue window on the roof."
+
+You can look at that and say:
+
+*   **"Yes, good idea!"** (You approve it, and the robot continues).
+*   **"Wait, that's wrong!"** You can change the plan yourself. "Don't use the blue window; use the yellow door on the bottom floor instead."
+
+This is like having a helpful assistant that always checks with you before doing anything important. It makes sure the robot works with you as a team and doesn't go off and make a mistake.

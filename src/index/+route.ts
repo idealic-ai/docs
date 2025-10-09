@@ -1,9 +1,12 @@
 import type { PageContext } from 'vike/types';
+import { LANGUAGES } from '../utils/languages';
 
 export { route };
 
 function route(pageContext: PageContext) {
-  const match = pageContext.urlPathname.match(/^\/(en|ru)\/?$/);
+  const langPattern = `(${LANGUAGES.join('|')})`;
+  const regex = new RegExp(`^/${langPattern}/?$`);
+  const match = pageContext.urlPathname.match(regex);
   if (match) {
     return {
       routeParams: {

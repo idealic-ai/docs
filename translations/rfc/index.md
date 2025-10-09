@@ -1,50 +1,33 @@
-# RFC (Запросы на комментарии)
+# Our Official Rulebook
+
+Imagine we're building a giant, super-cool LEGO castle together. Before anyone grabs a single brick, we need a plan, right? These documents are our official blueprints and rulebooks. Everyone on the team agrees on these plans *before* we start building. This way, we all know exactly how the castle should look and how all the pieces fit together.
+
+It's our promise to each other about how we'll build things.
 
 ---
 
-Эти документы являются техническими спецификациями, которые описывают подтвержденные нашей командой планы по реализации. Они служат авторитетным справочником по протоколам системы и устанавливают стандарты, которым мы следуем и на основе которых развиваем проект.
+And just in case we use any special team words, we have a **Glossary**, which is like our team's secret dictionary.
 
----
+### The Agents: Our Robot Helpers
 
-[Глоссарий](./000_glossary.md)
+> This part is all about our smart robot helpers that do all the work.
 
-### Агент
+Think of an 'Agent' as a tireless robot helper you can give tasks to. This section describes everything our robots can do: how they understand our requests, the tools they can use, how they make plans, and how they keep working on a task until it's done. It’s the user manual for our awesome helpers.
 
-> Sidenote: Описывает агентские возможности и модели исполнения.
+### The Concepts: The Laws of Our World
 
-- [001: Агент/Запрос](./001_agent_request.md)
-- [002: Агент/Инструмент](./002_agent_tool.md)
-- [003: Агент/Вызов](./003_agent_call.md)
-- [004: Агент/Цикл](./004_agent_loop.md)
-- [005: Агент/Ввод](./005_agent_input.md)
-- [006: Агент/Импорты](./006_agent_imports.md)
-- [007: Агент/Состояние](./007_agent_state.md)
-- [008: Агент/Инстансинг](./008_agent_instancing.md)
-- [009: Агент/План](./009_agent_plan.md)
+> This section explains the most basic, fundamental rules that everything else must follow.
 
-### Скрытое
+These are the 'Laws of Physics' for our entire project. They define the biggest, most important ideas, like what a new 'Idea' is, who 'owns' an idea, and how ideas are even created in the first place. These are the unbreakable rules that govern our whole world.
 
-> Sidenote: Определяет фундаментальные структуры данных и стандарты коммуникации экосистемы.
+### The Ideas: The LEGO Bricks Themselves
 
-- [101: Скрытое/Идея](./101_concept_idea.md)
-- [102: Скрытое/Суверенитет](./102_concept_sovereignty.md)
-- [103: Скрытое/Идеатор](./103_concept_ideator.md)
-- [104: Скрытое/Скрытое](./104_concept_latent.md)
+> Here, we describe the actual building blocks our robot helpers work with.
 
-### Идеи
+If 'Concepts' are the rules, 'Ideas' are the actual LEGO bricks. This section talks about the different kinds of bricks we have. It explains how we keep track of them (like an inventory list), how we package them up to move them around, and the instruction steps for how to use them. It’s all about the 'stuff' our project is made of.
 
-> Sidenote: Описывает основные примитивы идей.
+### The Ideator: The Giant Workshop
 
-- [201: Идея/Запись](./201_idea_record.md)
-- [202: Идея/Сосуд](./202_idea_vessel.md)
-- [203: Идея/Процесс](./203_idea_process.md)
-- [204: Идея/Инструкция](./204_idea_instruction.md)
-- [205: Идея/Бюджет](./205_idea_budget.md)
+> This describes the factory and the machinery that makes everything possible.
 
-### Идеатор
-
-> Sidenote: Описывает основные сервисы и инфраструктуру, поддерживающие экосистему.
-
-- [301: Идеатор/Хранилище](./301_ideator_storage.md)
-- [302: Идеатор/Резолвер](./302_ideator_resolver.md)
-- [303: Идеатор/Реактор](./303_ideator_reactor.md)
+The 'Ideator' is the magical workshop where all the building happens. It’s the supporting system that gives our robots a place to work and stores all our LEGO bricks. This part of the blueprint describes the different stations in our workshop: the giant warehouse for storing everything (`Storage`), the library for finding the right blueprints (`Resolver`), and the awesome assembly machine that puts the ideas together (`Reactor`).

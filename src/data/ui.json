@@ -21,6 +21,8 @@
   },
   "nav": {
     "en": "En",
-    "ru": "Ru"
+    "ru": "Ru",
+    "simple-en": "Simple En",
+    "simple-ru": "Simple Ru"
   }
 }

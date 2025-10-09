@@ -54,13 +54,18 @@ nav {
   }
 }
 
+.languages {
+  display: flex;
+  gap: 16px;
+}
+
 nav.pagination {
   padding-top: 16px;
   flex-direction: row;
 }
 
 a.is-active.is-active.is-active {
-  opacity: 1;1
+  opacity: 1;
 }
 
 nav.pagination {

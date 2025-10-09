@@ -1,97 +1,43 @@
-# 003: Агент/Вызов
+# Time to Take Action: The 'Call'
 
-> **Вызов:** Конкретный, исполняемый экземпляр `Инструмента` с заданными значениями для его `params`. Это сфокусированный на исполнении запрос о том, *что должно быть сделано*.
->
-> — [Глоссарий](./000_glossary.md)
+Imagine you have a big book of ideas. An **Idea** is like a finished drawing of a cool robot. It shows what the robot looks like and what it can do. It's the final result, the finished thing.
 
-> Sidenote:
->
-> - Требует: [Протокол: Ideators](./103_concept_ideator.md)
-> - Позволяет: [Протокол Imports](./006_agent_imports.md), [Протокол Instancing](./008_agent_instancing.md)
+Now, to help our computer friend (let's call it an Agent), we can't just show it the drawing. We need to give it instructions. So, we flip the idea around and turn it into a **Tool**. A Tool is like a blueprint or a recipe for building that robot. It says, "To build this robot, you will need these parts: a head, two arms, two legs." It's a list of what's possible.
 
-[Протокол Idea](./101_concept_idea.md) определяет мощную, самодостаточную структуру данных для представления знаний и скрытой логики. [Система Инструментов](./002_agent_tool.md) создает базовый, управляемый схемами интерфейс, который позволяет агентам понимать структурированные возможности. Этот документ описывает **Протокол Call**, который основывается на Инструментах для определения того, как происходит выполнение через элементы управления Областью (Scope) и Методом (Method).
+But a blueprint doesn't build itself. You have to decide to actually do it! That's where a **Call** comes in. A **Call** is when the Agent points at the robot blueprint and says, "Okay, let's build this *right now*! Use the shiny red metal for the head, the long silver pipes for the arms, and the chunky black wheels for the legs." 
 
-> Sidenote:
->
-> - Требует
->   - [RFC 1: Tool](/)
-> - Позволяет
->   - [RFC 9: Plan](/)
+So, it goes like this:
+1.  **Idea**: The picture of the finished robot.
+2.  **Tool**: The blueprint explaining what parts you need.
+3.  **Call**: The specific order to build the robot with *these exact parts*.
 
-**Вызов** — это конкретный экземпляр Инструмента с заданными значениями параметров, готовый к исполнению. Если Инструменты определяют, *что можно сделать*, то Вызовы определяют, *как это будет выполнено*.
+### Where and How to Build the Robot?
 
-## Конвейер от Idea к Вызову
+A Call has two main controls, like settings on a video game:
 
-1.  **Idea**: Самодостаточный, ориентированный на результат документ, представляющий знание или процесс.
-2.  **Инструмент**: `Idea`, преобразованная в схему, ориентированную на интерфейс, и зарегистрированная в системе инструментов агента (подробности о схемах Инструментов, регистрации и архитектуре двойного реестра см. в [Системе Инструментов](./002_agent_tool.md)).
-3.  **Вызов**: Когда LLM решает использовать `Инструмент`, она заполняет конкретные параметры, создавая **Вызов**. `Вызов` — это единичный, конкретный экземпляр вызова `Инструмента`.
+1.  **Scope (The 'Where')**: This decides *where* the work gets done.
+    *   **Inline (Do it here)**: The Agent builds the robot itself, right where it is. It's like cooking in your own kitchen.
+    *   **Module (Ask for help)**: The Agent sends the order to a special workshop. It's like ordering a pizza instead of making it yourself. Someone else handles the task.
 
-Основной принцип: **любую Idea можно превратить в Инструмент, который затем может быть вызван как Call.**
+2.  **Method (The 'How')**: This decides *how* the robot gets made.
+    *   **Explicit (Follow the exact steps)**: The blueprint has super-detailed, step-by-step instructions. If you follow them perfectly, you get the exact same robot every time.
+    *   **Latent (Use some creativity!)**: The blueprint just says, "Make a cool-looking head." The Agent has to get creative and design a head itself. This is like asking an AI to come up with its own idea.
 
-Для подробного объяснения того, как входная схема `Idea` преобразуется в схему параметров `Инструмента`, см. **[Протокол Input](./005_agent_input.md)**.
+### The Big Decision Moment
 
-## Элементы управления выполнением: Область и Метод
+So how does the Agent decide what to do? It uses something called a **Vessel Idea**. Think of it like a quest folder in a video game.
 
-Выполнение `Вызова` определяется двумя независимыми свойствами: **Областью** (где он выполняется) и **Методом** (как он выполняется). Эти элементы управления обозначаются специальными свойствами (`_module`, `_activity`, `_output`) в схеме инструмента.
+This folder contains two things:
+1.  **The Context**: This is all the information about the current situation. "You are in a dark forest, you have a map, and you hear a dragon roaring."
+2.  **The Tools**: This is the list of actions (or spells) you can use *right now*. For example: "Run," "Hide," or "Use Magic Shield."
 
-### Две Оси Выполнения
+The Agent (our hero!) looks at the situation and the list of available actions and makes a decision. Its decision is the answer—a list of one or more **Calls** to perform. For example: `[Call: 'Hide' behind the big rock, Call: 'Use Magic Shield'].`
 
-1.  **Область (Встроенная vs. Модульная)**
-    Область определяет, происходит ли выполнение в текущем контексте агента или делегируется внешнему, изолированному модулю.
-    - **Встроенная Область**: Режим по умолчанию, при котором `Вызов` обрабатывается напрямую.
-    - **Модульная Область**: Обозначается свойством `_module` и делегирует `Вызов` внешнему `Activity` или `Idea`.
+### Doing Multiple Things at Once
 
-2.  **Метод (Явный vs. Скрытый)**
-    Метод определяет, генерируется ли результат детерминированным кодом или с помощью LLM.
-    - **Явный Метод**: Обозначается наличием свойства `_activity`, результат `Вызова` генерируется детерминированным кодом.
-    - **Скрытый Метод**: Поведение по умолчанию при отсутствии `_activity`. Результат `Вызова` генерируется LLM. Требует наличия необязательного свойства `_output`.
+When the Agent decides to make multiple Calls, it can do them in different ways:
 
-Эти элементы управления можно комбинировать в различные паттерны выполнения, а их контекстом можно управлять с помощью импортов. Для подробного объяснения того, как эти элементы управления комбинируются и как управляется контекст, см. **[Протокол Imports](./008_agent_imports.md)**.
-
-## Idea, Инструмент и Вызов: Спектр фокуса
-
-Чтобы понять эту связь, мы должны уяснить фундаментальную разницу в направленности этих трех понятий.
-
-- **Idea** **ориентирована на результат**. Её основная цель — представить завершенную мысль или результат. `schema` определяет форму `solution` (результата), который был сгенерирован из `context`. Это запись того, *что было* или *могло бы быть*.
-
-- **Инструмент** **ориентирован на интерфейс**. Его схема определяет параметры (входные данные) и структуру `_output`. Это абстрактный шаблон для действия — сигнатура функции, ожидающая вызова.
-
-- **Вызов** **ориентирован на исполнение**. Это конкретный, исполняемый экземпляр `Инструмента`. Он берет интерфейс `Инструмента`, ориентированный на параметры, и заполняет его конкретными значениями, превращая в готовый к выполнению запрос о том, *что должно быть сделано*.
-
-## Vessel Idea: Единый момент принятия решения
-
-Когда агенту необходимо принять решение, полный запрос, отправляемый в LLM, структурируется как особый тип `Idea`, который мы называем **Vessel Idea**. Он представляет собой единый, самодостаточный момент принятия решения.
-
-Vessel Idea объединяет два ключевых компонента, необходимых LLM для принятия решения:
-
-1.  **Контекст**: Включает в себя всю релевантную информацию, которая нужна агенту, например, запрос пользователя, память и другие данные из окружения.
-2.  **Схема**: Для Vessel Idea основная роль схемы — определить «Контейнер» (Vessel) — набор возможных `Инструментов`, которые агенту разрешено использовать в данной конкретной ситуации.
-
-LLM обрабатывает всю эту `Idea` — контекст и схему доступных инструментов — и её `solution` является результатом этого решения: массив из нуля или более `Вызовов` для исполнения.
-
-Эта структура позволяет одной целостной `Idea` представлять сложное, многошаговое действие.
-
-## Паттерны выполнения Вызовов
-
-Когда Vessel Idea создает несколько Вызовов, можно применять различные стратегии их выполнения в зависимости от потребностей приложения:
-
-```typescript
-// Выполнение одного Вызова
-const result = await Tool(call);
-
-// Выполнить все Вызовы, дождаться всех результатов
-const results = await Tool.all(calls);
-
-// Выполнить все Вызовы, вернуть первый успешный результат
-const result = await Tool.any(calls);
-
-// Выполнить все Вызовы, вернуть первый завершившийся (успешно или с ошибкой)
-const result = await Tool.race(calls);
-```
-
-Эти паттерны обеспечивают:
-
-- **Детальный контроль**: Обрабатывайте Вызовы по отдельности с пользовательской логикой между выполнениями.
-- **Пакетная обработка**: Выполняйте независимые Вызовы параллельно для максимальной производительности.
-- **Стратегии быстрого отказа**: Останавливайтесь при первом успехе (`.any()`) или первом завершении (`.race()`).
-- **Операции «всё или ничего»**: Гарантируйте, что все Вызовы успешно завершатся вместе (`.all()`), поддерживая согласованность, когда Вызовы логически сгруппированы.
+*   **One by one**: Do the first action, see what happens, then do the second.
+*   **All at once (`.all`)**: Do all the actions at the same time, but they *all* have to succeed for the plan to work. It’s like you and your friend both have to turn your keys at the same time to open a treasure chest.
+*   **First one wins (`.any`)**: Try three different ways to open a door at once. As soon as one of them works, you stop and go through.
+*   **The Race (`.race`)**: Start two actions at the same time. Whichever one finishes first (even if it fails!) decides what you do next.

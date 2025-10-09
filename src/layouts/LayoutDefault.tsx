@@ -4,6 +4,7 @@ import '../assets/tufte.css';
 import { A } from '../components/A';
 import type { Chapter, Sitemap } from '../data/sitemap';
 import type { UIStrings } from '../data/ui';
+import { LANGUAGES } from '../utils/languages';
 
 export default function LayoutDefault({ children }: { children: React.ReactNode }) {
   const pageContext = usePageContext();
@@ -64,22 +65,16 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
             );
           })}
         </nav>
-        <div>
-          <A
-            href={pageContext.urlPathname}
-            lang="en"
-            className={lang === 'en' ? 'is-active' : undefined}
-          >
-            <strong>En</strong>
-          </A>
-          {' / '}
-          <A
-            href={pageContext.urlPathname}
-            lang="ru"
-            className={lang === 'ru' ? 'is-active' : undefined}
-          >
-            <strong>Ru</strong>
-          </A>
+        <div className="languages">
+          {LANGUAGES.map(l => (
+            <A
+              href={pageContext.urlPathname}
+              lang={l}
+              className={l === lang ? 'is-active' : undefined}
+            >
+              <strong>{ui.nav[l as keyof typeof ui.nav] || l}</strong>
+            </A>
+          ))}
         </div>
       </header>
       <main>{children}</main>
