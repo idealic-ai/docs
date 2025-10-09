@@ -22,13 +22,13 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
     <div>
       <nav>
         <div>
-          <a href="/en/">
+          <A href="/en/">
             <strong>En</strong>
-          </a>
+          </A>
           {' / '}
-          <a href="/ru/">
+          <A href="/ru/">
             <strong>Ru</strong>
-          </a>
+          </A>
         </div>
         {Object.entries(sitemap).map(([doc, chapters]) => {
           const isManifesto = doc === 'manifesto' || doc === 'edict';
