@@ -1,8 +1,7 @@
-import * as fs from 'node:fs';
-import * as path from 'node:path';
 import type { PageContextServer } from 'vike/types';
 import { data as getCommonData } from '../../+data';
-import { Chapter, Sitemap } from '../../data/sitemap';
+import { Chapter, Sitemap, getSitemap } from '../../data/sitemap';
+import { getMarkdownContent } from '../../utils/i18n';
 import { processMarkdown } from '../../utils/markdown';
 
 interface PageData {
@@ -22,10 +21,12 @@ export async function data(pageContext: PageContextServer): Promise<PageData> {
     chapterSlug: string;
     lang: string;
   }) || { document: '', chapterSlug: '', lang: 'en' };
+  const sitemap = await getSitemap(lang);
 
   if (!chapterSlug) {
     return {
       ...commonData,
+      sitemap,
       content: null,
       currentChapter: null,
       nextChapter: null,
@@ -34,38 +35,17 @@ export async function data(pageContext: PageContextServer): Promise<PageData> {
   }
 
   try {
-    const chapters = commonData.sitemap[document] || [];
+    const chapters = sitemap[document] || [];
     const chapterIndex = chapters.findIndex(
-      c => c.slug.toLowerCase() === chapterSlug.toLowerCase()
+      c => c.path.toLowerCase() === chapterSlug.toLowerCase()
     );
-    const chapter = chapters[chapterIndex];
 
+    const chapter = chapters[chapterIndex];
     if (!chapter) {
       throw new Error(`Chapter ${chapterSlug} not found in ${document}`);
     }
 
-    let markdownContent: string;
-    let isTranslated = true;
-
-    const translatedPath = path
-      .resolve(process.cwd(), './translations', lang, document, chapter.path)
-      .replace('/translations/en', '');
-
-    try {
-      markdownContent = await fs.promises.readFile(translatedPath, 'utf-8');
-    } catch (e) {
-      isTranslated = false;
-      const originalPath = path.resolve(process.cwd(), `./${document}`, chapter.path);
-      markdownContent = await fs.promises.readFile(originalPath, 'utf-8');
-    }
-
-    if (!isTranslated) {
-      const warning = `> [!WARNING]
-> This document has not yet been translated into ${
-        lang === 'ru' ? 'Russian' : 'the selected language'
-      }. You are reading the original English version.`;
-      markdownContent = `${warning}\n\n${markdownContent}`;
-    }
+    const { markdownContent } = await getMarkdownContent(document, chapter.path, lang);
 
     // Convert markdown to HTML
     const htmlContent = await processMarkdown(markdownContent);
@@ -85,6 +65,7 @@ export async function data(pageContext: PageContextServer): Promise<PageData> {
 
     return {
       ...commonData,
+      sitemap,
       content: htmlContent,
       currentChapter: chapter.name,
       title,

@@ -7,6 +7,7 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
   const pageContext = usePageContext();
   const { sitemap } = (pageContext.data as { sitemap: Sitemap }) || { sitemap: {} };
   const { urlPathname } = pageContext;
+  const { lang } = pageContext.routeParams as { lang: string };
 
   const pathParts = urlPathname.split('/').filter(Boolean);
   const currentDoc = pathParts[0];
@@ -28,7 +29,6 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
         {Object.entries(sitemap).map(([doc, chapters]) => {
           const isManifesto = doc === 'manifesto' || doc === 'edict';
           const isCurrentDoc = doc === currentDoc;
-
           return (
             <div key={doc}>
               <strong>

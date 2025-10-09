@@ -1,4 +1,7 @@
 import { Request } from '@augceo/agent';
+import '@augceo/agent/provider/vertexai';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export const LANGUAGES = ['en', 'ru'] as const;
 export type Language = (typeof LANGUAGES)[number];
@@ -16,8 +19,8 @@ const TranslationResponseSchema = {
 } as const;
 
 export const STYLE_EXAMPLE = {
-  original: `A Vibe is the fundamental unit of interaction and knowledge in our system.`,
-  translated: `Vibe — это фундаментальная единица взаимодействия и знаний в нашей системе.`,
+  original: `A Vibe is the fundamental unit of interaction and knowledge in our system. The core of \`Request\` is its \`schema\``,
+  translated: `Vibe — это фундаментальная единица взаимодействия и знаний в нашей системе. Основой \`Request\` является его \`schema\``,
 };
 
 /**
@@ -36,6 +39,9 @@ async function translateDocument(
 ): Promise<string> {
   const systemPrompt = `You are an expert translator and content localizer. Your task is to translate a markdown document into ${targetLang}, simplifying the language for a broad audience. You must follow the style of the provided example.
 
+  * Do not translate inline code blocks like \`mything\` by do translate comments in multiline code blocks.
+  * DO NOT translate the word Sidenote in blockquotes \`> Sidenote: something\` - these have special meaning
+
   **Style Example:**
   ---
   **Original:**
@@ -53,7 +59,8 @@ async function translateDocument(
   const response = await Request(
     {
       provider: 'vertexai',
-      model: 'gemini-2.5-pro-preview-05-06',
+      model: 'gemini-2.5-pro',
+      apiKey: process.env.VERTEXAI_API_KEY,
     },
     TranslationResponseSchema,
     [

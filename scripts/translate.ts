@@ -24,7 +24,7 @@ async function translateFile(filePath: string) {
 }
 
 async function main() {
-  const defaultGlob = '{blueprint,edict,manifesto,rfc}/**/*.md';
+  const defaultGlob = '{edict,manifesto,rfc}/**/*.md';
   const globPattern = process.argv[2] || defaultGlob;
 
   const files = await glob(globPattern, {

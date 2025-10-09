@@ -1,19 +1,19 @@
-import * as fs from 'node:fs';
-import * as path from 'node:path';
 import type { PageContextServer } from 'vike/types';
 import { data as getCommonData } from '../+data';
+import { getSitemap } from '../data/sitemap';
+import { getMarkdownContent } from '../utils/i18n';
 import { processMarkdown } from '../utils/markdown';
 
 export async function data(pageContext: PageContextServer) {
   const commonData = await getCommonData();
-  const { document } = pageContext.routeParams as { document: string };
+  const { document, lang } = (pageContext.routeParams as { document: string; lang: string }) || {
+    document: '',
+    lang: 'en',
+  };
+  const sitemap = await getSitemap(lang);
 
   try {
-    const COMPILED_DIR = path.resolve(process.cwd(), `./${document}`);
-    const markdownContent = await fs.promises.readFile(
-      path.join(COMPILED_DIR, 'index.md'),
-      'utf-8'
-    );
+    const { markdownContent } = await getMarkdownContent(document, 'index.md', lang);
     const htmlContent = await processMarkdown(markdownContent);
     const description =
       markdownContent
@@ -26,6 +26,7 @@ export async function data(pageContext: PageContextServer) {
 
     return {
       ...commonData,
+      sitemap,
       content: htmlContent,
       title: `${document.charAt(0).toUpperCase() + document.slice(1)}`,
       description,

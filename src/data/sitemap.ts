@@ -1,5 +1,6 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
+import { getMarkdownContent } from '../utils/i18n';
 
 // Define types
 export interface Chapter {
@@ -18,7 +19,7 @@ export interface Sitemap {
 
 const DOC_FOLDERS = ['manifesto', 'edict', 'rfc', 'blueprint'];
 
-async function getChaptersForDocument(document: string): Promise<Chapter[]> {
+async function getChaptersForDocument(document: string, lang: string = 'en'): Promise<Chapter[]> {
   const COMPILED_DIR = path.resolve(process.cwd(), `./${document}`);
   try {
     const dirents = await fs.promises.readdir(COMPILED_DIR, { withFileTypes: true });
@@ -32,23 +33,16 @@ async function getChaptersForDocument(document: string): Promise<Chapter[]> {
         const numberStr = fileMatch[2] || fileMatch[3] || '0';
         const chapterNum = parseInt(numberStr, 10);
 
-        const markdownContent = await fs.promises.readFile(
-          path.join(COMPILED_DIR, dirent.name),
-          'utf-8'
-        );
+        const { markdownContent } = await getMarkdownContent(document, dirent.name, lang);
 
         const titleMatch = markdownContent.match(/^(#|##) (.*)/m);
         let chapterName: string;
         if (document === 'rfc' && titleMatch) {
-          chapterName = titleMatch[2].replace(/Part \w+: /i, '').trim();
+          chapterName = titleMatch[2].replace(/.*?: /i, '').trim();
         } else {
           // Prioritize filename for chapter name, fallback to title.
           chapterName = titleMatch
-            ? titleMatch[2]
-                .replace(/Part \w+: /i, '')
-                .trim()
-                .replaceAll('*', '')
-                .replace('The ', '')
+            ? titleMatch[2].replace(/.*?: /i, '').trim().replaceAll('*', '').replace('The ', '')
             : dirent.name.replace('.md', '');
         }
 
@@ -75,10 +69,10 @@ async function getChaptersForDocument(document: string): Promise<Chapter[]> {
   }
 }
 
-export async function getSitemap(): Promise<Sitemap> {
+export async function getSitemap(lang: string = 'en'): Promise<Sitemap> {
   const sitemap: Sitemap = {};
   for (const doc of DOC_FOLDERS) {
-    sitemap[doc] = await getChaptersForDocument(doc);
+    sitemap[doc] = await getChaptersForDocument(doc, lang);
   }
   return sitemap;
 }

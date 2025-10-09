@@ -1,6 +1,6 @@
 import { getSitemap } from '../data/sitemap';
-import { LANGUAGES } from '../data/translator';
 
+export const LANGUAGES = ['en', 'ru'] as const;
 const DOC_FOLDERS = ['manifesto', 'edict', 'rfc', 'blueprint'];
 
 export async function onBeforePrerenderStart() {
