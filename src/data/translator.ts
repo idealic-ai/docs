@@ -1,5 +1,7 @@
 import { Request } from '@augceo/agent';
-import { FromSchema } from '@augceo/schemistry';
+
+export const LANGUAGES = ['en', 'ru'] as const;
+export type Language = (typeof LANGUAGES)[number];
 
 const TranslationResponseSchema = {
   type: 'object',
@@ -9,13 +11,14 @@ const TranslationResponseSchema = {
       description: 'The translated and simplified markdown content.',
     },
   },
+  required: ['translation'],
   unevaluatedProperties: false,
 } as const;
 
-interface StyleExample {
-  original: string;
-  translated: string;
-}
+export const STYLE_EXAMPLE = {
+  original: `A Vibe is the fundamental unit of interaction and knowledge in our system.`,
+  translated: `Vibe — это фундаментальная единица взаимодействия и знаний в нашей системе.`,
+};
 
 /**
  * Translates and simplifies a markdown document using an LLM.
@@ -26,9 +29,8 @@ interface StyleExample {
  * @param extraPrompt An optional extra prompt for simplification or other transformations.
  * @returns The translated and simplified markdown content.
  */
-export async function translateDocument(
+async function translateDocument(
   documentContent: string,
-  styleExample: StyleExample,
   targetLang: string = 'Russian',
   extraPrompt?: string
 ): Promise<string> {
@@ -37,10 +39,10 @@ export async function translateDocument(
   **Style Example:**
   ---
   **Original:**
-  ${styleExample.original}
+  ${STYLE_EXAMPLE.original}
   ---
   **Translated:**
-  ${styleExample.translated}
+  ${STYLE_EXAMPLE.translated}
   ---
 
   Now, translate and simplify the following document. ${
@@ -48,10 +50,7 @@ export async function translateDocument(
   }
   `;
 
-  const response = await Request<
-    typeof TranslationResponseSchema,
-    FromSchema<typeof TranslationResponseSchema>
-  >(
+  const response = await Request(
     {
       provider: 'vertexai',
       model: 'gemini-2.5-pro-preview-05-06',
@@ -70,8 +69,19 @@ export async function translateDocument(
   );
 
   if (response) {
-    return response;
+    return response[0].translation;
   }
 
   throw new Error('Failed to get a valid translation from the AI.');
+}
+
+export async function getAdaptedDocument(
+  content: string,
+  lang: Language,
+  extraPrompt?: string
+): Promise<string> {
+  if (lang === 'en' && !extraPrompt) {
+    return content;
+  }
+  return await translateDocument(content, lang === 'ru' ? 'Russian' : 'English', extraPrompt);
 }

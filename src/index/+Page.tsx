@@ -1,11 +1,11 @@
 import { useData } from 'vike-react/useData';
 
 export default function Page() {
-  const { contentHtml } = useData<{ contentHtml: string }>();
+  const { content } = useData<{ content: string }>();
   return (
     <main>
       <article>
-        <section dangerouslySetInnerHTML={{ __html: contentHtml }}></section>
+        <section dangerouslySetInnerHTML={{ __html: content }}></section>
       </article>
     </main>
   );

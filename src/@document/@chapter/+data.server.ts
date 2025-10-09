@@ -47,13 +47,9 @@ export async function data(pageContext: PageContextServer): Promise<PageData> {
     let markdownContent: string;
     let isTranslated = true;
 
-    const translatedPath = path.resolve(
-      process.cwd(),
-      './translations',
-      lang,
-      document,
-      chapter.path
-    );
+    const translatedPath = path
+      .resolve(process.cwd(), './translations', lang, document, chapter.path)
+      .replace('/translations/en', '');
 
     try {
       markdownContent = await fs.promises.readFile(translatedPath, 'utf-8');

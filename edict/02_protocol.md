@@ -51,13 +51,15 @@ The architecture of liberation is built on a radical principle: **the content is
 The method's structure is inspired by the Unix philosophy and the compositional patterns of functional programming. At its core is a fundamental insight: an **Idea is not just data, but a computational container**. It bundles a core value (the **solution**) with its own rich context for computation (the **schema** and **context**). This makes every Idea a self-contained universe of meaning, ready to be processed.
 
 > Sidenote: [RFC 103: Concept/Ideator](../rfc/103_concept_ideator.md)
-> The agents that operate on these Ideas are called **Ideators**. They act as standardized functions for transforming these containers. An **Ideator** takes an `Idea` container as input, operates on the inner value based on its context, and always returns a new `Idea` container as output. This input/output contract is the bedrock of the system's stability.
+
+The agents that operate on these Ideas are called **Ideators**. They act as standardized functions for transforming these containers. An **Ideator** takes an `Idea` container as input, operates on the inner value based on its context, and always returns a new `Idea` container as output. This input/output contract is the bedrock of the system's stability.
 
 A powerful aspect of this design is its approach to validation. An **Ideator** does not need to understand the full, complex schema of a `SOURCE` Idea. It only needs to verify that the Idea’s context and solution conform to the specific structure it requires—a form of structural typing. For example, an "Idea Improver" **Ideator** might declare: _"I accept a `SOURCE` Idea whose solution has a `title` string."_ This allows for immense flexibility.
 
 This container model is what makes the entire system composable. Because every **Ideator** speaks the universal language of the `Idea` container, they can be chained together into sophisticated pipelines. The shared structure automatically handles the complex connections between steps, allowing an agentic planner to compose powerful workflows without getting lost in the details. This is not the only method of interaction, however. Any **Ideator** can also be exposed and called directly via standard protocols like HTTP, offering transparent and flexible API access.
 
 > Sidenote: [RFC 009: Agent/Plan](../rfc/009_agent_plan.md)
-> Imagine a pipeline of **Ideators**: an initial `Idea` is sent to a **Simulator** to explore potential outcomes, then to a **Critic** that provides feedback, then to an **Improver** that refines the `Idea` based on that critique, and finally to a **Publisher** that shares it with a specific circle. Each **Ideator** is a simple, independent tool, but together they form a powerful, emergent system for thought and creation.
+
+Imagine a pipeline of **Ideators**: an initial `Idea` is sent to a **Simulator** to explore potential outcomes, then to a **Critic** that provides feedback, then to an **Improver** that refines the `Idea` based on that critique, and finally to a **Publisher** that shares it with a specific circle. Each **Ideator** is a simple, independent tool, but together they form a powerful, emergent system for thought and creation.
 
 This is what gives rise to a **digital life**: an `Idea` survives and evolves by persuading other nodes and **Ideators** to grant it processing time. It travels through the network, being processed, remixed, and enhanced at each step, its relevance proven by its ability to continue its journey.

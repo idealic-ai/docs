@@ -1,12 +1,12 @@
 # 101: Agent: Request
 
+> Sidenote: NPM: [https://www.npmjs.com/package/@augceo/agent](@idealic-ai/agent)
+
 > **Request:** A single, self-contained LLM invocation, which takes a `context` and a `schema` and produces a `solution`.
 >
 > — [Glossary](./000_glossary.md)
 
 This document describes the **Request Protocol**, which defines the fundamental unit of interaction with an LLM. The `Request` is the engine that makes the abstract **[Concept: Idea](./001_concept_idea.md)** computable by taking its `context` and `schema` to generate a `solution`.
-
-The implementation can be found in `agent/src/Request/Request.ts`.
 
 ## The Request Pipeline
 

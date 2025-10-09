@@ -1,19 +1,25 @@
 import type { PageContext } from 'vike/types';
+import { LANGUAGES } from '../../data/translator';
 
 export function route(pageContext: PageContext) {
-  const match = pageContext.urlPathname.match(
-    /^\/(en|ru)\/(manifesto|rfc|blueprint|edict)\/([^/]+).md$/
-  );
+  const langPattern = `/(${LANGUAGES.join('|')})`;
+  const docPattern = `/(manifesto|rfc|blueprint|edict)/([^/]+)`;
+  const regex = new RegExp(`^${langPattern}${docPattern}$`);
+  const match = pageContext.urlPathname.match(regex);
 
   if (!match) {
     return false;
   }
 
+  const lang = match[1];
+  const document = match[2];
+  const chapterSlug = match[3];
+
   return {
     routeParams: {
-      lang: match[1],
-      document: match[2],
-      chapterSlug: match[3],
+      lang,
+      document,
+      chapterSlug,
     },
   };
 }

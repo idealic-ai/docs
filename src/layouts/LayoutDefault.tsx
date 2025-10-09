@@ -20,6 +20,11 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
   return (
     <div>
       <nav>
+        <div>
+          <a href="/">
+            <strong>Docs</strong>
+          </a>
+        </div>
         {Object.entries(sitemap).map(([doc, chapters]) => {
           const isManifesto = doc === 'manifesto' || doc === 'edict';
           const isCurrentDoc = doc === currentDoc;
