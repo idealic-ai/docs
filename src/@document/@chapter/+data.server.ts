@@ -1,6 +1,7 @@
 import type { PageContextServer } from 'vike/types';
 import { data as getCommonData } from '../../+data';
 import { Chapter, Sitemap, getSitemap } from '../../data/sitemap';
+import { UIStrings, getUiStrings } from '../../data/ui';
 import { getMarkdownContent } from '../../utils/i18n';
 import { processMarkdown } from '../../utils/markdown';
 
@@ -12,6 +13,7 @@ interface PageData {
   description: string;
   nextChapter: Chapter | null;
   prevChapter: Chapter | null;
+  ui: UIStrings;
 }
 
 export async function data(pageContext: PageContextServer): Promise<PageData> {
@@ -22,6 +24,7 @@ export async function data(pageContext: PageContextServer): Promise<PageData> {
     lang: string;
   }) || { document: '', chapterSlug: '', lang: 'en' };
   const sitemap = await getSitemap(lang);
+  const uiStrings = await getUiStrings(lang);
 
   if (!chapterSlug) {
     return {
@@ -31,6 +34,7 @@ export async function data(pageContext: PageContextServer): Promise<PageData> {
       currentChapter: null,
       nextChapter: null,
       prevChapter: null,
+      ui: uiStrings,
     };
   }
 
@@ -72,6 +76,7 @@ export async function data(pageContext: PageContextServer): Promise<PageData> {
       description,
       nextChapter: nextChapter ? nextChapter : null,
       prevChapter: prevChapter ? prevChapter : null,
+      ui: uiStrings,
     };
   } catch (error) {
     console.error(`Error loading chapter ${chapterSlug} from ${document}:`, error);

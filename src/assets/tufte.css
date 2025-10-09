@@ -24,25 +24,49 @@ body {
   max-width: 1400px;
   counter-reset: sidenote-counter;
 }
-
-nav {
-  font-size: 16px;
-
-  display: flex;
-  gap: 16px;
+header {
   padding: 1rem 1rem 0;
+  display: flex;
+  gap: 32px;
+  a {
+    opacity: 0.55;
+  }
+
+  a img {
+    width: 48px;
+    height: 48px;
+  }
+}
+nav {
+  flex-grow: 1;
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  > div > strong {
+    width: 100px;
+    display: inline-block;
+  }
+
+  > div .chapter-link ~ .chapter-link {
+    margin-left: 5px;
+  }
+}
+
+nav.pagination {
+  padding-top: 16px;
+  flex-direction: row;
+}
+
+a.is-active.is-active.is-active {
+  opacity: 1;1
 }
 
 nav.pagination {
   border-top: 1px solid #ccc;
   display: flex;
   justify-content: space-between;
-}
-
-nav > div:not(:last-child):after {
-  content: ' • ';
-  opacity: 0.25;
-  margin-left: 16px;
 }
 
 p > code,
@@ -315,7 +339,7 @@ article {
   margin: 0 auto;
 }
 
-nav {
+header {
   max-width: 1240px;
   margin: 0 auto;
 }

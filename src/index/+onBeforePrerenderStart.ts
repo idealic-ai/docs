@@ -8,7 +8,7 @@ export async function onBeforePrerenderStart() {
 
   const urls: string[] = [];
   LANGUAGES.forEach(lang => {
-    urls.push(`/${lang}`);
+    urls.push(`/${lang}/`);
     for (const docType of DOC_FOLDERS) {
       urls.push(`/${lang}/${docType}/`);
       if (sitemap[docType]) {

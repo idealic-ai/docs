@@ -1,15 +1,15 @@
 # 004: Agent/Loop
 
+> **Loop:** A sequence of `Request`s aimed at achieving a goal. The agent continues to invoke `Request`s, process the resulting `Call`s, and feed the output back into the context of the next `Request` until no more `Call`s are generated.
+>
+> — [Glossary](./000_glossary.md)
+
 > Sidenote:
 >
 > - Requires:
 >   - [Agent: Request](./001_agent_request.md)
 >   - [Agent: Tool](./002_agent_tool.md)
 >   - [Agent: Call](./003_agent_call.md)
-
-> **Loop:** A sequence of `Request`s aimed at achieving a goal. The agent continues to invoke `Request`s, process the resulting `Call`s, and feed the output back into the context of the next `Request` until no more `Call`s are generated.
->
-> — [Glossary](./000_glossary.md)
 
 This document describes the **Loop Protocol**, which enables an agent to perform multi-step tasks by iteratively calling the `Request` protocol.
 

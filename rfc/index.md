@@ -8,9 +8,9 @@ These documents serve as normative specifications that articulate our team's con
 
 [Glossary](./000_glossary.md)
 
-> Sidenote: Focuses on the agentic capabilities and execution models.
-
 ### Agent
+
+> Sidenote: Focuses on the agentic capabilities and execution models.
 
 - [001: Agent/Request](./001_agent_request.md)
 - [002: Agent/Tool](./002_agent_tool.md)
@@ -22,18 +22,18 @@ These documents serve as normative specifications that articulate our team's con
 - [008: Agent/Instancing](./008_agent_instancing.md)
 - [009: Agent/Plan](./009_agent_plan.md)
 
-> Sidenote: Defines the foundational data structures and communication standards of the ecosystem.
-
 ### Concept
+
+> Sidenote: Defines the foundational data structures and communication standards of the ecosystem.
 
 - [101: Concept/Idea](./101_concept_idea.md)
 - [102: Concept/Sovereignty](./102_concept_sovereignty.md)
 - [103: Concept/Ideator](./103_concept_ideator.md)
 - [104: Concept/Latent](./104_concept_latent.md)
 
-> Sidenote: Describes the core primitives of ideas.
-
 ### Ideas
+
+> Sidenote: Describes the core primitives of ideas.
 
 - [201: Idea/Record](./201_idea_record.md)
 - [202: Idea/Vessel](./202_idea_vessel.md)
@@ -41,9 +41,9 @@ These documents serve as normative specifications that articulate our team's con
 - [204: Idea/Instruction](./204_idea_instruction.md)
 - [205: Idea/Budget](./205_idea_budget.md)
 
-> Sidenote: Describes the core services and infrastructure that support the ecosystem.
-
 ### Ideator
+
+> Sidenote: Describes the core services and infrastructure that support the ecosystem.
 
 - [301: Ideator/Storage](./301_ideator_storage.md)
 - [302: Ideator/Resolver](./302_ideator_resolver.md)

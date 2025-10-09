@@ -1,13 +1,13 @@
 # 005: Agent/Input
 
+> **Input Message:** A context message containing a `schema` and `input` data. Its presence transforms an `Idea` into an `Ideator` by defining its expected inputs.
+>
+> — [Glossary](./000_glossary.md)
+
 > Sidenote:
 >
 > - Requires: [The Idea Protocol](./101_concept_idea.md)
 > - Enables: [Protocol: Ideators](./103_concept_ideator.md)
-
-> **Input Message:** A context message containing a `schema` and `input` data. Its presence transforms an `Idea` into an `Ideator` by defining its expected inputs.
->
-> — [Glossary](./000_glossary.md)
 
 This document describes the **Input Protocol**, a system for defining structured inputs for `Ideas`. This protocol introduces a special message type that, when included in an `Idea`'s context, transforms it from a static piece of knowledge into an executable, function-like entity known as an **Ideator**.
 

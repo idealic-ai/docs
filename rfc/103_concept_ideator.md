@@ -1,5 +1,9 @@
 # 103: Concept/Ideator
 
+> **Ideator:** An `Idea` that accepts input, signified by a context message of `type: "input"`. It acts as a function, transforming input to output.
+>
+> — [Glossary](./000_glossary.md)
+
 > Sidenote:
 >
 > - Requires:
@@ -8,10 +12,6 @@
 > - Enables:
 >   - [The Call Protocol](./003_agent_call.md)
 >   - [Protocol: Sovereignty](./102_concept_sovereignty.md)
-
-> **Ideator:** An `Idea` that accepts input, signified by a context message of `type: "input"`. It acts as a function, transforming input to output.
->
-> — [Glossary](./000_glossary.md)
 
 ## 1. Introduction
 

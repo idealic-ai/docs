@@ -1,0 +1,26 @@
+{
+  "rfc": {
+    "short": "RFCs",
+    "long": "Request for Comments",
+    "toc_link": "Back to list of RFCs table of contents"
+  },
+  "edict": {
+    "short": "Edict",
+    "long": "Edict",
+    "toc_link": "Back to Edict table of contents"
+  },
+  "manifesto": {
+    "short": "Manifesto",
+    "long": "Manifesto",
+    "toc_link": "Back to Manifesto table of contents"
+  },
+  "blueprint": {
+    "short": "Blueprint",
+    "long": "Blueprint",
+    "toc_link": "Back to Blueprint table of contents"
+  },
+  "nav": {
+    "en": "En",
+    "ru": "Ru"
+  }
+}

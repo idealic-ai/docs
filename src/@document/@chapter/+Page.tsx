@@ -1,33 +1,30 @@
 import { usePageContext } from 'vike-react/usePageContext';
 import { A } from '../../components/A';
 import { Chapter } from '../../data/sitemap';
+import { UIStrings } from '../../data/ui';
 
 interface PageData {
   content: string | null;
   nextChapter: Chapter | null;
   prevChapter: Chapter | null;
+  ui: UIStrings;
 }
 
 export default function Page() {
   const pageContext = usePageContext();
   const { document } = pageContext.routeParams as { document: string };
-  const { content, nextChapter, prevChapter } = (pageContext.data as PageData) || {
+  const { content, nextChapter, prevChapter, ui } = (pageContext.data as PageData) || {
     content: null,
   };
+
+  const docStrings = ui ? ui[document as keyof UIStrings] : null;
 
   return (
     <article>
       {content ? (
         <>
           <A href={`/${document}/`} className="back-link">
-            &larr;{' '}
-            <span>
-              Back to{' '}
-              {document == 'rfc'
-                ? 'list of RFCs'
-                : document.charAt(0).toUpperCase() + document.slice(1)}{' '}
-              table of contents
-            </span>
+            &larr; <span>{docStrings ? docStrings.toc_link : `Back to ${document}`}</span>
           </A>
           <section dangerouslySetInnerHTML={{ __html: content }} />
           <nav className="pagination">

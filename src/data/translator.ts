@@ -39,6 +39,14 @@ async function translateDocument(
 
   * Do not translate inline code blocks like \`mything\` by do translate comments in multiline code blocks.
   * DO NOT translate the word Sidenote in blockquotes \`> Sidenote: something\` - these have special meaning
+  * When translating tech terms like Instancing, prefer to translate them as one word. Latinisms are fine, like Инстансинг,
+  * Concept / Latent can't be properly translated to russian, so we name it Скрытое (fine as one word), скрытое состояние, скрытое исполнение
+  * Main titles in the documents need to be translated, e.g. Agent: Request -> Агент: Запрос
+  *
+  * Edict -> Эдикт
+  * Blueprint -> Черновик
+  *
+  * Dont translate [!WARNING]-like tags, just translate the text next to it
 
   **Style Example:**
   ---

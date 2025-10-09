@@ -4,12 +4,12 @@
 >
 > — [Glossary](./000_glossary.md)
 
+A **Budget Idea** transforms static financial planning into a living economic engine. It's an Idea that combines **authority** (permission to act, defined in its `schema`) and **resources** (spendable assets, tracked in its `solution`). It governs all significant changes in the system through the `refine` primitive.
+
 > Sidenote:
 >
 > - Requires:
 >   - [Concept: Idea](./101_concept_idea.md)
-
-A **Budget Idea** transforms static financial planning into a living economic engine. It's an Idea that combines **authority** (permission to act, defined in its `schema`) and **resources** (spendable assets, tracked in its `solution`). It governs all significant changes in the system through the `refine` primitive.
 
 This document outlines the core concepts of Budget Ideas, which introduce a revolutionary way to think about budgets and economic systems. Traditional budgets are static numbers; Budget Ideas are living economic engines with their own rules, goals, and even custom currencies.
 

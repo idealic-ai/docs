@@ -1,19 +1,19 @@
 # 009: Agent/Plan
 
-> Sidenote:
->
-> - Requires:
->   - [Agent: Call](./003_agent_call.md)
->   - [Agent: Loop](./004_agent_loop.md)
->   - [Agent: State](./007_agent_state.md)
->   - [Agent: Instancing](./008_agent_instancing.md)
-
 > **Plan:** A directed acyclic graph (DAG) of `Tool Calls`. It defines a sequence of actions, with dependencies determined by tools reading from and writing to the `State Object`.
 >
 > — [Glossary](./000_glossary.md)
 
 > [!WARNING]
 > This RFC is currently a placeholder and will be expanded in the future. It outlines the foundational concepts of Plans as a higher-level abstraction built upon the State and Call systems.
+
+> Sidenote:
+>
+> - Requires:
+>   - [Agent: Call](./003_agent_call.md)
+>   - [Agent: Loop](./004_agent_loop.md)
+>   - [Agent: State](./07_agent_state.md)
+>   - [Agent: Instancing](./08_agent_instancing.md)
 
 This document describes the **Plan Protocol**, a system for creating and executing complex, multi-step workflows as a directed acyclic graph (DAG) of `Tool Calls`. This graph structure allows for sophisticated execution flows, including branching to handle different outcomes, merging parallel task results, and running independent `Call`s concurrently.
 

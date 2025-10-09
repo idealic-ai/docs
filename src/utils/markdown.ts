@@ -39,6 +39,22 @@ export async function processMarkdown(markdownContent: string): Promise<string> 
                   p.children.splice(p.children.indexOf(textNode), 1);
                 }
               }
+
+              if (parent && typeof index === 'number' && index > 0) {
+                let prevElementIndex = -1;
+                for (let i = index - 1; i >= 0; i--) {
+                  if (parent.children[i].type === 'element') {
+                    prevElementIndex = i;
+                    break;
+                  }
+                }
+
+                if (prevElementIndex !== -1) {
+                  const prevElement = parent.children[prevElementIndex];
+                  parent.children[prevElementIndex] = node;
+                  parent.children[index] = prevElement;
+                }
+              }
             }
           }
         }

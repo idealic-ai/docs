@@ -1,12 +1,12 @@
 # 002: Agent: Tool
 
-> Sidenote:
->
-> - Requires: [Agent: Request](./001_agent_request.md)
-
 > **Tool**: A schema that defines a capability an agent can use. It is presented to an LLM as part of a request, acting as a structured interface for a potential action. The LLM activates the tool by generating a `Call` with specific parameters, which is then executed either latently by the LLM or explicitly by a registered code function (`Activity`).
 >
 > — [Glossary](./000_glossary.md)
+
+> Sidenote:
+>
+> - Requires: [Agent: Request](./001_agent_request.md)
 
 This document describes the Tool - the foundational schema-driven interface that enables agents to understand and use structured capabilities.
 
@@ -120,12 +120,11 @@ Activity.register('weatherCheck', async call => {
 
 The Tool System supports two fundamentally different execution modes:
 
-> Sidenote:
->
-> - [RFC 104: Concept/Latent](../rfc/104_concept_latent.md)
->   **Latent Execution** uses the LLM's reasoning capabilities - the agent "thinks through" the problem and produces the output directly in the same invocation. This is knowledge-based execution, ideal for analysis, planning, or creative tasks where the LLM's training is sufficient.
-
-**Explicit Execution** delegates to deterministic code - an Activity function is called to compute the output. This is code-based execution, essential for external API calls, database operations, or any task requiring precise, repeatable behavior.
+- **Latent Execution** uses the LLM's reasoning capabilities - the agent "thinks through" the problem and produces the output directly in the same invocation. This is knowledge-based execution, ideal for analysis, planning, or creative tasks where the LLM's training is sufficient.
+  > Sidenote:
+  >
+  > - [RFC 104: Concept/Latent](../rfc/104_concept_latent.md)
+- **Explicit Execution** delegates to deterministic code - an Activity function is called to compute the output. This is code-based execution, essential for external API calls, database operations, or any task requiring precise, repeatable behavior.
 
 ### Zero-Configuration Activity Matching
 

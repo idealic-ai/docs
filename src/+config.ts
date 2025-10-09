@@ -10,7 +10,7 @@ export default {
   Layout,
 
   redirects: {
-    '/': '/docs/en',
+    '/': '/en/',
   },
 
   // https://vike.dev/head-tags
@@ -22,4 +22,5 @@ export default {
 
   // See https://vike.dev/prerender
   prerender: true,
+  disableUrlNormalization: true,
 } satisfies Config;

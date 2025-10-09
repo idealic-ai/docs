@@ -1,13 +1,15 @@
 # 003: Agent/Call
 
+> **Call:** A concrete, executable instance of a `Tool`, with specific values for its `params`. It's an invocation-focused request for what _should be done_.
+>
+> — [Glossary](./000_glossary.md)
+
 > Sidenote:
 >
 > - Requires: [Protocol: Ideators](./103_concept_ideator.md)
 > - Enables: [The Imports Protocol](./006_agent_imports.md), [The Instancing Protocol](./008_agent_instancing.md)
 
-> **Call:** A concrete, executable instance of a `Tool`, with specific values for its `params`. It's an invocation-focused request for what _should be done_.
->
-> — [Glossary](./000_glossary.md)
+The [Idea Protocol](./101_concept_idea.md) defines a powerful, self-contained data structure for representing knowledge and latent logic. The [Tool System](./002_agent_tool.md) establishes the foundational schema-driven interface that enables agents to understand structured capabilities. This document describes the **Call Protocol**, which builds upon Tools to define how execution happens through Scope and Method controls.
 
 > Sidenote:
 >
@@ -15,8 +17,6 @@
 >   - [RFC 1: Tool](/)
 > - Enables
 >   - [RFC 9: Plan](/)
-
-The [Idea Protocol](./101_concept_idea.md) defines a powerful, self-contained data structure for representing knowledge and latent logic. The [Tool System](./002_agent_tool.md) establishes the foundational schema-driven interface that enables agents to understand structured capabilities. This document describes the **Call Protocol**, which builds upon Tools to define how execution happens through Scope and Method controls.
 
 A **Call** is a concrete instance of a Tool with specific parameter values, ready for execution. Where Tools define _what can be done_, Calls define _how it gets executed_.
 

@@ -1,6 +1,7 @@
 import type { PageContextServer } from 'vike/types';
 import { data as getCommonData } from '../+data';
 import { getSitemap } from '../data/sitemap';
+import { getUiStrings } from '../data/ui';
 import { getMarkdownContent } from '../utils/i18n';
 import { processMarkdown } from '../utils/markdown';
 
@@ -11,6 +12,7 @@ export async function data(pageContext: PageContextServer) {
     lang: 'en',
   };
   const sitemap = await getSitemap(lang);
+  const uiStrings = await getUiStrings(lang);
 
   try {
     const { markdownContent } = await getMarkdownContent(document, 'index.md', lang);
@@ -30,6 +32,7 @@ export async function data(pageContext: PageContextServer) {
       content: htmlContent,
       title: `${document.charAt(0).toUpperCase() + document.slice(1)}`,
       description,
+      ui: uiStrings,
     };
   } catch (error) {
     console.error(`Error loading index for ${document}:`, error);

@@ -1,14 +1,14 @@
 # 101: Concept/Idea
 
+> **Idea:** A self-contained, stateful data triplet (`schema`, `solution`, `context`) representing a unit of knowledge. It's a persistent, computational primitive, not an ephemeral prompt.
+>
+> — [Glossary](./000_glossary.md)
+
 > Sidenote:
 >
 > - Requires:
 >   - [Agent: Request](./001_agent_request.md)
 > - Enables: [Protocol: Ideators](./103_concept_ideator.md)
-
-> **Idea:** A self-contained, stateful data triplet (`schema`, `solution`, `context`) representing a unit of knowledge. It's a persistent, computational primitive, not an ephemeral prompt.
->
-> — [Glossary](./000_glossary.md)
 
 This document outlines the architecture for a decentralized web of living documents. It covers the protocol's core data structure (the **Idea**) and the decentralized discovery mechanism for publishing and resolving them via **DNS**.
 
@@ -19,11 +19,11 @@ For details on how `Ideas` become executable services, see [RFC 10: Protocol: Id
 The architecture is built on a radical principle: **the content is the protocol.** The system's entire grammar consists of a single unit: a self-contained "triplet" called the **Idea**. This structure enables true ownership and portability; because there is no hidden state, you are never locked in.
 
 - **Context:** All the instructions, source material, and references used to generate the solution.
-- > Sidenote:
+- **Schema:** The `jsonschema` blueprint that gives the Idea's data a universal, semantic meaning, allowing any AI to understand and modify it.
+
+  > Sidenote:
   >
   > - [json-schema.org/](https://json-schema.org/)
-
-  **Schema:** The `jsonschema` blueprint that gives the Idea's data a universal, semantic meaning, allowing any AI to understand and modify it.
 
 - **Solution:** The output, result, or content of the Idea.
 
