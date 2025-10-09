@@ -1,9 +1,42 @@
+import { exec } from 'child_process';
 import 'dotenv/config';
 import fs from 'fs/promises';
 import { glob } from 'glob';
 import path from 'path';
+import { promisify } from 'util';
 import { getAdaptedDocument } from '../src/data/translator';
 import { LANGUAGES } from '../src/utils/languages';
+
+const execAsync = promisify(exec);
+
+async function getChangedMarkdownFiles(): Promise<string[]> {
+  const { stdout, stderr } = await execAsync('git status --porcelain');
+  if (stderr) {
+    console.error(`git status stderr: ${stderr}`);
+    return [];
+  }
+
+  const filePaths = stdout
+    .split('\n')
+    .filter(line => line.trim() !== '')
+    .map(line => {
+      // Handles ' M path/to/file', '?? path/to/file', 'R  old -> new' etc.
+      const parts = line.trim().split(/\s+/);
+      const status = parts[0];
+      let filePath;
+
+      if (status.startsWith('R')) {
+        const arrowIndex = parts.indexOf('->');
+        filePath = parts.slice(arrowIndex + 1).join(' ');
+      } else {
+        filePath = parts.slice(1).join(' ');
+      }
+      return filePath;
+    })
+    .filter(filePath => filePath && filePath.endsWith('.md'));
+
+  return filePaths.map(p => path.resolve(process.cwd(), p));
+}
 
 async function translateFile(filePath: string, targetLangs: string[]) {
   const isUiJson = filePath.endsWith('src/data/ui.json');
@@ -39,13 +72,27 @@ async function translateFile(filePath: string, targetLangs: string[]) {
 }
 
 async function main() {
-  const defaultGlob = '{edict,manifesto,rfc}/**/*.md';
-  const globPattern = process.argv[2] || defaultGlob;
+  const globPattern = process.argv[2];
+  let files: string[];
 
-  const files = await glob(globPattern, {
-    cwd: process.cwd(),
-    absolute: true,
-  });
+  if (globPattern) {
+    console.log(`Using glob pattern: ${globPattern}`);
+    files = await glob(globPattern, {
+      cwd: process.cwd(),
+      absolute: true,
+    });
+  } else {
+    console.log('No glob pattern provided, checking for changed markdown files in git...');
+    files = await getChangedMarkdownFiles();
+    if (files.length === 0) {
+      console.log('No changed markdown files found.');
+      return;
+    }
+    console.log(
+      'Files to translate:\n',
+      files.map(f => ` - ${path.relative(process.cwd(), f)}`).join('\n')
+    );
+  }
 
   //files.push('src/data/ui.json');
 

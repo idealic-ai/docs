@@ -5,7 +5,6 @@
 > - Requires:
 >   - [101: Concept/Idea](./101_concept_idea.md)
 >   - [103: Concept/Ideator](./103_concept_ideator.md)
-> - Enables: Practical deployment of the ecosystem.
 
 ## 1. Introduction
 
