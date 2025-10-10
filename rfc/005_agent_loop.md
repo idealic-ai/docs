@@ -8,6 +8,12 @@
 >   - [001: Agent/Request](./001_agent_request.md)
 >   - [002: Agent/Tool](./002_agent_tool.md)
 >   - [004: Agent/Call](./004_agent_call.md)
+
+This document describes the **Loop Protocol**, which enables an agent to perform multi-step tasks by iteratively calling the `Request` protocol.
+
+## The Execution Loop
+
+> Sidenote:
 >
 > ```mermaid
 > graph TD
@@ -20,10 +26,6 @@
 >     ExecuteCalls -- Results --> AssembleContext
 >     HITL -- Corrected --> AssembleContext
 > ```
-
-This document describes the **Loop Protocol**, which enables an agent to perform multi-step tasks by iteratively calling the `Request` protocol.
-
-## The Execution Loop
 
 The Agent Loop is the primary mechanism for autonomous, multi-step execution. It operates as follows:
 

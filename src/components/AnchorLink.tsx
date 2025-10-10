@@ -69,7 +69,7 @@ const AnchorLink: React.FC = () => {
 
   const style: React.CSSProperties = {
     top: top + window.scrollY,
-    left: isMobile ? left + window.scrollX + width + -30 : left + window.scrollX - 36,
+    left: isMobile ? left + window.scrollX + width + -30 : left + window.scrollX - 30,
     fontSize: computedStyle.fontSize,
     lineHeight: computedStyle.lineHeight,
   };
