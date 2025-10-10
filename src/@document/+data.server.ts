@@ -25,6 +25,7 @@ export async function data(pageContext: PageContextServer) {
         .slice(0, 2)
         .join(' ')
         .replace(/[*_`[\]()]/g, '')
+        .replace('\s*---*\s*', '')
         .substring(0, 160) + '...';
 
     return {

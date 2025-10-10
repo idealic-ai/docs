@@ -521,7 +521,7 @@ img {
   max-width: 100%;
 }
 
-@media (max-width: 999.99px) {
+@media (max-width: 759.99px) {
   .sidenote,
   .marginnote {
     margin-top: 0.3rem;
@@ -583,7 +583,7 @@ img {
     }
   }
 }
-@media (min-width: 1000px) {
+@media (min-width: 760px) {
   .sidenote,
   .marginnote {
     position: absolute;
