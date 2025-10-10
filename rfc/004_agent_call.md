@@ -18,15 +18,7 @@ The [101: Concept/Idea](./101_concept_idea.md) defines a powerful, self-containe
 
 A **Call** is a concrete instance of a Tool with specific parameter values, ready for execution. Where Tools define _what can be done_, Calls define _how it gets executed_.
 
-## The Idea-to-Call Pipeline
-
-1.  **Idea**: A self-contained, output-focused document representing knowledge or a process.
-2.  **Tool**: An `Idea` inverted into an interface-focused schema, registered in the agent's tool system (see [002: Agent/Tool](./002_agent_tool.md) for details on Tool schemas, registration, and the dual registry architecture).
-3.  **Call**: When the LLM decides to use a `Tool`, it fills in specific parameters, creating a **Call**. A `Call` is a single, concrete instance of a `Tool` being called.
-
-The core principle: **any Idea can be turned into a Tool, which can then be called as a Call.**
-
-For a detailed explanation of how an `Idea`'s input schema is inverted to become a `Tool`s parameter schema, see the **[007: Agent/Input](./007_agent_input.md)**.
+This concept can be extended to create reusable, reproducible requests. By giving a request a formal input structure, it can be inverted into a discoverable `Tool` that an agent can execute. This powerful pattern of creating a reproducible request is the core of what the system calls an **[101: Concept/Idea](./101_concept_idea.md)**. The process of defining inputs to turn an `Idea` into a `Tool` is detailed in **[007: Agent/Input](./007_agent_input.md)**.
 
 ## The Controls of Execution: Scope and Method
 

@@ -41,6 +41,16 @@ The Tool System is built on a fundamental principle: **Tools are pure schemas** 
 
 A Tool schema specifies:
 
+> Sidenote:
+> Extensions:
+>
+> - [010: Agent/State](./011_agent_state.md)
+>   - `_outputPath`
+> - [011: Agent/Instancing](./011_agent_instancing.md)
+>   - `_instance`
+> - [009: Agent/Module](./009_agent_module.md)
+>   - `_module`
+
 - **What the tool does** (description)
 - **What it needs** (input parameters)
 - **What it produces** (`_output` structure)
@@ -68,13 +78,9 @@ The Tool System handles:
 
 Higher-level protocols (like the [004: Agent/Call](./004_agent_call.md)) build workflow orchestration, state management, and execution policies on top of these primitives.
 
-## Tool Definition and Registration
+## Tool Definition
 
-Tools are defined through JSON schemas that specify their complete interface:
-
-### Basic Tool Schema (Latent Execution)
-
-This `Tool` has no corresponding `Activity`, so it will be executed by the LLM.
+Tools are defined as JSON schemas. The example below shows a `Tool` for sentiment analysis. This `Tool` is designed for latent execution, as it relies on the LLM's inherent language understanding and does not require an external function.
 
 ```typescript
 Tool.register('sentimentAnalysis', {
@@ -94,27 +100,20 @@ Tool.register('sentimentAnalysis', {
 });
 ```
 
-### Tool with an Activity (Explicit Execution)
+## Schema Composition and The Call
 
-This `Tool` is designed to be implemented by an `Activity`. See the [003: Agent/Activity](./003_agent_activity.md) for details on how to register the corresponding implementation.
+While individual Tools define discrete capabilities, their power is realized when they are composed. The system presents all available `Tool` schemas to the LLM within a single request, typically as an array. This allows the LLM to select the most appropriate `Tool` for a given situation. When the LLM chooses a `Tool` and provides the required parameters, it creates a **Call**—a concrete, executable instance of that `Tool`. The `Call` is the fundamental unit of action that is passed on for execution.
 
-```typescript
-// Define the tool schema
-// See docs/rfc/003_agent_activity.md
-```
+> Sidenote:
+>
+> - [004: Agent/Call](./004_agent_call.md).
 
-### Schema Composition
+## Latent and Explicit Execution
 
-Tool schemas are composed into a `calls` array for LLM consumption. Each schema is enhanced with meta fields and execution mode information, then added using JSON Schema's `anyOf` pattern. The `_activity` field is resolved according to the [Activity Resolution Strategy](./003_agent_activity.md#activity-resolution-strategy).
+A `Tool` schema, by itself, is only an interface. The execution of its `Call` can happen in one of two ways. The default is **latent execution**, where the LLM uses its own internal reasoning to generate the output, which is ideal for language or knowledge-based tasks. For actions that require interaction with the outside world—like calling an API or accessing a database—a `Tool` must be connected to a deterministic code function. This explicit implementation is called an **Activity**.
 
-```typescript
-{
-  // ... existing code ...
-}
-```
+The separation of the `Tool` interface from the `Activity` implementation is a core design principle. It allows an agent's capabilities to be defined and reasoned about abstractly, while the underlying execution logic can be swapped or updated independently. The next document, **[003: Agent/Activity](./003_agent_activity.md)**, describes how `Activities` provide the concrete logic for `Tools`.
 
-This allows the LLM to select from available tools and generate multiple Calls in a single request.
-
-## Tools as Foundation
-
-Tools represent the **first building block** of the agent action system - they define _what can be done_ through pure schema interfaces. The [003: Agent/Activity](./003_agent_activity.md) defines _how code is executed_, and the [004: Agent/Call](./004_agent_call.md) builds upon this foundation to define _how things are orchestrated_, enabling sophisticated multi-tool workflows and execution strategies.
+> Sidenote:
+>
+> - [003: Agent/Activity](./003_agent_activity.md).

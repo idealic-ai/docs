@@ -63,3 +63,9 @@ The dual registry architecture solves this by keeping `Tool` interfaces stable w
 - **Implementation changes don't break agents**: You can switch from latent to explicit execution without touching the agent's code.
 - **A/B testing execution strategies**: You can compare the performance of LLM reasoning versus an external API for the same capability.
 - **Gradual rollouts**: You can deploy new `Activity` implementations to a subset of agents while others continue to use the old one or the latent fallback.
+
+## From Definition to Action
+
+By separating the "what" (`Tool`) from the "how" (`Activity`), the system gains immense flexibility. But this is only part of the story. With interfaces and implementations defined, the final piece is orchestration: how these `Calls` are managed, executed, and sequenced.
+
+The next document, [004: Agent/Call](./004_agent_call.md), explores the protocol that governs this execution, turning abstract definitions into concrete, stateful actions.

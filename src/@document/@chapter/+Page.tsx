@@ -26,14 +26,14 @@ export default function Page() {
           <nav className="pagination top">
             {prevChapter ? (
               <A href={prevChapter.url} className="prev">
-                &larr; {prevChapter.name}
+                &larr; {prevChapter?.numberStr}: {prevChapter.name}
               </A>
             ) : (
               <span />
             )}
             {nextChapter ? (
               <A href={nextChapter.url} className="next">
-                {nextChapter.name} &rarr;
+                {nextChapter.numberStr}: {nextChapter.name} &rarr;
               </A>
             ) : (
               <span />
@@ -43,17 +43,17 @@ export default function Page() {
             <span>{docStrings?.toc_link}</span>
           </A>
           <section dangerouslySetInnerHTML={{ __html: content }} />
-          <nav className="pagination bottom">
+          <nav className="pagination top">
             {prevChapter ? (
               <A href={prevChapter.url} className="prev">
-                &larr; {prevChapter.name}
+                &larr; {prevChapter?.numberStr}: {prevChapter.name}
               </A>
             ) : (
               <span />
             )}
             {nextChapter ? (
               <A href={nextChapter.url} className="next">
-                {nextChapter.name} &rarr;
+                {nextChapter.numberStr}: {nextChapter.name} &rarr;
               </A>
             ) : (
               <span />

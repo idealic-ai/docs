@@ -18,6 +18,7 @@ const SHARED_TRANSLATION_PROMPT = `  * Ensure that in translation markdown heade
   * Activity -> Действие
   * RFCs -> Нормативные Акты (or Акты in short)
   * FAQ -> Частые Вопросы (ЧаВо)
+  * Vessel -> Носитель
   * RFC 003: Agent/Activity -> Акт 003: Агент/Действие`;
 
 const SHARED_STYLE_GUIDE = `
@@ -34,6 +35,7 @@ const SHARED_STYLE_GUIDE = `
 * Do not wrap whole document into blockquotes, only blockquotes or sidenotes should be prefixed with > symbol
 * When editing ui strings, keep language names abbreviated (En, Ru, Simple En, Simple Ru)
 * FAQ -> FAQ
+
 
     * Do not translate placeholders like __SIDENOTE_PLACEHOLDER_0__ or __SIDENOTE_TRANSLATION_SEPARATOR__. Keep them as is.
 `;
