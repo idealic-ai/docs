@@ -220,21 +220,38 @@ function extractSidenotes(content: string): { mainContent: string; sidenotes: st
   let i = 0;
   while (i < lines.length) {
     const line = lines[i];
-    if (line.startsWith('> Sidenote:')) {
+    const trimmedLine = line.trim();
+    if (trimmedLine.startsWith('> Sidenote:')) {
+      const indentation = line.substring(0, line.indexOf('>'));
       const sidenoteLines: string[] = [line];
       let j = i + 1;
-      while (j < lines.length && lines[j].startsWith('>')) {
+      while (j < lines.length && lines[j].trim().startsWith('>')) {
         sidenoteLines.push(lines[j]);
         j++;
       }
 
       const firstLine = sidenoteLines.shift() || '';
-      const firstLineContent = firstLine.replace(/^>\s?Sidenote:\s*/, '');
-      const restOfContent = sidenoteLines.map(l => l.replace(/^>\s?/, '')).join('\n');
-      const sidenoteContent = (firstLineContent + '\n' + restOfContent).trim();
+      const firstLineContent = firstLine.trim().replace(/^>\s?Sidenote:\s*/, '');
+      const restOfContent = sidenoteLines
+        .map(l => {
+          let deindentedLine = l;
+          if (l.startsWith(indentation)) {
+            deindentedLine = l.substring(indentation.length);
+          }
+          // Remove the `>` prefix, but handle lines that are just `>`
+          const trimmedPrefix = deindentedLine.trim();
+          if (trimmedPrefix === '>') {
+            return '';
+          }
+          return deindentedLine.replace(/^>\s?/, '');
+        })
+        .join('\n');
+      const sidenoteContent = firstLineContent
+        ? firstLineContent + '\n' + restOfContent
+        : restOfContent;
 
       sidenotes.push(sidenoteContent);
-      newLines.push(`__SIDENOTE_PLACEHOLDER_${sidenotes.length - 1}__`);
+      newLines.push(`${indentation}__SIDENOTE_PLACEHOLDER_${sidenotes.length - 1}__`);
 
       i = j; // Move index past the sidenote block
     } else {
@@ -254,21 +271,33 @@ function extractSidenotes(content: string): { mainContent: string; sidenotes: st
  * @returns The final, reassembled markdown content.
  */
 function reassembleSidenotes(translatedMainContent: string, translatedSidenotes: string[]): string {
-  let i = 0;
-  const finalContent = translatedMainContent.replace(/__SIDENOTE_PLACEHOLDER_(\d+)__/g, () => {
-    const translatedSidenote = translatedSidenotes[i++];
-    if (typeof translatedSidenote !== 'string') {
-      return '';
+  const finalContent = translatedMainContent.replace(
+    /( *)__SIDENOTE_PLACEHOLDER_(\d+)__/g,
+    (match, indentation, placeholderIndex) => {
+      const sidenoteIndex = parseInt(placeholderIndex, 10);
+      let translatedSidenote = translatedSidenotes[sidenoteIndex];
+      if (typeof translatedSidenote !== 'string') {
+        return '';
+      }
+
+      // The LLM often adds leading newlines to its response chunks.
+      translatedSidenote = translatedSidenote.replace(/^\n+/, '');
+
+      const translatedLines = translatedSidenote.split('\n');
+      const firstLineText = translatedLines.shift() || '';
+
+      const firstLine =
+        firstLineText.trim() === ''
+          ? `${indentation}> Sidenote:`
+          : `${indentation}> Sidenote: ${firstLineText}`;
+
+      const restLines = translatedLines.map(line =>
+        line.trim() === '' ? `${indentation}>` : `${indentation}> ${line}`
+      );
+
+      return [firstLine, ...restLines].join('\n');
     }
-
-    const translatedLines = translatedSidenote.trim().split('\n');
-    const firstLineText = translatedLines.shift() || '';
-
-    const firstLine = '> Sidenote: ' + firstLineText;
-    const restLines = translatedLines.map(line => (line.trim() === '' ? '>' : `> ${line}`));
-
-    return [firstLine, ...restLines].join('\n');
-  });
+  );
   return finalContent;
 }
 
@@ -291,9 +320,8 @@ export async function getAdaptedDocument(
   }
 
   const SIDENOTE_TRANSLATION_SEPARATOR = '__SIDENOTE_TRANSLATION_SEPARATOR__';
-  const contentToTranslate = [mainContent, ...sidenotes].join(
-    `\n\n${SIDENOTE_TRANSLATION_SEPARATOR}\n\n`
-  );
+  const joiner = `\n\n${SIDENOTE_TRANSLATION_SEPARATOR}\n\n`;
+  const contentToTranslate = [mainContent, ...sidenotes].join(joiner);
 
   const translate = async (text: string) => {
     if (lang === 'simple-en' || lang === 'simple-ru') {
@@ -304,9 +332,7 @@ export async function getAdaptedDocument(
 
   const translatedContent = await translate(contentToTranslate);
 
-  const translatedParts = translatedContent.split(
-    new RegExp(`\\s*${SIDENOTE_TRANSLATION_SEPARATOR}\\s*`)
-  );
+  const translatedParts = translatedContent.split(joiner);
 
   const translatedMainContent = translatedParts.shift() || '';
   const translatedSidenotes = translatedParts;

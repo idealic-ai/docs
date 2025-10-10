@@ -23,7 +23,7 @@ The protocol is inherently extensible. **Ideas** (living, self-contained documen
 >         InputIdea[/Input Idea/]
 >         OutputIdea[\Output Idea\]
 >
->     subgraph Ideator ["<div style="width:260px; height:8em; display:flex; justify-content: flex-start; align-items:flex-start;">Hosted Ideator</div>"]
+>     subgraph Ideator ["Hosted Ideator"]
 >         direction LR
 >         IdeatorService{{Ideator Service}}
 >         HiddenContext["Private Context / Logic"]
