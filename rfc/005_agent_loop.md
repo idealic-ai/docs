@@ -8,6 +8,18 @@
 >   - [001: Agent/Request](./001_agent_request.md)
 >   - [002: Agent/Tool](./002_agent_tool.md)
 >   - [004: Agent/Call](./004_agent_call.md)
+>
+> ```mermaid
+> graph TD
+>     Start((Start)) --> AssembleContext(Assemble Context)
+>     AssembleContext --> InvokeRequest(Invoke Request)
+>     InvokeRequest --> HasCalls{Solution has Calls?}
+>     HasCalls -- Yes --> HITL(Human-in-the-Loop)
+>     HITL -- Approved --> ExecuteCalls(Execute Calls)
+>     ExecuteCalls -- Results --> AssembleContext
+>     HITL -- Corrected --> AssembleContext
+>     HasCalls -- No --> Stop((End))
+> ```
 
 This document describes the **Loop Protocol**, which enables an agent to perform multi-step tasks by iteratively calling the `Request` protocol.
 
