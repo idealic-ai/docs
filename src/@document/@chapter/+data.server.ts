@@ -3,7 +3,7 @@ import { data as getCommonData } from '../../+data';
 import { Chapter, Sitemap, getSitemap } from '../../data/sitemap';
 import { UIStrings, getUiStrings } from '../../data/ui';
 import { getMarkdownContent } from '../../utils/i18n';
-import { processMarkdown } from '../../utils/markdown';
+import { processMarkdown, replaceRelativeLinks } from '../../utils/markdown';
 
 interface PageData {
   content: string | null;
@@ -52,7 +52,8 @@ export async function data(pageContext: PageContextServer): Promise<PageData> {
     const { markdownContent } = await getMarkdownContent(document, chapter.path, lang);
 
     // Convert markdown to HTML
-    const htmlContent = await processMarkdown(markdownContent);
+    const fixedLinksContent = replaceRelativeLinks(markdownContent, document, lang);
+    const htmlContent = await processMarkdown(fixedLinksContent);
 
     const title = `${chapter.name} | ${document.charAt(0).toUpperCase() + document.slice(1)}`;
     const description =

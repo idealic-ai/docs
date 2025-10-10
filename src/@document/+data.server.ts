@@ -3,7 +3,7 @@ import { data as getCommonData } from '../+data';
 import { getSitemap } from '../data/sitemap';
 import { getUiStrings } from '../data/ui';
 import { getMarkdownContent } from '../utils/i18n';
-import { processMarkdown } from '../utils/markdown';
+import { processMarkdown, replaceRelativeLinks } from '../utils/markdown';
 
 export async function data(pageContext: PageContextServer) {
   const commonData = await getCommonData();
@@ -16,7 +16,8 @@ export async function data(pageContext: PageContextServer) {
 
   try {
     const { markdownContent } = await getMarkdownContent(document, 'index.md', lang);
-    const htmlContent = await processMarkdown(markdownContent);
+    const fixedLinksContent = replaceRelativeLinks(markdownContent, document, lang);
+    const htmlContent = await processMarkdown(fixedLinksContent);
     const description =
       markdownContent
         .split('\n')
