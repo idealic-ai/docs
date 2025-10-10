@@ -38,66 +38,94 @@ async function getChangedMarkdownFiles(): Promise<string[]> {
   return filePaths.map(p => path.resolve(process.cwd(), p));
 }
 
-async function translateFile(filePath: string, targetLangs: string[]) {
-  const isUiJson = filePath.endsWith('src/data/ui.json');
+async function translateFile(filePath: string, lang: string) {
+  if (lang === 'en') {
+    return;
+  }
+  console.log(`Translating ${filePath} to ${lang}...`);
+  try {
+    const content = await fs.readFile(filePath, 'utf-8');
+    const translatedContent = await getAdaptedDocument(content, lang);
+    const relativePath = path.relative(path.resolve(process.cwd(), 'docs'), filePath);
+    const destPath = path.resolve(
+      process.cwd(),
+      'translations',
+      lang,
+      relativePath.replace(/\.\.\/(src\/)?/g, '')
+    );
 
-  for (const lang of LANGUAGES) {
-    if (lang === 'en') continue;
-    if (!targetLangs.includes(lang)) continue;
-
-    console.log(`Translating ${filePath} to ${lang}...`);
-    try {
-      let translatedContent: string;
-      let destPath: string;
-
-      const content = await fs.readFile(filePath, 'utf-8');
-
-      translatedContent = await getAdaptedDocument(content, lang);
-      const relativePath = path.relative(path.resolve(process.cwd(), 'docs'), filePath);
-      console.log('relativePath', relativePath);
-      destPath = path.resolve(
-        process.cwd(),
-        'translations',
-        lang,
-        relativePath.replace(/\.\.\/(src\/)?/g, '')
-      );
-
-      await fs.mkdir(path.dirname(destPath), { recursive: true });
-      await fs.writeFile(destPath, translatedContent);
-      console.log(`Finished translating ${destPath}`);
-    } catch (e) {
-      console.error(`Failed to translate ${filePath} to ${lang}:`, e);
-    }
+    await fs.mkdir(path.dirname(destPath), { recursive: true });
+    await fs.writeFile(destPath, translatedContent);
+    console.log(`Finished translating ${destPath}`);
+  } catch (e) {
+    console.error(`Failed to translate ${filePath} to ${lang}:`, e);
   }
 }
 
 async function main() {
-  const globPattern = process.argv[2];
-  let files: string[];
+  const args = process.argv.slice(2);
+  const availableLangs = LANGUAGES.filter(l => l !== 'en');
 
-  if (globPattern) {
-    console.log(`Using glob pattern: ${globPattern}`);
-    files = await glob(globPattern, {
-      cwd: process.cwd(),
-      absolute: true,
-    });
+  let targetLangs: string[] = [];
+  if (args.includes('all')) {
+    targetLangs.push(...availableLangs);
   } else {
+    const langArgs = args.filter(arg => availableLangs.includes(arg));
+    if (langArgs.length > 0) {
+      targetLangs.push(...langArgs);
+    }
+  }
+
+  targetLangs = [...new Set(targetLangs)];
+
+  if (targetLangs.length === 0) {
+    targetLangs = ['simple-ru', 'simple-en', 'ru'];
+  }
+
+  let files: string[] = [];
+  const globPatterns = args.filter(
+    arg => !availableLangs.includes(arg) && arg !== 'ui' && arg !== 'all'
+  );
+
+  if (args.includes('ui')) {
+    files.push(path.resolve(process.cwd(), 'src/data/ui.json'));
+  }
+
+  if (globPatterns.length > 0) {
+    console.log(`Using glob patterns: ${globPatterns.join(', ')}`);
+    const globResults = await Promise.all(
+      globPatterns.map(pattern =>
+        glob(pattern, {
+          cwd: process.cwd(),
+          absolute: true,
+        })
+      )
+    );
+    files.push(...globResults.flat());
+  } else if (!args.includes('ui')) {
     console.log('No glob pattern provided, checking for changed markdown files in git...');
-    files = await getChangedMarkdownFiles();
-    if (files.length === 0) {
+    const changedFiles = await getChangedMarkdownFiles();
+    if (changedFiles.length === 0) {
       console.log('No changed markdown files found.');
       return;
     }
     console.log(
       'Files to translate:\n',
-      files.map(f => ` - ${path.relative(process.cwd(), f)}`).join('\n')
+      changedFiles.map(f => ` - ${path.relative(process.cwd(), f)}`).join('\n')
     );
+    files.push(...changedFiles);
+  }
+  files = [...new Set(files)];
+
+  if (files.length === 0) {
+    console.log('No files to translate.');
+    return;
   }
 
-  files.push('src/data/ui.json');
+  console.log(`Translating to languages: ${targetLangs.join(', ')}`);
 
   await Promise.all(
-    files.flatMap(filePath => ['simple-en'].map(lang => translateFile(filePath, [lang])))
+    files.flatMap(filePath => targetLangs.map(lang => translateFile(filePath, lang)))
   );
 }
 

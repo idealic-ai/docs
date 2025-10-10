@@ -63,4 +63,10 @@ The `Composer`'s workflow is a multi-step process that mixes inline and modular 
     4.  The LLM for this sub-request receives the **combined context**: the module's permanent expert instructions followed by the caller's specific, temporary creative direction.
     5.  The `Sound-Designer` applies its expertise to the provided creative brief and generates the requested audio, which is returned as the output of the `synthesizeSound` `Call`.
 
-3.  **Assembly**: The `Composer` gathers the results from all its `Calls` to the `Sound-Designer` and assembles them with its original melody into the final song. This way, the `
+3.  **Assembly**: The `Composer` gathers the results from all its `Calls` to the `Sound-Designer` and assembles them with its original melody into the final song. This way, the `Composer` performs its own high-level creative work and then orchestrates specialist modules to handle the low-level implementation details.
+
+## Handling Large Schemas
+
+The Module protocol also provides a solution for managing `Tools` with very large or complex output schemas. Instead of including a massive `_output` schema in the main request—potentially crowding out other tools—a `Tool` can be defined with only its `input` parameters and a `_module` pointer.
+
+The LLM can plan the `Call` with just the input, and the complex output will be generated within the module's isolated sub-request. This allows an agent to reason about a sequence of complex operations without needing to "see" the entire, detailed schema for every step in a single context window. The LLM trusts that the module will produce the correct output, which it will receive and use in subsequent steps.

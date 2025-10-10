@@ -1,28 +1,28 @@
 {
   "rfc": {
-    "short": "Rules",
-    "long": "The Official Rulebook",
-    "toc_link": "The Official Rulebook"
+    "short": "Acts",
+    "long": "The Rules",
+    "toc_link": "The Rules"
   },
   "edict": {
     "short": "Declaration",
-    "long": "Our Declaration of Independence",
-    "toc_link": "Our Declaration of Independence"
+    "long": "Declaration of Freedom",
+    "toc_link": "Declaration of Freedom"
   },
   "manifesto": {
-    "short": "Our Mission",
-    "long": "Our Big Idea: To Learn and Grow, Together",
-    "toc_link": "Our Big Idea: To Learn and Grow, Together"
+    "short": "Mission",
+    "long": "Mission for Working Together",
+    "toc_link": "Mission for Working Together"
   },
   "blueprint": {
-    "short": "Sketches",
-    "long": "Sketches & Ideas",
-    "toc_link": "Sketches & Ideas"
+    "short": "Plans",
+    "long": "The Plans",
+    "toc_link": "The Plans"
   },
   "nav": {
     "en": "English",
     "ru": "Russian",
-    "simple-en": "Simple English (Easy to Read)",
-    "simple-ru": "Simple Russian (Easy to Read)"
+    "simple-en": "Simple English",
+    "simple-ru": "Simple Russian"
   }
 }
