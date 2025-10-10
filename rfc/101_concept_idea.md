@@ -22,7 +22,7 @@ The architecture is built on a radical principle: **the content is the protocol.
 
   > Sidenote:
   >
-  > - [json-schema.org/](https://json-schema.org/)
+  > - More at [json-schema.org/](https://json-schema.org/)
 
 - **Solution:** The output, result, or content of the Idea.
 

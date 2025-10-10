@@ -30,10 +30,10 @@ export async function data(pageContext: PageContextServer) {
   }
 
   const content = await processMarkdown(finalContent.trim());
-  const title = 'Index';
-  const description = 'Index of all documents';
   const sitemap = await getSitemap(lang);
   const uiStrings = await getUiStrings(lang);
+  const title = uiStrings.mainpage.title;
+  const description = uiStrings.mainpage.description;
 
   return {
     content,

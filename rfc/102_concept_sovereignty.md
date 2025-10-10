@@ -16,7 +16,30 @@ This model is the practical bridge between an abstract `Ideator` and a concrete,
 
 The ecosystem is structured in five distinct layers (1-5), each building upon the foundational **Decentralized Identity** layer defined in the [101: Concept/Idea](./101_concept_idea.md). This model allows creators to participate at the level that suits their needs, from a simple, decentralized identity to a fully-featured, managed web service.
 
-It's helpful to view this model as a spectrum of autonomy. At one end lies a managed service that provides convenience. At the other end lies **full sovereignty**: using a custom domain and self-hosting all services, effectively becoming one's own provider. The managed layers serve as an optional, progressive bridge between these two states.
+> It's helpful to view this model as a spectrum of autonomy. At one end lies a managed service that provides convenience. At the other end lies **full sovereignty**: using a custom domain and self-hosting all services, effectively becoming one's own provider. The managed layers serve as an optional, progressive bridge between these two states.
+
+#### Unified Request Flow: User Sovereignty via DNS
+
+The diagram below illustrates the two primary interactions with an Idea: fetching its definition (`GET`) and executing it as a service (`POST`). It shows how standard DNS records give the user full control over routing.
+
+**The user's DNS record is the control plane.** The domain's `TXT` record points to the location of the `Idea`'s JSON definition file (`Idea Storage`). The domain's primary `A` or `CNAME` record points to the execution endpoint (`Ideator`). By controlling these two records, the user directs all traffic, deciding whether to use managed services or their own infrastructure.
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant DNS
+    participant Idea Storage
+    participant Ideator
+
+    Client->>DNS: 1. Query TXT record for Idea JSON URL
+    DNS-->>Client: 2. Return URL for Idea Storage
+
+    Client->>Idea Storage: 3. GET Idea JSON from URL
+    Idea Storage-->>Client: 4. Return Idea JSON
+
+    Client->>Ideator: 5. POST to domain to execute (resolved via A/CNAME record)
+    Ideator-->>Client: 6. Return result
+```
 
 ### Layer 1: Managed Hosting
 

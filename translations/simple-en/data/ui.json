@@ -1,28 +1,32 @@
 {
   "rfc": {
     "short": "Acts",
-    "long": "The Rules",
-    "toc_link": "The Rules"
+    "long": "The Acts",
+    "toc_link": "The Acts"
   },
   "edict": {
-    "short": "Declaration",
-    "long": "Declaration of Freedom",
-    "toc_link": "Declaration of Freedom"
+    "short": "Edict",
+    "long": "Edict of Autonomy",
+    "toc_link": "Edict of Autonomy"
   },
   "manifesto": {
-    "short": "Mission",
-    "long": "Mission for Working Together",
-    "toc_link": "Mission for Working Together"
+    "short": "Manifesto",
+    "long": "Manifesto of Co-Liberation",
+    "toc_link": "Manifesto of Co-Liberation"
   },
   "blueprint": {
-    "short": "Plans",
-    "long": "The Plans",
-    "toc_link": "The Plans"
+    "short": "Drafts",
+    "long": "Drafts",
+    "toc_link": "Drafts"
   },
   "nav": {
     "en": "En",
     "ru": "Ru",
     "simple-en": "Simple En",
     "simple-ru": "Simple Ru"
+  },
+  "mainpage": {
+    "title": "The Idealic Guidebook",
+    "description": "Explore our main ideas and rules, including the Manifesto, the Edict of Autonomy, and all the official Acts."
   }
 }

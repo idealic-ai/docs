@@ -24,5 +24,9 @@
     "ru": "Ru",
     "simple-en": "Simple En",
     "simple-ru": "Simple Ru"
+  },
+  "mainpage": {
+    "title": "Idealic Knowledgebase",
+    "description": "A collection of documents detailing the Manifesto of Co-Liberation, the Edict of Autonomy, and other normative acts."
   }
 }

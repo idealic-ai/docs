@@ -16,7 +16,9 @@ const SHARED_TRANSLATION_PROMPT = `  * Ensure that in translation markdown heade
   * Blueprint -> Черновик
   * Roadmap -> План
   * Activity -> Действие
-  * RFCs -> Нормативные Акты (or Акты in short)`;
+  * RFCs -> Нормативные Акты (or Акты in short)
+  * FAQ -> Частые Вопросы (ЧаВо)
+  * RFC 003: Agent/Activity -> Акт 003: Агент/Действие`;
 
 const SHARED_STYLE_GUIDE = `
 
@@ -31,6 +33,7 @@ const SHARED_STYLE_GUIDE = `
 * Be mindful about list nesting, dont flatten lists
 * Do not wrap whole document into blockquotes, only blockquotes or sidenotes should be prefixed with > symbol
 * When editing ui strings, keep language names abbreviated (En, Ru, Simple En, Simple Ru)
+  * FAQ -> FAQ
 `;
 const TranslationResponseSchema = {
   type: 'object',

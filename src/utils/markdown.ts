@@ -1,5 +1,6 @@
 import { rehypeGithubAlerts } from 'rehype-github-alerts';
 import rehypeHighlight from 'rehype-highlight';
+import rehypeMermaid from 'rehype-mermaid';
 import rehypeRewrite from 'rehype-rewrite';
 import rehypeSlug from 'rehype-slug';
 import rehypeStringify from 'rehype-stringify';
@@ -16,6 +17,7 @@ export async function processMarkdown(markdownContent: string): Promise<string> 
     .use(rehypeHighlight)
     .use(rehypeGithubAlerts)
     .use(rehypeSlug)
+    .use(rehypeMermaid)
 
     .use(rehypeRewrite, {
       rewrite: (node, index, parent) => {

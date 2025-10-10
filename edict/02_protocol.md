@@ -24,6 +24,29 @@ The protocol is inherently extensible. **Ideas** (living, self-contained documen
 
 True decentralization requires a sophisticated approach to privacy. Full transparency is not required, nor is it desirable. The protocol is designed to allow content to flow between different **private nodes** (a user's individual, self-sovereign digital space). These private nodes are the architectural expression of the "Inner Journey"—the sacred spaces required to safely uncover one's "True Will" before choosing to share its fruits with the world.
 
+> Sidenote:
+>
+> The diagram below illustrates how an Ideator on a private node processes an Idea. The client sends an input Idea and receives an output Idea. The Ideator's own internal context and logic, which it uses for the transformation, remain completely private and are never exposed to the client.
+>
+> ```mermaid
+> flowchart TD
+>     subgraph "Client (Public)"
+>         InputIdea["Input Idea"]
+>         OutputIdea["Output Idea"]
+>     end
+>
+>     subgraph "Ideator (Private)"
+>         IdeatorService["Ideator Service"]
+>         HiddenContext["Private Context / Logic"]
+>         IdeatorService -- Invokes --> HiddenContext
+>     end
+>
+>     InputIdea -- "Sends input" --> IdeatorService
+>     IdeatorService -- "Returns output" --> OutputIdea
+>
+>     style HiddenContext fill:#ffe,stroke:#333,stroke-width:2px,stroke-dasharray: 5 5
+> ```
+
 A message can emerge from a private "black box"—a user's local system, with its unique data and AI models. The outputted idea carries references to its origin—meta-information about its lineage—without exposing the private process that created it. This creates an elegant balance: a traceable, graph-based web of knowledge that respects the sanctity of private spaces while allowing for attribution and connection. You can work with the output without demanding access to the source, and if gaps in the lineage exist, they can be seen as mysteries to be explored, reverse-engineered, or simply accepted.
 
 This architecture liberates the creator from the impossible burden of centralized control. Responsibility is distributed to the edges, residing with the individuals and communities who choose to interact. The goal is not to police a platform, but to empower a protocol that is, by its very nature, free.
