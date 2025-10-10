@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { usePageContext } from 'vike-react/usePageContext';
 import '../assets/tufte.css';
 import { A } from '../components/A';
@@ -49,6 +50,44 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
   if (currentDoc && sitemap[currentDoc]) {
     currentChapter = sitemap[currentDoc].find(c => c.slug === currentSlug);
   }
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    let themeAction = null;
+
+    if (urlParams.has('light')) {
+      themeAction = 'light';
+    } else if (urlParams.has('dark')) {
+      themeAction = 'dark';
+    } else if (urlParams.has('system')) {
+      themeAction = 'system';
+    }
+
+    if (themeAction) {
+      urlParams.delete('light');
+      urlParams.delete('dark');
+      urlParams.delete('system');
+      const newQuery = urlParams.toString();
+      const newUrl = window.location.pathname + (newQuery ? '?' + newQuery : '');
+      history.replaceState({}, '', newUrl);
+    }
+
+    if (themeAction === 'light') {
+      localStorage.setItem('color-scheme', 'light');
+    } else if (themeAction === 'dark') {
+      localStorage.setItem('color-scheme', 'dark');
+    } else if (themeAction === 'system') {
+      localStorage.removeItem('color-scheme');
+    }
+
+    const storedScheme = localStorage.getItem('color-scheme');
+    document.documentElement.classList.remove('light-scheme', 'dark-scheme');
+    if (storedScheme === 'light') {
+      document.documentElement.classList.add('light-scheme');
+    } else if (storedScheme === 'dark') {
+      document.documentElement.classList.add('dark-scheme');
+    }
+  }, []);
 
   return (
     <div>
