@@ -80,13 +80,31 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
       localStorage.removeItem('color-scheme');
     }
 
-    const storedScheme = localStorage.getItem('color-scheme');
-    document.documentElement.classList.remove('light-scheme', 'dark-scheme');
-    if (storedScheme === 'light') {
-      document.documentElement.classList.add('light-scheme');
-    } else if (storedScheme === 'dark') {
-      document.documentElement.classList.add('dark-scheme');
-    }
+    const applyTheme = () => {
+      const storedScheme = localStorage.getItem('color-scheme');
+      document.documentElement.classList.remove('light-scheme', 'dark-scheme');
+
+      if (storedScheme === 'light') {
+        document.documentElement.classList.add('light-scheme');
+      } else if (storedScheme === 'dark') {
+        document.documentElement.classList.add('dark-scheme');
+      } else {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.documentElement.classList.add('dark-scheme');
+        } else {
+          document.documentElement.classList.add('light-scheme');
+        }
+      }
+    };
+
+    applyTheme();
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    mediaQuery.addEventListener('change', applyTheme);
+
+    return () => {
+      mediaQuery.removeEventListener('change', applyTheme);
+    };
   }, []);
 
   return (
@@ -141,12 +159,6 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
       </header>
       <main>{children}</main>
       <AnchorLink />
-      <script type="module">
-        {`
-          import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-          mermaid.initialize({ startOnLoad: true });
-        `}
-      </script>
     </div>
   );
 }

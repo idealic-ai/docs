@@ -25,9 +25,42 @@ The `_imports` property is the primary mechanism for controlling the context ava
 
 The `_imports` property within a `Tool`'s schema determines whether the context is pre-approved and **provisioned** to the tool, or dynamically **requested** by the LLM at runtime.
 
-- **Static Imports (Context Provisioning)**: If the `_imports` property is a `const` value (e.g., `_imports: { "const": ["user_request"] }`), the context is **provisioned**. The `Tool` designer has hard-coded the exact context the tool is allowed to see.
+- **Static Imports (Context Provisioning)**: If the `_imports` property is a `const` value (e.g., `_imports: { "const": ["input"] }`), the context is **provisioned**. The `Tool` designer has hard-coded the exact context the tool is allowed to see.
 
-- **Dynamic Imports (Context Requesting)**: If the `_imports` property is a flexible schema (e.g., an array of enums `_imports: { "type": "array", "items": { "enum": ["session_memory"] } }`), the context is **requested**. The LLM decides which of the available imports it needs to generate the `Call`.
+> Sidenote:
+>
+> ```mermaid
+> graph TD
+>     subgraph Parent Context
+>         direction LR
+>         input("input")
+>         state("state")
+>     end
+>
+>     subgraph Tool Call
+>         direction LR
+>         filter{{"_imports: ['input']"}}
+>     end
+>
+>     input --> filter
+>     state -.-> filter
+>
+>     subgraph Provisioned Context
+>         direction LR
+>         input_prov("input")
+>     end
+>
+>     filter --> HITL{{Human approval}}
+>     HITL --> input_prov
+>     input_prov --> Execute(Execute Tool)
+>
+>     classDef unused stroke-dasharray: 5, 5, stroke:#aaa, color:#aaa
+>     class state unused
+>     classDef optional stroke-dasharray: 5, 5
+>     class HITL optional
+> ```
+
+- **Dynamic Imports (Context Requesting)**: If the `_imports` property is a flexible schema (e.g., an array of enums `_imports: { "type": "array", "items": { "enum": ["state"] } }`), the context is **requested**. The LLM decides which of the available imports it needs to generate the `Call`.
 
 This dynamic pattern is especially powerful when combined with a human-in-the-loop approval system, providing a critical layer of transparency and control.
 

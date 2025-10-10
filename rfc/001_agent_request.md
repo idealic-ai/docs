@@ -8,6 +8,34 @@ This document describes the **Request Protocol**, which defines the fundamental 
 
 ## The Request Pipeline
 
+> Sidenote:
+>
+> LLM will process the `context` to generate a `solution` that conforms to the `schema`.
+>
+> ```mermaid
+> graph TD
+>     subgraph User Input
+>         direction LR
+>         Context[\Context\]
+>         Schema[\Schema\]
+>     end
+>
+>     Process{{"Request"}}
+>
+>     subgraph LLM Output
+>         direction LR
+>         Solution[/Solution/]
+>     end
+>
+>     Context --> Process
+>     Schema --> Process
+>     Process --> Solution
+>     Schema -.-> Solution
+>
+>     linkStyle 2 stroke-width:2px,fill:none,stroke:gray,stroke-dasharray: 5 5;
+>     linkStyle 3 stroke-width:2px,fill:none,stroke:gray,stroke-dasharray: 5 5;
+> ```
+
 A `Request` is not a simple prompt. It is a structured pipeline that transforms a rich, multi-part context into a single, schema-compliant response from an LLM.
 
 ### 1. Context: An Array of Messages
@@ -50,3 +78,5 @@ After preprocessing, the final array of messages and the schema enforcement stra
 The system parses this response—whether it comes from the message content or a tool call's arguments—into a structured JavaScript object. This object is the `solution`.
 
 This entire pipeline—from processing a complex context to receiving a schema-validated solution—is what enables the **Idea** to function as a core computational primitive in the system.
+
+The `schema` defines the shape of the `solution`.

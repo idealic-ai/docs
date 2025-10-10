@@ -19,20 +19,19 @@ The protocol is inherently extensible. **Ideas** (living, self-contained documen
 > An Ideator on a private node can process an Idea, transforming an input into an output while its own internal context and logic remain completely private and are never exposed to the client.
 >
 > ```mermaid
-> flowchart TD
->     subgraph "Client (Public)"
->         InputIdea["Input Idea"]
->         OutputIdea["Output Idea"]
->     end
+> flowchart TB
+>         InputIdea[/Input Idea/]
+>         OutputIdea[\Output Idea\]
 >
->     subgraph "Ideator (Private)"
->         IdeatorService["Ideator Service"]
+>     subgraph Ideator ["<div style="width:260px; height:8em; display:flex; justify-content: flex-start; align-items:flex-start;">Hosted Ideator</div>"]
+>         direction LR
+>         IdeatorService{{Ideator Service}}
 >         HiddenContext["Private Context / Logic"]
 >         IdeatorService -- Invokes --> HiddenContext
 >     end
 >
 >     InputIdea -- "Sends input" --> IdeatorService
->     IdeatorService -- "Returns output" --> OutputIdea
+>     HiddenContext -- "Returns output" --> OutputIdea
 >
 >     style HiddenContext fill:#ffe,stroke:#333,stroke-width:2px,stroke-dasharray: 5 5
 > ```
@@ -55,6 +54,18 @@ The architecture of liberation is built on a radical principle: **the content is
 
 - **The Universal Interpreter:** The triplet structure creates radical accessibility. Because every Idea contains its own schema and context, any client can become a powerful participant. The "Hello, World!" of this new protocol is a simple, five-line universal client: a web server that accepts a triplet, passes it to an LLM, and returns the result. This minimal piece of code can immediately understand and interact with every Idea on the network, even those that have not yet been invented. Specialized code is no longer a barrier to entry; the LLM acts as a universal interpreter, leveling the playing field and fostering a truly democratized exchange of knowledge.
 
+  > Sidenote:
+  >
+  > [RFC 104: Concept/Latent](../rfc/104_concept_latent_.md)
+  >
+  > The LLM acts as the default mode of interaction, a universal function that can interpret any `Idea` without needing specialized code. It's a magical black box that turns any input `Idea` into a meaningful output `Idea`.
+  >
+  > ```mermaid
+  > graph TB
+  >     Input[/Input Idea/] --> LLM{{Latent Space}}
+  >     LLM --> Output[\Output Idea\]
+  > ```
+
 - **A Universe of Permissionless Innovation:** This enables radical, permissionless extensibility. Any participant can create a new Idea type and begin sharing it, effectively extending the protocol for the entire network in real time. There is no need to persuade others to implement support. Because every Idea is self-contained, even the simplest client, using its Universal Interpreter, can immediately understand and work with a completely novel message type. A single user can introduce a concept, and the whole network instantly adapts.
 
 ---
@@ -67,12 +78,32 @@ The method's structure is inspired by the Unix philosophy and the compositional 
 
 The agents that operate on these Ideas are called **Ideators**. They act as standardized functions for transforming these containers. An **Ideator** takes an `Idea` container as input, operates on the inner value based on its context, and always returns a new `Idea` container as output. This input/output contract is the bedrock of the system's stability.
 
+> Sidenote:
+>
+> The protocol's compositional nature allows complex processes to be built from simple, reusable Ideators. This diagram shows a common evolutionary loop where an idea is forked, processed in parallel by different chains of `Improvers` and `Evaluators`, and then the best outcome is selected by an `Arbiter` to refine the next iteration.
+>
+> ```mermaid
+> graph TD
+>     Vessel{Vessel} --> Writer{{Writer}}
+>     Writer --> ForkService[Forking Service]
+>     Writer --> Vessel
+>
+>     ForkService -- "A" --> Improver1{{Improver}}
+>     Improver1 --> Evaluator1{{Evaluator}}
+>
+>     ForkService -- "B" --> Improver2{{Improver}}
+>     Improver2 --> Evaluator2{{Evaluator}}
+>
+>     Evaluator1 --> Arbiter{{Arbiter}}
+>     Evaluator2 --> Arbiter
+>
+>     Arbiter -- "Best" --> Writer
+> ```
+
 A powerful aspect of this design is its approach to validation. An **Ideator** does not need to understand the full, complex schema of a `SOURCE` Idea. It only needs to verify that the Idea’s context and solution conform to the specific structure it requires—a form of structural typing. For example, an "Idea Improver" **Ideator** might declare: _"I accept a `SOURCE` Idea whose solution has a `title` string."_ This allows for immense flexibility.
 
 This container model is what makes the entire system composable. Because every **Ideator** speaks the universal language of the `Idea` container, they can be chained together into sophisticated pipelines. The shared structure automatically handles the complex connections between steps, allowing an agentic planner to compose powerful workflows without getting lost in the details. This is not the only method of interaction, however. Any **Ideator** can also be exposed and called directly via standard protocols like HTTP, offering transparent and flexible API access.
 
 Imagine a pipeline of **Ideators**: an initial `Idea` is sent to a **Simulator** to explore potential outcomes, then to a **Critic** that provides feedback, then to an **Improver** that refines the `Idea` based on that critique, and finally to a **Publisher** that shares it with a specific circle. Each **Ideator** is a simple, independent tool, but together they form a powerful, emergent system for thought and creation.
-
-> Sidenote: [RFC 009: Agent/Plan](../rfc/009_agent_plan.md)
 
 This is what gives rise to a **digital life**: an `Idea` survives and evolves by persuading other nodes and **Ideators** to grant it processing time. It travels through the network, being processed, remixed, and enhanced at each step, its relevance proven by its ability to continue its journey.

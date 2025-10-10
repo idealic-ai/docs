@@ -1,43 +1,74 @@
 # 008: Agent/Imports
 
-> **Import:** Imagine you have a helper (an AI) and a huge room full of information. An 'Import' is like a sticky note you give the helper that says, "You are only allowed to look at this specific box of files for this next task." It helps the AI focus on what's important. This is controlled by a special instruction called `_imports`.
+> **Import:** Imagine you're about to start a project, like building a LEGO set. An 'Import' is like someone handing you only the specific bags of LEGOs you need for the current step, instead of dumping the whole box on the table. This helps you focus. This list of what you get is controlled by a property called `_imports`. — [Glossary](./000_glossary.md)
 
-The previous guide, [004: Agent/Call](./004_agent_call.md), talked about the main ways to ask an AI to do something. We learned about its **Scope** (where it does the work) and its **Method** (how it does the work). This guide explains how to mix and match those settings and use **Imports** to control what information the AI sees for each job.
+In another guide, [004: Agent/Call](./004_agent_call.md), we talked about the main ways an AI can do a task. It can either work on it right here and now (**Inline**) or go to a special, separate 'room' to work (**Module**). It can also either do the work itself (**Latent**) or just give instructions to a different tool (**Explicit**). 
 
-## Combining Where and How The AI Works
+This guide explains how we make sure the AI gets the right information (or 'context') for each of those situations using **Imports**.
 
-Let's imagine the AI is a chef. **Scope** is *where* the chef works: in the main kitchen (**Inline**) or in a separate, special baking room (**Module**). **Method** is *how* the chef works: by using a physical tool like a blender (**Explicit**) or by figuring out a recipe in their head (**Latent**).
+## Combining the Different Ways of Working
 
-Here are the four ways you can combine them:
+There are four main combinations:
 
-1.  **Main Kitchen, Using a Tool (`Inline Explicit`):** This is like telling the chef, "Use the blender (`_activity`) with these strawberries." It's a simple, direct command. We don't usually need to use `_imports` here because the command is so specific.
+1.  **Work Here, Use a Tool (Inline Explicit)**: This is the classic way of using a tool. You ask the AI to do something, it figures out which tool to use, and tells the tool what to do. For example, you ask, "What's 5+5?" The AI grabs a calculator tool and tells it to calculate "5+5". We usually don't need Imports here because the job is so direct.
 
-2.  **Main Kitchen, In Their Head (`Inline Latent`):** This is when you ask the chef to come up with a recipe on the spot using only their brain. You can use `_imports` here to help them focus. It's like putting a spotlight on just the strawberries on the counter, so the chef ignores the onions and knows to create a strawberry dessert.
+2.  **Work Here, All by Itself (Inline Latent)**: The AI does the whole task in one go. Imagine you ask it to write a short story based on a picture you give it. You can use `_imports` to tell it, "Only look at this picture and nothing else." This acts like blinders on a horse, helping the AI focus and not get distracted by other information.
 
-3.  **Side Kitchen, Using a Tool (`Modular Explicit`):** You tell the chef, "Go to the baking room (`_module`) and use the oven (`_activity`)." The `_imports` instruction is like a tray you give the chef with only the exact ingredients they're allowed to take into that room, like pre-measured flour and sugar.
+3.  **Go to a Separate Room, Use a Tool (Modular Explicit)**: The AI decides it needs a specialized tool that lives in a separate 'room'. It prepares the information, then sends it to that room for the tool to work on. If we use `_imports`, we can choose to send *only* the necessary information into that room, keeping everything else private.
 
-4.  **Side Kitchen, In Their Head (`Modular Latent`):** You tell the chef, "Go to the baking room (`_module`) and figure out a recipe." The `_imports` list is the *only* information the chef can bring into that room. For example, a note that says "the user’s favorite flavor is chocolate." The chef then works in total isolation, using only the information you gave them.
+4.  **Go to a Separate Room, Think by Itself (Modular Latent)**: The AI decides it needs a quiet space to think. The system creates a new, clean 'room' for it and uses an `Idea` as its guide. The only information the AI has in this new room is what was already there plus any specific items we give it using `_imports`. It's like sending the AI to a library with just one book for inspiration.
 
-## Focusing the Field of View
+## Focusing the AI's View
 
-The `_imports` instruction is the main way we control what the AI is allowed to see. Think of it like putting blinders on a horse. It filters all the information available and gives the AI a very limited view for its task.
+The `_imports` property is the main way we control what information the AI sees. It's like giving the AI a special pair of glasses that only lets it see certain things.
 
--   **In the Main Kitchen (Inline Scope)**: The `_imports` help the AI focus its attention on the right thing in a busy environment.
--   **In the Side Kitchen (Module Scope)**: The `_imports` define the *only* things the AI can see. The rest of the world is completely blocked off.
+-   **When working right here (Inline Scope)**: `_imports` help the AI focus its attention.
+-   **When working in a separate room (Module Scope)**: `_imports` decide the *entire set of information* that is allowed into that room.
 
-## Giving vs. Asking For Information: Static vs. Dynamic Imports
+## Who Decides What Information to Use?
 
-How does a tool know what information it's allowed to see? It's defined in its instruction manual (`Tool`'s schema). There are two ways this can work:
+The way `_imports` is set up inside a tool determines if the information is given automatically or if the AI has to ask for it.
 
--   **Static Imports (Giving Information):** The instruction manual has a fixed list of things the tool can see. For example: `_imports: { "const": ["user_request"] }`. This means, "This tool is *always* given the user's request, and nothing else." The person who designed the tool has decided this in advance. It's like getting a pre-packaged meal kit with all the ingredients already measured out.
+-   **Static Imports (Pre-Packed Lunchbox)**: If `_imports` is set to a fixed value (like `_imports: { "const": ["input"] }`), the tool designer has already decided exactly what information the tool gets every single time. The AI can't ask for more. It's like getting a pre-packed lunchbox—you get what's inside, and that's it.
 
--   **Dynamic Imports (Asking For Information):** The instruction manual gives the AI a list of *approved* things it can ask for. For example: `_imports: { "type": "array", "items": { "enum": ["session_memory"] } }`. This means, "When you run this tool, you are allowed to *ask for* the 'session_memory' if you need it." The AI gets to decide at that moment if it needs that information to do its job.
+> Sidenote:
+>
+> This diagram shows that even though lots of information might be available (like 'input' and 'state'), the tool has a filter (`_imports`) that only allows 'input' to pass through. Sometimes a human might check this before the tool runs.
+>
+> ```mermaid
+> graph TD
+>     subgraph Parent Context
+>         direction LR
+>         input("input")
+>         state("state")
+>     end
+>
+>     subgraph Tool Call
+>         direction LR
+>         filter{{"_imports: ['input']"}}
+>     end
+>
+>     input --> filter
+>     state -.-> filter
+>
+>     subgraph Provisioned Context
+>         direction LR
+>         input_prov("input")
+>     end
+>
+>     filter --> HITL{{Human approval}}
+>     HITL --> input_prov
+>     input_prov --> Execute(Execute Tool)
+>
+>     classDef unused stroke-dasharray: 5, 5, stroke:#aaa, color:#aaa
+>     class state unused
+>     classDef optional stroke-dasharray: 5, 5
+>     class HITL optional
+> ```
 
-This "asking" style is super useful when you have a person checking the AI's work. The AI might ask, "Can I see the conversation history to complete this task?" and a person can click "Approve" before it gets the information. This gives us a great deal of safety and control.
+-   **Dynamic Imports (Ordering from a Menu)**: If `_imports` is set up with flexible options (like `_imports: { "type": "array", "items": { "enum": ["state"] } }`), the AI gets to choose what it needs from a pre-approved list. The tool designer creates the menu, and the AI decides what to order for the task. This is great because a human can look at the AI's order and approve it before the information is handed over, adding a layer of safety.
 
-## The Power of a Limited Context
+## Why Limiting the AI's View is a Good Thing
 
-Why is it so good to limit what the AI sees?
-
--   **Better Security & Focus**: By limiting the AI's view, we prevent it from accidentally seeing or sharing private information. It also helps the AI do a better and faster job because it isn't distracted by useless data. This can also make it cheaper to run.
--   **Works Like LEGOs**: Imports allow us to build tools and AI assistants that are like LEGO bricks. Each piece is self-contained and doesn't need to know about the whole castle it's a part of. You can just give a tool the one or two pieces of information it needs, and it will work perfectly, making it easy to reuse in different projects.
+-   **Safer and Smarter**: By only giving the AI what it needs, you prevent it from seeing private information by accident. It also helps it think more clearly because it isn't distracted by useless data. This makes it more accurate, faster, and cheaper to run.
+-   **Better Building Blocks**: Imports allow us to create tools that work like LEGO bricks. They are self-contained and don't need to know about the whole project. You can use them anywhere you need them, sure that they will do their one job well without causing problems.

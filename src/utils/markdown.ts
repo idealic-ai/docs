@@ -17,7 +17,23 @@ export async function processMarkdown(markdownContent: string): Promise<string> 
     .use(rehypeHighlight)
     .use(rehypeGithubAlerts)
     .use(rehypeSlug)
-    .use(rehypeMermaid)
+    .use(rehypeMermaid, {
+      mermaidConfig: {
+        theme: 'neutral',
+        themeVariables: {
+          secondaryColor: '#006100',
+          titleColor: '#999',
+        },
+        flowchart: {
+          subGraphTitleMargin: {
+            top: 5,
+            bottom: 10,
+          },
+          curve: 'basis',
+          useWidth: 200,
+        },
+      },
+    })
 
     .use(rehypeRewrite, {
       rewrite: (node, index, parent) => {

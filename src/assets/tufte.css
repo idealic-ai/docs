@@ -620,9 +620,12 @@ img {
     width: var(--right-size);
     margin-top: 0.3rem;
     margin-bottom: 0;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     line-height: 1.3;
     vertical-align: baseline;
+    code {
+      font-size: 0.9rem;
+    }
   }
 }
 .marginnote p,

@@ -25,6 +25,8 @@ This document describes the **Loop Protocol**, which enables an agent to perform
 >     HITL -- Approved --> ExecuteCalls(Execute Calls)
 >     ExecuteCalls -- Results --> AssembleContext
 >     HITL -- Corrected --> AssembleContext
+>     classDef optional stroke-dasharray: 5, 5
+>     class HITL optional
 > ```
 
 The Agent Loop is the primary mechanism for autonomous, multi-step execution. It operates as follows:
