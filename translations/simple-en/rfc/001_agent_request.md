@@ -16,22 +16,22 @@ This document explains the **Request Protocol**, which is the basic way we talk 
 > graph TD
 >     subgraph User Input
 >         direction LR
->         Context["Information / Ingredients"] 
+>         Context["Information / Ingredients"]
 >         Schema["Rules / Blueprint"]
 >     end
-> 
+>
 >     Process{{"Give Job to Computer"}}
-> 
+>
 >     subgraph LLM Output
 >         direction LR
->         Solution[/"Final Answer/"]
+>         Solution[/"Final Answer"/]
 >     end
-> 
+>
 >     Context --> Process
 >     Schema --> Process
 >     Process --> Solution
 >     Schema -.-> Solution
-> 
+>
 >     linkStyle 2 stroke-width:2px,fill:none,stroke:gray,stroke-dasharray: 5 5;
 >     linkStyle 3 stroke-width:2px,fill:none,stroke:gray,stroke-dasharray: 5 5;
 > ```
@@ -50,6 +50,7 @@ A simple context might look like this:
   { "role": "user", "content": "What is the capital of France?" }
 ]
 ```
+
 This tells the computer its job ("be helpful") and then gives it the user's question.
 
 ### 2. Special Kinds of Information
@@ -66,7 +67,7 @@ This powerful assembly line lets us give the computer big, complicated ideas to 
 
 ### 3. Schema: The Rules for the Answer
 
-The `schema` is a blueprint that tells the computer *exactly* what the final answer, or `solution`, must look like. For example, it might say, "Your answer must be a list containing three names."
+The `schema` is a blueprint that tells the computer _exactly_ what the final answer, or `solution`, must look like. For example, it might say, "Your answer must be a list containing three names."
 
 The system is smart and figures out the best way to give these rules to the computer:
 

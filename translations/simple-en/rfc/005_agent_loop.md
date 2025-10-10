@@ -3,7 +3,7 @@
 > **Loop:** Imagine you're building a big LEGO set. A "Loop" is like following the instruction book, one step at a time, to reach your goal. The AI does a step (`Request`), sees what happens (`Call`), and uses that information to figure out the next step. It keeps doing this until the LEGO set is finished (when there are no more steps to do).
 
 > Sidenote:
-> 
+>
 > - To understand this, you should know about:
 >   - [001: Agent/Request](./001_agent_request.md)
 >   - [002: Agent/Tool](./002_agent_tool.md)
@@ -14,7 +14,7 @@ This paper explains how the **Loop** works. A loop is what lets an AI do big tas
 ## The Execution Loop
 
 > Sidenote:
-> 
+>
 > ```mermaid
 > graph TD
 >     Start((Start)) --> AssembleContext(Assemble Context)
@@ -39,7 +39,7 @@ The Agent Loop is the main way the AI works by itself to finish a big project. I
 
 ## Human-in-the-Loop (HITL)
 
-Think of the AI as a very fast assistant. A cool thing about the loop is that it has a built-in "pause" button. The AI figures out *what* it wants to do (`Call`s), but it waits for your permission before it actually *does* it. This gives a person a chance to step in:
+Think of the AI as a very fast assistant. A cool thing about the loop is that it has a built-in "pause" button. The AI figures out _what_ it wants to do (`Call`s), but it waits for your permission before it actually _does_ it. This gives a person a chance to step in:
 
 - **Approval:** Before the AI takes action, it can show you its plan and ask, "Does this look right to you?"
 - **Correction:** You can change the plan. If the AI wants to search for "cats," you could change it to "funny cat videos" or tell it to do something totally different.

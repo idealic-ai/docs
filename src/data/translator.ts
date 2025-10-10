@@ -295,6 +295,7 @@ function reassembleSidenotes(translatedMainContent: string, translatedSidenotes:
         line.trim() === '' ? `${indentation}>` : `${indentation}> ${line}`
       );
 
+      console.log([firstLine, ...restLines], '~@~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
       return [firstLine, ...restLines].join('\n');
     }
   );

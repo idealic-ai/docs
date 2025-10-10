@@ -29,7 +29,7 @@ This document describes the **Loop Protocol**, which enables an agent to perform
 >     class HITL optional
 > ```
 
-The Agent Loop is the primary mechanism for autonomous, multi-step execution. It operates as follows:
+The Agent Loop is the primary mechanism for autonomous, multi-step execution. It operates as follows
 
 1.  **Context Assembly:** The loop begins by assembling the initial context, which may include the user's goal, the current `State`, and other relevant information.
 2.  **Request Invocation:** It invokes the **[001: Agent/Request](./001_agent_request.md)** protocol with the current context and a schema of available `Tools`.
