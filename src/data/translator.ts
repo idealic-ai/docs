@@ -28,6 +28,9 @@ const SHARED_STYLE_GUIDE = `
 * Retain all sidenotes with \`>Sidenote: translated here...\` syntax
 * Dont translate [!WARNING]-like tags, just translate the text next to it.
 * Keep UI strings simple (in json files), as they need to fit inside UI
+* Be mindful about list nesting, dont flatten lists
+* Do not wrap whole document into blockquotes, only blockquotes or sidenotes should be prefixed with > symbol
+* When editing ui strings, keep language names abbreviated (En, Ru, Simple En, Simple Ru)
 `;
 const TranslationResponseSchema = {
   type: 'object',
