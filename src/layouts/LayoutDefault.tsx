@@ -1,6 +1,7 @@
 import { usePageContext } from 'vike-react/usePageContext';
 import '../assets/tufte.css';
 import { A } from '../components/A';
+import AnchorLink from '../components/AnchorLink';
 import type { Chapter, Sitemap } from '../data/sitemap';
 import type { UIStrings } from '../data/ui';
 import { LANGUAGES } from '../utils/languages';
@@ -100,6 +101,7 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
         </div>
       </header>
       <main>{children}</main>
+      <AnchorLink />
     </div>
   );
 }

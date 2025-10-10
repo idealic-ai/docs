@@ -108,6 +108,15 @@ nav {
 nav.pagination {
   padding-top: 16px;
   flex-direction: row;
+
+  a {
+    opacity: 0.5;
+  }
+}
+
+*:target {
+  background: rgba(0, 20, 0, 0.1);
+  outline: 5px solid rgba(0, 20, 0, 0.1);
 }
 
 a.is-active.is-active.is-active {
