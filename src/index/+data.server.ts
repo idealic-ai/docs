@@ -2,18 +2,13 @@ import type { PageContextServer } from 'vike/types';
 import { getSitemap } from '../data/sitemap';
 import { getUiStrings } from '../data/ui';
 import { getMarkdownContent } from '../utils/i18n';
-import { processMarkdown } from '../utils/markdown';
+import { processMarkdown, replaceRelativeLinks } from '../utils/markdown';
 
 const DYNAMIC_SECTIONS: Record<string, string> = {
   'The Co-Liberation Manifesto': 'manifesto',
   'Edict Of Autonomy': 'edict',
   'Requests for Comments': 'rfc',
 };
-
-function fixLinks(content: string, prefix: string): string {
-  // Regex to find markdown links like [text](./path) and fix them
-  return content.replace(/(\[.+?\]\(\.\/)/g, `$1${prefix}/`);
-}
 
 export async function data(pageContext: PageContextServer) {
   const { lang } = (pageContext.routeParams as { lang: string }) || { lang: 'en' };
@@ -29,7 +24,7 @@ export async function data(pageContext: PageContextServer) {
 
     // Replace top-level heading with a second-level one
     const contentWithTweakedHeader = indexContentRaw.replace(/^#\s/m, '## ');
-    const fixedLinksContent = fixLinks(contentWithTweakedHeader, docPath);
+    const fixedLinksContent = replaceRelativeLinks(contentWithTweakedHeader, docPath, lang);
 
     finalContent += `\n\n---\n\n${fixedLinksContent.trim().replace(/\n---\n/g, '\n')}`;
   }

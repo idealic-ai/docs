@@ -114,3 +114,21 @@ export async function processMarkdown(markdownContent: string): Promise<string> 
 
   return htmlContent;
 }
+
+export function replaceRelativeLinks(
+  markdownContent: string,
+  baseUrl: string,
+  lang: string
+): string {
+  // This regex finds markdown links that are relative.
+  // It avoids absolute URLs (http, https, //), root-relative URLs (/), and anchor links (#).
+  const relativeLinkRegex = /\[([^\]]+)\]\((?!https?:\/\/|\/\/|\/|#)([^)]+)\)/g;
+
+  return markdownContent.replace(relativeLinkRegex, (match, linkText, linkUrl) => {
+    // Prepend the baseUrl to the relative link.
+    const cleanedLinkUrl = linkUrl.replace(/^\.\//, ''); // remove leading ./
+    const finalBaseUrl = `/${baseUrl.replace(/^\/|\/$/g, '')}`;
+    const absoluteUrl = `/docs/${lang}${finalBaseUrl}/${cleanedLinkUrl}`;
+    return `[${linkText}](${absoluteUrl})`;
+  });
+}
