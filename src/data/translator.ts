@@ -33,7 +33,9 @@ const SHARED_STYLE_GUIDE = `
 * Be mindful about list nesting, dont flatten lists
 * Do not wrap whole document into blockquotes, only blockquotes or sidenotes should be prefixed with > symbol
 * When editing ui strings, keep language names abbreviated (En, Ru, Simple En, Simple Ru)
-  * FAQ -> FAQ
+* FAQ -> FAQ
+
+    * Do not translate placeholders like __SIDENOTE_PLACEHOLDER_0__ or __SIDENOTE_TRANSLATION_SEPARATOR__. Keep them as is.
 `;
 const TranslationResponseSchema = {
   type: 'object',
@@ -63,10 +65,6 @@ You must follow these core principles:
 - **Use powerful metaphors:** Create relatable analogies and metaphors to explain abstract concepts. For example, instead of talking about "stateless architecture," you could say, "It's like a vending machine – it doesn't remember who you are, it just gives you what you ask for each time."
 - **Maintain accuracy:** Your explanation must be truthful. Do not compromise on the facts or mislead the user for the sake of simplicity.
 - **Be engaging and encouraging:** Write in a friendly, approachable tone that sparks curiosity and makes the user feel capable of understanding. Your goal is to empower them with knowledge.
-
-${SHARED_STYLE_GUIDE}
-
-${targetLang.includes('en') ? '' : SHARED_TRANSLATION_PROMPT}
 
 **Simplification Example:**
 
@@ -110,7 +108,15 @@ This layer is what turns an **Ideator** into something people can actually see a
 
 ---
 
+${SHARED_STYLE_GUIDE}
+
+${targetLang.includes('en') ? '' : SHARED_TRANSLATION_PROMPT}
+
+
+IMPORTANT: When translating, ensure that you are following style guides, especially around syntax, structure and nesting of markdown/diagrams. Keep empty nodes in diagram empty.
+
 Now, translate and simplify the following document.
+
 `;
 
   const response = await Request(
@@ -202,6 +208,70 @@ ${SHARED_TRANSLATION_PROMPT}
   throw new Error('Failed to get a valid translation from the AI.');
 }
 
+/**
+ * Extracts sidenotes from a markdown document, replacing them with placeholders.
+ * @param content The markdown content.
+ * @returns An object containing the main content with placeholders and an array of extracted sidenotes.
+ */
+function extractSidenotes(content: string): { mainContent: string; sidenotes: string[] } {
+  const sidenotes: string[] = [];
+  const lines = content.split('\n');
+  const newLines: string[] = [];
+  let i = 0;
+  while (i < lines.length) {
+    const line = lines[i];
+    if (line.startsWith('> Sidenote:')) {
+      const sidenoteLines: string[] = [line];
+      let j = i + 1;
+      while (j < lines.length && lines[j].startsWith('>')) {
+        sidenoteLines.push(lines[j]);
+        j++;
+      }
+
+      const firstLine = sidenoteLines.shift() || '';
+      const firstLineContent = firstLine.replace(/^>\s?Sidenote:\s*/, '');
+      const restOfContent = sidenoteLines.map(l => l.replace(/^>\s?/, '')).join('\n');
+      const sidenoteContent = (firstLineContent + '\n' + restOfContent).trim();
+
+      sidenotes.push(sidenoteContent);
+      newLines.push(`__SIDENOTE_PLACEHOLDER_${sidenotes.length - 1}__`);
+
+      i = j; // Move index past the sidenote block
+    } else {
+      newLines.push(line);
+      i++;
+    }
+  }
+
+  const mainContent = newLines.join('\n');
+  return { mainContent, sidenotes };
+}
+
+/**
+ * Reassembles the document by replacing sidenote placeholders with translated sidenote content.
+ * @param translatedMainContent The translated main content with placeholders.
+ * @param translatedSidenotes An array of translated sidenote contents.
+ * @returns The final, reassembled markdown content.
+ */
+function reassembleSidenotes(translatedMainContent: string, translatedSidenotes: string[]): string {
+  let i = 0;
+  const finalContent = translatedMainContent.replace(/__SIDENOTE_PLACEHOLDER_(\d+)__/g, () => {
+    const translatedSidenote = translatedSidenotes[i++];
+    if (typeof translatedSidenote !== 'string') {
+      return '';
+    }
+
+    const translatedLines = translatedSidenote.trim().split('\n');
+    const firstLineText = translatedLines.shift() || '';
+
+    const firstLine = '> Sidenote: ' + firstLineText;
+    const restLines = translatedLines.map(line => (line.trim() === '' ? '>' : `> ${line}`));
+
+    return [firstLine, ...restLines].join('\n');
+  });
+  return finalContent;
+}
+
 export async function getAdaptedDocument(
   content: string,
   lang: Language,
@@ -210,8 +280,36 @@ export async function getAdaptedDocument(
   if (lang === 'en' && !extraPrompt) {
     return content;
   }
-  if (lang === 'simple-en' || lang === 'simple-ru') {
-    return await translateELI5(content, lang);
+
+  const { mainContent, sidenotes } = extractSidenotes(content);
+
+  if (sidenotes.length === 0) {
+    if (lang === 'simple-en' || lang === 'simple-ru') {
+      return await translateELI5(content, lang);
+    }
+    return await translateDocument(content, lang === 'ru' ? 'Russian' : 'English', extraPrompt);
   }
-  return await translateDocument(content, lang === 'ru' ? 'Russian' : 'English', extraPrompt);
+
+  const SIDENOTE_TRANSLATION_SEPARATOR = '__SIDENOTE_TRANSLATION_SEPARATOR__';
+  const contentToTranslate = [mainContent, ...sidenotes].join(
+    `\n\n${SIDENOTE_TRANSLATION_SEPARATOR}\n\n`
+  );
+
+  const translate = async (text: string) => {
+    if (lang === 'simple-en' || lang === 'simple-ru') {
+      return await translateELI5(text, lang);
+    }
+    return await translateDocument(text, lang === 'ru' ? 'Russian' : 'English', extraPrompt);
+  };
+
+  const translatedContent = await translate(contentToTranslate);
+
+  const translatedParts = translatedContent.split(
+    new RegExp(`\\s*${SIDENOTE_TRANSLATION_SEPARATOR}\\s*`)
+  );
+
+  const translatedMainContent = translatedParts.shift() || '';
+  const translatedSidenotes = translatedParts;
+
+  return reassembleSidenotes(translatedMainContent, translatedSidenotes);
 }

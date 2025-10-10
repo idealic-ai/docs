@@ -62,7 +62,7 @@ The architecture of liberation is built on a radical principle: **the content is
   >
   > ```mermaid
   > graph TB
-  >     Input[/Input Idea/] --> LLM{{Latent Space}}
+  >     Input[/Input Idea/] --> LLM@{ shape: cloud, label: "Latent Space" }
   >     LLM --> Output[\Output Idea\]
   > ```
 

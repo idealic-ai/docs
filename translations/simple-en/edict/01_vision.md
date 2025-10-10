@@ -2,82 +2,80 @@
 
 ---
 
-_The big idea is a pushback against how the internet is run today. Right now, a few big companies control almost everything. We want to build a new kind of internet where individuals and groups have their power back, like building a town where everyone owns their own house instead of renting from one giant landlord._
+_The big idea is to fight back against the way the internet is heading, where a few giant companies control everything. We want to build a new digital world where everyone is in charge of their own stuff, like the boss of their own digital life._
 
 ---
 
 ### (Chapter 1) The Core Idea & Principles
 
-Everything we're building follows a few simple but strong rules. This helps everything fit together perfectly.
+This new world is built on a few simple, strong rules that make sure everything works together smoothly.
 
-- **Everything is an Idea.** Think of it like a world made of LEGOs. Every single thing—an app, a document, a tool, or even a set of instructions—is a special kind of LEGO brick called an "Idea." This keeps everything simple and consistent.
+- **Everything is an Idea.** To keep things simple, everything in this system—an app, a tool, a document—is just called an "Idea." Think of them like LEGO bricks. They're all the same type of thing, but you can use them to build anything you can imagine.
 
   > Sidenote: [RFC 101: Concept/Idea](../rfc/101_concept_idea.md)
 
-- **Self-Contained and Self-Describing.** Every "Idea" is like a toy that has its instructions printed right on it. You don't need a separate manual. Any computer or AI can look at it and instantly understand what it is and how to use it.
+- **Self-Contained and Self-Describing.** Every Idea comes with its own instruction manual built right in. This means any computer or AI can look at it and instantly know what it is and how to use it, without needing to be taught beforehand. It's like a toy that has the instructions printed right on it.
 
   > Sidenote: [RFC 001: Agent/Request](../rfc/001_agent_request.md)
 
-- **Any Idea Can Have a Home.** Any "Idea" can be given its own web address, like `www.my-cool-idea.com`. This gives it a permanent place on the internet. If it's a familiar type of thing (like an article), it will look like a normal article. If it's a special tool (called an Ideator), it gets a universal control panel so you can interact with it.
+- **Any Idea Can Have a Home.** Any Idea can get its own web address, like `www.mycoolidea.com`. This gives it a permanent home on the internet. If it's something familiar (like an article), it will look like an article. If it's a special kind of tool called an "Ideator," it will get a simple screen that can work with anything.
 
   > Sidenote: [RFC 102: Concept/Sovereignty](../rfc/102_concept_sovereignty.md)
 
-- **Ideators are Ideas with Input.** An "Ideator" is a special kind of "Idea" that can *do* something. Think of a normal Idea as a picture on the wall, but an Ideator is like a vending machine. You give it some input (like money and a button press), and it gives you something back.
+- **Ideators are Ideas with Input.** An "Ideator" is a special kind of Idea that can do something when you give it information. Think of it like a machine. An Idea might be a blueprint for a car, but an Ideator is the car itself—you give it fuel (the input) and it drives.
 
   > Sidenote:
   >
   > - [RFC 103: Concept/Ideator](../rfc/103_concept_ideator.md)
   > - [RFC 005: Agent/Input](../rfc/005_agent_input.md)
 
-- **Composable by Design.** The whole system is designed for things to snap together. Some Ideators can change other Ideas, which means you can chain them together to create powerful new tools and workflows, just like connecting different LEGO machines to build a factory.
+- **Composable by Design.** You can connect Ideas together to create bigger and more powerful things, just like stacking LEGO bricks. Some Ideators can even change other Ideas. You can link them together in a chain to build amazing creations, like a factory assembly line where each machine does one job.
 
-- **The LLM is the Universal Interpreter.** We use a smart Artificial Intelligence (called a Large Language Model or LLM) to be the brain of the system. It can look at any "Idea," read its built-in instructions, and figure out how to run it, even if it's never seen that type of Idea before. This makes the system incredibly flexible.
+- **The LLM is the Universal Interpreter.** We use a smart AI (like the brain in ChatGPT) to understand and run all these Ideas. Because every Idea explains itself, the AI can work with any of them, even brand new ones it's never seen before. It’s like having a magical remote control that automatically knows how to work with any device you point it at.
 
   > Sidenote: [RFC 104: Concept/Latent](../rfc/104_concept_latent_.md)
 
-- **A Protocol of Living Ideas.** We're not just sharing boring, static files. We're sharing living systems that can grow, change, and connect with other Ideas over time, like plants in a garden.
+- **A Protocol of Living Ideas.** We're not just sharing boring, static files like a picture or text. We are sharing living tools and systems that can change, grow, and get better over time as people work on them together.
 
 ---
 
 ### (Chapter 2) The Diagnosis — The Gilded Cage of Big Tech
 
-The problem today is that we've made a deal with big tech companies that sounds good but is actually a trap. At first, they offered us websites where we could reach millions of people, but they kept our data and controlled what we could do. Now, they're offering amazing AI tools that are hard to say no to. The more we use their stuff, the more we depend on them. It’s like being in a beautiful cage made of gold. It looks nice, but you're still trapped, and you don't really own your digital life.
+The main problem with the internet today is a deal from big tech companies that seems great but is actually a trap. First, they gave us social networks to connect with lots of people, but they collected our data and locked us into their websites. Now, they're giving us powerful AI tools that are hard to say no to. 
 
-> Sidenote:
->
-> This is what today's internet looks like. A big company (Platform) is in the middle, and it controls how everyone (Peers) connects.
+The more we use their free and convenient stuff, the more we depend on them. We get trapped in a "gilded cage"—it looks beautiful and shiny on the outside, but it's still a cage. They end up controlling our data and our entire digital lives.
+
+> Sidenote: A typical network where one big company (Platform) owns all the data and controls everyone.
 >
 > ```mermaid
-graph LR
-    P((Platform))
-    A((Peer)); B((Peer)); C((Peer)); D((Peer));
-
-    A --> P; B --> P; C --> P; D --> P;
-```
+> graph LR
+>     P((Platform))
+>     A((" ")); B((" ")); C((" ")); D((" "));
+>
+>     A --> P; B --> P; C --> P; D --> P;
+> ```
 
 ---
 
 ### (Chapter 3) The Solution — A Decentralized Renaissance
 
-The answer isn't to build a slightly better cage. The answer is to leave the cages behind and explore a new, open world. We are going back to the original dream of the internet—a place where everyone could connect freely—but updated for the age of AI. This new beginning is based on two big ideas.
+The solution isn’t to build a slightly nicer cage. It’s to break out of the cages completely and create a new, open digital world. We’re going back to the original dream of the internet, where nobody was in charge, but we’re updating it with today's smart AI technology. This "rebirth" is built on two big ideas:
 
-- **A Vision of Autonomy:** We want to move from using central websites (platforms) to using a shared language (a protocol) that lets our computers talk directly to each other. You would use a small AI on your own computer to do things, and you'd connect with friends person-to-person (peer-to-peer). This keeps your data and your digital life completely in your control. The goal is to create a system for ideas where you can share smart, interactive things—like a budget that manages itself, or a project plan that automatically updates—as easily as you share a document today, without needing a big company in the middle.
+- **An Vision of Autonomy:** Instead of everyone using a few giant websites (platforms), we want to use a shared set of rules (a protocol). With these rules, everyone can run their own AI on their own computers and connect directly with friends, like a walkie-talkie system (this is called peer-to-peer). This keeps your data and your digital life completely under your control. The goal is to create a system where you can share interactive tools—like a budget that manages itself or a team plan that updates on its own—as easily as you share a photo, without a big company in the middle.
 
-> Sidenote:
->
-> In our new network, everyone (Peers and Services) is equal and can connect to anyone else directly, without a middleman.
+> Sidenote: In a decentralized network, everyone is equal and can connect directly to each other without a company in the middle.
 >
 > ```mermaid
-graph TD
-        A((Peer)) <--> B((Peer))
-        A <--> C((Peer))
-        A <--> D((Service))
-        B <--> C
-        B <--> E((Peer))
-        C <--> F((Service))
-        D <--> E
-        D <--> F
-        E <--> F
-```
+> graph TD
+>         A((" ")) <--> B((" "))
+>         A <--> C((" "))
+>         A <--> D{{"Service"}}
+>         B <--> C
+>         B <--> E((" "))
+>         C <--> F{{"Service"}}
+>         D <--> E
+>         D <--> F
+>         E <--> F
+> ```
 
-- **A Philosophy of Connection:** This new way of building things also changes how we connect with people. Today, social media encourages us to share everything with everyone to get "likes." We want to bring sharing back to what it should be: a meaningful and deliberate act of giving something to people you know and trust. Instead of shouting everything in a giant public square, you can create your own "hidden worlds" and have real conversations, with full control over who sees your ideas and what you share.
+- **A Philosophy of Connection:** This new system also changes how we connect with people online. Right now, sharing on social media is like shouting in a giant, noisy crowd, hoping someone hears you. We want to make sharing a thoughtful choice again, where you give things only to people you trust. Instead of a firehose of random posts, we can have real conversations in small, trusted groups. This lets you build your own private worlds online, where you have total control over who sees your ideas and what you create.

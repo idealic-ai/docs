@@ -50,7 +50,7 @@ The core problem is a seductive but dangerous bargain from big tech, a strategy 
 > ```mermaid
 > graph LR
 >     P((Platform))
->     A((Peer)); B((Peer)); C((Peer)); D((Peer));
+>     A((" ")); B((" ")); C((" ")); D((" "));
 >
 >     A --> P; B --> P; C --> P; D --> P;
 > ```
@@ -69,12 +69,12 @@ The solution is not to build a better walled garden, but to leave the gardens en
 >
 > ```mermaid
 > graph TD
->         A((Peer)) <--> B((Peer))
->         A <--> C((Peer))
->         A <--> D((Service))
+>         A((" ")) <--> B((" "))
+>         A <--> C((" "))
+>         A <--> D{{"Service"}}
 >         B <--> C
->         B <--> E((Peer))
->         C <--> F((Service))
+>         B <--> E((" "))
+>         C <--> F{{"Service"}}
 >         D <--> E
 >         D <--> F
 >         E <--> F

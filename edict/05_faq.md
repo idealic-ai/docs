@@ -6,8 +6,6 @@ _This section contains answers to common questions and objections about the prot
 
 ---
 
-### Common Objections
-
 - #### Who is in charge if there’s a problem?
 
   No single person or entity is in charge; that is a fundamental feature of the design. Like the internet itself or email, this is a protocol, not a centrally-managed service. Responsibility is distributed among its participants. The community collectively stewards the protocol, and individuals are empowered to manage their own interactions and spaces. When a problem arises, the solution comes from the community, not from a top-down authority.

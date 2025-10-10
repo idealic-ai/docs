@@ -2,110 +2,73 @@
 
 ---
 
-_You can't build a new, better internet on top of the old, broken one. Trying to mix the old and new just means you carry over all the old problems. To make something truly free, you have to start from scratch with a completely new set of rules built for being strong, independent, and open. We aren't building another website or app; we're creating the rules of the game itself._
+_People often think about building a new, better internet by patching up the old one. But that’s like trying to build a spaceship by adding wings to a car. It just won't work. To create something truly free and powerful, we have to start from scratch with a completely new set of rules. We’re not building another website or app that someone else controls; we’re creating a shared rulebook that anyone can use to build their own things._
 
 ---
 
-### (Chapter 4) A Blueprint for Freedom
+### (Chapter 4) The Blueprint for a Free Web
 
 **An Operating System for Ideas**
 
-We are not making another giant website that wants all your time and information. Instead, we're building an _operating system for ideas_. Think of it like the soil in a garden. We're not telling you what plants to grow; we're creating a rich, healthy place where your own ideas can be planted, grow, and connect with other ideas.
+We aren't building another big website like Facebook or Google that you have to log into. Instead, we’re making something more like an operating system (like Windows or macOS), but for ideas. It’s a foundation that anyone can build on top of.
 
-Anyone can build their own tools to look at and work with these ideas. Some might build a simple library to store them, while others might build powerful tools to analyze them. The whole system becomes stronger and more interesting because of all the different things people build, not because one company planned it all out.
+The goal isn't to make one giant app that does everything. The goal is to create rich soil where new ideas can be planted, grow, and connect with each other. We expect and hope that other people will build their own apps and tools using these rules. Some might build simple tools for saving notes, while others might create powerful programs for analyzing information. The system becomes stronger and more interesting because of all the different things people create, not because of one master plan.
 
-This system is designed to grow. **Ideas** aren't just plain documents; they come in special types like a `Record` (a piece of information), a `Process` (a set of steps), or an `Agent` (a program that does things). We provide a basic set of these types to get started, but anyone can create their own. The cool part is that not every tool has to understand every type of Idea. A simple app might only know how to read `Records`, while a more advanced one could handle complex `Processes`. This lets people build specialized tools that are really good at one thing.
+These rules are designed to be easily expanded. **Ideas** are like smart, living documents that can be shared and changed. They come in different types, like a `Record` (which is like a note), a `Process` (a set of steps), or an `Agent` (a program that does things). We provide the basic types to get started, but anyone can invent their own new types of Ideas.
 
-> Sidenote:
->
-> An "Ideator" (a tool that processes ideas) can work in private. You can send it an Idea, and it will send you a new one back, but you never see how it works inside. It's like a magic black box.
->
-> ```mermaid
-> flowchart TB
->         InputIdea[/Input Idea/]
->         OutputIdea[\Output Idea\]
->
->     subgraph Ideator ["<div style=\"width:260px; height:8em; display:flex; justify-content: flex-start; align-items:flex-start;\">Hosted Ideator</div>"]
->         direction LR
->         IdeatorService{{Ideator Service}}
->         HiddenContext["Private Context / Logic"]
->         IdeatorService -- Invokes --> HiddenContext
->     end
->
->     InputIdea -- "Sends input" --> IdeatorService
->     HiddenContext -- "Returns output" --> OutputIdea
->
->     style HiddenContext fill:#ffe,stroke:#333,stroke-width:2px,stroke-dasharray: 5 5
-> ```
+And you don't have to worry about everyone’s app understanding every single type of Idea. A simple note-taking app might only know how to handle `Records`, while a more advanced app could manage complex `Processes`. This lets people build specialized tools that do one thing really well.
 
-An idea can come from a private place, like your own computer with its own secret data. The final idea it creates will have a note saying where it came from, but without giving away any of the secrets. This creates a perfect balance: you can see the family tree of an idea, which is great for trust and understanding, but it still protects people's privacy. You can use the finished product without needing to know exactly how it was made.
 
-This design frees creators from having to control everything. The responsibility is shared by everyone who uses the system. The goal isn't to police a website, but to give people a powerful set of rules that lets them be free by its very design.
+
+Imagine you have a secret recipe for creating an amazing new idea on your own computer. You can use your private tools and data to generate the idea, and then share the final result. This shared idea will contain a note saying where it came from, but without revealing your secret recipe. This creates a perfect balance: you can trace an idea's history and see how it connects to others, but everyone's private creative space is respected. You can use the finished product without needing to see the secret kitchen where it was made.
+
+This design frees creators from being controlled by a central company. The power and responsibility are given to the users at the edges of the network. The goal isn't to police a platform; it's to give everyone a set of rules that makes freedom the default.
 
 ---
 
 ### (Chapter 5) How a Living Web Works
 
-The most important rule is this: **the idea itself contains all the rules.** There are no secret computer commands or hidden systems. The only thing that exists is the **Idea**. Each Idea is like a package with three parts: the **solution** (the actual content), the **schema** (an instruction manual explaining what the content is), and the **context** (its history and family tree). These packages are the only things sent back and forth. Because everything is in the package, you're never locked into one service. You can pick up all your ideas and move them anywhere, anytime.
+The whole system is built on one simple, powerful rule: **the message itself contains all the rules.** There are no secret commands or hidden computer systems. The only thing that exists is the **Idea**.
 
-> Sidenote: [RFC 101: Concept/Idea](../rfc/101_concept_idea.md)
+Every Idea is a small package containing three things:
+1.  The **solution**: The actual content or information.
+2.  The **schema**: A rulebook that describes what the content is and how it can be used.
+3.  The **context**: The history of where the Idea came from.
 
-- **Unchangeable by Design:** You can only do one thing: share an Idea. Once an Idea is shared, it can never be changed or deleted, just like a letter you've already mailed. To change your thought, you create a *new* Idea that refers back to the old one. This creates a perfect, unbreakable history of how the thought evolved. It makes the whole system much simpler and more trustworthy.
+These little packages are everything. They are the messages, the instructions, and the results. Because everything you need is inside the package, you truly own your ideas. You're never locked into a specific app or website, and you can take all of your ideas with you wherever you go.
 
-- **A Web of Connections:** Every Idea keeps track of its history through **references**, like footnotes in a book. This creates a living network showing how ideas are connected. If an original Idea is updated with a new version, any other Ideas that refer to it get a notification. This lets their owners decide if they want to update to the new version. It's like how group projects work in programming, allowing the whole network of ideas to grow together in a smart way.
 
-- **The Universal Translator:** This three-part package makes everything easy to understand. Because every Idea comes with its own instruction manual (schema), any computer program can become a powerful tool. The simplest program you could write for this system would be just a few lines of code: a program that takes an Idea, sends it to a smart AI (like ChatGPT), and returns the AI's answer. This tiny program can instantly understand and work with *every* Idea on the network, even types of ideas that haven't been invented yet! The AI acts as a universal translator, making it easy for anyone to join in and create.
+
+*   **Permanent by Design:** The only thing you can do is share a new Idea. You can't ever change or delete an old one. To update a thought, you create a *new* Idea that points back to the old one. This creates a perfect, unbroken history of how a thought grew over time. It sounds simple, but it gets rid of a ton of problems that normal computer systems have.
+
+*   **A Web of Connections:** Every Idea knows its own history. It keeps track of which other Ideas it came from, creating a web of connections that you can explore. This isn't just a boring log file; it's a living network. If someone updates an Idea that you used as a source for your own, you get a notification. You can then choose whether or not to include their changes in your own work. This allows people to collaborate and build on each other's work in a clear and controlled way, letting the whole network of ideas grow together.
+
+*   **The Universal Translator:** This three-part package makes everything incredibly easy to use. Because every Idea carries its own rulebook, any app can be a powerful participant in the network. The “Hello, World!” of this system (the simplest first program you can write) is just a few lines of code. It's a tiny program that takes an Idea package, hands it to a smart AI (like ChatGPT), and shows you the result. This simple program can immediately understand and work with *every single Idea* on the network, even types of Ideas that haven't been invented yet. You no longer need to be an expert coder to join in. The AI acts as a **universal translator**, making it possible for anyone to participate.
 
   > Sidenote:
   >
   > [RFC 104: Concept/Latent](../rfc/104_concept_latent_.md)
   >
-  > The AI is like a magic box that acts as the default way to interact with things. It can take any Idea you give it and turn it into a useful new Idea, without you needing to write any special code.
+  > The AI is the default way to interact with things. It's like a magic box that can understand any `Idea` you give it and turn it into something new and useful, without needing any special programming.
   >
   > ```mermaid
   > graph TB
-  >     Input[/Input Idea/] --> LLM{{Latent Space}}
+  >     Input[/Input Idea/] --> LLM@{ shape: cloud, label: "Latent Space" }
   >     LLM --> Output[\Output Idea\]
   > ```
 
-- **A Universe of Creation Without Permission:** This system lets anyone invent new things. You can create a new type of Idea and start sharing it right away. You don't need to ask for permission or convince a company to add it. Because every Idea explains itself, even the simplest programs using the "Universal Translator" can immediately understand and use your new creation. One person can introduce a new concept, and the whole network instantly knows how to work with it.
+*   **A Universe of Endless Invention:** Because of the universal translator, anyone can invent a new type of Idea and start sharing it, and the entire network can instantly start using it. You don't have to ask for permission or wait for other people to update their apps. Since every Idea package explains itself, even the simplest app can understand and work with a brand-new type of message. One person can introduce a new concept, and the whole network instantly learns its language.
 
 ---
 
-### (Chapter 6) The Method — Building with Ideas
+### (Chapter 6) The Method — Building with Thought-Bricks
 
-This system is built like LEGOs. Its design is inspired by simple, powerful tools that you can combine to build complex things. The key insight is that an **Idea is not just information, but a little container for a program**. It holds the main content (the **solution**) along with everything needed to understand it (the **schema** and **context**). This makes every Idea a self-contained package, ready to be used.
+The way we build things with these rules is inspired by the simple and powerful philosophy of Unix and building with LEGOs. The main insight is this: an **Idea is not just information, it’s a package ready for action**. It bundles the information itself (the **solution**) with its own instruction manual (the **schema** and **context**).
 
-> Sidenote: [RFC 103: Concept/Ideator](../rfc/103_concept_ideator.md)
 
-The special tools that work on these Ideas are called **Ideators**. Think of them as little machines. An **Ideator** always does the same thing: it takes one Idea-package as an input, does something to it, and spits out a new Idea-package as an output. This simple rule makes the whole system incredibly stable and predictable.
 
-> Sidenote:
->
-> Because these Ideator machines are like LEGO bricks, you can snap them together to build very complex systems. This picture shows an idea being split into two paths, where different 'Improver' and 'Evaluator' machines work on it. Then, an 'Arbiter' machine picks the best result to start the next loop of improvement.
->
-> ```mermaid
-> graph TD
->     Vessel{Vessel} --> Writer{{Writer}}
->     Writer --> ForkService[Forking Service]
->     Writer --> Vessel
->
->     ForkService -- "A" --> Improver1{{Improver}}
->     Improver1 --> Evaluator1{{Evaluator}}
->
->     ForkService -- "B" --> Improver2{{Improver}}
->     Improver2 --> Evaluator2{{Evaluator}}
->
->     Evaluator1 --> Arbiter{{Arbiter}}
->     Evaluator2 --> Arbiter
->
->     Arbiter -- "Best" --> Writer
-> ```
+The agents that perform these actions are called **Ideators**. Think of them as specialized tools or workers. An **Ideator**'s job is simple: it takes one `Idea` package as input, does something to the information inside, and then produces a *new* `Idea` package as output. This simple contract—Idea in, Idea out—is what makes the whole system so stable and predictable.
 
-A really smart part of this design is how **Ideators** check their inputs. An **Ideator** doesn't need to understand every single detail of an Idea. It just needs to check for the specific parts it needs. For example, an "Idea Improver" tool might say: _"I'll work with any Idea as long as it has a 'title' written in text."_ It doesn't care about anything else inside the package. This makes the tools very flexible and reusable.
 
-This LEGO-like model is what makes everything work together so well. Because every **Ideator** speaks the same language of "Idea-packages," they can be chained together in long lines, like a factory assembly line. This allows you to build powerful workflows from simple parts. And if you want, you can also use any **Ideator** directly, just like a normal web API.
 
-Imagine a chain of **Ideators**: a starting `Idea` is sent to a **Simulator** to see what might happen, then to a **Critic** that gives feedback, then to an **Improver** that makes it better based on the feedback, and finally to a **Publisher** that shares it with friends. Each tool is simple on its own, but together they create a powerful system for thinking and creating.
-
-This is how ideas come to life in this digital world: an `Idea` survives and grows by convincing other tools and **Ideators** to pay attention to it and process it. It travels across the network, getting remixed and improved at every stop, proving it's valuable just by continuing its journey.
+What's really cool is how these tools check their work. An **Ideator** doesn’t need to understand every single detail about an Idea it receives. It only needs to check for the specific parts it needs. For example, an 
