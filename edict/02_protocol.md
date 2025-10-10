@@ -16,17 +16,7 @@ The protocol is inherently extensible. **Ideas** (living, self-contained documen
 
 > Sidenote:
 >
-> - [RFC 201: Idea/Record](../rfc/201_idea_record.md)
-> - [RFC 202: Idea/Vessel](../rfc/202_idea_vessel.md)
-> - [RFC 203: Idea/Process](../rfc/203_idea_process.md)
-
-**Privacy Through Private Nodes**
-
-True decentralization requires a sophisticated approach to privacy. Full transparency is not required, nor is it desirable. The protocol is designed to allow content to flow between different **private nodes** (a user's individual, self-sovereign digital space). These private nodes are the architectural expression of the "Inner Journey"—the sacred spaces required to safely uncover one's "True Will" before choosing to share its fruits with the world.
-
-> Sidenote:
->
-> The diagram below illustrates how an Ideator on a private node processes an Idea. The client sends an input Idea and receives an output Idea. The Ideator's own internal context and logic, which it uses for the transformation, remain completely private and are never exposed to the client.
+> An Ideator on a private node can process an Idea, transforming an input into an output while its own internal context and logic remain completely private and are never exposed to the client.
 >
 > ```mermaid
 > flowchart TD
