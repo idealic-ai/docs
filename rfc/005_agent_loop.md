@@ -14,11 +14,11 @@
 >     Start((Start)) --> AssembleContext(Assemble Context)
 >     AssembleContext --> InvokeRequest(Invoke Request)
 >     InvokeRequest --> HasCalls{Solution has Calls?}
->     HasCalls -- Yes --> HITL(Human-in-the-Loop)
+>     HasCalls -- No --> Stop((End))
+>     HasCalls -- Yes --> HITL{Human-in-the-Loop}
 >     HITL -- Approved --> ExecuteCalls(Execute Calls)
 >     ExecuteCalls -- Results --> AssembleContext
 >     HITL -- Corrected --> AssembleContext
->     HasCalls -- No --> Stop((End))
 > ```
 
 This document describes the **Loop Protocol**, which enables an agent to perform multi-step tasks by iteratively calling the `Request` protocol.
