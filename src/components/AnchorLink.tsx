@@ -47,6 +47,7 @@ const AnchorLink: React.FC = () => {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       });
+      window.location.hash = targetHeading.id;
     }
   };
 

@@ -120,6 +120,7 @@ nav.pagination {
 }
 * {
   scroll-padding-top: 100px;
+  scroll-behavior: smooth;
 }
 
 a.is-active.is-active.is-active {
