@@ -32,7 +32,8 @@ header {
     opacity: 0.55;
   }
 
-  a img {
+  a img,
+  a svg {
     width: 48px;
     height: 48px;
   }
@@ -52,8 +53,36 @@ nav {
     display: inline-block;
   }
 
-  > div .chapter-link ~ .chapter-link {
-    margin-left: 5px;
+  body {
+    padding: 0;
+  }
+
+  .document {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 1000px) {
+  nav.main {
+  }
+
+  header {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .languages {
+    order: -1;
+  }
+
+  .logo {
+    order: -2;
+  }
+
+  nav.main strong {
+    width: auto;
   }
 }
 
@@ -640,12 +669,6 @@ label.margin-toggle:not(.sidenote-number) {
 }
 
 @media (max-width: 760px) {
-  body {
-    width: 84%;
-    padding-left: 8%;
-    padding-right: 8%;
-  }
-
   hr,
   section > p,
   section > footer,
