@@ -6,7 +6,8 @@
 >
 > - Requires:
 >   - [001: Agent/Request](./001_agent_request.md)
-> - Enables: [103: Concept/Ideator](./103_concept_ideator.md)
+> - Enables:
+>   - [103: Concept/Ideator](./103_concept_ideator.md)
 
 This document outlines the architecture for a decentralized web of living documents. It covers the protocol's core data structure (the **Idea**) and the decentralized discovery mechanism for publishing and resolving them via **DNS**.
 

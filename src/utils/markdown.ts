@@ -31,6 +31,7 @@ export async function processMarkdown(markdownContent: string): Promise<string> 
                 node.properties = {};
               }
               node.properties.className = 'marginnote';
+              node.properties.tabIndex = -1;
               textNode.value = textNode.value.replace(/^Sidenote:\s*/, '');
               if (!textNode.value.trim()) {
                 if (p.children.length === 1) {
