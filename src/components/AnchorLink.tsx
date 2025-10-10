@@ -3,6 +3,17 @@ import React, { useEffect, useState } from 'react';
 const AnchorLink: React.FC = () => {
   const [targetHeading, setTargetHeading] = useState<HTMLElement | null>(null);
   const [copied, setCopied] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 759.99px)');
+    setIsMobile(mediaQuery.matches);
+
+    const handleResize = () => setIsMobile(mediaQuery.matches);
+    mediaQuery.addEventListener('change', handleResize);
+
+    return () => mediaQuery.removeEventListener('change', handleResize);
+  }, []);
 
   useEffect(() => {
     const handleMouseOver = (event: MouseEvent) => {
@@ -53,20 +64,14 @@ const AnchorLink: React.FC = () => {
 
   if (!targetHeading) return null;
 
-  const { top, left } = targetHeading.getBoundingClientRect();
+  const { top, left, width } = targetHeading.getBoundingClientRect();
   const computedStyle = window.getComputedStyle(targetHeading);
-  const style = {
-    position: 'absolute' as const,
+
+  const style: React.CSSProperties = {
     top: top + window.scrollY,
-    left: left + window.scrollX - 36, // Adjust as needed
-    padding: '0 10px',
-    cursor: 'pointer',
-    border: 'none',
-    background: 'transparent',
+    left: isMobile ? left + window.scrollX + width + -30 : left + window.scrollX - 36,
     fontSize: computedStyle.fontSize,
     lineHeight: computedStyle.lineHeight,
-    color: 'var(--color-accent)',
-    opacity: 0.7,
   };
 
   return (

@@ -115,8 +115,8 @@ nav.pagination {
 }
 
 *:target {
-  background: rgba(0, 20, 0, 0.1);
-  outline: 5px solid rgba(0, 20, 0, 0.1);
+  background: var(--color-accent-bg);
+  outline: 5px solid var(--color-accent-bg);
 }
 * {
   scroll-padding-top: 100px;
@@ -828,6 +828,8 @@ label.margin-toggle:not(.sidenote-number) {
 }
 
 :root {
+  --color-accent: #1e8ad6;
+  --color-accent-bg: rgba(30, 138, 214, 0.1);
   --rehype-github-alerts-default-color: rgb(89, 99, 110);
   --rehype-github-alerts-note-color: rgb(9, 105, 218);
   --rehype-github-alerts-tip-color: rgb(26, 127, 55);
@@ -841,7 +843,9 @@ label.margin-toggle:not(.sidenote-number) {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --rehype-github-alerts-default-color: rgb(145, 152, 161);
+    --color-accent: #1e8ad6;
+    --color-accent-bg: rgba(30, 138, 214, 0.1)
+      --rehype-github-alerts-default-color: rgb(145, 152, 161);
     --rehype-github-alerts-note-color: rgb(68, 147, 248);
     --rehype-github-alerts-tip-color: rgb(63, 185, 80);
     --rehype-github-alerts-important-color: rgb(171, 125, 248);
@@ -925,4 +929,19 @@ label.margin-toggle:not(.sidenote-number) {
   display: inline-block;
   overflow: visible !important;
   vertical-align: text-bottom;
+}
+
+.anchor-link-button {
+  position: absolute;
+  padding: 0 10px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  transition: opacity 0.2s;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.anchor-link-button:hover {
+  opacity: 1;
 }
