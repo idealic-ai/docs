@@ -417,6 +417,8 @@ blockquote footer {
 }
 
 section > p,
+section > ul,
+section > ol,
 section > footer,
 section > table {
   width: var(--left-size);

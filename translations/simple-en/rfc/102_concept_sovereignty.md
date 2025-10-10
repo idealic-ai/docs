@@ -1,76 +1,75 @@
-# 102: Концепция/Суверенитет
+# 102: Concept/Sovereignty
 
 > Sidenote:
 >
-> - Требует:
->   - [101: Концепция/Идея](./101_concept_idea.md)
->   - [103: Концепция/Идеатор](./103_concept_ideator.md)
-> - Позволяет: Практическое развертывание экосистемы.
+> - This builds on:
+>   - [101: Concept/Idea](./101_concept_idea.md)
+>   - [103: Concept/Ideator](./103_concept_ideator.md)
 
-## 1. Введение
+## 1. What This Is About
 
-Этот документ объясняет, что такое **Суверенитет** — это модное слово, которое просто означает, сколько контроля у тебя есть над своим творением. Представь, что ты можешь выбирать, как запустить свой проект: либо позволить нам помочь тебе с помощью готовых инструментов, либо построить и запустить всё самостоятельно с нуля.
+This document explains **Sovereignty**, which is just a fancy word for how much control you have over your creations in our system. Think of it like a video game where you can choose the difficulty level. You can use our easy-to-use tools that do most of the work for you, or you can choose to build and run everything yourself, giving you total control.
 
-Эта инструкция — это мост, который превращает твой чертёж (`Ideator`) в настоящий, работающий сервис.
+This is the guide that shows how we turn an idea on paper (an `Ideator`) into a real, working thing on the internet.
 
-## 2. Многоуровневая Архитектура
+## 2. The Five Levels of Control
 
-Наша система похожа на здание с несколькими этажами (всего их пять). Каждый этаж строится на фундаменте под названием **Децентрализованная Идентичность**, о котором мы говорили в документе [101: Концепция/Идея](./101_concept_idea.md). Ты, как создатель, можешь выбрать, на каком этаже тебе удобнее всего находиться.
+Our system is built in five levels, like floors in a building. Each level gives you more power and control. You can start on the first floor and use our help, or you can build your own penthouse suite where you are in charge of everything.
 
-Думай об этом как о шкале контроля. На одном конце — готовый сервис, где всё очень просто и удобно. На другом конце — **полный суверенитет**: ты используешь своё собственное интернет-имя (домен) и сам запускаешь все сервисы, фактически становясь своим собственным провайдером. Этажи посередине — это просто ступеньки, которые помогают тебе перейти от простого к сложному, если захочешь.
+It’s all about choice. You can pick the level of control that feels right for you. You can start with our simple, helpful services and gradually take over more control until you're running the whole show yourself on your own website.
 
-### Уровень 1: Управляемый Хостинг
+### Level 1: A Home for Your Idea
 
-Этот уровень даёт тебе бесплатное и простое место для хранения главного файла твоего проекта.
+This level gives your idea's blueprint (the `Ideator` file) a place to live on the internet, instantly and with no fuss.
 
-- **Как это работает:** Чтобы тебе было легче начать, мы предлагаем хранить файл твоего Идеатора в нашем онлайн-хранилище (S3). Интернет-адрес, который мы тебе дадим, будет указывать прямо на этот файл. Но в любой момент ты можешь перенести свой файл в другое место — например, на свой компьютер или в другую систему хранения (IPFS) — и просто обновить адрес, чтобы он указывал на новое место.
-- **Цель:** Избавить тебя от необходимости искать, где разместить свой файл, чтобы ты мог сразу приступить к делу.
-
----
-
-### Уровень 2: Создание Пользовательского Интерфейса
-
-Этот уровень превращает твой проект в сайт, который люди могут видеть и использовать, и для этого тебе не нужен никакой сервер.
-
-- **Как это работает:** Мы используем одну и ту же простую веб-страницу для всех проектов. Когда кто-то заходит на адрес твоего Идеатора, эта страница запускает небольшой скрипт. Скрипт спрашивает у интернета: «А где лежит главный файл этого проекта?» Он находит ссылку на файл с Уровня 1, скачивает его и на лету строит из него красивый и понятный интерфейс — кнопки, тексты и картинки — прямо в браузере пользователя.
-- **Цель:** Дать каждому проекту бесплатный, готовый к использованию веб-сайт, чтобы любой мог легко начать.
+- **How It Works:** To make things easy, we offer to keep your `Ideator` file in our online storage (it's called an S3 bucket). We then create a little signpost on the internet (a `TXT` record) that points to it. If you ever want to move your file to your own storage space, like your own server or another service, you just change the signpost to point to the new location. It's that simple.
+- **Why We Do It:** So you don’t have to worry about finding a place to store your file just to get started.
 
 ---
 
-### Уровень 3: Доступ для Других Программ (`GET`)
+### Level 2: A Face for Your Idea
 
-Этот уровень помогает другим компьютерным программам легко «читать» и понимать твою Идею.
+This level turns your `Ideator` into a real webpage that people can see and use, without needing any big, fancy servers.
 
-- **Как это работает:** Представь, что твой проект — это книга. Этот уровень добавляет к ней умное оглавление и указатель. Вместо того чтобы скачивать всю книгу, другая программа может запросить только нужную ей часть, например: `import { schema } from '...'`. Это делает взаимодействие между программами очень быстрым и эффективным. Мы также можем добавить подсказки для программистов, чтобы им было еще удобнее работать.
-- **Цель:** Сделать так, чтобы другие программы могли легко и правильно использовать твою Идею.
-
----
-
-### Уровень 4: Публикация (`PUT`)
-
-Этот уровень даёт тебе возможность публиковать и обновлять свою Идею с помощью программ.
-
-- **Как это работает:** Этот уровень обрабатывает запросы на обновление. Ты можешь отправить новую версию своего проекта вместе с секретным паролем. Система за один шаг загрузит новый файл и обновит все записи так, чтобы все сразу увидели новую версию. Это происходит мгновенно и безопасно, так что ничего не сломается.
-- **Цель:** Предоставить простой и безопасный способ управлять жизненным циклом твоих Идей.
+- **How It Works:** We have a special, one-size-fits-all webpage. When someone visits your idea's web address, some code on that page instantly goes to work. It looks up that internet signpost (`TXT` record) to find your idea's blueprint, downloads it, and builds a user-friendly interface right there in the browser. It’s like a pop-up book that assembles itself the moment you open it.
+- **Why We Do It:** To give every idea a free, working web app right away, making it super easy for anyone to create something useful.
 
 ---
 
-### Уровень 5: Полноценный Запуск (`POST`)
+### Level 3: A Smart Assistant for Other Computers
 
-Это самый высокий уровень, который превращает твой Идеатор в настоящий веб-сервис, который может выполнять реальные задачи.
+This level helps other computer programs understand and work with your idea really easily.
 
-- **Как это работает:** Этот уровень обрабатывает `POST` запросы, то есть команды для выполнения работы. Если твой проект — это калькулятор, то на этом уровне ты можешь отправить ему числа, и он вернёт тебе результат. Ты можешь использовать нашу систему для выполнения этих задач или запустить свою собственную.
-- **Цель:** Дать тебе всю мощь «облачной» архитектуры, чтобы ты мог запустить полноценное мини-приложение, имея на руках лишь один файл с его описанием.
+- **How It Works:** We put a smart delivery service (a CDN) in front of your idea's blueprint. When another computer program asks to see your idea, this service acts like a helpful librarian. Instead of handing over the whole blueprint, it can find and give out just the specific part the program needs. This makes it fast and easy for other developers to connect their apps to your idea. It can even provide a handy instruction manual (`.d.ts` file) so they know exactly how to work with it.
+- **Why We Do It:** To let other programs use your idea in a smart, efficient, and professional way.
 
-## 3. Спецификация API
+---
 
-Все взаимодействия с твоей идеей происходят по её основному адресу (`/`).
+### Level 4: The Magic Update Button
+
+This level gives you a simple and secure way to publish new versions of your idea.
+
+- **How It Works:** This level lets you send an update to your idea's web address. You just need to prove it’s you (with a secret key). With one single command, you can upload the new blueprint file *and* update the internet signpost at the exact same time. This makes updating smooth and safe, so nothing breaks.
+- **Why We Do It:** To give you a secure and simple way to manage and improve your ideas over time.
+
+---
+
+### Level 5: Bringing Your Idea to Life
+
+This is the top level. It turns your `Ideator` from a blueprint into a real, working machine that can do tasks.
+
+- **How It Works:** At this level, your idea can receive commands (`POST` requests) and actually perform the actions written in its blueprint. It’s like you've built a robot that can now follow instructions. You can let us provide the engine to make it run, or you can host your own engine and have complete control.
+- **Why We Do It:** To give you the power to create a real web service that can do almost anything, starting from just a simple idea file.
+
+## 3. The Commands
+
+All the computer commands happen at your idea's main web address (like `your-idea.com/`).
 
 - **`GET /`**
-  - Если ты заходишь с браузера (просишь `text/html`, Уровень 2): ты получаешь веб-сайт для просмотра.
-  - Если ты — другая программа (просишь `application/json`, Уровень 3): ты получаешь исходный файл Идеи в формате JSON.
-- **`PUT /`** (Уровень 4)
-  - Требует пароль. Один такой запрос загружает новую версию файла твоей Идеи и мгновенно делает её активной.
-- **`POST /`** (Уровень 5)
-  - Требует разрешения. Этот запрос заставляет Идеатор выполнить свою работу.
-  - В теле запроса отправляются данные, например: `{"context": "Ввод пользователя для обработки"}`.
+  - This command is for *getting* information.
+  - If a person in a web browser asks (`Accept: text/html`), it shows them the friendly webpage (from Level 2).
+  - If another computer asks (`Accept: application/json`), it gives them the raw blueprint file (from Level 3).
+- **`PUT /`** (Level 4)
+  - This command is for *updating* your idea. You need a secret key to prove it's you. It uploads your new blueprint and makes it live all in one go.
+- **`POST /`** (Level 5)
+  - This command is for *telling your idea to do something*. You send it a package of information (like `{"context": "Here is something to work on"}`), and your `Ideator` performs the task.

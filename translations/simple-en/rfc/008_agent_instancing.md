@@ -1,113 +1,34 @@
-# 011: Агент/Инстансинг
+# 011: Agent/Instancing
 
-> **Инстансинг:** Это когда компьютерная программа, или «агент», выполняет много похожих, но независимых задач одновременно. Каждая такая задача называется «экземпляром» (Instance), у каждого есть своя «карточка с данными» (`State Object`) и уникальный номер.
->
-> — [Словарь](./000_glossary.md)
+> **Instancing:** Think of this like being a chef who can cook many different meals at the same time. Each meal is an `Instance`. It has its own ingredients and recipe (`State Object`) and its own order number (a unique ID). Instancing is the skill of managing all these separate meals in one go without mixing them up.
+> 
+> — [Glossary](./000_glossary.md)
 
 > Sidenote:
 >
-> - Требуется: [Агент/Состояние](./010_agent_state.md)
-> - Совместимо с:
-> - [Агент/Ввод](./007_agent_input.md)
->   - [Агент/Импорты](./008_agent_imports.md)
->   - [Агент/План](./012_agent_plan.md)
+> - Requires: [Agent/State](./010_agent_state.md)
+> - Compatible:
+>   - [Agent/Input](./007_agent_input.md)
+>   - [Agent/Imports](./008_agent_imports.md)
+>   - [Agent/Plan](./012_agent_plan.md)
 
-Этот документ описывает, как научить ИИ-агента обрабатывать много независимых заданий в рамках одного запроса. Представьте, что вы просите его сделать не одну вещь, а сразу десять одинаковых, и он делает их все параллельно.
+This guide explains how a smart computer program (an agent) can handle many different jobs all at once, even though each job is totally separate from the others.
 
-## 1. Главное требование: Система состояний
+## 1. What We Need First: The State System
 
-Чтобы всё это работало, нам нужна одна важная вещь: **Система состояний**. Это правило, которое чётко разделяет два этапа: сначала «составить план», а потом «выполнить его». Они никогда не смешиваются.
+Before we can juggle multiple jobs, we need something called the **State System**. Its main job is to separate the *planning* of what to do from the *doing* of the thing.
 
-Мостом между этими двумя этапами служит **Объект состояния** (`State Object`). Это как личная карточка или анкета для каждого задания. У него есть две главные функции:
+Imagine you're building a LEGO set. The instructions are the plan, and snapping the bricks together is the execution. The **State System** makes sure these two steps are distinct.
 
-1.  **Место для ответа**: Это холст, на котором инструменты оставляют свои результаты. Когда инструмент выполняет свою работу (например, анализирует текст), он знает, в какую строчку этой «анкеты» записать ответ. Эта строчка указывается в свойстве `_outputPath`.
-2.  **Источник информации**: Инструмент может взять нужные ему для работы данные прямо из этой же «анкеты». Например, чтобы перевести текст, ему сперва нужно прочитать этот текст. Так задачи могут зависеть друг от друга.
+The bridge between planning and doing is the **State Object**. Think of it as a project board or a workbench for one specific job. It's a digital space where you keep all the information and results for that task. It's special for two reasons:
 
-## 2. Механизм инстансинга
+1.  **It's Where the Work Happens**: When a tool (a mini-program that does one thing) finishes its job, it needs a place to put the result. Every tool is told where to write its answer on the project board. This instruction is called an `_outputPath`.
+2.  **It's Where Tools Get Information**: To do its job, a tool might need an answer from a previous step. It can grab that information directly from the project board. This way, different tools can work together in a sequence.
 
-Настоящая магия этой системы в том, что она легко справляется с кучей задач одновременно. И всё благодаря Системе состояний.
+## 2. Juggling Multiple Jobs: The Instancing Mechanism
 
-### 2.1. Идентификаторы состояний
+The real magic happens when you use this system to handle many jobs at once.
 
-Чтобы обработать несколько заданий за раз, мы отправляем их в виде списка. Каждому заданию мы присваиваем **уникальный значок** с помощью специального свойства `_instance`. Эти значки — короткие и простые, например, цифры в кружочках: `①`, `②`. Искусственный интеллект их видит и понимает, что это просто метки для различения задач.
+### 2.1. Giving Each Job a Sticker
 
-### 2.2. Точечные операции
-
-Этот значок (`_instance`) используется, чтобы каждая команда была направлена на конкретное задание. Все команды для инструментов начинаются с нижнего подчеркивания (`_`), а их параметры вписаны прямо в команду.
-
-- **Связь с командой**: В каждой команде (`Tool Call`), которую генерирует ИИ, указан значок `_instance`, чтобы было понятно, к какому заданию она относится.
-- **Автоматическая привязка**: Этот значок работает как ярлык. Когда инструмент читает данные или записывает результат, он автоматически делает это в «анкете», помеченной этим ярлыком. Ему не нужно каждый раз объяснять, куда именно смотреть — он уже знает, что работает с заданием `①` или `②`.
-
-Благодаря этому сами инструменты остаются очень простыми. Им не нужно знать, что они работают с одним заданием из многих. Значок `_instance` сам разделяет их рабочие пространства.
-
-### 2.3. Пример
-
-Допустим, нам нужно проанализировать два текста на «настроение» (позитивное или негативное). Мы можем задать правила (схему), как должна выглядеть «анкета» для каждого текста, чтобы ИИ было проще.
-
-```json
-{
-  "context": [
-    {
-      "_instance": "①",
-      "type": "state",
-      // Карточка для первого задания
-      "state": { "text": "Это просто чудесно!" },
-      "schema": {
-        "type": "object",
-        "properties": {
-          "text": { "type": "string" },
-          "sentiment": { "type": "string" }
-        },
-        "required": ["text"]
-      }
-    },
-    {
-      "_instance": "②", 
-      "type": "state", 
-      // Карточка для второго задания
-      "state": { "text": "Это ужасно." } 
-    }
-  ]
-}
-```
-
-ИИ видит обе задачи сразу и составляет единый план для них:
-
-```json
-{
-  "calls": [
-    {
-      "_tool": "analyzeSentiment",
-      "_instance": "①",
-      "text": "†state.text",
-      "_outputPath": "sentiment"
-    },
-    {
-      "_tool": "analyzeSentiment",
-      "_instance": "②",
-      "text": "†state.text",
-      "_outputPath": "sentiment"
-    }
-  ]
-}
-```
-
-План очень простой: «Сначала проанализируй текст `①` и запиши результат в его анкету. Потом сделай то же самое для текста `②`». Затем этот план выполняется, и результаты появляются в анкетах каждого задания.
-
-## 3. Дополнительная система: План-схема
-
-Хотя это и не обязательно для инстансинга, **Система планирования** идеально его дополняет. Она позволяет создавать очень надёжные и многоразовые рабочие процессы.
-
-**План** — это как шаблон или рецепт, состоящий из шагов (вызовов инструментов). Этот рецепт составляется заранее, анализируя, какие инструменты что используют и что создают в «анкете».
-
-Самое главное — этот план можно создать и отладить *до* того, как он будет выполнен. Когда план готов, его можно передать агенту. И когда агент получит много заданий, он просто будет следовать этому готовому плану для каждого из них. Это обеспечивает одинаковый и предсказуемый результат для всех.
-
-А «анкета» (`State Object`) для каждого задания в этом случае работает как закладка, показывая, на каком шаге рецепта оно сейчас находится.
-
-## 4. Преимущества этого подхода
-
-Такой метод работы с задачами даёт огромные плюсы:
-
-- **Эффективность**: Система обрабатывает много заданий за один запрос к ИИ. Это всё равно что спросить у него один раз о десяти вещах, вместо того чтобы спрашивать десять раз по одной. Гораздо быстрее и дешевле.
-- **Качество и постоянство**: ИИ видит все похожие задачи одновременно, поэтому может заметить общие закономерности и составить более качественный и единообразный план для всех. Это повышает качество результата.
-- **Предсказуемость**: Если использовать заранее готовый **План**, результат становится на 100% предсказуемым. Как в сборке LEGO по инструкции: если следовать шагам, результат всегда будет одинаковым для каждого набора деталей.
+To manage many jobs in a single request, we give each one a unique label, like a little sticker. This special label is called `_instance`. The labels are usually super simple (like `①`, `②`, `③`) so the computer can easily see them. They don't mean anything other than 

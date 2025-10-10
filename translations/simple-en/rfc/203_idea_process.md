@@ -1,18 +1,19 @@
-# 203: Идея/Процесс
+# 203: Idea/Process
 
-> **Идея-Процесс:** Это Идея, чья `схема` похожа на рецепт — она описывает точную последовательность шагов. Каждое «приготовление» по этому рецепту называется **Выполнением Процесса**.
+> **Process Idea:** Think of this as an **Idea** that works like a detailed recipe. Its blueprint (`schema`) lists all the steps you need to follow, in order. If you follow the recipe exactly, you'll get the same result every time. When you actually start *making* the recipe, that's called a **Workflow Run**.
 >
-> — [Глоссарий](./000_glossary.md)
+> — [Glossary](./000_glossary.md)
 
 > [!WARNING]
-> Этот Нормативный Акт пока что просто заготовка и будет дополнен в будущем.
+> This document is just a starting point and will be filled out with more details later.
 
 > Sidenote:
 >
-> - Требуется:
->   - [101: Концепция/Идея](./101_concept_idea.md)
->   - [012: Агент/План](./012_agent_plan.md)
+> To understand this, it helps to first read about:
+>
+> - [101: Concept/Idea](./101_concept_idea.md)
+> - [012: Agent/Plan](./012_agent_plan.md)
 
-**Идея-Процесс** — это, по сути, пошаговая инструкция. В её `схеме` записано, что и в каком порядке нужно делать. Когда кто-то запускает эту инструкцию, это называется **Выполнение Процесса**.
+A **Process Idea** is like a blueprint for a step-by-step assembly line. Its design (`schema`) clearly defines a sequence of actions that, when followed precisely, always produce the same outcome. Each time someone or something follows this blueprint from start to finish, it's called a **Workflow Run**.
 
-Чтобы такая сложная инструкция работала, часто нужна система планирования. Представьте её как шеф-повара, который составляет рецепт. Этот «шеф-повар» продумывает все действия (`Вызовы Инструментов`) и выстраивает их в правильную цепочку. Технически это называется «направленный ациклический граф» (DAG). Проще говоря, это как flowchart, где ты можешь двигаться только вперёд, от одного шага к другому, и никогда не возвращаешься назад. Например, ты должен сначала испечь пирог, а уже потом его украшать — поменять шаги местами нельзя.
+To make this work, a system often needs to create a smart plan first. Imagine drawing a flowchart that shows every single action (or `Tool Call`) needed to complete the task. This flowchart is special: it only moves forward, and you can't get stuck in a loop. This one-way-only plan is called a **directed acyclic graph (DAG)**, and it makes sure every step builds on the last one logically until the job is done.

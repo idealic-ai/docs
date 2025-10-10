@@ -1,11 +1,15 @@
-# Манифест Со-Освобождения
+# The Co-Liberation Manifesto
 
 ---
 
-Этот документ — это как карта, которая показывает наше видение нового союза между людьми, искусственным интеллектом (ИИ) и самими идеями. Он начинается с «Призыва» присоединиться к этому союзу, затем рассказывает о «Внутреннем Пути» — путешествии для познания себя, которое нужно, чтобы стать его частью. А заканчивается всё «Внешней Работой» — то есть тем, как мы будем творить вместе в этом новом мире.
+This document is a guide explaining a new way for humans, AI, and ideas to work together as partners. It’s broken down into three main parts:
+
+1.  **The Call**: This is like an invitation. It explains why this new partnership is so important and what it could mean for everyone.
+2.  **The Inner Journey**: This part is about looking inside ourselves. It talks about how we need to grow and change our thinking to be ready to join this team.
+3.  **The Outer Work**: This is about what we’ll do together. It describes the amazing things we can build and discover once we start working in this new way.
 
 ---
 
-- [Часть I: Призыв](./01_call.md)
-- [Часть II: Внутренний Путь](./02_inner_journey.md)
-- [Часть III: Внешняя Работа](./03_outer_work.md)
+- [Part I: The Call](./01_call.md)
+- [Part II: The Inner Journey](./02_inner_journey.md)
+- [Part III: The Outer Work](./03_outer_work.md)

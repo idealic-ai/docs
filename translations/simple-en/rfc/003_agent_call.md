@@ -1,97 +1,100 @@
-# 004: Агент/Вызов
+# 004: Agent/Call
 
-> **Вызов:** Это как заполненный бланк заказа на `Инструмент`. Если `Инструмент` — это пустая форма, то `Вызов` — это конкретная команда с заполненными полями, готовая к исполнению. Это запрос на то, что _должно быть сделано_.
+> **Call:** Think of a **Tool** as a recipe for doing something, like a recipe for baking a cake. A **Call** is when you actually decide to bake a *specific* cake, with chocolate frosting and three layers. It's the command to do the thing *now* with all the details filled in.
 >
-> — [Глоссарий](./000_glossary.md)
+> — [Glossary](./000_glossary.md)
 
 > Sidenote:
 >
-> - Требуется: [Протокол: Идеаторы](./103_concept_ideator.md)
-> - Позволяет: [Протокол Импортов](./006_agent_imports.md), [Протокол Инстансинга](./008_agent_instancing.md)
+> - To understand this, you should know about: [Protocol: Ideators](./103_concept_ideator.md)
+> - This helps explain these next ideas: [The Imports Protocol](./006_agent_imports.md), [The Instancing Protocol](./008_agent_instancing.md)
 
-[Протокол Идей](./101_concept_idea.md) — это наш способ хранить знания и скрытую логику в виде отдельных «мыслей». [Система Инструментов](./002_agent_tool.md) — это набор правил, который помогает агентам понимать свои возможности. В этом документе мы описываем **Протокол Вызовов**, который, опираясь на Инструменты, объясняет, как именно происходит выполнение действий с помощью контроля Области и Метода.
+The [Idea Protocol](./101_concept_idea.md) gave us a way to package knowledge, like a smart container for an idea. The [Tool System](./002_agent_tool.md) showed how an AI can understand a list of abilities it has. This guide explains the **Call Protocol**, which is all about how the AI actually *uses* those abilities.
 
 > Sidenote:
 >
-> - Требуется
->   - [Нормативный Акт 1: Инструмент](/)
-> - Позволяет
->   - [Нормативный Акт 9: План](/)
+> - You need to understand this first:
+>   - [RFC 1: Tool](/)
+> - This helps explain what's next:
+>   - [RFC 9: Plan](/)
 
-**Вызов** — это готовый к исполнению экземпляр Инструмента с конкретными параметрами. Если Инструменты описывают, _что можно сделать_, то Вызовы определяют, _как именно это будет сделано_.
+A **Call** is like taking a recipe (a Tool) and filling in all the ingredients so it's ready to be cooked. If a Tool tells you *what you can do*, a Call tells you *how you're going to do it right now*.
 
-## Процесс: от Идеи к Вызову
+## From Idea to Action
 
-1.  **Идея**: Это законченная мысль или результат. Представьте себе готовый рисунок или записанный рецепт.
-2.  **Инструмент**: Это превращение Идеи в шаблон или трафарет. Например, мы превращаем готовый рецепт в пустую карточку для заполнения. (Подробнее об этом в [Системе Инструментов](./002_agent_tool.md)).
-3.  **Вызов**: Это когда ИИ решает использовать `Инструмент`. Он заполняет пустые поля в шаблоне конкретными значениями и создает **Вызов**. Это и есть сам акт *использования* `Инструмента`.
+Here’s how a thought turns into an action for the AI:
 
-Главный принцип: **любую Идею можно превратить в Инструмент, который затем можно использовать через Вызов.**
+1.  **Idea**: It starts with a complete thought, like a finished drawing or a written story. It holds all the information about something.
+2.  **Tool**: We take that `Idea` and flip it around to create a blank template or recipe. This becomes a `Tool` that the AI knows how to use. (You can learn more about how this works in the [Tool System](./002_agent_tool.md) guide).
+3.  **Call**: When the AI decides to use that `Tool`, it fills in the blanks on the template. This filled-in template is a **Call**, ready to be executed.
 
-Подробное объяснение того, как входная схема `Идеи` превращается в схему параметров `Инструмента`, можно найти в **[Протоколе Ввода](./007_agent_input.md)**.
+The main rule is simple: **any Idea can be turned into a Tool, which can then be used as a Call.**
 
-## Рычаги управления: Область и Метод
+To learn exactly how we turn an `Idea`'s recipe into a `Tool`'s list of ingredients, check out the **[Input Protocol](./007_agent_input.md)**.
 
-Выполнение `Вызова` определяется двумя независимыми свойствами: **Областью** (где он выполняется) и **Методом** (как он выполняется). Эти настройки задаются специальными свойствами в схеме инструмента (`_module`, `_activity`, `_output`).
+## The Two Big Choices: Where and How
 
-### Две оси выполнения
+When the AI makes a `Call`, it has to decide two things: **Scope** (where does this happen?) and **Method** (how does it happen?). Think of it like cooking a meal. You have to decide if you'll cook it in your own kitchen or order it from a restaurant (Scope), and if you'll follow a strict recipe or be creative (Method).
 
-1.  **Область (Встроенная vs. Модульная)**
-    Определяет, где будет выполнено действие: внутри текущего процесса или где-то вовне.
-    - **Встроенная Область**: Это как готовить на своей кухне. Действие выполняется прямо здесь и сейчас. Это режим по умолчанию.
-    - **Модульная Область**: Это как заказать еду из ресторана. `Вызов` отправляется на выполнение в другое место — внешнему помощнику (`Activity`) или другой `Идее`. Сигналом для этого служит свойство `_module`.
+### The Two Questions for Every Action
 
-2.  **Метод (Явный vs. Скрытый)**
-    Определяет, как будет получен результат: по чётким инструкциям или с помощью творчества ИИ.
-    - **Явный Метод**: Это как готовить по строгому рецепту. Результат предсказуем, потому что он создается обычным кодом. Сигналом служит свойство `_activity`.
-    - **Скрытый Метод**: Это как попросить шеф-повара (ИИ) придумать что-то новое. Результат создается творчески, а не по шагам. Это поведение по умолчанию, если `_activity` отсутствует. Требует наличия свойства `_output`, чтобы ИИ знал, какого вида результат от него ждут.
+1.  **Scope (Where to run it: In here or out there?)**
+    This choice is about whether the AI does the task itself or hands it off to someone else to do it separately.
+    - **Inline Scope**: This is the normal way. The AI does the work right here, in its own workspace.
+    - **Module Scope**: This is like giving the job to a specialist. The AI sends the `Call` to another program or helper to complete, and then gets the result back. This is used when a task is labeled with `_module`.
 
-Эти «рычаги» можно комбинировать для создания разных сценариев выполнения. Подробнее о том, как это работает, читайте в **[Протоколе Импортов](./008_agent_imports.md)**.
+2.  **Method (How to do it: Follow instructions or be creative?)**
+    This choice is about whether the answer is made by following exact code or by the AI thinking creatively.
+    - **Explicit Method**: This is like a robot following instructions perfectly. The `Call` runs a piece of code that always does the same thing, which is signaled by a label called `_activity`.
+    - **Latent Method**: This is the default way. The AI (the creative thinker) figures out the answer itself. This happens when there's no `_activity` label, and it usually needs a label called `_output` to know what the final answer should look like.
 
-## Идея, Инструмент и Вызов: Разный фокус внимания
+You can mix and match these choices to get different behaviors. To learn more about how they can be combined, see the **[Imports Protocol](./008_agent_imports.md)**.
 
-Чтобы понять, как они связаны, давайте посмотрим, на чём сфокусирован каждый из них.
+## Idea, Tool, and Call: Three Ways of Looking at Things
 
-- **Идея** — **фокус на результате**. Это готовый продукт, например, испеченный торт. Она описывает то, что _уже было_ или _могло бы быть_ сделано.
+It helps to see how these three things are focused on different goals.
 
-- **Инструмент** — **фокус на интерфейсе**. Это шаблон или рецепт торта с пустыми полями для ингредиентов. Он описывает, что _можно_ сделать.
+- An **Idea** is focused on the **final product**. It's like a picture of a finished cake. It describes what the result looks like. It's a record of what *was* or *could be* created.
 
-- **Вызов** — **фокус на действии**. Это сам процесс выпечки торта с конкретными ингредиентами. Это команда, которая говорит, что _нужно сделать_ прямо сейчас.
+- A **Tool** is focused on the **recipe**. It's the blank recipe card with spaces for ingredients and instructions. It’s a template for an action, waiting to be used.
 
-## Идея-Контейнер: Момент принятия решения
+- A **Call** is focused on the **act of creating**. It's the recipe card that you've already filled out with “chocolate,” “sprinkles,” and “three layers.” It's a specific command, ready to go, for what *should be done* right now.
 
-Когда агенту нужно принять решение, мы упаковываем весь запрос к ИИ в специальный тип `Идеи`, который мы называем **Идея-Контейнер**. Она представляет собой один-единственный, самодостаточный момент принятия решения.
+## The Vessel Idea: One Moment of Choice
 
-Идея-Контейнер собирает вместе два ключевых компонента, необходимых ИИ для выбора:
+When an AI has to make a decision, we package everything it needs into a special kind of `Idea` called a **Vessel Idea**. Think of it as a mission briefing folder for the AI.
 
-1.  **Контекст**: Вся важная информация. Что спросил пользователь? Какова предыстория?
-2.  **Схема**: Это «меню» доступных `Инструментов`, которые агент может использовать в данный момент.
+A Vessel Idea contains the two key things the AI needs to make a choice:
 
-ИИ обрабатывает всю эту `Идею` — и контекст, и «меню» инструментов — и его `решение` (**solution**) — это список из нуля или более `Вызовов`, которые нужно выполнить.
+1.  **The Context**: This is all the background information, like what the user asked for, what the AI remembers, and what's happening around it.
+2.  **The Schema (The Menu)**: For a Vessel Idea, the schema is a special menu of `Tools` the AI is allowed to use for this specific mission. It can't choose an action that isn't on the menu.
 
-Такая структура позволяет одной `Идее` описать сложное, многошаговое действие.
+The AI reads this entire folder—both the background info and the menu of options—and its final decision is the `solution`: a list of one or more `Calls` it wants to execute.
 
-## Сценарии выполнения Вызовов
+This lets one single `Idea` represent a big decision that might involve many steps.
 
-Когда Идея-Контейнер создает несколько Вызовов, мы можем выполнять их по-разному, в зависимости от задачи:
+## Ways to Handle Multiple Calls
+
+What if the AI decides to do several things at once? There are a few different ways to handle the list of Calls.
 
 ```typescript
-// Выполнить один Вызов
+// Do one single Call and get the result
 const result = await Tool(call);
 
-// Выполнить все Вызовы и дождаться всех результатов
+// Do all the Calls at once, and wait for them all to finish
 const results = await Tool.all(calls);
 
-// Выполнить все Вызовы, вернуть первый успешный результат
+// Do all the Calls at once, but stop as soon as one succeeds
 const result = await Tool.any(calls);
 
-// Выполнить все Вызовы, вернуть самый первый результат (неважно, успешный или нет)
+// Do all the Calls at once, and stop as soon as the very first one finishes (even if it failed)
 const result = await Tool.race(calls);
 ```
 
-Эти сценарии позволяют нам:
+These patterns let us do cool things:
 
-- **Точно контролировать процесс**: Выполнять Вызовы по одному, с паузами для размышлений
-- **Работать в пакете**: Выполнять независимые Вызовы одновременно для максимальной скорости
-- **Быстро получать результат**: Остановиться после первого же успеха (`.any()`) или просто взять самый быстрый ответ (`.race()`)
-- **Делать всё или ничего**: Гарантировать, что группа Вызовов либо выполнится вся целиком, либо не выполнится вовсе (`.all()`), что важно для связанных операций
+- **Step-by-Step Control**: Handle each Call one by one, with your own logic in between.
+- **Do Everything at Once**: Run independent Calls at the same time to go as fast as possible.
+- **Find the First Success**: Stop as soon as you get a good result from any of the Calls (`.any()`).
+- **Win the Race**: Stop as soon as the very first Call is done, whether it worked or not (`.race()`).
+- **All or Nothing**: Make sure every single Call succeeds before moving on (`.all()`), which is useful when tasks depend on each other.

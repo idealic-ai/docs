@@ -1,35 +1,35 @@
-# 005: Агент/Цикл
+# 005: Agent/Loop
 
-> **Цикл:** Последовательность `Запросов`, направленных на достижение цели. Агент продолжает вызывать `Запросы`, обрабатывать полученные `Вызовы` и передавать результат обратно в контекст для следующего `Запроса` до тех пор, пока `Вызовы` не перестанут генерироваться. — [Глоссарий](./000_glossary.md)
+> **Loop:** Imagine you have a goal, like building a LEGO castle. A loop is the process of figuring out what to do next, doing it, seeing what happened, and then figuring out the next step, over and over until the castle is finished. — [Glossary](./000_glossary.md)
 
 > Sidenote:
->
-> - Требуется:
->   - [001: Агент/Запрос](./001_agent_request.md)
->   - [002: Агент/Инструмент](./002_agent_tool.md)
->   - [004: Агент/Вызов](./004_agent_call.md)
+> 
+> - Before you can understand this, it helps to know about:
+>   - [001: Agent/Request](./001_agent_request.md)
+>   - [002: Agent/Tool](./002_agent_tool.md)
+>   - [004: Agent/Call](./004_agent_call.md)
 
-Этот документ описывает **Протокол Цикла**, который позволяет агенту выполнять задачи, состоящие из нескольких шагов, многократно повторяя запрос на следующее действие.
+This document explains the **Loop Protocol**. It's the way an AI agent can do tasks that take more than one step, like a robot that keeps working until its job is done.
 
-## Цикл Исполнения
+## The Action Cycle
 
-Цикл Агента — это главный способ, которым он самостоятельно выполняет большие задачи.
+Think of the Agent Loop like a robot chef baking a cake. The robot repeats a cycle of thinking and acting until the cake is ready.
 
-Представьте, что агент строит что-то из LEGO, чтобы достичь цели (например, построить космический корабль). Цикл работает так:
+1.  **Gather Ingredients (Context Assembly):** First, the robot looks at everything it has: the recipe (the user's goal), the ingredients on the counter (the current situation), and what it has already done.
+2.  **Decide the Next Step (Request Invocation):** With all that information, it thinks, "Okay, what's next?" It uses the **[001: Agent/Request](./001_agent_request.md)** protocol to look at its list of abilities (its `Tools`) and decide on a plan.
+3.  **Get a To-Do List (Call Processing):** The `Request` comes back with a `solution`, which is a little to-do list of one or more actions, called **[004: Agent/Call](./004_agent_call.md)s**. For example, "crack two eggs" and "measure one cup of flour."
+4.  **Do the Work & Check In (Execution & Feedback):**
+    - If the to-do list has actions on it, the robot does them. It cracks the eggs and measures the flour.
+    - The results (a bowl with eggs and flour) are added to its memory of what's been done. Now, it knows it has a mixture to work with for the next cycle.
+5.  **Finish the Job (Termination):** The robot repeats this cycle. It looks at the mixture, decides to stir, gets a "stir the batter" `Call`, and does it. Eventually, the cake is in the oven and finished. The robot asks, "What's next?" and the `solution` comes back with an empty to-do list (zero `Call`s). This is the signal that the job is done, and the loop stops.
 
-1.  **Сборка Контекста:** Сначала агент смотрит на всё, что у него есть: какова конечная цель, что уже построено (`Состояние`) и какие детали LEGO есть в наличии. Это как подготовка к работе.
-2.  **Запрос Действия:** Затем он обращается к своему «мозгу» и спрашивает: «Учитывая всё это, какой следующий шаг?». Он также передает список доступных ему `Инструментов`.
-3.  **Обработка Вызовов:** «Мозг» думает и возвращает план — список одного или нескольких действий, которые называются `Вызовами`. Например: «Возьми синий кубик 2x4».
-4.  **Исполнение и Обратная связь:**
-    - Если в плане есть действия, агент их выполняет — берёт синий кубик и прикрепляет его к кораблю.
-    - Результат этого действия (теперь корабль стал немного больше) добавляется в общую картину для следующего шага.
-5.  **Завершение:** Если «мозг» возвращает пустой план (ноль `Вызовов`), это значит, что агент считает свою работу законченной. Корабль построен, и цикл останавливается.
+## Human-in-the-Loop (Getting Help from a Person)
 
-## Человек-в-деле (Human-in-the-Loop, HITL)
+An awesome feature of this loop is that it gives a human a chance to step in and help. It’s like having a head chef watching over the robot chef.
 
-Самое замечательное в этом цикле то, что он позволяет человеку легко вмешаться и помочь. Поскольку агент сначала *решает*, что делать, а потом *делает*, между этими двумя моментами есть пауза. В эту паузу может вмешаться человек:
+Because the robot first decides *what* to do (getting the `Call`s) and *then* does it, there's a pause in between. During this pause, the system can show the robot's plan to a person.
 
-- **Одобрение:** Агент может показать человеку свой план («Я собираюсь добавить синий кубик сюда») и дождаться одобрения, прежде чем действовать.
-- **Исправление:** Человек может изменить план, сказав: «Нет, лучше возьми красный кубик» или предложив совершенно другое действие.
+-   **Approval:** Before mixing, the robot could show you its to-do list and ask, "Is this right?" You can say "yes" to let it continue.
+-   **Correction:** You might see the to-do list says "add one tablespoon of salt" and think, "Whoa, that's way too much for a cake!" You can change the plan to "add one pinch of salt" before the robot does it.
 
-Эта возможность очень важна для безопасности и для совместной работы, когда агент выступает в роли помощника. Агент может учиться на исправлениях и советах человека, чтобы в будущем составлять более удачные планы, как описано в документе **[012: Агент/План](./012_agent_plan.md)**.
+This is super important for making sure the AI is safe and helpful. It lets the AI work like an assistant that you can guide and teach, especially when you're working on something together. The AI can even learn from your changes using its **[012: Agent/Plan](./012_agent_plan.md)** to make better decisions next time.

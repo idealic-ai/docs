@@ -1,17 +1,19 @@
-# 204: Идея/Инструкция
+# 204: Idea/Instruction
 
-> **Идея Инструкции:** Представь себе понятный, многоразовый «рецепт» для какого-либо действия, записанный в специальном формате `JSON Schema`. Он даёт чёткое пошаговое руководство для операции «улучшения» (`refine`), объясняя, _как_ именно нужно что-то изменить.
->
-> — [Словарь](./000_glossary.md)
+> **Instruction Idea:** Imagine a super-detailed recipe that a computer can read. It's written in a special, organized format (called JSON Schema) so it can be saved and used over and over again. Its job is to give clear, step-by-step directions on *how* to change or improve something.
+> 
+> — [Glossary](./000_glossary.md)
 
 > [!WARNING]
-> Этот Нормативный Акт пока что является заготовкой и будет дополнен в будущем.
+> This explanation is just a placeholder for now and will be filled in with more details later.
 
 > Sidenote:
->
-> - Требуется:
->   - [101: Концепция/Идея](./101_concept_idea.md)
+> 
+> - You'll want to read this first:
+>   - [101: Concept/Idea](./101_concept_idea.md)
 
-**Инструкция** — это как подробный рецепт, который можно использовать снова и снова. Он записан в специальном компьютерном формате `JSON Schema`, чтобы машина его точно поняла.
+An **Instruction** is like a digital recipe that can be used again and again. It's written in a very structured way (using a format called JSON Schema) to guide a computer.
 
-Этот «рецепт» даёт чёткие указания для действия по «улучшению» (`refine`), подробно объясняя, _как_ именно нужно что-то поменять. Инструкция — это основной «кирпичик», из которого строятся как простые правки, так и сложные, многошаговые `Процессы` (представь, что Процесс — это целая поваренная книга, состоящая из множества таких рецептов).
+It provides a clear, step-by-step guide for an action called `refine`, which is just a fancy word for making a change or an improvement. The Instruction tells the computer exactly *how* that change should happen.
+
+Think of it as a single Lego brick. You can use one brick to make a simple tweak, or you can snap many bricks together to build complex, multi-step projects, which we call `Processes`.

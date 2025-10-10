@@ -1,52 +1,53 @@
-# 001: Агент/Запрос
+# 001: Agent/Request
 
-> **Запрос:** Это одна, полностью самостоятельная команда для умного ИИ (LLM). Вы даёте ему информацию для размышления (`context`), правила, как должен выглядеть ответ (`schema`), и он выдаёт вам результат (`solution`). — [Глоссарий](./000_glossary.md)
+> **Request:** Think of this as a single, complete mission for an AI brain (an LLM). You give it some background information (`context`) and a blueprint for the answer (`schema`), and it gives you back a finished product (`solution`). — [Glossary](./000_glossary.md)
 
 > Sidenote: NPM: [https://www.npmjs.com/package/@augceo/agent](@idealic-ai/agent)
 
-Этот документ объясняет **Протокол Запроса** — основной способ общения с умным ИИ. `Запрос` — это как мотор, который берёт абстрактную **[101: Концепцию/Идею](./101_concept_idea.md)** и делает её понятной для компьютера, используя информацию (`context`) и правила (`schema`), чтобы создать результат (`solution`).
+This page explains the **Request Protocol**, which is the basic way we talk to an AI. A `Request` is like the engine that brings a big **[101: Concept/Idea](./101_concept_idea.md)** to life. It takes the idea's information (`context`) and its rules (`schema`) to build a final `solution`.
 
-## Конвейер Запроса
+## The Request Assembly Line
 
-`Запрос` — это не просто вопрос. Это как сборочный конвейер, который берёт много разной информации (`context`), обрабатывает её по шагам и превращает в один, правильно оформленный ответ от ИИ.
+A `Request` isn't just asking a simple question. It's more like an assembly line that takes lots of different pieces of information and turns them into one perfect answer that follows all the rules.
 
-### 1. Контекст: Массив Сообщений
+### 1. Context: A List of Messages
 
-В основе каждого `Запроса` лежит его `context`, который выглядит как список `Сообщений`. Представьте это как сценарий пьесы, где записаны все реплики. Так можно показать ИИ целый разговор с разными участниками, чтобы он понял всю историю.
+The start of any `Request` is the `context`. Imagine it as a list of text messages that tell the AI everything it needs to know. This lets you show the AI a whole conversation, with different people talking, all neat and organized.
 
-Простой контекст может выглядеть так:
+A simple list might look like this:
 
 ```json
 [
-  { "role": "system", "content": "Ты — полезный ассистент." },
-  { "role": "user", "content": "Какая столица у Франции?" }
+  { "role": "system", "content": "You are a helpful assistant." },
+  { "role": "user", "content": "What is the capital of France?" }
 ]
 ```
+Here, we first tell the AI what its job is (the "system" message) and then ask our question (the "user" message).
 
-### 2. Пользовательские Типы Содержимого
+### 2. Special Instructions: Custom Content Types
 
-Система делает сообщения ещё умнее, позволяя использовать **пользовательские типы содержимого**. Вместо простого текста, `content` сообщения может быть специальным объектом, например, `{ "type": "state", "state": { ... } }`. Это как бы коробочка с ярлыком, где хранится определённая информация.
+This system is extra cool because messages can contain more than just plain text. The `content` can be a special object, like a piece of data with a label on it, for example: `{ "type": "state", "state": { ... } }`.
 
-Этими типами управляет система `Content` (см. `agent/src/Content/Content.ts`). У каждого типа есть свой «обработчик», и все они выстраиваются в конвейер. Когда сообщение проходит по этому конвейеру, его обработчик может изменить три главные части `Запроса`:
+Think of these special types as secret instructions hidden inside the messages. Each type has a helper that knows what to do with it. As the assembly line processes the messages, these helpers can change three main things about the mission:
 
-- **Настройки ИИ (LLM Config)**: Изменение таких параметров, как модель, «температура» (креативность) или другие опции.
-- **Схема (Schema)**: Изменение JSON-схемы, то есть правил, по которым должен быть построен финальный ответ.
-- **Контекст (Context)**: Изменение итогового списка сообщений, который увидит ИИ. Например, можно превратить специальный тип данных в обычный текст или добавить новые сообщения.
+- **AI Settings**: They can tweak the AI's brain, like telling it to be more creative (changing the `temperature`) or to use a different version of its brain (`model`).
+- **The Blueprint (`Schema`)**: They can change the rules for the final answer. For example, a special message might add a rule that says, "The answer must include a fun fact!"
+- **The Information (`Context`)**: They can change the messages that the AI actually sees. For example, a helper could turn a complicated data object into a simple sentence that the AI can understand, or it could add new messages to the conversation.
 
-Этот мощный механизм конвейера позволяет агенту работать со сложными, структурированными идеями и на лету создавать идеальную команду для ИИ, чтобы выполнить нужную задачу.
+This assembly line of helpers lets the system use big, organized ideas and automatically figure out the exact mission to send to the AI.
 
-### 3. Схема: Направляя Решение
+### 3. Schema: Guiding the Solution with a Blueprint
 
-`Схема` — это как чертёж, который задаёт точную структуру для желаемого `решения`. Функция `Запроса` проверяет, что умеет конкретный ИИ, и выбирает лучший способ заставить его следовать этому чертежу:
+The `schema` is like a blueprint or a fill-in-the-blanks form. It tells the AI the exact structure the final answer (`solution`) must have. The system is smart and will figure out the best way to give this blueprint to the AI:
 
-1.  **Родной режим JSON-схемы**: Если ИИ это поддерживает (как новые модели OpenAI), схема передаётся ему напрямую. Это самый надёжный способ.
-2.  **Запасной вариант через вызов инструментов**: Если ИИ не понимает схемы, но умеет пользоваться инструментами, мы «оборачиваем» схему в инструмент с названием `generate_response` и просим модель вызвать его.
-3.  **Режим JSON с добавлением в промпт**: В крайнем случае, если ИИ может выдавать только общий JSON, мы просто вставляем описание схемы прямо в текст системного сообщения и просим его следовать этим инструкциям.
+1.  **The Best Way (Native Mode)**: If the AI is advanced, you can just hand it the blueprint directly. It knows how to read it and will follow it perfectly.
+2.  **The Backup Plan (Tool-Calling)**: If the AI can't read the blueprint directly but knows how to use tools, the system puts the blueprint inside a special tool called "create_the_answer." Then it just tells the AI, "Use this tool to make your answer."
+3.  **The Last Resort (Writing it Out)**: If the AI only understands plain text, the system will just describe the blueprint in words, right in the instructions. It's like saying, "Please make sure your answer is a list that has a title and a description."
 
-### 4. Выполнение и Решение
+### 4. Getting the Final Answer (The Solution)
 
-После всей подготовки итоговый список сообщений и выбранный способ контроля схемы упаковываются в один запрос и отправляются к ИИ. ИИ генерирует ответ, который точно соответствует схеме.
+After the assembly line is finished, the final list of messages and the blueprint are packed up and sent to the AI. The AI then creates a response that perfectly matches the blueprint.
 
-Система разбирает этот ответ — неважно, пришёл ли он как обычный текст или как результат вызова инструмента — и превращает его в структурированный объект. Этот объект и есть `решение`.
+The system takes this response and turns it into an organized piece of data. This final, structured data is the `solution`.
 
-Весь этот конвейер — от обработки сложного контекста до получения проверенного по схеме решения — и позволяет **Идее** быть фундаментальным, вычислимым элементом в нашей системе.
+This whole process—from handling complicated information to getting back a perfect, rule-following answer—is what makes it possible for a big **Idea** to be used like a building block in a computer program.

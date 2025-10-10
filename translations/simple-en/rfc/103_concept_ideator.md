@@ -1,55 +1,55 @@
-# 103: Концепция/Идеатор
+# 103: Concept/Ideator
 
-> **Идеатор:** Это `Идея`, которая может принимать что-то на входе. Мы узнаём об этом по специальному сообщению `type: "input"`. Он работает как функция, которая превращает входные данные в выходные. — [Словарь](./000_glossary.md)
+> **Ideator:** Think of an `Idea` as a recipe. An `Ideator` is that recipe in action! It's an `Idea` that knows how to take something (an input) and turn it into something new (an output). The special instruction that tells you an `Idea` can do this is a message that says `type: "input"`. — [Glossary](./000_glossary.md)
 
 > Sidenote:
 >
-> - Требует:
->   - [101: Концепция/Идея](./101_concept_idea.md)
->   - [007: Агент/Ввод](./007_agent_input.md)
-> - Позволяет создать:
->   - [004: Агент/Вызов](./004_agent_call.md)
->   - [102: Концепция/Суверенитет](./102_concept_sovereignty.md)
+> - Requires:
+>   - [101: Concept/Idea](./101_concept_idea.md)
+>   - [007: Agent/Input](./007_agent_input.md)
+> - Enables:
+>   - [004: Agent/Call](./004_agent_call.md)
+>   - [102: Concept/Sovereignty](./102_concept_sovereignty.md)
 
-## 1. Введение
+## 1. Introduction
 
-Этот документ объясняет, как **Идеаторы** и **Трансформаторы Идей** работают, словно маленькие программки или сервисы, которые можно запустить. Он основан на документе [101: Концепция/Идея](./101_concept_idea.md), где описывается, из чего состоит `Идея`, и рассказывает, как она превращается в нечто, что может выполнять работу.
+This document explains the rules for how **Ideators** work. You can think of an `Ideator` as a special program that can run and do things. We'll start with the basic concept of an `Idea` (which is like a blueprint) from [101: Concept/Idea](./101_concept_idea.md), and then show how we turn that blueprint into something that can actually perform a task.
 
-Чтобы узнать о разных способах запуска и размещения Идеаторов, загляните в [102: Концепция/Суверенитет](./102_concept_sovereignty.md).
+To learn about all the different ways you can run an Ideator, like on your own computer or on the internet, check out [102: Concept/Sovereignty](./102_concept_sovereignty.md).
 
-## 2. От Идеи к Идеатору
+## 2. From Idea to Ideator
 
-**Идеатор** — это не какая-то новая штука, а просто роль, которую может играть любая `Идея`. Представьте его как волшебную машину, которая принимает что-то на входе (например, ингридиенты) и выдаёт что-то на выходе (готовое блюдо). Вся магия происходит в **скрытом пространстве**. Это значит, что его работа не всегда описана строгим компьютерным кодом. Вместо этого искусственный интеллект (ИИ) смотрит на все подсказки внутри `Идеи` — её схемы, примеры и обычные текстовые инструкции — и сам догадывается, что нужно делать. Как повар, который по одному взгляду на продукты понимает, как приготовить ужин.
+An **Ideator** isn't a totally new thing; it's just a job that any `Idea` can do. Imagine an `Idea` is a recipe written on a card. An `Ideator` is what happens when a chef takes that recipe and starts cooking. The chef doesn't follow rigid computer code. Instead, the chef (a smart AI) reads the whole recipe—the ingredients, helpful examples, and plain English instructions—and figures out what to do in its own imaginary kitchen.
 
-Главный знак того, что `Идея` может работать как Идеатор, — это наличие внутри неё специальной записки (`context`) с пометкой `type: "input"`. Эта записка объясняет, какие «ингредиенты» нужны машине. Иногда у работающего Идеатора может быть ещё одна записка `type: "code"`, которая указывает на конкретный код, если он всё-таки нужен.
+The one thing that tells you a recipe (`Idea`) is ready for cooking is an "Ingredients" list. For us, that's a special message that says `type: "input"`. It tells the AI exactly what it needs to get started. Sometimes, an `Idea` might also include super-specific instructions, like a piece of computer `code`, to make sure a step is done perfectly.
 
-### 2.1. Трансформатор Идей: особый случай
+### 2.1. The Idea Transformer: A Special Case
 
-Есть один очень полезный вид Идеатора, который на вход принимает не просто данные, а целую другую `Идею`. Такую штуку мы называем **Трансформатор Идей**. Это похоже на конвейер, где одна машина берёт деталь, что-то с ней делает и передаёт следующей. Именно так можно соединять Идеи в цепочки и развивать их.
+Now for a really cool part. Imagine a chef whose main ingredient isn't food, but *another recipe*. This special kind of `Ideator` is called an **Idea Transformer**. It takes one `Idea` as its input, makes changes or improvements to it, and then gives you back a new, better `Idea`. This is how we can connect different `Ideas` together, like cars on an assembly line, where each step adds something new.
 
-## 3. Как это работает и собирается вместе
+## 3. How They Are Built and Used
 
-Правила, описанные в этом документе, — это своего рода **договор о поведении** для любого сервиса-Идеатора. Это не инструкция для одной конкретной программы, а общий стандарт, чтобы разные программы могли понимать друг друга и работать вместе. Это как правила дорожного движения: неважно, на какой ты машине, главное — ехать по правилам.
+The rules in this document are like the rules for LEGO bricks. They don't tell you *what* to build, but they make sure every brick, no matter who makes it, can connect to every other brick. This shared set of rules allows people to build all sorts of different `Ideators` that can all work together.
 
-### 3.1. Множество реализаций
+### 3.1. Lots of Different Ways to Build
 
-Сервис-Идеатор выполняет свой «договор», если правильно принимает одну `Идею` и возвращает другую. Это позволяет создавать много разных версий для разных задач:
+As long as an `Ideator` follows the main rule—it accepts an `Idea` and returns another `Idea`—it's playing the game correctly. This lets people build them in many ways, for different situations:
 
-- **Готовые сервисы**: Кто-то может предложить вам запустить вашего Идеатора на своих мощных компьютерах в интернете. Вам не нужно думать о железе, всё просто работает. Это описано в [Протоколе Суверенитета](./102_concept_sovereignty.md).
-- **Собственные серверы**: Разработчик может запустить сервис на своём компьютере или сервере. Так у него будет полный контроль над всем.
-- **Запуск в памяти**: Для тестов и разработки можно запустить логику Идеатора прямо в памяти компьютера, как простую функцию, даже без подключения к интернету. Это как тренировочный режим, который работает по тем же правилам.
+- **Managed Services**: This is like renting a fully-equipped workshop. Someone else manages all the servers and tools online; you just use them to run your `Ideator`.
+- **Self-Hosted Instances**: This is like having your own workshop at home. You run the `Ideator` on your own computer, giving you complete control over everything.
+- **In-Memory Implementations**: This is like sketching your design on a piece of paper before you build it. It’s a super fast and simple way to test your `Ideator` on your own computer without needing any network connection.
 
-### 3.2. Сборка и системы высшего порядка
+### 3.2. Building Big Things by Combining Small Things
 
-В этой системе нет никаких «секретных ходов». Все сервисы общаются друг с другом по общим, открытым правилам.
+In this world of `Ideators`, there are no secret parts. Every `Ideator` is designed to connect openly with any other `Ideator`.
 
-Более сложные сервисы, которые можно назвать **Системами Высшего Порядка**, создаются путём сборки из более простых `Идеаторов`. Это как собирать что-то большое из кубиков LEGO. Внутренняя работа такой сложной системы — это просто вызовы других, более простых `Идеаторов`.
+You can create bigger, more powerful programs, called **Higher-Order Systems**, by snapping smaller, simpler `Ideators` together. Think of it like building a giant spaceship out of smaller LEGO parts like wings, a cockpit, and an engine. The spaceship is the big system, but it's made of simple `Ideator` pieces.
 
-Например, система **Реактор** — это `Идеатор` высшего порядка. Чтобы управлять игрой, он может:
+For example, let's say we have a big system called a **Reactor** that runs a video game:
 
-1.  Принять `Идею` с состоянием игры через свой публичный вход.
-2.  Внутри себя вызвать публичный сервис `Игрок`, чтобы создать и управлять игроками.
-3.  Вызвать публичный сервис `Хранилище`, чтобы записать историю игры.
-4.  Вернуть новую `Идею` с обновлённым состоянием игры через свой публичный выход.
+1.  You give the Reactor the current game information (as an `Idea`).
+2.  Inside, the Reactor uses a smaller `Player` `Ideator` to figure out who the players are.
+3.  Then, it uses a `Storage` `Ideator` to save what just happened in the game.
+4.  Finally, it gives you back the new, updated game information (as another `Idea`).
 
-Снаружи Реактор выглядит как обычный `Идеатор`. Вся его сложность скрыта внутри, где он просто использует другие независимые и публичные сервисы. Благодаря этому вся система остаётся простой для понимания, прозрачной и легко расширяемой.
+From the outside, the Reactor just looks like a single, simple `Ideator`. All its complicated work is done on the inside by combining other independent tools. This makes the whole system easy to change and grow, just like swapping one LEGO brick for another.

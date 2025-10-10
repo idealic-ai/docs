@@ -1,50 +1,52 @@
-# 007: Агент/Ввод
+# 007: How an Idea Listens for Instructions
 
-> **Сообщение Ввода:** Это специальное сообщение, в котором есть «правила» (`schema`) и сами «данные» (`input`). Когда такое сообщение появляется у «Идеи», она превращается в «Идеатор», потому что теперь понятно, какая информация ей нужна для работы. — [Словарь](./000_glossary.md)
+> **Input Message:** Think of this as an instruction card for an `Idea`. It contains a blueprint (`schema`) for what information it needs and the actual information (`input`) to use. Giving an `Idea` this card turns it into an `Ideator`, which is an `Idea` that can actually do a job. — [Glossary](./000_glossary.md)
 
 > Sidenote:
 >
-> - Требует: [101: Концепция/Идея](./101_concept_idea.md)
-> - Включает: [103: Концепция/Идеатор](./103_concept_ideator.md)
+> - Depends on: [101: About Ideas](./101_concept_idea.md)
+> - Makes Possible: [103: About Ideators](./103_concept_ideator.md)
 
-Этот документ описывает **Протокол Ввода** — систему, которая помогает задавать чёткие инструкции для `Идей`. Благодаря этому протоколу появляется особый тип сообщений. Если добавить его к `Идее`, она из простого знания превращается в нечто, что можно запустить, как программу. Такую «умную» `Идею` мы называем **Идеатор**.
+This document explains the **Input Protocol**, which is a special way to tell an `Idea` what kind of information it needs to get to work. When you add this special instruction message to an `Idea`, it changes from being just a piece of stored information into something that can perform a task, almost like a mini-program. We call this active version an **Ideator**.
 
-## Тип сообщения `Input`
+## The `Input` Message
 
-Сообщение `Input` — это как официальная анкета, которую должна заполнить `Идея`, чтобы начать работать. Оно помогает записать, какие именно данные были использованы для получения конкретного `решения`. Это завершает «Триаду Идеи» и сохраняет полную, воспроизводимую запись всего процесса.
+The `Input` message is a special instruction card that officially states what information an `Idea` needs to work. It's like writing down both the ingredients list and the actual ingredients you used to bake a cake. This helps create a complete record of how a final `solution` was made, so anyone can see exactly what went into it and repeat the process.
 
-В сообщении `Input` есть два главных поля:
+An `Input` message has two important parts:
 
-1.  **`schema`**: Это набор правил, как чертёж. Он описывает, какая информация нужна `Идее`: её вид, формат и ограничения. Например: «Мне нужны два числа и одно слово».
-2.  **`input`**: Это уже конкретные данные, которые соответствуют правилам из `schema`. Например: числа 5 и 10, и слово «привет».
+1.  **`schema`**: This is like a blueprint or a recipe's ingredient list. It describes the structure of the information the `Idea` needs. For example, it might say, "I need a person's name, which must be text, and their age, which must be a number."
+2.  **`input`**: This is the actual information you provide that follows the blueprint's rules. For example, `input` would be: "The name is 'Sarah' and the age is 12."
 
-Когда `Идея` так чётко описывает не только свой результат (`решение`), но и то, что ей нужно для работы, она становится самодостаточной и понятной.
+By describing its needs so clearly, an `Idea` can explain not only what it creates (its `solution`) but also what it needs to create it.
 
-### Путь к простоте использования
+### Making Ideas Easy to Use
 
-Самое классное в этом протоколе — то, что он позволяет автоматически создавать интерфейс для пользователя, то есть кнопки и поля для ввода на экране. Поскольку `schema` точно описывает, какие данные нужны, система может сама нарисовать форму с правильными полями, подсказками и проверками. Благодаря этому любую `Идею` можно мгновенно превратить в рабочее веб-приложение, с которым легко может взаимодействовать человек.
+A big benefit of this system is that it allows computers to automatically create a user interface (like a web form) for any `Idea`. Because the `schema` acts like a perfect instruction manual, a program can read it and instantly build a form with all the right text boxes, number fields, and buttons. This means anyone can start using an `Idea` right away, without needing to know how to code.
 
-## От Идеи к Идеатору
+## From a Thought to a Worker Bee
 
-Как мы уже говорили в документе [101: Концепция/Идея](./101_concept_idea.md), наличие сообщения `Input` у `Идеи` — это главный знак того, что перед нами **Идеатор**. То есть `Идея`, которая умеет выполнять работу. Она становится функцией, которую можно запустить снова и снова.
+As we learned in [About Ideas](./101_concept_idea.md), adding an `Input` message to an `Idea` is what officially turns it into an **Ideator**—an `Idea` that does work. It stops being just a thought and becomes a repeatable function, like a calculator that knows how to add numbers whenever you give it some.
 
-## Взаимодействие с протоколом Инстансинга
+## Working with Many Things at Once
 
-Сообщение `Input` отлично работает вместе с [011: Агент/Инстансинг](./011_agent_instancing.md). Это позволяет придумывать хитрые способы сбора данных, когда нужно обработать много однотипных задач за раз. Протокол может работать в двух режимах:
+The `Input` message works perfectly with the [Instancing Protocol](./011_agent_instancing.md), which lets you run the same task on a whole batch of items at once. Think of it like baking a tray of cookies; you can give instructions to all of them at once or decorate each one differently.
 
-1.  **Глобальный Ввод**: Представь, что ты даёшь одну и ту же инструкцию целому классу. Если сообщение `Input` не помечено специальным ярлыком `_instance`, его данные считаются «общими» для всех. Они доступны каждому экземпляру, который обрабатывается в запросе. Это удобно, чтобы задать общие настройки или параметры, которые одинаковы для всех задач.
+It can work in two ways:
 
-2.  **Ввод для конкретного экземпляра**: А теперь представь, что ты даёшь каждому ученику в классе уникальное задание. Если в сообщении `Input` есть ярлык `_instance`, то данные берутся только для этого конкретного экземпляра. Это мощный способ давать уникальные инструкции каждой задаче или использовать её собственные данные для работы общего `Идеатора`.
+1.  **Shared Instructions (Global Input)**: Imagine you're baking cookies and you set the oven temperature for the whole batch. That's a global input. You provide one `Input` message, and its information is automatically shared with every single item (or "instance") you're working on. This is great for settings or instructions that apply to everything, like a general theme.
 
-Такая гибкость позволяет создавать очень эффективные процессы, где один и тот же `Идеатор` может использовать общие «глобальные» настройки, но при этом подстраиваться под уникальные данные каждого отдельного экземпляра, который он обрабатывает.
+2.  **Individual Instructions (Instance-Specific Input)**: Now imagine you want to decorate each cookie differently. One gets red sprinkles, another gets chocolate chips. By adding a special tag (`_instance`) to an `Input` message, you can tell it to get its information directly from one specific cookie. This lets you customize the task for each individual item in the batch.
 
-## Инверсия: от Идеатора к Инструменту
+This system gives you a lot of flexibility. You can set up a main task with shared instructions and then add specific, custom details for each item it works on.
 
-`Идеатор` — это самодостаточная, готовая к запуску концепция. Но чтобы агент мог использовать его в своей пошаговой работе, нам нужно превратить его в **Инструмент**. Этот процесс превращения `Идеатора`, который сфокусирован на результате, в `Инструмент`, который сфокусирован на интерфейсе, называется **инверсией**. Мы как бы переворачиваем его с ног на голову, чтобы главным стали входные данные.
+## The Flip: Turning an Ideator into a Tool
 
-`Идея` — это триада, которая описывается своим результатом, то есть `схемой` и `решением`:
-`{ context, schema, solution }`
+An `Ideator` is a complete package focused on what it *creates* (the `solution`). But to use it as a simple command in a bigger program, we need to flip it around so it focuses on what it *needs* (the `input`). We call this flip an **inversion**, and it turns the `Ideator` into a **Tool**.
 
-Чтобы превратить её в `Инструмент`, мы заглядываем в её `контекст` и ищем там сообщение `Input`. Главный шаг инверсии — **вынести** правила из `schema` этого сообщения на самый верхний уровень. Они становятся главными параметрами `Инструмента` (подробнее о структуре `Инструмента` читай в [002: Агент/Инструмент](./002_agent_tool.md)).
+An `Idea` is all about its result:
+`{ instructions, blueprint_of_result, the_actual_result }`
 
-Так мы получаем определение `Инструмента`, которое, по сути, является описанием функции, готовой к регистрации в системе агента и к использованию в `Вызове`.
+To turn it into a `Tool`, we look at its instruction card (the `Input` message). The main step is to take the blueprint for the *inputs* and make that the main description of the `Tool`. For example, instead of thinking about the cake (`solution`), we focus on the part that says "needs flour and eggs" (`input`).
+
+This creates a `Tool` that works like a command you can call, ready to be used as one step in a much bigger plan. (You can learn more about this in [002: Agent/Tool](./002_agent_tool.md)).

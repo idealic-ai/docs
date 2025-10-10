@@ -1,41 +1,46 @@
-# 008: Агент/Импорты
+# 008: Agent/Imports
 
-> **Импорт:** Это как ярлык, который указывает, какую именно информацию из общей «комнаты» нужно передать для выполнения конкретного задания. Это помогает искусственному интеллекту (ИИ) сосредоточиться на задаче при **Скрытом встроенном** исполнении или собрать все необходимые данные для задачи, выполняемой в отдельной «комнате» (**Модульная область видимости**). За это отвечает свойство `_imports`.
+> **Import:** Imagine you're asking a friend for help with homework. Instead of giving them your entire backpack, you just hand them the specific textbook they need. An 'Import' is like that textbook—it's a specific piece of information from the bigger picture that you give to an AI so it can do its job.
 >
-> — [Глоссарий](./000_glossary.md)
+> — [Glossary](./000_glossary.md)
 
-[Протокол Вызова](./004_agent_call.md) объясняет, как мы можем давать команды ИИ, используя два переключателя: **Область видимости** (Встроенная или Модульная) и **Метод** (Явный или Скрытый). Этот документ, **Протокол Импортов**, рассказывает, как эти переключатели работают вместе и как управлять информацией для каждой комбинации.
+The way we ask an AI to do something is called the [Call Protocol](./004_agent_call.md). It has two main settings: **Scope** (where the work happens) and **Method** (how the work is done). The **Imports Protocol** is all about how we manage the information (the context) for each type of request.
 
-## Сочетание Области видимости и Метода
+## Combining Where and How
 
-Представьте, что вы даете поручение помощнику. Вот четыре разных способа это сделать:
+There are four main ways to combine these settings:
 
-1.  **Встроенный Явный (`_activity`)**: Это как сказать: «Принеси мне сахар». Помощник слышит команду (`params`), идет и сразу же приносит сахар (`_activity`). Здесь `_imports` обычно не нужны, потому что всё происходит прямо здесь и сейчас, и помощник уже знает, где находится сахар.
+1.  **Here and Now, with a Tool (`_activity`)**: This is like using a calculator. The AI figures out the numbers to punch in (`params`), and a simple, pre-written program does the math right away. You don't usually need to give it special information (`_imports`) for this.
 
-2.  **Встроенный Скрытый (без `_activity`)**: Это как сказать: «Приготовь глазурь и сразу покажи результат». ИИ обдумывает (`params`) и сразу выдает готовый результат (`_output`) за один шаг. Свойство `_imports` здесь очень полезно — оно как бы говорит: «Для глазури тебе понадобится только сахар и вода из всей кухни». Это помогает ИИ не отвлекаться на другие продукты.
+2.  **Here and Now, AI Does It All (no `_activity`)**: The AI thinks up the plan *and* the final answer all by itself in one step. You can use `_imports` to give it a little hint or focus its attention. It's like asking a friend to draw a cat, but you first show them a picture of *your* cat so they get it right.
 
-3.  **Модульный Явный (`_module` + `_activity`)**: Это как попросить: «Сходи в пекарню (`_module`) и попроси их испечь булочку (`_activity`)». Вашему помощнику дают точные инструкции (`params`). Затем система вызывает пекаря в его собственной пекарне, в совершенно новой, чистой среде. Если вы используете `_imports`, это как дать помощнику записку для пекаря, где написано: «Используй наш особый рецепт».
+3.  **In a Separate Room, with a Tool (`_module` + `_activity`)**: The AI decides to call in a specialist tool that runs in its own separate space. The AI gives the tool instructions (`params`). If you use `_imports`, it's like also handing that specialist a specific folder of notes it needs to complete the job.
 
-4.  **Модульный Скрытый (`_module`, без `_activity`)**: Это как сказать: «Попроси пекарню (`_module`) придумать новый десерт, вот тебе список предпочтений (`params`)». Система запускает совершенно новый, отдельный мыслительный процесс у пекаря (ИИ), используя его собственный опыт (`_module`). Контекст для этого процесса создается из того, что знает пекарь, и дополнительной информации, которую вы передали через `_imports` (например, «клиент любит шоколад»).
+4.  **In a Separate Room, Another AI Does It All (`_module`, no `_activity`)**: The AI decides to ask *another* specialized AI to handle the task in its own separate space. It hands off the instructions (`params`). The `_imports` you provide become the *only* information this second AI has to work with. It's like hiring an expert and giving them a very precise briefing document, and nothing else.
 
-## Фокусировка поля зрения
+## Focusing the AI's Vision
 
-Свойство `_imports` — это главный способ контролировать, какую информацию видит ИИ во время выполнения задачи. Оно работает как фильтр или шоры на глазах у лошади, позволяя видеть только то, что нужно здесь и сейчас.
+The `_imports` property is like putting blinders on a horse. It controls what the AI is allowed to see when it's working on a task. This helps it focus on only the important stuff.
 
-- **Во Встроенной Области видимости**: `_imports` помогают ИИ не отвлекаться и сосредоточиться.
-- **В Модульной Области видимости**: `_imports` определяют *весь набор информации*, который будет доступен в этой отдельной, изолированной задаче.
+-   **When working 'Here and Now' (Inline Scope)**: `_imports` help the AI concentrate on the right details.
+-   **When working 'In a Separate Room' (Module Scope)**: `_imports` create the entire world for that task. The AI sees *only* what you import and nothing else.
 
-## Предоставление или Запрос Контекста: Статические и Динамические импорты
+## Giving vs. Asking for Information: Static vs. Dynamic Imports
 
-То, как прописано свойство `_imports` в правилах для инструмента, определяет, получает ли он информацию автоматически или должен сам ее запрашивать.
+When we build an AI tool, we can decide how it gets its information (`_imports`).
 
-- **Статические импорты (Предоставление контекста)**: Представьте рецепт, где строго указано: `_imports: { "const": ["запрос_пользователя"] }`. Это значит, что инструмент *всегда* получает только эту заранее определенную информацию. Создатель инструмента жестко прописал, что именно ему можно видеть. Это как выдать повару строго отмеренный стакан муки и два яйца.
+-   **Static Imports (Giving Information)**: This is like pre-packing a lunchbox for the AI. The person who designed the tool decides exactly what information it will always get. For example, a tool might be set up to *always* see the user's original request. The AI has no choice; it just gets what it's given.
+    -   `_imports: { "const": ["user_request"] }`
 
-- **Динамические импорты (Запрос контекста)**: А теперь представьте, что правила более гибкие: `_imports: { "type": "array", "items": { "enum": ["память_сессии"] } }`. Это значит, что ИИ сам решает, какую информацию из доступного списка ему нужно запросить для выполнения задачи. Это как если бы повар мог сказать: «Думаю, мне понадобится сахар из кладовки».
+-   **Dynamic Imports (Asking for Information)**: This is like giving the AI a menu of information it can ask for. The AI looks at the task and thinks, "Hmm, to do this job, I need to know about the 'session_memory'." It then requests access to that specific piece of information.
+    -   `_imports: { "type": "array", "items": { "enum": ["session_memory"] } }`
 
-Такой динамический подход особенно хорош, когда человек может одобрить запрос, — это дает дополнительный контроль и прозрачность.
+This 'asking' pattern is super useful because a human can be in the middle to approve or deny the request, making sure the AI only sees what it's supposed to.
 
-## Сила Ограниченного Контекста
+## The Power of a Limited View
 
-- **Безопасность и Фокус**: Ограничивая то, что видит ИИ, импорты не дают ему случайно сболтнуть лишнего и помогают лучше сосредоточиться. Это делает его работу более предсказуемой, точной и дешевой.
-- **Улучшенная Модульность**: Импорты позволяют создавать «модули» (Идеи и Активности) как кубики LEGO — полностью независимыми и готовыми к использованию в любом месте.
+Why is it so good to limit what an AI can see?
+
+-   **Better Security & Focus**: By limiting its view, you prevent the AI from accidentally seeing private information. It also helps the AI concentrate, which makes it more accurate, faster, and cheaper to run.
+
+-   **Makes Tools Like LEGO Bricks**: Imports let us build small, independent AI tools (`Ideas` and `Activities`) that you can reuse in many different situations. They don't need to know everything about the project; they just need the specific info you hand them to do their one job perfectly.

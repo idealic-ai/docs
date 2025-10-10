@@ -1,56 +1,56 @@
-# Часть I: Видение
+# Part I: The Vision
 
 ---
 
-_Представьте, что современный интернет — это огромный город, в котором все магазины, парки и даже дороги принадлежат нескольким гигантским корпорациям. Они решают, куда вам можно идти и что вы можете делать. Наша главная идея — это своего рода бунт против такого порядка. Мы хотим построить совершенно новую цифровую вселенную, где каждый сможет иметь собственный дом и устанавливать свои правила, возвращая свободу и независимость как отдельным людям, так и целым сообществам._
+_The big idea here is to fight back against how the internet is being run today. Right now, a few giant companies control almost everything. This new vision is about building a digital world where regular people and their communities are in charge again, not big corporations._
 
 ---
 
-### (Глава 1) Основная Идея и Принципы
+### (Chapter 1) The Main Idea & Rules
 
-Вся эта новая вселенная построена на нескольких простых, но очень мощных правилах. Они помогают всему работать слаженно и гармонично.
+This whole new world is built on a few simple but super strong rules. These rules make sure everything can work together smoothly.
 
-- **Всё — это Идея.** В основе всего лежит одно понятие: любая вещь в системе, будь то приложение, инструмент, документ или даже процесс, — это просто Идея. Это делает систему изящной и единой, словно всё построено из одного и того же волшебного материала.
+- **Everything is an “Idea.”** Think of it like LEGO bricks. Everything in this system—whether it’s an app, a game, a notepad, or a set of instructions—is made from the same basic block, called an “Idea.” This keeps everything simple and makes it easy to fit pieces together.
 
-  > Sidenote: [Акт 101: Концепция/Идея](../rfc/101_concept_idea.md)
+  > Sidenote: [RFC 101: Concept/Idea](../rfc/101_concept_idea.md)
 
-- **Самодостаточность и самоописание.** Каждая Идея — как игрушка со встроенной инструкцией. Она сама рассказывает, что она такое и как с ней работать. Благодаря этому любой компьютер или искусственный интеллект может мгновенно понять её, не имея о ней никаких предварительных знаний.
+- **They Explain Themselves.** Every Idea is like a toy that comes with its own instruction manual built right in. You don’t need to look anywhere else to figure out what it is or how it works. This means any computer or AI can pick it up and instantly understand how to use it.
 
-  > Sidenote: [Акт 001: Агент/Запрос](../rfc/001_agent_request.md)
+  > Sidenote: [RFC 001: Agent/Request](../rfc/001_agent_request.md)
 
-- **У каждой Идеи может быть свой дом.** Любая Идея может получить свой собственный уникальный адрес в интернете, как у сайта. Это даёт ей постоянное место жительства и простой внешний вид. Если это что-то знакомое (например, статья), она будет выглядеть как статья. А если это сложный инструмент (Идеатор), у него будет специальный универсальный интерфейс для взаимодействия.
+- **Any Idea Can Have Its Own Home.** You can give any Idea its own website address, like a house having its own street address. This makes it easy to find and use. If it's something simple like a story, it will look like a webpage for reading. If it's a special tool (called an Ideator), it will open up like a mini-app you can use right away.
 
-  > Sidenote: [Акт 102: Концепция/Независимость](../rfc/102_concept_sovereignty.md)
+  > Sidenote: [RFC 102: Concept/Sovereignty](../rfc/102_concept_sovereignty.md)
 
-- **Идеаторы — это Идеи, которые умеют слушать.** Идеатор — это особая Идея, которая может принимать от вас указания (вводные данные). Представьте обычную Идею как книгу, которую можно только читать. А Идеатор — это как волшебная поваренная книга, которая сама испечёт торт, если вы дадите ей нужные ингредиенты.
+- **“Ideators” are Ideas That Do Things.** An “Ideator” is a special kind of Idea that’s ready for you to give it something to do. Think of an Idea as a noun (a thing) and an Ideator as a verb (a thing that takes action). It’s like a recipe waiting for you to add ingredients, or a machine waiting for you to press a button.
 
   > Sidenote:
   >
-  > - [Акт 103: Концепция/Идеатор](../rfc/103_concept_ideator.md)
-  > - [Акт 005: Агент/Ввод](../rfc/005_agent_input.md)
+  > - [RFC 103: Concept/Ideator](../rfc/103_concept_ideator.md)
+  > - [RFC 005: Agent/Input](../rfc/005_agent_input.md)
 
-- **Созданы для объединения.** Вся система построена так, чтобы её элементы можно было соединять друг с другом, как детали конструктора LEGO. Некоторые Идеаторы могут даже изменять другие Идеи. Это позволяет создавать очень сложные и мощные цепочки действий, просто соединяя простые инструменты.
+- **Made for Teamwork.** This system is designed so you can connect Ideas together. Some Ideators can even change other Ideas. This means you can line them up like a chain of dominoes to create amazing and complex new things.
 
-- **Искусственный интеллект — универсальный переводчик.** Мы используем большую языковую модель (вроде ChatGPT) как универсального помощника, который может понять и исполнить любую Идею. Поскольку каждая Идея сама себя описывает, ИИ просто читает её «инструкцию» и выполняет то, что нужно. Это делает всю систему невероятно гибкой и готовой к любым новым задачам.
+- **The AI is the Universal Translator.** We use Artificial Intelligence (the same kind that powers things like ChatGPT) to understand and run all these Ideas. Because every Idea explains itself, the AI can act like a universal translator that can read any instruction manual and make it work, even for brand-new things it has never seen before.
 
-  > Sidenote: [Акт 104: Концепция/Скрытое](../rfc/104_concept_latent_.md)
+  > Sidenote: [RFC 104: Concept/Latent](../rfc/104_concept_latent_.md)
 
-- **Протокол живых Идей.** Мы не просто обмениваемся неподвижными файлами, вроде фотографий или текстов. Мы обмениваемся живыми, развивающимися системами, которые могут расти и меняться со временем, особенно когда люди работают над ними вместе. Это как делиться не просто фотографией цветка, а целым садом.
-
----
-
-### (Глава 2) Диагноз — Позолоченная Клетка Больших Технологий
-
-Основная проблема сегодня — это соблазнительная, но опасная сделка, которую нам предлагают гигантские технологические компании. Сначала социальные сети заманили нас обещанием популярности и влияния, заперев в своих мирках, где наши данные собирались, а наш выбор ограничивался. Теперь наступил новый этап этой сделки — мощный искусственный интеллект, от которого почти невозможно отказаться.
-
-Но за это удобство приходится платить. Позволяя этим платформам всё глубже проникать в нашу жизнь, мы становимся от них зависимыми. Мы оказываемся в ловушке — в красивой «позолоченной клетке», построенной не вокруг нас лично, а вокруг всей нашей общей цифровой жизни.
+- **A Network of Living Ideas.** We're not just sharing boring, static files like photos or text documents. We're sharing things that are alive and can grow. It’s like sharing a plant seed that can grow into a tree, instead of just sharing a picture of a flower.
 
 ---
 
-### (Глава 3) Решение — Децентрализованное Возрождение
+### (Chapter 2) The Problem — Big Tech’s Beautiful Trap
 
-Наше решение — не строить клетку получше, а полностью покинуть все клетки и освоить новую, открытую территорию. Это возвращение к духу раннего, свободного интернета, но обновлённого для эпохи искусственного интеллекта. Это возрождение опирается на две фундаментальные вещи: новую архитектуру для идей и новую философию общения.
+The main problem with the internet today is that big tech companies have offered us a deal that’s hard to refuse but is actually a trap. First, social media sites gave us a place to connect with anyone in the world. But in exchange, they started collecting our data and controlling what we see. Now, they are offering amazing AI tools that are so helpful it's hard to say no. But with every new tool we use, we get more and more stuck. They’ve built us a beautiful, shiny cage. It feels nice on the inside, but we slowly realize we’re trapped, and our digital lives don't really belong to us anymore.
 
-- **Видение Автономии:** Мы предлагаем перейти от закрытых платформ к открытому протоколу — общему языку, на котором можно обмениваться не просто текстами и картинками, а живыми, работающими идеями. Люди будут использовать **локальные модели ИИ** (работающие на их собственных компьютерах) и соединяться друг с другом напрямую через **пиринговые сети**. Это означает, что ваши данные и ваша цифровая жизнь будут полностью под вашим контролем. Цель — создать своего рода операционную систему для идей, где можно было бы легко поделиться бюджетом, который сам себя ведёт, или планом проекта, который сам обновляется, — и всё это без посредников вроде больших корпораций.
+---
 
-- **Философия Связи:** Такая система меняет и то, как мы общаемся друг с другом в сети. Сегодня «делиться» — это часто просто кричать в толпу в социальных сетях. Мы же хотим вернуть этому слову его первоначальный смысл: **осознанный и намеренный дар** в кругу тех, кому доверяешь. Вместо бесконечного потока информации со всего мира мы сможем создавать свои маленькие «скрытые миры», где главной валютой будут доверие, качество и настоящая связь. Это позволит каждому самому решать, как и с кем делиться своими идеями.
+### (Chapter 3) The Solution — A New Beginning for the Internet
+
+The answer isn’t to build a slightly better cage. It's to leave the cages behind and start fresh in an open world. We need to go back to the spirit of the early internet, which was wild and free, but bring along all the cool AI technology we have today.
+
+This new beginning has two main parts:
+
+- **A Vision of Freedom:** Instead of everyone using a few monster websites (like Facebook or YouTube), we move to a shared set of rules—a protocol. Think of it like a secret handshake that lets everyone's computers talk to each other directly. You would use **AI that runs on your own computer**, and you would connect straight to your friends through **peer-to-peer networks**. This keeps your data and your digital world completely under your control. The goal is to create a system for ideas where you can share smart, active things—like a budget that manages itself, or a class project that automatically updates—as easily as you share a song, with no big company in the middle.
+
+- **A New Way to Connect:** This new system changes how we connect with each other online. Right now, social media encourages us to share everything with everyone, all the time. This idea brings sharing back to what it should be: **a thoughtful choice to give something meaningful** to people you trust. Instead of drinking from a firehose of random content, you can have real conversations in smaller, trusted groups. It allows people to create their own “hidden worlds” online, giving them total control over who they share their ideas with.

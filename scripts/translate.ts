@@ -94,12 +94,10 @@ async function main() {
     );
   }
 
-  //files.push('src/data/ui.json');
+  files.push('src/data/ui.json');
 
   await Promise.all(
-    files.flatMap(filePath =>
-      ['simple-ru', 'simple-en', 'ru'].map(lang => translateFile(filePath, [lang]))
-    )
+    files.flatMap(filePath => ['simple-en'].map(lang => translateFile(filePath, [lang])))
   );
 }
 

@@ -1,90 +1,91 @@
-# 004: Агент/Запрос
+# 004: Agent/Call
 
-> **Запрос:** Конкретный, готовый к выполнению экземпляр `Инструмента` с заданными значениями для его `параметров`. Это сфокусированный на выполнении приказ о том, *что должно быть сделано*. — [Глоссарий](./000_glossary.md)
+> **Call:** Think of a `Tool` like a magic spell, and a `Call` is when you actually say the magic words with a specific target. It's the real, ready-to-go command to make something happen. — [Glossary](./000_glossary.md)
 
 > Sidenote:
 >
-> - Требует: [103: Концепция/Идеатор](./103_concept_ideator.md)
-> - Открывает возможности для: [008: Агент/Импорты](./008_agent_imports.md), [011: Агент/Инстансинг](./011_agent_instancing.md)
+> - Requires: [103: Concept/Ideator](./103_concept_ideator.md)
+> - Enables: [008: Agent/Imports](./008_agent_imports.md), [011: Agent/Instancing](./011_agent_instancing.md)
 
-Документ [101: Концепция/Идея](./101_concept_idea.md) описывает `Идею` как мощную, самодостаточную структуру для хранения знаний и скрытой логики. А [002: Агент/Инструмент](./002_agent_tool.md) объясняет, как на её основе создать интерфейс, который агенты могут понять. Этот документ описывает **Протокол Запроса**, который строится на `Инструментах` и определяет, как именно происходит выполнение с помощью управления Областью (Scope) и Методом (Method).
+The [101: Concept/Idea](./101_concept_idea.md) document explained how an `Idea` is like a complete thought or piece of knowledge packaged up neatly. The [002: Agent/Tool](./002_agent_tool.md) document showed how we can turn those ideas into `Tools` that an AI Agent can understand and use. This document explains the **Call Protocol**, which is the set of rules for how the Agent actually *uses* those tools.
 
-**Запрос** — это как бы оживший `Инструмент`, которому дали конкретные параметры и сказали «действуй!». Если `Инструменты` определяют, *что можно сделать*, то Запросы определяют, *как это будет выполнено*.
+A **Call** is like taking a `Tool` and filling in all the blanks so it's ready to go. If a `Tool` is a recipe, a `Call` is the act of following that recipe with specific ingredients to bake a cake right now.
 
-## Путь от Идеи к Запросу
+## The Idea-to-Call Pipeline
 
-Представь себе конвейер:
+Here’s how a thought becomes an action:
 
-1.  **Идея**: Это как рецепт. Самодостаточный документ, который описывает готовый результат — например, шоколадный торт.
-2.  **Инструмент**: Это как бланк заказа в кондитерской, сделанный на основе рецепта. Он превращает рецепт в список вопросов: «Какой размер торта?», «Нужна ли посыпка?». (Подробнее об этом в [002: Агент/Инструмент](./002_agent_tool.md)).
-3.  **Запрос**: Это когда ИИ (в нашем случае — большая языковая модель, LLM) решает использовать `Инструмент`, он заполняет этот бланк заказа. Например: «Торт среднего размера, с посыпкой». Это и есть **Запрос** — одна конкретная, готовая к исполнению команда.
+1.  **Idea**: This is the starting point. It's a complete package of knowledge, like a blueprint for a car. It focuses on what the final thing looks like.
+2.  **Tool**: We take the `Idea` (the blueprint) and flip it around to create instructions on *how to build* the car. It becomes a `Tool` in the Agent's toolbox, listing all the parts you'll need (the parameters).
+3.  **Call**: The AI decides to use the "Build a Car" `Tool`. It picks out specific parts—red paint, four-cylinder engine, leather seats—and fills in the instructions. This specific, ready-to-execute command is a **Call**.
 
-Главный принцип: **любую Идею можно превратить в Инструмент, который затем можно вызвать как Запрос.**
+The main rule is simple: **any Idea can be turned into a Tool, which can then be used by making a Call.**
 
-Чтобы детально понять, как вопросы из `Идеи` превращаются в параметры `Инструмента`, загляни в **[007: Агент/Ввод](./007_agent_input.md)**.
+To learn more about how an `Idea`'s blueprint gets turned into a `Tool`'s instruction list, check out **[007: Agent/Input](./007_agent_input.md)**.
 
-## Как управлять выполнением: Область и Метод
+## The Controls of Execution: Scope and Method
 
-То, как будет выполнен `Запрос`, определяется двумя независимыми параметрами: **Областью** (где он работает) и **Методом** (как он работает). Агент понимает, что делать, по специальным подсказкам в `Инструменте` (`_module`, `_activity`, `_output`).
+When you make a `Call`, you can decide *where* it happens and *how* it happens. Think of these as two different dials you can turn.
 
-### Две оси выполнения
+### The Two Dials for Running a Call
 
-1.  **Область (Внутри или Снаружи)**
-    Область определяет, будет ли задача выполнена прямо здесь, в текущем процессе агента, или её передадут кому-то вовне.
-    - **Внутренняя Область**: Стандартный режим. Запрос обрабатывается немедленно.
-    - **Внешняя Область**: Если есть пометка `_module`, агент понимает, что нужно передать этот Запрос другому модулю (`Activity` или `Idea`), который работает отдельно, как специалист в другой комнате.
+1.  **Scope (Where it runs: Here vs. Elsewhere)**
+    The scope dial decides if the job gets done in the main workshop or if you send it out to a specialist.
+    -   **Inline Scope**: This is the normal way. The Agent does the work right then and there. It's like building a Lego piece and immediately adding it to your main creation.
+    -   **Module Scope**: This is like sending a part out to be built by someone else. You give them instructions (using a special note called `_module`), they build it in their own workshop, and then they send it back to you.
 
-2.  **Метод (Четко по инструкции или Творчески)**
-    Метод определяет, будет ли результат получен с помощью точного кода или с помощью «воображения» ИИ.
-    - **Четкий Метод**: Если есть пометка `_activity`, значит, результат должен быть получен с помощью предсказуемого кода, который работает как калькулятор.
-    - **Творческий Метод**: Это стандартный режим, когда `_activity` нет. Результат генерирует ИИ, основываясь на своем понимании. Для этого ему нужна подсказка `_output`, чтобы знать, в каком виде должен быть ответ.
+2.  **Method (How it runs: By the Book vs. With Creativity)**
+    The method dial decides if the work follows exact instructions or if it involves some creative thinking.
+    -   **Explicit Method**: This is like following a 'paint-by-numbers' kit. The instructions (`_activity`) are super specific, and the result is always the same. This is for tasks that need to be perfect and predictable, like math.
+    -   **Latent Method**: This is like asking an artist to draw you a picture of a cat. You give them a general idea (using a guide called `_output`), but the artist (the AI) uses its own creativity to make the final drawing. This is the default way things get done when there are no exact instructions.
 
-Эти параметры можно комбинировать для создания разных сценариев работы. Подробнее о том, как это всё сочетается, рассказано в **[008: Агент/Импорты](./008_agent_imports.md)**.
+These two dials can be set in different combinations to get different results. You can learn more about how they work together in **[008: Agent/Imports](./008_agent_imports.md)**.
 
-## Идея, Инструмент и Запрос: Разный фокус
+## Idea, Tool, and Call: Different Points of View
 
-Чтобы понять, как они связаны, важно увидеть, на чём сфокусирован каждый из них.
+Let's use an analogy to see how these three things are different:
 
-- **Идея** — **фокус на результате**. Её главная цель — показать готовый результат. Это описание того, что *было* или *могло бы быть*.
+-   An **Idea** is like **a photograph of a finished meal**. It focuses on the result—what the meal looks like when it's all done. It's a record of something that was made or could be made.
 
-- **Инструмент** — **фокус на интерфейсе**. Он описывает, какие параметры (входные данные) можно задать. Это как пустой шаблон для действия, который ждёт, когда его заполнят.
+-   A **Tool** is like **a blank recipe card**. It focuses on the ingredients and steps you need. It's a template for an action, waiting for someone to fill in the blanks.
 
-- **Запрос** — **фокус на выполнении**. Это конкретный, готовый к запуску экземпляр `Инструмента`. Он берёт шаблон `Инструмента` и заполняет его реальными значениями, превращаясь в приказ о том, *что нужно сделать*.
+-   A **Call** is like **the recipe card after you've filled it out** with specific ingredients (e.g., "2 cups of King Arthur flour") and handed it to the chef. It's a direct command to *do something now*.
 
-## Идея-Контейнер: один момент принятия решения
+## The Vessel Idea: The AI's Mission Briefing
 
-Когда агенту нужно принять решение, весь запрос к ИИ упаковывается в специальный тип `Идеи`, который мы называем **Идея-Контейнер**. Она представляет собой один-единственный момент принятия решения.
+When an AI Agent needs to decide what to do next, we give it a special kind of `Idea` called a **Vessel Idea**. Think of it as a mission briefing folder.
 
-Идея-Контейнер собирает вместе два ключевых элемента, которые нужны ИИ для выбора:
+This folder contains everything the AI needs to make a good choice:
 
-1.  **Контекст**: Вся важная информация, которая есть у агента: просьба пользователя, его прошлая история и другие данные.
-2.  **Схема**: В Идее-Контейнере схема играет роль «меню». Она определяет набор доступных `Инструментов`, которые агенту разрешено использовать в данной ситуации.
+1.  **The Context**: This is all the background information, like secret files for a spy. It includes the user's request, things the AI remembers, and what's happening around it.
+2.  **The Schema (The "Vessel")**: This is the list of approved gadgets and skills the spy is allowed to use on this mission. It's the set of `Tools` available for this specific situation.
 
-ИИ обрабатывает всю эту `Идею` — и контекст, и меню доступных инструментов — и его `решением` становится список из одного или нескольких `Запросов`, которые нужно выполнить.
+The AI reads the entire mission briefing—the background info and the list of available tools—and its final decision is its `solution`: a list of one or more `Calls` to carry out the mission.
 
-Это позволяет с помощью одной `Идеи` описать сложное действие, состоящее из нескольких шагов.
+This lets us package a complex, multi-step plan into a single, neat `Idea`.
 
-## Сценарии выполнения Запросов
+## Call Execution Patterns
 
-Когда Идея-Контейнер порождает несколько Запросов, их можно выполнять по-разному, в зависимости от задачи:
+When the AI's plan involves making multiple `Calls`, we can run them in different ways, just like a movie director giving commands to a film crew.
 
 ```typescript
-// Выполнить один Запрос
+// Give one command and wait for it to finish.
 const result = await Tool(call);
 
-// Выполнить все Запросы и дождаться всех результатов
+// Tell everyone to do their jobs and wait for them all to finish.
 const results = await Tool.all(calls);
 
-// Выполнить все Запросы и вернуть результат первого успешного
+// Ask several people to do the same task, and use the result from the first person who succeeds.
 const result = await Tool.any(calls);
 
-// Выполнить все Запросы и вернуть результат первого завершившегося (неважно, успешно или нет)
+// Ask several people to do a task, and take the answer from whoever gets back to you first, successful or not.
 const result = await Tool.race(calls);
 ```
 
-Эти сценарии позволяют:
+These different patterns let us:
 
-- **Точечно управлять**: Обрабатывать Запросы по одному, выполняя свою логику между ними.
-- **Обрабатывать пачкой**: Выполнять независимые Запросы одновременно для максимальной скорости.
-- **Быстро находить решение**: Остановиться после первого же успеха (`.any()`) или первого ответа (`.race()`).
-- **Делать всё или ничего**: Гарантировать, что все Запросы в группе выполнятся успешно (`.all()`), чтобы избежать ошибок, когда они связаны друг с другом.
+-   **Control Every Step**: Handle one command at a time, so you can do other things in between.
+-   **Work in Parallel**: Run a bunch of independent jobs at the same time to go faster.
+-   **Find Success Quickly**: Stop as soon as one of your attempts works (`.any()`).
+-   **Get a Fast Answer**: Stop as soon as you get any response, good or bad (`.race()`).
+-   **Do It All or Nothing**: Make sure a whole group of commands succeeds together, so things don't get left half-done.

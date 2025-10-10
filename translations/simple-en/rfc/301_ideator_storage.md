@@ -1,41 +1,43 @@
-# 301: Идеатор/Хранилище
+# 301: Ideator/Storage
 
-## 1. Введение
+## 1. Introduction
 
-Этот документ описывает **Систему: Хранилище**. Представь себе огромную волшебную библиотеку, созданную специально для `Идей`. Эта система и есть та самая библиотека.
+This document describes a core tool called the **Storage System**. Think of it as a super-smart library designed specifically for `Ideas`.
 
-Её главная задача — брать `Идеи`, надёжно сохранять их и присваивать им уникальный номер, как на книжке в библиотеке. Это как память для всей системы, где `Идеи` хранятся и ждут, пока они не понадобятся другим сервисам, например, [Системе: Поисковик](./202_ideator_resolver.md), которая умеет их находить.
+Its main job is to provide a permanent, safe place to keep `Ideas`. It's the foundation for memory in the whole system, allowing `Ideas` to be saved and kept in different versions. This way, other tools, like the [System: Resolver](./202_ideator_resolver.md), can find and use them later.
 
-## 2. Основная концепция: Хранилище как трансформатор Идей
+## 2. How It Works: Storage is an Idea Transformer
 
-Хранилище работает как специальная машина: ты кладёшь в неё `Идею`, она что-то с ней делает и возвращает её тебе.
+The Storage system is a special kind of tool called an `Idea Transformer`. These tools always take an `Idea` in and give an `Idea` back out.
 
-- **Что на входе**: `Идея`, состоящая из трёх частей (`схема`, `решение`, `контекст`).
-- **Что происходит**: Машина получает твою `Идею`, даёт ей уникальный адрес (который также включает номер версии) и кладёт её на вечное хранение в надёжное место (например, в базу данных).
-- **Что на выходе**: Машина возвращает тебе твою же `Идею`. Это как квитанция, подтверждающая, что всё сохранено. К ней может быть прикреплена записка с новым адресом и версией твоей `Идеи`.
+- **What you give it (Input)**: A complete `Idea`, which is made of three parts (`schema`, `solution`, `context`).
+- **What it does (Process)**: The system takes your `Idea`, gives it a unique address so it can be found later (this address also keeps track of the version), and then stores it in a super-reliable place, like a digital vault (for example, a PostgreSQL database).
+- **What you get back (Output)**: It hands you back your original `Idea` as a way of saying, "Got it! It's saved." It might also add a little note to your `Idea`, like a library receipt, that includes the new address and version number to prove it's been stored safely.
 
-## 3. Ключевые характеристики
+## 3. Key Features
 
-### 3.1. Хранение по принципу «чёрного ящика»
+### 3.1. It's a "Black Box"
 
-Представь Хранилище как волшебный сундук. Ты просто кладёшь в него свою `Идею`, и он гарантирует, что она будет в целости и сохранности. Тебе не нужно знать, из какого дерева сделан сундук, какие на нём замки или как он устроен внутри. Ты просто доверяешь ему свои `Идеи`, а он их надёжно хранит.
+The Storage system is designed to be a "black box" that just works. You send it an `Idea` to save, and you don't have to worry about how or where it's stored. You don't get to pick the database or the filing system.
 
-### 3.2. Версионирование и неизменность
+The system promises that once it accepts your `Idea`, it will be kept safe and will be available to be found later. The nerdy details inside the box are handled for you.
 
-Эта система никогда ничего не стирает. Если ты хочешь «обновить» `Идею`, Хранилище не будет исправлять старую запись. Вместо этого оно создаст новую копию с твоими изменениями и сохранит её как «версию 2».
+### 3.2. Versioning and Never Changing the Past
 
-Таким образом, сохраняется полная история всех изменений, и ты всегда можешь вернуться и посмотреть, как `Идея` выглядела раньше. Это как разные издания одной книги: когда выходит второе издание, первое никуда не исчезает.
+This system is built on a very important rule: nothing is ever erased or changed. When you want to "update" an `Idea`, the system doesn't just edit the old one. Instead, it creates a brand-new version and saves that, leaving the original one untouched.
 
-### 3.3. Адресация по содержимому
+Think of it like the "version history" in Google Docs. It keeps a perfect, unbroken timeline of every change an `Idea` has ever gone through. This means if you ask for a specific version of an `Idea`, you will always get that *exact* version, forever. You can ask for a specific version number or just ask for the `latest` one.
 
-Каждая `Идея`, сохранённая в Хранилище, получает свой уникальный адрес. Это похоже на то, как у каждой страницы в интернете есть своя ссылка. Благодаря этому адресу любую `Идею` и любую её версию можно найти точно и без путаницы.
+### 3.3. Every Idea Has a Unique Address
 
-## 4. Публичный интерфейс
+Every `Idea` that gets stored is given a unique address, almost like a fingerprint. You can use this special address (and its version number) to find and retrieve that exact `Idea` anytime. This makes the whole system very reliable and allows anyone to refer to a specific `Idea` with perfect clarity.
 
-У этой системы очень простая задача, поэтому и взаимодействовать с ней можно только одним способом.
+## 4. How to Talk to It
 
-- **Основное действие**: Единственное, что можно сделать, — это отдать `Идею` на хранение.
+The way you interact with the Storage system is very simple because it only has one main job: to save things.
 
-- **Поиском занимается другой**: Чтобы не было путаницы, Хранилище не занимается поиском и выдачей `Идей`. Эту работу выполняет другой сервис — **Поисковик** (Resolver).
+- **Your Main Action**: The only thing you do is give it an `Idea` to store.
 
-Представь себе почтовое отделение. Один сотрудник (Хранилище) только принимает и раскладывает посылки по полкам. А другой сотрудник (Поисковик) помогает тебе найти и забрать нужную посылку. Так у каждого своя простая и понятная задача.
+- **It Doesn't Fetch Things For You**: To keep things neat and simple, the Storage system's job isn't to help you find and retrieve `Ideas`. That responsibility is given to another tool called the **Resolver**. 
+
+This keeps each tool focused on what it does best. The Storage system is an expert at saving things. The Resolver is an expert at finding and putting things together.

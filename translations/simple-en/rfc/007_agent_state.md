@@ -1,14 +1,14 @@
-# 010: Агент/Состояние
+# 010: Agent/State
 
-> **Сообщение о состоянии:** Представьте, что у агента есть блокнот для заметок. «Сообщение о состоянии» — это записка, которую он делает для себя. В этой записке есть объект `state` (то, что нужно запомнить) и иногда `schema` (правила, по которым организована эта память). Агент заглядывает в эту записку каждый раз, когда делает новый шаг, чтобы не забыть, что он делал до этого.
+> **State Message:** Imagine an agent (a smart computer program) is doing a task. A "State Message" is like its short-term memory. It's a little note that holds an object called `state`, which is where the agent jots down what it's currently doing or thinking. This note can also have a `schema`, which is like a set of rules for what kind of information can be written down. This memory is important because it sticks around between each step, or "tick," the agent takes, so it never forgets what it was doing.
 >
-> — [Глоссарий](./000_glossary.md)
+> — [Glossary](./000_glossary.md)
 
 > Sidenote:
 >
-> - Требуется: [Агент/Инструмент](./002_agent_tool.md)
+> - You'll want to understand this first: [Agent/Tool](./002_agent_tool.md)
 
 > [!WARNING]
-> Этот Нормативный Акт в настоящее время является заготовкой и будет расширен в будущем.
+> This document is just a placeholder for now. We'll add more to it later.
 
-Этот документ описывает **Протокол Состояния** — это набор правил, по которым агент использует свою «память» или «блокнот». Он помогает агенту запоминать важную информацию, пока тот шаг за шагом работает над задачей.
+This document explains the **State Protocol**. Think of it as the official rulebook for how an agent remembers things from one moment to the next.

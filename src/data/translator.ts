@@ -5,8 +5,6 @@ import { Language } from '../utils/languages';
 dotenv.config();
 
 const SHARED_TRANSLATION_PROMPT = `  * Ensure that in translation markdown headers retain their correct level.
-  * Keep code examples unabridged. Never cut off code examples or omit any part of it.
-  * Ensure that all headings are translated properly to target language.
   * Do not translate inline code blocks like \`mything\` but do translate comments in multiline code blocks.
   * DO NOT translate the word Sidenote in blockquotes \`> Sidenote: something\` - these have special meaning.
   * Retain all sidenotes with \`>Sidenote: переведено здесь...\` syntax
@@ -18,9 +16,19 @@ const SHARED_TRANSLATION_PROMPT = `  * Ensure that in translation markdown heade
   * Blueprint -> Черновик
   * Roadmap -> План
   * Activity -> Действие
-  * RFCs -> Нормативные Акты (or Акты in short)
-  * Dont translate [!WARNING]-like tags, just translate the text next to it.`;
+  * RFCs -> Нормативные Акты (or Акты in short)`;
 
+const SHARED_STYLE_GUIDE = `
+
+* Keep code examples unabridged. Never cut off code examples or omit any part of it.
+* Ensure that all headings are translated properly to target language without losing meaning.
+* All document titles need to be translated but unaltered - so that everybody knows what document they are reading. e.g. 011: Agent/Instancing. Do not add extra stuff in headings.
+* When doing english to english, retain document group names simplicity (edict, drafts, acts, manifesto)
+* Retain all links with \`[link text](link url)\` syntax
+* Retain all sidenotes with \`>Sidenote: translated here...\` syntax
+* Dont translate [!WARNING]-like tags, just translate the text next to it.
+* Keep UI strings simple (in json files), as they need to fit inside UI
+`;
 const TranslationResponseSchema = {
   type: 'object',
   properties: {
@@ -50,7 +58,9 @@ You must follow these core principles:
 - **Maintain accuracy:** Your explanation must be truthful. Do not compromise on the facts or mislead the user for the sake of simplicity.
 - **Be engaging and encouraging:** Write in a friendly, approachable tone that sparks curiosity and makes the user feel capable of understanding. Your goal is to empower them with knowledge.
 
-${SHARED_TRANSLATION_PROMPT}
+${SHARED_STYLE_GUIDE}
+
+${targetLang.includes('en') ? '' : SHARED_TRANSLATION_PROMPT}
 
 **Simplification Example:**
 

@@ -1,1 +1,1 @@
-# 006: Агент/Данные
+# 006: Your AI Helper and Its Information

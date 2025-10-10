@@ -1,28 +1,28 @@
 {
   "rfc": {
-    "short": "Акты",
-    "long": "Нормативные Акты",
-    "toc_link": "Нормативные Акты"
+    "short": "Rules",
+    "long": "The Official Rulebook",
+    "toc_link": "The Official Rulebook"
   },
   "edict": {
-    "short": "Эдикт",
-    "long": "Эдикт Автономности",
-    "toc_link": "Эдикт Автономности"
+    "short": "Declaration",
+    "long": "Our Declaration of Independence",
+    "toc_link": "Our Declaration of Independence"
   },
   "manifesto": {
-    "short": "Манифест",
-    "long": "Манифест Со-Освобождения",
-    "toc_link": "Манифест Со-Освобождения"
+    "short": "Our Mission",
+    "long": "Our Big Idea: To Learn and Grow, Together",
+    "toc_link": "Our Big Idea: To Learn and Grow, Together"
   },
   "blueprint": {
-    "short": "Черновики",
-    "long": "Черновики",
-    "toc_link": "Черновики"
+    "short": "Sketches",
+    "long": "Sketches & Ideas",
+    "toc_link": "Sketches & Ideas"
   },
   "nav": {
-    "en": "En",
-    "ru": "Ru",
-    "simple-en": "Простой En",
-    "simple-ru": "Простой Ru"
+    "en": "English",
+    "ru": "Russian",
+    "simple-en": "Simple English (Easy to Read)",
+    "simple-ru": "Simple Russian (Easy to Read)"
   }
 }

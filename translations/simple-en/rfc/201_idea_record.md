@@ -1,17 +1,17 @@
-# 201: Идея/Запись
+# 201: Idea/Record
 
-> **Идея-Запись:** Это Идея, чей шаблон определяет, как должны быть устроены данные. Её «решение» — это и есть сами эти данные. — [Глоссарий](./000_glossary.md)
+> **What's a Record Idea?** Think of an "Idea" that works like a super-organized filing card. It has a set of rules (its `schema`) for what information can be stored on it, and the filled-out card itself is its `solution`. — [Glossary](./000_glossary.md)
 
 > [!WARNING]
-> Этот Нормативный Акт пока что является заготовкой и будет дополнен в будущем.
+> This document is just a temporary placeholder and will be explained more later on.
 
 > Sidenote:
 >
-> - Требует:
->   - [101: Концепция/Идея](./101_concept_idea.md)
+> - To understand this, you should first know about:
+>   - [101: Concept/Idea](./101_concept_idea.md)
 
-Представь себе **Идею-Запись** как пустой бланк или анкету, например, для создания персонажа в игре. 
+A **Record Idea** is like a blueprint for holding information. This blueprint is called a `schema`.
 
-У этой анкеты есть `схема` — это правила, которые описывают, какие поля нужно заполнить. Например: «Имя» (должен быть текст), «Уровень» (должно быть число) и «Навыки» (должен быть список). `Схема` — это как инструкция к анкете. Иногда в неё даже встроены специальные «инструменты для данных», которые помогают работать с информацией.
+The `schema` sets the rules for how its main content, called the `solution`, must be organized. Think of the `schema` as a fill-in-the-blanks form. The form tells you that you need to fill in a "Name" with text and an "Age" with a number. Sometimes, this form might even come with little "data tools" to help you work with the information.
 
-А `решение` для такой Идеи — это и есть сама **заполненная** анкета. Если `схема` — это пустой бланк, то `решение` — это уже готовый персонаж: «Имя: Арагорн, Уровень: 85». То есть, решением являются сами данные, которые ты ввёл по правилам `схемы` для определённой ситуации (`контекста`).
+The `solution` of a Record Idea is simply the **filled-out form**. Its main job isn't to figure something out, but to hold data in a neat, structured way that follows the rules, based on the specific situation (the `context`) it's in.

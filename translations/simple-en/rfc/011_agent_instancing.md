@@ -1,58 +1,54 @@
-# 011: Агент/Инстансинг
+# 011: Agent/Instancing
 
-> **Инстансинг:** Это как если бы повар готовил несколько разных блюд одновременно. У каждого блюда есть свой рецепт и своё место на кухне (`Объект Состояния`), и повар следит за всеми сразу, не путая их. — [Глоссарий](./000_glossary.md)
+> **Instancing:** Imagine a chef cooking ten identical meals. Instead of making them one by one, they do each step for all ten meals at the same time—chopping all the vegetables, then cooking all the meat, and so on. That's instancing: handling many separate but similar jobs (called `Instances`) all at once. — [Glossary](./000_glossary.md)
 
 > Sidenote:
->
-> - Требуется: [010: Агент/Состояние](./010_agent_state.md)
-> - Совместимо с:
->   - [007: Агент/Ввод](./007_agent_input.md)
->   - [008: Агент/Импорты](./008_agent_imports.md)
->   - [012: Агент/План](./012_agent_plan.md)
+> 
+> - Requires: [010: Agent/State](./010_agent_state.md)
+> - Compatible:
+>   - [007: Agent/Input](./007_agent_input.md)
+>   - [008: Agent/Imports](./008_agent_imports.md)
+>   - [012: Agent/Plan](./012_agent_plan.md)
 
-Этот документ объясняет, как научить искусственный интеллект (ИИ) выполнять много независимых задач за один раз, используя специальную систему состояний.
+This guide explains how to handle many different jobs in a single request to our computer brain, using a special system that keeps track of everything.
 
-## 1. Главное требование: Система Состояний
+## 1. The Foundation: The State System
 
-Чтобы всё это заработало, нам нужна **Система Состояний**. Представь, что это разделение между «придумать, что делать» и «начать делать». Сначала ты составляешь план, а потом выполняешь его шаг за шагом.
+The whole idea of instancing relies on one important thing: the **State System**. This system creates a clear separation between **planning** what to do and actually **doing** it.
 
-**Объект Состояния** — это что-то вроде рабочего стола для каждой отдельной задачи. Это цифровой блокнот, который делает две важные вещи:
+Think of the **State Object** as a personal workbench for each job. It's a digital space that holds all the information for that specific job, and it does two very important things:
 
-1.  **Место для результатов**: Это холст, на котором инструменты ИИ «рисуют». Каждое действие инструмента (`Tool Call`) знает, куда именно в этот блокнот записать результат. Например, в строчку с названием `_outputPath`.
-2.  **Источник данных**: Инструмент может взять информацию из одной части блокнота, чтобы использовать её в другой. Например, взять текст из одной строчки, чтобы проанализировать его и записать результат в другую. Так можно выстраивать целые цепочки действий.
+1.  **A Place for Results**: Tools (the little programs that do the work) use the workbench to store their results. Every instruction to a tool includes a special note called `_outputPath`, which tells it, "Put what you make right *here* on the workbench."
+2.  **A Source for Ingredients**: A tool can also pick up an ingredient left by another tool from the workbench. This allows us to chain steps together, where the result of one step becomes the starting point for the next.
 
-## 2. Как работает Инстансинг
+## 2. How Instancing Works
 
-Настоящая магия этой системы в том, как она справляется с множеством задач одновременно.
+Where this system really shines is in handling many jobs at once. It's built for it!
 
-### 2.1. Метки для задач
+### 2.1. Giving Each Job a Label
 
-Чтобы ИИ мог обработать сразу несколько задач, мы даём ему пачку «рабочих столов» (контекстных сообщений). Каждому такому столу мы прикрепляем уникальный значок-стикер, например `①` или `②`, с помощью специального свойства `_instance`.
+To manage multiple jobs in one go, we give each one a unique label. This is done with a special property called `_instance`. These labels are like little sticky notes (for example, `①` and `②`) that are easy for the AI to see. They don't mean anything special—they just help tell the jobs apart.
 
-Эти значки — просто метки. Они помогают ИИ не путать задачи между собой, как если бы ты наклеил стикеры с именами на разные тетради.
+### 2.2. Telling Tools Which Job to Work On
 
-### 2.2. Точечные операции
+This `_instance` label is attached to every instruction sent to a tool. It’s like saying, "Hey, do this step, but only for the job with the `①` sticky note."
 
-Этот значок `_instance` используется, чтобы каждое действие было направлено на правильный «рабочий стол».
+- **Connecting Tools to Jobs**: Every command in the AI's plan has an `_instance` label, so we always know which job it's for.
+- **Keeping Workspaces Separate**: This label also automatically tells a tool which workbench to use. When a tool needs to read an ingredient or write a result, it knows to look at the workbench for job `①`, not job `②`. It keeps everything from getting mixed up.
 
-- **Связь с действием**: Каждое действие (`Tool Call`) в плане ИИ содержит значок `_instance`, чтобы знать, к какой задаче оно относится.
-- **Автоматическая сортировка**: Когда ИИ видит значок на действии, он автоматически понимает, что все пути (куда записать результат `_outputPath` или откуда взять данные) относятся именно к этому рабочему столу. Ему не нужно каждый раз напоминать: «Запиши это в тетрадь `①`». Он просто видит значок `①` и знает, что работать нужно только с этой тетрадью.
+This is great because the tools themselves can stay simple. They don't need to know they're part of a big, multi-job request. They just do their assigned task on the workbench they're pointed to.
 
-Благодаря этому сами инструменты остаются очень простыми. Им не нужно знать, что они работают с одной из многих задач. Значки-стикеры делают всю работу по разделению за них.
+### 2.3. Let's See an Example
 
-### 2.3. Пример
-
-Представь, что мы дали ИИ два текста, чтобы он определил их настроение (хорошее или плохое). Мы можем даже дать ему «шаблон» для его блокнота, чтобы он знал, какие поля там должны быть.
+Imagine you want to know if two sentences are happy or sad. You can send both jobs in a single request. You can also give the AI a rulebook (a `schema`) for how the workbench should be organized.
 
 ```json
 {
   "context": [
     {
-      // Это первая задача, помеченная значком ①.
       "_instance": "①",
       "type": "state",
-      "state": { "text": "Это просто чудесно!" },
-      // Это шаблон: должен быть текст, а потом появится настроение.
+      "state": { "text": "This is wonderful!" },
       "schema": {
         "type": "object",
         "properties": {
@@ -62,32 +58,23 @@
         "required": ["text"]
       }
     },
-    {
-      // А это вторая задача, помеченная значком ②.
-      "_instance": "②",
-      "type": "state",
-      "state": { "text": "Это просто ужасно." }
-    }
+    { "_instance": "②", "type": "state", "state": { "text": "This is terrible." } }
   ]
 }
 ```
 
-ИИ видит обе задачи сразу и составляет один общий план для них:
+The AI looks at both jobs at the same time and creates one combined plan:
 
 ```json
 {
   "calls": [
     {
-      // 1. Используй инструмент "analyzeSentiment" для задачи ①.
       "_tool": "analyzeSentiment",
       "_instance": "①",
-      // Возьми текст из её блокнота.
       "text": "†state.text",
-      // Результат запиши в поле "sentiment".
       "_outputPath": "sentiment"
     },
     {
-      // 2. Сделай то же самое для задачи ②.
       "_tool": "analyzeSentiment",
       "_instance": "②",
       "text": "†state.text",
@@ -97,20 +84,20 @@
 }
 ```
 
-После этого система выполняет этот план, и результаты записываются в блокнот каждой задачи.
+The computer then runs this plan, calling the `analyzeSentiment` tool once for job `①` and once for job `②`. It writes the answer (like "positive" or "negative") back to the correct workbench for each.
 
-## 3. Дополнительная система: Граф Планирования
+## 3. A Super Helper: The Planning Graph
 
-**Система Планирования** — это как лучший друг для Инстансинга. Она помогает создавать очень предсказуемые и многоразовые инструкции.
+While not required, the **Planning System** works perfectly with instancing to create very reliable results.
 
-**План** — это как рецепт или инструкция для сборки. Он описывает все шаги и в каком порядке их выполнять. Этот рецепт можно составить и проверить *заранее*, до того как начнётся основная «готовка».
+A **Plan** is like a master recipe. It’s a perfect, pre-made list of steps that tools should follow. You can create this recipe once and perfect it.
 
-Когда рецепт готов, его можно передать ИИ. Теперь, когда ИИ получит много задач, он не будет придумывать план на ходу, а просто будет следовать этому готовому рецепту для каждой задачи. Это гарантирует, что результат для всех будет одинаково хорошим и предсказуемым.
+Then, when you have many jobs to do, you can just give the AI this master recipe. The AI will follow the exact same steps for every single job (`instance`), making the results incredibly consistent. The **State Object** (our workbench) for each job keeps track of which step of the recipe it's currently on.
 
-## 4. Плюсы такого подхода
+## 4. Why This Way Is So Good
 
-Эта система даёт огромные преимущества:
+This system for handling multiple jobs has some big advantages:
 
-- **Скорость и экономия**: ИИ обрабатывает много задач за один раз. Это как если бы ты делал домашку по математике сразу для всего класса — это намного быстрее и дешевле, чем делать для каждого по отдельности.
-- **Качество и постоянство**: Когда ИИ видит несколько похожих задач одновременно, он замечает общие черты. Это помогает ему составить более умный и качественный план, который хорошо сработает для всех.
-- **Предсказуемость**: Если использовать готовый **План** (рецепт), то можно быть уверенным, что результат будет всегда одинаковым. Никаких неприятных сюрпризов — каждая задача будет выполнена точно так, как задумано, раз за разом.
+- **Efficiency**: You get much more done, way faster and cheaper. By packing many jobs into a single request to the AI, you save a lot of time and resources.
+- **Consistency & Quality**: Because the AI sees all the jobs at once, it can notice patterns and create a smarter, more consistent plan for all of them. It’s like seeing the whole puzzle instead of just one piece.
+- **Predictability**: When you use a pre-made **Plan**, you know exactly what result you'll get, every single time. Because the steps are fixed, the outcome is reliable and you can count on it for every job.

@@ -1,53 +1,53 @@
-# 007: Агент/Ввод
+# 007: Agent/Input
 
-> **Сообщение Ввода:** Контекстное сообщение, содержащее `схему` и `входные` данные. Его наличие превращает `Идею` в `Идеатор`, определяя, какие данные ему нужны для работы.
+> **Input Message:** Imagine a special note that tells an `Idea` what ingredients it needs. When an `Idea` gets this note, it transforms from just a thing into a recipe that can make things, which we call an `Ideator`.
 >
-> — [Глоссарий](./000_glossary.md)
+> — [Glossary](./000_glossary.md)
 
 > Sidenote:
 >
-> - Требуется: [Протокол Идеи](./101_concept_idea.md)
-> - Включает: [Протокол: Идеаторы](./103_concept_ideator.md)
+> - You'll need to know about: [The Idea Protocol](./101_concept_idea.md)
+> - This helps create: [Protocol: Ideators](./103_concept_ideator.md)
 
-Этот документ описывает **Протокол Ввода** — систему, которая объясняет, какие именно данные нужны `Идеям` для работы. Этот протокол вводит специальное сообщение. Когда оно добавляется к `Идее`, она превращается из простого кусочка знаний в нечто, что может выполнять действия, как мини-программа. Такую «умную» `Идею` мы называем **Идеатор**.
+This document explains the **Input Protocol**. Think of it as a system for creating a clear recipe for any `Idea`. This system uses a special type of message that can turn a simple `Idea` (like a finished painting) into an `Ideator` (like a paint-by-numbers kit you can use to create the painting yourself).
 
-## Тип сообщения `Input`
+## The `Input` Message Type
 
-Сообщение `Input` — это специальная «записка», которая формально объявляет, какие данные принимает `Идея`. Представьте, что вы печёте торт. Готовый торт — это ваше `решение`. Сообщение `Input` — это одновременно и список нужных ингредиентов, и сами ингредиенты, которые вы использовали. Это создаёт полную запись всего процесса, чтобы его можно было в точности повторить.
+The `Input` message is a special note you add to an `Idea` to officially list the ingredients it needs. It’s what helps us see the full story of how something was made by showing what went into it.
 
-У сообщения `Input` есть два ключевых поля:
+An `Input` message has two important parts:
 
-1.  **`schema`**: Это как правила для ваших ингредиентов. Они говорят: «Нужна мука, и она должна быть в граммах. Нужно название, и оно должно быть текстом».
-2.  **`input`**: Это реальные данные, которые вы использовали в этот раз, строго по правилам `схемы`. Например: `{"мука": 500, "название": "Торт"}`.
+1.  **`schema`**: This is like the list of ingredients and rules for a recipe. It tells you exactly what you need, like "one cup of sugar" or "a name that's a word, not a number." It sets the structure.
+2.  **`input`**: These are the actual ingredients you used for one specific creation. For example, if the `schema` asks for a name, the `input` might be "Sparky."
 
-Благодаря такому описанию любая `Идея` может объяснить не только то, что она создала (`решение`), но и то, что ей для этого понадобилось.
+By describing its needs this way, an `Idea` can explain not only what it creates, but also what it needed to create it.
 
-### Путь к простоте использования
+### A Gateway to Usability
 
-Огромный плюс этого протокола в том, что он позволяет автоматически создавать интерфейсы для людей. Поскольку `схема` чётко описывает все необходимые данные, система может на лету создать форму с нужными полями, подсказками и проверками. Это позволяет мгновенно сделать любую `Идею` полезной для человека, без лишней сложной работы.
+A really cool thing about this is that it lets computers automatically create a user-friendly form for any `Idea`. Because the `schema` is like a perfect ingredient list, a program can read it and instantly build a webpage with the right text boxes, buttons, and menus. This means anyone can start using an `Idea` right away through a simple interface, without needing to be a tech expert.
 
-## От Идеи к Идеатору
+## From Idea to Ideator
 
-Как уже было сказано в [Протоколе Идеи](./101_concept_idea.md), наличие сообщения `Input` в контексте `Идеи` — это главный сигнал того, что перед нами **Идеатор**. То есть `Идея`, которая выполняет работу. Она становится воспроизводимой функцией.
+As we learned in the [Idea Protocol](./101_concept_idea.md), when an `Idea`'s instruction manual (its context) contains an `Input` message, it's a clear sign that it has leveled up. It's no longer just an `Idea`—it’s now an **Ideator**, which is an `Idea` that can do work. It becomes a repeatable recipe.
 
-## Взаимодействие с Протоколом Инстансинга
+## Interaction with the Instancing Protocol
 
-Сообщение `Input` отлично работает вместе с [Протоколом Инстансинга](./011_agent_instancing.md), который помогает выполнять одну и ту же задачу для множества разных элементов за раз. Оно может работать в двух режимах:
+The `Input` message works perfectly with the [Instancing Protocol](./011_agent_instancing.md), which is all about doing something many times at once. Think of it like a cookie factory. You can use your recipe in two ways:
 
-1.  **Общий Ввод**: Представьте, что вы даёте одно задание всему классу, например, «нарисуйте дерево». Это общая инструкция для всех. Точно так же, если сообщение `Input` не привязано к конкретному элементу (нет поля `_instance`), его данные считаются «общими» и доступны каждому, кто выполняет работу.
+1.  **Global Input**: This is like a rule for *every single cookie* you're making. For example, you might set a rule that says, "All cookies must be baked at 350 degrees." This shared instruction applies to every cookie without having to repeat it.
 
-2.  **Ввод для Экземпляра**: А теперь представьте, что вы даёте каждому ученику персональное задание: «Маша, нарисуй дуб», «Петя, нарисуй ёлку». Здесь вы используете уникальные данные для каждого. Если в сообщении `Input` есть метка `_instance`, то данные берутся přímo из этого конкретного элемента.
+2.  **Instance-Specific Input**: This is a special instruction for just *one* specific cookie. For example, you could say, "Add chocolate chips to cookie #5" or "Put sprinkles on cookie #12." This lets you customize individual cookies while still using the same main recipe for all of them.
 
-Такая гибкость позволяет настраивать `Идеатор` с помощью общих правил, а затем уточнять его работу уникальными данными для каждого отдельного случая.
+This two-part system is super flexible. It lets you set a main recipe for a whole batch of tasks but also add a unique twist to each one.
 
-## Инверсия: от Идеатора к Инструменту
+## The Inversion: From Ideator to Tool
 
-`Идеатор` — это самодостаточная вещь, которая знает, как получить результат. Но чтобы умный агент мог использовать её в своей работе, её нужно превратить в **Инструмент** — что-то вроде кнопки, которую агент может «нажать».
+An `Ideator` is a complete recipe that can work on its own. But to let an AI assistant use it like a command, we have to turn it into a **Tool**. This process is like turning the recipe inside-out, which we call an **inversion**.
 
-Для этого мы делаем «инверсию» — выворачиваем `Идеатор` наизнанку. Мы перестаём думать о результате и фокусируемся на том, что нужно для начала работы.
+An `Idea` is made of three parts: the ingredients, the rules, and the final product.
+`{ context, schema, solution }`
+Which is like: `{ how-it-was-made, what-it-should-look-like, the-finished-cake }`
 
-`Идея` состоит из трёх частей: `{ контекст, схема, решение }`.
+To turn it into a `Tool` (like a "Bake Cake" button on a robot's dashboard), we look at the recipe's ingredient list (`Input` message) and make that the most important part. The `Tool` doesn't care as much about the finished cake; it cares about what ingredients it needs to ask for to start baking.
 
-Чтобы превратить её в `Инструмент`, мы заглядываем в её `контекст`, находим сообщение `Input`, берём оттуда правила (`схему`) и делаем их главными настройками для нового `Инструмента`.
-
-Это похоже на то, как взять рецепт торта (`Идеатор`) и вместо инструкций по готовке создать на кухонном комбайне кнопку «Испечь торт» с полями «вкус» и «размер». Так у агента появляется готовый к использованию `Инструмент`.
+This creates a `Tool` that the AI assistant understands. It's like creating a simple order form from a complicated recipe, so the assistant can easily ask for a cake to be made.

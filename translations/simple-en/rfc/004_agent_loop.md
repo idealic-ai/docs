@@ -1,37 +1,37 @@
-# 005: Агент/Цикл
+# 005: Agent/Loop
 
-> **Цикл:** Это как цепочка `Запросов`, которые агент делает, чтобы достичь какой-то цели. Агент продолжает делать `Запросы`, выполнять полученные в ответ `Команды` и добавлять результат обратно в общую картину (контекст) для следующего `Запроса`. Так продолжается до тех пор, пока `Команды` не перестанут появляться.
+> **Loop:** Imagine you're trying to solve a big puzzle. You can't do it all at once. A **Loop** is when an AI agent works on a goal by taking one small step, seeing what happened, and then using that information to figure out the next small step. It keeps doing this over and over until the puzzle is solved and there are no more steps to take.
 > 
-> — [Глоссарий](./000_glossary.md)
+> — [Glossary](./000_glossary.md)
 
 > Sidenote:
 > 
-> - Требует:
->   - [Агент/Запрос](./001_agent_request.md)
->   - [Агент/Инструмент](./002_agent_tool.md)
->   - [Агент/Команда](./004_agent_call.md)
+> - To understand this, you should know about:
+>   - [Agent/Request](./001_agent_request.md)
+>   - [Agent/Tool](./002_agent_tool.md)
+>   - [Agent/Call](./004_agent_call.md)
 
-Этот документ объясняет **Протокол Цикла**. Представь, что это набор правил, которые позволяют агенту выполнять задачи, состоящие из нескольких шагов, раз за разом повторяя `Запрос`.
+This document explains how an AI agent can tackle big, multi-step jobs by repeating a simple 'think, then act' cycle.
 
-## Цикл выполнения
+## The Work Cycle
 
-Цикл Агента — это главный способ, которым он самостоятельно выполняет сложные задачи шаг за шагом. Он работает как бесконечная петля, которая останавливается только тогда, когда работа сделана. Вот как это происходит:
+The Agent Loop is the main way an AI can work on its own to finish a complicated task. Think of it like a robot chef baking a cake. Here’s how it works:
 
-1.  **Сбор информации:** Цикл начинается с того, что собирает всё, что ему известно: какая у него цель, что уже сделано (`Состояние`) и любую другую важную информацию. Это как если бы ты перед сборкой LEGO выложил все нужные детали перед собой.
-2.  **Создание Запроса:** Затем он использует протокол **[Агент/Запрос](./001_agent_request.md)**. Он как бы спрашивает сам себя: «Учитывая всё это, и зная, какие `Инструменты` у меня есть, что мне делать дальше?».
-3.  **Обработка Команды:** В ответ на `Запрос` приходит `решение`, в котором есть список **[Агент/Команд](./003_agent_call.md)s**. Это конкретные действия, которые нужно совершить. Их может быть несколько, одна или вообще ни одной.
-4.  **Выполнение и обратная связь:**
-    - Если в `решении` есть `Команды`, цикл их выполняет. Для `Явных` `Команд` это означает запуск нужного кода `Действия`.
-    - Результаты этих `Команд` (например, информация, найденная в интернете) добавляются в общую «копилку знаний» для следующего шага цикла. Теперь агент знает немного больше, чем на предыдущем шаге.
-5.  **Завершение:** Если в `решении` не оказалось ни одной `Команды`, агент считает, что цель достигнута, и цикл останавливается. Работа сделана!
+1.  **Read the Recipe (Context Assembly):** First, the robot looks at everything it needs: the goal (bake a chocolate cake), the current situation (`State`, like the oven is pre-heating), and any other notes.
+2.  **Ask "What's Next?" (Request Invocation):** The robot then makes a **`Request`**. This is like it asking its main brain, "Okay, based on the recipe and what I've done so far, what is the *single next action* I should take?" It also knows all the `Tools` it has, like a whisk, a bowl, and an oven.
+3.  **Get an Instruction (Call Processing):** The main brain answers with a `solution`, which is a to-do list with zero or more actions called **`Call`s**. A `Call` is a specific instruction, like "`Call` the 'Mix' tool with eggs and flour."
+4.  **Do the Work & Learn (Execution & Feedback):**
+    - If the to-do list has `Call`s on it, the robot does them. It picks up the whisk and starts mixing.
+    - The results (like having a bowl full of batter) are then added to its memory. This new information helps it figure out what to ask next.
+5.  **Finish the Job (Termination):** If the robot asks "What's next?" and the main brain sends back an *empty* to-do list (zero `Call`s), it means the cake is finished! The loop stops.
 
-## Человек в деле (Human-in-the-Loop, HITL)
+## Having a Person Help (Human-in-the-Loop)
 
-Ключевая особенность Цикла Агента — это встроенная возможность для человека наблюдать за процессом и вмешиваться. Это как кнопка «пауза» в игре.
+A really cool feature of this loop is that it has a natural pause button, so a person can check the AI's work.
 
-Поскольку цикл сначала решает, *что* делать (генерирует `Команды`), а только потом *делает* это, у человека появляется «окошко», чтобы вмешаться:
+Because the AI first *decides* what to do (it creates the list of `Call`s) and then *does* it, there’s a moment in between where a human can step in.
 
-- **Одобрение:** Перед тем как выполнить `Команды`, система может показать их тебе и спросить: «Я собираюсь сделать вот это. Всё правильно?».
-- **Исправление:** Ты можешь изменить детали `Команды` или даже заменить её на совершенно другую. Например, если агент решил поискать «рецепты яблочного пирога», ты можешь исправить на «простые рецепты яблочного пирога».
+- **Getting the Okay (Approval):** Before the AI starts mixing, the system can show you its plan ("I'm about to mix the eggs and flour") and wait for you to say, "Okay, go ahead."
+- **Making a Change (Correction):** You could also look at the plan and say, "Wait, the recipe says to add sugar first!" You can change the instruction or give it a completely new one.
 
-Это очень важно для безопасности и для совместной работы, когда агент выступает в роли твоего помощника. Твои исправления и подсказки могут использоваться **[Планом Агента](./012_agent_plan.md)**, что позволяет агенту учиться и становиться умнее на основе твоего мнения.
+This is super important for safety and for times when the AI is acting like your assistant. The AI can even use your feedback to get smarter about its plans in the future.

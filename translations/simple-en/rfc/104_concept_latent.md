@@ -1,59 +1,67 @@
-# 104: Концепция / Скрытое
+# 104: Concept/Latent
 
 > Sidenote:
 >
-> - Требуется:
->   - [101: Концепция/Идея](./101_concept_idea.md)
-> - Открывает возможности для:
->   - [001: Агент/Запрос](./001_agent_request.md)
+> - This builds on:
+>   - [101: Concept/Idea](./101_concept_idea.md)
+> - This makes possible:
+>   - [001: Agent/Request](./001_agent_request.md)
 
-> **Скрытое:** Использование внутренних знаний и способности к рассуждению большой языковой модели (LLM) (её «скрытого пространства») для создания результата без явного, заранее написанного кода. — [Словарь](./000_glossary.md)
+> **Latent:** Think of this as using an AI's imagination and general knowledge to figure things out, instead of giving it exact, step-by-step code. It's relying on the AI's own "brain" to connect the dots. — [Glossary](./000_glossary.md)
 
-## 1. Введение
+## 1. Introduction
 
-Понятие **«Концепция / Скрытое»** — это основа всей архитектуры системы. Оно включает в себя и процесс (**Скрытое Исполнение**), и источник знаний (**Скрытое Пространство**). Это основной способ работы системы, который полагается на большую языковую модель (LLM) как на универсального переводчика. Такой подход позволяет системе соединить входные данные `Идеи` (`контекст`) и её результат (`решение`), прокладывая путь через огромные внутренние знания ИИ.
+**Latent** is a core superpower of this system. It's both the *source* of knowledge (the AI's brain, called the **Latent Space**) and the *process* of using that knowledge (**Latent Execution**).
 
-Этот метод очень важен для гибкости системы. Он позволяет ей собирать и выполнять целые рабочие процессы, даже если для составляющих их задач не было написано ни строчки конкретного, заранее определённого кода.
+This is the system's default way of thinking. It uses a big AI, called a Large Language Model (LLM), as a do-everything translator. Imagine you have a problem (`context`) and you know what the answer should look like (`solution`). The system uses the AI to build a bridge between the two, using the AI's huge internal library of knowledge to figure out the steps.
 
-## 2. Скрытое пространство: Океан знаний
+This is why the system is so flexible. It can figure out how to do new things and combine different tasks, even if no one has ever written a specific line of code for them.
 
-**Скрытое Пространство** — это как гигантский океан, в котором хранятся все знания, закономерности и идеи, которые ИИ выучил во время своего «обучения». Это не просто список фактов, как в энциклопедии, а сложная карта понятий, где близость и направление определяют, насколько идеи связаны друг с другом. Большие языковые модели так сильны именно потому, что этот «океан» очень богат, но их знания полезны только в том случае, если мы можем найти нужное и правильно его использовать.
+## 2. The Latent Space: An Ocean of Knowledge
 
-Главная проблема не в том, что знаний нет, а в том, чтобы уметь по этому океану ориентироваться. Система создана как раз для того, чтобы задавать правильные вопросы и, что самое главное, давать правильные подсказки, чтобы направить ИИ в нужную часть его скрытого пространства.
+The **Latent Space** is the AI's brain. But it's not like a computer's hard drive or a library with books neatly organized on shelves. It's more like a giant ocean of ideas, feelings, and connections that the AI learned when it was trained.
 
-## 3. Скрытое исполнение: Активация скрытого пространства
+In this ocean, things that are similar in meaning are close together. For example, the ideas for "king," "queen," and "crown" would all be floating around in the same region. The AI is powerful because this ocean is so incredibly vast and rich. But all that knowledge is useless if you can't find what you're looking for.
 
-**Скрытое Исполнение** — это процесс, когда мы «активируем» океан знаний, чтобы выполнить задачу. Это происходит, когда у системы нет заранее написанного «рецепта» (кода, то есть `Активности`) для обработки `Вызова`.
+The biggest challenge isn't that the AI doesn't know something; it's helping the AI navigate its own mental ocean. Our system is designed to do exactly that, by asking the right questions and giving it the right maps to find its way.
 
-Процесс выглядит так:
+## 3. Latent Execution: Activating the Latent Space
 
-1.  Происходит `Вызов` к `Инструменту` или `Идее`.
-2.  Система проверяет и видит, что для этого `Вызова` нет готовой `Активности`.
-3.  Тогда система предоставляет ИИ все подсказки (`контекст`) и «шаблон» для желаемого ответа (`_output`).
-4.  Задача ИИ — проплыть по своему океану знаний, используя подсказки как карту, и создать `решение`, которое точно соответствует нужному шаблону.
+**Latent Execution** is the act of telling the AI to dive into its ocean of knowledge to complete a task. This happens whenever the system gets a request that it doesn't have a pre-written, step-by-step program for.
 
-Это превращает ИИ из простого генератора текста в мощный движок, который может выполнять совершенно новые задачи прямо на лету.
+Here’s how it works, step-by-step:
 
-## 4. Управление контекстом: Прокладываем курс в океане знаний
+1.  A request, called a `Call`, is sent to a `Tool` or an `Idea`.
+2.  The system looks for a specific, pre-written program (`Activity`) to handle the request. It finds nothing.
+3.  So, the system turns to the AI. It gives the AI all the background information (`context`) and a blueprint for what the final answer should look like (the `_output` `schema`).
+4.  The AI's job is now to swim through its ocean of knowledge, using the background info as a map, and create an answer that perfectly fits the blueprint it was given.
 
-Самая важная задача системы — это **помочь ИИ сориентироваться в его океане знаний** во время выполнения одного запроса. Она делает это с помощью разных «хитростей», которые помогают сфокусировать внимание ИИ и направить его мысли.
+This process turns the AI from something that just spits out text into a creative problem-solver that can figure out how to do brand new things on the spot.
 
-- **Богатый контекст**: Предоставляя чёткую историю сообщений, важные данные и запросы пользователя, система заранее настраивает ИИ, чтобы он понял суть задачи.
-- **Мышление на основе схемы**: JSON Schema используется не просто для проверки готового ответа, а как чертёж для его создания. Это даёт ИИ «шаблон» для желаемого `решения`, заставляя его выстраивать свои рассуждения и ограничивать свой путь по океану знаний.
-- **Инструкции и Инструменты**: `Инструкции` и `Инструменты` работают как мощные линзы, которые фокусируют ИИ на определённом навыке или способе мышления. Это «трюки», которые помогают выбрать самый подходящий участок скрытого пространства для конкретной задачи.
+## 4. Context Management: Arranging the Latent Space
 
-Эффективное управление контекстом — вот что делает скрытое исполнение надёжным. Именно так система превращает огромный, неупорядоченный океан знаний ИИ в точный и полезный инструмент.
+The most important job of our system is to help the AI navigate its mental ocean effectively. It can't just yell, "Find the answer!" The AI would get lost. Instead, the system uses clever tricks to focus the AI's attention, almost like giving a deep-sea diver a map, a compass, and a spotlight.
 
-## 5. Стандартный подход для «оптимистичной» сборки
+Here are some of the tools it uses:
 
-Скрытое исполнение — это не запасной вариант, а **основной способ работы**. Система действует по «оптимистичному» принципу: она предполагает, что любую задачу можно выполнить, если правильно сориентировать ИИ в его океане знаний. А `Активность` с заранее написанным кодом рассматривается как улучшение — оптимизация для задач, которые требуют скорости, надёжности или доступа к внешним сервисам.
+-   **Rich Context**: The system gives the AI the full story—past conversations, data, and user questions. This is like giving the diver a detailed logbook of the mission so far, so they know what they're looking for.
+-   **Schema-Based Reasoning**: The system uses a blueprint (a `JSON Schema`) not just to check the final answer, but to *guide* the AI's thinking. It's like giving the diver an empty jar and saying, "Whatever you bring back, it must fit perfectly inside this jar." This forces the AI to think in a structured way.
+-   **Instructions and Tools**: These are like special lenses or sonar equipment for the AI. They help it focus on a specific part of its knowledge ocean that's relevant to the job, ignoring all the distracting stuff nearby.
 
-Этот подход сильно влияет на разработку:
+By managing the context well, the system makes sure the AI's journey through its own brain is successful. It turns a giant, confusing ocean of knowledge into a sharp and useful tool.
 
-- **Быстрое создание прототипов**: Разработчики могут определять и связывать несколько `Инструментов` и `Идей` в сложный `План`, не написав ни строчки кода для их выполнения. ИИ выполнит весь процесс, используя свои скрытые знания.
-- **Лёгкое комбинирование**: Это позволяет смешивать `Идеи` и `Инструменты` от разных авторов и из разных источников, даже если их внутренние реализации недоступны.
-- > Sidenote: Эта концепция подробнее раскрыта в [Нормативном Акте 303: Идеатор/Реактор](../rfc/303_ideator_reactor.md).
+## 5. The Default for Optimistic Composition
 
-  **Постепенная «кристаллизация»**: Любой проект может начаться, полностью существуя в скрытом пространстве — как скульптура из мягкой глины. По мере развития системы, медленные или критически важные процессы можно выборочно «упрочнить», превратив их в `Активности` с чётким кодом, не меняя при этом общую структуру проекта.
+Using the AI's brain (Latent Execution) isn't a backup plan; it's the normal, default way this system works. The system is "optimistic"—it assumes that for any task, the AI is smart enough to figure it out if you just give it the right map and tools.
 
-Сделав скрытое исполнение стандартом, система ставит во главу угла гибкость и скорость разработки, позволяя с самого начала создавать сложное поведение умных агентов.
+Writing specific, step-by-step code (an `Activity`) is seen as an upgrade you add later, usually for tasks that need to be extra fast, super reliable, or need to talk to another program on the internet.
+
+This way of thinking changes everything for people building with the system:
+
+-   **Rapid Prototyping**: You can sketch out a big, complicated plan with many steps without writing any real code for the steps themselves. You just describe what each step does, and the AI figures out how to do it. It's like writing a movie script and letting the actors improvise all the scenes.
+-   **Seamless Composition**: You can grab `Ideas` and `Tools` made by different people and mix them together. The system's AI will act as the glue, figuring out how to make them work with each other.
+-   > Sidenote: We explore this idea more in [RFC 303: Ideator/Reactor](../rfc/303_ideator_reactor.md).
+
+-   **Progressive Crystallization**: You can start with a whole system that runs on the AI's imagination. Then, as you use it, you might notice one part is slow or really important. You can then replace just that one improvised part with solid, predictable code—like turning an improvised movie scene into a carefully choreographed action sequence with stunts and special effects. The rest of the system can keep running on imagination.
+
+By making the AI's brain the default engine, the system lets creators build amazing and complex things right away, worrying about the nitty-gritty details later.

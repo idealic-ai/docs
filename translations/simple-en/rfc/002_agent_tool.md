@@ -1,88 +1,88 @@
-# 002: Агент/Инструмент
+# 002: Agent/Tool
 
-> **Инструмент**: Это как инструкция для суперспособности, которую может использовать умный помощник (агент). Эту инструкцию показывают искусственному интеллекту (ИИ), и она объясняет, что можно сделать. ИИ активирует инструмент, создавая `Вызов` (Call) с нужными деталями. Этот вызов либо выполняется «в уме» самим ИИ, либо запускает настоящую программу (`Activity`). — [Словарь](./000_glossary.md)
+> **Tool**: Imagine you have a robot helper (an Agent). A Tool is like an app on a smartphone or a special power-up in a video game that you can give to your robot. It's a clear set of instructions telling the robot's brain (the AI) what the power-up does and how to use it. To use it, the AI creates a "Call," which is like tapping the app icon with the right information filled in. This action is then carried out either by the AI's own brain or by a separate helper program.
 
 > Sidenote:
 >
-> - Требуется: [001: Агент/Запрос](./001_agent_request.md)
-> - Дополняется: [003: Агент/Действие](./003_agent_activity.md)
+> - You should read this first: [001: Agent/Request](./001_agent_request.md)
+> - This goes well with: [003: Agent/Activity](./003_agent_activity.md)
 
-Этот документ описывает Инструмент — своего рода «инструкцию», которая помогает агентам понимать и использовать разные возможности.
+This guide explains Tools — the instruction manuals that let our robot helpers understand and use different skills.
 
-## Что такое Инструменты?
+## What Are Tools?
 
-Представь себе видеоигру. **Инструменты — это суперспособности или гаджеты** твоего персонажа. Они дают ему новую возможность: **выбирать правильное действие в нужный момент**. Благодаря им агент может посмотреть на ситуацию и решить, какую именно способность применить.
+**Tools are the most important part** of letting our robot helpers do things in the world. They give the robot a new ability: **choosing the right action at the right time**. This means the robot can look at a situation and decide the best thing to do.
 
-Инструменты дают нам:
+Tools give our robots:
 
-- **Понятные инструкции**: Описания способностей, которые агент может найти и понять.
-- **Надёжность**: Чёткие правила, что нужно дать инструменту и что он вернёт в ответ.
-- **Совместимость**: Их можно комбинировать, как кубики LEGO, чтобы создавать сложные действия.
-- **Понимание для ИИ**: Инструкции, которые искусственный интеллект может прочитать, обдумать и выбрать.
+- **Clear Instructions**: Each skill has a rulebook (called a schema) that the robot can read to understand it.
+- **No Mistakes**: The rules make sure the robot uses the right kind of information, like using a number when a math tool needs a number.
+- **Building Blocks**: You can combine simple tools to create more powerful and complex robot behaviors, just like LEGO bricks.
+- **AI-Friendly**: The instruction manuals are written in a way that the AI brain can understand and make choices about them.
 
-Когда агент решает использовать Инструмент и заполняет все необходимые для этого детали (параметры), он создаёт **Вызов (Call)**. Это как команда «используй эту способность вот так». Подробнее о том, как выполняются вызовы, читай в документе [004: Агент/Вызов](./004_agent_call.md).
+When a robot decides to use a Tool and fills in all the information it needs, it creates a **Call**. A Call is like a filled-out order form, ready to be sent off to get something done. (You can learn more about how that works in [004: Agent/Call](./004_agent_call.md)).
 
-> **Примечание**: Любой простой запрос к ИИ можно представить как Идею. Но Инструменты нужны для более сложных случаев, когда агенту нужно самому выбирать, что делать. О том, как Идеи могут превращаться в Инструменты, можно прочитать в [007: Агент/Ввод](./007_agent_input.md).
+> **Note**: Sometimes, you just want the AI to create something simple, like a poem or a list. For that, you can use something called an Idea. But when you need the robot to choose between different actions and do more complicated things, you need Tools. You can even turn Ideas into Tools!
 
-## Когда нужно использовать систему Инструментов
+## When Should You Use Tools?
 
-Используй Инструменты, когда твоему агенту нужно:
+You should give your robot helper a set of Tools when you want it to:
 
-- **Выбирать действия на лету**, в зависимости от того, что происходит вокруг.
-- **Делать выбор между несколькими способностями** для достижения цели.
-- **Использовать разные способы** для выполнения одной и той же задачи (например, искать информацию в Google или в Яндексе).
-- **Совмещать размышления ИИ с чёткими правилами** при принятии решений.
+- **Choose what to do on its own**, based on what's happening.
+- **Pick from many different skills** to finish a task.
+- **Use different versions of the same skill** (like choosing to search with Google or another search engine).
+- **Mix its own thinking with help from other computer programs** to make smart decisions.
 
-## Как устроена система Инструментов
+## How the Tool System Works
 
-### Главный принцип: Инструкция — это всё
+### The Main Idea: Every Tool is an Instruction Manual
 
-Система Инструментов построена на одной простой идее: **Инструменты — это просто инструкции**, которые описывают, *что* можно сделать, но не говорят, *как* именно. То, как будет выполнен Инструмент, решает либо сам ИИ «в уме», либо настоящая программа под названием **[003: Агент/Действие (Activity)](./003_agent_activity.md)**.
+The most important rule for the Tool system is this: **A Tool is just the instruction manual, not the machine that does the work.** The manual explains what can be done, but it doesn't do it. The actual work is handled either by the AI's own thinking or by a special piece of code called an **[Activity](./003_agent_activity.md)**.
 
-Инструкция (или схема) Инструмента объясняет:
+A Tool's instruction manual (its schema) tells you:
 
-- **Что он делает** (описание).
-- **Что ему нужно** (входные параметры).
-- **Что он создаёт в итоге** (структура `_output`).
-- **Как его зовут** (имя `_tool`).
-- **Как он выполняется** (поле `_activity`, подробнее в [003: Агент/Действие](./003_agent_activity.md)).
+- **What the tool does** (a simple description).
+- **What it needs to work** (the information you have to give it).
+- **What it gives you back** (the `_output` or result).
+- **What it's called** (its `_tool` name).
+- **How the work gets done** (the `_activity` field tells it if a helper program is needed).
 
-### Служебные поля в инструкции Инструмента
+### Special Labels in the Instruction Manual
 
-В инструкциях для инструментов есть специальные «служебные» поля (они начинаются с нижнего подчёркивания). Они нужны системе, чтобы понимать, как работать с инструментом:
+Tool manuals use special labels that start with an underscore (`_`) to tell the system important things. Think of them as notes for the robot's operating system.
 
-- **_tool**: Уникальное имя инструмента (обязательно).
-- **_activity**: Указывает, какая программа (`Activity`) должна выполнить этот инструмент. Подробнее о том, как она выбирается, читай в [документе 003](./003_agent_activity.md).
-- **_output**: Описание того, что должно получиться в результате.
-- **_reasoningForCall**: Объяснение от агента, почему он решил использовать именно этот инструмент (добавляется системой).
+- **`_tool`**: The tool's unique name, like a name tag.
+- **`_activity`**: A note that says which helper program, if any, should do the work for this tool.
+- **`_output`**: A description of what the result will look like.
+- **`_reasoningForCall`**: A spot where the robot writes down *why* it decided to use this tool at this moment.
 
-Любое поле без нижнего подчёркивания — это обычный параметр, который нужен для работы инструмента. Служебные поля всегда идут первыми, чтобы ИИ было проще их понимать.
+Any other field without an underscore is just a normal piece of information the tool needs to work. The special labels always come first so the AI's brain can easily read them.
 
-### Границы системы
+### What the System Manages
 
-Система Инструментов отвечает за:
+The Tool system takes care of:
 
-- Регистрацию Инструментов (хранение их инструкций).
-- Заполнение параметров (когда ИИ находит нужную информацию).
-- Направление на исполнение (решение, будет ли ИИ «воображать» результат или запустит настоящую программу).
+- **Keeping Track of Tools**: It holds all the instruction manuals for every available tool.
+- **Filling Out the Forms**: It helps the AI's brain pull information from a conversation to fill in what a tool needs.
+- **Directing Traffic**: It decides whether the AI should do the work with its own brain or if it needs to pass the job to a helper program (an `Activity`).
 
-Более сложные вещи, вроде управления цепочками задач и состоянием, строятся уже поверх этой системы (об этом в [004: Агент/Вызов](./004_agent_call.md)).
+The system gives us these basic building blocks. Other parts of the program then use them to manage an entire project, keep track of what's happening, and decide how to run a series of actions.
 
-## Определение и регистрация Инструмента
+## Creating and Adding a New Tool
 
-Инструменты создаются с помощью JSON-схем, которые полностью описывают, как они работают.
+To give a robot a new skill, you create an instruction manual for it using a format called JSON Schema.
 
-### Простая инструкция (для «воображаемого» исполнения)
+### A Simple Tool (The AI Does the Work)
 
-У этого `Инструмента` нет связанной с ним программы (`Activity`), поэтому его результат будет придуман самим ИИ.
+This tool doesn't have a separate helper program. The AI's brain will handle the job all by itself. Think of it as a skill the robot can perform just by thinking.
 
 ```typescript
 Tool.register('sentimentAnalysis', {
   type: 'object',
-  description: 'Анализирует эмоциональную окраску текста',
+  description: 'Analyzes text sentiment',
   properties: {
     _tool: { type: 'string', const: 'sentimentAnalysis' },
-    text: { type: 'string', description: 'Текст для анализа' },
+    text: { type: 'string', description: 'Text to analyze' },
     _output: {
       type: 'object',
       properties: {
@@ -93,26 +93,29 @@ Tool.register('sentimentAnalysis', {
   },
 });
 ```
+This manual describes a tool called `sentimentAnalysis`. It needs a piece of `text` and will give back a result with a `sentiment` (like "happy" or "sad") and a `confidence` score.
 
-### Инструмент с программой (для реального исполнения)
+### A Tool with a Helper Program (An Activity Does the Work)
 
-Этот `Инструмент` создан для того, чтобы его выполняла настоящая программа (`Activity`). О том, как её подключить, читай в [документе 003](./003_agent_activity.md).
+This kind of Tool is designed to be carried out by a separate piece of code, called an `Activity`. This is for things the AI can't do on its own, like checking the real-world weather. To see how to build the helper program, check out the [guide on Activities](./003_agent_activity.md).
 
 ```typescript
-// Определяем схему инструмента
-// Смотри docs/rfc/003_agent_activity.md
+// Define the tool schema
+// See docs/rfc/003_agent_activity.md
 ```
 
-### Сборка инструкций
+### Putting the Manuals Together
 
-Все доступные инструкции для Инструментов собираются вместе в один список `calls`, чтобы ИИ мог их прочитать. Система добавляет в каждую инструкцию служебную информацию, а затем объединяет их все. Это позволяет ИИ выбирать из всех доступных инструментов и даже планировать несколько `Вызовов` за один раз.
+When the robot needs to make a decision, the system gathers up all the instruction manuals for the tools it has and presents them to the AI's brain as a list of choices. This allows the brain to look at all its available skills and even decide to use several of them at once.
 
 ```typescript
 {
-  // ... существующий код ...
+  // ... existing code ...
 }
 ```
 
-## Инструменты как основа
+## Tools are Just the Beginning
 
-Инструменты — это **первый и самый важный кирпичик** в системе действий агента. Они определяют, *что можно сделать*, с помощью простых инструкций. Документ [003: Агент/Действие](./003_agent_activity.md) объясняет, *как именно выполняется код*, а [004: Агент/Вызов](./004_agent_call.md) строит на этой основе сложную систему управления задачами, позволяя создавать целые цепочки из разных инструментов.
+Tools are the **very first building block** for making smart robots that can take action. They answer the question, "*What can be done?*" through their simple instruction manuals.
+
+The next part, [003: Agent/Activity](./003_agent_activity.md), explains *how the work actually gets done with code*. And [004: Agent/Call](./004_agent_call.md) shows *how different actions are organized and run together* to complete big projects.

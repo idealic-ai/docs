@@ -1,14 +1,18 @@
-# 202: Идея/Носитель
+# 202: Idea/Vessel
 
-> **Носитель (Vessel):** Представь себе, что «Идея-Роль» — это чертёж для робота. Носитель — это конкретный робот, собранный по этому чертежу. У этого робота есть план (`schema`), который говорит разным его инструментам, как работать всем вместе и одновременно. В результате их совместной работы появляются `решения` (`solutions`) с новыми, неожиданными возможностями, которых не было у каждого инструмента по отдельности. — [Глоссарий](./000_glossary.md)
+> **Vessel:** Think of a **Role Idea** as a blueprint for a job, like "Chef." A **Vessel** is the actual chef working in the kitchen, bringing that blueprint to life. The blueprint has a plan, or `schema`, that organizes a bunch of tools (like knives, pans, and ovens) and gets them working together at the same time. The goal is to produce `solutions` (the finished meals) that are surprisingly awesome and complex, something you wouldn't expect just by looking at the individual tools. This unexpected outcome is called "emergent behavior."
 
 > [!WARNING]
-> Этот Нормативный Акт пока что является заготовкой и будет дополнен в будущем.
+> This explanation is just a placeholder for now. We'll add more details to it later.
 
 > Sidenote:
->
-> - Требуется прочитать:
->   - [101: Концепция/Идея](./101_concept_idea.md)
->   - [012: Агент/План](./012_agent_plan.md)
+> 
+> To understand this, it helps to read these first:
+> - [101: Concept/Idea](./101_concept_idea.md)
+> - [012: Agent/Plan](./012_agent_plan.md)
 
-**Носитель** (Vessel) — это, можно сказать, одна рабочая копия **«Идеи-Роли»**. У такой Идеи-Роли есть `схема` (`schema`), которая похожа на инструкцию, где по порядку перечислены разные инструменты (мемы). Они могут включаться и работать все вместе, одновременно. Чтобы всё это слаженно работало, часто нужен «мозг» — система планирования, которая следит за тем, какой инструмент когда включать и что от чего зависит. `Решения` (`solutions`), которые создаёт Носитель, играя свою Роль
+A **Vessel** is the active, working version of a **Role Idea**. The Role Idea is the job description, and the Vessel is the one doing the job.
+
+This job description includes a `schema`, which is like a detailed instruction manual. It lists all the tools needed and explains how they should work together, often at the same time. To keep everything from becoming a mess, a planning system helps manage how and when each tool is used, especially since some steps depend on others (you can't frost a cake before it's baked!).
+
+The `solutions` are the final results created by the Vessel as it follows the plan of its Role...

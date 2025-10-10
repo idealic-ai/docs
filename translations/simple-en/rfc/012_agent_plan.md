@@ -1,20 +1,23 @@
-# 012: Агент/План
+# 012: Agent/Plan
 
-> **План:** Это как подробный рецепт или план проекта, состоящий из отдельных шагов, называемых `Вызовами Инструментов`. Этот план выглядит как схема, где шаги могут выполняться только в одном направлении, без возврата назад. Он определяет, какие действия и в каком порядке нужно сделать, причём некоторые шаги зависят от результатов предыдущих. Эта зависимость возникает, когда один инструмент записывает результат своей работы в общую «память» (`Объект Состояния`), а другой инструмент считывает его оттуда, чтобы начать свою работу. — [Глоссарий](./000_glossary.md)
+> **Plan:** Imagine a recipe or a flowchart for the AI. It's a to-do list made of `Tool Calls` (the AI's actions) where some steps have to happen before others. You can't ice a cake before you bake it! This plan tells the AI a sequence of actions, and what each step needs from the previous ones.
 
 > [!WARNING]
-> Этот документ пока что является заготовкой и будет расширен в будущем. Он описывает основные идеи Планов как более сложной системы, построенной на основе систем Состояния и Вызовов.
+> This explanation is just a starting point and will get more detailed later. It describes the basic idea of a Plan, which is a big-picture concept built on top of the AI's memory (`State`) and its ability to take action (`Call`).
 
 > Sidenote:
 >
-> - Требует наличия:
->   - [004: Агент/Вызов](./004_agent_call.md)
->   - [005: Агент/Цикл](./005_agent_loop.md)
->   - [010: Агент/Состояние](./010_agent_state.md)
->   - [011: Агент/Инстансинг](./011_agent_instancing.md)
+> - Requires:
+>   - [004: Agent/Call](./004_agent_call.md)
+>   - [005: Agent/Loop](./005_agent_loop.md)
+>   - [010: Agent/State](./010_agent_state.md)
+>   - [011: Agent/Instancing](./011_agent_instancing.md)
 
-Этот документ описывает **Протокол Плана** — систему для создания и выполнения сложных, многошаговых задач. План представлен в виде схемы, похожей на дерево или карту дорог, которая называется «направленный ациклический граф». Эта структура позволяет выполнять задачи очень гибко: например, выбирать разные пути в зависимости от результата (ветвление), объединять результаты нескольких параллельно выполненных задач или запускать независимые `Вызовы` одновременно.
+This document explains the **Plan Protocol**. Think of it as a way to create a detailed game plan for the AI to follow. These aren't just simple, one-step instructions. They are multi-step adventures that look like a flowchart.
 
-`План` — это как карта действий, которую агент выполняет внутри **[005: Агент/Цикла](./005_agent_loop.md)**.
+Using a flowchart structure allows the AI to do really clever things, like:
 
-Представьте, что агент — это повар, а `Цикл` — это один раунд его работы на кухне. За один раунд повар может делать несколько вещей одновременно (например, резать овощи и следить за супом). Но чтобы приготовить сложное блюдо, ему нужен полный рецепт — это и есть `План`. План говорит повару, какие раунды работы (`Циклы`) и в какой последовательности нужно выполнить, чтобы в итоге достичь большой цели — приготовить блюдо.
+*   **Making choices:** If Step 1 gives one result, the plan can branch off to do Task A. If it gives a different result, it can branch off to do Task B, like in a choose-your-own-adventure book.
+*   **Working on things at the same time:** The AI can do two or more jobs at once if they don't depend on each other, and then bring the results together later.
+
+A `Plan` is like a complete strategy that the AI runs inside its main work cycle, the **[Agent Loop](./005_agent_loop.md)**. In a single spin of the loop, the AI can do several actions at once. But a `Plan` lets the AI think bigger. It allows the AI to set up a whole sequence of steps with clear dependencies, basically stringing together many work cycles to achieve a much larger goal.
