@@ -44,29 +44,54 @@ This is where the **[Imports Protocol](./008_agent_imports.md)** becomes critica
 
 ## Composition and Reusability: The Composer & Sound Designer
 
-Modules enable powerful composition by allowing `Ideas` to act as standalone services that can be orchestrated by other agents. This creates a clear hierarchy: high-level agents can focus on orchestration, while delegating specialized tasks to low-level, reusable modules.
+Modules enable powerful composition by allowing `Ideas` to act as standalone services that can be orchestrated by other agents. This creates a clear, dynamic hierarchy: high-level agents can focus on orchestration while delegating specialized tasks to low-level, reusable modules.
 
-Consider a high-level **`Composer`** agent and a low-level **`Sound-Designer`** module.
+Consider a workflow with two specialist modules: a **`Composer`** and a **`Sound-Designer`**.
 
-- The **`Sound-Designer`** is a self-contained `Idea` (`idea://sound-designer`). Its context contains expert knowledge on using a synthesizer. It is a reusable, specialist tool that accepts a musical concept and returns generated audio data.
+- The **`Sound-Designer`** is a low-level expert. It's a self-contained `Idea` (`idea://sound-designer`) focused on the physics of sound, knowing how to operate synthesizers to produce specific audio data.
 
-- The **`Composer`** agent's job is to create a complete song. Its process involves first generating a core musical idea and then producing the sounds to realize it. The `Composer` has its own inline `Tool`, `createMelody`, to handle the first part. For the second part, it uses a `Tool` called `synthesizeSound`, which delegates the work by specifying `_module: 'idea://sound-designer'`.
+- The **`Composer`** is a mid-level specialist. Its primary job is to create a song. It uses its own inline tools to generate a melody and musical structure. To realize this vision, it then makes `Calls` to the `Sound-Designer` module to synthesize the actual sounds.
 
-The `Composer`'s workflow is a multi-step process that mixes inline and modular execution:
+This two-layer hierarchy is a common pattern. However, the true power of modules lies in their dynamic, task-driven composition.
 
-1.  **Internal Work**: The `Composer` first calls its own `createMelody` tool. This is an inline execution that happens within the `Composer`'s own context, producing a structured melody and a narrative for the song.
+Now, let's introduce a high-level **`Producer`** agent. The `Producer`'s goal is to create a finished record. Based on the specific task, the `Producer` can orchestrate its modules in different ways:
 
-2.  **Delegation**: Now, with the melody and narrative in hand, the `Composer` calls the `synthesizeSound` `Tool` multiple times—once for the lead, once for the bassline, etc. For each `Call`, the execution looks like this:
-    1.  A new, isolated sub-request is created.
-    2.  The `Sound-Designer` `Idea` is loaded. Its own `context`, which contains its expert knowledge (e.g., "You are a world-class sound designer specializing in analog synthesizers..."), forms the base for the new execution environment.
-    3.  The `Composer` uses `_imports` to select pieces of its context (the melody, narrative, etc.). This imported context is then **appended** to the `Sound-Designer`'s base context.
-    4.  The LLM for this sub-request receives the **combined context**: the module's permanent expert instructions followed by the caller's specific, temporary creative direction.
-    5.  The `Sound-Designer` applies its expertise to the provided creative brief and generates the requested audio, which is returned as the output of the `synthesizeSound` `Call`.
+- **Hierarchical Orchestration**: For creating a song, the `Producer` might make a single `Call` to the `Composer` module. The `Producer` provides high-level direction ("I need a sad ballad"), and the `Composer` executes its entire internal workflow, including its own nested `Calls` to the `Sound-Designer`. The `Producer` doesn't need to know about the `Sound-Designer`'s existence in this case.
 
-3.  **Assembly**: The `Composer` gathers the results from all its `Calls` to the `Sound-Designer` and assembles them with its original melody into the final song. This way, the `Composer` performs its own high-level creative work and then orchestrates specialist modules to handle the low-level implementation details.
+- **Parallel Orchestration**: If the `Producer` also needs specific sound effects for the record (like foley or an ambient soundscape), it can make `Calls` directly to the `Sound-Designer` module for those tasks, in parallel with its `Call` to the `Composer`.
+
+This demonstrates the key principle: the composition is not fixed within the tools themselves. The `Producer` can choose to treat the `Composer` as a black box or to interact with its constituent parts (`Sound-Designer`) directly, all depending on the needs of the moment. This flexibility allows the same set of expert modules to be combined in various arrangements, creating a deeply composable and emergent system.
 
 ## Handling Large Schemas
 
 The Module protocol also provides a solution for managing `Tools` with very large or complex output schemas. Instead of including a massive `_output` schema in the main request—potentially crowding out other tools—a `Tool` can be defined with only its `input` parameters and a `_module` pointer.
 
 The LLM can plan the `Call` with just the input, and the complex output will be generated within the module's isolated sub-request. This allows an agent to reason about a sequence of complex operations without needing to "see" the entire, detailed schema for every step in a single context window. The LLM trusts that the module will produce the correct output, which it will receive and use in subsequent steps.
+
+## Module Resolution Strategies
+
+A `Tool` becomes a `Module` simply by including the `_module` property in its schema. This signals that the `Call` should be delegated. The key question is _when_ this delegation is resolved. The system supports two strategies, allowing a trade-off between strict safety and dynamic flexibility.
+
+### 1. Execution-Time Resolution (Default)
+
+The default and most flexible approach is to resolve the module at **execution time**, after an agent has already generated a `Call`.
+
+This method enables a powerful paradigm that is not possible with traditional code: **the LLM acts as an intelligent glue layer.** An agent can generate a `Call` with parameters that don't perfectly match the module's expected `input` schema. At execution time, the system assembles the module's context and the caller's provided input, and the LLM in the sub-request is tasked with bridging the gap.
+
+This is a significant advantage, as it allows modules to be updated and evolve independently. Even if a module changes its input structure, calling agents won't immediately break. The LLM will attempt to adapt the old `Call` format to the new `input` schema, providing a level of resilience and loose coupling that is unique to this architecture.
+
+The process is as follows:
+
+1.  An agent generates a `Call` to the modular `Tool`.
+2.  The executor sees the `_module` property and initiates the protocol.
+3.  **Context Assembly**: The executor fetches the module `Idea` (if not anonymous) and assembles the base context. It then uses `_imports` to append the caller's context.
+4.  **Input Mapping**: The `params` from the `Call` are packaged into an `Input Message` and added to the context. This is where the LLM's "glue" capability comes into play, as it will use this input to fulfill the module's logic, even if the schemas don't align perfectly.
+5.  **Execution**: A new, isolated `Request` is made with the combined context. The result is returned as the output of the original `Call`.
+
+### 2. Upfront Resolution (Optional)
+
+For scenarios requiring stricter guarantees, a module can be resolved **upfront**, before the initial `Request` is sent to the agent.
+
+In this mode, the system pre-fetches the module `Idea` and merges its `input` schema with the `Tool`'s parameter schema. This allows the agent's LLM to see the module's exact requirements from the start, ensuring that the generated `Call` is perfectly formed and type-safe.
+
+This approach provides the safety of traditional API contracts but sacrifices the flexibility of execution-time resolution. It is best used for critical, well-defined integrations where loose coupling is not a desired feature.

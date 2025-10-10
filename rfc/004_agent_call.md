@@ -1,13 +1,20 @@
 # 004: Agent/Call
 
-> **Call:** A concrete, executable instance of a `Tool`, with specific values for its `params`. It's an invocation-focused request for what _should be done_. — [Glossary](./000_glossary.md)
+> **Call:** A concrete, executable instance of a `Tool`, with specific values for its `params`. It's an invocation-focused request for what _should be done_.
+>
+> — [Glossary](./000_glossary.md)
 
 > Sidenote:
 >
-> - Requires: [103: Concept/Ideator](./103_concept_ideator.md)
-> - Enables: [008: Agent/Imports](./008_agent_imports.md), [011: Agent/Instancing](./011_agent_instancing.md)
+> - Requires:
+>   - [103: Concept/Ideator](./103_concept_ideator.md)
+> - Enables:
+>   - [008: Agent/Imports](./008_agent_imports.md)
+>   - [011: Agent/Instancing](./011_agent_instancing.md)
+>   - [202: Idea/Vessel](./202_idea_vessel.md)
+>   - [203: Idea/Process](./203_idea_process.md)
 
-The [101: Concept/Idea](./101_concept_idea.md) defines a powerful, self-contained data structure for representing knowledge and latent logic. The [002: Agent/Tool](./002_agent_tool.md) establishes the foundational schema-driven interface that enables agents to understand structured capabilities. This document describes the **Call Protocol**, which builds upon Tools to define how execution happens through Scope and Method controls.
+The [101: Concept/Idea](./101_concept_idea.md) defines a powerful, self-contained data structure for representing knowledge and latent logic. The [002: Agent/Tool](./002_agent_tool.md) establishes the foundational schema-driven interface that enables agents to understand structured capabilities. This document describes the **004: Agent/Call** protocol, which builds upon Tools to define how execution happens through Scope and Method controls.
 
 A **Call** is a concrete instance of a Tool with specific parameter values, ready for execution. Where Tools define _what can be done_, Calls define _how it gets executed_.
 
@@ -39,32 +46,18 @@ A `Call`'s execution is defined by two independent properties: the **Scope** (wh
 
 These controls can be combined into different execution patterns and can have their context controlled via imports. For a detailed explanation of how these controls are combined and how context is managed, see the **[008: Agent/Imports](./008_agent_imports.md)**.
 
-## Idea, Tool, and Call: A Spectrum of Focus
+## Enabling Complex Workflows
 
-To understand the bridge, we must understand the fundamental difference in focus between these three concepts.
+The `Call` is the primitive that enables more complex, structured workflows. Under the COILS protocol, it is the mechanism that can initiate higher-level executable `Ideas` like the **[202: Idea/Vessel](./202_idea_vessel.md)** and the **[203: Idea/Process](./203_idea_process.md)**. A `Vessel`, for instance, represents a single, reactive moment of decision-making. It encapsulates the entire request to an agent—including the rich `context` and a `schema` defining the set of available `Tools`—and the agent's response, which is a `solution` containing an array of zero or more `Calls` to be executed.
 
-- An **Idea** is **output-focused**. Its primary purpose is to represent a complete thought or result. The `schema` defines the shape of the `solution` (the output), which was generated from the `context`. It is a record of what _was_ or _could be_.
-
-- A **Tool** is **interface-focused**. Its schema defines parameters (inputs) and `_output` structure. It's an abstract template for an action—a function signature waiting to be called.
-
-- A **Call** is **invocation-focused**. It is a concrete, executable instance of a `Tool`. It takes the `Tool`'s parameter-focused interface and fills it with specific values, making it a ready-to-run request for what _should be done_.
-
-## The Vessel Idea: A single moment of decision
-
-When an agent needs to make a decision, the complete request sent to the LLM is structured as a specific type of `Idea` that we call a **Vessel Idea**. It represents a single, self-contained moment of decision-making.
-
-A Vessel Idea bundles the two key ingredients required for the LLM to make a choice:
-
-1.  **The Context**: This includes all relevant information the agent needs, such as the user's request, memory, and other environmental data.
-2.  **The Schema**: For a Vessel Idea, the schema's primary role is to define the "Vessel" — the set of possible `Tools` the agent is allowed to use in this specific situation.
-
-The LLM processes this entire `Idea`—the context and the schema of available tools—and its `solution` is the result of that decision: an array of zero or more `Calls` to be executed.
-
-This structure allows a single, coherent `Idea` to represent a complex, multi-step action.
+> Sidenote:
+>
+> - [202: Idea/Vessel](./202_idea_vessel.md)
+> - [203: Idea/Process](./203_idea_process.md)
 
 ## Call Execution Patterns
 
-When a Vessel Idea produces multiple Calls, different execution strategies can be applied based on the application's needs:
+When an agent generates multiple Calls, different execution strategies can be applied based on the application's needs:
 
 ```typescript
 // Single Call execution
