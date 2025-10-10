@@ -118,6 +118,9 @@ nav.pagination {
   background: rgba(0, 20, 0, 0.1);
   outline: 5px solid rgba(0, 20, 0, 0.1);
 }
+* {
+  scroll-padding-top: 100px;
+}
 
 a.is-active.is-active.is-active {
   opacity: 1;
