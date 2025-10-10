@@ -6,9 +6,6 @@ export default {
   extends: [vikeReact],
   build: {
     target: 'es2022',
-    rollupOptions: {
-      external: ['rehype-mermaid'],
-    },
   },
   // For GitHub Pages with /docs/ repository
   base: '/docs/',
