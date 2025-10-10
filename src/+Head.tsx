@@ -1,6 +1,6 @@
 // https://vike.dev/Head
 import { useData } from 'vike-react/useData';
-import logoUrl from './assets/logo.svg';
+import logoUrl from './assets/symbol.svg';
 
 export default function HeadDefault() {
   const { title, description } = useData<{ title: string; description: string }>();
