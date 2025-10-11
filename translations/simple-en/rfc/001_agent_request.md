@@ -3,6 +3,7 @@
 > **In simple terms:** A "Request" is a single, complete job you give to an AI. You give it some background information (`context`), a set of rules for the answer (`schema`), and it gives you back a final result (`solution`). — [What These Words Mean](./000_glossary.md)
 
 > Sidenote:
+>
 > - Makes this possible: [101: Idea](./101_concept_idea.md)
 >
 > Find it here: [https://www.npmjs.com/package/@augceo/agent](@idealic-ai/agent)
@@ -18,8 +19,8 @@ This page explains the **Request Protocol**, which is just a fancy way of saying
 > graph TD
 >     subgraph User Input
 >         direction LR
->         Context[/'The background info (Context)'/]
->         Schema[/'The rules for the answer (Schema)'/]
+>         Context[/"The background info (Context)"/]
+>         Schema[/"The rules for the answer (Schema)"/]
 >     end
 >
 >     Process{{"The Job (Request)"}}
@@ -69,7 +70,7 @@ This lets us work with big, smart ideas and automatically build the perfect, pre
 
 ### 3. Schema: The Blueprint for the Answer
 
-The `schema` is like an instruction manual or a blueprint that tells the AI *exactly* what the final `solution` must look like. The system is smart about making the AI follow these rules. It tries three different methods:
+The `schema` is like an instruction manual or a blueprint that tells the AI _exactly_ what the final `solution` must look like. The system is smart about making the AI follow these rules. It tries three different methods:
 
 1.  **The Best Way (Native JSON Schema)**: If the AI is advanced (like newer models from OpenAI), it has a built-in "Follow the Blueprint" mode. We just give it the schema, and it follows the rules perfectly.
 2.  **The Clever Trick (Tool-Calling)**: If the AI doesn't have that mode but knows how to use "tools," we wrap our blueprint inside a fake tool called `generate_response` and tell the AI, "Your job is to use this tool." It's a sneaky way to make it follow our rules.

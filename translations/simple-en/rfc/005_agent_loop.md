@@ -3,6 +3,7 @@
 > **Loop:** Think of a loop as a series of steps an agent takes to finish a big job. The agent keeps asking, "What should I do next?", does the action, and then uses the result to figure out its next question. It keeps going like this until the job is done and there are no more actions to take. — [Glossary](./000_glossary.md)
 
 > Sidenote:
+>
 > - Requires:
 >   - [001: Agent/Request](./001_agent_request.md)
 >   - [002: Agent/Tool](./002_agent_tool.md)
@@ -13,10 +14,11 @@ This document explains the **execution loop**, which is how an agent can do task
 ## The Execution Loop
 
 > Sidenote:
+>
 > ```mermaid
 > graph TD
 >     Start((Start)) --> ContextAssembly(1. Gather Information)
->     ContextAssembly --> RequestInvocation(2. Ask "What's Next?")
+>     ContextAssembly --> RequestInvocation("2. Ask \"What's Next?\"")
 >     RequestInvocation --> CallProcessing(3. Get Instructions)
 >     CallProcessing --> HasCalls{Are there instructions?}
 >     HasCalls -- No --> Termination((5. Finish))
@@ -42,7 +44,7 @@ The execution loop is the main engine that lets an agent work on its own through
 
 Imagine you're building a complex Lego set with a robot helper. The robot figures out the next step is to add a red brick, but before it does, it shows you its plan. That's what "Human-in-the-Loop" means.
 
-Because the loop first decides *what* to do and then *does* it, it creates a perfect moment for a person to step in:
+Because the loop first decides _what_ to do and then _does_ it, it creates a perfect moment for a person to step in:
 
 - **Approval:** Before the agent does anything, it can show you the planned actions. You can just say "Okay, go ahead."
 - **Correction:** You might notice a mistake and say, "No, don't use the red brick, use the blue one instead." You can change the plan before it happens.
@@ -51,7 +53,7 @@ This is super important for safety and for working together with the agent. When
 
 ## The Role of Data in the Loop
 
-The loop provides the step-by-step process, but what makes it powerful is the *information* that flows through it. Think of it like a detective solving a case. With each clue (data), the detective's understanding of the case (context) grows, allowing them to figure out the next step.
+The loop provides the step-by-step process, but what makes it powerful is the _information_ that flows through it. Think of it like a detective solving a case. With each clue (data), the detective's understanding of the case (context) grows, allowing them to figure out the next step.
 
 Similarly, the agent uses the data from each cycle to remember what it has done, learn from the results, and carry out a complex, multi-step plan.
 
