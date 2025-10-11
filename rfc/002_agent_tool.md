@@ -22,8 +22,6 @@ Tools provide:
 
 When an agent fills specific parameters for a Tool, it creates a **Call** - an instance of a Tool with all required parameters filled, representing a concrete request for execution (see [004: Agent/Call](./004_agent_call.md) for details on Call execution).
 
-> **Note**: While any LLM request can be represented as an Idea (which works well for simple structured content generation), Tools provide the mechanism for more complex scenarios requiring dynamic action selection. For details on how Ideas can be transformed into Tools through input schemas, see [007: Agent/Input](./007_agent_input.md).
-
 ## When to Use the Tool System
 
 Use the Tool System when you need agents to:
@@ -37,36 +35,30 @@ Use the Tool System when you need agents to:
 
 ### Core Principle: Schema as Interface
 
-The Tool System is built on a fundamental principle: **Tools are pure schemas** that define interfaces without mandating implementations. A Tool's execution is handled by either the LLM's latent reasoning or by a concrete code implementation called an **[003: Agent/Activity](./003_agent_activity.md)**.
+The Tool System is built on a fundamental principle: **Tools are pure schemas** that define interfaces without mandating implementations. A Tool's execution is handled by either the LLM's latent reasoning or by a concrete code implementation called an [003: Agent/Activity](./003_agent_activity.md).
 
-A Tool schema specifies:
+> Sidenote:
+>
+> - [004: Agent/Call](./004_agent_call.md).
+
+A `Tool` schema is a standard JSON Schema object. Any field without an underscore prefix is considered a parameter for the tool. The system uses special meta-fields (prefixed with `_`) to define system-level properties that control how the tool is identified and executed.
+
+A Tool's schema defines its complete interface:
 
 > Sidenote:
 > Extensions:
 >
-> - [010: Agent/State](./011_agent_state.md)
->   - `_outputPath`
-> - [011: Agent/Instancing](./011_agent_instancing.md)
->   - `_instance`
-> - [009: Agent/Module](./009_agent_module.md)
->   - `_module`
+> - **`_activity`**: Connects the tool to a deterministic code function for explicit execution. ([003: Agent/Activity](./003_agent_activity.md))
+> - **`_module`**: Delegates the tool's execution to an isolated, external module. ([009: Agent/Module](./009_agent_module.md))
+> - **`_outputPath`**: Makes the tool stateful by writing its output to a persistent state object. ([010: Agent/State](./010_agent_state.md))
+> - **`_instance`**: Targets the tool's execution to a specific instance in a multi-instance request. ([011: Agent/Instancing](./011_agent_instancing.md))
 
-- **What the tool does** (description)
-- **What it needs** (input parameters)
-- **What it produces** (`_output` structure)
-- **How it's identified** (`_tool` name)
-- **How it's executed** (`_activity` field, see [003: Agent/Activity](./003_agent_activity.md) for details)
-
-### Tool Schema Meta Fields
-
-Tool schemas use meta fields (prefixed with underscore) to define system-level properties:
-
-- **\_tool**: Unique identifier for the tool (required)
-- **\_activity**: Specifies which, if any, `Activity` should execute this tool. See the [003: Agent/Activity](./003_agent_activity.md) for resolution strategy.
-- **\_output**: Expected output structure (made nullable by system)
-- **\_reasoningForCall**: Agent's explanation for why this Call was created (added by system)
-
-Any field without an underscore prefix is considered a tool parameter. Meta fields always appear first in the schema composition order, providing consistent structure for LLM understanding.
+- **`title`**: A human-readable name for the schema.
+- **`description`**: Explains what the tool does.
+- **`parameters`**: Any non-underscored fields define the inputs the tool needs.
+- **`_tool`**: Provides a unique name to identify the tool.
+- **`_output`**: Defines the expected structure of the tool's result.
+- **`_reasoningForCall`**: A field added by the system for the agent to explain why it chose the tool.
 
 ### System Boundaries
 
@@ -74,7 +66,7 @@ The Tool System handles:
 
 - Tool Registration (schema definition and storage)
 - Parameter Filling (LLM-driven extraction from context)
-- Execution Routing (determining whether to use latent execution or an `Activity`)
+- Latent Execution (where the LLM produces the output directly from the inputd)
 
 Higher-level protocols (like the [004: Agent/Call](./004_agent_call.md)) build workflow orchestration, state management, and execution policies on top of these primitives.
 
