@@ -125,7 +125,7 @@ async function main() {
     return;
   }
 
-  files = files.filter(file => file.endsWith('instancing.md'));
+  //files = files.filter(file => file.endsWith('instancing.md'));
   console.log(`Translating to languages: ${targetLangs.join(', ')}`);
 
   await Promise.all(

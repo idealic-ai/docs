@@ -8,7 +8,7 @@
 >
 > NPM: [https://www.npmjs.com/package/@augceo/agent](@idealic-ai/agent)
 
-This document describes the **Request Protocol**, which defines the fundamental unit of interaction with an LLM. The `Request` is the engine that makes the abstract **[101: Concept/Idea](./101_concept_idea.md)** computable by taking its `context` and `schema` to generate a `solution`.
+This document describes the **Request**, which defines the fundamental unit of interaction with an LLM. The `Request` is the engine that makes the abstract [101: Concept/Idea](./101_concept_idea.md) computable by taking its `context` and `schema` to generate a `solution`.
 
 ## The Request Pipeline
 
@@ -42,7 +42,7 @@ This document describes the **Request Protocol**, which defines the fundamental 
 
 A `Request` is not a simple prompt. It is a structured pipeline that transforms a rich, multi-part context into a single, schema-compliant response from an LLM.
 
-### 1. Context: An Array of Messages
+### Context: An Array of Messages
 
 The foundation of a `Request` is its `context`, which is provided as an array of `Message` objects. This allows for a complex, multi-turn, or multi-role conversation to be presented to the LLM in a structured way.
 
@@ -55,7 +55,7 @@ A simple context might look like this:
 ]
 ```
 
-### 2. Custom Content Types
+### Custom Content Types
 
 The system extends this basic structure by allowing **custom content types** within messages. Instead of just a string, the `content` of a message can be a structured object, like `{ "type": "state", "state": { ... } }`.
 
@@ -67,21 +67,31 @@ These custom types are defined and managed by the `Content` system (see `agent/s
 
 This powerful pipeline mechanism allows the agent to work with high-level, structured concepts, dynamically constructing the precise LLM invocation needed to perform a task.
 
-### 3. Schema: Guiding the Solution
+### Schema: Guiding the Solution
 
-The `schema` is a JSON Schema that defines the exact structure of the desired `solution`. The `Request` function inspects the capabilities of the target LLM provider to determine the best way to enforce the schema:
+The `schema` is a JSON Schema that defines the exact structure of the desired `solution`. This is a powerful system that allows for the representation of any type of data, from simple strings to complex, nested objects. The LLM is forced to generate a `solution` that strictly conforms to this schema, guaranteeing that the output is always well-structured and predictable.
 
-1.  **Native JSON Schema Mode**: If the provider supports it (like newer OpenAI models), the schema is passed directly in the `response_format` field of the API call. This is the most reliable method.
-2.  **Tool-Calling Fallback**: If the provider supports tool-calling but not native schema mode, the system wraps the schema inside a function tool named `generate_response` and instructs the model to call that tool.
-3.  **JSON Mode with Prompt Injection**: As a last resort for providers that only support generic JSON output, the system instructs the model to generate a JSON object and injects the schema as a string into the system prompt.
+As schemas grow in complexity, they can be designed to guide not only the final output but also the LLM's reasoning process. For example, a schema can include fields for the data itself, as well as separate fields that prompt the LLM to outline its reasoning, chain of thought, or confidence scores. This turns the schema into an active tool for shaping the generation process.
 
-### 4. Execution and the Solution
+A core principle of this architecture is the composition of schemas. More complex capabilities are built by combining simpler, reusable schema components, allowing for a modular and scalable approach to defining the agent's knowledge and abilities.
 
-After preprocessing, the final array of messages and the schema enforcement strategy are packaged into a single API request and sent to the LLM. The LLM then generates a response that conforms to the schema.
+### Execution and the Solution
 
-The system parses this response—whether it comes from the message content or a tool call's arguments—into a structured JavaScript object. This object is the `solution`.
+After the `context` is processed, the final array of messages and the `schema` are sent to the LLM in a single request. The LLM's response is the `solution`—a structured, JSON-based document that strictly conforms to the provided `schema`.
+
+This process can be understood as the generation of a mini-narrative. Because an LLM operates as a next-token predictor, it generates the `solution` from top to bottom, following the structure of the `schema`. The order and design of the schema's fields have a direct impact on the narrative the LLM produces.
+
+For example, if a schema first requires a field for meta-reasoning (e.g., `"thought_process"`) before a field for the final `data`, the LLM is forced to first articulate its reasoning before producing the answer. The initial reasoning becomes part of the context that influences the generation of the subsequent data. This powerful mechanism allows us to guide the LLM's thinking, giving us significant control over the final result by shaping the very path it takes to get there.
 
 > [!TIP]
-> This entire `Request` pipeline—the `context`, the `schema`, and the resulting `solution`—forms a self-contained, reproducible unit. When saved, this unit is what the system refers to as an **[101: Concept/Idea](./101_concept_idea.md)**.
+> This entire `Request` pipeline—the `context`, the `schema`, and the resulting `solution`—forms a self-contained, reproducible unit. When saved, this unit is what the system refers to as an [101: Concept/Idea](./101_concept_idea.md).
 
-The `schema` defines the shape of the `solution`.
+## From Structured Output to Actionable Choices
+
+A `Request` provides a robust mechanism for generating a single, schema-compliant `solution`. However, to build sophisticated agents, we need more than just structured output. We need a way to present the LLM with a menu of capabilities—distinct actions it can choose from to achieve a goal. This requires a system for defining these actions as discrete, selectable units.
+
+> Sidenote:
+>
+> - [002: Agent/Tool](./002_agent_tool.md)
+
+The next document, [002: Agent/Tool](./002_agent_tool.md), introduces the protocol for defining these capabilities.
