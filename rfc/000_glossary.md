@@ -64,7 +64,7 @@ This document provides definitions for the key concepts used in the Idea Protoco
     >
     > - [104: Concept/Latent](./104_concept_latent.md)
 
-- **Module**: An external, reusable unit of logic (an `Activity` or an `Idea`) that can be invoked via a `Call` with a `Module Scope`. Signaled by the `_module` property.
+- **Module**: A protocol for isolating execution context. Invoked by a `Call`'s `_module` property, it executes an `Activity` or a new `Request` in a "clean room" environment, with the `_imports` property providing controlled access to the parent context.
 
   > Sidenote:
   >

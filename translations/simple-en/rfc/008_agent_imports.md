@@ -1,39 +1,22 @@
 # 008: Agent/Imports
 
-> **Import:** Imagine you're about to start a project, like building a LEGO set. An 'Import' is like someone handing you only the specific bags of LEGOs you need for the current step, instead of dumping the whole box on the table. This helps you focus. This list of what you get is controlled by a property called `_imports`. — [Glossary](./000_glossary.md)
-
-In another guide, [004: Agent/Call](./004_agent_call.md), we talked about the main ways an AI can do a task. It can either work on it right here and now (**Inline**) or go to a special, separate 'room' to work (**Module**). It can also either do the work itself (**Latent**) or just give instructions to a different tool (**Explicit**). 
-
-This guide explains how we make sure the AI gets the right information (or 'context') for each of those situations using **Imports**.
-
-## Combining the Different Ways of Working
-
-There are four main combinations:
-
-1.  **Work Here, Use a Tool (Inline Explicit)**: This is the classic way of using a tool. You ask the AI to do something, it figures out which tool to use, and tells the tool what to do. For example, you ask, "What's 5+5?" The AI grabs a calculator tool and tells it to calculate "5+5". We usually don't need Imports here because the job is so direct.
-
-2.  **Work Here, All by Itself (Inline Latent)**: The AI does the whole task in one go. Imagine you ask it to write a short story based on a picture you give it. You can use `_imports` to tell it, "Only look at this picture and nothing else." This acts like blinders on a horse, helping the AI focus and not get distracted by other information.
-
-3.  **Go to a Separate Room, Use a Tool (Modular Explicit)**: The AI decides it needs a specialized tool that lives in a separate 'room'. It prepares the information, then sends it to that room for the tool to work on. If we use `_imports`, we can choose to send *only* the necessary information into that room, keeping everything else private.
-
-4.  **Go to a Separate Room, Think by Itself (Modular Latent)**: The AI decides it needs a quiet space to think. The system creates a new, clean 'room' for it and uses an `Idea` as its guide. The only information the AI has in this new room is what was already there plus any specific items we give it using `_imports`. It's like sending the AI to a library with just one book for inspiration.
-
-## Focusing the AI's View
-
-The `_imports` property is the main way we control what information the AI sees. It's like giving the AI a special pair of glasses that only lets it see certain things.
-
--   **When working right here (Inline Scope)**: `_imports` help the AI focus its attention.
--   **When working in a separate room (Module Scope)**: `_imports` decide the *entire set of information* that is allowed into that room.
-
-## Who Decides What Information to Use?
-
-The way `_imports` is set up inside a tool determines if the information is given automatically or if the AI has to ask for it.
-
--   **Static Imports (Pre-Packed Lunchbox)**: If `_imports` is set to a fixed value (like `_imports: { "const": ["input"] }`), the tool designer has already decided exactly what information the tool gets every single time. The AI can't ask for more. It's like getting a pre-packed lunchbox—you get what's inside, and that's it.
+> **Imports:** Think of these as a special guest list for a task. They decide what information from the main program is allowed to “enter” and be used. The `_imports` property acts as this guest list, making sure a task only sees the exact data it needs, which keeps things safe and focused. — [Glossary](./000_glossary.md)
 
 > Sidenote:
->
-> This diagram shows that even though lots of information might be available (like 'input' and 'state'), the tool has a filter (`_imports`) that only allows 'input' to pass through. Sometimes a human might check this before the tool runs.
+> - Requires:
+>   - [002: Agent/Tool](./002_agent_tool.md)
+>   - [004: Agent/Call](./004_agent_call.md)
+
+The **Imports Protocol** is the rulebook for how a task gets the information it needs to do its job. A task rarely works all by itself; it usually needs to know what’s going on in the main program, like what a user just typed or what happened in the previous step. The Imports Protocol is the secure gatekeeper that controls this flow of information.
+
+By being strict about what information a task can see, imports make the whole system safer (so information doesn’t accidentally leak out) and help the AI focus on what’s important. This makes the AI more reliable and cheaper to run. This control is also what allows us to build programs like LEGOs, where each piece can work on its own without messing up the others. Let's explore how it works.
+
+## Giving vs. Asking for Information
+
+There are two main ways to handle imports: you can either decide ahead of time what information to **give** a task, or you can let the task **ask for** what it needs when it's running.
+
+> Sidenote:
+> > Sidenote: This diagram shows how imports act as a filter. The main program has two pieces of information: `input` and `state`. The tool's `_imports` list only allows `input` to pass through. The `state` is blocked. A person can optionally check and approve the task before it runs.
 >
 > ```mermaid
 > graph TD
@@ -52,13 +35,11 @@ The way `_imports` is set up inside a tool determines if the information is give
 >     state -.-> filter
 >
 >     subgraph Provisioned Context
->         direction LR
->         input_prov("input")
+>         Execute(Execute Tool)
 >     end
 >
 >     filter --> HITL{{Human approval}}
->     HITL --> input_prov
->     input_prov --> Execute(Execute Tool)
+>     HITL --> Execute
 >
 >     classDef unused stroke-dasharray: 5, 5, stroke:#aaa, color:#aaa
 >     class state unused
@@ -66,9 +47,54 @@ The way `_imports` is set up inside a tool determines if the information is give
 >     class HITL optional
 > ```
 
--   **Dynamic Imports (Ordering from a Menu)**: If `_imports` is set up with flexible options (like `_imports: { "type": "array", "items": { "enum": ["state"] } }`), the AI gets to choose what it needs from a pre-approved list. The tool designer creates the menu, and the AI decides what to order for the task. This is great because a human can look at the AI's order and approve it before the information is handed over, adding a layer of safety.
+- **Static Imports (Giving Information)**: This is like giving a task a pre-printed ticket. The programmer decides ahead of time exactly what information the task is allowed to see. It’s written in stone and can’t be changed.
 
-## Why Limiting the AI's View is a Good Thing
+  ```json
+  {
+    "_imports": {
+      "const": ["input"]
+    }
+  }
+  ```
 
--   **Safer and Smarter**: By only giving the AI what it needs, you prevent it from seeing private information by accident. It also helps it think more clearly because it isn't distracted by useless data. This makes it more accurate, faster, and cheaper to run.
--   **Better Building Blocks**: Imports allow us to create tools that work like LEGO bricks. They are self-contained and don't need to know about the whole project. You can use them anywhere you need them, sure that they will do their one job well without causing problems.
+- **Dynamic Imports (Asking for Information)**: This is like giving the AI a checklist of available information. The AI looks at the job it needs to do and ticks the boxes for the information it needs to complete the task.
+
+  ```json
+  {
+    "_imports": {
+      "type": "array",
+      "items": {
+        "enum": ["state", "input"]
+      }
+    }
+  }
+  ```
+
+  This is especially powerful when a person is there to approve the request, adding an extra layer of safety and control.
+
+## How Imports Work with Other Abilities
+
+The `_imports` property is the main remote control for what a task sees. It's smart and changes how it works depending on the situation, allowing us to mix and match different agent abilities like we're building with LEGOs.
+
+- **Normal Execution**: In a normal situation, `_imports` act like a helpful hint for the AI. It’s like you're underlining the most important sentences in a book before giving it to a friend. You’re not hiding the other words, but you’re guiding their attention to what matters most. This helps the AI work better and more cheaply, without getting distracted by useless information.
+
+  > Sidenote:
+  > > Sidenote: For more on how the AI reasons about what tool to use, see [002: Agent/Tool](./002_agent_tool.md).
+
+- **Using an `_activity`**: When a task is handled by a specific, pre-written function (an `Activity`), imports get much stricter. All the information on the guest list is bundled up and handed directly to that function. The `Activity` gets the whole package, ensuring it has everything it needs to do its job perfectly.
+
+  > Sidenote:
+  > > Sidenote: An `Activity` is a piece of code that runs exactly the same way every time. You can learn more in [003: Agent/Activity](./003_agent_activity.md).
+
+- **Using `_instance` for Batches**: Imagine you're grading 30 different tests at once. Imports make sure that when the AI is working on test #5, it *only* sees the information for test #5. This prevents information from “leaking” between jobs, so you don't accidentally write a comment for test #5 on test #6.
+
+  > Sidenote:
+  > > Sidenote: To learn more about how this works for batches of data, see [011: Agent/Instancing](./011_agent_instancing.md).
+
+- **Using a `_module` for Isolation**: When a task is sent to a separate, self-contained `Module`, imports act as the ultimate security guard. They create a totally isolated “clean room” for the task. The *only* information allowed inside this room is what's on the import list. Nothing else from the main program can get in. This makes modules truly independent and reusable, like a perfectly sealed part in a machine.
+
+  > Sidenote:
+  > > Sidenote: Modules are one of the most powerful concepts. We'll dive deep into them in [009: Agent/Module](./009_agent_module.md).
+  >
+
+The `_imports` property is the bridge that connects a task to the information it needs. As we just saw with modules, when this bridge is used to create a completely isolated clean room, it unlocks a very powerful way of building agents called the **Module Protocol**. The next document, [009: Agent/Module](./009_agent_module.md), explains this in more detail.

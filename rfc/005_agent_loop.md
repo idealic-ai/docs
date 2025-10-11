@@ -9,7 +9,7 @@
 >   - [002: Agent/Tool](./002_agent_tool.md)
 >   - [004: Agent/Call](./004_agent_call.md)
 
-This document describes the **Loop Protocol**, which enables an agent to perform multi-step tasks by iteratively calling the `Request` protocol.
+This document describes the **execution loop**, which enables an agent to perform multi-step tasks by iteratively making [001: Agent/Request](./001_agent_request.md)s. This iterative process of context assembly, tool use, and feedback is what is commonly meant when referring to an "agent."
 
 ## The Execution Loop
 
@@ -17,23 +17,24 @@ This document describes the **Loop Protocol**, which enables an agent to perform
 >
 > ```mermaid
 > graph TD
->     Start((Start)) --> AssembleContext(Assemble Context)
->     AssembleContext --> InvokeRequest(Invoke Request)
->     InvokeRequest --> HasCalls{Solution has Calls?}
->     HasCalls -- No --> Stop((End))
+>     Start((Start)) --> ContextAssembly(1. Context Assembly)
+>     ContextAssembly --> RequestInvocation(2. Request Invocation)
+>     RequestInvocation --> CallProcessing(3. Call Processing)
+>     CallProcessing --> HasCalls{Has Calls?}
+>     HasCalls -- No --> Termination((5. Termination))
 >     HasCalls -- Yes --> HITL{Human-in-the-Loop}
->     HITL -- Approved --> ExecuteCalls(Execute Calls)
->     ExecuteCalls -- Results --> AssembleContext
->     HITL -- Corrected --> AssembleContext
+>     HITL -- Approved --> Execution(4. Execution & Feedback)
+>     Execution -- Results --> ContextAssembly
+>     HITL -- Corrected --> ContextAssembly
 >     classDef optional stroke-dasharray: 5, 5
 >     class HITL optional
 > ```
 
-The Agent Loop is the primary mechanism for autonomous, multi-step execution. It operates as follows
+The execution loop is the primary mechanism for autonomous, multi-step execution. It operates as follows:
 
 1.  **Context Assembly:** The loop begins by assembling the initial context, which may include the user's goal, the current `State`, and other relevant information.
-2.  **Request Invocation:** It invokes the **[001: Agent/Request](./001_agent_request.md)** protocol with the current context and a schema of available `Tools`.
-3.  **Call Processing:** The `Request` returns a `solution` containing an array of zero or more **[004: Agent/Call](./004_agent_call.md)s**.
+2.  **Request Invocation:** It invokes the [001: Agent/Request](./001_agent_request.md) with the current context and a schema of available `Tools`.
+3.  **Call Processing:** The `Request` returns a `solution` containing an array of zero or more [004: Agent/Call](./004_agent_call.md)s.
 4.  **Execution & Feedback:**
     - If the `solution` contains `Call`s, the loop executes them. For `Explicit` `Call`s, this involves invoking the corresponding `Activity` code.
     - The results of these `Call`s are then added back into the context for the next iteration.
@@ -41,9 +42,15 @@ The Agent Loop is the primary mechanism for autonomous, multi-step execution. It
 
 ## Human-in-the-Loop (HITL)
 
-A key feature of the Agent Loop is its natural support for human oversight. Because the loop separates the generation of `Call`s from their execution, it creates an opportunity for a user to intervene:
+A key feature of the execution loop is its natural support for human oversight. Because the loop separates the generation of `Call`s from their execution, it creates an opportunity for a user to intervene:
 
 - **Approval:** Before executing the `Call`s, the system can present them to a user for approval.
 - **Correction:** The user can modify the parameters of a `Call` or even replace it with a different one.
 
-This capability is critical for safety and for collaborative tasks where the agent acts as an assistant. User adjustments and feedback can be leveraged by the **[012: Agent/Plan](./012_agent_plan.md)**, allowing the agent to refine its strategy based on human input.
+This capability is critical for safety and for collaborative tasks where the agent acts as an assistant. User adjustments and feedback can be leveraged by the [012: Agent/Plan](./012_agent_plan.md), allowing the agent to refine its strategy based on human input.
+
+## The Role of Data in the Loop
+
+The execution loop provides a dynamic structure for agent behavior, but its power is realized through the data that flows within it. The state, inputs, and outputs managed during each cycle are what allow an agent to maintain context, learn, and execute complex, multi-step plans.
+
+The next document, [006: Agent/Data](./006_agent_data.md), explores the protocols for managing this data.

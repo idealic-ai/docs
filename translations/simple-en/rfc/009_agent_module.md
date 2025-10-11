@@ -1,103 +1,113 @@
 # 009: Agent/Module
 
-> **Module**: Imagine a special app on your phone that does one thing really well, like editing photos. A Module is like that—it's a separate, reusable tool that another part of the AI can call on to do a specific job. It's marked with a special `_module` label.
->
+> **Module**: A way to give a task its own private workspace. When a task has a `_module` tag, it runs in a “clean room.” That clean room is only given the specific information it needs through the `_imports` tag, so it can’t get confused by anything else.
+
 > — [Glossary](./000_glossary.md)
 
 > Sidenote:
->
-> - To understand this, you should first know about:
+> - What you need to know first:
 >   - [004: Agent/Call](./004_agent_call.md)
-> - This also works together with:
+> - What helps to know next:
 >   - [008: Agent/Imports](./008_agent_imports.md)
 
-This document explains how we make AI tools work in their own little bubbles. It’s like telling one part of the AI to go into a quiet room to get its job done, so it doesn't get distracted by everything else happening.
+So far, we've talked about how individual `Tools` work. But what happens when you have lots and lots of tools? The **Module Protocol** is the answer. It’s like giving each tool its own special workshop to work in.
 
-This is the main way we can build bigger, smarter AIs by snapping together smaller, specialized parts, like using LEGO bricks to build something amazing.
+Imagine you have a huge, messy garage where you do everything. It’s hard to find things, and you might accidentally spill paint on your woodworking project. Modules let you send a task to a specialist in their own clean, organized workshop. This helps you build really smart and complex helpers (agents) out of small, focused parts that don't get in each other's way.
 
-## The Problem: One Big Toolbox is Messy
+## The Problem: One Big Toolbox and Messy Projects
 
-As our AIs get more powerful, putting all of their tools into one giant toolbox just doesn't work. Here’s why:
+As your AI helper gets more capable, putting all its `Tools` in one giant toolbox just doesn't work.
 
-1.  **Too Many Tools for the AI to Read**: The AI that decides which tool to use (the LLM) has a limit on how much information it can handle at once. If you give it an instruction manual with thousands of tools, it gets overwhelmed and can't figure out which one is the right one to use.
-2.  **Getting Confused**: When all the tools are jumbled together, the AI can get confused. It might grab a tool for writing a story when it's supposed to be calculating a math problem, just because the tools were sitting next to each other. Information from one job can "bleed" into another and cause mistakes.
-3.  **Hard to Share Tools**: If your bike-fixing tools are all mixed up with your car-fixing tools, you can't just hand your "bike toolbox" to a friend. You'd have to give them the whole messy garage. It’s hard to reuse a specific tool if it's tied to everything else.
+1.  **The Instruction Manual is Too Big**: The AI has a limit to how much information it can handle at once. If you give it a giant instruction manual for hundreds of tools, it gets confused and can't figure out which one to use.
+2.  **Getting Your Wires Crossed**: When all the tools are in the same workspace, information from one task can “bleed” over and mess up another. It's like trying to bake a cake while your car repair manual is open on the same kitchen counter—you might accidentally add motor oil instead of olive oil!
+3.  **Tools Aren't Easy to Share**: A tool designed for one specific project is hard to reuse for another because it's tangled up with all the other tools and instructions from its original project.
 
-Modules solve this by creating a **Module Scope**, which is like giving a tool its own clean, separate toolbox for a specific job.
+Modules solve this by creating a **Module Scope**, which is like telling the AI, "Don't do this job here. Send it to a specialist's workshop."
 
-## The `_module` Label: Asking for Help
+## The `_module` Tag
 
-To turn a tool into a module, we give it a special label in its instructions called `_module`. This label tells the system, "Hey, don't do this job right here. Call in a specialist!"
+To send a task to a specialist, you add a `_module` tag to its instructions. This tag tells the system not to do the work right here, but to hand it off to an outside helper.
 
-The `_module` label is a short piece of text.
+The `_module` tag is a simple piece of text that works in two ways:
 
-- **`_module: 'idea://<idea-name>'`**: This is like a direct link to a specialist. It points to another AI `Idea` and says, "Send this job over to that specific specialist to handle it."
-- **`_module: 'anonymous'`**: This is like saying, "I just need a clean, quiet workspace for a moment." It’s used for quick jobs that need their own space but don’t require a named specialist.
+- **Point to a Saved Plan (`Idea`)**: The text can be a link to a complete, self-contained plan, called an `Idea`. Think of it like a recipe card. This lets a `Tool` hand off its job to a whole different set of instructions.
+  - Example: `../ideas/my-idea.json` or `idea://my-cool-plan`.
 
-## Working in a "Clean Room"
+  > Sidenote:
+  > A saved, shareable plan (**[001: Agent/Request](./001_agent_request.md)**) is the most common type of `Idea`. The Module system is the main way to combine these `Ideas` to build bigger and smarter things. See **[101: Concept/Idea](./101_concept_idea.md)** to learn more.
 
-A module gives a tool a "clean room" to do its work. Instead of working in the main, noisy workshop where lots of other things are happening, the job is sent to a new, isolated space. Nothing from the main workshop is brought in automatically.
+- **Create a Temporary Workshop**: If you just need a clean workspace for a one-time job, you can use the word `'anonymous'`. This sets up a temporary, private workshop without needing a whole saved plan.
 
-This is where the **[Imports Protocol](./008_agent_imports.md)** is super important. The `_imports` label on the tool is like a checklist on the door of the clean room. It says, "Okay, you can bring these *specific* things in with you." This lets the main AI control exactly what information the specialist module gets to see, which prevents confusion and keeps the tool focused on its job.
+## Working in a Clean Room
+
+A module gives a task a "clean room" to work in. Instead of working in the main, busy office, the task is handled in a brand new, empty room. The only information allowed into this clean room is the information you specifically let in.
+
+This is where the **[Imports Protocol](./008_agent_imports.md)** is super important. The `_imports` tag on the tool is like a permission slip. It lists exactly which pieces of information from the main office can be brought into the clean room. This gives you perfect control over what the module can see, preventing any mess or confusion.
 
 > Sidenote:
->
 > - [008: Agent/Imports](./008_agent_imports.md)
 
-## Building a Team of Specialists: The Composer & Sound Designer
+## Handling Huge Plans
 
-Modules let us build a team of AIs, where some are bosses and others are specialists. It's like having a project manager who can hand off different tasks to experts.
+Modules also help when a tool creates a really big or complicated result. Instead of trying to describe that huge result in the main plan (which would clutter everything up), you can create a tool with just the simple inputs and a `_module` tag pointing to the specialist.
 
-Let’s imagine we’re making music with a team of two specialist AIs: a **`Composer`** and a **`Sound-Designer`**.
+The AI can plan its steps just by knowing the simple inputs. It trusts that the specialist module will do its job and create the big, complex result in its own private workshop. The AI doesn't need to see all the messy details upfront; it just knows it will get the right result back when it's done.
 
-- The **`Sound-Designer`** is the expert on sound. It’s a self-contained module (`idea://sound-designer`) that knows everything about how to use a synthesizer to create a cool bass drop or a sharp drum hit. It just makes sounds.
+## Two Ways to Hire a Specialist
 
-- The **`Composer`** is the musician. Its job is to write a song—the melody and the chords. To actually hear its song, it needs to call the `Sound-Designer` and say, "Please create a piano sound for this note."
+A `Tool` becomes a `Module` just by adding the `_module` tag. The important question is *when* the system looks up the specialist's instructions. There are two ways to do this.
 
-This is a simple two-level team. But the real magic happens when we add a high-level boss, a **`Producer`** AI.
+### 1. Figure it Out On The Fly (Default)
 
-The `Producer`’s goal is to create a finished album. The `Producer` can manage its team in different ways depending on the job:
+The normal way is to look up the module's instructions right when the job needs to be done.
 
-- **Telling the Team Leader What to Do**: The `Producer` could just tell the `Composer`, "I need a sad song." The `Composer` would then handle the whole process of writing the music and telling the `Sound-Designer` what sounds to create. In this case, the `Producer` doesn't even need to know that the `Sound-Designer` exists.
+This method is really powerful because **the AI acts like a smart middle-manager.** Imagine the main agent gives instructions that aren't *exactly* what the specialist module was expecting. When the job is handed off, the AI inside the specialist's workshop is smart enough to look at the instructions and figure out what was meant. It can bridge the gap.
 
-- **Talking to Everyone Directly**: The `Producer` might also need a special sound effect, like the sound of rain. It can call the `Sound-Designer` directly and say, "Make me a rain sound." At the same time, it can tell the `Composer`, "Keep working on that sad song."
-
-This shows the key idea: the team structure isn't fixed. The `Producer` can treat the `Composer` like a manager or talk to the individual experts directly, depending on what it needs. This makes the system super flexible, allowing the same team of specialists to be combined in many different ways to get new and interesting results.
-
-## Handling Huge Instruction Manuals
-
-Modules also help when a tool produces a very large and complicated result. Imagine a tool that designs a whole car engine. The instruction manual (its `_output` schema) for that engine would be enormous.
-
-Instead of including that giant manual in the main AI's workspace—which would take up too much space—we can make the tool a module. The main AI only needs to see the simple instructions on *how to start* the tool.
-
-The AI can plan to use the tool without seeing all the complicated details of the result. It trusts that the module will do its job correctly in its own clean room. Once the module is finished, the AI gets the completed car engine design back and can use it in the next step.
-
-## When to Call the Specialist
-
-Any tool with the `_module` label becomes a specialist that gets called in. The big question is *when* we check the specialist's instructions. There are two ways to do this, giving us a choice between being super flexible or super safe.
-
-### 1. Figure it Out on a 'Need-to-Know' Basis (The Default Way)
-
-The normal and most flexible way is to figure out the details when the tool is actually **run**.
-
-This allows for something really cool that normal computer programs can't do: **the AI acts like smart glue.** A boss AI can make a request that doesn't perfectly match what the specialist module expects. For example, the boss might ask for a "funky bass sound."
-
-When the specialist module receives this request, another little AI inside its clean room acts as a translator. It looks at the boss's request ("funky bass sound") and compares it to the specialist's list of actual sounds (like "Slap Bass Patch #3"). It figures out what the boss meant and makes the connection.
-
-This is a huge benefit because specialists can be updated and change their tools, and the boss AIs won't immediately break. The AI glue will try to adapt the old request to the new tool list, making the whole system more resilient and flexible.
+This is great because you can update your specialist modules without breaking all the old tools that use them. The AI will try to adapt, making the whole system more flexible and resilient.
 
 Here’s how it works:
 
-1.  A boss AI decides to use the specialist tool.
-2.  The system sees the `_module` label and starts the process.
-3.  **Get Ready**: The system prepares the specialist's clean room and uses `_imports` to bring in any needed information from the boss.
-4.  **Translate the Request**: The boss's request is sent to the specialist. This is where the "AI glue" figures out how to make the request work with the specialist's tools, even if the names don't match perfectly.
-5.  **Do the Work**: The job is run in the clean room, and the final result is sent back to the boss.
+> Sidenote:
+> ```mermaid
+> graph TD
+>     A[Agent plans a job] --> B{System sees it's for a specialist};
+>     B --> C["1. Gets the specialist's workshop ready"];
+>     C --> D["2. Gives the specialist the instructions"];
+>     D --> E["3. The specialist does the work in private"];
+>     E --> F["The specialist is smart & can adapt"];
+>     F --> G[The finished job is returned];
+> ```
 
-### 2. Check Everything Before You Start (The Super-Safe Way)
+1.  The main agent decides to use the specialist `Tool`.
+2.  The system sees the `_module` tag and starts the hand-off.
+3.  **Get the Workshop Ready**: The system finds the module's plan (`Idea`) and prepares the clean room. It then uses the `_imports` list to bring in the necessary information from the main office.
+4.  **Give the Instructions**: The instructions from the main agent are given to the module. This is where the module's AI might need to be clever to understand them if they don't match perfectly.
+5.  **Do the Work**: A new, separate request is made inside the clean room. The result is then sent back to the main agent.
 
-For situations where you need to be absolutely sure everything will work perfectly, you can check the specialist's tools **before** the boss AI even starts thinking.
+### 2. Check Everything Upfront (Optional)
 
-In this mode, the system goes and gets the specialist's exact list of tools and merges it with the boss's tool list from the very beginning. This means the boss AI sees the specialist's exact capabilities from the start.
+For jobs where you can't have any mistakes, you can check the module's instructions **before** the main agent even starts working.
 
-This is like giving a chef a cookbook with a precise list of all the ingredients available in the kitchen. The chef will only write recipes using those exact ingredients. This guarantees that the request will be perfectly understood, but it's less flexible. If a new ingredient arrives in the kitchen, the chef won't know about it until their cookbook is updated.
+In this mode, the system grabs the module's instruction manual and merges it with the main plan. This lets the main agent's AI see the specialist's *exact* requirements from the very beginning, ensuring the job request is perfect. It’s like double-checking a blueprint before you start building to make sure everything will fit together.
+
+This is safer and more predictable, like using a pre-made kit. But you lose the flexibility of letting the AI figure things out on the fly.
+
+## Building Teams of Specialists: The Composer & Sound Designer
+
+Modules let you build powerful teams by allowing different `Ideas` to act like expert services that can be managed by other agents. You can have high-level managers that focus on the big picture, while delegating smaller jobs to focused specialists.
+
+Think of a music studio with two specialists: a **`Composer`** and a **`Sound-Designer`**.
+
+- The **`Sound-Designer`** is a low-level expert. It’s a self-contained `Idea` (`idea://sound-designer`) that knows everything about creating sounds. It knows how to use electronic instruments to make a specific noise.
+
+- The **`Composer`** is a mid-level specialist. Its job is to write a song. It figures out the melody and structure. To actually hear the song, it sends requests to the `Sound-Designer` module to create the right sounds.
+
+This is a simple two-layer team. But the real magic happens when you can arrange your team differently depending on the job.
+
+Now, let's add a high-level **`Producer`** agent. The `Producer`'s goal is to create a finished album. The `Producer` can manage its specialists in different ways:
+
+- **Manager-Style**: To create a song, the `Producer` might just make one call to the `Composer` module. The `Producer` gives a simple direction ("I need a sad song"), and trusts the `Composer` to handle everything, including telling the `Sound-Designer` what to do. The `Producer` doesn't even need to know the `Sound-Designer` exists.
+
+- **Director-Style**: What if the album also needs sound effects, like footsteps or rain? The `Producer` can make requests *directly* to the `Sound-Designer` for those effects, while *at the same time* asking the `Composer` to write the music.
+
+This shows the main point: the team structure isn't fixed. The `Producer` can treat the `Composer` like a self-managing unit, or it can dive in and direct the individual specialists (`Sound-Designer`) itself, all depending on what the project needs. This flexibility allows you to combine the same set of experts in endless ways to solve new problems.

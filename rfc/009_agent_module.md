@@ -1,7 +1,7 @@
 # 009: Agent/Module
 
-> **Module**: An external, reusable unit of logic (an `Activity` or an `Idea`) that can be invoked via a `Call` with a `Module Scope`. Signaled by the `_module` property.
->
+> **Module**: A protocol for isolating execution context. Invoked by a `Call`'s `_module` property, it executes an `Activity` or a new `Request` in a "clean room" environment, with the `_imports` property providing controlled access to the parent context.
+
 > — [Glossary](./000_glossary.md)
 
 > Sidenote:
@@ -11,7 +11,7 @@
 > - Complemented by:
 >   - [008: Agent/Imports](./008_agent_imports.md)
 
-This document describes the **Module Protocol**, which enables `Tools` to be executed in an isolated context, either by referencing another `Idea` or by invoking an `Activity` in a clean sub-request. It is the primary mechanism for composing complex agentic behaviors from self-contained, reusable components.
+While previous documents have established how individual `Tools` are defined and executed, the **Module Protocol** addresses the critical challenge of scaling and composing these capabilities. It provides a powerful mechanism for executing `Tools` in isolated "clean room" environments, preventing context bleeding and enabling true reusability. By delegating a `Call` to an external module—either another `Idea` or an `Activity` in a sub-request—the system can build complex agentic behaviors from self-contained, independently developed components.
 
 ## The Problem: Monolithic Tools and Context Bleeding
 
@@ -27,10 +27,17 @@ The Module Protocol solves these problems by introducing **Module Scope**, a way
 
 Module Scope is signaled by the `_module` property within a `Tool`'s schema. This property instructs the system to treat the `Call` not as an inline operation, but as a request to an external module.
 
-The `_module` property is a `string`.
+The `_module` property is a `string` and can be used in two ways:
 
-- **`_module: 'idea://<idea-name>'`**: A string, typically a URI, that resolves to a specific `Idea`. This tells the executor to run the `Call` within the context of the referenced `Idea`.
-- **`_module: 'anonymous'`**: A string literal that signals an anonymous module. This is used when you need an isolated execution environment for an `Activity` without the overhead of a full `Idea` context.
+- **Reference an `Idea`**: The string can be a reference to a self-contained `Idea`—a JSON object containing `context` and `schema` properties. This allows a `Tool` to delegate its execution to a completely separate set of instructions. The reference can be provided as:
+  - A path or URL to a JSON file (e.g., `../ideas/my-idea.json`).
+  - An `idea://` protocol link.
+
+  > Sidenote:
+  >
+  > A saved, reusable **[001: Agent/Request](./001_agent_request.md)** is the most common form of an `Idea`. The Module protocol is the primary mechanism for composing these `Ideas` into more complex systems. See **[101: Concept/Idea](./101_concept_idea.md)** for details.
+
+- **Create an anonymous module**: A string literal `'anonymous'` signals an anonymous module. This is used when you need an isolated execution environment for an `Activity` without the overhead of a full saved `Request` context.
 
 ## Execution in a Clean Room
 
@@ -41,26 +48,6 @@ This is where the **[Imports Protocol](./008_agent_imports.md)** becomes critica
 > Sidenote:
 >
 > - [008: Agent/Imports](./008_agent_imports.md)
-
-## Composition and Reusability: The Composer & Sound Designer
-
-Modules enable powerful composition by allowing `Ideas` to act as standalone services that can be orchestrated by other agents. This creates a clear, dynamic hierarchy: high-level agents can focus on orchestration while delegating specialized tasks to low-level, reusable modules.
-
-Consider a workflow with two specialist modules: a **`Composer`** and a **`Sound-Designer`**.
-
-- The **`Sound-Designer`** is a low-level expert. It's a self-contained `Idea` (`idea://sound-designer`) focused on the physics of sound, knowing how to operate synthesizers to produce specific audio data.
-
-- The **`Composer`** is a mid-level specialist. Its primary job is to create a song. It uses its own inline tools to generate a melody and musical structure. To realize this vision, it then makes `Calls` to the `Sound-Designer` module to synthesize the actual sounds.
-
-This two-layer hierarchy is a common pattern. However, the true power of modules lies in their dynamic, task-driven composition.
-
-Now, let's introduce a high-level **`Producer`** agent. The `Producer`'s goal is to create a finished record. Based on the specific task, the `Producer` can orchestrate its modules in different ways:
-
-- **Hierarchical Orchestration**: For creating a song, the `Producer` might make a single `Call` to the `Composer` module. The `Producer` provides high-level direction ("I need a sad ballad"), and the `Composer` executes its entire internal workflow, including its own nested `Calls` to the `Sound-Designer`. The `Producer` doesn't need to know about the `Sound-Designer`'s existence in this case.
-
-- **Parallel Orchestration**: If the `Producer` also needs specific sound effects for the record (like foley or an ambient soundscape), it can make `Calls` directly to the `Sound-Designer` module for those tasks, in parallel with its `Call` to the `Composer`.
-
-This demonstrates the key principle: the composition is not fixed within the tools themselves. The `Producer` can choose to treat the `Composer` as a black box or to interact with its constituent parts (`Sound-Designer`) directly, all depending on the needs of the moment. This flexibility allows the same set of expert modules to be combined in various arrangements, creating a deeply composable and emergent system.
 
 ## Handling Large Schemas
 
@@ -82,6 +69,18 @@ This is a significant advantage, as it allows modules to be updated and evolve i
 
 The process is as follows:
 
+> Sidenote:
+>
+> ```mermaid
+> graph TD
+>     A[Agent generates Call] --> B{Executor};
+>     B --> C["1. Context Assembly<br/>(Module + Imports)"];
+>     C --> D["2. Input Mapping<br/>(Call Params)"];
+>     D --> E["3. Execution<br/>(New Request)"];
+>     E --> F["Sub-LLM bridges gaps"];
+>     F --> G[Result returned to Agent];
+> ```
+
 1.  An agent generates a `Call` to the modular `Tool`.
 2.  The executor sees the `_module` property and initiates the protocol.
 3.  **Context Assembly**: The executor fetches the module `Idea` (if not anonymous) and assembles the base context. It then uses `_imports` to append the caller's context.
@@ -92,6 +91,26 @@ The process is as follows:
 
 For scenarios requiring stricter guarantees, a module can be resolved **upfront**, before the initial `Request` is sent to the agent.
 
-In this mode, the system pre-fetches the module `Idea` and merges its `input` schema with the `Tool`'s parameter schema. This allows the agent's LLM to see the module's exact requirements from the start, ensuring that the generated `Call` is perfectly formed and type-safe.
+In this mode, the system pre-fetches the module `Idea` and merges its `input` schema with the `Tool`'s parameter schema. This allows the agent's LLM to see the module's exact requirements from the start, ensuring that the generated `Call` is perfectly formed and type-safe. Crucially, this upfront merge can also include the module's `_output` schema, providing a strict contract for the expected result.
 
-This approach provides the safety of traditional API contracts but sacrifices the flexibility of execution-time resolution. It is best used for critical, well-defined integrations where loose coupling is not a desired feature.
+This approach provides the safety of traditional API contracts, where both the inputs and outputs are known and validated. It sacrifices the flexibility of execution-time resolution and is best used for critical, well-defined integrations where loose coupling is not a desired feature.
+
+## Composition and Reusability: The Composer & Sound Designer
+
+Modules enable powerful composition by allowing `Ideas` to act as standalone services that can be orchestrated by other agents. This creates a clear, dynamic hierarchy: high-level agents can focus on orchestration while delegating specialized tasks to low-level, reusable modules.
+
+Consider a workflow with two specialist modules: a **`Composer`** and a **`Sound-Designer`**.
+
+- The **`Sound-Designer`** is a low-level expert. It's a self-contained `Idea` (`idea://sound-designer`) focused on the physics of sound, knowing how to operate synthesizers to produce specific audio data.
+
+- The **`Composer`** is a mid-level specialist. Its primary job is to create a song. It uses its own inline tools to generate a melody and musical structure. To realize this vision, it then makes `Calls` to the `Sound-Designer` module to synthesize the actual sounds.
+
+This two-layer hierarchy is a common pattern. However, the true power of modules lies in their dynamic, task-driven composition.
+
+Now, let's introduce a high-level **`Producer`** agent. The `Producer`'s goal is to create a finished record. Based on the specific task, the `Producer` can orchestrate its modules in different ways:
+
+- **Hierarchical Orchestration**: For creating a song, the `Producer` might make a single `Call` to the `Composer` module. The `Producer` provides high-level direction ("I need a sad ballad"), and the `Composer` executes its entire internal workflow, including its own nested `Calls` to the `Sound-Designer`. The `Producer` doesn't need to know about the `Sound-Designer`'s existence in this case.
+
+- **Parallel Orchestration**: If the `Producer` also needs specific sound effects for the record (like foley or an ambient soundscape), it can make `Calls` directly to the `Sound-Designer` module for those tasks, in parallel with its `Call` to the `Composer`.
+
+This demonstrates the key principle: the composition is not fixed within the tools themselves. The `Producer` can choose to treat the `Composer` as a black box or to interact with its constituent parts (`Sound-Designer`) directly, all depending on the needs of the moment. This flexibility allows the same set of expert modules to be combined in various arrangements, creating a deeply composable and emergent system.

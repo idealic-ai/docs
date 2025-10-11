@@ -2,7 +2,11 @@
 
 > **Request:** A single, self-contained LLM invocation, which takes a `context` and a `schema` and produces a `solution`. — [Glossary](./000_glossary.md)
 
-> Sidenote: NPM: [https://www.npmjs.com/package/@augceo/agent](@idealic-ai/agent)
+> Sidenote:
+>
+> - Enables: [101: Concept/Idea](./101_concept_idea.md)
+>
+> NPM: [https://www.npmjs.com/package/@augceo/agent](@idealic-ai/agent)
 
 This document describes the **Request Protocol**, which defines the fundamental unit of interaction with an LLM. The `Request` is the engine that makes the abstract **[101: Concept/Idea](./101_concept_idea.md)** computable by taking its `context` and `schema` to generate a `solution`.
 
@@ -77,6 +81,7 @@ After preprocessing, the final array of messages and the schema enforcement stra
 
 The system parses this response—whether it comes from the message content or a tool call's arguments—into a structured JavaScript object. This object is the `solution`.
 
-This entire pipeline—from processing a complex context to receiving a schema-validated solution—is what enables the **Idea** to function as a core computational primitive in the system.
+> [!TIP]
+> This entire `Request` pipeline—the `context`, the `schema`, and the resulting `solution`—forms a self-contained, reproducible unit. When saved, this unit is what the system refers to as an **[101: Concept/Idea](./101_concept_idea.md)**.
 
 The `schema` defines the shape of the `solution`.

@@ -1,52 +1,68 @@
-# 007: How an Idea Listens for Instructions
+# 007: Agent/Input
 
-> **Input Message:** Think of this as an instruction card for an `Idea`. It contains a blueprint (`schema`) for what information it needs and the actual information (`input`) to use. Giving an `Idea` this card turns it into an `Ideator`, which is an `Idea` that can actually do a job. — [Glossary](./000_glossary.md)
+> **Input Message:** It's like a note that comes with a task, telling you exactly what information you need to get started. It has two parts: a list of rules (`schema`) and the actual information (`input`). This note is what turns a simple `Idea` into a tool you can use, called an `Ideator`. — [Glossary](./000_glossary.md)
 
 > Sidenote:
->
-> - Depends on: [101: About Ideas](./101_concept_idea.md)
-> - Makes Possible: [103: About Ideators](./103_concept_ideator.md)
+> - Requires: [101: Concept/Idea](./101_concept_idea.md)
+> - Enables: [103: Concept/Ideator](./103_concept_ideator.md)
 
-This document explains the **Input Protocol**, which is a special way to tell an `Idea` what kind of information it needs to get to work. When you add this special instruction message to an `Idea`, it changes from being just a piece of stored information into something that can perform a task, almost like a mini-program. We call this active version an **Ideator**.
+This document explains the **Input Message**. Think of it as the list of ingredients for a recipe. When you give a regular request ([001: Agent/Request](./001_agent_request.md)) a clear, structured list of what it needs to work, you turn it from a one-time action into a reusable tool, just like a recipe you can use over and over.
 
-## The `Input` Message
+This is how a simple `Request` becomes a useful `Tool` that other computer helpers (agents) can use.
 
-The `Input` message is a special instruction card that officially states what information an `Idea` needs to work. It's like writing down both the ingredients list and the actual ingredients you used to bake a cake. This helps create a complete record of how a final `solution` was made, so anyone can see exactly what went into it and repeat the process.
+> [!TIP]
+> A saved recipe is what the system calls an **[101: Concept/Idea](./101_concept_idea.md)**. When you add a list of ingredients (`Input` message) to it, it becomes a hands-on cooking station, or an **[103: Concept/Ideator](./103_concept_ideator.md)**.
+
+## The `Input` Message Type
+
+The `Input` message is a special note that officially lists the information an `Idea` needs to work. It’s the part of the puzzle that records what you started with to get a specific answer (`solution`), giving you a complete picture of the whole process from start to finish.
 
 An `Input` message has two important parts:
 
-1.  **`schema`**: This is like a blueprint or a recipe's ingredient list. It describes the structure of the information the `Idea` needs. For example, it might say, "I need a person's name, which must be text, and their age, which must be a number."
-2.  **`input`**: This is the actual information you provide that follows the blueprint's rules. For example, `input` would be: "The name is 'Sarah' and the age is 12."
+1.  **`schema`**: This is like the list of rules for your ingredients. It says you need "flour" (which must be a word), "cups of sugar" (which must be a number), and so on. It defines the shape and type of information required.
+2.  **`input`**: These are the actual ingredients you're using right now. For example, "flour" is "whole wheat" and "cups of sugar" is `2`. This is the real data that follows the rules in the `schema`.
 
-By describing its needs so clearly, an `Idea` can explain not only what it creates (its `solution`) but also what it needs to create it.
+By explaining its ingredients this way, any `Idea` can show not only what it creates (the `solution`) but also what it needs to get started. This is the secret to making a task repeatable and understandable.
 
-### Making Ideas Easy to Use
+## A Gateway to Usability: A User Interface Comes Free
 
-A big benefit of this system is that it allows computers to automatically create a user interface (like a web form) for any `Idea`. Because the `schema` acts like a perfect instruction manual, a program can read it and instantly build a form with all the right text boxes, number fields, and buttons. This means anyone can start using an `Idea` right away, without needing to know how to code.
+The `Input` message isn't just for organization; it's a magic key that automatically creates a friendly, interactive webpage for any `Request`.
 
-## From a Thought to a Worker Bee
+> Sidenote:
+> - [103: Concept/Ideator](./103_concept_ideator.md).
 
-As we learned in [About Ideas](./101_concept_idea.md), adding an `Input` message to an `Idea` is what officially turns it into an **Ideator**—an `Idea` that does work. It stops being just a thought and becomes a repeatable function, like a calculator that knows how to add numbers whenever you give it some.
+This webpage has two parts:
 
-## Working with Many Things at Once
+1.  **The Form**: The `schema` in the `Input` message is a blueprint for a fill-in-the-blanks form. The system reads these rules and instantly builds a form with text boxes, dropdowns, and buttons, so you can easily enter your information.
+2.  **The Result**: The main `schema` of the `Request` (which describes the answer) acts as a blueprint for the results page. After the task is done, the answer (`solution`) is shown in a neat, organized way, not just as a bunch of code.
 
-The `Input` message works perfectly with the [Instancing Protocol](./011_agent_instancing.md), which lets you run the same task on a whole batch of items at once. Think of it like baking a tray of cookies; you can give instructions to all of them at once or decorate each one differently.
+This turns any `Request` into a mini-app or a playground. You can try out different inputs in the form and instantly see how your changes affect the final result. It makes powerful computer processes feel like simple, interactive tools that anyone can use and explore.
 
-It can work in two ways:
+> Sidenote:
+> - [102: Concept/Sovereignty](./102_concept_sovereignty.md).
 
-1.  **Shared Instructions (Global Input)**: Imagine you're baking cookies and you set the oven temperature for the whole batch. That's a global input. You provide one `Input` message, and its information is automatically shared with every single item (or "instance") you're working on. This is great for settings or instructions that apply to everything, like a general theme.
+## Connecting with Other Rules
 
-2.  **Individual Instructions (Instance-Specific Input)**: Now imagine you want to decorate each cookie differently. One gets red sprinkles, another gets chocolate chips. By adding a special tag (`_instance`) to an `Input` message, you can tell it to get its information directly from one specific cookie. This lets you customize the task for each individual item in the batch.
+The `Input` message is simple, but it becomes really powerful when it works with other rules in the system. It acts like a bridge connecting raw information, reusable tools, and complex projects.
 
-This system gives you a lot of flexibility. You can set up a main task with shared instructions and then add specific, custom details for each item it works on.
+- **Structured Data**: The `Input` message uses the same principles from the [006: Agent/Data](./006_agent_data.md) document to keep all its information clean and organized.
 
-## The Flip: Turning an Ideator into a Tool
+  > Sidenote:
+  > - [006: Agent/Data](./006_agent_data.md).
 
-An `Ideator` is a complete package focused on what it *creates* (the `solution`). But to use it as a simple command in a bigger program, we need to flip it around so it focuses on what it *needs* (the `input`). We call this flip an **inversion**, and it turns the `Ideator` into a **Tool**.
+- **Tool Creation**: The `Input` message is the most important step in turning a `Request` into a reusable [002: Agent/Tool](./002_agent_tool.md). The `schema` from the `Input` becomes the list of settings or buttons for the `Tool`, and the main `schema` of the `Request` tells you what kind of result the `Tool` will give you.
 
-An `Idea` is all about its result:
-`{ instructions, blueprint_of_result, the_actual_result }`
+  > Sidenote:
+  > - [002: Agent/Tool](./002_agent_tool.md).
 
-To turn it into a `Tool`, we look at its instruction card (the `Input` message). The main step is to take the blueprint for the *inputs* and make that the main description of the `Tool`. For example, instead of thinking about the cake (`solution`), we focus on the part that says "needs flour and eggs" (`input`).
+- **Making Copies (Instancing)**: When you need to run the same task many times at once ([011: Agent/Instancing](./011_agent_instancing.md)), `Input` messages can give each copy its own unique instructions or provide one set of instructions for all of them to share.
+  > Sidenote:
+  > - [011: Agent/Instancing](./011_agent_instancing.md).
 
-This creates a `Tool` that works like a command you can call, ready to be used as one step in a much bigger plan. (You can learn more about this in [002: Agent/Tool](./002_agent_tool.md)).
+## Giving Tools the Bigger Picture
+
+While the `Input` message gives a `Tool` specific ingredients (its parameters), sometimes a `Tool` needs to see the whole kitchen it's working in. For example, it might need to know what other tasks are running or look at a bigger collection of data.
+
+The **Imports** rule is how a `Tool` gets permission to see and use this bigger picture. It lets a `Tool` receive whole chunks of information as context, not just single ingredients.
+
+The next document, [008: Agent/Imports](./008_agent_imports.md), explains how a `Tool` can ask for and receive this background information.

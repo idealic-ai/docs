@@ -1,112 +1,93 @@
-# A List of Important Words
+# A Dictionary of Big Ideas
 
-This document explains the main words we use when talking about the Idea Protocol and how it works.
+This guide explains the main ideas you'll find in the Idea Protocol and all the things built with it.
 
-- **Idea**: Imagine a single recipe card. It has three parts: `schema` (the list of ingredients you need), `solution` (the instructions for how to cook it), and `context` (a little note about the recipe, like "Grandma's favorite"). An **Idea** is like that recipe card—a complete package of knowledge that can be saved and used by a computer. It's not just a one-time question; it's a solid building block.
+- **Idea**: Think of an `Idea` as a smart Lego brick of knowledge. It's a single, self-contained block that has three parts: `schema` (its shape and what it connects to), `solution` (what it holds, like a color or a specific piece), and `context` (where it fits in the big picture). It’s a permanent building block, not just a temporary question you ask.
 
   > Sidenote:
-  >
   > - [101: Concept/Idea](./101_concept_idea.md)
 
-- **Ideator**: This is a special kind of **Idea** that can take in new information. Think of it like a customizable recipe. If the basic `Idea` is a recipe for a pancake, an **Ideator** is a recipe that lets you add an ingredient (like blueberries or chocolate chips) to create a new, special kind of pancake. It's an **Idea** that acts like a machine, turning an input into an output.
+- **Ideator**: An `Ideator` is an `Idea` that can do something. Imagine a vending machine. You put something in (input), and it gives you something back (output). An `Ideator` is an `Idea` that has a slot for you to give it information, and it uses that to create a new result.
 
   > Sidenote:
-  >
   > - [103: Concept/Ideator](./103_concept_ideator.md)
 
-- **Idea Transformer**: This is a special kind of **Ideator**. Instead of taking a simple ingredient (like "blueberries"), it takes a whole other **Idea** (like a full recipe) and changes it. Imagine a machine that can take a recipe for a simple cookie and transform it into a recipe for a fancy, decorated cookie cake.
+- **Idea Transformer**: This is a special kind of `Ideator` that takes a whole `Idea` as its input. It’s like a remix machine for ideas. You can give it a complete song (one `Idea`) and it will transform it into a whole new song (another `Idea`).
 
   > Sidenote:
-  >
   > - [103: Concept/Ideator](./103_concept_ideator.md)
 
-- **Input Message**: This is the message you send to an **Idea** to turn it into an **Ideator**. It's like a note that says, "Get ready, I'm going to give you some information to work with." It tells the **Idea** what kind of input to expect, like saying, "You'll be getting a type of fruit."
+- **Input Message**: This is the label you stick on an `Idea` to turn it into an `Ideator`. It’s like the “Insert Coin” sign on an arcade game. It tells everyone what kind of input the `Idea` is expecting to get started.
 
   > Sidenote:
-  >
   > - [007: Agent/Input](./007_agent_input.md)
 
-- **Tool**: Think of a **Tool** as a description of a special power an AI can use, like "Look up the weather" or "Send an email." The AI doesn't know *how* to do it, but it knows the power exists. When the AI decides it needs to use one of these powers, it makes a `Call` to activate it.
+- **Tool**: Imagine giving an AI a toolbox. A `Tool` is like the description of one of the tools inside, like “Hammer” or “Weather Checker.” The AI can’t use a real hammer, but it can look at the description and decide, “Okay, I need to use the Hammer tool for this job.”
 
   > Sidenote:
-  >
   > - [002: Agent/Tool](./002_agent_tool.md)
 
-- **Activity**: An **Activity** is the actual computer program that does the work for a **Tool**. If the **Tool** is the power "Look up the weather," the **Activity** is the code that connects to a weather website and gets the real forecast. It’s the behind-the-scenes work that makes the **Tool** actually do something.
+- **Activity**: If a `Tool` is the *description* of the “Weather Checker,” the `Activity` is the actual computer program that connects to the internet, finds out the weather, and reports back. It’s the real work that gets done when the AI decides to use a `Tool`.
 
   > Sidenote:
-  >
   > - [003: Agent/Activity](./003_agent_activity.md)
 
-- **Call**: A **Call** is a specific order to use a **Tool**. If the **Tool** is "Send an email," a **Call** would be: "Send an email to mom@example.com with the subject 'Hi!' and the message 'Just checking in.'" It’s the command to actually *do* the thing.
+- **Call**: A `Call` is the AI actually *using* a tool for a specific job. If the `Tool` is “Check Weather,” a `Call` is the specific command: “Check Weather for **Paris** on **Friday**.” It’s the order that tells the `Activity` exactly what to do.
 
   > Sidenote:
-  >
   > - [004: Agent/Call](./004_agent_call.md)
 
-- **Scope**: **Scope** tells you *where* a **Call** gets handled.
-  - **Inline Scope**: The AI handles the job itself, right where it is. It’s like doing a math problem in your head.
-  - **Module Scope**: The AI sends the job to a different, specialized helper to do the work and just waits for the result. It’s like using a calculator instead of doing the math yourself.
+- **Scope**: This is about *where* a job gets done.
+  - **Inline Scope**: The job is done right here, in the current workspace.
+  - **Module Scope**: The job is sent to a special, separate workshop that handles just that kind of task.
     > Sidenote:
-    >
     > - [004: Agent/Call](./004_agent_call.md)
 
-- **Method**: **Method** is about *how* a **Call** gets done.
-  - **Explicit Execution**: The result is created by a strict, predictable computer program (an `Activity`). It's like using a calculator—you always get the exact same answer for 2+2.
-
+- **Method**: This is about *how* a job gets done.
+  - **Explicit Execution**: The job is done by following a precise set of instructions, like a recipe (`Activity`). The result is always predictable.
     > Sidenote:
-    >
     > - [003: Agent/Activity](./003_agent_activity.md)
 
-  - **Latent Execution**: The result is created by the AI just thinking about it and coming up with an answer. It's more like asking a creative friend for an idea—the answer will be good, but it's not based on a strict set of rules.
+  - **Latent Execution**: The job is given to a creative expert (the AI) to figure out. It’s like asking an artist to draw a cat—they use their own skill to come up with the answer.
 
     > Sidenote:
-    >
     > - [104: Concept/Latent](./104_concept_latent.md)
 
-- **Module**: A **Module** is like a self-contained helper program that's really good at one specific job. Instead of building that logic into your main program, you can just call on this helper whenever you need it. Think of it like a special calculator app on your phone that you can open anytime you need to do math.
+- **Module**: A `Module` is like a specialist working in a clean room. When you have a very specific task, you send it to the `Module`. It works in isolation with only the specific information you give it (`_imports`), so it doesn’t get confused. After it’s done, it sends the perfect result back.
 
   > Sidenote:
-  >
   > - [009: Agent/Module](./009_agent_module.md)
 
-- **Import**: When you ask a helper (**Module**) to do a job, you might need to give it some key information from your main project. An **Import** is like giving that helper a note with specific instructions, like "When you do this job, remember that the user's name is Alex." It's a way to pass along important details.
+- **Import**: When you ask a specialist in a `Module` for help, you don't tell them everything you know. You just give them the key facts they need for the job. An `Import` is like handing them a sticky note with only the essential information, telling them, “Just focus on this.”
 
   > Sidenote:
-  >
   > - [008: Agent/Imports](./008_agent_imports.md)
 
-- **Loop**: A **Loop** is when the AI keeps trying to solve a problem step-by-step. It makes a move, sees what happens, thinks about the result, and then makes another move. It keeps doing this again and again until the goal is reached and it doesn't need to make any more moves.
+- **Loop**: This is how an AI thinks step-by-step to solve a problem. It’s a cycle: 1. Look at the problem. 2. Decide which `Tool` to use. 3. Use the tool and see the result. 4. Look at the new situation. It repeats this “think-act-learn” cycle until the job is done.
 
   > Sidenote:
-  >
   > - [005: Agent/Loop](./005_agent_loop.md)
 
-- **State Message**: In a multi-step process (a **Loop**), the AI needs to remember what's going on from one step to the next. A **State Message** is like its memory. It’s a note the AI writes to itself after each step, saying, "Here's what the situation looks like right now," so it knows where to pick up from.
+- **State Message**: This is the AI's short-term memory. In between each step of its thinking `Loop`, it writes down everything important about the current situation. It’s like the score and health bar in a video game—it gets updated after every single move.
 
   > Sidenote:
-  >
   > - [010: Agent/State](./010_agent_state.md)
 
-- **Plan**: A **Plan** is the AI's to-do list for a complex job. But it's a smart to-do list. It knows that you have to do Step 1 *before* you can do Step 2. It maps out all the actions (**Calls**) and the order they need to happen in, just like a building instruction manual.
+- **Plan**: Before starting a big task, an AI can create a `Plan`. It’s not just a to-do list; it’s a flowchart that shows which steps have to happen in what order. For example, it knows you must “gather ingredients” *before* you can “bake the cake.”
 
   > Sidenote:
-  >
   > - [012: Agent/Plan](./012_agent_plan.md)
 
-- **Instancing**: This is a way for an AI to handle many similar jobs all at once, without getting them mixed up. Imagine you ask an AI to write a personal thank-you note to ten different friends. **Instancing** is the process that lets the AI do all ten at the same time, keeping each friend's name and details separate and correct.
+- **Instancing**: Imagine an AI needs to do the same task for 100 different people at once. `Instancing` is the power to handle all 100 jobs at the same time, while keeping everyone's information completely separate and organized.
 
   > Sidenote:
-  >
   > - [011: Agent/Instancing](./011_agent_instancing.md)
 
-- **Instance**: An **Instance** is one of the individual jobs in a big batch. In the thank-you note example, the request to write a note to your friend Sarah is one **Instance**. The request to write a note to your friend Ben is another **Instance**. Each one is separate and unique.
+- **Instance**: If `Instancing` is like a teacher grading 100 tests at once, an `Instance` is a single student's test paper. It has a unique name on it and its own set of answers, totally separate from everyone else's.
 
   > Sidenote:
-  >
   > - [011: Agent/Instancing](./011_agent_instancing.md)
 
-- **Reactor**: A **Reactor** is a special kind of **Idea Transformer** that acts like the engine for a turn-by-turn game or process. You give it the current situation (like the positions of all the pieces on a chessboard), and it figures out what the situation will look like after the next move. It takes one "snapshot" of the process and produces the next "snapshot."
+- **Reactor**: A `Reactor` is like a universal game engine. You give it the current state of any game or process (like the positions on a chessboard), and it figures out what the very next moment should look like. It’s an expert at moving any step-by-step system forward.
   > Sidenote:
-  >
   > - [303: Ideator/Reactor](./303_ideator_reactor.md)

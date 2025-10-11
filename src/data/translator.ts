@@ -7,7 +7,7 @@ dotenv.config();
 const SHARED_TRANSLATION_PROMPT = `  * Ensure that in translation markdown headers retain their correct level.
   * Do not translate inline code blocks like \`mything\` but do translate comments in multiline code blocks.
   * DO NOT translate the word Sidenote in blockquotes \`> Sidenote: something\` - these have special meaning.
-  * Retain all sidenotes with \`>Sidenote: переведено здесь...\` syntax
+  * Retain all sidenotes with \`> Sidenote: переведено здесь...\` syntax if you see that, but dont add new ones
   * Retain all links with \`[link text](link url)\` syntax
   * When translating tech terms like Instancing, prefer to translate them as one word. Latinisms are fine, like Инстансинг.
   * Concept / Latent can't be properly translated to russian, so we name it "Концепция / Скрытое" (fine as one word), but elsewhere say скрытое состояние, скрытое исполнение.
@@ -28,13 +28,14 @@ const SHARED_STYLE_GUIDE = `
 * All document titles need to be translated but unaltered - so that everybody knows what document they are reading. e.g. 011: Agent/Instancing. Do not add extra stuff in headings.
 * When doing english to english, retain document group names simplicity (edict, drafts, acts, manifesto)
 * Retain all links with \`[link text](link url)\` syntax
-* Retain all sidenotes with \`>Sidenote: translated here...\` syntax
+* Retain all sidenotes with \`> Sidenote: translated here...\` syntax
 * Dont translate [!WARNING]-like tags, just translate the text next to it.
 * Keep UI strings simple (in json files), as they need to fit inside UI
 * Be mindful about list nesting, dont flatten lists
 * Do not wrap whole document into blockquotes, only blockquotes or sidenotes should be prefixed with > symbol
 * When editing ui strings, keep language names abbreviated (En, Ru, Simple En, Simple Ru)
 * FAQ -> FAQ
+* Avoid messing up syntax for output/input in mermaid: \`Solution[/"The Final Answer (Solution)"/]\` - slashes are in between square brackets and quotes.
 
 
     * Do not translate placeholders like __SIDENOTE_PLACEHOLDER_0__ or __SIDENOTE_TRANSLATION_SEPARATOR__. Keep them as is.
@@ -291,7 +292,7 @@ function reassembleSidenotes(translatedMainContent: string, translatedSidenotes:
       const firstLine =
         firstLineText.trim() === ''
           ? `${indentation}> Sidenote:`
-          : `${indentation}> Sidenote: ${firstLineText}`;
+          : `${indentation}> Sidenote:\n${indentation}> ${firstLineText}`;
 
       const restLines = translatedLines.map(line =>
         line.trim() === '' ? `${indentation}>` : `${indentation}> ${line}`

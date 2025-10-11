@@ -19,6 +19,7 @@ async function getChangedMarkdownFiles(): Promise<string[]> {
   const filePaths = stdout
     .split('\n')
     .filter(line => line.trim() !== '')
+    .filter(line => line[0] !== 'D' && line[1] !== 'D')
     .map(line => {
       // Handles ' M path/to/file', '?? path/to/file', 'R  old -> new' etc.
       const parts = line.trim().split(/\s+/);
@@ -104,7 +105,9 @@ async function main() {
     files.push(...globResults.flat());
   } else if (!args.includes('ui')) {
     console.log('No glob pattern provided, checking for changed markdown files in git...');
-    const changedFiles = await getChangedMarkdownFiles();
+    const changedFiles = await (
+      await getChangedMarkdownFiles()
+    ).filter(c => !c.includes('translations'));
     if (changedFiles.length === 0) {
       console.log('No changed markdown files found.');
       return;
@@ -122,6 +125,7 @@ async function main() {
     return;
   }
 
+  //  files = files.filter(file => file.endsWith('imports.md'));
   console.log(`Translating to languages: ${targetLangs.join(', ')}`);
 
   await Promise.all(
