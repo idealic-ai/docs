@@ -7,8 +7,9 @@
 > Sidenote:
 >
 > - Requires:
->   - [103: Concept/Ideator](./103_concept_ideator.md)
+>   - [002: Agent/Tool](./002_agent_tool.md)
 > - Enables:
+>   - [103: Concept/Ideator](./103_concept_ideator.md)
 >   - [008: Agent/Imports](./008_agent_imports.md)
 >   - [011: Agent/Instancing](./011_agent_instancing.md)
 >   - [202: Idea/Vessel](./202_idea_vessel.md)
@@ -16,12 +17,12 @@
 > - Extended by:
 >   - [009: Agent/Module](./009_agent_module.md)
 
-The [101: Concept/Idea](./101_concept_idea.md) defines a powerful, self-contained data structure for representing knowledge and latent logic. The [002: Agent/Tool](./002_agent_tool.md) establishes the foundational schema-driven interface that enables agents to understand structured capabilities. This document describes the **004: Agent/Call** protocol, which builds upon Tools to define how execution happens.
+The [002: Agent/Tool](./002_agent_tool.md) establishes the foundational schema-driven interface that enables agents to understand structured capabilities. This document describes the **004: Agent/Call** protocol, which builds upon Tools to define how execution happens.
 
 A **Call** is a concrete instance of a Tool with specific parameter values, ready for execution. Where Tools define _what can be done_, Calls define _how it gets executed_.
 
 > [!TIP]
-> A **[001: Agent/Request](./001_agent_request.md)** that results in a set of `Calls` is a **[202: Idea/Vessel](./202_idea_vessel.md)**. A `Vessel` represents a single, reactive moment of decision-making where an agent selects from available `Tools` to form a response.
+> A [001: Agent/Request](./001_agent_request.md) that results in a set of `Calls` is a [202: Idea/Vessel](./202_idea_vessel.md). A `Vessel` represents a single, reactive moment of decision-making where an agent selects from available `Tools` to form a response.
 
 ## Composition and Context
 
@@ -35,7 +36,7 @@ By giving these meta-properties clear semantic meaning, we enable the LLM to be 
   >
   > - [003: Agent/Activity](./003_agent_activity.md).
 
-- **Delegated Execution (`_module`)**: A `Call` can be delegated to an external **Module**. The `_module` property typically contains a reference to a saved **[001: Agent/Request](./001_agent_request.md)** (often as a path to a JSON file), allowing that request to be invoked as a reusable tool. This provides an isolated "clean room" for execution, preventing context bleeding and enabling true encapsulation.
+- **Delegated Execution (`_module`)**: A `Call` can be delegated to an external **Module**. The `_module` property typically contains a reference to a saved [001: Agent/Request](./001_agent_request.md) (often as a path to a JSON file), allowing that request to be invoked as a reusable tool. This provides an isolated "clean room" for execution, preventing context bleeding and enabling true encapsulation.
 
   > Sidenote:
   >
@@ -87,4 +88,4 @@ These patterns enable:
 
 While these patterns manage the execution of a single batch of `Calls`, agents often need to perform multi-step tasks where the output of one `Call` informs the next. This is handled by a higher-level protocol that orchestrates `Requests` and `Calls` in a sequence.
 
-The next document, **[005: Agent/Loop](./005_agent_loop.md)**, describes this execution loop in detail.
+The next document, [005: Agent/Loop](./005_agent_loop.md), describes this execution loop in detail.
