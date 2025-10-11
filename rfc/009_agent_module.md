@@ -1,8 +1,6 @@
 # 009: Agent/Module
 
-> **Module**: A protocol for isolating execution context. Invoked by a `Call`'s `_module` property, it executes an `Activity` or a new `Request` in a "clean room" environment, with the `_imports` property providing controlled access to the parent context.
-
-> — [Glossary](./000_glossary.md)
+> **Module**: A protocol for isolating execution context. Invoked by a `Call`'s `_module` property, it executes an `Activity` or a new `Request` in a "clean room" environment, with the `_imports` property providing controlled access to the parent context. — [Glossary](./000_glossary.md)
 
 > Sidenote:
 >
@@ -35,7 +33,7 @@ The `_module` property is a `string` and can be used in two ways:
 
   > Sidenote:
   >
-  > A saved, reusable **[001: Agent/Request](./001_agent_request.md)** is the most common form of an `Idea`. The Module protocol is the primary mechanism for composing these `Ideas` into more complex systems. See **[101: Concept/Idea](./101_concept_idea.md)** for details.
+  > A saved, reusable [001: Agent/Request](./001_agent_request.md) is the most common form of an `Idea`. The Module protocol is the primary mechanism for composing these `Ideas` into more complex systems. See [101: Concept/Idea](./101_concept_idea.md) for details.
 
 - **Create an anonymous module**: A string literal `'anonymous'` signals an anonymous module. This is used when you need an isolated execution environment for an `Activity` without the overhead of a full saved `Request` context.
 
@@ -43,7 +41,7 @@ The `_module` property is a `string` and can be used in two ways:
 
 A module provides a "clean room" for execution. Instead of running inside the parent agent's bustling context, the `Call` is processed in a new, isolated sub-request. The context for this sub-request is carefully constructed, not inherited.
 
-This is where the **[Imports Protocol](./008_agent_imports.md)** becomes critical. The `_imports` property on the `Tool` schema acts as a bridge, explicitly declaring which pieces of the parent context should be "imported" into the module's clean room. This gives the parent agent precise control over what the module can see, preventing context bleeding and enabling true encapsulation.
+This is where the [Imports Protocol](./008_agent_imports.md) becomes critical. The `_imports` property on the `Tool` schema acts as a bridge, explicitly declaring which pieces of the parent context should be "imported" into the module's clean room. This gives the parent agent precise control over what the module can see, preventing context bleeding and enabling true encapsulation.
 
 > Sidenote:
 >
@@ -68,18 +66,6 @@ This method enables a powerful paradigm that is not possible with traditional co
 This is a significant advantage, as it allows modules to be updated and evolve independently. Even if a module changes its input structure, calling agents won't immediately break. The LLM will attempt to adapt the old `Call` format to the new `input` schema, providing a level of resilience and loose coupling that is unique to this architecture.
 
 The process is as follows:
-
-> Sidenote:
->
-> ```mermaid
-> graph TD
->     A[Agent generates Call] --> B{Executor};
->     B --> C["1. Context Assembly<br/>(Module + Imports)"];
->     C --> D["2. Input Mapping<br/>(Call Params)"];
->     D --> E["3. Execution<br/>(New Request)"];
->     E --> F["Sub-LLM bridges gaps"];
->     F --> G[Result returned to Agent];
-> ```
 
 1.  An agent generates a `Call` to the modular `Tool`.
 2.  The executor sees the `_module` property and initiates the protocol.
@@ -109,8 +95,25 @@ This two-layer hierarchy is a common pattern. However, the true power of modules
 
 Now, let's introduce a high-level **`Producer`** agent. The `Producer`'s goal is to create a finished record. Based on the specific task, the `Producer` can orchestrate its modules in different ways:
 
+> Sidenote:
+>
+> This arrangement allows for flexible orchestration. A high-level `Producer` can delegate to a `Composer`, who in turn uses a `Sound-Designer`. However, the `Producer` can also bypass the `Composer` and interact with the `Sound-Designer` directly for specific tasks.
+>
+> ```mermaid
+> graph TD
+>     Producer --> Composer
+>     Producer --> SoundDesigner(Sound-Designer)
+>     Composer --> SoundDesigner(Sound-Designer)
+> ```
+
 - **Hierarchical Orchestration**: For creating a song, the `Producer` might make a single `Call` to the `Composer` module. The `Producer` provides high-level direction ("I need a sad ballad"), and the `Composer` executes its entire internal workflow, including its own nested `Calls` to the `Sound-Designer`. The `Producer` doesn't need to know about the `Sound-Designer`'s existence in this case.
 
 - **Parallel Orchestration**: If the `Producer` also needs specific sound effects for the record (like foley or an ambient soundscape), it can make `Calls` directly to the `Sound-Designer` module for those tasks, in parallel with its `Call` to the `Composer`.
 
 This demonstrates the key principle: the composition is not fixed within the tools themselves. The `Producer` can choose to treat the `Composer` as a black box or to interact with its constituent parts (`Sound-Designer`) directly, all depending on the needs of the moment. This flexibility allows the same set of expert modules to be combined in various arrangements, creating a deeply composable and emergent system.
+
+## From Modules to Memory
+
+Modules provide powerful encapsulation for discrete capabilities, but complex, multi-step workflows require a memory. An agent needs a way to maintain a persistent state between `Calls` to track progress, learn from previous outcomes, and execute long-term plans. This is the bridge from isolated actions to coherent, stateful execution.
+
+The next document, [010: Agent/State](./010_agent_state.md), describes the protocol for managing this persistent state.

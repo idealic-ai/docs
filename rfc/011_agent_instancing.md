@@ -10,94 +10,59 @@
 >   - [008: Agent/Imports](./008_agent_imports.md)
 >   - [012: Agent/Plan](./012_agent_plan.md)
 
-This document outlines a protocol for processing multiple, independent instances within a single agent request, using a state-driven architecture.
+The **Instancing Protocol** is a data-centric pattern that connects multiple, independent data objects within a single agent request. By leveraging a state-driven architecture, an agent can operate on an array of `State Objects` concurrently, dramatically improving throughput and consistency. This protocol is the key to scaling agentic operations from single-item processing to high-volume data workflows.
 
-## 1. Foundational Requirement: The State System
+## The Instancing Mechanism
 
-The core prerequisite for this instancing protocol is the **State System**, which explicitly decouples the planning of actions from their execution.
+Instancing is built upon the foundation of the **[010: Agent/State](./010_agent_state.md)** protocol. Instead of providing a single `State Object`, a request can include an array of them, each representing a distinct `Instance` of a task.
 
-The **State Object** is the bridge between these phases. It is a mutable, JSON-like object that serves two critical functions:
+To manage these concurrent contexts, each `State` message is assigned a **unique identifier** via a special `_instance` property. These identifiers are short, unique tokens (e.g., `①`, `②`) that allow the LLM to associate operations with a specific `Instance`.
 
-1.  **Target for Execution**: It is the canvas upon which tools operate. Every `Tool Call` includes an `_outputPath` property, which specifies a path within the `State` object where the tool's output should be written during execution.
-2.  **Source for Dependencies**: A `Tool Call` can reference a value from the `State` as one of its inputs. This allows for the creation of dependency graphs.
+This approach provides significant benefits:
 
-## 2. The Instancing Mechanism
+- **Efficiency**: It multiplies the throughput of the system by processing many instances in a single LLM request.
+- **Consistency**: By allowing the LLM to see multiple related instances in a single context, it can generate more consistent and higher-quality plans.
 
-The true power of this architecture is revealed in its native support for multi-instance operations, which is enabled by the State System.
+## Composition with Context Messages
 
-### 2.1. State Identifiers
+The protocol's power comes from how the `_instance` identifier scopes the behavior of different context message types.
 
-To process multiple instances in a single request, the system accepts an array of context messages. Each message representing a distinct instance is assigned a **unique identifier** via a special `_instance` property. These identifiers are short, unique tokens (e.g., circled numbers like `①`, `②`) that are easily visible to the LLM but carry no semantic meaning beyond their function as a reference.
+- **State:** The `State` message is the core of the protocol. Each `Instance` is a distinct `State Object`, uniquely identified by the `_instance` property. This provides an isolated canvas for a sequence of operations, ensuring that parallel workflows do not interfere with one another.
 
-### 2.2. Targeted Operations
+  > Sidenote:
+  >
+  > - [010: Agent/State](./010_agent_state.md)
 
-This `_instance` is then used to target all operations to a specific instance's context. Furthermore, all meta-parameters for a `Tool Call` are prefixed with an underscore (`_`), and its `params` are inlined directly into the call object.
+- **Input:** An `Input` message can be used in two ways. A global `Input` message (without an `_instance` identifier) provides configuration for all instances in a batch. A targeted `Input` message (with an `_instance` identifier) provides data for a specific `State Object`, overriding any global input.
 
-- **`Tool Call` Association**: Each `Tool Call` in the generated plan contains the `_instance` of the context it should operate on.
-- **Implicit Scoping**: The `_instance` on a `Tool Call` implicitly scopes all path-based operations (`_outputPath` and input references) within that call. This means that when a tool reads from or writes to a state object, the path is relative to the `_instance` of the context it belongs to.
+  > Sidenote:
+  >
+  > - [007: Agent/Input](./007_agent_input.md)
 
-This mechanism allows the definitions of the tools themselves to remain simple and agnostic of the instancing context. The `_outputPath` and input references within a tool's schema do not need to be updated; the identifier cleanly separates the operational contexts.
+- **Imports:** The `_instance` identifier provides critical data isolation for `Imports`. When a `Call` targets a specific instance, its `_imports` are also scoped to that instance's context. This is what allows a `Module` to see only the data relevant to its specific unit of work, even when it is being orchestrated as one of many within a larger, multi-instance request.
 
-### 2.3. Example
+  > Sidenote:
+  >
+  > - [008: Agent/Imports](./008_agent_imports.md)
 
-A single request might contain two state objects for sentiment analysis. The schema for the state can be provided to constrain the available properties and guide the LLM.
+## Composition with Other Protocols
 
-```json
-{
-  "context": [
-    {
-      "_instance": "①",
-      "type": "state",
-      "state": { "text": "This is wonderful!" },
-      "schema": {
-        "type": "object",
-        "properties": {
-          "text": { "type": "string" },
-          "sentiment": { "type": "string" }
-        },
-        "required": ["text"]
-      }
-    },
-    { "_instance": "②", "type": "state", "state": { "text": "This is terrible." } }
-  ]
-}
-```
+Instancing integrates with higher-level protocols to manage execution flow.
 
-The LLM processes both in a single context and generates a unified plan:
+- **Calls:** The `_instance` property on a `Call` is the core mechanism that directs its execution. It ensures that all state manipulations—whether writing to an `_outputPath` or reading a value from the state to use as an input—are correctly scoped to the intended `Instance`.
 
-```json
-{
-  "calls": [
-    {
-      "_tool": "analyzeSentiment",
-      "_instance": "①",
-      "text": "†state.text",
-      "_outputPath": "sentiment"
-    },
-    {
-      "_tool": "analyzeSentiment",
-      "_instance": "②",
-      "text": "†state.text",
-      "_outputPath": "sentiment"
-    }
-  ]
-}
-```
+  > Sidenote:
+  >
+  > - [004: Agent/Call](./004_agent_call.md)
 
-The host environment then executes this plan, writing the results to the respective state objects.
+- **Plan:** While instancing provides a mechanism for executing tasks in parallel, a `Plan` defines the sequence of tasks to be performed. A single, reusable `Plan` can be applied to every `Instance` in a request, ensuring that a complex, multi-step workflow is executed consistently across a large batch of data.
 
-## 3. Complementary System: The Planning Graph
+  > Sidenote:
+  >
+  > - [012: Agent/Plan](./012_agent_plan.md)
 
-While not a strict requirement for instancing, the **Planning System** works symbiotically with this architecture to enable highly predictable, reusable workflows.
+## From Parallelism to Planning
 
-A **Plan** is a template for a process, defined as a directed acyclic graph (DAG) of `Tool Calls`. This graph is generated by analyzing the dependencies between tools reading from and writing to a `State Object`.
+Instancing provides the mechanism for executing tasks in parallel across many independent states. However, the sequence of tasks to be performed on each state is often complex and requires its own definition. To manage this, the agent needs a reusable workflow that can be applied consistently to every instance.
 
-Crucially, this plan can be generated and perfected _before_ execution. Once finalized, the plan can be passed as a `Context Message` to the agent. When processing multiple instances, the agent can then follow this pre-defined plan for each `State Object`, achieving highly consistent and predictable results across multiple invocations. The `State Object` for each instance serves as a snapshot of its current position within that execution graph.
-
-## 4. Advantages of this Approach
-
-This state-driven instancing model provides significant benefits:
-
-- **Efficiency**: It multiplies the throughput of the system by processing many instances in a single LLM request, dramatically improving speed and reducing costs.
-- **Consistency & Quality**: By allowing the LLM to see multiple related instances in a single context, it can generate more consistent and higher-quality plans, leveraging patterns across all instances.
-- **Predictability**: When combined with a pre-defined **Plan**, the system can achieve deterministic outcomes. The deterministic execution loop ensures that once a plan is followed, its outcome is reliable and repeatable across every instance.
+The next document, **[012: Agent/Plan](./012_agent_plan.md)**, describes the protocol for creating these reusable, graph-based workflows.
