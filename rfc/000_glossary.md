@@ -88,11 +88,23 @@ This document provides definitions for the key concepts used in the Idea Protoco
   >
   > - [010: Agent/State](./010_agent_state.md)
 
-- **Plan**: A directed acyclic graph (DAG) of `Tool Calls`. It defines a sequence of actions, with dependencies determined by tools reading from and writing to the `State Object`.
+- **Plan Idea**: An `Idea` that represents a reusable, multi-step workflow. Its `schema` defines the structure of the workflow as a graph of `Calls`, and its `solution` is empty, as it is a template for execution, not a result. An instance of a `Plan Idea` that is actively running is a `Process Idea`.
 
   > Sidenote:
   >
   > - [012: Agent/Plan](./012_agent_plan.md)
+
+- **Process Idea**: A self-contained `Idea` that is both the definition of a strategic workflow (`Plan`) and the persistent record of its execution state. Its `schema` defines the workflow's graph, and its `solution` captures the state of that graph at a specific moment.
+
+  > Sidenote:
+  >
+  > - [012: Agent/Plan](./012_agent_plan.md)
+
+- **Vessel Idea**: A self-contained `Idea` that is both the definition of a reactive capability and the persistent record of its execution. Its `schema` defines the full universe of possible `Calls`, and its `solution` captures the specific `Calls` that were chosen in response to a stimulus.
+
+  > Sidenote:
+  >
+  > - [202: Idea/Vessel](./202_idea_vessel.md)
 
 - **Instancing**: The process of handling multiple, independent `Instances` (each with its own `State Object` and unique identifier) within a single agent request.
 

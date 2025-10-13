@@ -1,93 +1,83 @@
-# A Dictionary of Big Ideas
+# A Dictionary of Big Words
 
-This guide explains the main ideas you'll find in the Idea Protocol and all the things built with it.
+This guide explains the main ideas and words you'll see when we talk about the Idea Protocol.
 
-- **Idea**: Think of an `Idea` as a smart Lego brick of knowledge. It's a single, self-contained block that has three parts: `schema` (its shape and what it connects to), `solution` (what it holds, like a color or a specific piece), and `context` (where it fits in the big picture). It’s a permanent building block, not just a temporary question you ask.
+- **Idea**: Think of an Idea as a special LEGO brick. It's not just a plastic block; it's a smart block that holds a single piece of knowledge. It remembers its shape (`schema`), what it's for (`solution`), and how it fits with other bricks (`context`). It's a permanent building block, not just a temporary command you shout.
 
-  > Sidenote:
-  > - [101: Concept/Idea](./101_concept_idea.md)
 
-- **Ideator**: An `Ideator` is an `Idea` that can do something. Imagine a vending machine. You put something in (input), and it gives you something back (output). An `Ideator` is an `Idea` that has a slot for you to give it information, and it uses that to create a new result.
 
-  > Sidenote:
-  > - [103: Concept/Ideator](./103_concept_ideator.md)
+- **Ideator**: This is an Idea that can *do* something. It’s like a function machine from math class: you put something in, and it gives you something new back. We know it's an Ideator because it's waiting for an `input`.
 
-- **Idea Transformer**: This is a special kind of `Ideator` that takes a whole `Idea` as its input. It’s like a remix machine for ideas. You can give it a complete song (one `Idea`) and it will transform it into a whole new song (another `Idea`).
 
-  > Sidenote:
-  > - [103: Concept/Ideator](./103_concept_ideator.md)
 
-- **Input Message**: This is the label you stick on an `Idea` to turn it into an `Ideator`. It’s like the “Insert Coin” sign on an arcade game. It tells everyone what kind of input the `Idea` is expecting to get started.
+- **Idea Transformer**: A special kind of Ideator whose job is to change other Ideas. Imagine a machine where you put in a red LEGO brick (an Idea), and it spits out a blue LEGO brick (a new Idea). That machine is an Idea Transformer.
 
-  > Sidenote:
-  > - [007: Agent/Input](./007_agent_input.md)
 
-- **Tool**: Imagine giving an AI a toolbox. A `Tool` is like the description of one of the tools inside, like “Hammer” or “Weather Checker.” The AI can’t use a real hammer, but it can look at the description and decide, “Okay, I need to use the Hammer tool for this job.”
 
-  > Sidenote:
-  > - [002: Agent/Tool](./002_agent_tool.md)
+- **Input Message**: This is the specific thing you give to an Ideator to make it work. If an Ideator is a gumball machine, the Input Message is the quarter you put in to get a gumball out.
 
-- **Activity**: If a `Tool` is the *description* of the “Weather Checker,” the `Activity` is the actual computer program that connects to the internet, finds out the weather, and reports back. It’s the real work that gets done when the AI decides to use a `Tool`.
 
-  > Sidenote:
-  > - [003: Agent/Activity](./003_agent_activity.md)
 
-- **Call**: A `Call` is the AI actually *using* a tool for a specific job. If the `Tool` is “Check Weather,” a `Call` is the specific command: “Check Weather for **Paris** on **Friday**.” It’s the order that tells the `Activity` exactly what to do.
+- **Tool**: This is like a button on a video game controller. The button has a label, like "Jump," which tells you what it *can* do. The AI (the player) sees this button and knows it's an available action.
 
-  > Sidenote:
-  > - [004: Agent/Call](./004_agent_call.md)
 
-- **Scope**: This is about *where* a job gets done.
-  - **Inline Scope**: The job is done right here, in the current workspace.
-  - **Module Scope**: The job is sent to a special, separate workshop that handles just that kind of task.
-    > Sidenote:
-    > - [004: Agent/Call](./004_agent_call.md)
 
-- **Method**: This is about *how* a job gets done.
-  - **Explicit Execution**: The job is done by following a precise set of instructions, like a recipe (`Activity`). The result is always predictable.
-    > Sidenote:
-    > - [003: Agent/Activity](./003_agent_activity.md)
+- **Activity**: This is the actual computer code that runs when a Tool is used. If the "Jump" button is the Tool, the Activity is the programming that makes the character on the screen actually jump. It’s for things the AI can't do by just thinking, like connecting to the internet or saving a file.
 
-  - **Latent Execution**: The job is given to a creative expert (the AI) to figure out. It’s like asking an artist to draw a cat—they use their own skill to come up with the answer.
 
-    > Sidenote:
-    > - [104: Concept/Latent](./104_concept_latent.md)
 
-- **Module**: A `Module` is like a specialist working in a clean room. When you have a very specific task, you send it to the `Module`. It works in isolation with only the specific information you give it (`_imports`), so it doesn’t get confused. After it’s done, it sends the perfect result back.
+- **Call**: A Call is when the AI actually presses the button. It’s the specific command to use a Tool with all the details filled in, like "Jump 2 feet high."
 
-  > Sidenote:
-  > - [009: Agent/Module](./009_agent_module.md)
 
-- **Import**: When you ask a specialist in a `Module` for help, you don't tell them everything you know. You just give them the key facts they need for the job. An `Import` is like handing them a sticky note with only the essential information, telling them, “Just focus on this.”
 
-  > Sidenote:
-  > - [008: Agent/Imports](./008_agent_imports.md)
+- **Scope**: This is *where* the command (the `Call`) happens.
+  - **Inline Scope**: The command is handled right here, in the current 'room' or process.
+  - **Module Scope**: The command is sent to a different, separate 'room' to be handled, so it doesn't mess with what's happening here.
 
-- **Loop**: This is how an AI thinks step-by-step to solve a problem. It’s a cycle: 1. Look at the problem. 2. Decide which `Tool` to use. 3. Use the tool and see the result. 4. Look at the new situation. It repeats this “think-act-learn” cycle until the job is done.
 
-  > Sidenote:
-  > - [005: Agent/Loop](./005_agent_loop.md)
+- **Method**: This is *how* the command (the `Call`) is carried out.
+  - **Explicit Execution**: The result is predictable because it's done by regular computer code (an `Activity`). If you press the jump button, the character jumps exactly 2 feet every time.
 
-- **State Message**: This is the AI's short-term memory. In between each step of its thinking `Loop`, it writes down everything important about the current situation. It’s like the score and health bar in a video game—it gets updated after every single move.
 
-  > Sidenote:
-  > - [010: Agent/State](./010_agent_state.md)
 
-- **Plan**: Before starting a big task, an AI can create a `Plan`. It’s not just a to-do list; it’s a flowchart that shows which steps have to happen in what order. For example, it knows you must “gather ingredients” *before* you can “bake the cake.”
+  - **Latent Execution**: The result is figured out by the creative AI. It's like asking a friend for an idea—you know you'll get an answer, but you don't know exactly what it will be.
 
-  > Sidenote:
-  > - [012: Agent/Plan](./012_agent_plan.md)
 
-- **Instancing**: Imagine an AI needs to do the same task for 100 different people at once. `Instancing` is the power to handle all 100 jobs at the same time, while keeping everyone's information completely separate and organized.
 
-  > Sidenote:
-  > - [011: Agent/Instancing](./011_agent_instancing.md)
+- **Module**: A 'clean room' for running a command. When you use a Module, the task is done in a totally separate space. This way, it can't accidentally interfere with the main project. You can pass in only the specific tools and information it needs to do its job.
 
-- **Instance**: If `Instancing` is like a teacher grading 100 tests at once, an `Instance` is a single student's test paper. It has a unique name on it and its own set of answers, totally separate from everyone else's.
 
-  > Sidenote:
-  > - [011: Agent/Instancing](./011_agent_instancing.md)
 
-- **Reactor**: A `Reactor` is like a universal game engine. You give it the current state of any game or process (like the positions on a chessboard), and it figures out what the very next moment should look like. It’s an expert at moving any step-by-step system forward.
-  > Sidenote:
-  > - [303: Ideator/Reactor](./303_ideator_reactor.md)
+- **Import**: This is like carefully passing a specific tool or note into the 'clean room' (the Module). It's a way to give a task only the exact information it needs from the outside world without letting it see everything.
+
+
+
+- **Loop**: Imagine you're trying to solve a puzzle. You try a move (`Request`), see what happens (`Call`), and then use that result to plan your next move. You keep doing this over and over until the puzzle is solved. That whole process is a Loop.
+
+
+
+- **State Message**: This is like a sticky note that helps the AI remember what's going on between steps in a Loop. It's like a 'save point' in a video game that keeps track of your progress and inventory.
+
+
+
+- **Plan Idea**: This is a recipe or a blueprint for a multi-step task. It lists all the steps and tools you'll need, but it hasn't been used yet. It’s like a recipe for a cake before you've started baking.
+
+
+
+- **Process Idea**: This is a `Plan Idea` that's currently in action. It's the cake recipe while you're actually baking, with checkboxes next to the steps you've already completed. It holds both the plan and your current progress.
+
+
+
+- **Vessel Idea**: This is like a character in a fighting game. It knows every possible move it could make (`schema`), and it also remembers the specific move it just made (`solution`) in response to what its opponent did.
+
+
+
+- **Instancing**: This is like a teacher grading tests for the whole class at once. The teacher is doing one job (grading), but is applying it to many different students (`Instances`) at the same time, keeping each student's score separate.
+
+
+
+- **Instance**: In the test grading example, each individual student's test is an Instance. It has its own answers and its own final score, separate from everyone else's.
+
+
+
+- **Reactor**: This is a special Ideator that acts like a game engine or a referee. You give it the current state of a game (like the positions of all the chess pieces), and it tells you what the game looks like after the next turn. It reacts to the input and produces the next state.

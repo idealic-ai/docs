@@ -19,7 +19,9 @@ const SHARED_TRANSLATION_PROMPT = `  * Ensure that in translation markdown heade
   * RFCs -> Нормативные Акты (or Акты in short)
   * FAQ -> Частые Вопросы (ЧаВо)
   * Vessel -> Носитель
-  * RFC 003: Agent/Activity -> Акт 003: Агент/Действие`;
+  * RFC 003: Agent/Activity -> Акт 003: Агент/Действие
+  * AI-Native -> ИИ-центричный, ИИ-центричность
+`;
 
 const SHARED_STYLE_GUIDE = `
 

@@ -6,8 +6,6 @@ These documents serve as normative specifications that articulate our team's con
 
 ---
 
-[Glossary](./000_glossary.md)
-
 ### Agent
 
 > Sidenote: Focuses on the agentic capabilities and execution models.
@@ -33,6 +31,7 @@ These documents serve as normative specifications that articulate our team's con
 - [102: Concept/Sovereignty](./102_concept_sovereignty.md)
 - [103: Concept/Ideator](./103_concept_ideator.md)
 - [104: Concept/Latent](./104_concept_latent.md)
+- [105: Concept/AI-Native](./105_concept_ai_native.md)
 
 ### Ideas
 
@@ -51,3 +50,8 @@ These documents serve as normative specifications that articulate our team's con
 - [301: Ideator/Storage](./301_ideator_storage.md)
 - [302: Ideator/Resolver](./302_ideator_resolver.md)
 - [303: Ideator/Reactor](./303_ideator_reactor.md)
+- [304: Ideator/Watcher](./304_ideator_watcher.md)
+
+### Glossary
+
+[Read the full glossary](./000_glossary.md)

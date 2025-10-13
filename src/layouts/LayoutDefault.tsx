@@ -135,6 +135,20 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
                     ))}
                   </>
                 )}
+                {doc === 'rfc' && ui.rfc_sections && (
+                  <>
+                    {Object.entries(ui.rfc_sections).map(([key, value], index, arr) => {
+                      const href =
+                        key === 'glossary' ? `/${lang}/rfc/000_glossary.md` : `/${lang}/rfc#${key}`;
+                      return (
+                        <span key={key} className="chapter-link">
+                          <A href={href}>{value}</A>
+                          {index < arr.length - 1 && ', '}
+                        </span>
+                      );
+                    })}
+                  </>
+                )}
                 {isCurrentDoc && !isManifesto && currentChapter && (
                   <>
                     {' -> '}

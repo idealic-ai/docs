@@ -2,42 +2,48 @@
 
 ## 1. Introduction
 
-This document describes a core tool called the **Storage System**. Think of it as a super-smart library designed specifically for `Ideas`.
+This document explains a very important part of the Idea system called **System: Storage**. Think of it as the system's long-term memory. Its main job is to be a super-safe place where `Ideas` can be saved forever.
 
-Its main job is to provide a permanent, safe place to keep `Ideas`. It's the foundation for memory in the whole system, allowing `Ideas` to be saved and kept in different versions. This way, other tools, like the [System: Resolver](./202_ideator_resolver.md), can find and use them later.
+It's like a magical library that stores every `Idea`. Once an `Idea` is stored, other parts of the system, like the [System: Resolver](./202_ideator_resolver.md) (the librarian), can find and use it later.
 
-## 2. How It Works: Storage is an Idea Transformer
+## 2. Core Concept: How Storage Works
 
-The Storage system is a special kind of tool called an `Idea Transformer`. These tools always take an `Idea` in and give an `Idea` back out.
+The Storage system is a special kind of machine that works with `Ideas`. It follows a simple pattern:
 
-- **What you give it (Input)**: A complete `Idea`, which is made of three parts (`schema`, `solution`, `context`).
-- **What it does (Process)**: The system takes your `Idea`, gives it a unique address so it can be found later (this address also keeps track of the version), and then stores it in a super-reliable place, like a digital vault (for example, a PostgreSQL database).
-- **What you get back (Output)**: It hands you back your original `Idea` as a way of saying, "Got it! It's saved." It might also add a little note to your `Idea`, like a library receipt, that includes the new address and version number to prove it's been stored safely.
+- **Input**: You give it an `Idea`.
+- **Process**: The machine takes the `Idea`, gives it a unique tracking number (including its version, like 'v1', 'v2', etc.), and files it away in a permanent, safe place (like a vault or a database).
+- **Output**: To let you know it worked, the machine hands the `Idea` right back to you with a receipt attached. This receipt has the new tracking number on it, confirming that your `Idea` is safely stored.
 
-## 3. Key Features
+## 3. Storage as a Checkpoint
 
-### 3.1. It's a "Black Box"
+One of the most important jobs of the Storage system is to act like a **save point in a video game**.
 
-The Storage system is designed to be a "black box" that just works. You send it an `Idea` to save, and you don't have to worry about how or where it's stored. You don't get to pick the database or the filing system.
+When you give an `Idea` to Storage and get your receipt back, that part of the mission is complete. Your progress is saved.
 
-The system promises that once it accepts your `Idea`, it will be kept safe and will be available to be found later. The nerdy details inside the box are handled for you.
+This is a big deal because it allows the whole system to work in small, safe steps. Once an `Idea` is saved, it can trigger another part of the system to start a brand new task. This is much better than trying to do one giant, complicated job all at once. If something goes wrong, you only lose a small step, not the whole thing. It makes the system strong and organized.
 
-### 3.2. Versioning and Never Changing the Past
+## 4. Key Features
 
-This system is built on a very important rule: nothing is ever erased or changed. When you want to "update" an `Idea`, the system doesn't just edit the old one. Instead, it creates a brand-new version and saves that, leaving the original one untouched.
+### 4.1. It's a Magic Box
 
-Think of it like the "version history" in Google Docs. It keeps a perfect, unbroken timeline of every change an `Idea` has ever gone through. This means if you ask for a specific version of an `Idea`, you will always get that *exact* version, forever. You can ask for a specific version number or just ask for the `latest` one.
+The Storage system is like a magic box. You put your `Idea` in, and you trust that it will be kept safe. You don't need to know *how* it's stored—whether it's in a big database or split into tiny pieces across many computers. The system promises that once it accepts your `Idea`, it will be there when you need it.
 
-### 3.3. Every Idea Has a Unique Address
+### 4.2. Saving History, Not Changing It
 
-Every `Idea` that gets stored is given a unique address, almost like a fingerprint. You can use this special address (and its version number) to find and retrieve that exact `Idea` anytime. This makes the whole system very reliable and allows anyone to refer to a specific `Idea` with perfect clarity.
+The system has one very important rule: **you can never change the past**. When you want to "update" an `Idea`, the system doesn't erase the old one. Instead, it creates a brand new version and saves it.
 
-## 4. How to Talk to It
+This creates a perfect, unbroken history of the `Idea` from its beginning to its latest version. It’s like a cartoonist's sketchbook, where you can see every a previous draft of a character, not just the final one.
 
-The way you interact with the Storage system is very simple because it only has one main job: to save things.
+### 4.3. Every Idea Has a Unique Address
 
-- **Your Main Action**: The only thing you do is give it an `Idea` to store.
+Every single `Idea` that gets stored receives its own unique address, like a house address or a website link. This address includes its version number. This means you can ask for a very specific `Idea` from a specific moment in time, and the system can find the exact one you mean, no confusion.
 
-- **It Doesn't Fetch Things For You**: To keep things neat and simple, the Storage system's job isn't to help you find and retrieve `Ideas`. That responsibility is given to another tool called the **Resolver**. 
+## 5. How to Use It
 
-This keeps each tool focused on what it does best. The Storage system is an expert at saving things. The Resolver is an expert at finding and putting things together.
+The Storage system is designed to be very simple, with only one main job.
+
+- **Its Only Job**: You can only give it an `Idea` to save.
+
+- **It Doesn't Fetch Things**: To keep things neat, the Storage system doesn't handle finding or reading `Ideas`. That's a different job. If you want to get an `Idea` out of storage, you have to ask another system called the **Resolver**. 
+
+Think of it like this: Storage is a **mailbox** (you can only put letters in it), and the Resolver is the **mail carrier** (they are the one who can go get the mail for you).

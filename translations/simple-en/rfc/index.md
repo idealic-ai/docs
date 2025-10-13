@@ -2,17 +2,15 @@
 
 ---
 
-Imagine we're building a giant, complicated LEGO castle together. Before we start snapping bricks, we need a plan, right? That's what these documents are. "Request for Comments" (RFC) is a fancy way of saying, "Here’s our blueprint. What do you think?"
-
-These documents are the official plans our team has agreed on. They are the final rulebook for how every part of our system works and connects, so we can all build things the right way and make sure they fit together perfectly.
+Think of these documents as the official blueprints for how our system works. They are the strict rules and standards we promise to follow, making sure everything we build fits together perfectly.
 
 ---
 
-[Glossary](./000_glossary.md)
-
 ### Agent
 
-> Sidenote: This section is all about the 'doers' in our system. Think of them like little digital robots that can be given tasks to carry out all by themselves.
+> Sidenote:
+> > Sidenote: This is about how the AI agents think, act, and get things done.
+>
 
 - [001: Agent/Request](./001_agent_request.md)
 - [002: Agent/Tool](./002_agent_tool.md)
@@ -29,16 +27,21 @@ These documents are the official plans our team has agreed on. They are the fina
 
 ### Concept
 
-> Sidenote: This part describes the most basic building blocks and the rules for how they talk to each other. It’s like defining the alphabet and grammar for our project's language.
+> Sidenote:
+> > Sidenote: This section explains the main building blocks of our world and the rules for how they talk to each other.
+>
 
 - [101: Concept/Idea](./101_concept_idea.md)
 - [102: Concept/Sovereignty](./102_concept_sovereignty.md)
 - [103: Concept/Ideator](./103_concept_ideator.md)
 - [104: Concept/Latent](./104_concept_latent.md)
+- [105: Concept/AI-Native](./105_concept_ai_native.md)
 
 ### Ideas
 
-> Sidenote: This section explains the simple, core pieces that make up what we call an 'idea' in our system. It's like explaining what atoms are before you build molecules.
+> Sidenote:
+> > Sidenote: This part breaks down what an 'Idea' is made of—its most basic parts.
+>
 
 - [201: Idea/Record](./201_idea_record.md)
 - [202: Idea/Vessel](./202_idea_vessel.md)
@@ -48,8 +51,15 @@ These documents are the official plans our team has agreed on. They are the fina
 
 ### Ideator
 
-> Sidenote: This is about all the background machinery that keeps everything running. Think of it like the power grid, roads, and factories that support a city.
+> Sidenote:
+> > Sidenote: This covers the background machinery and services that make everything run smoothly.
+>
 
 - [301: Ideator/Storage](./301_ideator_storage.md)
 - [302: Ideator/Resolver](./302_ideator_resolver.md)
 - [303: Ideator/Reactor](./303_ideator_reactor.md)
+- [304: Ideator/Watcher](./304_ideator_watcher.md)
+
+### Glossary
+
+[Read the full glossary](./000_glossary.md)

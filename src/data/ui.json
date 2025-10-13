@@ -19,6 +19,13 @@
     "long": "Drafts",
     "toc_link": "Drafts"
   },
+  "rfc_sections": {
+    "glossary": "Glossary",
+    "agent": "Agent",
+    "concept": "Concept",
+    "ideas": "Ideas",
+    "ideator": "Ideator"
+  },
   "nav": {
     "en": "En",
     "ru": "Ru",
