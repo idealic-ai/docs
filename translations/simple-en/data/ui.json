@@ -1,1 +1,39 @@
-{"rfc":{"short":"Acts","long":"The Official Rules","toc_link":"The Official Rules"},"edict":{"short":"The Proclamation","long":"The Proclamation of Freedom","toc_link":"The Proclamation of Freedom"},"manifesto":{"short":"Our Big Idea","long":"Our Big Idea: Freeing Together","toc_link":"Our Big Idea: Freeing Together"},"blueprint":{"short":"Drafts","long":"Drafts","toc_link":"Drafts"},"rfc_sections":{"glossary":"Word List","agent":"Agent","concept":"Concept","ideas":"Ideas","ideator":"Ideator"},"nav":{"en":"En","ru":"Ru","simple-en":"Simple En","simple-ru":"Simple Ru"},"mainpage":{"title":"The Idealic Library","description":"A collection of documents explaining Our Big Idea: Freeing Together, The Proclamation of Freedom, and other official rules."}}
+{
+  "rfc": {
+    "short": "Acts",
+    "long": "Acts of Emergence",
+    "toc_link": "Acts of Emergence"
+  },
+  "edict": {
+    "short": "Edict",
+    "long": "The Rule of Independence",
+    "toc_link": "The Rule of Independence"
+  },
+  "manifesto": {
+    "short": "Manifesto",
+    "long": "A Declaration of Freeing Together",
+    "toc_link": "A Declaration of Freeing Together"
+  },
+  "blueprint": {
+    "short": "Drafts",
+    "long": "Drafts",
+    "toc_link": "Drafts"
+  },
+  "rfc_sections": {
+    "glossary": "Word List",
+    "agent": "Agent",
+    "concept": "Concept",
+    "ideas": "Ideas",
+    "ideator": "Ideator"
+  },
+  "nav": {
+    "en": "En",
+    "ru": "Ru",
+    "simple-en": "Simple En",
+    "simple-ru": "Simple Ru"
+  },
+  "mainpage": {
+    "title": "The Idealic Library",
+    "description": "A collection of writings explaining our big ideas, like the Declaration of Freeing Together, the Rule of Independence, and other important guidelines."
+  }
+}

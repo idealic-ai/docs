@@ -1,32 +1,30 @@
 # 102: Concept/Sovereignty
 
 > Sidenote:
->
 > - Requires:
 >   - [101: Concept/Idea](./101_concept_idea.md)
 >   - [103: Concept/Ideator](./103_concept_ideator.md)
 
-## 1. Introduction
+## Introduction
 
-This guide explains **Sovereignty**, which is just a fancy word for how much control you have over your creations. Think of it like a menu of options, from letting us handle everything for you to doing it all yourself.
+This paper explains an idea called **Sovereignty**, which is all about how much control creators have over their creations. Think of it like a ladder. You can start on the bottom step and let us handle everything for you, or you can climb all the way to the top and manage everything yourself.
 
-We've set up different levels of control so you can choose what works best. This is how we turn a cool idea (an `Ideator`) into a real thing that actually runs on the internet.
+This is the plan that turns a blueprint for an idea (an `Ideator`) into a real, working service on the internet.
 
-## 2. The Layered Architecture
+## Your Internet Address is Your Castle
 
-Our system has five levels, or "layers." Each level gives you more power and control, building on top of the special ID you created in [101: Concept/Idea](./101_concept_idea.md). You can start on the first level with just a simple ID, or go all the way to the top and run a complete web service.
+The whole system is built on one simple rule: **your internet address (domain name) gives you control**. This means your `Idea` is never locked into one company or platform. You truly own it.
 
-> It's like deciding how to have a pizza. At one end, you can just order a pizza from a restaurant. It's super easy, and they do all the work. At the other end, you can buy your own flour, make your own dough, and bake it in your own oven. You have total control—that's **full sovereignty**. Our layers are like the steps in between, like buying a pre-made pizza crust and adding your own toppings. They help you get from being a customer to being your own pizza chef, if you want.
+Here’s how it works: Every `Idea` gets its own unique domain name, like `my-cool-idea.com`. Attached to that domain is a little digital sticky note, called a `TXT` record. This note holds the web address for the `Idea`'s main file. By controlling this little note, you have the final say over where your `Idea` lives and what it is.
 
-#### How You Stay in Control: Using the Internet's Address Book (DNS)
+### How You Stay in Control
 
-The picture below shows the two main things you can do with an Idea: get its instructions (`GET`) or tell it to do something (`POST`). It also shows how you are always in charge by using something called DNS, which is like the internet's main address book.
+The picture below shows the two main things you can do with an Idea: look at its blueprint (`GET`) and run it like an app (`POST`). It shows how you, the owner of the domain name, are the one directing all the traffic.
 
-**Your entries in the address book are your control panel.** You have two special entries for your website name:
-1. A little note (`TXT` record) that says: "The *instructions* for this Idea are stored over here."
-2. The main address (`A` or `CNAME` record) that says: "To *use* this Idea, go to this place."
+**Think of your domain name’s settings as your control panel.** One setting (the `TXT` record) points to where your `Idea`'s blueprint is stored. Another setting (the `A` or `CNAME` record) points to the computer that runs the `Idea`. Since you control both, you decide whether to use our easy-to-use services or set up your own.
 
-By changing these two addresses, you decide where everything goes. You can use our services or switch to your own servers anytime you want.
+> [!TIP]
+> It helps to see this as a range of choices. On one end, you use our system, which is super easy. On the other end, you have **full sovereignty**: you use your own domain name and run everything on your own computers. You become your own provider. Our services are just here to help you get from one end to the other if you want.
 
 ```mermaid
 sequenceDiagram
@@ -35,71 +33,116 @@ sequenceDiagram
     participant Idea Storage
     participant Ideator
 
-    Client->>DNS: 1. Query TXT record for Idea JSON URL
-    DNS-->>Client: 2. Return URL for Idea Storage
+    Client->>DNS: 1. Asks domain: "Where's the Idea blueprint?" (TXT record)
+    DNS-->>Client: 2. Replies with the blueprint's web address
 
-    Client->>Idea Storage: 3. GET Idea JSON from URL
-    Idea Storage-->>Client: 4. Return Idea JSON
+    Client->>Idea Storage: 3. Goes to that address to get the blueprint file
+    Idea Storage-->>Client: 4. Sends back the blueprint file
 
-    Client->>Ideator: 5. POST to domain to execute (resolved via A/CNAME record)
-    Note over Client, Ideator: The domain's primary DNS record points to the Ideator
-    Ideator-->>Client: 6. Return result
+    Client->>Ideator: 5. Asks domain: "Run this for me." (A/CNAME record)
+    Ideator-->>Client: 6. Runs the idea and sends back the result
 ```
+
+## The Five Layers of Service
+
+On top of the foundation that you own your domain, we offer five optional levels of service. These let you pick exactly how much control you want. You can start with our simple services and gradually take over more yourself, or just jump straight to doing it all on your own.
 
 ### Layer 1: We'll Hold Your Files for You
 
-This level gives you a free place to store the main file for your Ideator, so you can get started right away.
+This layer is a super easy, no-fuss way to store the main file for your Ideator.
 
-- **How It Works:** To make things easy, we'll store your Ideator's instruction file for you in a big online storage folder. The address book entry (`TXT` record) for your project will point to that file. If you ever decide you want to store the file somewhere else (like your own computer or another service), you can just update the address book to point to the new spot. You are never locked in.
-- **Purpose:** To help you start creating without worrying about finding a place to host your files.
-
----
-
-### Layer 2: A Website for Your Idea, Instantly
-
-This layer turns your Ideator into a real website that people can see and use, without needing any fancy servers.
-
-- **How It Works:** We have a special, universal webpage that works for any Ideator. When someone visits your Ideator's web address, this page loads. Its first job is to do a quick, secure lookup in the internet's address book (`DNS-over-HTTPS`) to find your special note (`TXT` record). That note tells it where your Ideator's instruction file is stored. The page then grabs that file and uses it to build a user interface—with buttons, text, and everything—right on the spot inside their browser.
-- **Purpose:** To give every Ideator a free, working web app from day one, making it super easy for anyone to create something useful.
+- **How It Works:** To make things simple, we can store your Ideator's blueprint file for you in a big online storage space (like Google Drive or Dropbox, but for developers). The digital sticky note (`TXT` record) on your domain will point to this file's location. If you ever want to store the file somewhere else, you can just change the address on the sticky note to point to your new location.
+- **Purpose:** To let you get started right away without worrying about setting up your own file storage.
 
 ---
 
-### Layer 3: A Smart Library for Other Computers
+### Layer 2: An Instant Webpage for Your Idea
 
-This layer makes it easy for other computer programs to read and understand your Idea.
+This layer turns your Ideator into a simple webpage that people can use, without needing any fancy servers.
 
-- **How It Works:** We put a fast delivery network (a CDN) in front of your files. When another program asks for information about your Idea, this network is smart enough to deliver it in a way that's easy for programmers to use. For example, instead of grabbing the whole instruction manual, a program can ask for just "the list of ingredients." It even provides a guide on how to use each part correctly. This makes it really nice for developers to build things that connect with your Idea.
-- **Purpose:** To make your Idea powerful and easy for other programs to use, with all the tools developers love.
-
----
-
-### Layer 4: The "Publish Update" Button
-
-This layer gives you a way to publish new versions of your Idea easily and safely.
-
-- **How It Works:** This is how you send updates. You send a special, secure request (`PUT` request) containing the new version of your Idea file. In one single step, this service uploads your new file and instantly updates the address book to point to it. This makes updating your Idea simple and safe.
-- **Purpose:** To give you a secure and simple way to manage and update your creations.
+- **How It Works:** We have a single, universal webpage that works for any Ideator. When someone visits your Ideator's domain in their web browser, some code on that page automatically does a special search to read the digital sticky note (`TXT` record) on your domain. It finds the address of your Ideator's blueprint file (from Layer 1), downloads it, and builds a user interface right there on the spot.
+- **Purpose:** To give every Ideator a free, ready-to-use web app, making it incredibly easy for anyone to create something people can interact with.
 
 ---
 
-### Layer 5: Bringing Your Idea to Life
+### Layer 3: A Special Mailbox for Computers
 
-This is the highest level, where your Ideator stops being just a file of instructions and becomes a real service that can *do* things.
+This layer makes it easy for other computer programs to read and understand your Idea's blueprint.
 
-- **How It Works:** At this level, your Ideator can receive commands (`POST` requests) and run its code to get a job done. It's like turning your Lego blueprint into a working robot that follows instructions. You can let us handle the work of running it for you, or you can set up your own robot factory. 
-- **Purpose:** To give you the power of a modern web service, letting anyone publish a useful app with just a simple instruction file.
+- **How It Works:** We put a smart delivery service (a CDN) in front of your file. When another program sends a message (`GET` request) to your Idea's domain, this service knows how to package up the blueprint in a way that's easy for other code to use. It lets developers import specific parts of your `Idea` directly into their own projects. They can still get the plain, raw file if they ask for it, too.
+- **Purpose:** To let other programmers easily and safely use your Idea in their own code.
 
-## 3. The Rules for Talking to Your Idea
+```ts
+// This special header helps code editors understand the blueprint
+const { default: run, schema } = await import('http://my-idea.com');
+console.log(`The Idea's structure is`, schema);
 
-All conversations with your Idea happen at its main web address (like `your-idea.com/`). Here are the commands computers can use:
+// You can even run the idea like a function
+await run(input);
+```
+
+---
+
+### Layer 4: Publishing Your Updates
+
+This layer gives you a way to publish new versions of your Idea using code.
+
+- **How It Works:** This layer handles special `PUT` requests sent to your Idea's domain. With one secure command, you can upload a new version of your blueprint file and automatically update the digital sticky note to point to it, making the new version live instantly.
+- **Purpose:** To give you a safe and simple way to manage and update your Ideas.
+
+```ts
+// Publish a new version of the idea
+await fetch('http://my-idea.com', {
+  method: 'PUT',
+  data: JSON.stringify({ context, schema, solution }),
+});
+```
+
+---
+
+### Layer 5: A Fully Working Web Service
+
+This is the top layer, which turns your Ideator into a real, powerful web service that other apps can call.
+
+- **How It Works:** This layer handles `POST` requests to your Ideator's domain, telling it to run its logic. This can be handled by our system automatically, or you can set up your own server to do the work.
+- **Purpose:** To give you the power of a modern web service, letting anyone publish a fully working app using just a simple blueprint file.
+
+```ts
+// Use the idea as a service with some new information
+const idea = await fetch('http://my-idea.com', {
+  method: 'POST',
+  data: JSON.stringify(context),
+});
+console.log('New result from the idea:', idea.solution);
+```
+
+### The Blueprint vs. The Service: A Quick Note
+
+One very important rule in our system is that the public blueprint (`Idea`) is separate from how it actually runs. An `Idea` is a complete plan. It has everything needed for an advanced AI or a person to run it on their own computer. This lets people download your `Idea`, play with it, and use it however they want.
+
+The final layer, "Full API Execution," isn't something you have to use. It's an extra feature and a way to build a business. It lets a creator offer their `Idea` as a reliable, professionally-managed service. This is where you can have business secrets and make money in an open system.
+
+A creator can share a public `Idea` as an open promise—a clear description of what the service does and what you'll get back—while keeping the exact way they do it private.
+
+This private method is the creator's "secret sauce." It might use special AI models, powerful computers, or unique data. The service becomes a trustworthy "black box" that does what the public `Idea` promises. This creates a world where open blueprints and valuable private services can exist together and build on each other.
+
+## Technical Details
+
+All commands are sent to the root of the Idea's domain (e.g., `http://my-cool-idea.com/`).
 
 - **`GET /`**
-  This command means "Show me something."
-  - If you ask like a web browser (for a person to see): You get the pretty user interface from Layer 2.
-  - If you ask like a computer (for a program to read): You get the raw instruction file (the JSON file) from Layer 3.
-
+  - If your browser asks for it (as `text/html`, Layer 2): You get the simple webpage for the Idea.
+  - If a program asks for it (as `application/json`, Layer 3): You get the Idea's raw blueprint file.
 - **`PUT /`** (Layer 4)
-  This command means "Here is a new version." You'll need a secret key to prove it's you. One command is all it takes to upload the new file and make it live.
-
+  - You must be logged in. A single `PUT` command uploads the new blueprint and automatically updates the domain's records to make it live.
 - **`POST /`** (Layer 5)
-  This command means "Run and do this job." This is how you tell the Ideator to perform its task. You might need special permission to do this. The request must include the information the Ideator needs to do its work, like `{"context": "Please bake a virtual pizza"}`.
+  - Requires permission. This runs the Ideator.
+  - The body of the request is a JSON object with the input, like `{"context": "The user's input to be processed"}`.
+
+```
+
+```
+
+```
+
+```

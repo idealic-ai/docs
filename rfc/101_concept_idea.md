@@ -57,12 +57,8 @@ The `solution` is the state. Because every `solution` must conform to its `schem
 An `Idea` with a different `context` or `schema` is a different `Idea`. An `Idea`
 is considered backward-compatible if it adds new fields to the `schema`. An `Idea` that changes the `schema` requires bumping the version.
 
-## Publication & Discovery: Decentralized Identity via DNS
+## Publication & Discovery
 
-DNS provides a globally unique, resolvable name for any Idea, establishing a decentralized identity that decouples the Idea from its storage location. This is the bedrock of the entire system.
+For an `Idea` to be useful, it must be published and discoverable. To achieve this in a decentralized way, every `Idea` is given a globally unique, resolvable name, which serves as its identity. This decouples the `Idea` from any specific storage location, making it truly portable and sovereign.
 
-For details on the progressive hosting layers that build on top of this foundation, see [102: Concept/Sovereignty](./102_concept_sovereignty.md).
-
-### The DNS Identity Mechanism
-
-- **How It Works:** An Idea is given a unique domain name. A `TXT` record is created for that domain containing an `idea` key that points to the canonical Idea JSON document. This document defines the Idea's complete interface.
+This is achieved by giving each `Idea` a unique domain name and using DNS records to point to its canonical definition. The specific mechanics of this decentralized identity and the progressive layers of hosting that build upon it are detailed in the next document, [102: Concept/Sovereignty](./102_concept_sovereignty.md).

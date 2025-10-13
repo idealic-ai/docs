@@ -9,19 +9,19 @@
 
 > **Latent:** The use of a Large Language Model's (LLM) internal knowledge and reasoning capabilities (its "latent space") to generate outputs without explicit, deterministic code. — [Glossary](./000_glossary.md)
 
-## 1. Introduction
+## Introduction
 
 The concept of **Latent** is fundamental to the system's architecture, encompassing both the process (**Latent Execution**) and the source of knowledge (**Latent Space**). It is the system's default computational method, relying on a Large Language Model (LLM) to function as a universal interpreter. This approach allows the system to bridge the gap between an `Idea`'s input (`context`) and its output (`solution`) by navigating and arranging the LLM's vast internal knowledge.
 
 This approach is fundamental to the system's flexibility, allowing for the composition and execution of workflows even when no explicit, deterministic code has been written for the constituent tasks.
 
-## 2. The Latent Space: An Ocean of Knowledge
+## The Latent Space: An Ocean of Knowledge
 
 The **Latent Space** is the vast, high-dimensional representation of knowledge, patterns, and relationships that an LLM learns during its training. It is not a database of facts, but a complex map of concepts where proximity and orientation define semantic relationships. Large language models are powerful precisely because of the richness of this space, but their knowledge is only useful if it can be accessed and directed effectively.
 
 The primary challenge is not the existence of this knowledge, but the ability to navigate it. The system is designed to solve this by providing the right questions and, critically, the right context to guide the LLM to the relevant areas of its latent space.
 
-## 3. Latent Execution: Activating the Latent Space
+## Latent Execution: Activating the Latent Space
 
 **Latent Execution** is the process of activating the latent space to perform a task. It is what occurs when the system defaults to using the LLM because no explicit, deterministic code (`Activity`) is registered to handle a `Call`.
 
@@ -34,7 +34,7 @@ The process is as follows:
 
 This transforms the LLM from a simple text generator into a dynamic execution engine that can fulfill novel interfaces on the fly.
 
-## 4. Context Management: Arranging the Latent Space
+## Context Management: Arranging the Latent Space
 
 The system's most critical function is to **optimize the arrangement of the latent space** within a single request. It does this through sophisticated context management, using a variety of "tool-like tricks" to focus the LLM's attention and guide its reasoning.
 
@@ -44,7 +44,7 @@ The system's most critical function is to **optimize the arrangement of the late
 
 Effective context management is what makes latent execution reliable. It is how the system turns the LLM's vast, undifferentiated ocean of knowledge into a precise and useful tool.
 
-## 5. The Default for Optimistic Composition
+## The Default for Optimistic Composition
 
 Latent Execution is not an exception; it is the default behavior. The system operates on an "optimistic" principle: it assumes any defined interface can be fulfilled by arranging the latent space correctly. An `Activity` with deterministic code is treated as a progressive enhancement—an optimization for tasks that require speed, reliability, or access to external APIs.
 
