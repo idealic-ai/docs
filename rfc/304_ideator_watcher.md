@@ -36,3 +36,4 @@ Consider a `Plan` that involves a step that may take hours or days to complete (
 Instead, the `Plan` can delegate the long-running task to an external service and then terminate. That external service, upon completion, writes its result back to `Storage`. A `Watcher`, configured to listen for this specific result, can then trigger a _new_ `Plan` to continue the workflow.
 
 This pattern allows for highly resilient and scalable processes that are not constrained by the memory or lifespan of any single runtime. It enables true asynchronicity by breaking down a long process into a series of smaller, event-triggered transactions.
+

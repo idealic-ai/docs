@@ -10,3 +10,4 @@ This document outlines a vision for a new digital ecosystem based on decentraliz
 - [Part II: The Protocol](./02_protocol.md)
 - [Part III: The Impact](./03_impact.md)
 - [Part IV: Appendices](./04_appendices.md)
+

@@ -22,8 +22,6 @@ A `Process Idea` uses the `Idea` triplet to provide a complete snapshot of a wor
 
 - **`schema` (The Palette):** Defines the library of all available [Tools](./002_agent_tool.md) from which a `Plan` can be constructed. It represents the agent's full set of capabilities.
 
-- **`solution` (The New Plan):** The directed acyclic graph (DAG) of `Calls` that is the agent's chosen strategy for the _current_ tick. This becomes the `Plan Message` for the next tick.
-
 - **`context` (Situational Awareness):** This holds all the information necessary for the agent to plan and execute the current tick.
   - **Input Message:** The initial stimulus that kicked off the entire process. This is typically provided only once and remains constant.
 
@@ -42,6 +40,8 @@ A `Process Idea` uses the `Idea` triplet to provide a complete snapshot of a wor
     > Sidenote:
     >
     > - [012: Agent/Plan](./012_agent_plan.md)
+
+- **`solution` (The New Plan):** The directed acyclic graph (DAG) of `Calls` that is the agent's chosen strategy for the _current_ tick. This becomes the `Plan Message` for the next tick.
 
 ### The Unity of Planning and Execution
 
@@ -62,6 +62,10 @@ This unified model provides two powerful advantages. First, a `Plan` can be esta
 ### The Flexibility Spectrum of a Plan
 
 The `State` object enables a powerful, three-stage lifecycle for a `Plan`, allowing it to evolve from a flexible discovery process into a predictable, deterministic workflow:
+
+> Sidenote:
+>
+> - [010: Agent/State](./010_agent_state.md)
 
 1.  **Freeform Plan:** Initially, the `State` can be defined without a `schema`. This gives the agent maximum freedom to discover a `Plan` by creating new connections (properties in the `State` object) on the fly.
 
@@ -98,7 +102,7 @@ The power of a `Process Idea` comes from its immutability. Each step in a workfl
   >
   > - [202: Idea/Vessel](./202_idea_vessel.md)
 
-- **Consistent Batch Processing:** The snapshot-based approach ensures consistency when scaling workflows with the Instancing protocol. A `Plan` acts as a template that is applied across a batch of independent `State` objects. Because both the `Plan` and the starting `State` of each instance are well-defined snapshots, the agent can process the entire batch in a single, atomic tick, guaranteeing a coherent and predictable outcome for every instance.
+- **Consistent Parallel Processing:** The snapshot-based architecture achieves massive scale through the Instancing protocol. This pattern treats each task in a batch as an independent execution thread, each with its own isolated `State` snapshot. A single `Plan` acts as a strategic template applied to all threads simultaneously. In one atomic tick, the agent performs parallel planning for the entire batch, generating a coherent set of `Calls` tailored to each instance. This guarantees a consistent outcome across diverse tasks while dramatically increasing efficiency.
 
   > Sidenote:
   >
@@ -108,7 +112,7 @@ The power of a `Process Idea` comes from its immutability. Each step in a workfl
 
 A `Process Idea` can mature into a **Resolved Plan**—a highly predictable and reliable workflow. While this rigidity provides stability, it can also limit flexibility. The system needs a way to introduce nuanced, context-specific guidance without sacrificing the integrity of the established plan.
 
-This is the role of an **[Instruction Idea](./204_idea_instruction.md)**. An `Instruction` is a structured recipe for action that can be composed with a stable `Process`. Instead of altering the plan's structure, it provides targeted guidance for individual choices _within_ that structure. This allows an `Instruction` to direct specific reasoning steps, add new checks, or influence a decision at a particular node in the graph, providing an extra layer of control while retaining all the guarantees of the predictable plan. It is the mechanism for enhancing the logic of a workflow, not just its sequence of actions.
+This is the role of an **[Instruction Idea](./204_idea_instruction.md)**. An `Instruction` is a structured recipe for action that provides a higher level of strategic guidance. It acts as a "mental checklist" or a set of principles that influences the workflow at two levels: guiding the agent in selecting or generating the most appropriate `Plan` for a given context, and providing targeted guidance for individual choices and reasoning steps during the execution of that `Plan`. In essence, an `Instruction` enhances the _logic_ and _reasoning_ of a workflow, ensuring that both the overall strategy and the tactical execution align with a desired methodology.
 
 > Sidenote:
 >
