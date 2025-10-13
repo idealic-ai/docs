@@ -57,3 +57,15 @@ This default has a profound impact on development:
   **Progressive Crystallization**: A workflow can begin its life entirely in the latent space. As the system evolves, performance bottlenecks or critical processes can be selectively "crystallized" into `Activities` with explicit code, without changing the overall structure of the workflow.
 
 By making latent execution the default, the system prioritizes flexibility and speed of iteration, enabling the creation of complex agentic behaviors from day one.
+
+## The Engine of AI-Native Architecture
+
+The principle of latent execution is not just a feature; it is the engine that drives the entire AI-Native paradigm. The ability to prototype, compose, and execute complex workflows without first writing deterministic code is the fundamental enabler of the fluidity and resilience that an AI-Native system requires. It is what allows an AI to act as the architect, planner, and executor of its own processes.
+
+This concept is the key to moving beyond systems that simply _use_ AI as a tool, to systems that are fundamentally built _in the medium_ of AI.
+
+> Sidenote:
+>
+> - [105: Concept/AI-Native](./105_concept_ai_native.md)
+
+The next document, [105: Concept/AI-Native](./105_concept_ai_native.md), explores this architectural shift in detail.

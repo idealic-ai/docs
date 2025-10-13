@@ -41,6 +41,7 @@ This document is the bridge between high-level vision and ground-level implement
 - [103: Concept/Ideator](./103_concept_ideator.md)
 - [104: Concept/Latent](./104_concept_latent.md)
 - [105: Concept/AI-Native](./105_concept_ai_native.md)
+- [106: Concept/Evolution](./106_concept_evolution.md)
 
 ### Ideas
 

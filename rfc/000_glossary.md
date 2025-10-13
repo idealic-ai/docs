@@ -82,6 +82,12 @@ This document provides definitions for the key concepts used in the Idea Protoco
   >
   > - [005: Agent/Loop](./005_agent_loop.md)
 
+- **Evolution**: The process by which an AI-Native system autonomously or semi-autonomously adapts, improves, and changes its own structure, logic, and capabilities over time in response to new data, feedback, or changing goals.
+
+  > Sidenote:
+  >
+  > - [106: Concept/Evolution](./106_concept_evolution.md)
+
 - **State Message**: A context message containing a `state` object and an optional `schema`. It represents a persistent state maintained between ticks of an agent's execution loop.
 
   > Sidenote:

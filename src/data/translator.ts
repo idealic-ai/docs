@@ -47,6 +47,7 @@ const SHARED_STYLE_GUIDE = `
 * __SIDENOTE_TRANSLATION_SEPARATOR__s
 * Idealic is the name of our company, so dont translate it
 * Idealic — это проект, цель которого — освободить идеи.
+* Dont use LEGO as a metaphor for the system, it is too common and doesnt fit the context. Attempt to find other metaphors.
 `;
 const TranslationResponseSchema = {
   type: 'object',
