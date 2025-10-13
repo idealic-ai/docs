@@ -94,13 +94,13 @@ This document provides definitions for the key concepts used in the Idea Protoco
   >
   > - [012: Agent/Plan](./012_agent_plan.md)
 
-- **Process Idea**: A self-contained `Idea` that is both the definition of a strategic workflow (`Plan`) and the persistent record of its execution state. Its `schema` defines the workflow's graph, and its `solution` captures the state of that graph at a specific moment.
+- **Process Idea**: A self-contained [Idea](./101_concept_idea.md) that captures a strategic [Plan](./012_agent_plan.md) and its live execution state. Its `schema` is the library of [Tools](./002_agent_tool.md), its `solution` is the _new_ `Plan` for the current tick, and its `context` contains the `Input`, `State`, and the previous `Plan`.
 
   > Sidenote:
   >
   > - [012: Agent/Plan](./012_agent_plan.md)
 
-- **Vessel Idea**: A self-contained `Idea` that is both the definition of a reactive capability and the persistent record of its execution. Its `schema` defines the full universe of possible `Calls`, and its `solution` captures the specific `Calls` that were chosen in response to a stimulus.
+- **Vessel Idea**: A self-contained `Idea` that is both the definition of a reactive capability and the record of its chosen reaction. Its `schema` defines the full universe of possible `Tools`, and its `solution` captures the specific `Calls` (instances of those `Tools`) that were chosen in response to a stimulus.
 
   > Sidenote:
   >

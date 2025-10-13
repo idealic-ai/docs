@@ -1,6 +1,6 @@
 # 202: Idea/Vessel
 
-> **Vessel Idea:** A self-contained `Idea` that is both the definition of a reactive capability and the persistent record of its execution. Its `schema` defines the full universe of possible `Calls`, and its `solution` captures the specific `Calls` that were chosen in response to a stimulus.
+> **Vessel Idea:** A self-contained `Idea` that is both the definition of a reactive capability and the record of its chosen reaction. Its `schema` defines the full universe of possible `Tools`, and its `solution` captures the specific `Calls` (instances of those `Tools`) that were chosen in response to a stimulus.
 >
 > — [Glossary](./000_glossary.md)
 
@@ -22,8 +22,8 @@ A `Vessel Idea` uses the core `Idea` triplet to capture both the potential for a
 > - [101: Concept/Idea](./101_concept_idea.md)
 
 - **`context` (The Stimulus):** This contains the input that triggered the agent's reaction.
-- **`schema` (The Definition):** This defines the agent's entire reactive capability in that moment—the full "call setup." It describes every `Tool` the agent _could have_ used, typically as a `oneOf` schema.
-- **`solution` (The Instance):** This is the record of what the agent _actually did_. It's an array containing the specific `Calls` that were chosen and executed.
+- **`schema` (The Definition):** This defines the agent's entire reactive capability in that moment. It describes every `Tool` the agent _could have_ used, typically as a `oneOf` schema.
+- **`solution` (The Instance):** This is the record of what the agent _actually did_. It's an array containing the specific `Calls`—concrete instances of the `Tools` from the `schema`—that were chosen and executed.
 
 Because a `Vessel` contains both the universe of possibilities (`schema`) and the specific outcome (`solution`), it provides a complete picture of a decision-making event.
 
