@@ -36,9 +36,9 @@ An AI-Native system overcomes these limitations by treating the entire processâ€
 
 The lifecycle of an AI-Native process is a continuous, self-improving loop managed by the AI. It is not a static, human-defined flowchart. The AI can dynamically re-plan, adapt to unforeseen errors, and optimize its own workflows based on performance and outcomes, creating a truly resilient and evolving system.
 
-### Fluidity from Simulation to Reality
+### Fluidity and Resilience
 
-In an AI-Native system, a new tool or process doesn't require immediate code. It can begin as a **latent tool**, where its function is simply described. The LLM can simulate and "role-play" this tool's behavior within a larger plan. This allows for rapid prototyping and design of complex systems. Over time, these latent tools can be progressively **crystallized** into hardened, code-backed implementations as needed, without disrupting the overall workflow. This seamless continuum from abstract design to concrete execution eliminates the gap that plagues traditional systems.
+In an AI-Native system, the workflow is fluid from abstract design to concrete execution. A new tool or process doesn't require immediate code; it can begin as a **latent tool**, where its function is simply described. The LLM can simulate and "role-play" this tool's behavior, allowing for rapid prototyping. Over time, these latent tools can be progressively **crystallized** into hardened, code-backed implementations as needed, without disrupting the workflow. This fluidity extends to execution: the LLM also acts as an intelligent "glue" between components. If the output of one tool doesn't perfectly match the expected input of the next, the LLM dynamically adapts the data to bridge the gap. This provides extraordinary stability as the system evolves, preventing the cascading failures that plague traditional, rigidly-connected architectures.
 
 ### Radical Efficiency via Unified Planning
 

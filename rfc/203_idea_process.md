@@ -37,7 +37,7 @@ A `Process Idea` uses the `Idea` triplet to provide a complete snapshot of a wor
     >
     > - [010: Agent/State](./010_agent_state.md)
 
-  - **Plan Message:** This message contains the **Committed Plan** from the previous tick, which the agent can choose to follow or readjust.
+  - **Plan Message:** This message contains the _commited_ plan from the previous tick, which the agent can choose to follow or readjust.
 
     > Sidenote:
     >
@@ -52,6 +52,12 @@ This unity is what makes the system so dynamic and efficient. The `Plan` is a li
 > Sidenote:
 >
 > - [004: Agent/Call](./004_agent_call.md)
+
+This unified model provides two powerful advantages. First, a `Plan` can be established and simulated based on its schemas alone, even before concrete data is available. The LLM can "role-play" the behavior of each step, allowing for the design and validation of complex workflows from day one. Second, the LLM acts as an intelligent adapter between steps. If the output of one `Call` doesn't perfectly match the expected input of the next, the LLM can bridge the gap, providing extraordinary stability as the system evolves. This resilience prevents the cascading failures that plague traditional, rigidly-connected systems.
+
+> Sidenote:
+>
+> - [105: Concept/AI-Native](./105_concept_ai_native.md)
 
 ### The Flexibility Spectrum of a Plan
 

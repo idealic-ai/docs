@@ -21,6 +21,7 @@ const SHARED_TRANSLATION_PROMPT = `  * Ensure that in translation markdown heade
   * Vessel -> Носитель
   * RFC 003: Agent/Activity -> Акт 003: Агент/Действие
   * AI-Native -> ИИ-центричный, ИИ-центричность
+  * When translating inline links to chapters, e.g. 202: Idea/Vessel, translate it in the same forat like 202: Идея/Носитель, dont add parenthesis.
 `;
 
 const SHARED_STYLE_GUIDE = `
