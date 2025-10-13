@@ -48,6 +48,7 @@ const SHARED_STYLE_GUIDE = `
 * Idealic — это проект, цель которого — освободить идеи.
 * Dont use LEGO as a metaphor for the system, it is too common and doesnt fit the context. Attempt to find other metaphors.
 * Simple ru -> Простой Ру
+* DO NOT STOP at \` character, always continue to the end of the file
 `;
 const TranslationResponseSchema = {
   type: 'object',
