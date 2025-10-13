@@ -108,7 +108,7 @@ The power of a `Process Idea` comes from its immutability. Each step in a workfl
 
 A `Process Idea` can mature into a **Resolved Plan**—a highly predictable and reliable workflow. While this rigidity provides stability, it can also limit flexibility. The system needs a way to introduce nuanced, context-specific guidance without sacrificing the integrity of the established plan.
 
-This is the role of an **[Instruction Idea](./204_idea_instruction.md)**. An `Instruction` is a structured recipe for action that can be composed with a stable `Process`. Instead of altering the plan's structure, it provides targeted guidance for individual choices _within_ that structure. This allows an `Instruction` to direct specific reasoning steps, add new checks, or influence a decision at a particular node in the graph, providing an extra layer of control while retaining all the guarantees of the predictable plan. It is the mechanism for enhancing the _logic_ of a workflow, not just its sequence of actions.
+This is the role of an **[Instruction Idea](./204_idea_instruction.md)**. An `Instruction` is a structured recipe for action that can be composed with a stable `Process`. Instead of altering the plan's structure, it provides targeted guidance for individual choices _within_ that structure. This allows an `Instruction` to direct specific reasoning steps, add new checks, or influence a decision at a particular node in the graph, providing an extra layer of control while retaining all the guarantees of the predictable plan. It is the mechanism for enhancing the logic of a workflow, not just its sequence of actions.
 
 > Sidenote:
 >

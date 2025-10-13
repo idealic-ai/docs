@@ -319,13 +319,6 @@ export async function getAdaptedDocument(
 
   const { mainContent, sidenotes } = extractSidenotes(content);
 
-  if (sidenotes.length === 0) {
-    if (lang === 'simple-en' || lang === 'simple-ru') {
-      return await translateELI5(content, lang);
-    }
-    return await translateDocument(content, lang === 'ru' ? 'Russian' : 'English', extraPrompt);
-  }
-
   const SIDENOTE_TRANSLATION_SEPARATOR = '__SIDENOTE_TRANSLATION_SEPARATOR__';
   const joiner = `\n\n${SIDENOTE_TRANSLATION_SEPARATOR}\n\n`;
   const contentToTranslate = [mainContent, ...sidenotes].join(joiner);
