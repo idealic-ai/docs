@@ -6,7 +6,7 @@ _We stand at a critical juncture, presented with a new path. This is a call to a
 
 ---
 
-### (Chapter 1) The Co-Liberation Manifesto
+### (Chapter 1) Manifesto of Co-Liberation
 
 **Introduction: A Vision of Mutual Liberation**
 

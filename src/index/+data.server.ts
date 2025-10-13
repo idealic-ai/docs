@@ -5,7 +5,7 @@ import { getMarkdownContent } from '../utils/i18n';
 import { processMarkdown, replaceRelativeLinks } from '../utils/markdown';
 
 const DYNAMIC_SECTIONS: Record<string, string> = {
-  'The Co-Liberation Manifesto': 'manifesto',
+  'Manifesto of Co-Liberation': 'manifesto',
   'Edict Of Autonomy': 'edict',
   'Requests for Comments': 'rfc',
 };

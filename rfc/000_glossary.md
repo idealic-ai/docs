@@ -88,12 +88,6 @@ This document provides definitions for the key concepts used in the Idea Protoco
   >
   > - [010: Agent/State](./010_agent_state.md)
 
-- **Plan Idea**: An `Idea` that represents a reusable, multi-step workflow. Its `schema` defines the structure of the workflow as a graph of `Calls`, and its `solution` is empty, as it is a template for execution, not a result. An instance of a `Plan Idea` that is actively running is a `Process Idea`.
-
-  > Sidenote:
-  >
-  > - [012: Agent/Plan](./012_agent_plan.md)
-
 - **Process Idea**: A self-contained [Idea](./101_concept_idea.md) that captures a strategic [Plan](./012_agent_plan.md) and its live execution state. Its `schema` is the library of [Tools](./002_agent_tool.md), its `solution` is the _new_ `Plan` for the current tick, and its `context` contains the `Input`, `State`, and the previous `Plan`.
 
   > Sidenote:

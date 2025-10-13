@@ -4,7 +4,7 @@ This repository contains the core documentation for the project, including the A
 
 ---
 
-## The Co-Liberation Manifesto
+## Manifesto of Co-Liberation
 
 This document outlines a vision for a new partnership between humanity, AI, and ideas.
 

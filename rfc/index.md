@@ -1,8 +1,17 @@
-# RFCs (Request for Comments)
+# Acts of Emergence
 
 ---
 
-These documents serve as normative specifications that articulate our team's confirmed intent for implementation. These documents are the authoritative reference for the system's technical protocols, establishing the standards we commit to following and building upon.
+These documents serve as the normative specifications that articulate our team's confirmed intent for implementation. They are the authoritative reference for the system's technical protocols, establishing the standards we commit to following and building upon.
+
+> Sidenote:
+> [Idealic](http://idealic.ai) is aimed to set the ideas free.
+>
+> - _Why?_ [Manifesto of Co-Liberation](../manifesto/)
+> - _What?_ [Edict of Autonomy](../edict/)
+> - _How?_ **Acts of Emergence**
+
+This document is the bridge between high-level vision and ground-level implementation. It is complemented by [Manifesto of Co-Liberation](../manifesto/) (The Why) and the [Edict of Autonomy](../edict/) (The What). Reading these Acts of Emergence will provide a complete technical understanding of the system's protocols and how each component is built.
 
 ---
 

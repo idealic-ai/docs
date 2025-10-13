@@ -21,8 +21,10 @@ const SHARED_TRANSLATION_PROMPT = `  * Ensure that in translation markdown heade
   * Vessel -> Носитель
   * RFC 003: Agent/Activity -> Акт 003: Агент/Действие
   * AI-Native -> ИИ-центричный, ИИ-центричность
+  * Acts of Emergence -> Акты Становления
   * When translating inline links to chapters, e.g. 202: Idea/Vessel, translate it in the same forat like 202: Идея/Носитель, dont add parenthesis. Not \`Идея-Носитель (202)\`, not \`Носитель (202: Idea/Vessel)\`, but \`202: Идея/Носитель\`
     * Do not translate placeholders like __SIDENOTE_TRANSLATION_SEPARATOR__. Keep them as is, but translate the content between them.
+    * Idealic is aimed to set the ideas free -> Idealic — это проект, цель которого — освободить идеи.
 `;
 
 const SHARED_STYLE_GUIDE = `
@@ -43,6 +45,8 @@ const SHARED_STYLE_GUIDE = `
 * IMPORTANT: Ensure that all parts of the source document are translated, including content in between
 * When simplifyin english, keep words Edict/Manifesto/Acts as is.
 * __SIDENOTE_TRANSLATION_SEPARATOR__s
+* Idealic is the name of our company, so dont translate it
+* Idealic — это проект, цель которого — освободить идеи.
 `;
 const TranslationResponseSchema = {
   type: 'object',
