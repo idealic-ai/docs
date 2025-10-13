@@ -119,6 +119,9 @@ This document provides definitions for the key concepts used in the Idea Protoco
   > - [011: Agent/Instancing](./011_agent_instancing.md)
 
 - **Reactor**: A specific `Idea Transformer` designed as a universal runtime for stateful, turn-based agent interactions. It takes a game/process state (`Idea`) and produces the next state (`Idea`).
+
   > Sidenote:
   >
   > - [303: Ideator/Reactor](./303_ideator_reactor.md)
+
+- **Variable Reference**: A string with a special syntax (`†<kind>.<path>`) used in a `Tool Call`'s parameters to reference a value from the context (e.g., from a `State` or `Input` message). It allows an agent to dynamically wire tools together by using the output of one tool as the input for another.

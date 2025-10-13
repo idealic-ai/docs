@@ -37,3 +37,4 @@ Instead, the `Plan` can delegate the long-running task to an external service an
 
 This pattern allows for highly resilient and scalable processes that are not constrained by the memory or lifespan of any single runtime. It enables true asynchronicity by breaking down a long process into a series of smaller, event-triggered transactions.
 
+

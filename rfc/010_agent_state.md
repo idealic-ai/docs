@@ -14,7 +14,7 @@
 
 This document describes the **State message**, which provides a mechanism for managing persistent state within an agent's execution loop. The `State` message is a specialized application of the **Data** system, designed to create stateful, multi-step workflows. It functions as a container for the "local variables" of a process, allowing context to be maintained across a sequence of `Tool` executions.
 
-The `State` object acts as the source of truth for the system regarding the current status of a request. By analyzing it, the system understands what has already been accomplished, allowing subsequent operations to pick up where the previous ones left off.
+The `State` object acts as the source of truth for the current status of a request and is the key to resilience and resumption. Because it captures the complete context of a workflow at a specific point in time, it allows a process to be paused and resumed. When a new iteration begins, the `State` from the previous tick provides the LLM with a clear understanding of where the process left off, ensuring subsequent operations can seamlessly continue the work.
 
 ## Multi-Step Tools
 
@@ -22,17 +22,32 @@ The primary function of the `State` message is to allow different `Tools` to sha
 
 This is achieved through a simple read/write mechanism: one `Tool` can write its output to the `State` object, and another `Tool` can then read that data as its input in a subsequent step. This allows for the creation of toolchains, where the output of one capability directly informs the input of the next, all without losing context between executions.
 
-## Schemas and Output Paths
+## Inputs
 
-The `State` message introduces a powerful mechanism for guiding the LLM's planning process. The `schema` of the `State` message can be used to define a set of expected properties, essentially creating a "shape" for the final state that the process must produce.
+The primary mechanism for reading from the `State` is through **Variable References**. This system allows any parameter in a `Tool Call` to be a special string that references a variable from the context, rather than the value itself. The reference is a string that follows a specific syntax. This approach is highly efficient as it avoids duplicating large data objects, saving space and cost.
 
-This works in concert with a new meta-property on the `Call` object: `_outputPath`.
+The reference is a simple string syntax prefixed with a dagger (`†`). The syntax is `†<kind>.<path>`, where `<kind>` is the type of `Data` message (e.g., `state`, `input`) and `<path>` is the dot-notation path to the desired value.
+
+For example, a `Tool Call` for fetching a user profile might look like this:
+
+```json
+{
+  "_tool": "fetchUserProfile",
+  "userId": "†state.currentUser.id"
+}
+```
+
+At execution time, the system resolves this reference, fetching the value from `state.currentUser.id` and injecting it as the `userId` parameter before the tool is executed.
+
+## Outputs
+
+The primary mechanism for writing to the `State` is the `_outputPath` meta-property on a `Call`. This string tells the execution engine where to place a tool's result.
 
 > Sidenote:
 >
 > - [004: Agent/Call](./004_agent_call.md)
 
-A `Tool` can declare its intent to write to the `State` by specifying an `_outputPath` in its `Call`. This path tells the execution engine where to place the `Tool`'s result within the `State` object. The `_outputPath` value is a string that can use special syntax to define complex data flows.
+The `schema` of the `State` message can be used to define a set of expected properties. This creates a powerful feedback loop for the LLM: when the `schema` requires certain properties, the LLM is guided to invoke `Tools` whose `_outputPath` matches those properties, ensuring the `Tool` sequence is structurally correct.
 
 ### Path Syntax
 
@@ -67,44 +82,33 @@ The method for determining the `_outputPath` value is defined by its schema, a p
   }
   ```
 
-- **Prescribed (Hard-Coded):** Alternatively, the schema can use a `const` value to lock down the tool's behavior. This forces the `Tool` to always use a specific, predetermined path, which is crucial for creating stable, predictable workflows. This can be used to create robust error-handling patterns by prescribing different paths for success and failure outcomes.
+- **Prescribed (Hard-Coded):** Alternatively, the schema can use restrictive JSON Schema keywords like `const`, `enum`, or `oneOf` to lock down the tool's behavior. A `const` value forces a single, specific path, while `enum` can force the LLM to choose from a limited set of predefined options. This is crucial for creating stable workflows and robust error-handling patterns where the possible outcomes are known in advance.
 
-  _Tool Schema (Prescribing success/failure paths):_
+  _Tool Schema (Prescribing a choice of success/failure paths):_
 
   ```json
   {
     "_outputPath": {
-      "const": "†state.operation.result || †state.operation.error"
+      "enum": ["†state.success", "†state.failure"]
     }
   }
   ```
 
 This flexibility is a key element of the **Plan** system, allowing a workflow designer to choose between giving the agent creative freedom and enforcing a rigid, reliable data flow.
 
-This creates a powerful feedback loop for the LLM. When the `State` `schema` requires certain properties to be filled, the LLM is guided to invoke `Tools` whose `_outputPath` matches those properties. This ensures that the sequence of `Tools` is not only logical but also structurally correct.
+## Planning vs. Execution
 
-## Variable References
+The combination of writing to state via `_outputPath` and reading from it with **Variable References** is the core mechanism that enables the separation of planning from execution. It allows an agent to construct a complete data-flow graph—a chain of `Tool Calls` linked by references—_before_ any tool is run.
 
-For a true workflow to exist, tools must not only write to the `State` but also read from it. The system enables this by allowing any value within a `Tool Call`'s parameters to be a special string that references a variable from the context.
+This graph of references can be validated, reused, and even simulated, making it fully compatible with the latent execution of LLMs. The flexibility of this system comes from the ability to control both inputs and outputs at the schema level. A workflow designer can leave the **`Variable References`** (inputs) and the **`_outputPath`** (outputs) dynamic for the LLM to decide, or prescribe them to enforce a rigid, reliable data flow.
 
-This is achieved with a simple string syntax prefixed with a dagger (`†`). The syntax is `†<kind>.<path>`, where `<kind>` is the type of `Data` message (e.g., `state`, `input`) and `<path>` is the dot-notation path to the desired value.
-
-For example, a `Tool Call` for fetching a user profile might look like this:
-
-```json
-{
-  "_tool": "fetchUserProfile",
-  "userId": "†state.currentUser.id"
-}
-```
-
-At execution time, the system resolves this reference, fetching the value from `state.currentUser.id` and injecting it as the `userId` parameter before the tool is executed.
-
-This mechanism is what allows an LLM to wire tools together, using the output of one tool (saved to state via `_outputPath`) as the input for the next. It completes the full read-process-write cycle, enabling tools to interact with the `State` and with each other. While the primary use case is direct references, the syntax is designed to be extensible.
-
-## Resuming Execution
-
-The `State` object is also the key to resilience and resumption. Because it captures the complete context of a workflow at a specific point in time, it allows a process to be paused and resumed. When a new iteration begins, the `State` from the previous tick provides the LLM with a clear understanding of where the process left off, what has been accomplished, and what remains to be done.
+> [!TIP]
+> Creating `Tool Calls` that are connected to each other via the `State` is the act of planning. This system provides the technical groundwork for this process: a persistent `State` acts as the canvas, `Variable References` and `_outputPath` act as the wires, and the agent **Loop** provides the iterative engine. Together, these components allow an agent to construct a complete data-flow graph, which is the essence of a **Plan**.
+>
+> > Sidenote:
+> >
+> > - [005: Agent/Loop](./005_agent_loop.md)
+> > - [012: Agent/Plan](./012_agent_plan.md)
 
 ## Composition
 
@@ -120,7 +124,7 @@ The `State` object is also the key to resilience and resumption. Because it capt
   >
   > - [006: Agent/Data](./006_agent_data.md)
 
-- **Imports:** While not a direct dependency, the `State` message's `_outputPath` mechanism is conceptually parallel to the `Imports` system. Both use a schema to define whether a value is determined dynamically by the LLM or prescribed with a `const` value, providing a consistent pattern for managing data flow and agent autonomy.
+- **Imports:** The `Imports` system is the primary mechanism for providing a `State` object to a `Tool` running in an isolated context, such as a **Module**. When a `Call` is delegated, the `_imports` property can specify that the `state` should be included in the module's "clean room" environment. This allows encapsulated tools to read from and interact with the main workflow's state in a controlled and explicit manner.
 
   > Sidenote:
   >
@@ -132,8 +136,14 @@ The `State` object is also the key to resilience and resumption. Because it capt
   >
   > - [012: Agent/Plan](./012_agent_plan.md)
 
-## Parallel States
+- **Instancing:** The `State` message is fully compatible with the `Instancing` system. When a request processes multiple `Instances`, each one maintains its own isolated `State` object, identified by a unique `_instance` key. `Variable References` (e.g., `†state.currentUser.id`) are automatically and transparently routed to the correct `State` object corresponding to the `Instance` the `Tool Call` is targeting. This allows a single, generic `Plan` to be executed across many different states in parallel with guaranteed data isolation.
 
-The `State` message provides the mechanism for managing the memory of a single, coherent workflow. However, to build truly scalable systems, agents must be able to apply the same workflow to many different pieces of data simultaneously. This requires a way to manage multiple, independent states in parallel within a single request.
+  > Sidenote:
+  >
+  > - [011: Agent/Instancing](./011_agent_instancing.md)
 
-The next document, **[011: Agent/Instancing](./011_agent_instancing.md)**, describes how to achieve this parallel execution.
+## From Single State to Parallel Execution
+
+The `State` message provides the mechanism for managing the memory of a single, coherent workflow. However, to build truly scalable systems, agents must be able to apply the same workflow to many different pieces of data simultaneously. This requires a way to manage multiple, independent states in parallel within a single request, with operations like `Variable References` and `_outputPath` being correctly routed to the appropriate state.
+
+The next document, **[011: Agent/Instancing](./011_agent_instancing.md)**, describes the system that makes this parallel execution possible.
