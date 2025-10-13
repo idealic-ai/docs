@@ -41,7 +41,7 @@ A `Process Idea` uses the `Idea` triplet to provide a complete snapshot of a wor
     >
     > - [012: Agent/Plan](./012_agent_plan.md)
 
-- **`solution` (The New Plan):** The directed acyclic graph (DAG) of `Calls` that is the agent's chosen strategy for the _current_ tick. This becomes the `Plan Message` for the next tick.
+- **`solution` (The New Plan):** The directed acyclic graph of `Calls` that is the agent's chosen strategy for the _current_ tick. This becomes the `Plan Message` for the next tick.
 
 ### The Unity of Planning and Execution
 

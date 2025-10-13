@@ -22,6 +22,7 @@ const SHARED_TRANSLATION_PROMPT = `  * Ensure that in translation markdown heade
   * RFC 003: Agent/Activity -> Акт 003: Агент/Действие
   * AI-Native -> ИИ-центричный, ИИ-центричность
   * When translating inline links to chapters, e.g. 202: Idea/Vessel, translate it in the same forat like 202: Идея/Носитель, dont add parenthesis. Not \`Идея-Носитель (202)\`, not \`Носитель (202: Idea/Vessel)\`, but \`202: Идея/Носитель\`
+    * Do not translate placeholders like __SIDENOTE_TRANSLATION_SEPARATOR__. Keep them as is, but translate the content between them.
 `;
 
 const SHARED_STYLE_GUIDE = `
@@ -39,9 +40,9 @@ const SHARED_STYLE_GUIDE = `
 * When editing ui strings, keep language names abbreviated (En, Ru, Simple En, Simple Ru)
 * FAQ -> FAQ
 * Avoid messing up syntax for output/input in mermaid: \`Solution[/"The Final Answer (Solution)"/]\` - slashes are in between square brackets and quotes.
-
-
-    * Do not translate placeholders like __SIDENOTE_PLACEHOLDER_0__ or __SIDENOTE_TRANSLATION_SEPARATOR__. Keep them as is.
+* IMPORTANT: Ensure that all parts of the source document are translated, including content in between
+* When simplifyin english, keep words Edict/Manifesto/Acts as is.
+* __SIDENOTE_TRANSLATION_SEPARATOR__s
 `;
 const TranslationResponseSchema = {
   type: 'object',
@@ -129,6 +130,8 @@ Now, translate and simplify the following document.
     {
       provider: 'vertexai',
       model: 'gemini-2.5-pro',
+      maxTokens: 128000,
+      thinkingBudget: 1024,
       apiKey: process.env.VERTEXAI_API_KEY,
     },
     TranslationResponseSchema,
@@ -337,7 +340,7 @@ export async function getAdaptedDocument(
   const translatedMainContent = translatedParts.shift() || '';
   const translatedSidenotes = translatedParts;
 
-  console.log(translatedSidenotes);
+  console.log(translatedMainContent, translatedSidenotes);
 
   return reassembleSidenotes(translatedMainContent, translatedSidenotes);
 }
