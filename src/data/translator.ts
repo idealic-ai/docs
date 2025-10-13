@@ -23,7 +23,6 @@ const SHARED_TRANSLATION_PROMPT = `  * Ensure that in translation markdown heade
   * AI-Native -> ИИ-центричный, ИИ-центричность
   * Acts of Emergence -> Акты Становления
   * When translating inline links to chapters, e.g. 202: Idea/Vessel, translate it in the same forat like 202: Идея/Носитель, dont add parenthesis. Not \`Идея-Носитель (202)\`, not \`Носитель (202: Idea/Vessel)\`, but \`202: Идея/Носитель\`
-    * Do not translate placeholders like __SIDENOTE_TRANSLATION_SEPARATOR__. Keep them as is, but translate the content between them.
     * Idealic is aimed to set the ideas free -> Idealic — это проект, цель которого — освободить идеи.
 `;
 
@@ -44,10 +43,11 @@ const SHARED_STYLE_GUIDE = `
 * Avoid messing up syntax for output/input in mermaid: \`Solution[/"The Final Answer (Solution)"/]\` - slashes are in between square brackets and quotes.
 * IMPORTANT: Ensure that all parts of the source document are translated, including content in between
 * When simplifyin english, keep words Edict/Manifesto/Acts as is.
-* __SIDENOTE_TRANSLATION_SEPARATOR__s
+    * Do not translate placeholders like __SIDENOTE_TRANSLATION_SEPARATOR__ or __SIDENOTE_PLACEHOLDER_\d__ . Keep them as is, but translate the content between them.
 * Idealic is the name of our company, so dont translate it
 * Idealic — это проект, цель которого — освободить идеи.
 * Dont use LEGO as a metaphor for the system, it is too common and doesnt fit the context. Attempt to find other metaphors.
+* Simple ru -> Простой Ру
 `;
 const TranslationResponseSchema = {
   type: 'object',
@@ -345,7 +345,7 @@ export async function getAdaptedDocument(
   const translatedMainContent = translatedParts.shift() || '';
   const translatedSidenotes = translatedParts;
 
-  console.log(translatedMainContent, translatedSidenotes);
+  console.log(translatedMainContent, translatedSidenotes, [contentToTranslate]);
 
   return reassembleSidenotes(translatedMainContent, translatedSidenotes);
 }
