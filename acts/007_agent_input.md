@@ -52,11 +52,15 @@ The `Input` message is a simple pattern, but its power comes from its compositio
   >
   > - [006: Agent/Data](./006_agent_data.md).
 
-- **Tool Creation**: The `Input` message is the key to turning a `Request` into a reusable [002: Agent/Tool](./002_agent_tool.md). The `schema` from the `Input` message becomes the definition for the `Tool`'s parameters, and the main `schema` of the `Request` becomes the `Tool`'s expected output.
+- **From Request to Reusable Tool**: The `Input` message is the key to turning a `Request` into a reusable [002: Agent/Tool](./002_agent_tool.md). This process maps the components of the `Request` to the `Tool`'s interface:
 
   > Sidenote:
   >
   > - [002: Agent/Tool](./002_agent_tool.md).
+  1. The `schema` from the **`Input` message** defines the `Tool`'s **parameters**. It describes what the `Tool` needs to run.
+  2. The main `schema` of the **`Request`** defines the `Tool`'s **`_output`**. It describes what the `Tool` is expected to produce.
+
+  This allows new `Tools` to be created on the fly. By adding a structured `Input` to an existing `Request`, you define a callable interface for it, making it an executable component for other agents.
 
 - **Instancing**: When used with the [011: Agent/Instancing](./011_agent_instancing.md) protocol, `Input` messages can provide data for multi-instance requests, either as a global configuration for all instances or as a targeted input for a specific instance.
   > Sidenote:

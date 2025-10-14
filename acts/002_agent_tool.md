@@ -7,7 +7,7 @@
 > - Requires: [001: Agent/Request](./001_agent_request.md)
 > - Complemented by: [003: Agent/Activity](./003_agent_activity.md)
 
-This document describes the Tool - the foundational schema-driven interface that enables agents to understand and use structured capabilities.
+A `Tool` is a schema-driven interface that defines a structured capability an agent can use. It acts as the foundational building block for all agent actions, providing a way for the LLM to understand and select from a menu of possible behaviors.
 
 ## What Are Tools?
 
@@ -20,7 +20,9 @@ Tools provide:
 - **Composability**: Building blocks that combine into complex agent behaviors
 - **LLM Integration**: Schemas that language models can reason about and select
 
-When an agent fills specific parameters for a Tool, it creates a **Call** - an instance of a Tool with all required parameters filled, representing a concrete request for execution (see [004: Agent/Call](./004_agent_call.md) for details on Call execution).
+When an agent fills specific parameters for a Tool, it creates a **Call**—an instance of a Tool with all required parameters filled, representing a concrete request for execution.
+
+> Sidenote: [004: Agent/Call](./004_agent_call.md)
 
 ## When to Use the Tool System
 
@@ -35,11 +37,7 @@ Use the Tool System when you need agents to:
 
 ### Core Principle: Schema as Interface
 
-The Tool System is built on a fundamental principle: **Tools are pure schemas** that define interfaces without mandating implementations. A Tool's execution is handled by either the LLM's latent reasoning or by a concrete code implementation called an [003: Agent/Activity](./003_agent_activity.md).
-
-> Sidenote:
->
-> - [004: Agent/Call](./004_agent_call.md).
+The Tool System is built on a fundamental principle: **Tools are pure schemas** that define interfaces without mandating implementations. This separation of interface from implementation is the key to the system's flexibility and composability.
 
 A `Tool` schema is a standard JSON Schema object. Any field without an underscore prefix is considered a parameter for the tool. The system uses special meta-fields (prefixed with `_`) to define system-level properties that control how the tool is identified and executed.
 
@@ -53,22 +51,14 @@ A Tool's schema defines its complete interface:
 > - **`_outputPath`**: Makes the tool stateful by writing its output to a persistent state object. ([010: Agent/State](./010_agent_state.md))
 > - **`_instance`**: Targets the tool's execution to a specific instance in a multi-instance request. ([011: Agent/Instancing](./011_agent_instancing.md))
 
-- **`title`**: A human-readable name for the schema.
+- **`title`**: A human-readable name for the schema (optional).
 - **`description`**: Explains what the tool does.
 - **`parameters`**: Any non-underscored fields define the inputs the tool needs.
 - **`_tool`**: Provides a unique name to identify the tool.
 - **`_output`**: Defines the expected structure of the tool's result.
 - **`_reasoningForCall`**: A field added by the system for the agent to explain why it chose the tool.
 
-### System Boundaries
-
-The Tool System handles:
-
-- Tool Registration (schema definition and storage)
-- Parameter Filling (LLM-driven extraction from context)
-- Latent Execution (where the LLM produces the output directly from the inputd)
-
-Higher-level protocols (like the [004: Agent/Call](./004_agent_call.md)) build workflow orchestration, state management, and execution policies on top of these primitives.
+Higher-level protocols build workflow orchestration, state management, and execution policies on top of these primitives.
 
 ## Tool Definition
 
@@ -92,9 +82,9 @@ Tool.register('sentimentAnalysis', {
 });
 ```
 
-## Schema Composition and The Call
+## Schema Composition and Execution
 
-While individual Tools define discrete capabilities, their power is realized when they are composed. The system presents all available `Tool` schemas to the LLM within a single request, typically as an array. This allows the LLM to select the most appropriate `Tool` for a given situation. When the LLM chooses a `Tool` and provides the required parameters, it creates a **Call**—a concrete, executable instance of that `Tool`. The `Call` is the fundamental unit of action that is passed on for execution.
+While individual Tools define discrete capabilities, their power is realized when they are composed. The system presents all available `Tool` schemas to the LLM within a single request, typically as an array. This allows the LLM to select the most appropriate `Tool` for a given situation and provide the required parameters. The resulting instance of a tool use is a an object called `Call`.
 
 > Sidenote:
 >
@@ -102,7 +92,7 @@ While individual Tools define discrete capabilities, their power is realized whe
 
 ## Latent and Explicit Execution
 
-A `Tool` schema, by itself, is only an interface. The execution of its `Call` can happen in one of two ways. The default is **latent execution**, where the LLM uses its own internal reasoning to generate the output, which is ideal for language or knowledge-based tasks. For actions that require interaction with the outside world—like calling an API or accessing a database—a `Tool` must be connected to a deterministic code function. This explicit implementation is called an **Activity**.
+A `Tool` schema, by itself, is only an interface. Its execution can happen in one of two ways. The default is **latent execution**, where the LLM uses its own internal reasoning to generate the output, which is ideal for language or knowledge-based tasks. For actions that require interaction with the outside world—like calling an API or accessing a database—a `Tool` must be connected to a deterministic code function. This explicit implementation is called an **Activity**.
 
 The separation of the `Tool` interface from the `Activity` implementation is a core design principle. It allows an agent's capabilities to be defined and reasoned about abstractly, while the underlying execution logic can be swapped or updated independently. The next document, **[003: Agent/Activity](./003_agent_activity.md)**, describes how `Activities` provide the concrete logic for `Tools`.
 

@@ -2,68 +2,81 @@
 
 ---
 
-_The big idea is to fight back against the way the internet is heading, where a few giant companies control everything. We want to build a new digital world where everyone is in charge of their own stuff, like the boss of their own digital life._
+_The big idea here is a major rethink of how the internet works. Right now, a few big companies control everything. This vision is about building a new digital world where power is handed back to individuals and communities, letting everyone be in charge of their own digital lives._
 
 ---
 
 ### (Chapter 1) The Core Idea & Principles
 
-This new world is built on a few simple, strong rules that make sure everything works together smoothly.
+The whole system is built on a few simple but strong rules. These rules make sure everything works together smoothly.
 
-- **Everything is an Idea.** To keep things simple, everything in this system—an app, a tool, a document—is just called an "Idea." Think of them like LEGO bricks. They're all the same type of thing, but you can use them to build anything you can imagine.
-
-  > Sidenote: [Act 101: Concept/Idea](../acts/101_concept_idea.md)
-
-- **Self-Contained and Self-Describing.** Every Idea comes with its own instruction manual built right in. This means any computer or AI can look at it and instantly know what it is and how to use it, without needing to be taught beforehand. It's like a toy that has the instructions printed right on it.
-
-  > Sidenote: [Act 001: Agent/Request](../acts/001_agent_request.md)
-
-- **Any Idea Can Have a Home.** Any Idea can get its own web address, like `www.mycoolidea.com`. This gives it a permanent home on the internet. If it's something familiar (like an article), it will look like an article. If it's a special kind of tool called an "Ideator," it will get a simple screen that can work with anything.
-
-  > Sidenote: [Act 102: Concept/Sovereignty](../acts/102_concept_sovereignty.md)
-
-- **Ideators are Ideas with Input.** An "Ideator" is a special kind of Idea that can do something when you give it information. Think of it like a machine. An Idea might be a blueprint for a car, but an Ideator is the car itself—you give it fuel (the input) and it drives.
+- **Everything is an Idea.** At the very center of this system, everything you create or use—an app, a tool, a document, a plan—is called an “Idea.” This keeps things simple and organized, because there’s only one type of building block for everything.
 
   > Sidenote:
+  > [RFC 101: Concept/Idea](../acts/101_concept_idea.md)
   >
-  > - [Act 103: Concept/Ideator](../acts/103_concept_ideator.md)
-  > - [Act 005: Agent/Input](../acts/005_agent_input.md)
 
-- **Composable by Design.** You can connect Ideas together to create bigger and more powerful things, just like stacking LEGO bricks. Some Ideators can even change other Ideas. You can link them together in a chain to build amazing creations, like a factory assembly line where each machine does one job.
+- **Self-Contained and Self-Describing.** Every Idea comes with its own instruction manual built right in. This means any person, program, or AI can look at an Idea and immediately understand what it is and how to use it, without needing any prior information.
 
-- **The LLM is the Universal Interpreter.** We use a smart AI (like the brain in ChatGPT) to understand and run all these Ideas. Because every Idea explains itself, the AI can work with any of them, even brand new ones it's never seen before. It’s like having a magical remote control that automatically knows how to work with any device you point it at.
+  > Sidenote:
+  > [RFC 001: Agent/Request](../acts/001_agent_request.md)
+  >
 
-  > Sidenote: [Act 104: Concept/Latent](../acts/104_concept_latent_.md)
+- **Any Idea Can Have a Home.** Any Idea can be given its own website address (a domain). This gives it a permanent place on the internet and a basic webpage to interact with. If it's a common type of Idea (like an article), it gets a nice, custom-fit page. If it’s something more complex (an Ideator), it gets a flexible, do-anything kind of page.
 
-- **A Protocol of Living Ideas.** We're not just sharing boring, static files like a picture or text. We are sharing living tools and systems that can change, grow, and get better over time as people work on them together.
+  > Sidenote:
+  > [RFC 102: Concept/Sovereignty](../acts/102_concept_sovereignty.md)
+  >
+
+- **Ideators are Ideas with Input.** An “Ideator” is just an Idea that’s designed to take instructions from you. Think of it like a simple machine or a tool. While a basic Idea might just be information (like a recipe), an Ideator is a tool that uses that information to *do* something (like a mixer that takes flour and eggs and turns it into batter).
+
+  > Sidenote:
+  > - [RFC 103: Concept/Ideator](../acts/103_concept_ideator.md)
+  > - [RFC 005: Agent/Input](../acts/005_agent_input.md)
+
+- **Composable by Design.** This system is made for connecting things together. Some Ideators can take one Idea and change it into another. This means you can line them up in a chain to create powerful automated jobs, where the output of one tool becomes the input for the next.
+
+- **The AI is the Universal Interpreter.** We use Artificial Intelligence (specifically, a large language model or LLM) as a smart helper. Because every Idea explains itself, the AI can read its “instruction manual” and figure out how to run it. This makes the system incredibly flexible and able to handle new kinds of Ideas without needing to be reprogrammed.
+
+  > Sidenote:
+  > [RFC 104: Concept/Latent](../acts/104_concept_latent_.md)
+  >
+
+- **A Protocol of Living Ideas.** We're not just creating a way to share files that sit there and do nothing. We're building a system for sharing living, functional things that can grow, change, and connect with each other over time.
 
 ---
 
 ### (Chapter 2) The Diagnosis — The Gilded Cage of Big Tech
 
-The main problem with the internet today is a deal from big tech companies that seems great but is actually a trap. First, they gave us social networks to connect with lots of people, but they collected our data and locked us into their websites. Now, they're giving us powerful AI tools that are hard to say no to.
+The main problem with today's internet is that big tech companies have offered us a deal that seems great at first but is actually a trap. At first, they gave us social networks that promised we could reach millions of people. This pulled us into their private playgrounds, where they collected our data and limited our choices. Now, they're offering us powerful AI tools that are too good to pass up.
 
-The more we use their free and convenient stuff, the more we depend on them. We get trapped in a "gilded cage"—it looks beautiful and shiny on the outside, but it's still a cage. They end up controlling our data and our entire digital lives.
+But this convenience has a hidden price. The more we rely on their platforms, the more we depend on them. We end up trapped in a beautiful cage where we don't own our own digital lives anymore; the platform does.
 
-> Sidenote: A typical network where one big company (Platform) owns all the data and controls everyone.
+> Sidenote:
+> This is a typical centralized network. The Platform in the middle owns all the data and controls everyone connected to it.
 >
 > ```mermaid
 > graph LR
 >     P((Platform))
->     A((" ")); B((" ")); C((" ")); D((" "));
+>     A((" ")); B((" ")); C((" "));
+>     E((" ")); F((" ")); G((" ")); H((" ")); I((" "));
 >
->     A --> P; B --> P; C --> P; D --> P;
+>     A --> P; B --> P; C --> P;
+>     P --> E; P --> F; P  --> G; P --> H; P --> I
 > ```
 
 ---
 
 ### (Chapter 3) The Solution — A Decentralized Renaissance
 
-The solution isn’t to build a slightly nicer cage. It’s to break out of the cages completely and create a new, open digital world. We’re going back to the original dream of the internet, where nobody was in charge, but we’re updating it with today's smart AI technology. This "rebirth" is built on two big ideas:
+The answer isn't to build a slightly better cage. It's to leave the cages behind and create a new, open world. We're going back to the original spirit of the internet, where everything was open and decentralized, but we're updating it for the age of AI.
 
-- **An Vision of Autonomy:** Instead of everyone using a few giant websites (platforms), we want to use a shared set of rules (a protocol). With these rules, everyone can run their own AI on their own computers and connect directly with friends, like a walkie-talkie system (this is called peer-to-peer). This keeps your data and your digital life completely under your control. The goal is to create a system where you can share interactive tools—like a budget that manages itself or a team plan that updates on its own—as easily as you share a photo, without a big company in the middle.
+This new world is built on two big pillars:
 
-> Sidenote: In a decentralized network, everyone is equal and can connect directly to each other without a company in the middle.
+- **A Vision of Autonomy:** We want to move from platforms to a protocol. A protocol is like a shared language that everyone agrees to use, instead of a private playground owned by one company. In this system, you use **AI models that run on your own computer** and connect directly with others through **peer-to-peer networks**. This means your data and digital tools stay completely in your control. The goal is to create an operating system for ideas, where you can share interactive, intelligent tools—like a budget that manages itself, or a project plan that automatically updates—as easily as you share a text document today.
+
+> Sidenote:
+> In a decentralized network, everyone (peers and services) is equal and connects directly to each other without needing a middleman.
 >
 > ```mermaid
 > graph TD
@@ -72,10 +85,11 @@ The solution isn’t to build a slightly nicer cage. It’s to break out of the 
 >         A <--> D{{"Service"}}
 >         B <--> C
 >         B <--> E((" "))
->         C <--> F{{"Service"}}
+>         C <---> F{{"Service"}}
 >         D <--> E
 >         D <--> F
 >         E <--> F
+>         F <--> G((" "))
 > ```
 
-- **A Philosophy of Connection:** This new system also changes how we connect with people online. Right now, sharing on social media is like shouting in a giant, noisy crowd, hoping someone hears you. We want to make sharing a thoughtful choice again, where you give things only to people you trust. Instead of a firehose of random posts, we can have real conversations in small, trusted groups. This lets you build your own private worlds online, where you have total control over who sees your ideas and what you create.
+- **A Philosophy of Connection:** This new way of building things also changes how we connect with each other. Today, “sharing” online often feels like shouting into a crowd for attention. We want to bring sharing back to what it should be: a **thoughtful, deliberate act of giving** something to people you trust. It's about moving away from a flood of global content and toward meaningful conversations in small, trusted groups. This lets people create their own “hidden worlds” online, where they have total control over who sees their ideas and how they are used.

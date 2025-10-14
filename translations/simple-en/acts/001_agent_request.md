@@ -1,18 +1,52 @@
 # 001: Agent/Request
 
-> **Request:** Think of a "Request" as giving the AI a single, complete mission. You give it some background info (`context`) and a template for the answer (`schema`), and it gives you back the filled-out template (`solution`). — [Glossary](./000_glossary.md)
+> **Request:** Think of a `Request` as a single, complete mission for an AI. You give it some background information (`context`) and a set of rules for the answer (`schema`), and it gives you back a finished product (`solution`). — [Glossary](./000_glossary.md)
 
-This page explains the **Request**, which is the basic building block for how we talk to an AI (what we call an LLM). A `Request` is what turns a big idea from the [101: Concept/Idea](./101_concept_idea.md) document into something a computer can actually figure out. It takes the idea's background information (`context`) and its answer template (`schema`) to create a final answer (`solution`).
+> Sidenote:
+> *   Makes it possible to create an [101: Concept/Idea](./101_concept_idea.md)
+>
+> NPM: [https://www.npmjs.com/package/@augceo/agent](@idealic-ai/agent)
 
-## The Request Pipeline
+A `Request` is the main building block for our AI system. It’s like giving the AI a clear, repeatable set of instructions. It takes all the important information (the context) and a strict set of rules for the answer (the schema) and uses them to create a perfect, structured solution.
 
-A `Request` isn't just asking a simple question. It's more like a recipe or an assembly line. It takes a bunch of different pieces of information and follows a series of steps to create one perfect answer that fits our rules.
+It’s much more than just a simple question. A `Request` is a complete, self-contained job that powers everything the AI can do.
 
-### Context: The Story So Far
+## Context: A carefully packed lunchbox for the AI
 
-The most important part of a `Request` is its `context`. Imagine you're telling the AI a story to get it up to speed. This story is given as a list of `Message` objects. This lets you set up a whole conversation, with different characters or turns, so the AI knows exactly what's going on.
+> Sidenote:
+> The AI will process the `context` (what you tell it) to create a `solution` (the final answer) that follows the rules of the `schema`.
+>
+> ```mermaid
+> graph TD
+>     subgraph User Input
+>         direction LR
+>         Context[Context]
+>         Schema[Schema]
+>     end
+>
+>     Process{{"Request"}}
+>
+>     subgraph AI Output
+>         direction LR
+>         Solution[/Solution/]
+>     end
+>
+>     Context --> Process
+>     Schema --> Process
+>     Process --> Solution
+>     Schema -.-> Solution
+>
+>     linkStyle 2 stroke-width:2px,fill:none,stroke:gray,stroke-dasharray: 5 5;
+>     linkStyle 3 stroke-width:2px,fill:none,stroke:gray,stroke-dasharray: 5 5;
+> ```
 
-A simple story might look like this:
+Every `Request` starts with its `context`, which is just a list of messages. Each message has a `role` (like who is talking: the “system,” the “user,” or the “assistant”) and the `content` (what they said). This lets you show the AI a whole conversation as background information.
+
+Unlike a normal chatbot that just keeps adding to a long, messy conversation history, the `context` for each `Request` is a fresh, clean package. It’s built specifically for one job and doesn't get cluttered with old, irrelevant chats. The AI's answers aren't automatically added back in; we build a new, perfect context for every single task. This makes sure the process is reliable and the AI always has exactly the information it needs, without forgetting anything important.
+
+This collection of messages is how we give the AI its instructions, data, and questions. Everything it needs to do its job is packed inside this context.
+
+A simple list of messages might look like this:
 
 ```json
 [
@@ -21,76 +55,52 @@ A simple story might look like this:
 ]
 ```
 
-### Special Kinds of Messages
+#### The Content Pipeline: It's more than just text
 
-Our system makes this even cooler by allowing special types of messages. Instead of just being plain text, the `content` of a message can be a special package of information, like `{ "type": "state", "state": { ... } }`.
+The system makes this even more powerful because the `content` of a message can be more than just plain text. It can be a special, structured object, like a piece of data with a label on it. For example, instead of a simple sentence, the content could be `{ "type": "input", "input": { ... } }`.
 
-Think of these like special items in a video game. Each special message type has its own instructions for how to use it. As the system reads through the messages, these instructions can change three things about the mission:
+> Sidenote:
+> Special message types are explained in these documents:
+>
+> *   [006: Agent/Data](./006_agent_data.md) - How to give the AI data and explain what it means.
+> *   [007: Agent/Input](./007_agent_input.md) - A structured way to give the AI its main prompt.
+> *   [010: Agent/State](./010_agent_state.md) - How the AI can remember things between steps.
+> *   [012: Agent/Plan](./012_agent_plan.md) - A pre-made plan for a multi-step job.
 
-- **AI Settings**: It can change things like which AI model to use or how creative it should be.
-- **Answer Template (`Schema`)**: It can change the rules for what the final answer should look like.
-- **The Story (`Context`)**: It can change the story itself, maybe by turning a special message into plain text for the AI to read, or by adding totally new messages to the conversation.
+This makes the `context` the primary way we can add new features and abilities to the system.
 
-This lets us work with big, complicated ideas and automatically builds the perfect, precise mission for the AI to handle a task.
+Each of these special content types has its own little instruction manual, called a handler. Before the `Request` is sent to the AI, a pipeline of these handlers checks every message. A handler for a message can change the `Request` on the fly:
 
-### Schema: The Blueprint for the Answer
+*   **AI Settings**: It can tweak things like which AI model to use or how creative it should be.
+*   **Answer Rules (Schema)**: It can change the rules that the final answer has to follow.
+*   **The Messages (Context)**: It can change the list of messages the AI sees. For example, it could turn a special object into plain text or even add new messages to give the AI more hints.
 
-The `schema` is like a fill-in-the-blanks form or a blueprint that the AI's answer _must_ follow. It tells the AI exactly how to structure its `solution`, whether it's a single word or a complicated report with many parts. This guarantees that the AI's answer will always be organized and easy for our programs to understand.
+This pipeline is super powerful. It lets the AI work with complex ideas, building the perfect instructions for the job right before it starts.
 
-As these blueprints get more detailed, they can do more than just shape the final answer. They can also guide _how_ the AI thinks. For example, a blueprint can have a section for the final answer, but also a separate section that asks the AI to first write down its step-by-step thinking. This turns the blueprint into a tool for shaping the AI's thought process.
+## Schema: The blueprint for the answer
 
-A key idea here is that we can build big, complex blueprints by snapping together smaller, reusable ones, like LEGO blocks. This lets us build an AI that can learn and do new things in a very organized way.
+The `schema` is like a blueprint that tells the AI *exactly* what the final answer, or `solution`, should look like. It uses a system called JSON Schema to define the structure of the data, whether it's a simple word or a complex object with many nested parts. The AI *must* generate an answer that perfectly matches this blueprint, which means the output is always predictable and organized correctly.
 
-### Putting It All Together and Getting the Solution
+As these blueprints get more detailed, they can do more than just shape the final answer. They can also guide the AI's thinking process. For example, a schema could have one spot for the actual answer and another spot where the AI has to write down its step-by-step reasoning. This turns the schema into a tool for shaping *how* the AI thinks.
 
-After the story (`context`) is fully prepared, the final list of messages and the answer blueprint (`schema`) are sent to the AI in a single mission. The AI's response is the `solution`—a perfectly structured document that follows all the rules of the blueprint.
+A key idea here is that we can build big, complex blueprints by snapping together smaller, reusable ones. This is like building with interlocking blocks—it lets us create powerful AI abilities in a smart and organized way.
 
-You can think of this process like the AI writing a short story. Since an AI works by figuring out the very next word to write, it fills out the `solution` from top to bottom, following the blueprint's structure. The order of the fields in the blueprint directly changes the story the AI tells.
+## Execution: How the answer gets made
 
-For example, if your blueprint first asks for a "My Thought Process" section before asking for the "Final Answer" section, the AI is forced to explain its thinking _before_ giving the answer. The explanation it writes becomes part of the story that helps it figure out the final answer. This is a super powerful way to guide the AI, giving us a lot of control over the result by shaping the path it takes to get there.
+After the messages in the `context` are processed, the final list of messages and the `schema` are sent to the AI in one single mission. The AI's response is the `solution`—a structured, JSON-based answer that perfectly follows the rules of the `schema`.
+
+You can think of this process as the AI telling a short story. Since an AI works by predicting the very next word, it builds the `solution` from top to bottom, following the structure of the blueprint. The order of the fields in the blueprint directly affects the story the AI tells.
+
+For example, if your blueprint first asks for a field called `"thought_process"` before asking for the final `"data"`, you force the AI to first explain its thinking *before* giving the answer. That thinking then becomes part of the context it uses to come up with the final answer. This is a powerful trick that lets us guide the AI’s thought process, giving us more control over the result by shaping the path it takes to get there.
 
 > [!TIP]
-> This whole mission package—the story (`context`), the blueprint (`schema`), and the final answer (`solution`)—is a complete, self-contained record. When you save it, it becomes what we call an [101: Concept/Idea](./101_concept_idea.md).
+> This whole package—the `context`, the `schema`, and the `solution` it creates—is a complete, repeatable unit. When we save one of these, we call it an [101: Concept/Idea](./101_concept_idea.md).
 
-## From Answers to Actions
+## From a structured answer to a real choice
 
-A `Request` is a great way to get a single, well-organized `solution` from an AI. But to build really smart agents, we need more than just good answers. We need a way to give the AI a menu of different tools or actions it can choose from to complete a goal.
+A `Request` is a great way to get a single, well-structured answer. But to build truly smart AI agents, we need more. We need to give the AI a list of different tools or actions it can choose from to complete a goal. This means we need a way to define these actions as separate, selectable options.
 
-The next document, [002: Agent/Tool](./002_agent_tool.md), explains how we create this menu of tools for the AI.
+> Sidenote:
+> *   [002: Agent/Tool](./002_agent_tool.md)
 
-**SIDENOTE_TRANSLATION_SEPARATOR**
-
-- This makes the [101: Concept/Idea](./101_concept_idea.md) possible.
-
-NPM: [https://www.npmjs.com/package/@augceo/agent](@idealic-ai/agent)
-
-**SIDENOTE_TRANSLATION_SEPARATOR**
-The AI uses the **background info** (`Context`) and the **answer template** (`Schema`) to create the final **answer** (`Solution`).
-
-```mermaid
-graph TD
-    subgraph User Input
-        direction LR
-        Context[\"Context"\]
-        Schema[\"Schema"\]
-    end
-
-    Process{{"Request"}}
-
-    subgraph LLM Output
-        direction LR
-        Solution[/"Solution"/]
-    end
-
-    Context --> Process
-    Schema --> Process
-    Process --> Solution
-    Schema -.-> Solution
-
-    linkStyle 2 stroke-width:2px,fill:none,stroke:gray,stroke-dasharray: 5 5;
-    linkStyle 3 stroke-width:2px,fill:none,stroke:gray,stroke-dasharray: 5 5;
-```
-
-**SIDENOTE_TRANSLATION_SEPARATOR**
-
-- [002: Agent/Tool](./002_agent_tool.md)
+The next document, [002: Agent/Tool](./002_agent_tool.md), explains how we define these tools.

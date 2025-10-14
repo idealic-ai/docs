@@ -49,6 +49,7 @@ const SHARED_STYLE_GUIDE = `
 * Dont use LEGO as a metaphor for the system, it is too common and doesnt fit the context. Attempt to find other metaphors.
 * Simple ru -> Простой Ру
 * DO NOT STOP at \` character, always continue to the end of the file
+* DO NOT try to complicate diagrams. keep labels of nodes without extra text or parenthesis. Do not try to rephase the diagram labels if simplifying.
 `;
 const TranslationResponseSchema = {
   type: 'object',

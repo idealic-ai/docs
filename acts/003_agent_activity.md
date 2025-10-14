@@ -1,6 +1,6 @@
 # 003: Agent/Activity
 
-> **Activity:** An explicit, deterministic code function that implements the logic for a `Tool`. It is the mechanism for executing actions that require external API calls, database operations, or any task that cannot be handled by an LLM's latent space. — [Glossary](./000_glossary.md)
+> **Activity:** An explicit, asynchronous function that implements the logic for a `Tool`. It is the mechanism for executing actions that require external API calls, database operations, or any task that cannot be handled by an LLM's latent space. — [Glossary](./000_glossary.md)
 
 > Sidenote:
 >
@@ -13,7 +13,7 @@ This document describes the **Activity Protocol**, which defines how `Tools` are
 The agent system employs two complementary registries to separate a capability's interface from its implementation:
 
 - **Tool Registry**: Stores the schema definitions for `Tools`.
-- **Activity Registry**: Stores the explicit code functions (`Activities`) that implement `Tools`.
+- **Activity Registry**: Stores the explicit `async` code functions (`Activities`) that implement `Tools`.
 
 This separation is the key to the system's flexibility. It allows `Tools` to be defined and used in a latent-only mode (where the LLM generates the output directly) and allows for different implementations of an `Activity` to be swapped in without changing the `Tool`'s interface (e.g., for different environments like development and production).
 
@@ -23,7 +23,7 @@ An `Activity` is registered with a unique name, which is used to bind it to a `T
 
 ```typescript
 // Register an Activity implementation.
-// The name 'weatherCheck' should match the Tool it implements.
+// By convention, an Activity can be bound to a Tool of the same name.
 Activity.register('weatherCheck', async call => {
   const data = await weatherAPI.get(call.location);
   return { temperature: data.temp, conditions: data.desc };

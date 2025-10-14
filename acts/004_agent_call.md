@@ -1,8 +1,6 @@
 # 004: Agent/Call
 
-> **Call:** A concrete, executable instance of a `Tool`, with specific values for its `params`. It's an invocation-focused request for what _should be done_.
->
-> — [Glossary](./000_glossary.md)
+> **Call:** A concrete, executable instance of a `Tool`, with specific values for its `params`. It's an invocation-focused request for what _should be done_. — [Glossary](./000_glossary.md)
 
 > Sidenote:
 >

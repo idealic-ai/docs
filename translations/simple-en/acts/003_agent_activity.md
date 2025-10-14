@@ -1,71 +1,73 @@
 # 003: Agent/Activity
 
-> **Activity:** Think of this as the actual, step-by-step recipe that a `Tool` follows. A `Tool` might be called "Check the Weather," but the `Activity` is the real code that goes to a weather website and gets the temperature. It’s for any job that the AI can't just "think up" an answer for.
+> **Activity:** Think of this as the actual a program that does the work for a `Tool`. If a `Tool` is a button, the `Activity` is the machinery inside that makes the button work, especially for things the AI can't do on its own, like checking a live database or a real-world weather service.
 
-> Sidenote: - It helps to have read this first: [002: Agent/Tool](./002_agent_tool.md)
+> Sidenote:
+> - Requires: [002: Agent/Tool](./002_agent_tool.md)
 
-This guide explains the **Activity Protocol**, which is the system for connecting a `Tool` (the what) to the real code that actually does the work (the how).
+This document explains the **Activity Protocol**, which is the set of rules for how `Tools` (the description of a skill) are connected to real, runnable code.
 
-## The Two Phonebooks System
+## The Two-List System
 
-Imagine the agent has two different phonebooks to keep things organized. This makes the whole system super flexible.
+The system uses two separate lists to keep the *idea* of a skill separate from the *action* of doing it:
 
-- **Tool Phonebook**: This book lists all the *skills* the agent knows about, like “check the weather” or “send an email.” It describes *what* can be done.
-- **Activity Phonebook**: This book lists the actual *workers* (pieces of code) that can perform those skills. It describes *how* to do it.
+- **Tool Registry**: A list of all the available skills, describing what they can do (e.g., "check the weather").
+- **Activity Registry**: A list of the actual code programs (`Activities`) that carry out those skills (e.g., the code that connects to the weather API).
 
-By keeping these two separate, we can easily change how a skill is performed without confusing the agent. For example, we can switch from one weather service to another, and the agent won't even notice—it just knows it can still “check the weather.”
+Separating them is super important. It lets the system be flexible. An AI can just *imagine* the result of a `Tool` if it needs to, or you can swap out the real-world code for a `Tool` (like switching from one weather service to another) without having to tell the AI anything new.
 
-## Signing Up an Activity
+## How to Register an Activity
 
-To make a piece of code available, a programmer has to sign it up, or "register" it, in the Activity phonebook with a unique name. This name is how it gets linked to a `Tool`.
+You give your `Activity` code a unique name so the system can find it and link it to a `Tool`.
 
 ```typescript
-// Here, we're adding a worker to the phonebook.
-// The name 'weatherCheck' should match the Tool it's for.
+// This is how you add an Activity program to the list.
+// The simplest way is to give the Activity the same name as the Tool it's for.
 Activity.register('weatherCheck', async call => {
-  // This is the code that calls a real weather service
+  // Go to the real-world weather service and get the data.
   const data = await weatherAPI.get(call.location);
-  // It returns the answer in a neat package
+  // Send back the result.
   return { temperature: data.temp, conditions: data.desc };
 });
 ```
 
-## Ways of Getting Things Done: Thinking vs. Doing
+## Ways to Run a Tool: Imagined vs. Real
 
-When a `Tool` is used, the system has two ways to get an answer:
+The system has two different ways to handle a request to use a `Tool`:
 
-- **Thinking (Latent Execution)**: The AI uses its own giant brain to just *think* of the answer. It's like asking a really smart friend a trivia question—they just know it. This is the default if there’s no specific code to run.
-  > Sidenote: - [104: Concept/Latent](./104_concept_latent.md)
-- **Doing (Explicit Execution)**: The system calls on a specific worker—the `Activity` code—to perform the task. This is for things that need real, up-to-the-minute information from the outside world (like a weather API) or for math problems that have to be perfectly correct.
+- **Imagined (Latent Execution)**: The AI uses its own brain to figure out the answer. It "thinks" about what the result of the tool *should* be and gives you a response immediately. This is the default if it can't find any real code for a `Tool`.
+  > Sidenote:
+  > - [104: Concept/Latent](./104_concept_latent.md)
+- **Real (Explicit Execution)**: The request is handed off to a real piece of code (an `Activity`). The code runs and computes the answer. This is necessary for talking to the outside world (like websites or databases) or for doing things that need to be perfectly accurate every time.
 
-## How the System Decides Which Method to Use
+## How the System Decides Which Way to Go
 
-The system is smart and doesn't need a lot of setup to figure out whether to "think" or "do." It follows these simple rules when a `Tool` is used:
+The system has a simple, automatic way to decide whether to imagine the result or run real code. It looks at a special field in the `Tool`'s description called `_activity`.
 
-1.  **Check for a Specific Order**: First, it looks at the `Tool`'s description to see if it specifically names an `Activity` to use. If it says, "Use the 'SuperWeatherChecker' code," it will do that.
-2.  **Look for a Matching Name (The Easy Way)**: If there's no specific order, it looks in the Activity phonebook for a worker that has the *exact same name* as the `Tool`. So, if the `Tool` is named `weatherCheck`, it looks for an `Activity` also named `weatherCheck`.
-3.  **Default to Thinking**: If it can't find a worker using the first two rules, it just tells the AI, "Okay, you're on your own. Just think of the best answer you can."
+1.  **Look for a Manual Link**: If the person who made the `Tool` put a specific `Activity` name in the `_activity` field, the system uses that.
+2.  **Look for the Same Name (Recommended)**: If there's no manual link, the system looks for an `Activity` in its list that has the **exact same name** as the `Tool`. If it finds one, it automatically links them.
+3.  **Fall Back to Imagining**: If it can't find a matching `Activity` after checking those two things, it assumes there is no real code and decides to use the AI's imagination (latent execution).
 
-This makes life easy for programmers:
+This makes things easy for developers:
 
-- **For most cases, just give your `Tool` and your `Activity` the same name, and it will just work.**
-- `Tool`s that are just for thinking don't need an `Activity` at all.
-- You can always override this by giving a specific order in the `Tool`'s description.
+- **For things to just work, give your `Activity` code the same name as your `Tool`.**
+- `Tools` that don't have real code attached to them will safely run in "imagined" mode by default.
+- You can always override this by manually linking a `Tool` to an `Activity` with a different name.
 
-## Why This Separation is a Big Deal
+## Why This Separation Is a Big Deal
 
-If we didn't separate the `Tool` (the what) from the `Activity` (the how), they would be stuck together forever. Imagine if to change your weather app, you had to re-teach your phone's assistant how to ask for the weather. That would be a huge pain!
+If we didn't separate the `Tool` description from the `Activity` code, they would be stuck together forever. Imagine you wanted to switch from having the AI *guess* the weather to having it use a *real* weather service. You'd have to go find every single AI that uses that `Tool` and change all of them.
 
-This two-phonebook system avoids that. The agent always uses the same `Tool`, so it doesn't get confused. Meanwhile, programmers can freely update, change, or test the `Activity` code in the background.
+By keeping them separate, the `Tool` description stays the same, while the code behind it can change.
 
-This means we can:
+This means:
 
-- **Update code without breaking the agent**: You can switch from the AI just guessing the weather to using a real-time `Activity` without having to change the agent at all.
-- **Test different approaches**: You can have two different `Activities` for the same `Tool` to see which one works better.
-- **Slowly roll out new features**: You can give a new, better `Activity` to some agents while others keep using the old one, just to be safe.
+- **You don't break the AI when you update the code**: You can switch from imagined to real mode, and the AI that uses the `Tool` won't even notice.
+- **You can test different approaches**: You can easily compare if the AI's guess is better or worse than the result from a real-world service for the same skill.
+- **You can roll out changes slowly**: You can give the new, real code to just a few AIs to test it out, while everyone else keeps using the old version.
 
 ## From Idea to Action
 
-By separating the "what" (`Tool`) from the "how" (`Activity`), we've made the system incredibly flexible. But there's one more piece to the puzzle. Now that we know what the agent can do and how it does it, we need to understand how all these actions are managed and organized.
+By separating the "what" (`Tool`) from the "how" (`Activity`), the system becomes incredibly flexible. But this is just one piece of the puzzle. Now that we have descriptions of skills and the real code to run them, the next step is managing how these skills are called, run, and organized in a sequence.
 
-The next document, [004: Agent/Call](./004_agent_call.md), explains how the system takes these ideas and turns them into real, organized actions.
+The next document, [004: Agent/Call](./004_agent_call.md), explains the rules that turn these ideas into real, guided actions.

@@ -12,28 +12,28 @@ The entire ecosystem is built on a set of simple, powerful principles that ensur
 
 - **Everything is an Idea.** At the heart of it, every piece of the system—whether it’s an app, a tool, a document, or a process—is just an Idea. This keeps the system elegant and unified.
 
-  > Sidenote: [Act 101: Concept/Idea](../acts/101_concept_idea.md)
+  > Sidenote: [RFC 101: Concept/Idea](../acts/101_concept_idea.md)
 
 - **Self-Contained and Self-Describing.** Every Idea carries its own schema and context, making it fully self-describing. This allows any client or LLM to understand and interact with it without prior knowledge.
 
-  > Sidenote: [Act 001: Agent/Request](../acts/001_agent_request.md)
+  > Sidenote: [RFC 001: Agent/Request](../acts/001_agent_request.md)
 
 - **Any Idea Can Have a Home.** Any Idea can be hosted at a unique domain, giving it a stable home and a default UI. If it’s a known type (like an article), it gets a tailored interface. If it’s an Ideator, it gets a flexible, universal interface.
 
-  > Sidenote: [Act 102: Concept/Sovereignty](../acts/102_concept_sovereignty.md)
+  > Sidenote: [RFC 102: Concept/Sovereignty](../acts/102_concept_sovereignty.md)
 
 - **Ideators are Ideas with Input.** An Ideator is an Idea that is configured to accept input, making it function like a callable process.
 
   > Sidenote:
   >
-  > - [Act 103: Concept/Ideator](../acts/103_concept_ideator.md)
-  > - [Act 005: Agent/Input](../acts/005_agent_input.md)
+  > - [RFC 103: Concept/Ideator](../acts/103_concept_ideator.md)
+  > - [RFC 005: Agent/Input](../acts/005_agent_input.md)
 
 - **Composable by Design.** The system is built for composition. Because some Ideators (called Idea Transformers) can transform other Ideas, they can be chained and orchestrated into complex workflows.
 
 - **The LLM is the Universal Interpreter.** By relying on a language model to interpret and execute Ideas based on their self-describing structure, the entire system becomes incredibly accessible and adaptable to novel use cases.
 
-  > Sidenote: [Act 104: Concept/Latent](../acts/104_concept_latent_.md)
+  > Sidenote: [RFC 104: Concept/Latent](../acts/104_concept_latent_.md)
 
 - **A Protocol of Living Ideas.** We are not just sharing static data; we are exchanging living, evolving systems that can grow and adapt over time through collaboration and composition.
 
@@ -50,9 +50,11 @@ The core problem is a seductive but dangerous bargain from big tech, a strategy 
 > ```mermaid
 > graph LR
 >     P((Platform))
->     A((" ")); B((" ")); C((" ")); D((" "));
+>     A((" ")); B((" ")); C((" "));
+>     E((" ")); F((" ")); G((" ")); H((" ")); I((" "));
 >
->     A --> P; B --> P; C --> P; D --> P;
+>     A --> P; B --> P; C --> P;
+>     P --> E; P --> F; P  --> G; P --> H; P --> I
 > ```
 
 ---
@@ -74,10 +76,11 @@ The solution is not to build a better walled garden, but to leave the gardens en
 >         A <--> D{{"Service"}}
 >         B <--> C
 >         B <--> E((" "))
->         C <--> F{{"Service"}}
+>         C <---> F{{"Service"}}
 >         D <--> E
 >         D <--> F
 >         E <--> F
+>         F <--> G((" "))
 > ```
 
 - **A Philosophy of Connection:** This architecture enables a profound philosophical shift in how we relate to each other online. The act of sharing is reclaimed from the economy of indiscriminate, performative "oversharing" and returned to its roots as a **conscious, intentional act of giving** within trusted circles. It is a move from a global firehose of content to meaningful, local exchanges where trust, quality, and genuine connection are the primary currency. This allows individuals to cultivate their own "hidden worlds," giving them complete control over how their ideas are shared and with whom.

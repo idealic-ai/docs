@@ -8,9 +8,9 @@
 >
 > NPM: [https://www.npmjs.com/package/@augceo/agent](@idealic-ai/agent)
 
-This document describes the **Request**, which defines the fundamental unit of interaction with an LLM. The `Request` is the engine that makes the abstract [101: Concept/Idea](./101_concept_idea.md) computable by taking its `context` and `schema` to generate a `solution`.
+The `Request` is the core computational primitive of the agent system. It provides a structured, reproducible, and extensible pipeline for interacting with an LLM, turning a rich context and a declarative schema into a precise, structured solution. Unlike a simple prompt, a `Request` is a complete, self-contained unit of work that serves as the engine for all higher-level agent capabilities.
 
-## The Request Pipeline
+## Context: A Pipeline of Messages
 
 > Sidenote:
 >
@@ -40,13 +40,13 @@ This document describes the **Request**, which defines the fundamental unit of i
 >     linkStyle 3 stroke-width:2px,fill:none,stroke:gray,stroke-dasharray: 5 5;
 > ```
 
-A `Request` is not a simple prompt. It is a structured pipeline that transforms a rich, multi-part context into a single, schema-compliant response from an LLM.
+The foundation of a `Request` is its `context`: an array of `Message` objects. Each `Message` is a simple structure containing a `role` (like `"system"`, `"user"`, or `"assistant"`) and `content`. This structure allows a rich, multi-turn conversation to be presented to the LLM.
 
-### Context: An Array of Messages
+Unlike a typical chat-based model where messages are continuously appended to a growing history, the `context` for each `Request` is a fully managed, standalone package. It is carefully constructed for a specific task and is not polluted by previous, unrelated interactions. The LLM's responses are not automatically added back; the context is rebuilt for each new computation. This ensures that the process is reproducible and that the LLM has the exact information it needs, without the risk of context truncation or "forgetting" crucial details.
 
-The foundation of a `Request` is its `context`, which is provided as an array of `Message` objects. This allows for a complex, multi-turn, or multi-role conversation to be presented to the LLM in a structured way.
+This managed context is the primary mechanism for providing the LLM with prompts, data, and instructions. Everything required for the computation, except for the final output `schema`, is delivered through these messages.
 
-A simple context might look like this:
+A simple `Message` array might look like this:
 
 ```json
 [
@@ -55,11 +55,22 @@ A simple context might look like this:
 ]
 ```
 
-### Custom Content Types
+#### The Content Pipeline
 
-The system extends this basic structure by allowing **custom content types** within messages. Instead of just a string, the `content` of a message can be a structured object, like `{ "type": "state", "state": { ... } }`.
+The system extends this basic `Message` structure by allowing the `content` field to hold not just text, but specialized objects called **custom content types**. For example, instead of a string, a message's content could be a structured object like `{ "type": "input", "input": { ... } }`.
 
-These custom types are defined and managed by the `Content` system (see `agent/src/Content/Content.ts`). Each custom type is registered with a handler, and these handlers form a processing pipeline. As each message is processed, its handler can modify the three core components of the `Request`:
+> Sidenote:
+>
+> Custom message types described in Acts:
+>
+> - [006: Agent/Data](./006_agent_data.md) - present data and its meaning to LLM as a message
+> - [007: Agent/Input](./007_agent_input.md) - structured prompt for LLM to use
+> - [010: Agent/State](./010_agent_state.md) - persistent state retained within loop
+> - [012: Agent/Plan](./012_agent_plan.md) - prepared plan for multi-step execution
+
+This capability makes the `context` the main point of extension within the system.
+
+Each custom content type is registered with a handler, and these handlers form a processing pipeline. Before the `Request` is sent to the LLM, the pipeline processes each message in the `context`. A message's handler can dynamically modify the core components of the `Request`:
 
 - **LLM Config**: Adjusting parameters like the model, temperature, or other settings.
 - **Schema**: Modifying the JSON schema that the final output must conform to.
@@ -67,7 +78,7 @@ These custom types are defined and managed by the `Content` system (see `agent/s
 
 This powerful pipeline mechanism allows the agent to work with high-level, structured concepts, dynamically constructing the precise LLM invocation needed to perform a task.
 
-### Schema: Guiding the Solution
+## Schema: Guiding the Solution
 
 The `schema` is a JSON Schema that defines the exact structure of the desired `solution`. This is a powerful system that allows for the representation of any type of data, from simple strings to complex, nested objects. The LLM is forced to generate a `solution` that strictly conforms to this schema, guaranteeing that the output is always well-structured and predictable.
 
@@ -75,7 +86,7 @@ As schemas grow in complexity, they can be designed to guide not only the final 
 
 A core principle of this architecture is the composition of schemas. More complex capabilities are built by combining simpler, reusable schema components, allowing for a modular and scalable approach to defining the agent's knowledge and abilities.
 
-### Execution and the Solution
+## Execution and the Solution
 
 After the `context` is processed, the final array of messages and the `schema` are sent to the LLM in a single request. The LLM's response is the `solution`—a structured, JSON-based document that strictly conforms to the provided `schema`.
 
