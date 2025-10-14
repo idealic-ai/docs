@@ -7,6 +7,5 @@ export default {
   build: {
     target: 'es2022',
   },
-  // For GitHub Pages with /docs/ repository
-  base: '/docs/',
+  base: `${process.env.VITE_BASE_PATH || ''}/`,
 } as Config;

@@ -149,7 +149,7 @@ export function replaceRelativeLinks(
     // Prepend the baseUrl to the relative link.
     const cleanedLinkUrl = linkUrl.replace(/^\.\//, ''); // remove leading ./
     const finalBaseUrl = `/${baseUrl.replace(/^\/|\/$/g, '')}`;
-    const absoluteUrl = `/docs/${lang}${finalBaseUrl}/${cleanedLinkUrl}`;
+    const absoluteUrl = `${process.env.VITE_BASE_PATH}/${lang}${finalBaseUrl}/${cleanedLinkUrl}`;
     return `[${linkText}](${absoluteUrl})`;
   });
 }
