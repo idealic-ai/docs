@@ -9,7 +9,7 @@
 > - Complemented by:
 >   - [008: Agent/Imports](./008_agent_imports.md)
 
-While previous documents have established how individual `Tools` are defined and executed, the **Module Protocol** addresses the critical challenge of scaling and composing these capabilities. It provides a powerful mechanism for executing `Tools` in isolated "clean room" environments, preventing context bleeding and enabling true reusability. By delegating a `Call` to an external module—either another `Idea` or an `Activity` in a sub-request—the system can build complex agentic behaviors from self-contained, independently developed components.
+While previous documents have established how individual `Tools` are defined and executed, the **Module Protocol** addresses the critical challenge of scaling and composing these capabilities. It provides a powerful mechanism for executing `Tools` in isolated "clean room" environments, preventing context bleeding and enabling true reusability. By delegating a `Call` to an external module—either another `Request` definition or an `Activity` in a sub-request—the system can build complex agentic behaviors from self-contained, independently developed components.
 
 ## The Problem: Monolithic Tools and Context Bleeding
 
@@ -27,15 +27,13 @@ Module Scope is signaled by the `_module` property within a `Tool`'s schema. Thi
 
 The `_module` property is a `string` and can be used in two ways:
 
-- **Reference an `Idea`**: The string can be a reference to a self-contained `Idea`—a JSON object containing `context` and `schema` properties. This allows a `Tool` to delegate its execution to a completely separate set of instructions. The reference can be provided as:
-  - A path or URL to a JSON file (e.g., `../ideas/my-idea.json`).
-  - An `idea://` protocol link.
+- **Reference a saved `Request`**: The string can be a path or URL to a JSON file that defines a self-contained `Request`—a JSON object containing `context` and `schema` properties. This allows a `Tool` to delegate its execution to a completely separate set of instructions.
 
   > Sidenote:
   >
   > A saved, reusable [001: Agent/Request](./001_agent_request.md) is the most common form of an `Idea`. The Module protocol is the primary mechanism for composing these `Ideas` into more complex systems. See [101: Concept/Idea](./101_concept_idea.md) for details.
 
-- **Create an anonymous module**: A string literal `'anonymous'` signals an anonymous module. This is used when you need an isolated execution environment for an `Activity` without the overhead of a full saved `Request` context.
+- **Create an anonymous module**: A string literal `'anonymous'` signals an anonymous module. This is used to create an isolated execution environment for a `Tool Call` (whether latent or explicit) without needing an intermediate JSON file. It automatically scopes a new, empty context for the `Call`.
 
 ## Execution in a Clean Room
 
@@ -69,7 +67,7 @@ The process is as follows:
 
 1.  An agent generates a `Call` to the modular `Tool`.
 2.  The executor sees the `_module` property and initiates the protocol.
-3.  **Context Assembly**: The executor fetches the module `Idea` (if not anonymous) and assembles the base context. It then uses `_imports` to append the caller's context.
+3.  **Context Assembly**: The executor fetches the module definition file (if not anonymous) and assembles the base context. It then uses `_imports` to append the caller's context.
 4.  **Input Mapping**: The `params` from the `Call` are packaged into an `Input Message` and added to the context. This is where the LLM's "glue" capability comes into play, as it will use this input to fulfill the module's logic, even if the schemas don't align perfectly.
 5.  **Execution**: A new, isolated `Request` is made with the combined context. The result is returned as the output of the original `Call`.
 
@@ -77,17 +75,17 @@ The process is as follows:
 
 For scenarios requiring stricter guarantees, a module can be resolved **upfront**, before the initial `Request` is sent to the agent.
 
-In this mode, the system pre-fetches the module `Idea` and merges its `input` schema with the `Tool`'s parameter schema. This allows the agent's LLM to see the module's exact requirements from the start, ensuring that the generated `Call` is perfectly formed and type-safe. Crucially, this upfront merge can also include the module's `_output` schema, providing a strict contract for the expected result.
+In this mode, the system pre-fetches the module `Request` definition and merges its `input` schema with the `Tool`'s parameter schema. This allows the agent's LLM to see the module's exact requirements from the start, ensuring that the generated `Call` is perfectly formed and type-safe. Crucially, this upfront merge can also include the module's `_output` schema, providing a strict contract for the expected result.
 
 This approach provides the safety of traditional API contracts, where both the inputs and outputs are known and validated. It sacrifices the flexibility of execution-time resolution and is best used for critical, well-defined integrations where loose coupling is not a desired feature.
 
 ## Composition and Reusability: The Composer & Sound Designer
 
-Modules enable powerful composition by allowing `Ideas` to act as standalone services that can be orchestrated by other agents. This creates a clear, dynamic hierarchy: high-level agents can focus on orchestration while delegating specialized tasks to low-level, reusable modules.
+Modules enable powerful composition by allowing `Request` definitions to act as standalone services that can be orchestrated by other agents. This creates a clear, dynamic hierarchy: high-level agents can focus on orchestration while delegating specialized tasks to low-level, reusable modules.
 
 Consider a workflow with two specialist modules: a **`Composer`** and a **`Sound-Designer`**.
 
-- The **`Sound-Designer`** is a low-level expert. It's a self-contained `Idea` (`idea://sound-designer`) focused on the physics of sound, knowing how to operate synthesizers to produce specific audio data.
+- The **`Sound-Designer`** is a low-level expert. It's a self-contained `Request` definition focused on the physics of sound, knowing how to operate synthesizers to produce specific audio data.
 
 - The **`Composer`** is a mid-level specialist. Its primary job is to create a song. It uses its own inline tools to generate a melody and musical structure. To realize this vision, it then makes `Calls` to the `Sound-Designer` module to synthesize the actual sounds.
 

@@ -55,8 +55,6 @@ A simple `Message` array might look like this:
 ]
 ```
 
-#### The Content Pipeline
-
 The system extends this basic `Message` structure by allowing the `content` field to hold not just text, but specialized objects called **custom content types**. For example, instead of a string, a message's content could be a structured object like `{ "type": "input", "input": { ... } }`.
 
 > Sidenote:
@@ -79,6 +77,10 @@ Each custom content type is registered with a handler, and these handlers form a
 This powerful pipeline mechanism allows the agent to work with high-level, structured concepts, dynamically constructing the precise LLM invocation needed to perform a task.
 
 ## Schema: Guiding the Solution
+
+> Sidenote:
+>
+> - Read more at [json-schema.org](https://json-schema.org/)
 
 The `schema` is a JSON Schema that defines the exact structure of the desired `solution`. This is a powerful system that allows for the representation of any type of data, from simple strings to complex, nested objects. The LLM is forced to generate a `solution` that strictly conforms to this schema, guaranteeing that the output is always well-structured and predictable.
 

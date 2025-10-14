@@ -28,7 +28,7 @@ The primary mechanism for reading from the `State` is through **Variable Referen
 
 The reference is a simple string syntax prefixed with a dagger (`†`). The syntax is `†<kind>.<path>`, where `<kind>` is the type of `Data` message (e.g., `state`, `input`) and `<path>` is the dot-notation path to the desired value.
 
-For example, a `Tool Call` for fetching a user profile might look like this:
+For example, a `Tool Call` for fetching a user profile might be defined as a data structure (e.g., in JSON) like this:
 
 ```json
 {
@@ -37,7 +37,13 @@ For example, a `Tool Call` for fetching a user profile might look like this:
 }
 ```
 
-At execution time, the system resolves this reference, fetching the value from `state.currentUser.id` and injecting it as the `userId` parameter before the tool is executed.
+At execution time, the system resolves the `†state.currentUser.id` reference, making the call equivalent to the following TypeScript code:
+
+```typescript
+fetchUserProfile({
+  userId: state.currentUser.id,
+});
+```
 
 ## Outputs
 
@@ -94,7 +100,7 @@ The method for determining the `_outputPath` value is defined by its schema, a p
   }
   ```
 
-This flexibility is a key element of the **Plan** system, allowing a workflow designer to choose between giving the agent creative freedom and enforcing a rigid, reliable data flow.
+This provides a knob for workflow predictability, allowing a designer to move from a flexible, exploratory phase to a locked-down, deterministic one to ensure reliable outcomes.
 
 ## Planning vs. Execution
 

@@ -1,6 +1,6 @@
 # 010: Agent/State
 
-> **State Message:** Think of this as the a workflow's live memory. It’s like a scratchpad where the AI can keep notes and store information as it works, allowing it to handle tasks that have multiple steps.
+> **State Message:** Imagine a computer program has a personal notepad where it keeps track of everything it's doing on a task. This notepad is its live, evolving memory. It’s a place for its “local variables,” which lets it handle jobs that take more than one step. — [Glossary](./000_glossary.md)
 
 > Sidenote:
 > - Requires:
@@ -11,23 +11,25 @@
 > - Complemented by:
 >   - [011: Agent/Instancing](./011_agent_instancing.md)
 
-This document explains the **State message**, a feature that lets an AI agent remember what it's doing from one moment to the next. The `State` message is a special way of using the **Data** system to create workflows that have a memory.
+This document is about something called the **State message**. Think of it as a computer agent's short-term memory.
 
-Imagine you're building something with instructions. The `State` is like your workbench. It holds all your pieces and progress so that if you stop and come back later, you know exactly where you left off. When the AI starts a new step, it looks at the `State` from the previous step to understand what's already been done and what to do next.
+The `State` message is how an agent remembers what it's doing from one moment to the next. It’s like a scratchpad where the agent jots down notes. This is super important because it allows the agent to work on complex tasks that have multiple steps. A tool can do its job, leave a note on the scratchpad, and the next tool can read that note to continue the work.
+
+This scratchpad holds the complete, up-to-the-minute status of a job. Because of this, you can pause a task and come back to it later. When the agent starts again, it just reads the scratchpad to see exactly where it left off, and continues without missing a beat.
 
 ## Multi-Step Tools
 
-The main job of the `State` message is to let different **Tools** (the abilities the AI can use) share information. It creates a shared workspace where one tool can leave its result, and another tool can pick it up and use it.
+The main job of the `State` message is to let different tools share information. It’s what allows them to work together as a team on the same task.
 
-It works like passing a note. One tool does its job and writes the result to the `State` (the note). Then, the next tool in the sequence reads that note to get the information it needs to do its own job. This lets you build chains of tools that work together, where the result of one step becomes the starting point for the next.
+It works very simply: one tool writes its result onto the scratchpad (`State`), and another tool reads that result as its instruction for the next step. This lets you create a chain of tools, where the work of the first one feeds directly into the second one, and so on, without forgetting anything in between.
 
-## Inputs
+## How Tools Read from Memory (Inputs)
 
-How does a tool read information from the `State`? It uses something called a **Variable Reference**. Instead of copying a large piece of data, a tool can use a special shortcut that points to where the data is stored in the `State`. This is much more efficient, like writing down a page number in a book instead of copying the whole page.
+Tools read from the `State` using something called **Variable References**. Instead of giving a tool the actual piece of information, you give it a special pointer that says, "Go look for the information you need over here on the scratchpad."
 
-The shortcut is a simple string that starts with a dagger symbol (`†`). The format is `†<where>.<what>`, where `<where>` is the type of memory (like `state` for the main workbench) and `<what>` is the specific piece of data you want.
+This pointer is just a little piece of text that starts with a dagger symbol (`†`). The format is like `†kind.path`, where `kind` tells you which scratchpad to look at (like `state`) and `path` is the exact spot on the page where the note is written.
 
-For example, if an AI needed to look up a user, the instruction might look like this:
+For example, if a tool needs to look up a user, the instruction might look like this in code:
 
 ```json
 {
@@ -36,42 +38,41 @@ For example, if an AI needed to look up a user, the instruction might look like 
 }
 ```
 
-When it's time to run this, the system sees `†state.currentUser.id` and automatically goes to the `State` memory, finds the `id` of the `currentUser`, and plugs it into the `userId` field before running the tool.
+When the system runs this, it sees `†state.currentUser.id` and knows it's not a real ID. Instead, it goes to the `State` scratchpad, finds the `currentUser` section, gets the `id`, and uses that to run the tool. It's like telling your friend, "Go get the address from the sticky note on the fridge," instead of telling them the address yourself.
 
-## Outputs
+This is smart because if the information is really big, you don't have to copy it. You just point to it.
 
-To write a result *to* the `State`, a tool uses a special instruction called `_outputPath`. This is like telling the AI exactly where on the workbench to put the result of its work.
+## How Tools Write to Memory (Outputs)
+
+To write something to the `State` scratchpad, a tool uses a special instruction called `_outputPath`. This tells the system exactly where to put the tool's result when it's finished.
 
 > Sidenote:
-> - A `Tool Call` tells a tool *what* to do. The `_outputPath` tells it *where* to put the result, changing it from a simple action into a step that builds a larger memory.
+> - [004: Agent/Call](./004_agent_call.md)
 
-You can also set up rules (a `schema`) for what the `State` memory should contain. If the rules say a certain piece of information is missing, it cleverly guides the AI to use a tool that will create that information and put it in the right place.
+You can also give the `State` a template (called a `schema`) that shows what kind of notes you expect to see on it. This helps guide the AI. If the template has a blank spot labeled "summary," the AI will know it needs to run a tool that can create a summary and put the result in that spot.
 
-### Path Syntax
+### Different Ways to Write
 
-The `_outputPath` instruction can be written in a few ways:
+The `_outputPath` instruction can be written in a few cool ways:
 
-- **Regular Path:** A simple location. The `†state.` part is just a reminder that you're saving to the main `State` memory.
+- **One Spot:** Just give it a simple location. The `†state.` part is just a reminder that you're writing to the main scratchpad.
   ```json
   "†state.user.summary"
   ```
-- **Alternative Paths (Branching):** Using `||` (which means "or") gives a choice of where to save the result. This is useful for tasks that can have different outcomes, like success or failure.
+- **A Choice (Branching):** Using `||` (which means "OR") lets you give a few possible spots. The system can then decide which one to use. This is useful for things that can either succeed or fail.
   ```json
   "†state.summary.text || †state.summary.json"
   ```
-- **Concurrent Paths (Fan-out):** Using `&&` (which means "and") tells the system to save the same result in multiple places at the same time.
+- **Many Spots at Once (Fan-out):** Using `&&` (which means "AND") tells the system to write the same result to all the locations at the same time. It's like making copies of your note and sticking them in different places.
   ```json
   "†state.user.profile.summary && †state.audit.log.summary"
   ```
 
-### Specification Methods
+### Who Decides Where to Write?
 
-How does a tool know which `_outputPath` to use? The rules for the tool can define this:
+- **Let the AI Decide (Dynamic):** You can let the AI be creative and decide where to put the results. This is great for when the agent is exploring and figuring things out on its own.
 
-- **Dynamic (AI Decides):** The tool's rules can be very flexible, letting the AI decide where to save the data. This gives the agent the freedom to connect tools in new and creative ways as it works.
-
-  _Tool's Rules:_
-
+  _Tool's Rulebook:_
   ```json
   {
     "_outputPath": {
@@ -80,10 +81,9 @@ How does a tool know which `_outputPath` to use? The rules for the tool can defi
   }
   ```
 
-- **Prescribed (Hard-Coded):** The rules can be very strict, forcing the AI to save the result in a specific spot or choose from a short, pre-approved list of locations. This is great for building predictable and reliable workflows where you know exactly what should happen.
+- **Set the Rules (Prescribed):** Or, you can set strict rules. For example, you can say, "The result MUST go here," or "The AI can only choose between these two spots." This is great for building reliable workflows where you know exactly what should happen, like handling errors.
 
-  _Tool's Rules (forcing a choice between success or failure spots):_
-
+  _Tool's Rulebook (forcing a choice between a success spot or a failure spot):_
   ```json
   {
     "_outputPath": {
@@ -92,51 +92,50 @@ How does a tool know which `_outputPath` to use? The rules for the tool can defi
   }
   ```
 
-This choice between freedom and control is a key part of how the **Plan** system works, letting you build workflows that are either creative or rock-solid reliable.
+This gives you a way to control how predictable the agent is. You can let it be creative at first, and then lock down the rules to make it super reliable.
 
-## Planning vs. Execution
+## Planning vs. Doing
 
-The combination of writing to the `State` with `_outputPath` and reading from it with **Variable References** is what makes it possible to separate *planning* from *doing*. An AI can create a complete map of all the steps it needs to take—a chain of tools connected by these memory pointers—*before* it actually runs a single one.
+This whole system of writing to `State` (outputs) and reading from `State` (inputs) is what allows the agent to **plan before it acts**.
 
-This map can be checked for errors, saved for later, and understood as a whole. You can give the AI the freedom to draw its own map by letting it decide the inputs and outputs, or you can give it a strict blueprint to follow for guaranteed results.
+It can create a whole map of how different tools will connect to each other, like a flowchart, *before* running a single one. It can see that Tool A will create a result, and Tool B will need that result to start its work. This map can be checked and saved. This is perfect for AIs because they can think through the entire plan first, then execute it perfectly.
 
 > [!TIP]
-> Making a plan is simply the act of connecting **Tool Calls** together using the **State**. The `State` is the whiteboard, the references (`†...`) and output paths are the lines connecting ideas, and the AI **Loop** is the engine that follows the diagram, step by step. Together, they let an agent build a complete data-flow map, which is what a **Plan** really is.
-> 
+> Making a plan is just creating a series of tool commands that are connected to each other through the `State`. The `State` is the whiteboard, the pointers (`Variable References` and `_outputPath`) are the connecting lines, and the agent's main loop is the engine that moves from step to step. Together, they let an agent draw out a complete workflow, which is its **Plan**.
+>
 > > Sidenote:
-> > 
+> >
 > > - [005: Agent/Loop](./005_agent_loop.md)
 > > - [012: Agent/Plan](./012_agent_plan.md)
 
-## Composition
+## How `State` Works with Other Parts
 
-- **Call:** A `Call` (using a tool) and a `State` are tightly connected. When a `Tool Call` includes `_outputPath`, it's no longer just a one-off action; it's an action that changes the workflow's memory. By telling the system where to write its result, a `Call` becomes a way for the AI to record what it has done, allowing future steps to build on that work.
+- **Call:** A `Call` is a command to use a tool. By adding the `_outputPath` instruction, a simple command becomes an action that changes the agent's memory (`State`). This is how the agent's actions build on each other, creating a chain of events that are all recorded in the `State`.
 
   > Sidenote:
   > - [004: Agent/Call](./004_agent_call.md)
 
-- **Data:** The `State` is just a special use of the **Data** system. It uses a `Data` message with the label `kind: "state"`. This gives it all the features of `Data`, like using a `schema` to define its structure and the ability to be updated in small pieces, which the system then merges into one complete memory.
+- **Data:** At its heart, the `State` message is just a special kind of `Data` message. It uses all the same rules to create a memory for the agent. Its template (`schema`) defines how that memory should be organized, and it can be updated one little piece at a time.
 
   > Sidenote:
   > - [006: Agent/Data](./006_agent_data.md)
 
-- **Imports:** The **Imports** system is how you give a tool running in its own separate workspace access to the main `State` memory. When an AI delegates a task, it can use `_imports` to say, "Include the main `State` so this tool knows what's going on." This allows self-contained tools to safely read from and contribute to the main workflow.
+- **Imports:** If a tool needs to work in a separate, clean room, the `Imports` system is how you pass it a copy of the main scratchpad (`State`). This lets tools that work in isolation still see what's happening in the main workflow in a safe and controlled way.
 
   > Sidenote:
   > - [008: Agent/Imports](./008_agent_imports.md)
 
-- **Plan:** A `State` is the backbone of a **Plan**. A `Plan` is like a flowchart where each box is a tool. The `State` provides the arrows that connect the boxes. It lets the output of one tool become the input for another, creating complex workflows with branches (if/then logic) and parallel tasks.
+- **Plan:** `State` is the backbone of a `Plan`. In a `Plan`, all the tool commands are like dots on a map. The `State` provides the lines that connect the dots, showing how information flows from one tool to the next. This allows for creating smart workflows with branches (if this, then that) or parallel tasks.
 
-  > Sidenote:
-  > - [012: Agent/Plan](./012_agent_plan.md)
+  __SIDENOTE_PLACEHolder_5__
 
-- **Instancing:** The `State` works perfectly with the **Instancing** system. If you need to run the same workflow on 100 different items at once, each item gets its own separate `State` memory. When a tool refers to `†state.currentUser.id`, the system automatically knows which of the 100 memories to look at. This lets you run one general plan across lots of different data at the same time, without anything getting mixed up.
+- **Instancing:** The `State` system works perfectly with the **Instancing** system. If you need to run the same task on 100 different things at once, each of those 100 tasks gets its own private scratchpad (`State`). The system is smart enough to make sure that when a tool asks for `†state.currentUser.id`, it automatically gets the ID from the correct scratchpad for the task it's working on. This lets one single plan run on thousands of items at the same time without them getting mixed up.
 
   > Sidenote:
   > - [011: Agent/Instancing](./011_agent_instancing.md)
 
-## From Single State to Parallel Execution
+## From One Task to Many
 
-The `State` message provides the memory for a single workflow. But to build powerful systems, we need to run that same workflow on many different things at once. This means managing many separate `State` memories in parallel.
+The `State` message gives an agent the memory to handle one job from start to finish. But to build truly powerful systems, agents need to be able to run that same job on many different things at once, in parallel.
 
-The next document, **[011: Agent/Instancing](./011_agent_instancing.md)**, explains how the system handles this challenge.
+The next document, **[011: Agent/Instancing](./011_agent_instancing.md)**, explains how the system manages all those parallel jobs, each with its own memory, without anything getting confused.

@@ -1,99 +1,99 @@
 # 009: Agent/Module
 
-> **Module**: Imagine you have a special, clean workshop for a very specific job. A Module is a set of rules for using that workshop. When a `Call` has a `_module` tag, it sends a task to be done in that clean room. The `_imports` tag is like a list of an approved tools and materials you're allowed to bring into the workshop from the outside. — [Glossary](./000_glossary.md)
+> **Module**: A way to give a task its own private workspace. When you tell a program to use a module, it runs the task in a special “clean room” so it doesn’t get confused by other things happening. To give it the information it needs, you use a special list called `_imports` which is like a keycard that only lets specific data into the room. — [Glossary](./000_glossary.md)
 
 > Sidenote:
-> - You should know about:
+> - To understand this, you should first read about:
 >   - [004: Agent/Call](./004_agent_call.md)
 > - This works together with:
 >   - [008: Agent/Imports](./008_agent_imports.md)
 
-We've already talked about how individual `Tools` work. The **Module Protocol** helps us solve a bigger problem: how do you manage and combine lots of tools without making a huge mess? It’s a way to run `Tools` in their own private “workshops” so they don’t interfere with each other. This keeps everything clean and makes it easy to reuse tools for different jobs. By giving a job to a module—which could be another `Idea` or a specific `Activity`—the system can build smart assistants that are made of smaller, independent, and reusable parts.
+So far, we’ve talked about how individual `Tools` get their jobs done. But what happens when you have lots of tools and want them to work together without getting in each other's way? That's where the **Module Protocol** comes in.
 
-## The Problem: A Big Messy Workshop
+It’s a system for running `Tools` in their own private workspaces, or “clean rooms.” This stops them from messing with each other and makes them truly reusable. An AI can hand off a job to a module, which works like a separate mini-program, allowing you to build very smart and complex behaviors out of smaller, independent parts.
 
-If you just throw all your `Tools` into one big pile, things quickly become a disaster.
+## The Problem: One Big Toolbox and Messy Workspaces
 
-1.  **Too Many Instructions**: An AI has limits. If you give it a giant instruction book for hundreds of complicated `Tools` all at once, it can get overwhelmed and won't know which one to pick.
-2.  **Getting Confused**: When all the `Tools` are in the same workspace, the AI can get confused by information that isn't relevant to its current task. This is like trying to build a LEGO car and accidentally grabbing a piece from a LEGO castle that's on the same table—it leads to mistakes.
-3.  **Hard to Reuse**: A `Tool` built for one assistant is hard to move to another one, because you have to bring its entire messy workshop along with it.
+As an AI gets more powerful, just dumping all its `Tools` into one giant toolbox becomes a problem.
 
-The Module Protocol fixes this by creating a **Module Scope**, which is like giving each `Tool` its own separate, organized workshop.
+1.  **Too Much to Read**: Imagine giving an AI a manual that's a thousand pages long. It has limits on how much it can read and understand at once. If you give it too many complicated `Tools`, it gets overwhelmed and can't use them correctly.
+2.  **Getting Confused**: When all the `Tools` are in the same workspace, the AI can get distracted by information that has nothing to do with the current task. It might grab the wrong tool or use it incorrectly because it's confused by all the clutter.
+3.  **Hard to Share**: A `Tool` built for one AI assistant is hard to move to another one. It’s like trying to move a single brick that’s glued to an entire wall — you have to take the whole messy wall with it.
 
-## The `_module` Note
+The Module system solves this by creating **Module Scope**, which is like giving each `Tool` its own room to work in.
 
-To send a task to a separate workshop, you use a special `_module` note in the `Tool`'s instructions. This tells the system not to do the job right here, but to send it to an outside module.
+## The `_module` Property: The “Go Here” Sign
 
-The `_module` note is just a piece of text and can be used in two ways:
+Module Scope is turned on by using the `_module` property inside a `Tool`'s instructions. This property tells the system, “Don’t run this job here. Send it to a special module to handle it.”
 
-- **Point to a specific `Idea`**: The text can be a link to a separate `Idea`—a complete set of instructions stored in a file. This lets one `Tool` hand off its work to a totally different instruction manual.
-  - You can use a file path like `../ideas/my-idea.json`.
-  - Or a special link like `idea://`.
+The `_module` property is a simple piece of text that works in two ways:
+
+- **Point to a Saved Plan**: The text can be an address (like a web link) to a file that contains a complete, self-contained plan, called a `Request`. This lets one `Tool` hand off its entire job to another set of instructions.
 
   > Sidenote:
-  > An `Idea` is usually just a saved set of instructions, also known as a `Request` ([001: Agent/Request](./001_agent_request.md)). The Module system is the main way to combine these `Ideas` to build more complicated assistants. See [101: Concept/Idea](./101_concept_idea.md) for more.
+  > A saved, shareable plan (a [001: Agent/Request](./001_agent_request.md)) is the most common kind of `Idea`. The Module system is the main way to combine these `Ideas` to build bigger and more complex things. See [101: Concept/Idea](./101_concept_idea.md) for more info.
 
-- **Create a temporary workshop**: If you just write `'anonymous'`, it tells the system to create a brand new, temporary workshop just for this one task. This is useful when you need a clean space without needing to save it as a whole new `Idea`.
+- **Create a Temporary Workspace**: If the text is just the word `'anonymous'`, it tells the system to create a brand new, empty workspace on the spot for the job. You don’t need a pre-saved file; it’s like renting a clean, empty room for a single task.
 
 ## Working in a Clean Room
 
-A module is like a “clean room” for getting work done. Instead of working in the middle of the main, busy workshop, the task is handled in a new, separate space. The instructions for this new space are built from scratch, not just copied from the main area.
+A module gives a task a “clean room” to work in. Instead of operating in the main AI’s busy and cluttered office, the job is handled in a fresh, isolated space. The new space starts empty; it doesn’t automatically get all the information from the main office.
 
-This is where the [Imports Protocol](./008_agent_imports.md) is super important. The `_imports` note on the `Tool` acts like a bridge. It's a checklist of exactly which pieces of information from the main workshop should be allowed into the clean room. This gives the main assistant total control over what the module can see, preventing confusion and keeping everything neatly packed away.
+This is why the [Imports Protocol](./008_agent_imports.md) is so important. The `_imports` property on a `Tool` acts like a security guard at the door of the clean room. It has a list of exactly what information from the main office is allowed inside. This gives the main AI total control over what the module sees, preventing confusion and keeping everything neatly organized.
 
 > Sidenote:
 > - [008: Agent/Imports](./008_agent_imports.md)
 
-## Handling Huge Blueprints
+## Handling Huge amounts of information
 
-The Module system also helps when a tool produces something really big and complicated. Instead of making the main AI read a giant blueprint for the `_output`—which could crowd out other important tools—a `Tool` can be defined with just its input instructions and a `_module` pointer.
+The Module system also helps when a `Tool` needs to produce a very large or complicated result. Instead of making the main AI worry about all the tiny details of the result, you can put that complexity inside a module.
 
-The AI can plan its work just by knowing what goes *in* to the tool. The complicated output will be created inside the module's private workshop. This lets an AI plan a series of complex steps without needing to see every single tiny detail of every step all at once. The AI trusts that the module will do its job correctly and will be ready to use the result in the next step.
+The AI just needs to know what ingredients to give the module. It can then plan its next steps, trusting that the module will figure out the complicated result on its own. The main AI doesn’t need to see the entire messy recipe; it just waits for the finished cake to come out of the module's kitchen. It can then take that finished cake and use it for the next step.
 
-## How to Hand Off Work to a Module
+## How to Look Up a Module
 
-A `Tool` becomes a `Module` just by adding the `_module` note to its instructions. This means the job should be handed off. The big question is *when* the system figures out the details of this handoff. There are two ways to do it.
+A `Tool` becomes a `Module` just by having the `_module` property in its instructions. This tells the system to hand off the job. The big question is *when* the system figures out where to send the job. There are two ways to do this.
 
-### 1. The Easygoing Way (Default)
+### 1. Figuring It Out on the Fly (The Default Way)
 
-The normal way is to figure out the module details right when it's time to **do the work**, after the AI has already decided to make a `Call`.
+The most common and flexible way is for the system to look up the module **when it's time to run the task**, after the AI has already decided what to do.
 
-This method allows for something really cool that normal computer programs can't do: **the AI acts like smart glue.** An AI can make a `Call` with details that don't perfectly match what the module expects. When it's time to run, the system takes what the AI provided and lets the module's own AI figure out how to make it work.
+This method allows for something really cool that normal computer programs can't do: **the AI acts like smart glue.** An AI might tell a module to do something but give it instructions that don’t perfectly match what the module expects. When the system sends the job over, the AI inside the module's clean room is smart enough to figure out what was meant and make it work.
 
-This is a huge benefit because it means modules can be updated and changed on their own. Even if a module starts asking for information in a new way, other AIs that use it won't instantly break. The module's AI will try to adapt the old request to the new format, making the whole system flexible and strong.
+This is a huge benefit because it means modules can be updated and changed without breaking everything. If a module's instructions change a little, other AIs can still talk to it, and the module’s AI will try to adapt. It creates a flexible system where parts can evolve on their own.
 
-The process works like this:
+Here's how it works:
 
-1.  An AI decides to use the modular `Tool` and makes a `Call`.
-2.  The system sees the `_module` note and starts the handoff process.
-3.  **Getting the Workshop Ready**: The system gets the module's `Idea` (its instruction book) and sets up the clean workspace. Then, it uses the `_imports` list to bring in the necessary info from the caller.
-4.  **Mapping the Inputs**: The details from the `Call` are given to the module as a new `Input Message`. This is where the "smart glue" happens, as the module's AI will use this input to do its job, even if the instructions aren't a perfect match.
-5.  **Doing the Work**: A new, separate `Request` is made inside the module's clean workspace. The final result is sent back as the output of the original `Call`.
+1.  An AI decides to use a `Tool` that is a module.
+2.  The system sees the `_module` property and starts the hand-off process.
+3.  **Get the Workspace Ready**: The system grabs the module's instruction file (if it has one) and prepares the clean room. It then uses the `_imports` list to bring in the necessary information from the main AI.
+4.  **Give it the Job**: The specific details of the job (the `params`) are sent to the module as an `Input Message`. This is where the “smart glue” happens. The module’s AI will use this message to do its work, even if it's not in the perfect format.
+5.  **Run the Job**: The task is run in the new, isolated workspace, and the result is sent back to the main AI.
 
-### 2. The Super-Strict Way (Optional)
+### 2. Looking It Up Ahead of Time (The Safer Way)
 
-For situations where you need to be absolutely certain everything is perfect, you can prepare the module **beforehand**, before the first `Request` is even sent to the AI.
+For situations where you need to be very sure everything will work perfectly, you can look up the module **before the AI even starts thinking**.
 
-In this mode, the system pre-loads the module's `Idea` and merges its input instructions with the `Tool`'s instructions. This lets the main AI see the module's exact requirements right from the start, guaranteeing that the `Call` it creates will be perfectly correct. This can even include the module's `_output` instructions, creating a strict contract for what to expect as a result.
+In this mode, the system finds the module's instructions ahead of time and shows them to the main AI. This way, the AI sees exactly what the module needs from the very beginning, making sure the job it creates is perfectly formatted and safe. This can also include the module’s expected result, so there are no surprises.
 
-This approach gives you the safety of a traditional contract, where you know exactly what goes in and what comes out. You lose some of the flexibility of the easygoing way, so it's best for important jobs where you don't want any surprises.
+This is like having a strict contract for a job, where you know exactly what you need to provide and what you’ll get back. It’s less flexible, but it’s great for important tasks where you can’t afford any mistakes.
 
-## Building Bigger Things: The Producer & Composer
+## Putting It All Together: The Composer & The Sound Designer
 
-Modules let you build cool things by having `Ideas` act like their own mini-services that can be directed by other AIs. This creates a clear and flexible structure: high-level AIs can focus on the big picture, while they give specialized jobs to smaller, reusable modules.
+Modules let you build powerful systems by having different AIs call on each other like services. This creates a clear structure: a high-level manager AI can focus on the big picture, while handing off specialized tasks to expert, reusable modules.
 
-Think about making music with a team of two expert modules: a **`Composer`** and a **`Sound-Designer`**.
+Imagine you're making music with two expert modules: a **`Composer`** and a **`Sound-Designer`**.
 
-- The **`Sound-Designer`** is the low-level expert. It's a self-contained `Idea` (`idea://sound-designer`) that knows all about sound physics. It knows how to use machines to create specific audio files.
+- The **`Sound-Designer`** is a low-level expert. It's a self-contained module that only knows about the science of sound. It knows how to use digital synthesizers to create specific audio clips.
 
-- The **`Composer`** is the mid-level artist. Its main job is to write a song. It uses its own tools to come up with a melody. Then, to make the melody real, it makes `Calls` to the `Sound-Designer` module to create the actual sounds.
+- The **`Composer`** is a mid-level expert. Its job is to write a song. It uses its own tools to create a melody and structure. Then, to turn its musical ideas into actual sound, it makes calls to the `Sound-Designer` module.
 
-This two-layer setup is very common. But the real magic of modules is how they can be combined in different ways for different tasks.
+This two-level structure is very common. But the real magic happens when you can mix and match these modules based on the task.
 
-Now, let's bring in a high-level **`Producer`** AI. The `Producer`'s goal is to create a complete song. Depending on the task, the `Producer` can direct its modules in different ways:
+Now, let’s add a high-level **`Producer`** AI. The `Producer`'s goal is to create a finished song recording. The `Producer` can use its modules in different ways depending on what needs to be done:
 
 > Sidenote:
-> This setup allows for a lot of flexibility. A high-level `Producer` can give a task to a `Composer`, who then uses a `Sound-Designer`. However, the `Producer` can also skip the `Composer` and talk directly to the `Sound-Designer` for specific sound effects.
+> This setup allows for a lot of flexibility. A high-level `Producer` can tell a `Composer` what to do, and the `Composer` then uses a `Sound-Designer`. But the `Producer` can also skip the `Composer` and talk directly to the `Sound-Designer` for specific tasks.
 >
 > ```mermaid
 > graph TD
@@ -102,14 +102,14 @@ Now, let's bring in a high-level **`Producer`** AI. The `Producer`'s goal is to 
 >     Composer --> SoundDesigner(Sound-Designer)
 > ```
 
-- **Managing a Team**: To create a song, the `Producer` might make a single `Call` to the `Composer` module. The `Producer` gives a high-level goal ("I need a sad song"), and the `Composer` handles everything else, including making its own `Calls` to the `Sound-Designer`. In this case, the `Producer` doesn't even need to know the `Sound-Designer` exists.
+- **Telling the Manager**: To create a song, the `Producer` might make a single call to the `Composer` module. The `Producer` gives a simple instruction like, “I need a sad song,” and the `Composer` handles everything else, including making its own calls to the `Sound-Designer`. In this case, the `Producer` doesn’t even need to know the `Sound-Designer` exists.
 
-- **Directing Individuals**: If the `Producer` also needs a special sound effect (like a door creaking or wind blowing), it can make `Calls` directly to the `Sound-Designer` for those sounds, at the same time the `Composer` is working on the music.
+- **Working Side-by-Side**: What if the `Producer` also needs special sound effects, like footsteps or rain? It can make calls directly to the `Sound-Designer` for those specific sounds, at the same time it’s waiting for the `Composer` to finish the music.
 
-This shows the main idea: the way the tools work together isn't fixed. The `Producer` can treat the `Composer` as a single unit or can work with its individual helper (`Sound-Designer`) directly, all depending on what's needed at that moment. This flexibility allows the same expert modules to be combined in endless ways, creating a powerful system where new abilities can emerge.
+This shows the main idea: the way modules are connected isn't fixed. The `Producer` can treat the `Composer` like a black box that just gets the job done, or it can work directly with the `Sound-Designer` if needed. This flexibility allows the same expert modules to be combined in endless ways to solve new problems.
 
 ## From Modules to Memory
 
-Modules are great for giving AIs specific skills that work perfectly in a clean room. But for projects that have many steps, an AI needs a memory. It needs a way to keep track of its progress, learn from what it has already done, and follow a long-term plan. This is the bridge from doing single, separate actions to carrying out a complete, thought-out project.
+Modules are great for handling one-off expert tasks. But for longer, more complicated projects, an AI needs a memory. It needs a way to keep track of its progress, learn from what it has done, and follow a long-term plan. This is how we go from single, isolated actions to a smart, continuous thought process.
 
-The next document, [010: Agent/State](./010_agent_state.md), explains how the system manages this memory.
+The next document, [010: Agent/State](./010_agent_state.md), explains how we give AIs this persistent memory.

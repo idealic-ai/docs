@@ -20,7 +20,7 @@ This document provides definitions for the key concepts used in the Idea Protoco
   >
   > - [103: Concept/Ideator](./103_concept_ideator.md)
 
-- **Input Message**: A context message containing a `schema` and `input` data. Its presence transforms an `Idea` into an `Ideator` by defining its expected inputs.
+- **Input Message**: A context message containing a `schema` and `input` data. It defines the expected inputs for a `Request`, making it a reusable, function-like component.
 
   > Sidenote:
   >

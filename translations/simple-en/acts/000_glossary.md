@@ -1,107 +1,47 @@
-# Glossary of Terms
+# A List of Words and What They Mean
 
-This page explains the main words we use in the Idea Protocol. Think of it as a dictionary for our project.
+This document explains the important words you'll see used in the Idea Protocol.
 
-- **Idea**: The basic building block of knowledge in our system. Instead of being a temporary command, it's a permanent, self-contained package of information with three parts: a blueprint (`schema`), a final answer (`solution`), and the background story (`context`).
+- **Idea**: Think of an Idea as a smart, digital recipe card. It has three parts: the `schema` (the list of ingredients), the `solution` (the cooking instructions), and the `context` (notes on what you've done so far). It’s a complete package of knowledge that sticks around, not just a quick question you ask and forget.
 
-  > Sidenote:
-  > - [101: Concept/Idea](./101_concept_idea.md)
 
-- **Ideator**: An `Idea` that is built to do a job. Think of it like a machine or a function: you give it some information (input), and it does something to give you a result (output).
 
-  > Sidenote:
-  > - [103: Concept/Ideator](./103_concept_ideator.md)
+- **Ideator**: This is like a magical recipe that can actually do things. You give it an ingredient (the `input`), and it gives you back a finished dish (the `output`). It's an **Idea** that's built to transform something into something else.
 
-- **Idea Transformer**: A special kind of `Ideator` that takes another `Idea` as its input. It’s like a tool designed to change or upgrade other `Ideas`.
 
-  > Sidenote:
-  > - [103: Concept/Ideator](./103_concept_ideator.md)
 
-- **Input Message**: The specific instruction that tells an `Idea` what kind of information it should expect. Giving an `Idea` an `Input Message` is what turns it from a simple piece of information into an active `Ideator`.
+- **Idea Transformer**: This is a special kind of **Ideator** that works on other **Ideas**. Instead of taking a simple ingredient, it takes an entire recipe card and improves it or turns it into a completely new one. For example, it could turn a cookie recipe into a brownie recipe.
 
-  > Sidenote:
-  > - [007: Agent/Input](./007_agent_input.md)
 
-- **Tool**: A description of a capability or an action an AI agent can perform. It's like an item on a menu given to the AI. The AI doesn't perform the action itself; it just points to the menu item and says, "I want to do this."
 
-  > Sidenote:
-  > - [002: Agent/Tool](./002_agent_tool.md)
+- **Input Message**: This is like the order you give to a machine. It clearly lists what you're providing (`input` data) and the rules for it (`schema`). This makes it easy to use the same kind of order over and over again, just like ordering the same thing from a menu.
 
-- **Activity**: The actual code that runs when an AI decides to use a `Tool`. If a `Tool` is a button on a controller, the `Activity` is the set of wires and circuits that make the button actually do something in the game.
 
-  > Sidenote:
-  > - [003: Agent/Activity](./003_agent_activity.md)
 
-- **Call**: The specific moment an AI decides to use a `Tool`. It’s the action of pressing the button, with all the details filled in. It’s the command to *do the thing* now.
+- **Tool**: Imagine you're giving the AI a catalog of special abilities it can use, like "look up the weather" or "send an email." A **Tool** is a description of one of these abilities. The AI doesn't use the tool itself, but it can decide *to* use it by filling out an order form for it.
 
-  > Sidenote:
-  > - [004: Agent/Call](./004_agent_call.md)
 
-- **Scope**: This decides *where* a `Call` happens.
-  - **Inline Scope**: The `Call` is handled right here, within the AI's current thought process.
-  - **Module Scope**: The `Call` is sent to a separate, specialized helper to handle the job in a clean environment.
-    > Sidenote:
-    > - [004: Agent/Call](./004_agent_call.md)
 
-- **Method**: This decides *how* a `Call` gets done.
-  - **Explicit Execution**: The `Call` is completed by a predictable, pre-written piece of code (an `Activity`). It's like using a calculator – you always get the same answer for 2+2.
+- **Activity**: This is the actual code that does the work for a **Tool**. If the AI decides to "look up the weather," the **Activity** is the programming that connects to the weather service and gets the information. It’s what happens behind the scenes to make a tool work in the real world.
 
-    > Sidenote:
-    > - [003: Agent/Activity](./003_agent_activity.md)
 
-  - **Latent Execution**: The `Call`'s result is imagined or created by the AI model itself. It's more like asking an artist to draw a picture – the result is creative and might be different each time.
 
-    > Sidenote:
-    > - [104: Concept/Latent](./104_concept_latent.md)
+- **Call**: A **Call** is the filled-out order form for a **Tool**. The AI looks at the catalog of **Tools** and then creates a **Call** saying, "I want to use the 'look up weather' tool for 'New York City' right now." It’s the specific command to do something.
 
-- **Module**: A separate, isolated workshop where a task can be performed. When a job is sent to a `Module`, it's done in a clean room, so it doesn't get mixed up with anything else. It can only use the specific information it was given.
 
-  > Sidenote:
-  > - [009: Agent/Module](./009_agent_module.md)
 
-- **Import**: A piece of information borrowed from the main context and given to a task. It’s like giving a worker a specific tool or a piece of data from your desk so they can do their job, without giving them access to everything on your desk.
+- **Scope**: This is where the **Call** gets handled.
+  - **Inline Scope**: The order is handled right here, in the current workspace.
+  - **Module Scope**: The order is sent off to a specialist in another room to handle it there.
 
-  > Sidenote:
-  > - [008: Agent/Imports](./008_agent_imports.md)
 
-- **Loop**: The cycle of work an agent performs to reach a goal. The agent makes a request, gets a `Call` back, performs the action, and uses the result to decide on its next request. It keeps doing this until the job is finished.
+- **Method**: This is *how* the **Call** gets done.
+  - **Explicit Execution**: The order is completed by a real program (an **Activity**) that follows specific, predictable steps.
 
-  > Sidenote:
-  > - [005: Agent/Loop](./005_agent_loop.md)
 
-- **Evolution**: The process where a system built with AI can learn and improve on its own over time. It can change its own rules, tools, and behaviors based on new information or feedback, much like a living thing adapts to its environment.
 
-  > Sidenote:
-  > - [106: Concept/Evolution](./106_concept_evolution.md)
+  - **Latent Execution**: The order is completed by the AI using its own vast knowledge and creativity, like asking it to write a poem. It *imagines* the result.
 
-- **State Message**: A piece of information in the AI's memory that helps it remember things between steps. It’s like a sticky note that the AI keeps, reminding it of the current score in a game or what it was doing a moment ago.
 
-  > Sidenote:
-  > - [010: Agent/State](./010_agent_state.md)
 
-- **Process Idea**: A special `Idea` that holds a complete plan and tracks its progress. Think of it as a project manager's clipboard: it holds the list of available tools (`schema`), the updated to-do list for right now (`solution`), and all the background notes (`context`).
-
-  > Sidenote:
-  > - [012: Agent/Plan](./012_agent_plan.md)
-
-- **Vessel Idea**: A special `Idea` that holds a complete set of possible actions and also remembers the specific action that was chosen. It’s like a game controller (`schema`) that lists all possible moves, while also recording the exact button combo (`solution`) the player just used.
-
-  > Sidenote:
-  > - [202: Idea/Vessel](./202_idea_vessel.md)
-
-- **Instancing**: The ability to handle many different tasks or users at the same time, all within a single request. It’s like a chess master playing against 20 people at once, keeping track of each individual game separately.
-
-  > Sidenote:
-  > - [011: Agent/Instancing](./011_agent_instancing.md)
-
-- **Instance**: One single, separate task within an `Instancing` operation. In the chess example, each individual game and its board position is one `Instance`.
-
-  > Sidenote:
-  > - [011: Agent/Instancing](./011_agent_instancing.md)
-
-- **Reactor**: A special `Idea Transformer` that acts as a universal engine for turn-based games or processes. You give it the current state of the game (`Idea`), and it gives you back the next state of the game (`Idea`).
-
-  > Sidenote:
-  > - [303: Ideator/Reactor](./303_ideator_reactor.md)
-
-- **Variable Reference**: A special code (like `†state.score`) that acts like a pointer. It lets an agent take the result from one tool and use it as the input for another. It’s like saying, “Take whatever number is on the scoreboard and plug it into this calculator.”
+- **Module**: Think of this as a 

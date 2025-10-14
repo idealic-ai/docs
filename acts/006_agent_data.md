@@ -51,12 +51,6 @@ The `Data` protocol is a foundational pattern that is specialized and extended b
   >
   > - [005: Agent/Loop](./005_agent_loop.md)
 
-- **Input:** The `Input` protocol uses a `Data` message to formally declare the parameters a `Request` accepts. This is the mechanism that transforms a static `Idea` into a reusable, function-like `Ideator`.
-
-  > Sidenote:
-  >
-  > - [007: Agent/Input](./007_agent_input.md)
-
 - **State:** The `State` protocol uses a `Data` message to represent the persistent, evolving memory of a workflow. The message's `schema` defines the structure of the state object, including what properties and variables are available.
 
   > Sidenote:
@@ -69,8 +63,14 @@ The `Data` protocol is a foundational pattern that is specialized and extended b
   >
   > - [011: Agent/Instancing](./011_agent_instancing.md)
 
+- **Input:** The `Input` protocol uses a `Data` message to formally declare the parameters a `Request` accepts. This is the mechanism that transforms a static `Request` into a reusable, function-like component.
+
+  > Sidenote:
+  >
+  > - [007: Agent/Input](./007_agent_input.md)
+
 ## From Data to Actionable Input
 
 The `Data` protocol provides a generic container for structured information. With this foundation established, we can now explore its first major application: providing structured parameters to a request. This is the critical step that turns a static document into a dynamic, executable tool.
 
-The next document, **[007: Agent/Input](./007_agent_input.md)**, describes how this pattern is used to define a formal input interface for an `Idea`.
+The next document, **[007: Agent/Input](./007_agent_input.md)**, describes how this pattern is used to provide a structured prompt for a `Request`.

@@ -1,11 +1,11 @@
 # 007: Agent/Input
 
-> **Input Message:** A context message containing a `schema` and `input` data. Its presence transforms an `Idea` into an `Ideator` by defining its expected inputs. — [Glossary](./000_glossary.md)
+> **Input Message:** A context message containing a `schema` and `input` data. It defines the expected inputs for a `Request`, making it a reusable, function-like component. — [Glossary](./000_glossary.md)
 
 > Sidenote:
 >
-> - Requires: [101: Concept/Idea](./101_concept_idea.md)
-> - Enables: [103: Concept/Ideator](./103_concept_ideator.md)
+> - Requires: [001: Agent/Request](./001_agent_request.md)
+> - Enables: [002: Agent/Tool](./002_agent_tool.md)
 
 This document describes the **Input Message**, a special type of context message that provides a structured prompt for a [001: Agent/Request](./001_agent_request.md). By formally defining the data that a `Request` uses to shape its `solution`, the `Input` message transforms a one-off invocation into a reusable, function-like component. This pattern is the key to turning a simple `Request` into an executable `Tool` that agents can use.
 
@@ -14,14 +14,14 @@ This document describes the **Input Message**, a special type of context message
 
 ## The `Input` Message Type
 
-The `Input` message is a special type of context message designed to formally declare the data an `Idea` accepts. It is the mechanism that captures the structured input used to produce a given `solution`, completing the "Idea Triplet" and providing a full, reproducible record of the creative or computational process.
+The `Input` message is a special type of context message designed to formally declare the data a `Request` accepts. It is the mechanism that captures the structured input used to produce a given `solution`, providing a full, reproducible record of the computational process.
 
 An `Input` message contains two key properties:
 
-1.  **`schema`**: A JSON Schema object that defines the structure, types, and constraints of the data the `Idea` expects.
+1.  **`schema`**: A JSON Schema object that defines the structure, types, and constraints of the data the `Request` expects.
 2.  **`input`**: A concrete data object that conforms to the `schema` and represents the actual values used for a specific execution.
 
-By defining its inputs in this structured way, any `Idea` can become self-describing not only in its output (`solution` and `schema`) but also in what it requires to be generated. This is the core mechanism for creating a reproducible request.
+By defining its inputs in this structured way, any `Request` can become self-describing not only in its output (`solution` and `schema`) but also in what it requires to be generated. This is the core mechanism for creating a reproducible request.
 
 ## A Gateway to Usability: UI by Default
 
