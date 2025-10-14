@@ -8,17 +8,9 @@ export const onPageTransitionEnd: OnPageTransitionEndAsync = async () => {
   if (hash) {
     const target = document.querySelector(hash);
     if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
-
       // Temporarily remove and re-apply the hash to trigger :target
       window.history.replaceState({}, '', window.location.pathname + window.location.search);
-      setTimeout(() => {
-        window.history.replaceState(
-          {},
-          '',
-          window.location.pathname + window.location.search + hash
-        );
-      }, 100);
+      requestAnimationFrame(() => (window.location.hash = hash));
     }
   }
 };
