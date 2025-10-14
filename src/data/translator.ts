@@ -342,6 +342,8 @@ export async function getAdaptedDocument(
     return await translateDocument(text, lang === 'ru' ? 'Russian' : 'English', extraPrompt);
   };
 
+  console.log([contentToTranslate]);
+
   const translatedContent = await translate(contentToTranslate);
 
   const translatedParts = translatedContent.split(joiner);

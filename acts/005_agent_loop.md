@@ -45,7 +45,7 @@ The execution loop is the primary mechanism for autonomous, multi-step execution
 A key feature of the execution loop is its natural support for human oversight. Because the loop separates the generation of `Call`s from their execution, it creates an opportunity for a user to intervene:
 
 - **Approval:** Before executing the `Call`s, the system can present them to a user for approval. The execution engine can be configured with a confirmation step (e.g., a callback function) that acts as a breakpoint, pausing the loop until human input is received.
-- **Correction:** The user can modify the parameters of a `Call` or even replace it with a different one.
+- **Correction:** The user can modify the parameters of a `Call` or even replace it with a different one
 
 It is important to note that these specific HITL mechanisms are not part of the core protocol. The architecture simply provides the necessary separation between proposing actions and executing them, giving developers the flexibility to implement any kind of intervention, from a simple manual approval to a complex, automated system with timeouts.
 
@@ -55,4 +55,4 @@ This capability is critical for safety and for collaborative tasks where the age
 
 The execution loop provides a dynamic structure for agent behavior, but its power is realized through the data that flows within it. The state, inputs, and outputs managed during each cycle are what allow an agent to maintain context, learn, and execute complex, multi-step plans.
 
-The next document, [006: Agent/Data](./006_agent_data.md), explores the protocols for managing this data
+The next document, [006: Agent/Data](./006_agent_data.md), explores the protocols for managing this data.

@@ -14,16 +14,17 @@ html,
 body {
   padding: 0;
   margin: 0;
+  height: 100%;
 }
 
 body {
   font-family:
     et-book, Palatino, 'Palatino Linotype', 'Palatino LT STD', 'Book Antiqua', Georgia, serif;
-  background-color: #fffff8;
   color: #111;
   max-width: 1400px;
   margin: 0 auto;
   counter-reset: sidenote-counter;
+  background: #fffff8 linear-gradient(to bottom, rgba(200, 200, 200, 0.4), rgba(0, 0, 0, 0) 200px);
 }
 header {
   padding: 1rem 1rem 0;
