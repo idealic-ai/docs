@@ -22,6 +22,7 @@ body {
   background-color: #fffff8;
   color: #111;
   max-width: 1400px;
+  margin: 0 auto;
   counter-reset: sidenote-counter;
 }
 header {
