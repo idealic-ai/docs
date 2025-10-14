@@ -19,6 +19,7 @@ const SHARED_TRANSLATION_PROMPT = `  * Ensure that in translation markdown heade
   * Acts -> Нормативные Акты (or Акты in short)
   * FAQ -> Частые Вопросы (ЧаВо)
   * Vessel -> Носитель
+  * Activity -> Активность
   * Act 003: Agent/Activity -> Акт 003: Агент/Действие
   * AI-Native -> ИИ-центричный, ИИ-центричность
   * Acts of Emergence -> Акты Становления

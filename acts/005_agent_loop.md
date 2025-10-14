@@ -34,7 +34,7 @@ The execution loop is the primary mechanism for autonomous, multi-step execution
 
 1.  **Context Assembly:** The loop begins by assembling the initial context, which may include the user's goal, the current `State`, and other relevant information.
 2.  **Request Invocation:** It invokes the [001: Agent/Request](./001_agent_request.md) with the current context and a schema of available `Tools`.
-3.  **Call Processing:** The `Request` returns a `solution` containing an array of zero or more [004: Agent/Call](./004_agent_call.md)s.
+3.  **Call Processing:** The `Request` returns a `solution` containing an array of zero or more [004: Agent/Call](./004_agent_call.md)s. Crucially, at this stage, these `Calls` are only proposed actions; they have not been executed yet.
 4.  **Execution & Feedback:**
     - If the `solution` contains `Call`s, the loop executes them. For `Explicit` `Call`s, this involves invoking the corresponding `Activity` code.
     - The results of these `Call`s are then added back into the context for the next iteration.
@@ -44,8 +44,10 @@ The execution loop is the primary mechanism for autonomous, multi-step execution
 
 A key feature of the execution loop is its natural support for human oversight. Because the loop separates the generation of `Call`s from their execution, it creates an opportunity for a user to intervene:
 
-- **Approval:** Before executing the `Call`s, the system can present them to a user for approval.
+- **Approval:** Before executing the `Call`s, the system can present them to a user for approval. The execution engine can be configured with a confirmation step (e.g., a callback function) that acts as a breakpoint, pausing the loop until human input is received.
 - **Correction:** The user can modify the parameters of a `Call` or even replace it with a different one.
+
+It is important to note that these specific HITL mechanisms are not part of the core protocol. The architecture simply provides the necessary separation between proposing actions and executing them, giving developers the flexibility to implement any kind of intervention, from a simple manual approval to a complex, automated system with timeouts.
 
 This capability is critical for safety and for collaborative tasks where the agent acts as an assistant. User adjustments and feedback can be leveraged by the [012: Agent/Plan](./012_agent_plan.md), allowing the agent to refine its strategy based on human input.
 
