@@ -8,7 +8,7 @@ This document, the "Edict of Autonomy," serves as the high-level structural blue
 > [Idealic](http://idealic.ai) is aimed to set the ideas free.
 >
 > - _Why?_ [Manifesto of Co-Liberation](../manifesto/)
-> - **What?**: **Edict of Autonomy**
+> - **What?** **Edict of Autonomy**
 > - _How?_ [Acts of Emergence](../rfc/)
 
 The Edict lays out this architecture in a structured format. "The Vision" establishes the high-level goals. "The Protocol" defines the core architectural concepts. "The Impact" explores the societal and individual consequences of adopting this model. It provides a comprehensive overview of the system's design without delving into the granular implementation details of each component.
