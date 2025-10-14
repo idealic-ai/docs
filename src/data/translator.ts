@@ -51,6 +51,7 @@ const SHARED_STYLE_GUIDE = `
 * Simple ru -> Простой Ру
 * DO NOT STOP at \` character, always continue to the end of the file
 * DO NOT try to complicate diagrams. keep labels of nodes without extra text or parenthesis. Do not try to rephase the diagram labels if simplifying.
+* Do not attempt to rearrange placeholders like __SIDENOTE_PLACEHOLDER_\d__ or __SIDENOTE_TRANSLATION_SEPARATOR__, process the content between them as is.
 `;
 const TranslationResponseSchema = {
   type: 'object',
@@ -298,9 +299,9 @@ function reassembleSidenotes(translatedMainContent: string, translatedSidenotes:
       }
 
       // The LLM often adds leading newlines to its response chunks.
-      translatedSidenote = translatedSidenote.replace(/^\r?\n+/, '');
+      translatedSidenote = translatedSidenote.replace(/^\n+/, '');
 
-      const translatedLines = translatedSidenote.split(/\r?\n/g);
+      const translatedLines = translatedSidenote.split(/\n/g);
       const firstLineText = translatedLines.shift() || '';
 
       const firstLine =
@@ -331,7 +332,7 @@ export async function getAdaptedDocument(
   const { mainContent, sidenotes } = extractSidenotes(content);
 
   const SIDENOTE_TRANSLATION_SEPARATOR = '__SIDENOTE_TRANSLATION_SEPARATOR__';
-  const joiner = `\n\n${SIDENOTE_TRANSLATION_SEPARATOR}\n\n`;
+  const joiner = `\n${SIDENOTE_TRANSLATION_SEPARATOR}\n`;
   const contentToTranslate = [mainContent, ...sidenotes].join(joiner);
 
   const translate = async (text: string) => {
@@ -348,7 +349,7 @@ export async function getAdaptedDocument(
   const translatedMainContent = translatedParts.shift() || '';
   const translatedSidenotes = translatedParts;
 
-  console.log(translatedMainContent, translatedSidenotes, [contentToTranslate]);
+  console.log(translatedContent.split(joiner), joiner);
 
   return reassembleSidenotes(translatedMainContent, translatedSidenotes);
 }

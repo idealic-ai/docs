@@ -1,56 +1,63 @@
-# 005: Agent/Loop
+# 005: Agent/How it Repeats Steps
 
-> **Loop:** Imagine an AI trying to complete a task, like building a model airplane. A Loop is the series of steps it takes. The AI makes a `Request` (reads the next instruction), performs a `Call` (glues a piece on), and then adds the result (the piece is now attached) to its memory. It keeps repeating this cycle until there are no more instructions left.
+> **Loop:** A series of steps an AI assistant takes to reach a goal. The assistant keeps asking what to do next, taking action, and adding the results to its memory until the job is done.
 
 > Sidenote:
-> - This idea builds on:
+> - Requires:
 >   - [001: Agent/Request](./001_agent_request.md)
 >   - [002: Agent/Tool](./002_agent_tool.md)
 >   - [004: Agent/Call](./004_agent_call.md)
+>
 
-This document explains the **execution loop**. Think of it as the AI's internal process for tackling big jobs one step at a time. This cycle of thinking, acting, and learning from the results is what makes an AI an "agent."
+This document explains the **execution loop**, which is how an AI assistant can handle big projects that require more than one step. Think of it as the AI's thought process: it gathers information, uses its tools, and learns from the results over and over again. This whole cycle is what we mean when we talk about an "agent."
 
-## How the Loop Works
+## The Execution Loop
 
 > Sidenote:
 > ```mermaid
 > graph TD
 >     Start((Start)) --> ContextAssembly(1. Gather Info)
->     ContextAssembly --> RequestInvocation(2. Decide What to Do)
->     RequestInvocation --> CallProcessing(3. Create Plan)
->     CallProcessing --> HasCalls{Is there a plan?}
+>     ContextAssembly --> RequestInvocation(2. Ask What's Next)
+>     RequestInvocation --> CallProcessing(3. Get a Plan)
+>     CallProcessing --> HasCalls{Are there steps in the plan?}
 >     HasCalls -- No --> Termination((5. Finish))
->     HasCalls -- Yes --> HITL{Ask Human?}
+>     HasCalls -- Yes --> HITL{Human Check}
 >     HITL -- Approved --> Execution(4. Take Action & Learn)
 >     Execution -- Results --> ContextAssembly
 >     HITL -- Corrected --> ContextAssembly
 >     classDef optional stroke-dasharray: 5, 5
 >     class HITL optional
 > ```
+>
 
-The execution loop is how the agent works on its own to complete a task. It follows these steps over and over:
+The loop is the engine that lets the assistant work on its own. It's like a repeating checklist:
 
-1.  **Gather Information:** The loop starts by looking at everything it knows—what you asked it to do, what it has already done (`State`), and any other important facts. It's like a chef reading a recipe and checking the ingredients before starting.
-2.  **Decide What to Do:** With all that information, it makes a [Request](./001_agent_request.md) to figure out the next best action. It looks at the `Tools` it has available to make its decision.
-3.  **Create a Plan:** The `Request` comes back with a `solution`, which is a list of one or more proposed actions called `Calls`. This is important: at this point, the AI has only *decided* what to do, it hasn't done it yet.
-4.  **Take Action & Get Feedback:**
-    - If the `solution` has `Calls` in it, the loop runs them. This means actually using the `Tool` to perform the action.
-    - The results of these actions (what happened) are then added back to its memory for the next cycle.
-5.  **Finish:** If the `solution` contains zero `Calls`, it means the AI thinks the job is done, and the loop stops.
+1.  **Gather Info:** First, the assistant looks at everything it knows: what you asked it to do, what it has already done, and any other important facts.
 
-## Human-in-the-Loop (You can jump in!)
+2.  **Ask What's Next:** With all that information, it thinks, "Okay, what's the next logical step?" It looks at the tools it has and decides what action to propose.
 
-A really cool feature of this loop is that it has a built-in pause button for a human to step in. Because the agent first decides what to do (Step 3) and then does it (Step 4), there’s a moment in between for you to check its work.
+3.  **Get a Plan:** The assistant comes up with a plan, which is a list of proposed actions called `Calls`. A key detail here is that these are just *ideas*—it hasn't actually done anything yet. It's like writing a to-do list before you start working.
 
-- **Approval:** The system can show you the planned `Calls` and wait for you to say “okay” before it does anything. This pause gives you a chance to prevent mistakes.
-- **Correction:** You can also change the plan. If you don't like a `Call` the agent suggested, you can edit it or replace it with a better one.
+4.  **Take Action & Learn:**
+    - If the plan has actions on it, the assistant now performs them. For example, if the plan is to "send an email," this is the moment it actually sends it.
+    - The results of these actions (like "email sent successfully") are added to its memory for the next cycle.
 
-How this works isn't strictly defined by the system. It just creates the space for it. This means developers can build all sorts of safety checks, from a simple “Are you sure?” button to more complex review systems.
+5.  **Know When to Stop:** If the assistant thinks and decides there are no more actions to take, it means the goal has been reached. The loop stops.
 
-This is super important for safety and for working together with the AI. When you make a correction, the agent can use that feedback to learn and make better plans in the future.
+## Human-in-the-Loop (You're the Boss)
 
-## The Role of Data in the Loop
+A really cool feature of this loop is that it naturally creates a pause for a human to step in. Because the assistant first *proposes* what it wants to do and then *waits* to do it, you get a chance to supervise.
 
-The loop provides the step-by-step process, but the agent's real power comes from the information flowing through it. The memory (`State`), your instructions, and the results of its actions are what allow the agent to understand what's going on, learn, and carry out complex plans.
+-   **Approval:** The system can show you the assistant's plan before it acts. You can give it a thumbs-up to continue. It's like having a helpful intern who asks, "Is this what you want me to do next?" before they do it.
 
-The next document, [006: Agent/Data](./006_agent_data.md), explains how all this information is managed.
+-   **Correction:** You can also change the plan. You might see a proposed action and say, "Don't do that, do this instead," or "Almost, but change this small detail."
+
+This isn't a special add-on; it's built into the design. Having a gap between planning and acting gives programmers the freedom to add any kind of check, from a simple "Are you sure?" button to more complex safety systems.
+
+This is super important for safety and for working together with the AI. When you make a correction, the AI can use that feedback to make better plans in the future.
+
+## Why Information Matters in the Loop
+
+The loop provides the steps, but the real power comes from the information that flows through it. The assistant's ability to remember what it has done, what the results were, and what the original goal is allows it to handle complex, multi-step projects without getting lost.
+
+The next document, [006: Agent/Data](./006_agent_data.md), explains how the assistant keeps track of all this information.

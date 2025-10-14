@@ -55,4 +55,4 @@ This capability is critical for safety and for collaborative tasks where the age
 
 The execution loop provides a dynamic structure for agent behavior, but its power is realized through the data that flows within it. The state, inputs, and outputs managed during each cycle are what allow an agent to maintain context, learn, and execute complex, multi-step plans.
 
-The next document, [006: Agent/Data](./006_agent_data.md), explores the protocols for managing this data.
+The next document, [006: Agent/Data](./006_agent_data.md), explores the protocols for managing this data
