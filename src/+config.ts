@@ -10,7 +10,7 @@ export default {
   Layout,
 
   redirects: {
-    '/': `${process.env.VITE_BASE_PATH}/en/`,
+    '/': `${process.env.VITE_BASE_PATH || ''}/en/`,
   },
 
   // https://vike.dev/head-tags
