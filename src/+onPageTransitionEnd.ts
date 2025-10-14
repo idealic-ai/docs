@@ -1,6 +1,16 @@
-import type { OnPageTransitionEndAsync } from "vike/types";
+import type { OnPageTransitionEndAsync } from 'vike/types';
 
 export const onPageTransitionEnd: OnPageTransitionEndAsync = async () => {
-  console.log("Page transition end");
-  document.querySelector("body")?.classList.remove("page-is-transitioning");
+  console.log('Page transition end');
+  document.querySelector('body')?.classList.remove('page-is-transitioning');
+
+  const hash = window.location.hash;
+  if (hash) {
+    const target = document.querySelector(hash);
+    if (target) {
+      // Temporarily remove and re-apply the hash to trigger :target
+      window.location.hash = '';
+      window.location.hash = hash;
+    }
+  }
 };
