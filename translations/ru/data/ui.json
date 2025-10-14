@@ -1,5 +1,5 @@
 {
-  "rfc": {
+  "acts": {
     "short": "Акты",
     "long": "Акты Становления",
     "toc_link": "Акты Становления"
@@ -19,7 +19,7 @@
     "long": "Черновики",
     "toc_link": "Черновики"
   },
-  "rfc_sections": {
+  "acts_sections": {
     "glossary": "Глоссарий",
     "agent": "Агент",
     "concept": "Концепция",

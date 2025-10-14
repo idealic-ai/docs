@@ -1,5 +1,5 @@
 {
-  "rfc": {
+  "acts": {
     "short": "Acts",
     "long": "Acts of Emergence",
     "toc_link": "Acts of Emergence"
@@ -19,7 +19,7 @@
     "long": "Drafts",
     "toc_link": "Drafts"
   },
-  "rfc_sections": {
+  "acts_sections": {
     "glossary": "Word List",
     "agent": "Agent",
     "concept": "Concept",

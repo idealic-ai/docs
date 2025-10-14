@@ -1,7 +1,5 @@
 # 104: Concept/Latent
 
-
-
 > **Latent:** This is a fancy word for using an AI's own knowledge and thinking skills to get answers, instead of giving it strict, step-by-step computer code. It’s like the AI is using its “imagination” to figure things out. — [Glossary](./000_glossary.md)
 
 ## Introduction
@@ -37,9 +35,9 @@ This turns the AI from something that just writes text into a creative problem-s
 
 The most important thing the system does is **organize the clues for the AI** so it can think clearly. It uses a few tricks to help the AI focus on the right part of its knowledge ocean.
 
-*   **Giving Good Clues:** By providing a clear history of what's happened, the system gives the AI all the background it needs to understand the job.
-*   **Providing a Blueprint:** The blueprint (a JSON Schema) doesn't just check the final answer. It actually helps the AI think. It’s like giving someone a coloring book page—it tells them the shape of the final picture, so they know where to put the colors.
-*   **Providing Special Tools:** `Instructions` and `Tools` are like special magnifying glasses that help the AI focus on the right skills or ways of thinking needed for a specific task.
+- **Giving Good Clues:** By providing a clear history of what's happened, the system gives the AI all the background it needs to understand the job.
+- **Providing a Blueprint:** The blueprint (a JSON Schema) doesn't just check the final answer. It actually helps the AI think. It’s like giving someone a coloring book page—it tells them the shape of the final picture, so they know where to put the colors.
+- **Providing Special Tools:** `Instructions` and `Tools` are like special magnifying glasses that help the AI focus on the right skills or ways of thinking needed for a specific task.
 
 Giving the AI a good, well-organized map is what makes this whole process work. It's how the system turns a huge, messy ocean of knowledge into a sharp and useful tool.
 
@@ -51,11 +49,11 @@ Writing a specific computer program for a task is seen as an upgrade you add lat
 
 This changes how people can build things:
 
-*   **Build Things Super Fast:** You can design a whole complicated project by connecting different AI `Tools` and `Ideas` without writing any real code. The AI just figures out how to make them all work together.
-*   **Mix and Match Easily:** You can combine ideas and tools made by different people, and they will work together because the AI acts as the universal translator between them.
-*   > Sidenote: This idea is explained more in [RFC 303: Ideator/Reactor](../rfc/303_ideator_reactor.md).
+- **Build Things Super Fast:** You can design a whole complicated project by connecting different AI `Tools` and `Ideas` without writing any real code. The AI just figures out how to make them all work together.
+- **Mix and Match Easily:** You can combine ideas and tools made by different people, and they will work together because the AI acts as the universal translator between them.
+- > Sidenote: This idea is explained more in [Act 303: Ideator/Reactor](../acts/303_ideator_reactor.md).
 
-*   **Start Messy, Then Clean Up:** A project can start out running completely on the AI’s imagination. Later, if some parts are slow or super important, you can replace them with fast, specific computer code without having to rebuild everything.
+- **Start Messy, Then Clean Up:** A project can start out running completely on the AI’s imagination. Later, if some parts are slow or super important, you can replace them with fast, specific computer code without having to rebuild everything.
 
 By making this the default, the system lets people create and experiment with amazing new ideas very quickly.
 
@@ -65,8 +63,6 @@ This way of working is more than just a cool feature; it’s the engine that pow
 
 The ability to design and run complex systems without first writing every line of code is what makes AI-Native systems so flexible and smart. It’s what lets the AI be the architect, the planner, and the worker all at the same time.
 
-This is how we move from just *using* AI as a tool to building things *with* AI as the main building block.
-
-
+This is how we move from just _using_ AI as a tool to building things _with_ AI as the main building block.
 
 The next document, [105: Concept/AI-Native](./105_concept_ai_native.md), talks more about this big shift in how to build things.

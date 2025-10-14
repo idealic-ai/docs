@@ -10,9 +10,9 @@ _This section has extra materials like real-world examples, answers to common qu
 
 In the world of computers, the first program people usually write just makes the words "Hello, World!" appear on the screen. It's a simple test to make sure everything works. For our new system, our "Hello, World!" isn't a program, but something we call an Ideator.
 
-It’s a super-simple, five-line computer helper that can act as a universal translator. It takes a three-part message, gives it to a smart AI to think about, and then brings back the answer. This tiny piece of code can instantly understand and work with every single Idea on the network, even Ideas that haven't been invented yet. 
+It’s a super-simple, five-line computer helper that can act as a universal translator. It takes a three-part message, gives it to a smart AI to think about, and then brings back the answer. This tiny piece of code can instantly understand and work with every single Idea on the network, even Ideas that haven't been invented yet.
 
-This is like a famous thought puzzle called the "Chinese Room." The puzzle says you don't need to *understand* Chinese to translate it; you just need a really good rulebook. Our Ideator is like that. It doesn't need to "understand" an Idea to work with it; it just follows the instructions in the message perfectly. This means you don't need to be an expert coder to create things. The AI acts as a universal translator for everyone, making it easy and fair for anybody to share their knowledge.
+This is like a famous thought puzzle called the "Chinese Room." The puzzle says you don't need to _understand_ Chinese to translate it; you just need a really good rulebook. Our Ideator is like that. It doesn't need to "understand" an Idea to work with it; it just follows the instructions in the message perfectly. This means you don't need to be an expert coder to create things. The AI acts as a universal translator for everyone, making it easy and fair for anybody to share their knowledge.
 
 The first Ideator we made, the Genesis Ideator, is more than just a test. It's a statement. It proves that it’s incredibly easy to start using this new web. Anyone with a basic text editor and access to an AI can start creating, sharing, and improving ideas. Of course, people will build more powerful Ideators with fancy features, but you don't need them to get started. The power to create is available to everyone from day one—and that’s exactly what the tools we build are for.
 
@@ -44,22 +44,22 @@ Alice builds a successful online store in her private workshop. It isn't just a 
 
 - **Record Ideas**: These are like smart files for her products or invoices. They aren't just text; they're interactive cards that know what they are and what you can do with them.
 
-  > Sidenote: [RFC 201: Idea/Record](../rfc/201_idea_record.md)
+  > Sidenote: [Act 201: Idea/Record](../acts/201_idea_record.md)
 
 - **Instruction Ideas**: These are reusable recipes for doing things. An `Add New Product` instruction guides her through adding an item, and a `Process Return` instruction gives the exact steps for a refund.
 
-  > Sidenote: [RFC 204: Idea/Instruction](../rfc/204_idea_instruction.md)
+  > Sidenote: [Act 204: Idea/Instruction](../acts/204_idea_instruction.md)
 
 - **Process Ideas**: This is the master plan for getting orders to customers. When someone clicks "buy," a process for `Order Fulfillment` kicks off and follows a set of instructions automatically: `Confirm Payment`, `Update Inventory`, `Generate Shipping Label`, and `Send Confirmation Email`.
 
-  > Sidenote: [RFC 203: Idea/Process](../rfc/203_idea_process.md)
+  > Sidenote: [Act 203: Idea/Process](../acts/203_idea_process.md)
 
 - **Role Ideas**: This is like a little robot helper, an "Inventory Manager." This robot is set up to watch how fast products are selling and how many are left. It uses an `Analyze Inventory` instruction to tell Alice when it's time to order more of something popular.
 
-  > Sidenote: [RFC 202: Idea/Vessel](../rfc/202_idea_vessel.md)
+  > Sidenote: [Act 202: Idea/Vessel](../acts/202_idea_vessel.md)
 
 - **Budget Ideas**: A `Marketing Budget` that's like a smart piggy bank, not just a number on a page. It has both the power to act (rules for ad campaigns) and the money to spend, so it acts as both a wallet and a permission slip.
-  > Sidenote: [RFC 205: Idea/Budget](../rfc/205_idea_budget.md)
+  > Sidenote: [Act 205: Idea/Budget](../acts/205_idea_budget.md)
 
 After getting her system running just right, Alice wants to help her friend Bob start his own business. She doesn't send him a list of tips or a folder of templates. She bundles her entire **Online Store Project** and shares it with Bob's workshop.
 

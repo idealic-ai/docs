@@ -44,16 +44,15 @@ This design frees creators from the impossible job of being in charge of everyth
 
 The entire system is built on one radical rule: **the content is the protocol.** There are no hidden menus, secret back-end servers, or complicated commands. The only thing you need to understand is the **Idea**. Each Idea is a self-contained package—a "triplet"—made of the **solution** (the content itself), the **schema** (a blueprint that explains what the content means and how it can change), and the **context** (its history and the instructions that created it). These packages are the messages, the building blocks, and the actions—there is nothing else. This structure gives you true ownership. Because there are no hidden parts, you're never locked in and can take your entire universe of ideas with you whenever you want. Everything else is just a natural outcome of this simple design.
 
-> Sidenote: [RFC 101: Concept/Idea](../rfc/101_concept_idea.md)
->
+> Sidenote: [Act 101: Concept/Idea](../acts/101_concept_idea.md)
 
-- **Immutable by Design:** The protocol only has one action: sharing an Idea. Ideas are permanent; they can't be changed or deleted. To evolve a thought, you create a *new* Idea that links back to the old one. This preserves a perfect, unbreakable history of creation. This radical simplicity gets rid of many of the problems found in traditional computer systems.
+- **Immutable by Design:** The protocol only has one action: sharing an Idea. Ideas are permanent; they can't be changed or deleted. To evolve a thought, you create a _new_ Idea that links back to the old one. This preserves a perfect, unbreakable history of creation. This radical simplicity gets rid of many of the problems found in traditional computer systems.
 
 - **A Web of References:** Every Idea openly keeps track of its history through **references**, creating a traceable web of connections, like citations in a research paper. But this isn't just a dusty old record; it's a living, growing network. If an Idea you used gets updated (by a new version), you get a notification. This allows you to consciously decide whether to include the upstream changes in your own work. It's like collaborating on a giant open-source project, allowing the entire web of ideas to evolve together.
 
 - **The Universal Interpreter:** The triplet structure makes everything incredibly accessible. Because every Idea contains its own instruction manual (its schema and context), any app can become a powerful participant. The "Hello, World!" for this new world is a simple, five-line universal tool: a web server that takes an Idea package, passes it to an AI (an LLM), and returns the result. This tiny piece of code can instantly understand and interact with every Idea on the network, even types that haven't been invented yet. Complicated code is no longer a barrier; the AI acts as a universal translator, leveling the playing field for everyone.
 
-  > Sidenote: [RFC 104: Concept/Latent](../rfc/104_concept_latent_.md)
+  > Sidenote: [Act 104: Concept/Latent](../acts/104_concept_latent_.md)
   >
   > The AI acts as the default way of interacting, a universal tool that can understand any `Idea` without needing special code. It's like a magic black box that can turn any input `Idea` into a meaningful output `Idea`.
   >
@@ -71,8 +70,7 @@ The entire system is built on one radical rule: **the content is the protocol.**
 
 The system's design is inspired by the Unix philosophy and building with Lego blocks. At its heart is a key insight: an **Idea is not just data, but a computational container**. It's a package that bundles the core information (the **solution**) with all the instructions needed to compute with it (the **schema** and **context**). This makes every Idea a self-contained little universe, ready to be processed.
 
-> Sidenote: [RFC 103: Concept/Ideator](../rfc/103_concept_ideator.md)
->
+> Sidenote: [Act 103: Concept/Ideator](../acts/103_concept_ideator.md)
 
 The agents that operate on these Ideas are called **Ideators**. They are like specialized tools or functions for transforming these containers. An **Ideator** takes an `Idea` container as input, works on its contents based on its instructions, and always returns a new `Idea` container as output. This simple input/output rule is what makes the whole system so stable and predictable.
 

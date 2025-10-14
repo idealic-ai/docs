@@ -12,28 +12,28 @@ This new world is built on a few simple, strong rules that make sure everything 
 
 - **Everything is an Idea.** To keep things simple, everything in this system—an app, a tool, a document—is just called an "Idea." Think of them like LEGO bricks. They're all the same type of thing, but you can use them to build anything you can imagine.
 
-  > Sidenote: [RFC 101: Concept/Idea](../rfc/101_concept_idea.md)
+  > Sidenote: [Act 101: Concept/Idea](../acts/101_concept_idea.md)
 
 - **Self-Contained and Self-Describing.** Every Idea comes with its own instruction manual built right in. This means any computer or AI can look at it and instantly know what it is and how to use it, without needing to be taught beforehand. It's like a toy that has the instructions printed right on it.
 
-  > Sidenote: [RFC 001: Agent/Request](../rfc/001_agent_request.md)
+  > Sidenote: [Act 001: Agent/Request](../acts/001_agent_request.md)
 
 - **Any Idea Can Have a Home.** Any Idea can get its own web address, like `www.mycoolidea.com`. This gives it a permanent home on the internet. If it's something familiar (like an article), it will look like an article. If it's a special kind of tool called an "Ideator," it will get a simple screen that can work with anything.
 
-  > Sidenote: [RFC 102: Concept/Sovereignty](../rfc/102_concept_sovereignty.md)
+  > Sidenote: [Act 102: Concept/Sovereignty](../acts/102_concept_sovereignty.md)
 
 - **Ideators are Ideas with Input.** An "Ideator" is a special kind of Idea that can do something when you give it information. Think of it like a machine. An Idea might be a blueprint for a car, but an Ideator is the car itself—you give it fuel (the input) and it drives.
 
   > Sidenote:
   >
-  > - [RFC 103: Concept/Ideator](../rfc/103_concept_ideator.md)
-  > - [RFC 005: Agent/Input](../rfc/005_agent_input.md)
+  > - [Act 103: Concept/Ideator](../acts/103_concept_ideator.md)
+  > - [Act 005: Agent/Input](../acts/005_agent_input.md)
 
 - **Composable by Design.** You can connect Ideas together to create bigger and more powerful things, just like stacking LEGO bricks. Some Ideators can even change other Ideas. You can link them together in a chain to build amazing creations, like a factory assembly line where each machine does one job.
 
 - **The LLM is the Universal Interpreter.** We use a smart AI (like the brain in ChatGPT) to understand and run all these Ideas. Because every Idea explains itself, the AI can work with any of them, even brand new ones it's never seen before. It’s like having a magical remote control that automatically knows how to work with any device you point it at.
 
-  > Sidenote: [RFC 104: Concept/Latent](../rfc/104_concept_latent_.md)
+  > Sidenote: [Act 104: Concept/Latent](../acts/104_concept_latent_.md)
 
 - **A Protocol of Living Ideas.** We're not just sharing boring, static files like a picture or text. We are sharing living tools and systems that can change, grow, and get better over time as people work on them together.
 
@@ -41,7 +41,7 @@ This new world is built on a few simple, strong rules that make sure everything 
 
 ### (Chapter 2) The Diagnosis — The Gilded Cage of Big Tech
 
-The main problem with the internet today is a deal from big tech companies that seems great but is actually a trap. First, they gave us social networks to connect with lots of people, but they collected our data and locked us into their websites. Now, they're giving us powerful AI tools that are hard to say no to. 
+The main problem with the internet today is a deal from big tech companies that seems great but is actually a trap. First, they gave us social networks to connect with lots of people, but they collected our data and locked us into their websites. Now, they're giving us powerful AI tools that are hard to say no to.
 
 The more we use their free and convenient stuff, the more we depend on them. We get trapped in a "gilded cage"—it looks beautiful and shiny on the outside, but it's still a cage. They end up controlling our data and our entire digital lives.
 

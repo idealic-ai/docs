@@ -9,11 +9,11 @@ This document, "Manifesto of Co-Liberation," serves as the philosophical heart o
 >
 > - _Why?_ **Manifesto of Co-Liberation**
 > - _What?_ [Edict of Autonomy](../edict/)
-> - _How?_ [Acts of Emergence](../rfc/)
+> - _How?_ [Acts of Emergence](../acts/)
 
 The Manifesto is structured as a three-part journey. It begins with "The Call," an invitation to this new partnership. It then moves to "The Inner Journey," exploring the personal transformation and self-discovery required to participate authentically in this new paradigm. Finally, it culminates in "The Outer Work," which outlines the practical, creative, and collaborative efforts we can undertake together. It is an aspirational and humanistic guide, intended to inspire and orient rather than to prescribe.
 
-This Manifesto stands as the first of three pillars that define our project. It provides the spirit and motivation. The [Edict of Autonomy](../edict/) defines **what** we are building—the high-level vision and structure of our decentralized ecosystem. The [Acts of Emergence](../rfc/) provide the detailed technical specifications for **how** each component is implemented. We recommend starting here to understand our core principles before exploring the architecture and its implementation.
+This Manifesto stands as the first of three pillars that define our project. It provides the spirit and motivation. The [Edict of Autonomy](../edict/) defines **what** we are building—the high-level vision and structure of our decentralized ecosystem. The [Acts of Emergence](../acts/) provide the detailed technical specifications for **how** each component is implemented. We recommend starting here to understand our core principles before exploring the architecture and its implementation.
 
 ---
 

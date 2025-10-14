@@ -46,7 +46,7 @@ This architecture liberates the creator from the impossible burden of centralize
 
 The architecture of liberation is built on a radical principle: **the content is the protocol.** There are no hidden APIs, proprietary back-ends, or complex commands. The system's entire grammar consists of a single unit: the **Idea**. Each Idea is a self-contained "triplet" composed of the **solution** (the content), the **schema** (a JSON Schema that defines the data's meaning and its potential for change), and the **context** (the lineage and instructions that produced it). These triplets are the messages, the inputs, and the effects—there is nothing else. This structure is what enables true ownership and portability; because there is no hidden state, you are never locked in and can take your entire universe of ideas with you at any time. The following mechanics are all emergent properties of this foundational design.
 
-> Sidenote: [RFC 101: Concept/Idea](../rfc/101_concept_idea.md)
+> Sidenote: [Act 101: Concept/Idea](../acts/101_concept_idea.md)
 
 - **Immutable by Design:** The protocol has only one action: sharing an Idea. Ideas are immutable; they cannot be updated or deleted. To evolve a thought, a new Idea is created that references the old, preserving a pristine, unbreakable chain of creation. This radical simplicity eliminates entire classes of complexity found in traditional systems.
 
@@ -56,7 +56,7 @@ The architecture of liberation is built on a radical principle: **the content is
 
   > Sidenote:
   >
-  > [RFC 104: Concept/Latent](../rfc/104_concept_latent_.md)
+  > [Act 104: Concept/Latent](../acts/104_concept_latent_.md)
   >
   > The LLM acts as the default mode of interaction, a universal function that can interpret any `Idea` without needing specialized code. It's a magical black box that turns any input `Idea` into a meaningful output `Idea`.
   >
@@ -74,7 +74,7 @@ The architecture of liberation is built on a radical principle: **the content is
 
 The method's structure is inspired by the Unix philosophy and the compositional patterns of functional programming. At its core is a fundamental insight: an **Idea is not just data, but a computational container**. It bundles a core value (the **solution**) with its own rich context for computation (the **schema** and **context**). This makes every Idea a self-contained universe of meaning, ready to be processed.
 
-> Sidenote: [RFC 103: Concept/Ideator](../rfc/103_concept_ideator.md)
+> Sidenote: [Act 103: Concept/Ideator](../acts/103_concept_ideator.md)
 
 The agents that operate on these Ideas are called **Ideators**. They act as standardized functions for transforming these containers. An **Ideator** takes an `Idea` container as input, operates on the inner value based on its context, and always returns a new `Idea` container as output. This input/output contract is the bedrock of the system's stability.
 

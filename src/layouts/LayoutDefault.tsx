@@ -135,11 +135,13 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
                     ))}
                   </>
                 )}
-                {doc === 'rfc' && ui.rfc_sections && (
+                {doc === 'acts' && ui.acts_sections && (
                   <>
-                    {Object.entries(ui.rfc_sections).map(([key, value], index, arr) => {
+                    {Object.entries(ui.acts_sections).map(([key, value], index, arr) => {
                       const href =
-                        key === 'glossary' ? `/${lang}/rfc/000_glossary.md` : `/${lang}/rfc#${key}`;
+                        key === 'glossary'
+                          ? `/${lang}/acts/000_glossary.md`
+                          : `/${lang}/acts#${key}`;
                       return (
                         <span key={key} className="chapter-link">
                           <A href={href}>{value}</A>

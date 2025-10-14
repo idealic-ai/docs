@@ -17,7 +17,7 @@ export interface Sitemap {
   [key: string]: Chapter[];
 }
 
-const DOC_FOLDERS = ['manifesto', 'edict', 'rfc', 'blueprint'];
+const DOC_FOLDERS = ['manifesto', 'edict', 'acts', 'blueprint'];
 
 async function getChaptersForDocument(document: string, lang: string = 'en'): Promise<Chapter[]> {
   const COMPILED_DIR = path.resolve(process.cwd(), `./${document}`);
@@ -37,7 +37,7 @@ async function getChaptersForDocument(document: string, lang: string = 'en'): Pr
 
         const titleMatch = markdownContent.match(/^(#|##) (.*)/m);
         let chapterName: string;
-        if (document === 'rfc' && titleMatch) {
+        if (document === 'acts' && titleMatch) {
           chapterName = titleMatch[2].replace(/.*?: /i, '').trim();
         } else {
           // Prioritize filename for chapter name, fallback to title.

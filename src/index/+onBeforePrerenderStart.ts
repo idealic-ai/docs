@@ -1,7 +1,7 @@
 import { getSitemap } from '../data/sitemap';
 import { LANGUAGES } from '../utils/languages';
 
-const DOC_FOLDERS = ['manifesto', 'edict', 'rfc', 'blueprint'];
+const DOC_FOLDERS = ['manifesto', 'edict', 'acts', 'blueprint'];
 
 export async function onBeforePrerenderStart() {
   const sitemap = await getSitemap();

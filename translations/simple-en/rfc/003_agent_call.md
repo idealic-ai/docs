@@ -1,6 +1,6 @@
 # 004: Agent/Call
 
-> **Call:** Think of a **Tool** as a recipe for doing something, like a recipe for baking a cake. A **Call** is when you actually decide to bake a *specific* cake, with chocolate frosting and three layers. It's the command to do the thing *now* with all the details filled in.
+> **Call:** Think of a **Tool** as a recipe for doing something, like a recipe for baking a cake. A **Call** is when you actually decide to bake a _specific_ cake, with chocolate frosting and three layers. It's the command to do the thing _now_ with all the details filled in.
 >
 > — [Glossary](./000_glossary.md)
 
@@ -9,16 +9,16 @@
 > - To understand this, you should know about: [Protocol: Ideators](./103_concept_ideator.md)
 > - This helps explain these next ideas: [The Imports Protocol](./006_agent_imports.md), [The Instancing Protocol](./008_agent_instancing.md)
 
-The [Idea Protocol](./101_concept_idea.md) gave us a way to package knowledge, like a smart container for an idea. The [Tool System](./002_agent_tool.md) showed how an AI can understand a list of abilities it has. This guide explains the **Call Protocol**, which is all about how the AI actually *uses* those abilities.
+The [Idea Protocol](./101_concept_idea.md) gave us a way to package knowledge, like a smart container for an idea. The [Tool System](./002_agent_tool.md) showed how an AI can understand a list of abilities it has. This guide explains the **Call Protocol**, which is all about how the AI actually _uses_ those abilities.
 
 > Sidenote:
 >
 > - You need to understand this first:
->   - [RFC 1: Tool](/)
+>   - [Act 1: Tool](/)
 > - This helps explain what's next:
->   - [RFC 9: Plan](/)
+>   - [Act 9: Plan](/)
 
-A **Call** is like taking a recipe (a Tool) and filling in all the ingredients so it's ready to be cooked. If a Tool tells you *what you can do*, a Call tells you *how you're going to do it right now*.
+A **Call** is like taking a recipe (a Tool) and filling in all the ingredients so it's ready to be cooked. If a Tool tells you _what you can do_, a Call tells you _how you're going to do it right now_.
 
 ## From Idea to Action
 
@@ -54,11 +54,11 @@ You can mix and match these choices to get different behaviors. To learn more ab
 
 It helps to see how these three things are focused on different goals.
 
-- An **Idea** is focused on the **final product**. It's like a picture of a finished cake. It describes what the result looks like. It's a record of what *was* or *could be* created.
+- An **Idea** is focused on the **final product**. It's like a picture of a finished cake. It describes what the result looks like. It's a record of what _was_ or _could be_ created.
 
 - A **Tool** is focused on the **recipe**. It's the blank recipe card with spaces for ingredients and instructions. It’s a template for an action, waiting to be used.
 
-- A **Call** is focused on the **act of creating**. It's the recipe card that you've already filled out with “chocolate,” “sprinkles,” and “three layers.” It's a specific command, ready to go, for what *should be done* right now.
+- A **Call** is focused on the **act of creating**. It's the recipe card that you've already filled out with “chocolate,” “sprinkles,” and “three layers.” It's a specific command, ready to go, for what _should be done_ right now.
 
 ## The Vessel Idea: One Moment of Choice
 

@@ -16,10 +16,10 @@ const SHARED_TRANSLATION_PROMPT = `  * Ensure that in translation markdown heade
   * Blueprint -> Черновик
   * Roadmap -> План
   * Activity -> Действие
-  * RFCs -> Нормативные Акты (or Акты in short)
+  * Acts -> Нормативные Акты (or Акты in short)
   * FAQ -> Частые Вопросы (ЧаВо)
   * Vessel -> Носитель
-  * RFC 003: Agent/Activity -> Акт 003: Агент/Действие
+  * Act 003: Agent/Activity -> Акт 003: Агент/Действие
   * AI-Native -> ИИ-центричный, ИИ-центричность
   * Acts of Emergence -> Акты Становления
   * When translating inline links to chapters, e.g. 202: Idea/Vessel, translate it in the same forat like 202: Идея/Носитель, dont add parenthesis. Not \`Идея-Носитель (202)\`, not \`Носитель (202: Idea/Vessel)\`, but \`202: Идея/Носитель\`

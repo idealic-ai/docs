@@ -52,7 +52,7 @@ This default has a profound impact on development:
 
 - **Rapid Prototyping**: Developers can define and chain together multiple `Tools` and `Ideas` into a complex `Plan` without writing a single line of implementation code. The LLM executes the entire workflow latently.
 - **Seamless Composition**: It allows for the combination of `Ideas` and `Tools` from different authors and sources, even if their underlying implementations are not available.
-- > Sidenote: This concept is further explored in [RFC 303: Ideator/Reactor](../rfc/303_ideator_reactor.md).
+- > Sidenote: This concept is further explored in [Act 303: Ideator/Reactor](../acts/303_ideator_reactor.md).
 
   **Progressive Crystallization**: A workflow can begin its life entirely in the latent space. As the system evolves, performance bottlenecks or critical processes can be selectively "crystallized" into `Activities` with explicit code, without changing the overall structure of the workflow.
 

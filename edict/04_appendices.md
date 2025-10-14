@@ -38,22 +38,22 @@ Alice develops a successful e-shop within her private node. This isn't just a we
 
 - **Record Ideas**: Self-describing templates for her product listings and invoices. These are not just data, but interactive records that know how they can be used.
 
-  > Sidenote: [RFC 201: Idea/Record](../rfc/201_idea_record.md)
+  > Sidenote: [Act 201: Idea/Record](../acts/201_idea_record.md)
 
 - **Instruction Ideas**: Reusable "recipes" for core operations. An `Add New Product` instruction guides her through adding an item, while a `Process Return` instruction contains the exact steps for a refund.
 
-  > Sidenote: [RFC 204: Idea/Instruction](../rfc/204_idea_instruction.md)
+  > Sidenote: [Act 204: Idea/Instruction](../acts/204_idea_instruction.md)
 
 - **Process Ideas**: The master workflow for fulfilling orders. When a customer clicks "buy," a stateful `Order Fulfillment Process` is kicked off, reliably executing a sequence of instructions: `Confirm Payment`, `Update Inventory`, `Generate Shipping Label`, and `Send Confirmation Email`.
 
-  > Sidenote: [RFC 203: Idea/Process](../rfc/203_idea_process.md)
+  > Sidenote: [Act 203: Idea/Process](../acts/203_idea_process.md)
 
 - **Role Ideas**: An autonomous "Inventory Manager" agent. This role is configured to watch sales velocity and stock levels, using an `Analyze Inventory` instruction to alert Alice when it's time to re-order a popular item.
 
-  > Sidenote: [RFC 202: Idea/Vessel](../rfc/202_idea_vessel.md)
+  > Sidenote: [Act 202: Idea/Vessel](../acts/202_idea_vessel.md)
 
 - **Budget Ideas**: A `Marketing Budget` that acts as a living economic engine, not just a static number. It combines the authority to act (campaign rules) with the resources to spend (ad funds), serving as both a wallet and a permission slip.
-  > Sidenote: [RFC 205: Idea/Budget](../rfc/205_idea_budget.md)
+  > Sidenote: [Act 205: Idea/Budget](../acts/205_idea_budget.md)
 
 After refining her system, Alice wants to help her friend Bob start his own business. She doesn't send him a list of tips or a zip file of templates. She bundles her entire **E-Shop Project** and shares it with Bob's node.
 

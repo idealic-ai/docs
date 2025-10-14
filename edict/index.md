@@ -9,11 +9,11 @@ This document, the "Edict of Autonomy," serves as the high-level structural blue
 >
 > - _Why?_ [Manifesto of Co-Liberation](../manifesto/)
 > - **What?** **Edict of Autonomy**
-> - _How?_ [Acts of Emergence](../rfc/)
+> - _How?_ [Acts of Emergence](../acts/)
 
 The Edict lays out this architecture in a structured format. "The Vision" establishes the high-level goals. "The Protocol" defines the core architectural concepts. "The Impact" explores the societal and individual consequences of adopting this model. It provides a comprehensive overview of the system's design without delving into the granular implementation details of each component.
 
-This document is the bridge between philosophy and implementation. It is complemented by [Manifesto of Co-Liberation](../manifesto/) (The Why) and the detailed technical specifications in our [Acts of Emergence](../rfc/) (The How). Reading this document will provide a complete understanding of the system's architecture and its intended purpose.
+This document is the bridge between philosophy and implementation. It is complemented by [Manifesto of Co-Liberation](../manifesto/) (The Why) and the detailed technical specifications in our [Acts of Emergence](../acts/) (The How). Reading this document will provide a complete understanding of the system's architecture and its intended purpose.
 
 ---
 
