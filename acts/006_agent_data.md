@@ -73,4 +73,4 @@ The `Data` protocol is a foundational pattern that is specialized and extended b
 
 The `Data` protocol provides a generic container for structured information. With this foundation established, we can now explore its first major application: providing structured parameters to a request. This is the critical step that turns a static document into a dynamic, executable tool.
 
-The next document, **[007: Agent/Input](./007_agent_input.md)**, describes how this pattern is used to provide a structured prompt for a `Request`.
+The next document, **[007: Agent/Input](./007_agent_input.md)**, describes how this pattern is used to define a formal input interface for an `Idea`.

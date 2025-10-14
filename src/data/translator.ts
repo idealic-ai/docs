@@ -297,9 +297,9 @@ function reassembleSidenotes(translatedMainContent: string, translatedSidenotes:
       }
 
       // The LLM often adds leading newlines to its response chunks.
-      translatedSidenote = translatedSidenote.replace(/^\n+/, '');
+      translatedSidenote = translatedSidenote.replace(/^\r?\n+/, '');
 
-      const translatedLines = translatedSidenote.split('\n');
+      const translatedLines = translatedSidenote.split(/\r?\n/g);
       const firstLineText = translatedLines.shift() || '';
 
       const firstLine =
