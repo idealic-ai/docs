@@ -27,7 +27,7 @@ export function A({
 
   return (
     <a
-      href={`/${process.env.VITE_BASE_PATH || ''}${newHref}`}
+      href={`${process.env.VITE_BASE_PATH || ''}/${newHref}`}
       {...props}
       className={`${className} ${isActive ? 'is-active' : undefined}`}
     >
