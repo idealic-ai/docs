@@ -96,7 +96,7 @@ This process can be understood as the generation of a mini-narrative. Because an
 
 For example, if a schema first requires a field for meta-reasoning (e.g., `"thought_process"`) before a field for the final `data`, the LLM is forced to first articulate its reasoning before producing the answer. The initial reasoning becomes part of the context that influences the generation of the subsequent data. This powerful mechanism allows us to guide the LLM's thinking, giving us significant control over the final result by shaping the very path it takes to get there.
 
-> [!TIP]
+> [!HEADSUP] Heads up
 > This entire `Request` pipeline—the `context`, the `schema`, and the resulting `solution`—forms a self-contained, reproducible unit. When saved, this unit is what the system refers to as an [101: Concept/Idea](./101_concept_idea.md).
 
 ## From Structured Output to Actionable Choices

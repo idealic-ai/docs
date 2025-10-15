@@ -105,7 +105,7 @@ A `Plan` is not static; it is a living strategy that can be adapted at each step
 
 This iterative process allows the agent to be both proactive and reactive. It can follow the existing `Plan`, but it can also modify it in response to the results of the previous step. For example, if a `Tool Call` fails, the agent can generate a new `Plan` that includes error-handling steps. This makes the system resilient and adaptable.
 
-> [!TIP]
+> [!HEADSUP] Heads up
 > This iterative cycle of planning and execution is the core of a **[Process Idea](./203_idea_process.md)**. The `Process Idea` is a self-contained snapshot of a workflow, capturing the `Tools` available, the live `State`, and the `Plan` itself.
 
 ## Composition

@@ -1,6 +1,7 @@
 # 102: Concept/Sovereignty
 
 > Sidenote:
+>
 > - Requires:
 >   - [101: Concept/Idea](./101_concept_idea.md)
 >   - [103: Concept/Ideator](./103_concept_ideator.md)
@@ -23,7 +24,7 @@ The picture below shows the two main things you can do with an Idea: look at its
 
 **Think of your domain name’s settings as your control panel.** One setting (the `TXT` record) points to where your `Idea`'s blueprint is stored. Another setting (the `A` or `CNAME` record) points to the computer that runs the `Idea`. Since you control both, you decide whether to use our easy-to-use services or set up your own.
 
-> [!TIP]
+> [!HEADSUP] Heads up
 > It helps to see this as a range of choices. On one end, you use our system, which is super easy. On the other end, you have **full sovereignty**: you use your own domain name and run everything on your own computers. You become your own provider. Our services are just here to help you get from one end to the other if you want.
 
 ```mermaid

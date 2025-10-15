@@ -3,6 +3,7 @@
 > **Plan:** Think of a Plan as a recipe or a blueprint. It’s a drawing that shows how to connect a bunch of steps to get something done. You can use it for many things, like making a list of actions for a robot to follow, drawing a map of ideas, or even designing a new database. — [Glossary](./000_glossary.md)
 
 > Sidenote:
+>
 > - You'll need to understand these first:
 >   - [004: Agent/Call](./004_agent_call.md)
 >   - [005: Agent/Loop](./005_agent_loop.md)
@@ -34,7 +35,7 @@ The `Plan` isn't just for making the AI do things. It can be used to create any 
 While a `Plan` is great for brainstorming and thinking out loud, we mostly use it to define step-by-step instructions that a computer can follow. For this, we use a special kind of map called a **Directed Acyclic Graph (DAG)**. That sounds complicated, but it’s easy to break down:
 
 - **Graph:** This is the whole a plan—all the steps (`Tool Calls`) and the connections between them.
-- **Directed:** The connections only go one way. It’s like a recipe: you have to chop the onions *before* you can cook them. The steps have an order.
+- **Directed:** The connections only go one way. It’s like a recipe: you have to chop the onions _before_ you can cook them. The steps have an order.
 - **Acyclic:** You can't have loops that go on forever. You can’t have a step that says, “to make a cake, you first need a finished cake.” The Plan has to have a clear beginning and end.
 
 ## How a Plan is Formed
@@ -66,6 +67,7 @@ For example, a `Plan` to get a user's profile and then write a summary of it wou
 Here, the `summarizeProfile` step depends on the result of `fetchUserProfile`. This creates a simple two-step plan. You can picture it like this:
 
 > Sidenote:
+>
 > ```mermaid
 > graph TD
 >     state_var("user.profile")
@@ -81,7 +83,7 @@ Here, the `summarizeProfile` step depends on the result of `fetchUserProfile`. T
 
 ## Separation of Planning and Execution
 
-The best part about this system is that making the plan is completely separate from doing the plan. A `Plan` is just a description of what to do, like a recipe written on a card. This means an AI can create the entire plan *before* even starting the first step.
+The best part about this system is that making the plan is completely separate from doing the plan. A `Plan` is just a description of what to do, like a recipe written on a card. This means an AI can create the entire plan _before_ even starting the first step.
 
 The AI acts as the planner, creating the list of `Tool Calls` for the whole job. Because the plan is just data, we can do a few things with it:
 
@@ -100,7 +102,7 @@ A `Plan` isn't set in stone. It’s a living strategy that can change after each
 
 This back-and-forth lets the AI be both forward-thinking and able to react to changes. It can stick to the plan, but if something unexpected happens (like a step failing), it can create a new `Plan` that includes steps to fix the problem. This makes the whole system smart and able to adapt.
 
-> [!TIP]
+> [!HEADSUP] Heads up
 > This cycle of planning and doing is the heart of a **[Process Idea](./203_idea_process.md)**. A `Process Idea` is like a complete snapshot of a project, holding the available `Tools`, the current `State` of the workbench, and the `Plan` itself.
 
 ## Composition
@@ -110,21 +112,25 @@ The Plan is the conductor of an orchestra, bringing together several other key i
 - **Call:** `Tool Calls` are the individual musicians, or the basic building blocks of any `Plan`. The `_outputPath` property is what allows a `Call` to place its result on the `State`, letting it play its part in the larger performance.
 
   > Sidenote:
+  >
   > - [004: Agent/Call](./004_agent_call.md)
 
 - **State:** The `State` is the musical score or the workbench that everyone shares. It provides the “wires” that connect the separate `Tool Calls` into one working machine.
 
   > Sidenote:
+  >
   > - [010: Agent/State](./010_agent_state.md)
 
 - **Loop:** The `Loop` is the engine that brings a `Plan` to life. It’s the chef in the kitchen that reads the recipe (`Plan`), manages the ingredients on the workbench (`State`), and makes decisions if the plan needs to change.
 
   > Sidenote:
+  >
   > - [005: Agent/Loop](./005_agent_loop.md)
 
 - **Instancing:** The `Plan` system works perfectly with `Instancing`. Imagine you have one great recipe (`Plan`) and you want to make 100 cookies at once. `Instancing` gives each cookie its own little workbench (`State`), so the same recipe can be followed for all 100 cookies at the same time without them getting mixed up.
 
   > Sidenote:
+  >
   > - [011: Agent/Instancing](./011_agent_instancing.md)
 
 ## From a Plan to a Process

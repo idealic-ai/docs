@@ -19,7 +19,7 @@ The [002: Agent/Tool](./002_agent_tool.md) establishes the foundational schema-d
 
 A **Call** is a concrete instance of a Tool with specific parameter values, ready for execution. Where Tools define _what can be done_, Calls define _how it gets executed_.
 
-> [!TIP]
+> [!HEADSUP] Heads up
 > A [001: Agent/Request](./001_agent_request.md) that results in a set of `Calls` is a [202: Idea/Vessel](./202_idea_vessel.md). A `Vessel` represents a single, reactive moment of decision-making where an agent selects from available `Tools` to form a response.
 
 ## Composition and Context
@@ -27,6 +27,9 @@ A **Call** is a concrete instance of a Tool with specific parameter values, read
 A `Call` by itself is a simple data structure. Its power comes from its composition with other protocols that manage its execution environment. These protocols are activated by special meta-properties (prefixed with `_`) within a `Tool`'s schema, allowing a single `Call` object to trigger a variety of execution behaviors.
 
 By giving these meta-properties clear semantic meaning, we enable the LLM to be an active participant in the composition. It can reason about the various permutations of these properties to construct complex and novel execution chains, moving beyond simple tool selection to dynamic workflow orchestration.
+
+> [!TIP]
+> The following section explains connections to other parts of the system that will be detailed later. There's no need to jump ahead, as we'll cover everything in a logical sequence. You can come back to this section later.
 
 - **Explicit Execution (`_activity`)**: The most fundamental extension is connecting a `Call` to a deterministic code function. The `_activity` property signals that the `Call` should be executed by an **Activity** rather than by the LLM's latent reasoning.
 

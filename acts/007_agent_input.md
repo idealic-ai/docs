@@ -9,7 +9,7 @@
 
 This document describes the **Input Message**, a special type of context message that provides a structured prompt for a [001: Agent/Request](./001_agent_request.md). By formally defining the data that a `Request` uses to shape its `solution`, the `Input` message transforms a one-off invocation into a reusable, function-like component. This pattern is the key to turning a simple `Request` into an executable `Tool` that agents can use.
 
-> [!TIP]
+> [!HEADSUP] Heads up
 > A saved, reproducible **Request** is what the system calls an **[101: Concept/Idea](./101_concept_idea.md)**. When an `Input` message is added to its context, it becomes an executable **[103: Concept/Ideator](./103_concept_ideator.md)**.
 
 ## The `Input` Message Type

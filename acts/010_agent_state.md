@@ -108,7 +108,7 @@ The combination of writing to state via `_outputPath` and reading from it with *
 
 This graph of references can be validated, reused, and even simulated, making it fully compatible with the latent execution of LLMs. The flexibility of this system comes from the ability to control both inputs and outputs at the schema level. A workflow designer can leave the **`Variable References`** (inputs) and the **`_outputPath`** (outputs) dynamic for the LLM to decide, or prescribe them to enforce a rigid, reliable data flow.
 
-> [!TIP]
+> [!HEADSUP] Heads up
 > Creating `Tool Calls` that are connected to each other via the `State` is the act of planning. This system provides the technical groundwork for this process: a persistent `State` acts as the canvas, `Variable References` and `_outputPath` act as the wires, and the agent **Loop** provides the iterative engine. Together, these components allow an agent to construct a complete data-flow graph, which is the essence of a **Plan**.
 >
 > > Sidenote:

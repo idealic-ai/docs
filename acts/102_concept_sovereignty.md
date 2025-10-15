@@ -22,7 +22,7 @@ The diagram below illustrates the two primary interactions with an Idea: fetchin
 
 **The user's DNS record is the control plane.** The domain's `TXT` record points to the location of the `Idea`'s JSON definition file (`Idea Storage`). The domain's primary `A` or `CNAME` record points to the execution endpoint (`Ideator`). By controlling these two records, the user directs all traffic, deciding whether to use managed services or their own infrastructure.
 
-> [!TIP]
+> [!HEADSUP] Heads up
 > It's helpful to view this model as a spectrum of autonomy. At one end lies a managed service that provides convenience. At the other end lies **full sovereignty**: using a custom domain and self-hosting all services, effectively becoming one's own provider. The managed layers serve as an optional, progressive bridge between these two states.
 
 ```mermaid

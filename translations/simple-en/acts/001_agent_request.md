@@ -3,6 +3,7 @@
 > **Request:** Think of this as a single, complete job for an AI. You give it some information (the `context`) and a set of rules for the answer (the `schema`), and it gives you back a final answer (the `solution`). — [Glossary](./000_glossary.md)
 
 > Sidenote:
+>
 > - Helps create: [101: Concept/Idea](./101_concept_idea.md)
 >
 > NPM: [https://www.npmjs.com/package/@augceo/agent](@idealic-ai/agent)
@@ -42,7 +43,7 @@ The most important part of a `Request` is its `context`, which is just a list of
 
 Unlike a normal chatbot where the conversation just keeps getting longer and longer, the `context` for each `Request` is like a carefully prepared recipe. It’s built from scratch for one specific job and doesn't get messed up by old, unrelated chats. The AI's answers aren't automatically added back in; we build a fresh, clean context for every new task. This makes sure the process always works the same way and that the AI has exactly the information it needs, without forgetting important details.
 
-Everything the AI needs to know—like instructions, data, and questions—is given to it through these messages. 
+Everything the AI needs to know—like instructions, data, and questions—is given to it through these messages.
 
 A simple list of `Message`s might look like this:
 
@@ -76,11 +77,12 @@ This lets the AI work with big ideas and complex information, building the perfe
 ## Schema: The Blueprint for the Answer
 
 > Sidenote:
+>
 > - Read more at [json-schema.org](https://json-schema.org/)
 
-The `schema` is a blueprint (specifically, a JSON Schema) that tells the AI *exactly* what the final `solution` should look like. It can demand anything from a simple word to a complicated structure with many nested parts. The AI *must* follow this blueprint, which means the answer is always organized and predictable.
+The `schema` is a blueprint (specifically, a JSON Schema) that tells the AI _exactly_ what the final `solution` should look like. It can demand anything from a simple word to a complicated structure with many nested parts. The AI _must_ follow this blueprint, which means the answer is always organized and predictable.
 
-As blueprints get more complex, they can guide not just the final answer but also how the AI *thinks*. For example, a blueprint can have a spot for the final data, but also a separate spot where the AI has to write down its step-by-step thinking or how confident it is. This turns the blueprint into a tool that helps shape the AI's thought process.
+As blueprints get more complex, they can guide not just the final answer but also how the AI _thinks_. For example, a blueprint can have a spot for the final data, but also a separate spot where the AI has to write down its step-by-step thinking or how confident it is. This turns the blueprint into a tool that helps shape the AI's thought process.
 
 A key idea here is that we can build big, complex blueprints by snapping together smaller, reusable ones. This keeps everything neat and makes it easy to teach the AI new skills.
 
@@ -90,9 +92,9 @@ After the `context` is prepared, the final list of messages and the `schema` blu
 
 You can think of this process like the AI telling a short story. Because an AI works by predicting the very next word, it builds the `solution` from top to bottom, following the structure of the `schema` blueprint. The way you design the blueprint changes the story the AI tells.
 
-For example, if the blueprint first asks for a field called `"thought_process"` before the field for the final `"data"`, the AI is forced to explain its thinking *before* giving the answer. That explanation then becomes part of the information it uses to create the final data. This is a powerful way to guide the AI's thinking and get a much better result.
+For example, if the blueprint first asks for a field called `"thought_process"` before the field for the final `"data"`, the AI is forced to explain its thinking _before_ giving the answer. That explanation then becomes part of the information it uses to create the final data. This is a powerful way to guide the AI's thinking and get a much better result.
 
-> [!TIP]
+> [!HEADSUP] Heads up
 > This whole package—the `context`, the `schema`, and the `solution` it creates—is a single, repeatable unit. When we save one of these, we call it an [101: Concept/Idea](./101_concept_idea.md).
 
 ## From a Structured Answer to Making a Choice
@@ -100,6 +102,7 @@ For example, if the blueprint first asks for a field called `"thought_process"` 
 A `Request` is great for getting a single, well-structured `solution`. But to build really smart agents, we need more. We need a way to give the AI a menu of different actions it can choose from to complete a goal. This means we need a way to define these actions as separate, selectable options.
 
 > Sidenote:
+>
 > - [002: Agent/Tool](./002_agent_tool.md)
 
 The next document, [002: Agent/Tool](./002_agent_tool.md), explains how we define these special abilities.

@@ -1,4 +1,5 @@
-import { rehypeGithubAlerts } from 'rehype-github-alerts';
+import octicons from '@primer/octicons';
+import rehypeCallouts from 'rehype-callouts';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeMermaid from 'rehype-mermaid';
 import rehypeRewrite from 'rehype-rewrite';
@@ -15,7 +16,46 @@ export async function processMarkdown(markdownContent: string): Promise<string> 
     .use(remarkGfm)
     .use(remarkRehype)
     .use(rehypeHighlight)
-    .use(rehypeGithubAlerts)
+    .use(rehypeCallouts, {
+      callouts: {
+        NOTE: {
+          indicator: `<svg class="octicon octicon-info" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">${String(
+            octicons['info'].heights[16]?.path
+          )}</svg>`,
+          title: 'Note',
+        },
+        IMPORTANT: {
+          indicator: `<svg class="octicon octicon-report" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">${String(
+            octicons['report'].heights[16]?.path
+          )}</svg>`,
+          title: 'Important',
+        },
+        WARNING: {
+          indicator: `<svg class="octicon octicon-alert" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">${String(
+            octicons['alert'].heights[16]?.path
+          )}</svg>`,
+          title: 'Warning',
+        },
+        TIP: {
+          indicator: `<svg class="octicon octicon-light-bulb" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">${String(
+            octicons['light-bulb'].heights[16]?.path
+          )}</svg>`,
+          title: 'Tip',
+        },
+        CAUTION: {
+          indicator: `<svg class="octicon octicon-stop" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">${String(
+            octicons['stop'].heights[16]?.path
+          )}</svg>`,
+          title: 'Caution',
+        },
+        HEADSUP: {
+          indicator: `<svg class="octicon octicon-light-bulb" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">${String(
+            octicons['mortar-board'].heights[16]?.path
+          )}</svg>`,
+          title: 'Heads up',
+        },
+      },
+    })
     .use(rehypeSlug)
     .use(rehypeMermaid, {
       mermaidConfig: {
