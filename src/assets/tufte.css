@@ -890,3 +890,7 @@ label.margin-toggle:not(.sidenote-number) {
 .anchor-link-button:hover {
   opacity: 1;
 }
+
+.edgeLabel.edgeLabel.edgeLabel.edgeLabel {
+  line-height: 1.2;
+}

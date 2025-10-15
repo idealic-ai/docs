@@ -25,10 +25,10 @@ A `Plan` is a generic and powerful tool for thinking in graphs. It provides a st
 > ```mermaid
 > graph TD
 >     A[Get Weather] --> B{Is it Sunny?};
->     B -- Yes --> C[Find a Park];
->     B -- No --> D[Find a Movie];
->     C --> E[Present Suggestion];
->     D --> E[Present Suggestion];
+>     B -- state.sunny --> C[Find a Park];
+>     B -- state.notSunny --> D[Find a Movie];
+>     C -- state.suggestion --> E[Present Suggestion];
+>     D -- state.suggestion --> E[Present Suggestion];
 > ```
 
 The `Plan` protocol is not limited to just executing tasks. It can be used to generate any kind of graph in response to a user's request. For example, a `Tool` could take a table of contacts and produce a `Plan` that visualizes a network of friends. Another could generate a `Plan` representing a complete GitHub Actions workflow or a blueprint for a new database schema.
@@ -73,10 +73,10 @@ Here, the `summarizeProfile` call depends on the output of `fetchUserProfile`, c
 >
 > ```mermaid
 > graph TD
->     state_var("user.profile")
+>     state_var("state.user.profile")
 >
->     Call1["Call A<br/>_outputPath: '†state.user.profile'"]
->     Call2["Call B<br/>userId: '†state.user.profile'"]
+>     Call1["fetchUserProfile"]
+>     Call2["summarizeProfile"]
 >
 >     Call1 -- writes to --> state_var
 >     state_var -- read by --> Call2
@@ -106,7 +106,7 @@ A `Plan` is not static; it is a living strategy that can be adapted at each step
 This iterative process allows the agent to be both proactive and reactive. It can follow the existing `Plan`, but it can also modify it in response to the results of the previous step. For example, if a `Tool Call` fails, the agent can generate a new `Plan` that includes error-handling steps. This makes the system resilient and adaptable.
 
 > [!HEADSUP] Heads up
-> This iterative cycle of planning and execution is the core of a **[Process Idea](./203_idea_process.md)**. The `Process Idea` is a self-contained snapshot of a workflow, capturing the `Tools` available, the live `State`, and the `Plan` itself.
+> This iterative cycle of planning and execution is the core of a [203: Idea/Process](./203_idea_process.md). It is is a self-contained snapshot of a workflow, capturing the `Tools` available, the live `State`, and the `Plan` itself.
 
 ## Composition
 
