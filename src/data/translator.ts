@@ -24,7 +24,7 @@ const SHARED_TRANSLATION_PROMPT = `  * Ensure that in translation markdown heade
   * AI-Native -> ИИ-центричный, ИИ-центричность
   * Acts of Emergence -> Акты Становления
   * When translating inline links to chapters, e.g. 202: Idea/Vessel, translate it in the same forat like 202: Идея/Носитель, dont add parenthesis. Not \`Идея-Носитель (202)\`, not \`Носитель (202: Idea/Vessel)\`, but \`202: Идея/Носитель\`
-    * Idealic is aimed to set the ideas free -> Idealic — это проект, цель которого — освободить идеи.
+  * Idealic is aimed to set the ideas free -> Idealic — это проект, цель которого — освободить идеи.
 `;
 
 const SHARED_STYLE_GUIDE = `
@@ -52,6 +52,7 @@ const SHARED_STYLE_GUIDE = `
 * DO NOT STOP at \` character, always continue to the end of the file
 * DO NOT try to complicate diagrams. keep labels of nodes without extra text or parenthesis. Do not try to rephase the diagram labels if simplifying.
 * Do not attempt to rearrange placeholders like __SIDENOTE_PLACEHOLDER_\d__ or __SIDENOTE_TRANSLATION_SEPARATOR__, process the content between them as is.
+* underscored properties like \`_activity\` or \`reasoningForCall\` -> meta properties
 `;
 const TranslationResponseSchema = {
   type: 'object',

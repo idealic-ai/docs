@@ -876,3 +876,17 @@ label.margin-toggle:not(.sidenote-number) {
   --rc-color-light: var(--callout-tip-color-light, rgb(197, 146, 7));
   --rc-color-dark: var(--callout-tip-color-dark, rgb(197, 146, 7));
 }
+.anchor-link-button {
+  position: absolute;
+  padding: 0 10px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  transition: opacity 0.2s;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.anchor-link-button:hover {
+  opacity: 1;
+}
