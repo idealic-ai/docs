@@ -61,6 +61,7 @@ const SHARED_STYLE_GUIDE = `
 * Do not attempt to rearrange placeholders like __SIDENOTE_PLACEHOLDER_\d__ or __SIDENOTE_TRANSLATION_SEPARATOR__, process the content between them as is.
 * underscored properties like \`_activity\` or \`reasoningForCall\` -> meta properties
 * do not add extra content to :::columns blocks, just translate the existing content
+* In mermand, shape syntax is this: Node@{ shape: cloud, label: "Язык" } - pay attention to that @, dont lose it.
 `;
 async function translateELI5(
   documentContent: string,
