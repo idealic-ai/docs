@@ -28,6 +28,7 @@ const SHARED_TRANSLATION_PROMPT = `  * Ensure that in translation markdown heade
   * Dont translate wikipedia links (keep english language in the url)
   * Data -> Данные
   * State -> Состояние
+  * Heads up -> На заметку
 `;
 
 const SHARED_STYLE_GUIDE = `
