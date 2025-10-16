@@ -26,6 +26,8 @@ const SHARED_TRANSLATION_PROMPT = `  * Ensure that in translation markdown heade
   * When translating inline links to chapters, e.g. 202: Idea/Vessel, translate it in the same forat like 202: Идея/Носитель, dont add parenthesis. Not \`Идея-Носитель (202)\`, not \`Носитель (202: Idea/Vessel)\`, but \`202: Идея/Носитель\`
   * Idealic is aimed to set the ideas free -> Idealic — это проект, цель которого — освободить идеи.
   * Dont translate wikipedia links (keep english language in the url)
+  * Data -> Данные
+  * State -> Состояние
 `;
 
 const SHARED_STYLE_GUIDE = `
