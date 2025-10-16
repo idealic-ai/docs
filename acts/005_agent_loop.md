@@ -1,6 +1,7 @@
 # 005: Agent/Loop
 
-> **Loop:** A sequence of `Request`s aimed at achieving a goal. The agent continues to invoke `Request`s, process the resulting `Call`s, and feed the output back into the context of the next `Request` until no more `Call`s are generated. — [Glossary](./000_glossary.md)
+> [!DEFINITION] [Loop](./000_glossary.md)
+> A sequence of `Request`s aimed at achieving a goal. The agent continues to invoke `Request`s, process the resulting `Call`s, and feed the output back into the context of the next `Request` until no more `Call`s are generated.
 
 > Sidenote:
 >
@@ -49,7 +50,7 @@ A key feature of the execution loop is its natural support for human oversight. 
 
 It is important to note that these specific HITL mechanisms are not part of the core protocol. The architecture simply provides the necessary separation between proposing actions and executing them, giving developers the flexibility to implement any kind of intervention, from a simple manual approval to a complex, automated system with timeouts.
 
-This capability is critical for safety and for collaborative tasks where the agent acts as an assistant. User adjustments and feedback can be leveraged by the [012: Agent/Plan](./012_agent_plan.md), allowing the agent to refine its strategy based on human input.
+This capability is critical for safety and for collaborative tasks where the agent acts as an assistant. User adjustments and feedback can be leveraged by the [010: Agent/Plan](./010_agent_plan.md), allowing the agent to refine its strategy based on human input.
 
 ## The Role of Data in the Loop
 

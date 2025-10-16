@@ -1,6 +1,7 @@
 # 103: Concept/Ideator
 
-> **Ideator:** An `Idea` that accepts input, signified by a context message of `type: "input"`. It acts as a function, transforming input to output. — [Glossary](./000_glossary.md)
+> [!DEFINITION] [Ideator](./000_glossary.md)
+> An `Idea` that accepts input, signified by a context message of `type: "input"`. It acts as a function, transforming input to output.
 
 > Sidenote:
 >

@@ -1,6 +1,7 @@
 # 004: Agent/Call
 
-> **Call:** A concrete, executable instance of a `Tool`, with specific values for its `params`. It's an invocation-focused request for what _should be done_. — [Glossary](./000_glossary.md)
+> [!DEFINITION] [Call](./000_glossary.md)
+> A concrete, executable instance of a `Tool`, with specific values for its `params`. It's an invocation-focused request for what _should be done_.
 
 > Sidenote:
 >
@@ -8,12 +9,12 @@
 >   - [002: Agent/Tool](./002_agent_tool.md)
 > - Enables:
 >   - [103: Concept/Ideator](./103_concept_ideator.md)
->   - [008: Agent/Imports](./008_agent_imports.md)
+>   - [013: Agent/Scopes](./013_agent_scopes.md)
 >   - [011: Agent/Instancing](./011_agent_instancing.md)
 >   - [202: Idea/Vessel](./202_idea_vessel.md)
 >   - [203: Idea/Process](./203_idea_process.md)
 > - Extended by:
->   - [009: Agent/Module](./009_agent_module.md)
+>   - [012: Agent/Delegate](./012_agent_delegate.md)
 
 The [002: Agent/Tool](./002_agent_tool.md) establishes the foundational schema-driven interface that enables agents to understand structured capabilities. This document describes the **004: Agent/Call** protocol, which builds upon Tools to define how execution happens.
 
@@ -37,23 +38,23 @@ By giving these meta-properties clear semantic meaning, we enable the LLM to be 
   >
   > - [003: Agent/Activity](./003_agent_activity.md).
 
-- **Delegated Execution (`_module`)**: A `Call` can be delegated to an external **Module**. The `_module` property typically contains a reference to a saved [001: Agent/Request](./001_agent_request.md) (often as a path to a JSON file), allowing that request to be invoked as a reusable tool. This provides an isolated "clean room" for execution, preventing context bleeding and enabling true encapsulation.
+- **Delegated Execution (`_delegate`)**: A `Call` can be delegated to an external **Delegate**. The `_delegate` property typically contains a reference to a saved [001: Agent/Request](./001_agent_request.md) (often as a path to a JSON file), allowing that request to be invoked as a reusable tool. This provides an isolated "clean room" for execution, preventing context bleeding and enabling true encapsulation.
 
   > Sidenote:
   >
-  > - [009: Agent/Module](./009_agent_module.md).
+  > - [012: Agent/Delegate](./012_agent_delegate.md).
 
-- **Context Bridging (`_imports`)**: The **Imports** protocol controls what context is available to a `Call`. Its primary use is to focus an LLM's attention during a latent execution by specifying which parts of the parent context it should consider. This prevents context bleeding and leads to more reliable outputs. When used with a `_module`, its role becomes even more powerful: it strictly defines the _entire_ context for the module's isolated execution.
+- **Context Bridging (`_scopes`)**: The **Scopes** protocol controls what context is available to a `Call`. Its primary use is to focus an LLM's attention during a latent execution by specifying which parts of the parent context it should consider. This prevents context bleeding and leads to more reliable outputs. When used with a `_delegate`, its role becomes even more powerful: it strictly defines the _entire_ context for the delegate's isolated execution.
 
   > Sidenote:
   >
-  > - [008: Agent/Imports](./008_agent_imports.md).
+  > - [013: Agent/Scopes](./013_agent_scopes.md).
 
 - **Stateful Execution (`_outputPath`)**: A `Call` can be made stateful by instructing it where to write its output. The `_outputPath` property specifies a path within a persistent **State Object** where the result of the `Call` should be stored. This allows for the creation of multi-step workflows where the output of one `Call` can be used as the input for another.
 
   > Sidenote:
   >
-  > - [010: Agent/State](./010_agent_state.md).
+  > - [009: Agent/State](./009_agent_state.md).
 
 - **Instanced Execution (`_instance`)**: A `Call` can be targeted to a specific **Instance** within a multi-instance request. The `_instance` property acts as a unique identifier, focusing all operations of that `Call` (like reading inputs from and writing outputs to the `State Object`) on a particular context. This enables efficient, parallel processing of multiple states with the same set of tools.
   > Sidenote:

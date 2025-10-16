@@ -1,89 +1,88 @@
 # 004: Agent/Call
 
-> **Call:** Think of a **Tool** as a recipe for a cake. A **Call** is when you actually bake the cake, using specific ingredients like 2 cups of flour and 3 eggs. It’s the command to _do_ something. — [Glossary](./000_glossary.md)
+> **What's a Call?**
+> Imagine a **Tool** is like a recipe for baking a cake. It tells you the ingredients and steps you *could* take. A **Call** is when you actually decide to bake a *specific* cake, with chocolate chips and vanilla frosting. It's the recipe filled out and ready to go.
 
 > Sidenote:
->
-> - Requires:
+> - Depends on:
 >   - [002: Agent/Tool](./002_agent_tool.md)
-> - Enables:
+> - Helps create:
 >   - [103: Concept/Ideator](./103_concept_ideator.md)
->   - [008: Agent/Imports](./008_agent_imports.md)
+>   - [013: Agent/Scopes](./013_agent_scopes.md)
 >   - [011: Agent/Instancing](./011_agent_instancing.md)
 >   - [202: Idea/Vessel](./202_idea_vessel.md)
 >   - [203: Idea/Process](./203_idea_process.md)
-> - Extended by:
->   - [009: Agent/Module](./009_agent_module.md)
+> - Is expanded by:
+>   - [012: Agent/Delegate](./012_agent_delegate.md)
 
-The [Tool document](./002_agent_tool.md) explained how we give an AI a set of defined abilities, like a list of recipes it knows. This document explains the **Call** protocol, which is how we tell the AI to actually _use_ one of those recipes.
+The previous document, [Agent/Tool](./002_agent_tool.md), explained how we give our AI helpers a list of their abilities, like a menu of recipes. This document explains the **Call**, which is how the AI actually uses one of those abilities.
 
-A **Call** is a specific instruction to use a Tool with all the details filled in, ready to go. While a Tool describes _what can be done_, a Call defines _how it gets done right now_.
+A **Call** is a command to use a specific Tool with all the details filled in. If a Tool is what *can be done*, a Call is the decision of *what is being done right now*.
 
-> [!HEADSUP] Heads up
-> When an AI responds to a request by creating a set of Calls, we call that a [Vessel](./202_idea_vessel.md). A Vessel is like a single, complete decision—the AI looks at the tools it has and decides which ones to use to get the job done.
+> **Heads Up**
+> When an AI decides to use a bunch of Tools to respond to a request, that whole package of ready-to-go `Calls` is called a **Vessel**. Think of it as the AI's complete plan of action for a single moment.
 
-## Combining Calls with Other Systems
+## How Calls Work with Other Systems
 
-A Call on its own is just a simple piece of data. It becomes powerful when it's combined with other systems that manage how it runs. We activate these systems using special settings in the Tool's recipe that start with an underscore (`_`), like `_activity` or `_module`.
+A Call by itself is just a simple instruction. Its real power comes from special notes, called **meta-properties**, that can be attached to it. These notes start with an underscore (like `_activity`) and tell our system *how* to handle the instruction.
 
-This lets the AI do more than just pick a tool. It can creatively combine these special settings to build new and complex workflows on the fly.
+By giving these notes clear meanings, the AI can be more creative. It doesn't just pick a tool; it can combine these special notes to build complex plans, like a chef deciding not just what to cook, but how to manage the whole kitchen.
 
-- **Doing something with code (`_activity`)**: The most basic way to make a Call powerful is to link it to a specific piece of computer code that runs predictably every time. The `_activity` setting tells the system, "Don't just think about this; run this exact program to get the answer."
+> **Just a heads up:**
+> The next few points talk about how a Call connects to other parts of our system. You don't need to understand them all right away. We'll explain each part in detail later. You can always come back here for a refresher.
+
+- **Telling it to Run Code (`_activity`)**: This is the most basic note. It connects a Call to a specific piece of code. It’s like telling a robot, "Instead of trying to figure out how to open this jar, just run your 'jar-opener' program."
 
   > Sidenote:
-  >
   > - [003: Agent/Activity](./003_agent_activity.md).
 
-- **Delegating to a specialist (`_module`)**: A Call can hand off its job to another self-contained system called a **Module**. The `_module` setting is usually a link to a saved request, turning that whole request into a reusable tool. This is like giving a task to a specialized team that works in its own separate office, which prevents them from being distracted by anything else.
+- **Handing Off the Job (`_delegate`)**: This note tells the system to give this Call to a different, specialized helper. It's like asking a friend who's an expert baker to handle the cake part of your dinner party. This keeps the main helper's workspace clean and avoids confusion.
 
   > Sidenote:
-  >
-  > - [009: Agent/Module](./009_agent_module.md).
+  > - [012: Agent/Delegate](./012_agent_delegate.md).
 
-- **Focusing its attention (`_imports`)**: The **Imports** system controls what information a Call is allowed to see. Its main job is to tell the AI, "Only pay attention to _this specific information_ from the main conversation when you think about your next step." When used with a Module, it's even stricter: it defines the _only_ information the specialized team is allowed to see, ensuring they aren't influenced by anything else.
-
-  > Sidenote:
-  >
-  > - [008: Agent/Imports](./008_agent_imports.md).
-
-- **Saving the result (`_outputPath`)**: A Call can be told where to save its result. The `_outputPath` setting is like giving a worker a specific spot on a shelf to place a finished part. This allows you to create assembly lines where the output of one step becomes the input for the next.
+- **Focusing its Attention (`_scopes`)**: This note tells the AI exactly what information it should look at to complete the Call. It’s like giving someone a book and saying, “You only need to read the highlighted sentences.” This helps the AI focus and gives better results. When you hand off a job to a delegate, this note tells them exactly what information they get to see.
 
   > Sidenote:
-  >
-  > - [010: Agent/State](./010_agent_state.md).
+  > - [013: Agent/Scopes](./013_agent_scopes.md).
 
-- **Working on a specific item (`_instance`)**: When you're running the same task on many different items at once, a Call can be aimed at a specific one. The `_instance` setting acts like a serial number, telling the system to focus all its work (like reading info and saving results) on just one item. This lets you process many things in parallel without getting them mixed up.
+- **Saving the Result (`_outputPath`)**: This note tells the system where to save the result of the Call. It’s like saying, “After you finish your math homework, put the answer sheet in this specific folder.” This lets you use the result of one step as the starting point for the next one.
+
   > Sidenote:
-  >
+  > - [009: Agent/State](./009_agent_state.md).
+
+- **Doing the Same Job on Many Things (`_instance`)**: This note is used when you have the same task but for many different items, like resizing 100 photos. The `_instance` note acts like a label for each photo, so the system knows which photo it's working on and where to save the resized version without getting them mixed up. This lets it work on many things at once, very efficiently.
+  > Sidenote:
   > - [011: Agent/Instancing](./011_agent_instancing.md).
 
-## Ways to Run Calls
+## Different Ways to Run Calls
 
-When an AI creates a list of Calls to execute, you can run them in different ways depending on what you need.
+When an AI creates several Calls at once, we can run them in different ways depending on what we need.
 
 ```typescript
-// Run a single Call by itself
+// Run just one Call
 const result = await Tool(call);
 
-// Run all Calls at once and wait for them all to finish
+// Run all Calls and wait for them all to finish
 const results = await Tool.all(calls);
 
-// Run all Calls at once, but stop as soon as one succeeds
+// Run all Calls and stop as soon as one succeeds
 const result = await Tool.any(calls);
 
-// Run all Calls at once and stop as soon as the first one finishes (whether it succeeded or failed)
+// Run all Calls and stop as soon as one finishes (whether it succeeded or failed)
 const result = await Tool.race(calls);
 ```
 
-These different methods let you:
+These different strategies let us:
 
-- **Control every step**: Handle one Call at a time with your own logic in between.
-- **Work in batches**: Run a bunch of independent Calls at the same time for speed.
-- **Find the first success**: Get an answer as quickly as possible without waiting for every Call to finish (`.any()`).
-- **Create logical groups**: Make sure a whole group of Calls succeeds together, keeping everything consistent (`.all()`).
+- **Be very precise**: Handle each Call one by one, with special steps in between.
+- **Work in batches**: Run a bunch of independent Calls all at once to save time.
+- **Find a quick answer**: Stop as soon as we get the first successful result (`.any()`).
+- **Act on the first result**: Stop as soon as *any* Call finishes, successful or not (`.race()`).
+- **Succeed together**: Make sure that a group of related Calls all finish successfully (`.all()`).
 
-## Chaining Calls Together in a Loop
+## Putting Calls Together in a Loop
 
-These patterns are great for running a single batch of Calls. But often, an AI needs to perform a task in multiple steps, where the result of one Call is needed to figure out the next one. This is managed by a bigger system that organizes these steps.
+These patterns are great for running a single batch of Calls. But often, an AI needs to do things in multiple steps, where the result of one Call is needed for the next. This is handled by a bigger system that manages the flow of requests and calls over time.
 
-The next document, [005: Agent/Loop](./005_agent_loop.md), explains how that step-by-step process works.
+The next document, [005: Agent/Loop](./005_agent_loop.md), explains how this step-by-step process works.

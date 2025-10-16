@@ -1,8 +1,7 @@
 # 202: Idea/Vessel
 
-> **Vessel Idea:** A self-contained `Idea` that is both the definition of a reactive capability and the record of its chosen reaction. Its `schema` defines the full universe of possible `Tools`, and its `solution` captures the specific `Calls` (instances of those `Tools`) that were chosen in response to a stimulus.
->
-> — [Glossary](./000_glossary.md)
+> [!DEFINITION] [Vessel Idea](./000_glossary.md)
+> A self-contained `Idea` that is both the definition of a reactive capability and the record of its chosen reaction. Its `schema` defines the full universe of possible `Tools`, and its `solution` captures the specific `Calls` (instances of those `Tools`) that were chosen in response to a stimulus.
 
 > Sidenote:
 >

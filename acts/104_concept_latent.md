@@ -7,7 +7,8 @@
 > - Enables
 >   - [001: Agent/Request](./001_agent_request.md)
 
-> **Latent:** The use of a Large Language Model's (LLM) internal knowledge and reasoning capabilities (its "latent space") to generate outputs without explicit, deterministic code. — [Glossary](./000_glossary.md)
+> [!DEFINITION] [Latent](./000_glossary.md)
+> The use of a Large Language Model's (LLM) internal knowledge and reasoning capabilities (its "latent space") to generate outputs without explicit, deterministic code.
 
 ## Introduction
 

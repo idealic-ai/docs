@@ -46,7 +46,7 @@ This document provides definitions for the key concepts used in the Idea Protoco
 
 - **Scope**: The locus of execution for a `Call`.
   - **Inline Scope**: The `Call` is processed in the current agent's context.
-  - **Module Scope**: The `Call` is delegated to an external, isolated module.
+  - **Delegate Scope**: The `Call` is delegated to an external, isolated delegate.
     > Sidenote:
     >
     > - [004: Agent/Call](./004_agent_call.md)
@@ -64,17 +64,17 @@ This document provides definitions for the key concepts used in the Idea Protoco
     >
     > - [104: Concept/Latent](./104_concept_latent.md)
 
-- **Module**: A protocol for isolating execution context. Invoked by a `Call`'s `_module` property, it executes an `Activity` or a new `Request` in a "clean room" environment, with the `_imports` property providing controlled access to the parent context.
+- **Delegate**: A protocol for isolating execution context. Invoked by a `Call`'s `_delegate` property, it executes an `Activity` or a new `Request` in a "clean room" environment, with the `_scopes` property providing controlled access to the parent context.
 
   > Sidenote:
   >
-  > - [009: Agent/Module](./009_agent_module.md)
+  > - [012: Agent/Delegate](./012_agent_delegate.md)
 
-- **Import**: A key that identifies a piece of context from the parent environment to be made available (`imported`) to an execution. It can be used to focus an LLM's attention in a **Latent Inline** execution or to construct the entire context for a **Module Scope** execution. Controlled by the `_imports` property.
+- **Scope**: A key that identifies a piece of context from the parent environment to be made available (`scoped`) to an execution. It can be used to focus an LLM's attention in a **Latent Inline** execution or to construct the entire context for a **Delegate Scope** execution. Controlled by the `_scopes` property.
 
   > Sidenote:
   >
-  > - [008: Agent/Imports](./008_agent_imports.md)
+  > - [013: Agent/Scopes](./013_agent_scopes.md)
 
 - **Loop**: A sequence of `Request`s aimed at achieving a goal. The agent continues to invoke `Request`s, process the resulting `Call`s, and feed the output back into the context of the next `Request` until no more `Call`s are generated.
 
@@ -92,13 +92,13 @@ This document provides definitions for the key concepts used in the Idea Protoco
 
   > Sidenote:
   >
-  > - [010: Agent/State](./010_agent_state.md)
+  > - [009: Agent/State](./009_agent_state.md)
 
-- **Process Idea**: A self-contained [Idea](./101_concept_idea.md) that captures a strategic [Plan](./013_agent_plan.md) and its live execution state. Its `schema` is the library of [Tools](./002_agent_tool.md), its `solution` is the _new_ `Plan` for the current tick, and its `context` contains the `Input`, `State`, and the previous `Plan`.
+- **Process Idea**: A self-contained [Idea](./101_concept_idea.md) that captures a strategic [Plan](./010_agent_plan.md) and its live execution state. Its `schema` is the library of [Tools](./002_agent_tool.md), its `solution` is the _new_ `Plan` for the current tick, and its `context` contains the `Input`, `State`, and the previous `Plan`.
 
   > Sidenote:
   >
-  > - [013: Agent/Plan](./013_agent_plan.md)
+  > - [010: Agent/Plan](./010_agent_plan.md)
 
 - **Vessel Idea**: A self-contained `Idea` that is both the definition of a reactive capability and the record of its chosen reaction. Its `schema` defines the full universe of possible `Tools`, and its `solution` captures the specific `Calls` (instances of those `Tools`) that were chosen in response to a stimulus.
 

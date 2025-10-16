@@ -1,72 +1,53 @@
-# 011: Agent/Instancing
+# 011: Handling Multiple Tasks at Once (Instancing)
 
-> **Instancing:** Imagine you have a bunch of homework problems to solve. Instead of doing them one by one, you handle them all at the same time. Each problem is an "Instance," and it has its own separate sheet of paper (its "State Object") and a number so you don't get them mixed up.
+> **What is Instancing?**
+> Imagine you need to do the same task over and over again for a hundred different things, like addressing a hundred different letters. Instancing is a way to do all of them at the same time, keeping each one separate and organized.
 
-> Sidenote:
->
-> - What this needs: [010: Agent/State](./010_agent_state.md)
-> - What works with this:
->   - [007: Agent/Input](./007_agent_input.md)
->   - [008: Agent/Imports](./008_agent_imports.md)
->   - [013: Agent/Plan](./013_agent_plan.md)
 
-The **Instancing Protocol** is a way for an AI agent to work on many separate tasks at the same time, in a single go. It’s like a super-efficient assembly line. By giving the agent a whole batch of tasks (as a list of `State Objects`), it can work on all of them at once, making it much faster and more consistent.
 
-This is how the agent goes from doing one thing at a time to handling huge amounts of work all at once.
+The **Instancing Protocol** is a clever way to get a lot of work done quickly. It lets you use a single recipe (called a [Plan](./010_agent_plan.md)) to work on many separate tasks at the same time, which makes everything much faster and more consistent.
 
-## How Instancing Works
+## How It Works
 
-Instancing builds on the idea of the **[010: Agent/State](./010_agent_state.md)** protocol. But instead of sending just one task (a single `State Object`), you can send a whole list of them. Each item in the list is a separate job, or `Instance`.
+This idea builds on the concept of a **[State](./009_agent_state.md)**, which is like a digital workspace for a single task. Instead of sending just one workspace to the AI, you can send a whole list of them. Each one in the list is a separate **Instance** of the task.
 
-To keep track of which job is which, each one gets a special tag called `_instance`. Think of it like a sticky note with a number on it (like `①`, `②`, `③`). This tag lets the AI know which instructions and data belong to which job.
+To keep them from getting mixed up, each workspace gets a unique label, like a sticky note with a number on it (e.g., `①`, `②`). This label is stored in a special property called `_instance`.
+
+When the AI sees these labels, it knows exactly which task it's working on. It's like telling a chef, "This ingredient is for order #1, and that one is for order #2."
 
 This method has big advantages:
 
-- **Efficiency**: It's like a chef cooking ten burgers at once on a big grill instead of one at a time. The agent gets way more done in a single request.
-- **Consistency**: Because the AI sees all the related jobs at the same time, it can make sure the results are similar and high-quality. All the burgers will be cooked just right.
+- **Efficiency**: You can handle tons of tasks in a single request, which saves a lot of time.
+- **Consistency**: Because the AI sees all the similar tasks at once, it learns to handle them in the same reliable way, making the results better.
 
-## How Instancing Works with Other Messages
+## Staying Organized with Different Messages
 
-The real power of instancing is how the little `_instance` sticky note tells other types of messages what to do.
+The real power of instancing comes from how the `_instance` label helps organize different types of information.
 
-- **State:** The `State` message is your main workspace for a task. Each `Instance` has its own private workspace, identified by its `_instance` tag. This keeps the work for different tasks from getting mixed up, like having a separate cutting board for each burger.
+- **State:** Each `State` is a workspace. The `_instance` label makes sure that the work done for task `①` stays in workspace `①` and doesn't spill over into workspace `②`.
 
-  > Sidenote:
-  >
-  > - [010: Agent/State](./010_agent_state.md)
 
-- **Input:** An `Input` message gives instructions. You can use it in two ways:
-  1.  **For everyone:** Send one `Input` message without a sticky note, and the instructions apply to _all_ the tasks in the batch (e.g., "add cheese to every burger").
-  2.  **For just one:** Attach an `_instance` sticky note to an `Input` message, and the instruction only applies to that specific task (e.g., "burger `③`, no onions").
 
-  > Sidenote:
-  >
-  > - [007: Agent/Input](./007_agent_input.md)
+- **Input:** You can give instructions in two ways. You can provide one set of instructions for *all* the tasks at once (a global `Input`). Or, you can give a specific instruction just for task `②` by adding the `_instance: '②'` label to it.
 
-- **Imports:** The `_instance` tag is also super important for bringing in data. When a tool is asked to work on a specific task (an `Instance`), it's only shown the data for _that_ task. This stops it from getting confused by all the other tasks happening at the same time.
 
-  > Sidenote:
-  >
-  > - [008: Agent/Imports](./008_agent_imports.md)
+
+- **Scopes:** Scopes are like private notes for a specific tool. The `_instance` label ensures that when a tool is working on task `①`, it only sees the notes relevant to task `①`. This helps tools focus on their part of the job without getting confused by other tasks happening at the same time.
+
+
 
 ## How Instancing Works with Other Protocols
 
-Instancing also works with higher-level instructions to control the flow of work.
+Instancing also works with other angets to manage how tasks get done.
 
-- **Calls:** When you `Call` a tool, you add an `_instance` tag to it. This acts like a pointer, telling the tool exactly which workspace to go to and which task to work on. It makes sure any changes are saved to the right place.
+- **Calls:** A `Call` is a command to a tool. When a `Call` has an `_instance` label, it tells the tool exactly which workspace to use. This makes sure that when a tool saves a result or reads a value, it does it in the right place.
 
-  > Sidenote:
-  >
-  > - [004: Agent/Call](./004_agent_call.md)
 
-- **Plan:** A `Plan` is like a recipe or a set of instructions. While instancing lets you work on many tasks at once, the `Plan` tells the agent _what steps to follow_ for each task. You can use the same recipe for every single `Instance` in a big batch, making sure a complicated job is done the same way every time.
 
-  > Sidenote:
-  >
-  > - [013: Agent/Plan](./013_agent_plan.md)
+- **Plan:** A `Plan` is a reusable recipe, like the steps for making a pizza. Instancing lets you use that single pizza recipe to make a hundred different pizzas at once, each with its own unique toppings. The `Plan` ensures every pizza is made the right way, while `Instancing` handles making all of them at the same time.
 
-## From Working at the Same Time to Making a Plan
 
-Instancing gives us the power to do many jobs at the same time, side-by-side. But the steps for each job can be complicated. To handle this, the agent needs a repeatable recipe that it can apply to every single job.
 
-The next document, **[013: Agent/Plan](./013_agent_plan.md)**, explains how to create these reusable, step-by-step recipes.
+## From a Recipe to a Finished Project
+
+If a `Plan` is the recipe and `Instancing` is the busy kitchen that makes many dishes at once, then a **[Process Idea](./203_idea_process.md)** is the final cookbook. It contains the original recipe and a perfect record of how every single dish was made.

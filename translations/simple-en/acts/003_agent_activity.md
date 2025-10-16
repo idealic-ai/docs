@@ -1,73 +1,71 @@
 # 003: Agent/Activity
 
-> **Activity:** Think of this as the actual a program that does the work for a `Tool`. If a `Tool` is a button, the `Activity` is the machinery inside that makes the button work, especially for things the AI can't do on its own, like checking a live database or a real-world weather service.
+> [!DEFINITION] [Activity](./000_glossary.md)
+> An Activity is the real, hands-on code that does the work for a `Tool`. Think of it as the engine that makes the car move. It’s what lets the system do things in the real world, like calling a weather service, checking a database, or doing any job that the AI can't just "think up" an answer for.
 
 > Sidenote:
-> - Requires: [002: Agent/Tool](./002_agent_tool.md)
+> *   Requires: [002: Agent/Tool](./002_agent_tool.md)
 
-This document explains the **Activity Protocol**, which is the set of rules for how `Tools` (the description of a skill) are connected to real, runnable code.
+This document explains how `Tools` get their power from real, runnable code. A `Tool` describes *what* a special ability does, but an **Activity** is the code that *how* it actually does it.
 
 ## The Two-List System
 
-The system uses two separate lists to keep the *idea* of a skill separate from the *action* of doing it:
+Our system uses two separate lists to keep things organized. This separation is what makes the system so flexible.
 
-- **Tool Registry**: A list of all the available skills, describing what they can do (e.g., "check the weather").
-- **Activity Registry**: A list of the actual code programs (`Activities`) that carry out those skills (e.g., the code that connects to the weather API).
+*   **The Tool List (Tool Registry):** This is like a menu at a restaurant. It lists all the things you can order (like `getWeather` or `searchForFile`), but it doesn’t tell you how they're made.
+*   **The Activity List (Activity Registry):** This is like the restaurant's cookbook. It contains the actual recipes (the code) for making each item on the menu.
 
-Separating them is super important. It lets the system be flexible. An AI can just *imagine* the result of a `Tool` if it needs to, or you can swap out the real-world code for a `Tool` (like switching from one weather service to another) without having to tell the AI anything new.
+By keeping the menu and the cookbook separate, we can easily change a recipe without having to reprint the entire menu. For example, we could switch from one weather service to another without changing how the AI asks for the weather.
 
-## How to Register an Activity
+## How to Add a Recipe (Activity)
 
-You give your `Activity` code a unique name so the system can find it and link it to a `Tool`.
+You register a new piece of code (an Activity) by giving it a name that matches its `Tool`.
 
 ```typescript
-// This is how you add an Activity program to the list.
-// The simplest way is to give the Activity the same name as the Tool it's for.
+// This is like adding a recipe to the cookbook.
+// By convention, we give it the same name as the menu item.
 Activity.register('weatherCheck', async call => {
-  // Go to the real-world weather service and get the data.
+  // Go to the real weather service and get the data
   const data = await weatherAPI.get(call.location);
-  // Send back the result.
+  // Return the result
   return { temperature: data.temp, conditions: data.desc };
 });
 ```
 
-## Ways to Run a Tool: Imagined vs. Real
+## Two Ways to Get an Answer: Guessing vs. Doing
 
-The system has two different ways to handle a request to use a `Tool`:
+When a `Tool` is used, the system can get the answer in one of two ways:
 
-- **Imagined (Latent Execution)**: The AI uses its own brain to figure out the answer. It "thinks" about what the result of the tool *should* be and gives you a response immediately. This is the default if it can't find any real code for a `Tool`.
-  > Sidenote:
-  > - [104: Concept/Latent](./104_concept_latent.md)
-- **Real (Explicit Execution)**: The request is handed off to a real piece of code (an `Activity`). The code runs and computes the answer. This is necessary for talking to the outside world (like websites or databases) or for doing things that need to be perfectly accurate every time.
+*   **Imagined Answer (Latent Execution):** This is like asking a really smart friend a question. They use everything they've learned to give you a very good guess, right on the spot. This is the default if there's no real code (Activity) for a `Tool`.
+    > Sidenote:
+    > *   [104: Concept/Latent](./104_concept_latent.md)
+*   **Real Answer (Explicit Execution):** This is like handing your friend a phone and asking them to look up the answer. The system runs the actual Activity code to get a precise, real-world result. This is necessary for things like checking an API, reading a file, or anything that requires interacting with the outside world.
 
-## How the System Decides Which Way to Go
+## How the System Decides Which Method to Use
 
-The system has a simple, automatic way to decide whether to imagine the result or run real code. It looks at a special field in the `Tool`'s description called `_activity`.
+The system has a simple, automatic way of deciding whether to guess or do.
 
-1.  **Look for a Manual Link**: If the person who made the `Tool` put a specific `Activity` name in the `_activity` field, the system uses that.
-2.  **Look for the Same Name (Recommended)**: If there's no manual link, the system looks for an `Activity` in its list that has the **exact same name** as the `Tool`. If it finds one, it automatically links them.
-3.  **Fall Back to Imagining**: If it can't find a matching `Activity` after checking those two things, it assumes there is no real code and decides to use the AI's imagination (latent execution).
+1.  **Specific Instructions:** If the `Tool`'s definition specifically says, "Use *this* recipe," it will always look for that recipe (Activity) in the cookbook.
+2.  **Matching Names (Recommended):** If there are no specific instructions, the system looks for a recipe in the cookbook that has the **exact same name** as the menu item (`Tool`). If it finds one, it uses it.
+3.  **Default to Imagining:** If it can't find a matching recipe after checking the first two rules, it falls back to imagining the answer. The AI will just think it through and give its best guess.
 
-This makes things easy for developers:
+This makes things easy:
 
-- **For things to just work, give your `Activity` code the same name as your `Tool`.**
-- `Tools` that don't have real code attached to them will safely run in "imagined" mode by default.
-- You can always override this by manually linking a `Tool` to an `Activity` with a different name.
+*   **To make a `Tool` do real work, just create an `Activity` with the same name.**
+*   `Tool`s that are just for thinking or organizing ideas don't need code and will work automatically.
 
 ## Why This Separation Is a Big Deal
 
-If we didn't separate the `Tool` description from the `Activity` code, they would be stuck together forever. Imagine you wanted to switch from having the AI *guess* the weather to having it use a *real* weather service. You'd have to go find every single AI that uses that `Tool` and change all of them.
+If we didn't separate the menu (`Tool`) from the cookbook (`Activity`), every menu item would be permanently tied to its recipe. To change how a `Tool` works (like switching from a test weather service to a real one), you'd have to find every agent that uses that menu and teach it the new recipe.
 
-By keeping them separate, the `Tool` description stays the same, while the code behind it can change.
+With our two-list system, you can just swap out the recipe in the cookbook. The agents keep ordering from the same menu and don't even know the recipe changed. This lets us:
 
-This means:
-
-- **You don't break the AI when you update the code**: You can switch from imagined to real mode, and the AI that uses the `Tool` won't even notice.
-- **You can test different approaches**: You can easily compare if the AI's guess is better or worse than the result from a real-world service for the same skill.
-- **You can roll out changes slowly**: You can give the new, real code to just a few AIs to test it out, while everyone else keeps using the old version.
+*   **Update how things work without breaking agents.**
+*   **Test different ways of getting the same job done** (e.g., see if the AI's guess is as good as a real API call).
+*   **Slowly roll out new features** by giving the new recipe to only some agents at first.
 
 ## From Idea to Action
 
-By separating the "what" (`Tool`) from the "how" (`Activity`), the system becomes incredibly flexible. But this is just one piece of the puzzle. Now that we have descriptions of skills and the real code to run them, the next step is managing how these skills are called, run, and organized in a sequence.
+By separating the "what" (`Tool`) from the "how" (`Activity`), we've built a very flexible system. We have our menu of abilities and our cookbook of recipes. The last piece of the puzzle is the waiter — the part of the system that takes the order and makes sure the kitchen cooks it correctly.
 
-The next document, [004: Agent/Call](./004_agent_call.md), explains the rules that turn these ideas into real, guided actions.
+The next document, [004: Agent/Call](./004_agent_call.md), explains how the system manages and executes these requests, turning ideas into real actions.

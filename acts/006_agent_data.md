@@ -1,6 +1,7 @@
 # 006: Agent/Data
 
-> **Data Message:** A persistent context message containing a `data` value and an optional `schema`. It is retained across an agent's execution loop to provide a stable, structured context. — [Glossary](./000_glossary.md)
+> [!DEFINITION] [Data Message](./000_glossary.md)
+> A persistent context message containing a `data` value and an optional `schema`. It is retained across an agent's execution loop to provide a stable, structured context.
 
 > Sidenote:
 >
@@ -8,12 +9,12 @@
 >   - [001: Agent/Request](./001_agent_request.md)
 > - Enables:
 >   - [007: Agent/Input](./007_agent_input.md)
->   - [010: Agent/State](./010_agent_state.md)
+>   - [009: Agent/State](./009_agent_state.md)
 > - Complemented by:
 >   - [005: Agent/Loop](./005_agent_loop.md)
 >   - [011: Agent/Instancing](./011_agent_instancing.md)
 
-This document describes the **Data Protocol**, a low-level pattern for providing structured, self-describing information. It serves as a foundational mechanism used by other subsystems, such as [Input](./007_agent_input.md) and [State](./010_agent_state.md), to manage structured data within an agent's `context`. Unlike ephemeral messages, `Data` messages are persistent and are retained across iterations of an agent's execution loop, providing a stable context for multi-step tasks.
+This document describes the **Data Protocol**, a low-level pattern for providing structured, self-describing information. It serves as a foundational mechanism used by other subsystems, such as [Input](./007_agent_input.md) and [State](./009_agent_state.md), to manage structured data within an agent's `context`. Unlike ephemeral messages, `Data` messages are persistent and are retained across iterations of an agent's execution loop, providing a stable context for multi-step tasks.
 
 ## The Data Message
 
@@ -73,4 +74,4 @@ The `Data` protocol is a foundational pattern that is specialized and extended b
 
 The `Data` protocol provides a generic container for structured information. With this foundation established, we can now explore how to dynamically connect these pieces of data. This is the critical step that allows an agent to create workflows where the output of one step becomes the input for another.
 
-The next document, **[011: Agent/Variables](./011_agent_variables.md)**, describes the protocol that makes these dynamic connections possible.
+The next document, **[008: Agent/Variables](./008_agent_variables.md)**, describes the protocol that makes these dynamic connections possible.

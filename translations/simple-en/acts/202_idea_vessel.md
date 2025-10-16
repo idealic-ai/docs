@@ -1,64 +1,37 @@
 # 202: Idea/Vessel
 
-> **Vessel Idea:** Think of this as a special kind of box. This box holds two important things: a list of all the possible actions an AI could take in a situation (its `Tools`), and a note saying which action it actually picked. It’s a complete record of a single reaction.
->
-> — [Glossary](./000_glossary.md)
+> [!DEFINITION] [Vessel Idea](./000_glossary.md)
+> Think of a Vessel Idea as a 'snapshot' of a decision. It's a complete package that holds two things: 1) all the possible actions an AI agent could take in a specific moment (its menu of `Tools`), and 2) the exact action (`Call`) it actually chose in response to something happening.
 
-> Sidenote:
-> - Requires:
->   - [101: Concept/Idea](./101_concept_idea.md)
->   - [002: Agent/Tool](./002_agent_tool.md)
->   - [004: Agent/Call](./004_agent_call.md)
 
-A **Vessel Idea** is like a perfect snapshot of an AI agent's immediate reaction to something. It’s more than just a log of what happened. It’s a rich recording that includes the full story of the decision, which makes it easy to check, change, and use again later.
 
-## 1. The Parts of a Reaction
+A **Vessel Idea** is like a perfect little time capsule of an AI agent's reaction to something that just happened. It’s not just a simple log of what it did. It’s a detailed record that includes the entire situation, making that single decision easy to check, change, and reuse later on.
 
-Imagine an AI making a decision. A `Vessel Idea` captures both what it *could have* done and what it *actually did*.
+## 1. The Anatomy of a Reaction
 
-Let’s use the analogy of ordering food at a restaurant:
+A `Vessel Idea` has three main parts. Together, they describe both what *could have* happened and what *did* happen:
 
-> Sidenote:
-> - [101: Concept/Idea](./101_concept_idea.md)
 
-- **`context` (What Happened):** This is the reason for the action. *You are hungry and looking at a menu.*
-- **`schema` (All the Choices):** This describes every single thing the AI could possibly do. It's the full toolbox available at that moment. *This is the entire menu, listing every single dish you could order.*
-- **`solution` (The Choice That Was Made):** This is the record of what the AI actually did. It's a list of the specific `Calls` (actions) it chose from the `schema`. *This is the one dish you actually ordered from the menu.*
 
-Because a `Vessel` contains both the menu (`schema`) and your final order (`solution`), it gives a complete picture of why and how a decision was made.
+- **`context` (What Happened):** This is the trigger—the user's question or the new information that made the agent need to act.
+- **`schema` (The Menu of Options):** This describes every single `Tool` the agent had available at that exact moment. It’s the full list of everything it *could have* done.
+- **`solution` (What It Chose):** This is the record of what the agent *actually did*. It’s a list of the specific `Calls` (actions) it picked from the menu in the `schema`.
 
-## 2. The Power of a Complete Snapshot
+Because a `Vessel` contains both the menu of possibilities (`schema`) and the final choice (`solution`), it gives you a complete picture of why a decision was made.
 
-Packing everything into one box like this is what makes the system so smart. By keeping the list of choices together with the final decision, a `Vessel Idea` makes several cool things possible:
+## 2. The Power of Self-Contained Decisions
 
-- **Checking and Changing:** A person can look at a `Vessel` and see not only what the AI did, but all the other things it could have done. They can then say, "Yep, that's right," or change the decision by picking a different action from the list of choices (`schema`).
-- **Trying Again:** If an action fails, the AI can rethink its choice. It already has the original problem (`context`) and the full list of its options (`schema`), so it can easily pick a different action and create a new `Vessel`.
-- **Using it Again:** A `Vessel` can be a great example or template for making similar decisions in the future.
+This all-in-one package is what makes the system so smart and flexible. By bundling the menu with the choice, a `Vessel Idea` can do some cool things:
+
+- **Human Check and Override:** A person can look at a `Vessel` and see not just what the agent did, but all the other things it could have done. They can then either approve the action or pick a different one from the `schema`.
+- **Replanning:** If an action fails, the agent can try again. It already has the original situation (`context`) and its full menu of options (`schema`), so it can easily pick a different `Tool` and create a new `Vessel`.
+- **Reusability:** A `Vessel` can be used as a perfect example or a template for making similar decisions in the future.
 
 ### 2.1. Interactive Time Travel
 
-Because a `Vessel Idea` is a complete and unchangeable snapshot, it lets you do something like time travel.
-You can load a `Vessel` from the past and see the AI exactly as it was at that very moment.
+Because a `Vessel Idea` is a complete and unchangeable snapshot, it lets you do something like interactive time travel. You can load a `Vessel` from the past and see the agent exactly as it was in that moment.
 
-The `schema` guarantees that the AI's abilities are frozen in time. Even if the modern AI has learned new tricks and has new `Tools`, the old `Vessel` will only show the options that were available back when it was created. This lets you:
+The `schema` guarantees the agent's abilities are frozen in time. Even if the modern version of the agent has new, better `Tools`, the old `Vessel` will only show the options it had back then. This allows you to:
 
-- **Replay the Past:** See exactly how a past decision was made.
-- **Explore "What Ifs":** You can give that old `Vessel` a new problem (`context`) to see how the older version of the AI would have reacted. This is a great way to understand how the AI has grown and to find bugs.
-
-This gives us a powerful way to check, understand, and watch how an agent's thinking changes over time.
-
-## 3. The Vessel in Action
-
-A `Vessel` is like a single heartbeat in the AI's life. The AI sees something, reacts (creating a `Vessel`), and then the results of that action are fed back in as the starting point for the next heartbeat, which might create a new `Vessel`.
-
-> Sidenote:
-> - [005: Agent/Loop](./005_agent_loop.md)
-
-This pattern is great for building AIs that can react quickly to things as they happen. However, it's not designed for big, complicated plans that have many steps and require remembering things for a long time.
-
-## 4. From Quick Reactions to Big Plans
-
-While a `Vessel` is a perfect record of a single, quick reaction, reaching bigger goals requires a way to plan things out over multiple steps. This is where a **Process Idea** comes in. It uses the same idea of a self-contained box, but for a long-term, step-by-step plan.
-
-> Sidenote:
-> - [203: Idea/Process](./203_idea_process.md)
+- **Replay History:** See exactly how and why a past decision was made.
+- **Explore Alternatives:** Ask 

@@ -30,8 +30,8 @@ This document is the bridge between high-level vision and ground-level implement
 - [009: Agent/State](./009_agent_state.md)
 - [010: Agent/Plan](./010_agent_plan.md)
 - [011: Agent/Instancing](./011_agent_instancing.md)
-- [012: Agent/Module](./012_agent_module.md)
-- [013: Agent/Imports](./013_agent_imports.md)
+- [012: Agent/Delegate](./012_agent_delegate.md)
+- [013: Agent/Scopes](./013_agent_scopes.md)
 
 ### Concept
 

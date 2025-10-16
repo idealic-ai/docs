@@ -1,6 +1,7 @@
 # 101: Concept/Idea
 
-> **Idea:** A self-contained, stateful data triplet (`schema`, `solution`, `context`) representing a unit of knowledge. It's a persistent, computational primitive, not an ephemeral prompt. — [Glossary](./000_glossary.md)
+> [!DEFINITION] [Idea](./000_glossary.md)
+> A self-contained, stateful data triplet (`schema`, `solution`, `context`) representing a unit of knowledge. It's a persistent, computational primitive, not an ephemeral prompt.
 
 > Sidenote:
 >

@@ -1,6 +1,7 @@
 # 001: Agent/Request
 
-> **Request:** A single, self-contained LLM invocation, which takes a `context` and a `schema` and produces a `solution`. — [Glossary](./000_glossary.md)
+> [!DEFINITION] [Request](./000_glossary.md)
+> A single, self-contained LLM invocation, which takes a `context` and a `schema` and produces a `solution`.
 
 > Sidenote:
 >
@@ -63,8 +64,8 @@ The system extends this basic `Message` structure by allowing the `content` fiel
 >
 > - [006: Agent/Data](./006_agent_data.md) - present data and its meaning to LLM as a message
 > - [007: Agent/Input](./007_agent_input.md) - structured prompt for LLM to use
-> - [010: Agent/State](./010_agent_state.md) - persistent state retained within loop
-> - [013: Agent/Plan](./013_agent_plan.md) - prepared plan for multi-step execution
+> - [009: Agent/State](./009_agent_state.md) - persistent state retained within loop
+> - [010: Agent/Plan](./010_agent_plan.md) - prepared plan for multi-step execution
 
 This capability makes the `context` the main point of extension within the system.
 

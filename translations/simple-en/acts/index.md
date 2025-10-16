@@ -2,21 +2,24 @@
 
 ---
 
-Think of these documents as the official blueprints for how we're building everything. They explain the exact rules and instructions our team agrees to follow. They're the go-to guide for all the technical details.
+These are the official blueprints our team uses to build the system. Think of them as the detailed instruction manuals that explain exactly how everything should work. They set the rules we all agree to follow.
 
-> Sidenote: [Idealic](http://idealic.ai) is a project all about setting ideas free.
+> Sidenote:
+> [Idealic](http://idealic.ai) is a project that aims to set ideas free.
 >
-> - To understand _Why_ we're doing this, read the [Manifesto of Co-Liberation](../manifesto/).
-> - To understand _What_ we're building, read the [Edict of Autonomy](../edict/).
-> - To understand _How_ it all works, you're in the right place: the **Acts of Emergence**.
+> - *Why are we doing this?* [Manifesto of Co-Liberation](../manifesto/)
+> - *What are we building?* [Edict of Autonomy](../edict/)
+> - *How are we building it?* **Acts of Emergence**
 
-These documents connect our big dreams to the actual code that makes them real. They work together with the [Manifesto of Co-Liberation](../manifesto/) (which explains _why_ we're doing this) and the [Edict of Autonomy](../edict/) (which explains _what_ we're building). By reading these 'Acts', you'll get the full technical picture of how everything works and fits together.
+This collection of documents connects our big vision with the actual, hands-on work of building it. To get the full picture, you can also read the [Manifesto of Co-Liberation](../manifesto/) (which explains *The Why*) and the [Edict of Autonomy](../edict/) (which explains *The What*). These Acts of Emergence will give you the complete technical story of how every piece is built.
 
 ---
 
 ### Agent
 
-> Sidenote: This section is about how our AI agents think and act.
+> Sidenote:
+> This section is about the AI "workers" in our system—how they think, act, and get things done.
+>
 
 - [001: Agent/Request](./001_agent_request.md)
 - [002: Agent/Tool](./002_agent_tool.md)
@@ -25,15 +28,18 @@ These documents connect our big dreams to the actual code that makes them real. 
 - [005: Agent/Loop](./005_agent_loop.md)
 - [006: Agent/Data](./006_agent_data.md)
 - [007: Agent/Input](./007_agent_input.md)
-- [008: Agent/Imports](./008_agent_imports.md)
-- [009: Agent/Module](./009_agent_module.md)
-- [010: Agent/State](./010_agent_state.md)
+- [008: Agent/Variables](./008_agent_variables.md)
+- [009: Agent/State](./009_agent_state.md)
+- [010: Agent/Plan](./010_agent_plan.md)
 - [011: Agent/Instancing](./011_agent_instancing.md)
-- [013: Agent/Plan](./013_agent_plan.md)
+- [012: Agent/Delegate](./012_agent_delegate.md)
+- [013: Agent/Scopes](./013_agent_scopes.md)
 
 ### Concept
 
-> Sidenote: This section explains the basic building blocks and rules for how everything communicates.
+> Sidenote:
+> These documents explain the fundamental building blocks of our digital world and the rules for how different parts can talk to each other.
+>
 
 - [101: Concept/Idea](./101_concept_idea.md)
 - [102: Concept/Sovereignty](./102_concept_sovereignty.md)
@@ -44,7 +50,9 @@ These documents connect our big dreams to the actual code that makes them real. 
 
 ### Ideas
 
-> Sidenote: This section is all about the most important thing: ideas themselves, and how they are structured.
+> Sidenote:
+> This explains what an "idea" is actually made of in our system, breaking it down into its smallest parts.
+>
 
 - [201: Idea/Record](./201_idea_record.md)
 - [202: Idea/Vessel](./202_idea_vessel.md)
@@ -54,7 +62,8 @@ These documents connect our big dreams to the actual code that makes them real. 
 
 ### Ideator
 
-> Sidenote: This section describes the essential background services that make the whole system run.
+> Sidenote:
+> This is about the services and digital machinery that run in the background to support everything and keep it working.
 
 - [301: Ideator/Storage](./301_ideator_storage.md)
 - [302: Ideator/Resolver](./302_ideator_resolver.md)

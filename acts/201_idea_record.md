@@ -1,6 +1,7 @@
 # 201: Idea/Record
 
-> **Record Idea:** An Idea whose schema defines structured data. Its `solution` is the structured content itself. — [Glossary](./000_glossary.md)
+> [!DEFINITION] [Record Idea](./000_glossary.md)
+> An Idea whose schema defines structured data. Its `solution` is the structured content itself.
 
 > [!WARNING]
 > This RFC is currently a placeholder and will be expanded in the future.

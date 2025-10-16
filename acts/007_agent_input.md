@@ -1,6 +1,7 @@
 # 007: Agent/Input
 
-> **Input Message:** A context message containing a `schema` and `input` data. It defines the expected inputs for a `Request`, making it a reusable, function-like component. — [Glossary](./000_glossary.md)
+> [!DEFINITION] [Input Message](./000_glossary.md)
+> A context message containing a `schema` and `input` data. It defines the expected inputs for a `Request`, making it a reusable, function-like component.
 
 > Sidenote:
 >

@@ -1,47 +1,57 @@
 # 103: Concept/Ideator
 
-> **Ideator:** An `Idea` that is built to receive an input. Think of it like a function or a machine that takes something in and produces something new.
+> [!DEFINITION] [Ideator](./000_glossary.md)
+> An `Ideator` is an `Idea` that can do work. It's like a function in math: it takes something in (an input) and produces something new (an output). We know an `Idea` can do this when it has a special message inside it labeled `type: "input"`.
 
+> Sidenote:
+> - Relies on these documents:
+>   - [101: Concept/Idea](./101_concept_idea.md)
+>   - [007: Agent/Input](./007_agent_input.md)
+> - Makes these documents possible:
+>   - [004: Agent/Call](./004_agent_call.md)
+>   - [102: Concept/Sovereignty](./102_concept_sovereignty.md)
 
 ## Introduction
 
-This document explains how an **Ideator**, which is a special kind of `Idea`, can be turned into a running service that actually does things. It builds on the basic concept of an `Idea` (which is like a blueprint) and explains how to make that blueprint come to life.
+This document explains how an **`Idea`** can become an **`Ideator`** — an active, thinking machine that you can give tasks to. This builds on the first document, [101: Concept/Idea](./101_concept_idea.md), which described what an `Idea` is made of. 
 
-To understand where these services can live (on the cloud, on your computer, etc.), check out the document on [Sovereignty](./102_concept_sovereignty.md).
+To learn about all the different ways you can run an `Ideator`, like on your own computer or on the internet, you can read [102: Concept/Sovereignty](./102_concept_sovereignty.md).
 
-## From a Blueprint to a Machine
+## From Idea to Ideator
 
-An **Ideator** isn't a totally new thing; it's just an `Idea` that has a job to do. You can think of it like a function or a machine: you give it an input, and it gives you an output. This work happens in a “smart space” (called a **latent space**), which means it's not always run by normal computer code. Instead, a powerful AI reads all the instructions, examples, and rules inside the `Idea` and figures out what to do.
+An **`Ideator`** isn't a totally new thing; it's just an `Idea` that has a job to do. Think of it like a recipe that can actually cook for you. It takes ingredients (input) and makes a meal (output).
 
-The one thing that officially makes an `Idea` an **Ideator** is a special instruction inside it that says `type: "input"`. This little tag is like an “INPUT” slot on a machine—it tells everyone that this `Idea` is waiting for you to give it something to work on.
+Its instructions aren't written in normal computer code. Instead, an AI reads the `Idea`'s descriptions, examples, and rules to figure out what to do. This is a bit like a chef who can look at a list of ingredients and a picture of a dish and figure out all the steps on their own.
 
-### The Idea Transformer: A Special Kind of Machine
+The one thing that officially turns an `Idea` into an `Ideator` is a message inside it that says `type: "input"`. This message tells everyone what kind of ingredients the `Ideator` needs to do its job. Sometimes, an `Ideator` might also have a message with `type: "code"` that points to a specific set of instructions, just in case.
 
-A very common and useful type of Ideator is one that takes another `Idea` as its input. We call this an **Idea Transformer**. Imagine a machine that doesn't take ingredients like flour and sugar, but instead takes a whole *recipe* and gives you back a new, improved recipe. This is how you can connect Ideas together to build bigger and more complex things.
+### The Idea Transformer: A Special Case
 
-## How Ideators Work Together
+One very cool type of `Ideator` is one that takes *another `Idea`* as its input. We call this an **Idea Transformer**. It’s like a special kitchen machine whose only job is to take one recipe and make it better or change it into a new one. This is how we can chain `Ideas` together to build amazing things.
 
-The rules in this document create a **shared agreement** for how any Ideator service should behave. This isn’t about building one single piece of software, but about creating a standard that allows many different versions of Ideators to work together, like different brands of LEGO bricks that all fit perfectly.
+## How They Work and Connect
 
-### Many Ways to Build an Ideator
+The rules in this document create a **handshake agreement** for how any `Ideator` should behave. This isn't for one single program, but a standard that lets lots of different `Ideator` programs, built by different people, all understand each other and work together.
 
-As long as a service follows the rules (it accepts an `Idea` and returns another `Idea`), it can be built in many different ways:
+### Many Ways to Build an `Ideator`
 
-*   **Cloud Services**: A company can run the Ideator for you on their powerful computers. You don't have to worry about the technical stuff, you just use it.
-*   **Do-It-Yourself**: A developer can run the service on their own computer or server, giving them total control.
-*   **Local Testing**: For practice or building, you can run the Ideator's logic right inside your computer's memory, skipping the internet entirely. It still follows the same core rules, just in a simpler way.
+As long as an `Ideator` follows the handshake agreement (it accepts an `Idea` and returns another one), it can be built in many different ways:
 
-### Building Big Things from Small Pieces
+- **Online Services**: A company can run `Ideators` on the internet for you. You don't have to worry about the computers or the setup; you just use it. This is explained more in the [Sovereignty Protocol](./102_concept_sovereignty.md).
+- **Do-It-Yourself**: You can run an `Ideator` on your own computer or server. This gives you total control over how it works.
+- **Just for Practice**: For building and testing, you can run an `Ideator` right inside your code on your laptop. It works the same way but doesn't need to connect to the internet at all.
 
-In this system, there are no secret or private connections. Every service is designed to be public and interact with others based on the shared agreement.
+### Building Bigger Things by Connecting `Ideators`
 
-Bigger, more advanced services, which we can call **Higher-Order Systems**, are built by combining smaller, simpler `Ideators`. The big service works by making calls to other public Ideators to get its job done.
+In this world, there are no secret passages or private doors. Every `Ideator` uses the same public handshake to talk to others.
 
-For example, imagine a game manager called the **Reactor**. It's just a big Ideator, but on the inside, it does a few things:
+More powerful tools, which we can call **Higher-Order Systems**, are built by connecting simple `Ideators` together. The big system does its job by asking smaller, public `Ideators` to do theirs.
 
-1.  It receives the current state of the game as an `Idea`.
-2.  Inside, it calls a separate, public `Player` service to create and manage players.
-3.  It then calls another public `Storage` service to save the game's history.
-4.  Finally, it returns the new game state as an `Idea`.
+For example, imagine a system called **Reactor** that runs a game. Here’s how it might work:
 
-From the outside, you don't see all those moving parts. The Reactor just looks like a single, simple Ideator. Its complexity is handled by piecing together other independent, public services. This keeps the whole system clear, organized, and easy to grow.
+1.  You give Reactor the current game information as an `Idea`.
+2.  Inside, Reactor calls a public `Player` `Ideator` to create new players.
+3.  Then, it calls a public `Storage` `Ideator` to save what happened in the game.
+4.  Finally, it gives you back the new, updated game information as an `Idea`.
+
+From the outside, Reactor just looks like any other `Ideator`. All its complicated work is done by combining other simple, public `Ideators`. This keeps everything neat, easy to understand, and able to grow bigger and bigger.

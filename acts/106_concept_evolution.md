@@ -1,8 +1,7 @@
 # 106: Concept/Evolution
 
-> **Evolution:** The process by which an AI-Native system autonomously or semi-autonomously adapts, improves, and changes its own structure, logic, and capabilities over time in response to new data, feedback, or changing goals.
->
-> — [Glossary](./000_glossary.md)
+> [!DEFINITION] [Evolution](./000_glossary.md)
+> The process by which an AI-Native system autonomously or semi-autonomously adapts, improves, and changes its own structure, logic, and capabilities over time in response to new data, feedback, or changing goals.
 
 > Sidenote:
 >
@@ -71,7 +70,7 @@ A key enabler of this scaling is parallelism. Multiple evolutionary loops can be
 > Sidenote:
 >
 > - [101: Concept/Idea](./101_concept_idea.md)
-> - [012: Agent/Plan](./012_agent_plan.md)
+> - [010: Agent/Plan](./010_agent_plan.md)
 
 For the end-user, these rapid, hidden iterations can be abstracted away. From their perspective, the system may appear to understand and fulfill a complex request in a single step. In reality, this "understanding" is the emergent result of numerous high-speed evolutionary loops, where the AI has simulated communication between its components, analyzed outcomes, and progressively converged on a solution that truly fits the context.
 

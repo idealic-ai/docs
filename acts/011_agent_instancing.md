@@ -1,20 +1,21 @@
-# 013: Agent/Instancing
+# 011: Agent/Instancing
 
-> **Instancing:** The process of handling multiple, independent `Instances` (each with its own `State Object` and unique identifier) within a single agent request. — [Glossary](./000_glossary.md)
+> [!DEFINITION] [Instancing](./000_glossary.md)
+> The process of handling multiple, independent `Instances` (each with its own `State Object` and unique identifier) within a single agent request.
 
 > Sidenote:
 >
-> - Requires: [011: Agent/State](./011_agent_state.md)
+> - Requires: [009: Agent/State](./009_agent_state.md)
 > - Compatible:
 >   - [007: Agent/Input](./007_agent_input.md)
->   - [008: Agent/Imports](./008_agent_imports.md)
->   - [012: Agent/Plan](./012_agent_plan.md)
+>   - [013: Agent/Scopes](./013_agent_scopes.md)
+>   - [010: Agent/Plan](./010_agent_plan.md)
 
-The **Instancing Protocol** is a data-centric pattern for scaling agentic workflows. It allows a single, reusable [Plan](./012_agent_plan.md) to be executed concurrently across multiple, independent `State` objects, dramatically improving throughput and consistency.
+The **Instancing Protocol** is a data-centric pattern for scaling agentic workflows. It allows a single, reusable [Plan](./010_agent_plan.md) to be executed concurrently across multiple, independent `State` objects, dramatically improving throughput and consistency.
 
 ## The Instancing Mechanism
 
-Instancing is built upon the foundation of the **[010: Agent/State](./010_agent_state.md)** protocol. Instead of providing a single `State Object`, a request can include an array of them, each representing a distinct `Instance` of a task.
+Instancing is built upon the foundation of the **[009: Agent/State](./009_agent_state.md)** protocol. Instead of providing a single `State Object`, a request can include an array of them, each representing a distinct `Instance` of a task.
 
 To manage these concurrent contexts, each `State` message is assigned a **unique identifier** via a special `_instance` property. These identifiers are short, unique tokens (e.g., `①`, `②`) that allow the LLM to associate operations with a specific `Instance`.
 
@@ -31,7 +32,7 @@ The protocol's power comes from how the `_instance` identifier scopes the behavi
 
   > Sidenote:
   >
-  > - [010: Agent/State](./010_agent_state.md)
+  > - [009: Agent/State](./009_agent_state.md)
 
 - **Input:** An `Input` message can be used in two ways. A global `Input` message (without an `_instance` identifier) provides configuration for all instances in a batch. A targeted `Input` message (with an `_instance` identifier) provides data for a specific `State Object`, overriding any global input.
 
@@ -39,11 +40,11 @@ The protocol's power comes from how the `_instance` identifier scopes the behavi
   >
   > - [007: Agent/Input](./007_agent_input.md)
 
-- **Imports:** The `_instance` identifier provides critical data isolation for `Imports`. When a `Call` targets a specific instance, its `_imports` are also scoped to that instance's context. This is what allows a `Module` to see only the data relevant to its specific unit of work, even when it is being orchestrated as one of many within a larger, multi-instance request.
+- **Scopes:** The `_instance` identifier provides critical data isolation for `Scopes`. When a `Call` targets a specific instance, its `_scopes` are also scoped to that instance's context. This is what allows a `Delegate` to see only the data relevant to its specific unit of work, even when it is being orchestrated as one of many within a larger, multi-instance request.
 
   > Sidenote:
   >
-  > - [008: Agent/Imports](./008_agent_imports.md)
+  > - [013: Agent/Scopes](./013_agent_scopes.md)
 
 ## Composition with Other Protocols
 
@@ -59,7 +60,7 @@ Instancing integrates with higher-level protocols to manage execution flow.
 
   > Sidenote:
   >
-  > - [012: Agent/Plan](./012_agent_plan.md)
+  > - [010: Agent/Plan](./010_agent_plan.md)
 
 ## From Planning to Process
 

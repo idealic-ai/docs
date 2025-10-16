@@ -1,6 +1,7 @@
 # 003: Agent/Activity
 
-> **Activity:** An explicit, asynchronous function that implements the logic for a `Tool`. It is the mechanism for executing actions that require external API calls, database operations, or any task that cannot be handled by an LLM's latent space. — [Glossary](./000_glossary.md)
+> [!DEFINITION] [Activity](./000_glossary.md)
+> An explicit, asynchronous function that implements the logic for a `Tool`. It is the mechanism for executing actions that require external API calls, database operations, or any task that cannot be handled by an LLM's latent space.
 
 > Sidenote:
 >

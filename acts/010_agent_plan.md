@@ -1,6 +1,7 @@
 # 010: Agent/Plan
 
-> **Plan:** A structured representation of a workflow, vision, or system, expressed as a graph. It is a versatile tool for generating any kind of network—from an executable sequence of `Tool Calls` to a conceptual map for brainstorming. — [Glossary](./000_glossary.md)
+> [!DEFINITION] [Plan](./000_glossary.md)
+> A structured representation of a workflow, vision, or system, expressed as a graph. It is a versatile tool for generating any kind of network—from an executable sequence of `Tool Calls` to a conceptual map for brainstorming.
 
 > Sidenote:
 >
@@ -27,6 +28,8 @@ This establishes a clear dependency: the second `Tool Call` cannot execute until
 
 For example, a `Plan` to fetch a user's profile and then summarize it would consist of two `Tool Calls`:
 
+:::div{.limited-width}
+
 ```json
 [
   {
@@ -42,13 +45,11 @@ For example, a `Plan` to fetch a user's profile and then summarize it would cons
 ]
 ```
 
-Here, the `summarizeProfile` call depends on the output of `fetchUserProfile`, creating a two-step plan. This relationship can be visualized as a simple graph:
-
 > Sidenote:
 >
 > ```mermaid
 > graph TD
->     state_var("state.user.profile")
+>     state_var{{"state.user.profile"}}
 >
 >     Call1["fetchUserProfile"]
 >     Call2["summarizeProfile"]
@@ -57,7 +58,9 @@ Here, the `summarizeProfile` call depends on the output of `fetchUserProfile`, c
 >     state_var -- read by --> Call2
 > ```
 
-- [009: Agent/State](./009_agent_state.md)
+:::
+
+Here, the `summarizeProfile` call depends on the output of `fetchUserProfile`, creating a two-step plan. This relationship can be visualized as a simple graph.
 
 ## What is a Plan?
 
@@ -107,8 +110,7 @@ A `Plan` is not static; it is a living strategy that can be adapted at each step
 
 This iterative process allows the agent to be both proactive and reactive. It can follow the existing `Plan`, but it can also modify it in response to the results of the previous step. For example, if a `Tool Call` fails, the agent can generate a new `Plan` that includes error-handling steps. This makes the system resilient and adaptable.
 
-> [!HEADSUP] Heads up
-> This iterative cycle of planning and execution is the core of a [203: Idea/Process](./203_idea_process.md). It is is a self-contained snapshot of a workflow, capturing the `Tools` available, the live `State`, and the `Plan` itself.
+This iterative cycle of planning and execution is the core of a [203: Idea/Process](./203_idea_process.md). It is is a self-contained snapshot of a workflow, capturing the `Tools` available, the live `State`, and the `Plan` itself.
 
 ## From Single Plan to Reusable Workflows
 

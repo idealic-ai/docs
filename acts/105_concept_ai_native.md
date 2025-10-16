@@ -1,14 +1,15 @@
 # 105: Concept/AI-Native
 
-> **AI-Native:** An architectural paradigm where an AI is the primary engine for a system's entire lifecycle, including its design, execution, evolution, and continuous improvement. It treats AI not as an integrated tool, but as the fundamental medium in which the system operates. — [Glossary](./000_glossary.md)
+> [!DEFINITION] [AI-Native](./000_glossary.md)
+> An architectural paradigm where an AI is the primary engine for a system's entire lifecycle, including its design, execution, evolution, and continuous improvement. It treats AI not as an integrated tool, but as the fundamental medium in which the system operates.
 
 > Sidenote:
 >
 > - Requires:
 >   - [101: Concept/Idea](./101_concept_idea.md)
 >   - [103: Concept/Ideator](./103_concept_ideator.md)
->   - [012: Agent/Plan](./012_agent_plan.md)
->   - [013: Agent/Instancing](./013_agent_instancing.md)
+>   - [010: Agent/Plan](./010_agent_plan.md)
+>   - [011: Agent/Instancing](./011_agent_instancing.md)
 
 This document outlines the **AI-Native** concept, a new architectural approach for building complex, adaptive systems. It explains how this paradigm fundamentally differs from traditional models like node-based programming and why it enables the creation of systems that can scale in complexity and autonomy far beyond what was previously possible.
 

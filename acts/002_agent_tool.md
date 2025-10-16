@@ -1,6 +1,7 @@
 # 002: Agent/Tool
 
-> **Tool**: A schema that defines a capability an agent can use. It is presented to an LLM as part of a request, acting as a structured interface for a potential action. The LLM activates the tool by generating a `Call` with specific parameters, which is then executed either latently by the LLM or explicitly by a registered code function (`Activity`). — [Glossary](./000_glossary.md)
+> [!DEFINITION] [Tool](./000_glossary.md)
+> A schema that defines a capability an agent can use. It is presented to an LLM as part of a request, acting as a structured interface for a potential action. The LLM activates the tool by generating a `Call` with specific parameters, which is then executed either latently by the LLM or explicitly by a registered code function (`Activity`).
 
 > Sidenote:
 >
@@ -47,8 +48,8 @@ A Tool's schema defines its complete interface:
 > Extensions:
 >
 > - **`_activity`**: Connects the tool to a deterministic code function for explicit execution. ([003: Agent/Activity](./003_agent_activity.md))
-> - **`_module`**: Delegates the tool's execution to an isolated, external module. ([009: Agent/Module](./009_agent_module.md))
-> - **`_outputPath`**: Makes the tool stateful by writing its output to a persistent state object. ([010: Agent/State](./010_agent_state.md))
+> - **`_delegate`**: Delegates the tool's execution to an isolated, external delegate. ([012: Agent/Delegate](./012_agent_delegate.md))
+> - **`_outputPath`**: Makes the tool stateful by writing its output to a persistent state object. ([009: Agent/State](./009_agent_state.md))
 > - **`_instance`**: Targets the tool's execution to a specific instance in a multi-instance request. ([011: Agent/Instancing](./011_agent_instancing.md))
 
 - **`title`**: A human-readable name for the schema (optional).

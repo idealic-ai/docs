@@ -6,14 +6,14 @@
 > Sidenote:
 >
 > - Requires:
->   - [004: Agent/Call](./004_agent_call.md)
->   - [006: Agent/Data](./006_agent_data.md)
+>   - [004: Agent/Call](./004_agent/call.md)
+>   - [006: Agent/Data](./006_agent/data.md)
 > - Enables:
->   - [010: Agent/Plan](./010_agent_plan.md)
+>   - [010: Agent/Plan](./010_agent/plan.md)
 > - Complemented by:
->   - [011: Agent/Instancing](./011_agent_instancing.md)
->   - [012: Agent/Module](./012_agent_module.md)
->   - [013: Agent/Imports](./013_agent_imports.md)
+>   - [011: Agent/Instancing](./011_agent/instancing.md)
+>   - [012: Agent/Delegate](./012_agent/delegate.md)
+>   - [013: Agent/Scopes](./013_agent/scopes.md)
 
 This document describes the **State message**, a specialized `Data` message that provides persistent memory for an agent's execution loop. While [Variables](./008_agent_variables.md) provide the "wires" to connect tools, the `State` object provides the "scratchpad" where the results of these connections are stored and maintained across multiple steps.
 
@@ -22,6 +22,10 @@ The `State` object acts as the source of truth for the current status of a reque
 ## Guiding the Workflow with a Schema
 
 Providing a `schema` for the `State` object is an optional but powerful step. The schema documents the intended data flow by defining a set of expected properties. This implicitly defines the interactions between `Tools` and hints at the overall process. This creates a strong feedback loop for the LLM: knowing what properties the `State` should contain, it is guided to generate `Tool Calls` with corresponding `_outputPath` values. This improves results by ensuring the agent's actions are structurally correct and aligned with the desired workflow.
+
+> Sidenote:
+>
+> - [008: Agent/Variables](./008_agent_variables.md)
 
 ## Multi-Step Tools
 
@@ -57,23 +61,23 @@ This graph of references can be validated, reused, and even simulated, making it
   >
   > - [006: Agent/Data](./006_agent_data.md)
 
-- **Imports:** The `Imports` system is the primary mechanism for providing a `State` object to a `Tool` running in an isolated context, such as a **Module**. When a `Call` is delegated, the `_imports` property can specify that the `state` should be included in the module's "clean room" environment. This allows encapsulated tools to read from and interact with the main workflow's state in a controlled and explicit manner.
+- **Scopes:** The `Scopes` system is the primary mechanism for providing a `State` object to a `Tool` running in an isolated context, such as a **Delegate**. When a `Call` is delegated, the `_scopes` property can specify that the `state` should be included in the delegate's "clean room" environment. This allows encapsulated tools to read from and interact with the main workflow's state in a controlled and explicit manner.
 
   > Sidenote:
   >
-  > - [013: Agent/Imports](./013_agent_imports.md)
-
-- **Plan:** While `State` enables simple tool sequences, its full power is realized when used as the backbone of the `Plan` system. In a `Plan`, a workflow is represented as a directed acyclic graph (DAG) where `Tool Calls` are the nodes. The `State` object provides the connections—the edges—between these nodes. It allows one node to write into a variable and others to read from it, enabling complex patterns like logical forks (if-else) or parallel fan-outs.
-
-  > Sidenote:
-  >
-  > - [010: Agent/Plan](./010_agent_plan.md)
+  > - [013: Agent/Scopes](./013_agent_scopes.md)
 
 - **Instancing:** The `State` message is fully compatible with the `Instancing` system. When a request processes multiple `Instances`, each one maintains its own isolated `State` object, identified by a unique `_instance` key. `Variable References` (e.g., `†state.currentUser.id`) are automatically and transparently routed to the correct `State` object corresponding to the `Instance` the `Tool Call` is targeting. This allows a single, generic `Plan` to be executed across many different states in parallel with guaranteed data isolation.
 
   > Sidenote:
   >
   > - [011: Agent/Instancing](./011_agent_instancing.md)
+
+- **Plan:** While `State` enables simple tool sequences, its full power is realized when used as the backbone of the `Plan` system. In a `Plan`, a workflow is represented as a directed acyclic graph (DAG) where `Tool Calls` are the nodes. The `State` object provides the connections—the edges—between these nodes. It allows one node to write into a variable and others to read from it, enabling complex patterns like logical forks (if-else) or parallel fan-outs.
+
+  > Sidenote:
+  >
+  > - [010: Agent/Plan](./010_agent_plan.md)
 
 ## From Single State to Orchestrated Workflows
 

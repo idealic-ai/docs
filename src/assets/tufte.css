@@ -953,6 +953,10 @@ h1 + .marginnote {
   line-height: 1.2;
 }
 
+.limited-width {
+  max-width: var(--left-size);
+}
+
 .columns {
   display: flex;
   gap: 1rem;
