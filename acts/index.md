@@ -26,12 +26,12 @@ This document is the bridge between high-level vision and ground-level implement
 - [005: Agent/Loop](./005_agent_loop.md)
 - [006: Agent/Data](./006_agent_data.md)
 - [007: Agent/Input](./007_agent_input.md)
-- [008: Agent/Imports](./008_agent_imports.md)
-- [009: Agent/Module](./009_agent_module.md)
-- [010: Agent/Variables](./010_agent_variables.md)
-- [011: Agent/State](./011_agent_state.md)
-- [012: Agent/Plan](./012_agent_plan.md)
-- [013: Agent/Instancing](./013_agent_instancing.md)
+- [008: Agent/Variables](./008_agent_variables.md)
+- [009: Agent/State](./009_agent_state.md)
+- [010: Agent/Plan](./010_agent_plan.md)
+- [011: Agent/Instancing](./011_agent_instancing.md)
+- [012: Agent/Module](./012_agent_module.md)
+- [013: Agent/Imports](./013_agent_imports.md)
 
 ### Concept
 

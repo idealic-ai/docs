@@ -1,4 +1,4 @@
-# 011: Agent/State
+# 009: Agent/State
 
 > [!DEFINITION] [State Message](./000_glossary.md)
 > A persistent `Data` message that represents the live, evolving memory of a workflow. It acts as a set of local variables, enabling multi-step, stateful operations
@@ -9,11 +9,13 @@
 >   - [004: Agent/Call](./004_agent_call.md)
 >   - [006: Agent/Data](./006_agent_data.md)
 > - Enables:
->   - [012: Agent/Plan](./012_agent_plan.md)
+>   - [010: Agent/Plan](./010_agent_plan.md)
 > - Complemented by:
->   - [013: Agent/Instancing](./013_agent_instancing.md)
+>   - [011: Agent/Instancing](./011_agent_instancing.md)
+>   - [012: Agent/Module](./012_agent_module.md)
+>   - [013: Agent/Imports](./013_agent_imports.md)
 
-This document describes the **State message**, a specialized `Data` message that provides persistent memory for an agent's execution loop. While [Variables](./010_agent_variables.md) provide the "wires" to connect tools, the `State` object provides the "scratchpad" where the results of these connections are stored and maintained across multiple steps.
+This document describes the **State message**, a specialized `Data` message that provides persistent memory for an agent's execution loop. While [Variables](./008_agent_variables.md) provide the "wires" to connect tools, the `State` object provides the "scratchpad" where the results of these connections are stored and maintained across multiple steps.
 
 The `State` object acts as the source of truth for the current status of a request and is the key to resilience and resumption. Because it captures the complete context of a workflow at a specific point in time, it allows a process to be paused and resumed. When a new iteration begins, the `State` from the previous tick provides the LLM with a clear understanding of where the process left off, ensuring subsequent operations can seamlessly continue the work.
 
@@ -23,7 +25,7 @@ Providing a `schema` for the `State` object is an optional but powerful step. Th
 
 ## Multi-Step Tools
 
-The primary function of the `State` message is to allow different `Tools` to share information within a single, continuous process. It enables stateful operations by providing a shared canvas where `Tools` can store their results.
+The primary function of the `State` message is to allow different `Tools` to share information within a single, continuous process. It enables stateful operations by providing a shared scratchpad where `Tools` can store their results.
 
 This is achieved through a simple read/write mechanism: one `Tool` can write its output to the `State` object, and another `Tool` can then read that data as its input in a subsequent step. This allows for the creation of toolchains, where the output of one capability directly informs the input of the next, all without losing context between executions.
 
@@ -34,12 +36,12 @@ The combination of writing to state via `_outputPath` and reading from it with *
 This graph of references can be validated, reused, and even simulated, making it fully compatible with the latent execution of LLMs. The flexibility of this system comes from the ability to control both inputs and outputs at the schema level. A workflow designer can leave the **`Variable References`** (inputs) and the **`_outputPath`** (outputs) dynamic for the LLM to decide, or prescribe them to enforce a rigid, reliable data flow.
 
 > [!HEADSUP] Heads up
-> Creating `Tool Calls` that are connected to each other via the `State` is the act of planning. This system provides the technical groundwork for this process: a persistent `State` acts as the canvas, `Variable References` and `_outputPath` act as the wires, and the agent **Loop** provides the iterative engine. Together, these components allow an agent to construct a complete data-flow graph, which is the essence of a **Plan**.
+> Creating `Tool Calls` that are connected to each other via the `State` is the act of planning. This system provides the technical groundwork for this process: a persistent `State` acts as the scratchpad, `Variable References` and `_outputPath` act as the wires, and the agent **Loop** provides the iterative engine. Together, these components allow an agent to construct a complete data-flow graph, which is the essence of a **Plan**.
 >
 > > Sidenote:
 > >
 > > - [005: Agent/Loop](./005_agent_loop.md)
-> > - [012: Agent/Plan](./012_agent_plan.md)
+> > - [010: Agent/Plan](./010_agent_plan.md)
 
 ## Composition
 
@@ -59,22 +61,22 @@ This graph of references can be validated, reused, and even simulated, making it
 
   > Sidenote:
   >
-  > - [008: Agent/Imports](./008_agent_imports.md)
+  > - [013: Agent/Imports](./013_agent_imports.md)
 
 - **Plan:** While `State` enables simple tool sequences, its full power is realized when used as the backbone of the `Plan` system. In a `Plan`, a workflow is represented as a directed acyclic graph (DAG) where `Tool Calls` are the nodes. The `State` object provides the connections—the edges—between these nodes. It allows one node to write into a variable and others to read from it, enabling complex patterns like logical forks (if-else) or parallel fan-outs.
 
   > Sidenote:
   >
-  > - [012: Agent/Plan](./012_agent_plan.md)
+  > - [010: Agent/Plan](./010_agent_plan.md)
 
 - **Instancing:** The `State` message is fully compatible with the `Instancing` system. When a request processes multiple `Instances`, each one maintains its own isolated `State` object, identified by a unique `_instance` key. `Variable References` (e.g., `†state.currentUser.id`) are automatically and transparently routed to the correct `State` object corresponding to the `Instance` the `Tool Call` is targeting. This allows a single, generic `Plan` to be executed across many different states in parallel with guaranteed data isolation.
 
   > Sidenote:
   >
-  > - [013: Agent/Instancing](./013_agent_instancing.md)
+  > - [011: Agent/Instancing](./011_agent_instancing.md)
 
 ## From Single State to Orchestrated Workflows
 
 The `State` message provides the mechanism for managing the memory of a single, coherent workflow. With a persistent scratchpad and the variables to connect tools, we can now design and execute complex, multi-step workflows.
 
-The next document, **[012: Agent/Plan](./012_agent_plan.md)**, describes the system for orchestrating these workflows as a graph of `Tool Calls`.
+The next document, **[010: Agent/Plan](./010_agent_plan.md)**, describes the system for orchestrating these workflows as a graph of `Tool Calls`.

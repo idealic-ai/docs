@@ -67,8 +67,11 @@ The `Input` message is a simple pattern, but its power comes from its compositio
   >
   > - [011: Agent/Instancing](./011_agent_instancing.md).
 
-## Providing Context for Tools
+## From Static Inputs to Dynamic Workflows
 
-While the `Input` message provides direct, structured data for a `Tool`'s parameters, a `Tool` often needs access to the broader context it runs in, such as the current `State` or other data objects. The **Imports** protocol is the mechanism that controls what a `Tool` is allowed to see and use from this context. It allows a `Tool` to receive entire objects as context, not just individual parameters.
+The `Input` message provides the initial, static data that kicks off a process. However, to build sophisticated agents, we need a way to create dynamic data flows. The following chapters build upon this foundation to create complex, multi-step workflows:
 
-The next document, [008: Agent/Imports](./008_agent_imports.md), describes how a `Tool` can declare and receive this contextual information.
+1.  **[008: Agent/Variables](./008_agent_variables.md):** The `Variables` system provides the "wires" that allow `Tools` to read from the `Input` and other context messages, and to connect the output of one `Tool` to the input of another.
+2.  **[009: Agent/State](./009_agent_state.md):** The `State` object provides a persistent "scratchpad" for the workflow, allowing data to be maintained across multiple steps and execution loops.
+3.  **[010: Agent/Plan](./010_agent_plan.md):** With `Variables` to connect them and a `State` to work in, `Tool Calls` can be orchestrated into a `Plan`—a complete, declarative data-flow graph.
+4.  **[011: Agent/Instancing](./011_agent_instancing.md):** Finally, `Instancing` allows a single `Plan` to be executed at scale across many different `State` objects in parallel.

@@ -1,4 +1,4 @@
-# 010: Agent/Variables
+# 008: Agent/Variables
 
 > [!DEFINITION] [Variable Reference](./000_glossary.md)
 > A string with a special syntax (`†<kind>.<path>`) used in a `Tool Call`'s parameters to dynamically reference a value from the agent's context.
@@ -68,7 +68,7 @@ This ability to define a full sequence of operations—including complex branchi
 
 > Sidenote:
 >
-> - [012: Agent/Plan](./012_agent_plan.md)
+> - [010: Agent/Plan](./010_agent_plan.md)
 
 ## Composition
 
@@ -88,16 +88,16 @@ This ability to define a full sequence of operations—including complex branchi
 
   > Sidenote:
   >
-  > - [011: Agent/State](./011_agent_state.md)
+  > - [009: Agent/State](./009_agent_state.md)
 
 - **Plan:** Variables are the fundamental technology that powers the `Plan` system. A `Plan` is a graph of `Tool Calls` where the connections (edges) are formed by `Variable References` pointing to `Output Paths`. This allows an agent to define a complete, executable workflow as a single, declarative data structure.
 
   > Sidenote:
   >
-  > - [012: Agent/Plan](./012_agent_plan.md)
+  > - [010: Agent/Plan](./010_agent_plan.md)
 
 ## From Ephemeral Connections to Persistent Memory
 
 Variables provide the mechanism for wiring data to tools within a single, atomic request. However, to build complex agents that execute tasks over multiple steps, a more persistent form of memory is required—a "scratchpad" where results can be stored and accessed across multiple, independent requests in an execution loop.
 
-The next document, **[011: Agent/State](./011_agent_state.md)**, describes the protocol for this persistent state management.
+The next document, **[009: Agent/State](./009_agent_state.md)**, describes the protocol for this persistent state management.
