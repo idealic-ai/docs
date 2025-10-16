@@ -11,7 +11,7 @@
 
 The **Scopes Protocol** is a fundamental mechanism for managing the context available to a `Call`. In a complex agentic system, a `Call` rarely executes in a vacuum; it often needs access to information from its parent environment, such as user input, current state, or the results of previous steps. The Scopes Protocol provides a secure and explicit way to control this flow of information.
 
-By restricting the context, scopes enhance security, prevent accidental data leakage, and focus the LLM, leading to more predictable and cost-effective executions. This controlled context is also the key to modularity, allowing components like `Ideas` and `Activities` to be truly self-contained and reusable. This document explains how this protocol works and how it composes with other agent capabilities.
+By restricting the context, scopes enhance security, prevent accidental data leakage, and focus the LLM, leading to more predictable and cost-effective executions. This controlled context is also the key to modularity, allowing components like `Ideas` and `Activities` to be truly self-contained and reusable. This document explains how this protocol works and how it composes with other agent capabilities
 
 ## Provisioning vs. Requesting Context
 
