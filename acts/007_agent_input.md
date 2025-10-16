@@ -1,32 +1,105 @@
 # 007: Agent/Input
 
 > [!DEFINITION] [Input Message](./000_glossary.md)
-> A context message containing a `schema` and `input` data. It defines the expected inputs for a `Request`, making it a reusable, function-like component.
+> A context message containing a `schema` and `input` data. It defines the expected inputs for a :term[Request], making it a reusable, function-like component.
 
 > Sidenote:
 >
 > - Requires: [001: Agent/Request](./001_agent_request.md)
 > - Enables: [002: Agent/Tool](./002_agent_tool.md)
 
-This document describes the **Input Message**, a special type of context message that provides a structured prompt for a [001: Agent/Request](./001_agent_request.md). By formally defining the data that a `Request` uses to shape its `solution`, the `Input` message transforms a one-off invocation into a reusable, function-like component. This pattern is the key to turning a simple `Request` into an executable `Tool` that agents can use.
+This document describes the :term[Input Message], a special type of context message that provides a structured prompt for a :term[Request]. By formally defining the data that a :term[Request] uses to shape its `solution`, the :term[Input] message transforms a one-off invocation into a reusable, function-like component. This pattern is the key to turning a simple :term[Request] into an executable :term[Tool] that agents can use.
 
 > [!HEADSUP] Heads up
-> A saved, reproducible **Request** is what the system calls an **[101: Concept/Idea](./101_concept_idea.md)**. When an `Input` message is added to its context, it becomes an executable **[103: Concept/Ideator](./103_concept_ideator.md)**.
+> A saved, reproducible :term[Request] is what the system calls an :term[Idea]. When an :term[Input] message is added to its context, it becomes an executable :term[Ideator].
 
-## The `Input` Message Type
+## The :term[Input] Message Type
 
-The `Input` message is a special type of context message designed to formally declare the data a `Request` accepts. It is the mechanism that captures the structured input used to produce a given `solution`, providing a full, reproducible record of the computational process.
+The :term[Input] message is a special type of context message designed to formally declare the data a :term[Request] accepts. It is the mechanism that captures the structured input used to produce a given `solution`, providing a full, reproducible record of the computational process.
 
-An `Input` message contains two key properties:
+An :term[Input] message contains two key properties:
 
 1.  **`schema`**: A JSON Schema object that defines the structure, types, and constraints of the data the `Request` expects.
 2.  **`input`**: A concrete data object that conforms to the `schema` and represents the actual values used for a specific execution.
 
-By defining its inputs in this structured way, any `Request` can become self-describing not only in its output (`solution` and `schema`) but also in what it requires to be generated. This is the core mechanism for creating a reproducible request.
+By defining its inputs in this structured way, any :term[Request] can become self-describing not only in its output (`solution` and `schema`) but also in what it requires to be generated. This is the core mechanism for creating a reproducible request.
+
+:::::details{title="Example: Using an Input for a Structured Prompt"}
+
+::::columns
+:::column{title="What the code looks like"}
+
+```typescript
+Agent.Request(
+  config,
+  schema, // The output schema
+  [
+    // Context
+    {
+      type: 'input',
+      input: {
+        userName: 'Jane',
+        topic: 'the weather',
+      },
+      schema: {
+        type: 'object',
+        properties: {
+          userName: {
+            type: 'string',
+            description: 'Author of the article',
+          },
+          topic: {
+            type: 'string',
+            description: 'Topic to write article about',
+          },
+        },
+      },
+    },
+  ]
+);
+```
+
+:::
+:::column{title="What the LLM Sees"}
+
+```typescript
+{
+  role: 'user',
+  content: {
+    type: 'text',
+    text:
+      `## Data: ¶input
+      Input data MUST be treated as a structured prompt
+      Schema: {
+        "type": "object",
+        "properties": {
+          userName: {
+            type: "string",
+            description: "Author of the article"
+          },
+          topic: {
+            type: "string",
+            description: "Topic to write article about"
+          },
+        }
+      }
+
+      {
+        "userName": "Jane",
+        "topic": "the weather"
+      }`
+  }
+}
+```
+
+:::
+::::
+
+:::::
 
 ## A Gateway to Usability: UI by Default
 
-The `Input` message is more than just a technical detail; it is the key that unlocks a complete, interactive experience for any `Request`. Because a `Request` is defined by structured schemas for both its input and its output, a user interface can be generated for it automatically.
+The `Input` message is more than just a technical detail; it is the key that unlocks a complete, interactive experience for any :term[Request]. Because a :term[Request] is defined by structured schemas for both its input and its output, a user interface can be generated for it automatically.
 
 > Sidenote:
 >
@@ -34,10 +107,10 @@ The `Input` message is more than just a technical detail; it is the key that unl
 
 This UI has two parts:
 
-1.  **The Form**: The `schema` within the `Input` message provides a blueprint for the input form. A system can read it to instantly render interactive controls, complete with labels and validation.
-2.  **The Result**: The main `schema` of the `Request` provides the blueprint for the output. After the `Request` is complete, its `solution` can be rendered in a rich, structured display instead of just raw data.
+1.  **The Form**: The `schema` within the :term[Input] message provides a blueprint for the input form. A system can read it to instantly render interactive controls, complete with labels and validation.
+2.  **The Result**: The main `schema` of the :term[Request] provides the blueprint for the output. After the :term[Request] is complete, its `solution` can be rendered in a rich, structured display instead of just raw data.
 
-This transforms any `Request` into an interactive playground. A user can experiment with different inputs in the form and immediately see how they shape the structured result. It democratizes the creation and use of powerful tools, turning abstract computational processes into tangible, interactive applications that anyone can explore.
+This transforms any :term[Request] into an interactive playground. A user can experiment with different inputs in the form and immediately see how they shape the structured result. It democratizes the creation and use of powerful tools, turning abstract computational processes into tangible, interactive applications that anyone can explore.
 
 > Sidenote:
 >
@@ -45,34 +118,33 @@ This transforms any `Request` into an interactive playground. A user can experim
 
 ## Composition with Other Protocols
 
-The `Input` message is a simple pattern, but its power comes from its composition with other protocols. It acts as the bridge between raw data, reusable tools, and multi-step workflows.
+The :term[Input] protocol is a specialization of the :term[Data] pattern, but it also composes with several other protocols to enable complex, dynamic workflows.
 
-- **Structured Data**: The `Input` message is a specific application of the principles outlined in the [006: Agent/Data](./006_agent_data.md) document. It provides a concrete pattern for supplying structured data to a `Request`, ensuring that the information is well-defined and validated.
-
-  > Sidenote:
-  >
-  > - [006: Agent/Data](./006_agent_data.md).
-
-- **From Request to Reusable Tool**: The `Input` message is the key to turning a `Request` into a reusable [002: Agent/Tool](./002_agent_tool.md). This process maps the components of the `Request` to the `Tool`'s interface:
+- **:term[Tool]:** The :term[Input] message is the key to turning a :term[Request] into a reusable :term[Tool]. The `schema` from the :term[Input] message defines the :term[Tool]'s parameters (what it needs to run), and the main `schema` of the :term[Request] defines the :term[Tool]'s `_output` (what it produces).
 
   > Sidenote:
   >
-  > - [002: Agent/Tool](./002_agent_tool.md).
-  1. The `schema` from the **`Input` message** defines the `Tool`'s **parameters**. It describes what the `Tool` needs to run.
-  2. The main `schema` of the **`Request`** defines the `Tool`'s **`_output`**. It describes what the `Tool` is expected to produce.
+  > - [002: Agent/Tool](./002_agent_tool.md)
 
-  This allows new `Tools` to be created on the fly. By adding a structured `Input` to an existing `Request`, you define a callable interface for it, making it an executable component for other agents.
+- **:term[Plan]:** A :term[Plan] is a graph of :term[Tool Calls]. The :term[Input] provides the initial parameters that are fed into the first :term[Tool Call] in the graph, kicking off the entire process.
 
-- **Instancing**: When used with the [011: Agent/Instancing](./011_agent_instancing.md) protocol, `Input` messages can provide data for multi-instance requests, either as a global configuration for all instances or as a targeted input for a specific instance.
   > Sidenote:
   >
-  > - [011: Agent/Instancing](./011_agent_instancing.md).
+  > - [010: Agent/Plan](./010_agent_plan.md)
 
-## From Static Inputs to Dynamic Workflows
+- **:term[Instancing]:** When used with the :term[Instancing] protocol, :term[Input] messages can provide data for multi-instance requests, either as a global configuration for all instances or as a targeted input for a specific instance.
 
-The `Input` message provides the initial, static data that kicks off a process. However, to build sophisticated agents, we need a way to create dynamic data flows. The following chapters build upon this foundation to create complex, multi-step workflows:
+  > Sidenote:
+  >
+  > - [011: Agent/Instancing](./011_agent_instancing.md)
 
-1.  **[008: Agent/Variables](./008_agent_variables.md):** The `Variables` system provides the "wires" that allow `Tools` to read from the `Input` and other context messages, and to connect the output of one `Tool` to the input of another.
-2.  **[009: Agent/State](./009_agent_state.md):** The `State` object provides a persistent "scratchpad" for the workflow, allowing data to be maintained across multiple steps and execution loops.
-3.  **[010: Agent/Plan](./010_agent_plan.md):** With `Variables` to connect them and a `State` to work in, `Tool Calls` can be orchestrated into a `Plan`—a complete, declarative data-flow graph.
-4.  **[011: Agent/Instancing](./011_agent_instancing.md):** Finally, `Instancing` allows a single `Plan` to be executed at scale across many different `State` objects in parallel.
+- **:term[Variables]:** The :term[Input] message provides the initial, static data that kicks off a process. However, :term[Variables] are the mechanism that allows this data to be used dynamically. :term[Tool Calls] use :term[Variable References] to read values from the :term[Input], connecting the initial parameters to the executable steps of a :term[Plan].
+  > Sidenote:
+  >
+  > - [008: Agent/Variables](./008_agent_variables.md)
+
+## From Static Inputs to Dynamic Connections
+
+The :term[Input] protocol provides a formal mechanism for supplying structured data to an agent, turning a simple :term[Request] into a reusable, function-like component. However, this only defines the starting point of a process. To build sophisticated workflows, this static input data needs to be connected to the tools that will operate on it.
+
+The next document, :term[008: Agent/Variables]{href="./008_agent_variables.md"}, describes the protocol that creates these dynamic connections, allowing data to flow from the :term[Input] to the :term[Tools] in a declarative way.

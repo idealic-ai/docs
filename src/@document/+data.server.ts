@@ -1,7 +1,8 @@
 import type { PageContextServer } from 'vike/types';
 import { data as getCommonData } from '../+data';
-import { getSitemap } from '../data/sitemap';
+import { getGlossary, getSitemap } from '../data/sitemap';
 import { getUiStrings } from '../data/ui';
+import { linkGlossaryTerms } from '../utils/glossary';
 import { getMarkdownContent } from '../utils/i18n';
 import { processMarkdown, replaceRelativeLinks } from '../utils/markdown';
 
@@ -13,10 +14,12 @@ export async function data(pageContext: PageContextServer) {
   };
   const sitemap = await getSitemap(lang);
   const uiStrings = await getUiStrings(lang);
+  const glossary = await getGlossary(lang);
 
   try {
     const { markdownContent } = await getMarkdownContent(document, 'index.md', lang);
-    const fixedLinksContent = replaceRelativeLinks(markdownContent, document, lang);
+    const contentWithGlossary = linkGlossaryTerms(markdownContent, glossary, lang);
+    const fixedLinksContent = replaceRelativeLinks(contentWithGlossary, document, lang);
     const htmlContent = await processMarkdown(fixedLinksContent);
     const description =
       markdownContent
@@ -35,6 +38,7 @@ export async function data(pageContext: PageContextServer) {
       title: `${document.charAt(0).toUpperCase() + document.slice(1)}`,
       description,
       ui: uiStrings,
+      glossary,
     };
   } catch (error) {
     console.error(`Error loading index for ${document}:`, error);

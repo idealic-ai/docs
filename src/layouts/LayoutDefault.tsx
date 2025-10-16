@@ -3,7 +3,7 @@ import { usePageContext } from 'vike-react/usePageContext';
 import '../assets/tufte.css';
 import { A } from '../components/A';
 import AnchorLink from '../components/AnchorLink';
-import type { Chapter, Sitemap } from '../data/sitemap';
+import type { Chapter, Glossary, Sitemap } from '../data/sitemap';
 import type { UIStrings } from '../data/ui';
 import { LANGUAGES } from '../utils/languages';
 
@@ -32,13 +32,22 @@ const logo = (
   </svg>
 );
 
+function sanitizeTooltipContent(content: string): string {
+  return content
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // Remove markdown links
+    .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>') // Bold
+    .replace(/(?<!\w)__(.+?)__(?!\w)/g, '<b>$1</b>') // Bold (underscore)
+    .replace(/\*(.+?)\*/g, '<i>$1</i>') // Italic
+    .replace(/(?<!\w)_(.+?)_(?!\w)/g, '<i>$1</i>') // Italic (underscore)
+    .replace(/`([^`]+)`/g, '<code>$1</code>'); // Inline code
+}
+
 export default function LayoutDefault({ children }: { children: React.ReactNode }) {
   const pageContext = usePageContext();
-  const { sitemap, ui } = (pageContext.data as { sitemap: Sitemap; ui: UIStrings }) || {
-    sitemap: {},
-  };
+  const { sitemap, ui, glossary } =
+    (pageContext.data as { sitemap: Sitemap; ui: UIStrings; glossary: Glossary }) || {};
   const { urlPathname } = pageContext;
-  const { lang } = pageContext.routeParams as { lang: string };
+  const { lang } = (pageContext.routeParams as { lang: string }) || { lang: 'en' };
 
   const pathParts = urlPathname.split('/').filter(Boolean);
   const currentDoc = pathParts[1];
@@ -106,6 +115,60 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
       mediaQuery.removeEventListener('change', applyTheme);
     };
   }, []);
+
+  useEffect(() => {
+    if (!glossary) return;
+
+    const handleMouseOver = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (target.tagName !== 'A') return;
+
+      const link = target as HTMLAnchorElement;
+      const canonical = link.getAttribute('canonical')?.toLowerCase();
+      if (!canonical) return;
+      debugger;
+      const glossaryEntry = Object.values(glossary).find(entry => entry.slug === canonical);
+      if (!glossaryEntry) return;
+
+      const tooltip = document.createElement('div');
+      tooltip.className = 'glossary-tooltip';
+      tooltip.innerHTML = sanitizeTooltipContent(glossaryEntry.definition);
+      document.body.appendChild(tooltip);
+
+      const rect = link.getBoundingClientRect();
+      const tooltipRect = tooltip.getBoundingClientRect();
+
+      let top = rect.bottom + window.scrollY + 5;
+      let left = rect.left + window.scrollX;
+
+      if (left + tooltipRect.width > window.innerWidth) {
+        left = rect.right + window.scrollX - tooltipRect.width;
+      }
+      if (top + tooltipRect.height > window.innerHeight + window.scrollY) {
+        top = rect.top + window.scrollY - tooltipRect.height - 5;
+      }
+
+      tooltip.style.left = `${left}px`;
+      tooltip.style.top = `${top}px`;
+
+      const handleMouseOut = () => {
+        if (document.body.contains(tooltip)) {
+          document.body.removeChild(tooltip);
+        }
+        link.removeEventListener('mouseout', handleMouseOut);
+        link.removeEventListener('click', handleMouseOut);
+      };
+
+      link.addEventListener('mouseout', handleMouseOut);
+      link.addEventListener('click', handleMouseOut);
+    };
+
+    document.addEventListener('mouseover', handleMouseOver);
+
+    return () => {
+      document.removeEventListener('mouseover', handleMouseOver);
+    };
+  }, [glossary]);
 
   return (
     <div>

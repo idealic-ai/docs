@@ -15,6 +15,12 @@ This document is the bridge between high-level vision and ground-level implement
 
 ---
 
+### Style Guide
+
+Before contributing, please review the [Style Guide for Acts](./STYLE_GUIDE.md).
+
+---
+
 ### Agent
 
 > Sidenote: Focuses on the agentic capabilities and execution models.

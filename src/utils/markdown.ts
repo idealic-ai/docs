@@ -224,11 +224,49 @@ function myRemarkPlugin() {
         node.type === 'leafDirective' ||
         node.type === 'textDirective'
       ) {
+        if (node.name === 'term') {
+          const data = node.data || (node.data = {});
+          const tagName = 'span';
+          (node.attributes ||= {}).className = 'term';
+
+          data.hName = node.attributes.href ? 'a' : tagName;
+          data.hProperties = h(tagName, node.attributes || {}).properties;
+        }
         if (node.name === 'columns') {
           const data = node.data || (node.data = {});
           const tagName = node.type === 'textDirective' ? 'span' : 'div';
           (node.attributes ||= {}).className = 'columns';
 
+          data.hName = tagName;
+          data.hProperties = h(tagName, node.attributes || {}).properties;
+        } else if (node.name === 'details') {
+          const data = node.data || (node.data = {});
+          const tagName = 'details';
+
+          if (node.attributes?.open !== 'false') {
+            (node.attributes ||= {}).open = 'open';
+          }
+
+          // Clean up the open attribute so it's not rendered in the HTML
+          if (node.attributes && 'open' in node.attributes) {
+            delete node.attributes.open;
+          }
+          (node.attributes ||= {}).className = 'details';
+
+          if (node.attributes?.title) {
+            const title = node.attributes.title;
+            delete node.attributes.title;
+
+            node.children.unshift({
+              // @ts-ignore
+              type: 'literal',
+              data: {
+                hName: 'summary',
+                hProperties: { class: 'details-summary' },
+                hChildren: [h('p', title)],
+              },
+            });
+          }
           data.hName = tagName;
           data.hProperties = h(tagName, node.attributes || {}).properties;
         } else if (node.name == 'column') {

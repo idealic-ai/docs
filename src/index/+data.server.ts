@@ -1,6 +1,7 @@
 import type { PageContextServer } from 'vike/types';
-import { getSitemap } from '../data/sitemap';
+import { getGlossary, getSitemap } from '../data/sitemap';
 import { getUiStrings } from '../data/ui';
+import { linkGlossaryTerms } from '../utils/glossary';
 import { getMarkdownContent } from '../utils/i18n';
 import { processMarkdown, replaceRelativeLinks } from '../utils/markdown';
 
@@ -12,8 +13,9 @@ const DYNAMIC_SECTIONS: Record<string, string> = {
 
 export async function data(pageContext: PageContextServer) {
   const { lang } = (pageContext.routeParams as { lang: string }) || { lang: 'en' };
+  const glossary = await getGlossary(lang);
   const { markdownContent: introContent } = await getMarkdownContent('ui', 'intro.md', lang);
-  let finalContent = introContent;
+  let finalContent = linkGlossaryTerms(introContent, glossary, lang);
 
   for (const [title, docPath] of Object.entries(DYNAMIC_SECTIONS)) {
     const { markdownContent: indexContentRaw } = await getMarkdownContent(
@@ -24,7 +26,8 @@ export async function data(pageContext: PageContextServer) {
 
     // Replace top-level heading with a second-level one
     const contentWithTweakedHeader = indexContentRaw.replace(/^#\s/m, '## ');
-    const fixedLinksContent = replaceRelativeLinks(contentWithTweakedHeader, docPath, lang);
+    const contentWithGlossary = linkGlossaryTerms(contentWithTweakedHeader, glossary, lang);
+    const fixedLinksContent = replaceRelativeLinks(contentWithGlossary, docPath, lang);
 
     finalContent += `\n\n---\n\n${fixedLinksContent.trim().replace(/\n---\n/g, '\n')}`;
   }
@@ -41,5 +44,6 @@ export async function data(pageContext: PageContextServer) {
     description,
     sitemap,
     ui: uiStrings,
+    glossary,
   };
 }

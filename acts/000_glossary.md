@@ -82,6 +82,12 @@ This document provides definitions for the key concepts used in the Idea Protoco
   >
   > - [005: Agent/Loop](./005_agent_loop.md)
 
+- **HITL (Human-in-the-Loop)**: The practice of inserting a human checkpoint into an automated process. In the context of the `Execution Loop`, this refers to the opportunity for a user to approve, deny, or modify an agent's proposed `Call`s before they are executed.
+
+  > Sidenote:
+  >
+  > - [005: Agent/Loop](./005_agent_loop.md#human-in-the-loop-hitl)
+
 - **Evolution**: The process by which an AI-Native system autonomously or semi-autonomously adapts, improves, and changes its own structure, logic, and capabilities over time in response to new data, feedback, or changing goals.
 
   > Sidenote:
@@ -112,6 +118,8 @@ This document provides definitions for the key concepts used in the Idea Protoco
   >
   > - [011: Agent/Instancing](./011_agent_instancing.md)
 
+- **Request**: A single, self-contained LLM invocation, which takes a `context` and a `schema` and produces a `solution`.
+
 - **Instance**: A single, uniquely identified state object and its associated context, processed as one of many within an `Instancing` operation.
 
   > Sidenote:
@@ -125,3 +133,5 @@ This document provides definitions for the key concepts used in the Idea Protoco
   > - [303: Ideator/Reactor](./303_ideator_reactor.md)
 
 - **Variable Reference**: A string with a special syntax (`†<kind>.<path>`) used in a `Tool Call`'s parameters to reference a value from the context (e.g., from a `State` or `Input` message). It allows an agent to dynamically wire tools together by using the output of one tool as the input for another.
+
+- **Solution**: The structured object returned by a `Request`. It contains the proposed `Tool Calls` and the final `output`, conforming to a predefined JSON Schema.

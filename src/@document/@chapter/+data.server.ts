@@ -1,7 +1,8 @@
 import type { PageContextServer } from 'vike/types';
 import { data as getCommonData } from '../../+data';
-import { Chapter, Sitemap, getSitemap } from '../../data/sitemap';
+import { Chapter, Glossary, Sitemap, getGlossary, getSitemap } from '../../data/sitemap';
 import { UIStrings, getUiStrings } from '../../data/ui';
+import { linkGlossaryTerms } from '../../utils/glossary';
 import { getMarkdownContent } from '../../utils/i18n';
 import { processMarkdown, replaceRelativeLinks } from '../../utils/markdown';
 
@@ -14,6 +15,7 @@ interface PageData {
   nextChapter: Chapter | null;
   prevChapter: Chapter | null;
   ui: UIStrings;
+  glossary: Glossary;
 }
 
 export async function data(pageContext: PageContextServer): Promise<PageData> {
@@ -25,6 +27,7 @@ export async function data(pageContext: PageContextServer): Promise<PageData> {
   }) || { document: '', chapterSlug: '', lang: 'en' };
   const sitemap = await getSitemap(lang);
   const uiStrings = await getUiStrings(lang);
+  const glossary = await getGlossary(lang);
 
   if (!chapterSlug) {
     return {
@@ -35,6 +38,7 @@ export async function data(pageContext: PageContextServer): Promise<PageData> {
       nextChapter: null,
       prevChapter: null,
       ui: uiStrings,
+      glossary,
     };
   }
 
@@ -52,7 +56,8 @@ export async function data(pageContext: PageContextServer): Promise<PageData> {
     const { markdownContent } = await getMarkdownContent(document, chapter.path, lang);
 
     // Convert markdown to HTML
-    const fixedLinksContent = replaceRelativeLinks(markdownContent, document, lang);
+    const contentWithGlossary = linkGlossaryTerms(markdownContent, glossary, lang);
+    const fixedLinksContent = replaceRelativeLinks(contentWithGlossary, document, lang);
     const htmlContent = await processMarkdown(fixedLinksContent);
 
     const title = `${chapter.name} | ${document.charAt(0).toUpperCase() + document.slice(1)}`;
@@ -79,6 +84,7 @@ export async function data(pageContext: PageContextServer): Promise<PageData> {
       nextChapter: nextChapter ? nextChapter : null,
       prevChapter: prevChapter ? prevChapter : null,
       ui: uiStrings,
+      glossary,
     };
   } catch (error) {
     console.error(`Error loading chapter ${chapterSlug} from ${document}:`, error);
