@@ -58,28 +58,22 @@ const SHARED_STYLE_GUIDE = `
 * underscored properties like \`_activity\` or \`reasoningForCall\` -> meta properties
 * do not add extra content to :::columns blocks, just translate the existing content
 `;
-const TranslationResponseSchema = {
-  type: 'object',
-  properties: {
-    translation: {
-      type: 'string',
-      description: 'The translated and simplified markdown content.',
-    },
-  },
-  required: ['translation'],
-  unevaluatedProperties: false,
-} as const;
-
-async function translateELI5(documentContent: string, targetLang: Language): Promise<string> {
+async function translateELI5(
+  documentContent: string,
+  schema: any,
+  targetLang: Language
+): Promise<Record<string, string>> {
   const languageMap: Record<string, string> = {
     'simple-en': 'English',
     'simple-ru': 'Russian',
   };
 
   const systemPrompt = `
-You are an expert at explaining complex technical concepts to a non-technical audience. Your task is to translate and simplify a markdown document into ${
+You are an expert at explaining complex technical concepts to a non-technical audience. Your task is to translate and simplify a JSON object containing markdown content into ${
     languageMap[targetLang]
   }, as if you were explaining it to a 12-year-old.
+
+The user will provide a JSON object. You must return a JSON object with the exact same structure, where each string value is translated and simplified.
 
 You must follow these core principles:
 - **Simplify, but don't dumb down:** The user is intelligent and curious, but lacks technical jargon. Break down complex ideas into their essential parts without losing the core meaning.
@@ -136,7 +130,7 @@ ${targetLang.includes('en') ? '' : SHARED_TRANSLATION_PROMPT}
 
 IMPORTANT: When translating, ensure that you are following style guides, especially around syntax, structure and nesting of markdown/diagrams. Keep empty nodes in diagram empty.
 
-Now, translate and simplify the following document.
+Now, translate and simplify the content of the following JSON object, returning a JSON object with the same structure.
 
 `;
 
@@ -148,7 +142,7 @@ Now, translate and simplify the following document.
       thinkingBudget: 1024,
       apiKey: process.env.VERTEXAI_API_KEY,
     },
-    TranslationResponseSchema,
+    schema,
     [
       {
         role: 'system',
@@ -162,7 +156,7 @@ Now, translate and simplify the following document.
   );
 
   if (response) {
-    return response[0].translation;
+    return response[0] as Record<string, string>;
   }
 
   throw new Error('Failed to get a valid translation from the AI.');
@@ -184,10 +178,11 @@ export const STYLE_EXAMPLE = {
  */
 async function translateDocument(
   documentContent: string,
+  schema: any,
   targetLang: string = 'Russian',
   extraPrompt?: string
-): Promise<string> {
-  const systemPrompt = `You are an expert translator and content localizer. Your task is to translate a markdown document into ${targetLang}, simplifying the language for a broad audience. You must follow the style of the provided example.
+): Promise<Record<string, string>> {
+  const systemPrompt = `You are an expert translator and content localizer. Your task is to translate a JSON object containing markdown content into ${targetLang}, simplifying the language for a broad audience. You must follow the style of the provided example and return a JSON object with the exact same structure.
 
 ${SHARED_TRANSLATION_PROMPT}
 
@@ -200,7 +195,7 @@ ${SHARED_TRANSLATION_PROMPT}
   ${STYLE_EXAMPLE.translated}
   ---
 
-  Now, translate and simplify the following document. ${
+  Now, translate and simplify the content of the following JSON object. ${
     extraPrompt ? `Additionally, apply the following instruction: "${extraPrompt}"` : ''
   }
   `;
@@ -211,7 +206,7 @@ ${SHARED_TRANSLATION_PROMPT}
       model: 'gemini-2.5-pro',
       apiKey: process.env.VERTEXAI_API_KEY,
     },
-    TranslationResponseSchema,
+    schema,
     [
       {
         role: 'system',
@@ -225,7 +220,7 @@ ${SHARED_TRANSLATION_PROMPT}
   );
 
   if (response) {
-    return response[0].translation;
+    return response[0] as Record<string, string>;
   }
 
   throw new Error('Failed to get a valid translation from the AI.');
@@ -318,7 +313,6 @@ function reassembleSidenotes(translatedMainContent: string, translatedSidenotes:
         line.trim() === '' ? `${indentation}>` : `${indentation}> ${line}`
       );
 
-      console.log([firstLine, ...restLines], '~@~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
       return [firstLine, ...restLines].join('\n');
     }
   );
@@ -336,27 +330,48 @@ export async function getAdaptedDocument(
 
   const { mainContent, sidenotes } = extractSidenotes(content);
 
-  const SIDENOTE_TRANSLATION_SEPARATOR = '__SIDENOTE_TRANSLATION_SEPARATOR__';
-  const joiner = `\n${SIDENOTE_TRANSLATION_SEPARATOR}\n`;
-  const contentToTranslate = [mainContent, ...sidenotes].join(joiner);
+  const translationInput: Record<string, string> = {
+    content: mainContent,
+  };
+  sidenotes.forEach((sidenote, index) => {
+    translationInput[`sidenote${index}`] = sidenote;
+  });
 
-  const translate = async (text: string) => {
+  const properties: Record<string, { type: 'string'; description: string }> = {
+    content: { type: 'string', description: 'The translated main content of the document.' },
+  };
+  sidenotes.forEach((_, index) => {
+    properties[`sidenote${index}`] = {
+      type: 'string',
+      description: `The translated content for sidenote ${index}.`,
+    };
+  });
+
+  const translationSchema = {
+    type: 'object',
+    properties,
+    required: ['content', ...sidenotes.map((_, i) => `sidenote${i}`)],
+    unevaluatedProperties: false,
+  } as const;
+
+  const contentToTranslate = JSON.stringify(translationInput, null, 2);
+
+  const translate = async (text: string, schema: typeof translationSchema) => {
     if (lang === 'simple-en' || lang === 'simple-ru') {
-      return await translateELI5(text, lang);
+      return await translateELI5(text, schema, lang);
     }
-    return await translateDocument(text, lang === 'ru' ? 'Russian' : 'English', extraPrompt);
+    return await translateDocument(
+      text,
+      schema,
+      lang === 'ru' ? 'Russian' : 'English',
+      extraPrompt
+    );
   };
 
-  console.log([contentToTranslate]);
+  const translatedObject = await translate(contentToTranslate, translationSchema);
 
-  const translatedContent = await translate(contentToTranslate);
-
-  const translatedParts = translatedContent.split(joiner);
-
-  const translatedMainContent = translatedParts.shift() || '';
-  const translatedSidenotes = translatedParts;
-
-  console.log(translatedContent.split(joiner), joiner);
+  const translatedMainContent = translatedObject.content || '';
+  const translatedSidenotes = sidenotes.map((_, i) => translatedObject[`sidenote${i}`]);
 
   return reassembleSidenotes(translatedMainContent, translatedSidenotes);
 }
