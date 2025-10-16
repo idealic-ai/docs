@@ -1,97 +1,69 @@
 # 106: Concept/Evolution
 
 > [!DEFINITION] [Evolution](./000_glossary.md)
-> The way a smart computer system can learn, get better, and even change its own programming all by itself. It does this by watching what happens, getting feedback, or when its goals change.
+> This is how a special kind of AI system can learn and improve all by itself. Think of it like a video game character that levels up on its own, changing its skills and abilities over time based on what it experiences.
 
-sidenav
+> Sidenote:
+> - Requires:
+>   - [105: Concept/AI-Native](./105_concept_ai_native.md)
 
-- Requires:
-  - [105: Concept/AI-Native](./105_concept_ai_native.md)
+This paper explains the idea of **Evolution**. It’s the main ingredient that makes our AI system feel less like a tool and more like a living thing. It’s what allows the system to change, learn, and grow as it interacts with the world, instead of just staying the same forever.
 
+> Sidenote:
+> - [105: Concept/AI-Native](./105_concept_ai_native.md)
 
+## The Communication Barrier: A Universal Problem
 
-This document explains **Evolution**, which is the most important idea behind how these new AI systems work. It's about how a computer program can stop being just a fixed tool and become more like a living thing that can adapt and grow as it learns about the world around it.
+Have you ever tried to describe a dream to someone? You use words, but you can never perfectly capture the exact images and feelings. Some details always get lost along the way. Human language is like that—it's a squished-down version of our thoughts. This "information gap" is why it’s so hard to get things perfect when working with others. We think we've explained exactly what we want, but later find out the other person heard something slightly different.
 
-sidenav
+> Sidenote:
+> ```mermaid
+> graph TD
+>     Thought("Alice's Idea") -- "Squished into words (Info is lost)" --> Language{Language}
+>     Language -- "Unsquished into thought (More info is lost)" --> Understanding("Bob's Interpretation")
+> ```
+>
+> - [104: Concept/Latent](./104_concept_latent.md)
 
-- [105: Concept/AI-Native](./105_concept_ai_native.md)
+An AI has a special advantage here. It has learned from a giant chunk of the internet, so it understands how all sorts of ideas connect. It can guess what you mean even if you don't say everything perfectly. But there's a flip side. While the AI might understand the general concept you're talking about, it doesn't know *you*. It might miss the personal touch you had in mind, while a human friend might get your personal style but miss the bigger picture.
 
+It’s a mistake to think an AI can read our minds. Just like a person, an AI needs clear information to understand what we really want. Expecting an AI to build something complex and perfect on the first try is like expecting a chef to cook your favorite meal without a recipe. The only way to get it right is to try, get feedback, and try again.
 
+## Evolution: The AI-Native Solution
 
-## The Communication Problem: A Challenge for Everyone
+The big difference is that an AI-native system can do this try-and-fail cycle **all by itself**. When people work together, this back-and-forth takes a lot of time. But an AI can run through these improvement cycles at computer speed, without anyone needing to watch over its shoulder. This ability to get better on its own is what we call Evolution.
 
-Have you ever tried to explain a really cool idea or a dream to someone? You use words, but you know the other person isn’t seeing *exactly* what's in your head. That's because words are like squishing a big, complex thought into a small box. Some of the details and feelings always get lost.
+> Sidenote:
+> - [005: Agent/Loop](./005_agent_loop.md)
+> - [203: Idea/Process](./203_idea_process.md)
 
-This communication gap causes problems all the time when people work together. We think we've explained things perfectly, but later we find out the other person missed something important.
+The evolutionary loop is a constant cycle of getting better:
 
-sidenav
+1.  **Create:** The system makes a first draft of a solution.
+2.  **Observe:** It looks at the result of its first draft to see what happened.
+3.  **Evaluate:** It measures how well the result matches its goals and figures out what went wrong.
+4.  **Refine:** Based on what it learned, it adjusts its own instructions and adds new rules to avoid making the same mistake again.
+5.  **Iterate:** It starts over with its new, smarter plan to create an even better solution.
 
-```mermaid
-graph TD
-    Thought("Alice's Idea") -- "Squished into Words (Loses Detail)" --> Language
-    Language -- "Unpacked from Words (Loses Detail)" --> Understanding("Bob's Version")
-```
+> Sidenote:
+> ```mermaid
+> graph TD
+>     Create --> Observe
+>     Observe --> Evaluate
+>     Evaluate --> Refine
+>     Refine --> Create
+> ```
 
-- [104: Concept/Latent](./104_concept_latent.md)
+This is a lot like how animals evolve in nature. An animal adapts to survive in its environment. For an AI, the "environment" is everything from what the user wants, to new information it gets, to the results of its own actions.
 
+## The Path to Large-Scale Evolution
 
+A system can’t learn to do huge, complex things without first learning how to make tiny improvements. Everything in our system, from the smallest `Idea` to the biggest `Plan`, is designed to be improved in small steps. Each tiny improvement adds up, allowing the whole system to evolve in big ways.
 
-An AI, especially a big one that has read most of the internet, has a special skill. It can see the hidden connections between words and ideas that one person might miss. But it has its own communication problem. It might understand the *dictionary definition* of your idea perfectly but miss the *personal meaning* it has for you. A human friend might get your personal meaning but miss the bigger connections.
+One of the secrets to making this work is doing many things at once. The system can try out hundreds of different solutions at the same time, like exploring many different paths in a forest to see which one is the fastest. It creates a competition where only the best ideas survive and get used in the next round. The only thing that limits how fast the system can evolve is how much computer power it has. With enough power, it can explore a huge number of possibilities and find amazing solutions much faster than any team of people ever could.
 
-It’s a mistake to think an AI can read your mind. Just like a person, it needs good, clear information to understand what you really want. Asking an AI to build something complicated perfectly on the first try is like asking a friend to do the same. It never works perfectly the first time—you have to try, check, and fix things over and over.
+> Sidenote:
+> - [101: Concept/Idea](./101_concept_idea.md)
+> - [010: Agent/Plan](./010_agent_plan.md)
 
-## Evolution: The AI's Super-Fast Solution
-
-The big difference with an AI system is that it can do all that “trying and fixing” **by itself, super fast**. While humans have to talk, review, and slowly make changes, an AI can go through thousands of these guessing-and-checking cycles in the blink of an eye, without anyone needing to watch over it. This is **Evolution**.
-
-sidenav
-
-- [005: Agent/Loop](./005_agent_loop.md)
-- [203: Idea/Process](./203_idea_process.md)
-
-
-
-The steps for this super-fast learning are simple:
-
-1.  **Try:** The AI creates a first attempt at solving a problem.
-2.  **Watch:** It looks at the result of its attempt to see what happened.
-3.  **Judge:** It checks the result against its goals. Did it work well? What parts were weak?
-4.  **Improve:** Based on what it learned, it adjusts its own instructions. It’s like telling itself, “Okay, don’t make that mistake again,” and adds a new rule for next time.
-5.  **Repeat:** It starts over with the new, improved instructions.
-
-sidenav
-
-```mermaid
-graph TD
-    Try --> Watch
-    Watch --> Judge
-    Judge --> Improve
-    Improve --> Try
-```
-
-
-
-This is a lot like how animals evolve. An animal adapts to survive in its environment. For an AI, the “environment” is a mix of your requests, new information, new tools it can use, and the results of its own actions.
-
-## How Evolution Gets Big
-
-A system can’t make huge, amazing changes all at once. It has to be built to learn in tiny steps. Everything in the system, from the smallest `Idea` to the biggest `Plan`, is designed to be able to go through this tiny improvement cycle. Each small improvement adds up, allowing the whole system to make big leaps forward.
-
-A trick to make this even faster is to run many learning loops at the same time. Imagine trying to find the best recipe for a cookie. Instead of baking one batch, trying it, and then baking another, imagine you had a thousand ovens and could try a thousand different recipes all at once. The AI can do this with ideas. It explores many different solutions at the same time and picks the best one.
-
-The only thing slowing it down is how much computer power it has. With enough power, it can explore a huge number of possibilities and find amazing solutions much faster than a team of people ever could.
-
-sidenav
-
-- [101: Concept/Idea](./101_concept_idea.md)
-- [010: Agent/Plan](./010_agent_plan.md)
-
-
-
-To you, the user, all this happens behind the scenes. It might seem like the AI just magically understood your complicated request in one go. But really, it performed thousands of tiny experiments, learning and improving with each one until it found a solution that perfectly fit what you wanted.
-
-## What It Takes to Be a “Living” System
-
-This ability to evolve on its own is what makes an AI system feel “alive” instead of just being a fancy tool. But for it to work, humans can’t get in the way of the learning loop. If a person has to check the results every time or write new code to help the AI improve, then it’s just a helpful assistant, not a truly independent system.
-
-The whole point is to create a system that can manage its own improvements. When it can try things, see what happens, and get better all by itself, it can truly start to grow and become a powerful partner for solving big, complex problems.
+To the person using the system, all of this happens behind the scenes. It might look like the system understood a really complicated request and got it right on the first try. But really, what you're seeing is the final result of thousands of super-fast evolutionary cycles, where the AI 

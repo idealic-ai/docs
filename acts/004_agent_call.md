@@ -30,7 +30,7 @@ A `Call` by itself is a simple data structure. Its power comes from its composit
 By giving these meta-properties clear semantic meaning, we enable the LLM to be an active participant in the composition. It can reason about the various permutations of these properties to construct complex and novel execution chains, moving beyond simple tool selection to dynamic workflow orchestration.
 
 > [!TIP]
-> The following section explains connections to other parts of the system that will be detailed later. There's no need to jump ahead, as we'll cover everything in a logical sequence. You can come back to this section later.
+> The following section explains connections to other parts of the system that will be detailed later. There's no need to jump ahead, as we'll cover everything in a logical sequence. You can come back to this section later
 
 - **Explicit Execution (`_activity`)**: The most fundamental extension is connecting a `Call` to a deterministic code function. The `_activity` property signals that the `Call` should be executed by an **Activity** rather than by the LLM's latent reasoning.
 
