@@ -1,7 +1,7 @@
 # 011: Agent/Instancing
 
 > **Instancing:** Think of this like being a chef who can cook many different meals at the same time. Each meal is an `Instance`. It has its own ingredients and recipe (`State Object`) and its own order number (a unique ID). Instancing is the skill of managing all these separate meals in one go without mixing them up.
-> 
+>
 > — [Glossary](./000_glossary.md)
 
 > Sidenote:
@@ -10,13 +10,13 @@
 > - Compatible:
 >   - [Agent/Input](./007_agent_input.md)
 >   - [Agent/Imports](./008_agent_imports.md)
->   - [Agent/Plan](./012_agent_plan.md)
+>   - [Agent/Plan](./013_agent_plan.md)
 
 This guide explains how a smart computer program (an agent) can handle many different jobs all at once, even though each job is totally separate from the others.
 
 ## 1. What We Need First: The State System
 
-Before we can juggle multiple jobs, we need something called the **State System**. Its main job is to separate the *planning* of what to do from the *doing* of the thing.
+Before we can juggle multiple jobs, we need something called the **State System**. Its main job is to separate the _planning_ of what to do from the _doing_ of the thing.
 
 Imagine you're building a LEGO set. The instructions are the plan, and snapping the bricks together is the execution. The **State System** makes sure these two steps are distinct.
 
@@ -31,4 +31,4 @@ The real magic happens when you use this system to handle many jobs at once.
 
 ### 2.1. Giving Each Job a Sticker
 
-To manage many jobs in a single request, we give each one a unique label, like a little sticker. This special label is called `_instance`. The labels are usually super simple (like `①`, `②`, `③`) so the computer can easily see them. They don't mean anything other than 
+To manage many jobs in a single request, we give each one a unique label, like a little sticker. This special label is called `_instance`. The labels are usually super simple (like `①`, `②`, `③`) so the computer can easily see them. They don't mean anything other than

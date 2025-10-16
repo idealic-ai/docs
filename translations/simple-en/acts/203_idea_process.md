@@ -1,19 +1,21 @@
 # 203: Idea/Process
 
-> **Process Idea:** Think of this as a smart project plan. It's an [Idea](./101_concept_idea.md) that holds a complete [Plan](./012_agent_plan.md) and keeps track of what's happening right now. Its `schema` is the toolbox of all available [Tools](./002_agent_tool.md), its `solution` is the *new* plan for the very next step, and its `context` holds the original request, the current situation, and the previous plan.
+> **Process Idea:** Think of this as a smart project plan. It's an [Idea](./101_concept_idea.md) that holds a complete [Plan](./013_agent_plan.md) and keeps track of what's happening right now. Its `schema` is the toolbox of all available [Tools](./002_agent_tool.md), its `solution` is the _new_ plan for the very next step, and its `context` holds the original request, the current situation, and the previous plan.
 >
 > — [Glossary](./000_glossary.md)
 
 > Sidenote: To understand this, you should know about:
+>
 > - [101: Concept/Idea](./101_concept_idea.md)
-> - [012: Agent/Plan](./012_agent_plan.md)
+> - [013: Agent/Plan](./013_agent_plan.md)
 > - [010: Agent/State](./010_agent_state.md)
 > - [007: Agent/Input](./007_agent_input.md)
-> 
+>
 > It works really well with:
+>
 > - [011: Agent/Instancing](./011_agent_instancing.md)
 
-A [202: Idea/Vessel](./202_idea_vessel.md) is like making a single, quick decision. A **Process Idea** is different; it's like managing a whole project with many steps. It's the file that gets created when the system makes a [Plan](./012_agent_plan.md) to handle a big task over time. This file is a perfect record of everything the project can do and the exact strategy the computer chose to follow.
+A [202: Idea/Vessel](./202_idea_vessel.md) is like making a single, quick decision. A **Process Idea** is different; it's like managing a whole project with many steps. It's the file that gets created when the system makes a [Plan](./013_agent_plan.md) to handle a big task over time. This file is a perfect record of everything the project can do and the exact strategy the computer chose to follow.
 
 ## What a Plan Looks Like
 
@@ -30,17 +32,17 @@ A `Process Idea` uses three parts to give you a complete picture of a project at
 
     > Sidenote: [010: Agent/State](./010_agent_state.md)
 
-  - **Plan Message:** This is the *approved* plan from the last turn. The computer can decide to stick with it or change it.
+  - **Plan Message:** This is the _approved_ plan from the last turn. The computer can decide to stick with it or change it.
 
-    > Sidenote: [012: Agent/Plan](./012_agent_plan.md)
+    > Sidenote: [013: Agent/Plan](./013_agent_plan.md)
 
-- **`solution` (The New Plan):** This is the computer's chosen strategy for *this* turn. It's a map of tool `Calls` that shows what to do next. This becomes the `Plan Message` for the next turn.
+- **`solution` (The New Plan):** This is the computer's chosen strategy for _this_ turn. It's a map of tool `Calls` that shows what to do next. This becomes the `Plan Message` for the next turn.
 
 ### Planning and Doing at the Same Time
 
 A key idea here is that planning and doing things happen together, in one single step. In older systems, you'd make a full plan first, and then you'd follow it. Here, the computer does both at once.
 
-When the computer figures out the `solution` (the new `Plan`), that *is* the action for this step. It's like cooking and writing the recipe at the same time. You taste the soup, decide it needs salt, write "add salt," and add the salt all in one motion.
+When the computer figures out the `solution` (the new `Plan`), that _is_ the action for this step. It's like cooking and writing the recipe at the same time. You taste the soup, decide it needs salt, write "add salt," and add the salt all in one motion.
 
 This makes the system very fast and clever. The `Plan` is a living thing that doesn't have to be finished to be useful. It can grow and change with each step. The `Calls` it creates are both the steps of the plan and the information passed between them. This means a single thought from the AI can check the current situation, adjust the plan, and take the next step all at once. There's no separate, slow step for re-planning.
 
@@ -78,9 +80,9 @@ The real power of a `Process Idea` is that it's unchangeable. Every step of a pr
 
 - **Reliable and Smart Actions:** The step-by-step process is very reliable because each new step starts from a clean, complete snapshot of the last one. This prevents confusion. The computer looks at the last snapshot and decides to either stick to the plan or change it based on solid information. Each step creates a new `Process Idea` snapshot, moving the project forward safely.
 
-  > Sidenote: This is managed by the system's main `Loop`, which runs the `Plan`. [005: Agent/Loop](./005_agent_loop.md), [012: Agent/Plan](./012_agent_plan.md)
+  > Sidenote: This is managed by the system's main `Loop`, which runs the `Plan`. [005: Agent/Loop](./005_agent_loop.md), [013: Agent/Plan](./013_agent_plan.md)
 
-- **Tough Project Management:** Because a `Process Idea` is a self-contained file, managing the project is very strong. You can pause a project just by saving its latest snapshot. A human or another system can then look at that frozen-in-time state and decide what to do. If they make a change, it creates a *new* `Process Idea` snapshot to continue the project, without changing the history of what already happened.
+- **Tough Project Management:** Because a `Process Idea` is a self-contained file, managing the project is very strong. You can pause a project just by saving its latest snapshot. A human or another system can then look at that frozen-in-time state and decide what to do. If they make a change, it creates a _new_ `Process Idea` snapshot to continue the project, without changing the history of what already happened.
 
   > Sidenote: The `State` is the snapshot of everything happening at that moment. [010: Agent/State](./010_agent_state.md)
 
@@ -98,4 +100,4 @@ A `Process Idea` can grow into a **Resolved Plan**—a workflow that is very rel
 
 This is where an **[Instruction Idea](./204_idea_instruction.md)** comes in. An `Instruction` is like a recipe for good decision-making. It's like a mental checklist that helps the computer choose the right `Plan` for a situation and gives it helpful tips while it's running the plan. An `Instruction` adds wisdom and reasoning to the project, making sure that both the big-picture strategy and the small moment-to-moment actions are smart and follow the right principles.
 
-> Sidenote: An `Instruction` provides guidance *on top of* a `Plan`. [204: Idea/Instruction](./204_idea_instruction.md)
+> Sidenote: An `Instruction` provides guidance _on top of_ a `Plan`. [204: Idea/Instruction](./204_idea_instruction.md)

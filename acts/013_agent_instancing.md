@@ -1,16 +1,16 @@
-# 011: Agent/Instancing
+# 013: Agent/Instancing
 
 > **Instancing:** The process of handling multiple, independent `Instances` (each with its own `State Object` and unique identifier) within a single agent request. — [Glossary](./000_glossary.md)
 
 > Sidenote:
 >
-> - Requires: [010: Agent/State](./010_agent_state.md)
+> - Requires: [011: Agent/State](./011_agent_state.md)
 > - Compatible:
 >   - [007: Agent/Input](./007_agent_input.md)
 >   - [008: Agent/Imports](./008_agent_imports.md)
 >   - [012: Agent/Plan](./012_agent_plan.md)
 
-The **Instancing Protocol** is a data-centric pattern that connects multiple, independent data objects within a single agent request. By leveraging a state-driven architecture, an agent can operate on an array of `State Objects` concurrently, dramatically improving throughput and consistency. This protocol is the key to scaling agentic operations from single-item processing to high-volume data workflows.
+The **Instancing Protocol** is a data-centric pattern for scaling agentic workflows. It allows a single, reusable [Plan](./012_agent_plan.md) to be executed concurrently across multiple, independent `State` objects, dramatically improving throughput and consistency.
 
 ## The Instancing Mechanism
 
@@ -61,8 +61,6 @@ Instancing integrates with higher-level protocols to manage execution flow.
   >
   > - [012: Agent/Plan](./012_agent_plan.md)
 
-## From Parallelism to Planning
+## From Planning to Process
 
-Instancing provides the mechanism for executing tasks in parallel across many independent states. However, the sequence of tasks to be performed on each state is often complex and requires its own definition. To manage this, the agent needs a reusable workflow that can be applied consistently to every instance.
-
-The next document, **[012: Agent/Plan](./012_agent_plan.md)**, describes the protocol for creating these reusable, graph-based workflows.
+Where a `Plan` provides the reusable template for a workflow, and `Instancing` provides the mechanism to execute it at scale, a **[Process Idea](./203_idea_process.md)** is the artifact that captures the result. It is the complete, self-contained record of a strategic plan and its live execution state across all instances.

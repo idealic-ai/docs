@@ -62,7 +62,7 @@ Our system makes this even more powerful. Instead of just plain text, the `conte
 > - [006: Agent/Data](./006_agent_data.md) - How to give the AI data and explain what it means.
 > - [007: Agent/Input](./007_agent_input.md) - An organized way to give the AI instructions.
 > - [010: Agent/State](./010_agent_state.md) - A way to give the AI a memory that lasts between jobs.
-> - [012: Agent/Plan](./012_agent_plan.md) - A pre-made plan for the AI to follow for multi-step tasks.
+> - [013: Agent/Plan](./013_agent_plan.md) - A pre-made plan for the AI to follow for multi-step tasks.
 
 This is what makes the whole system so flexible.
 

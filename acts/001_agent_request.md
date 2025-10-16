@@ -64,7 +64,7 @@ The system extends this basic `Message` structure by allowing the `content` fiel
 > - [006: Agent/Data](./006_agent_data.md) - present data and its meaning to LLM as a message
 > - [007: Agent/Input](./007_agent_input.md) - structured prompt for LLM to use
 > - [010: Agent/State](./010_agent_state.md) - persistent state retained within loop
-> - [012: Agent/Plan](./012_agent_plan.md) - prepared plan for multi-step execution
+> - [013: Agent/Plan](./013_agent_plan.md) - prepared plan for multi-step execution
 
 This capability makes the `context` the main point of extension within the system.
 

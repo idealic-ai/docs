@@ -5,12 +5,14 @@
 > — [Glossary](./000_glossary.md)
 
 > Sidenote:
+>
 > - Requires:
 >   - [105: Concept/AI-Native](./105_concept_ai_native.md)
 
 This document explains the idea of **Evolution**, which is the most important part of what makes an AI-Native system special. It’s about how a system can be more than just a static tool and become something that’s alive—able to adapt, learn, and grow as it interacts with the world.
 
 > Sidenote:
+>
 > - [105: Concept/AI-Native](./105_concept_ai_native.md)
 
 ## The Communication Problem: A Challenge for Everyone
@@ -20,6 +22,7 @@ Have you ever tried to explain a really cool dream or a big idea to someone? You
 This communication gap is why we have misunderstandings. We think we've explained something perfectly, but we find out later that the other person missed a key detail.
 
 > Sidenote:
+>
 > ```mermaid
 > graph TD
 >     Thought("Alice's Idea") -- "Compression (Loss)" --> Language@{ shape: cloud, label: "Language" }
@@ -39,6 +42,7 @@ It’s a mistake to think that even a super-smart AI can read your mind. Just li
 The big difference with an AI-Native system is that it can do these steps **all by itself**. While humans need to talk back and forth to fix mistakes, which is slow, the AI can check its own work and make improvements at computer speed, without a person watching over its shoulder. This is Evolution.
 
 > Sidenote:
+>
 > - [005: Agent/Loop](./005_agent_loop.md)
 > - [203: Idea/Process](./203_idea_process.md)
 
@@ -51,6 +55,7 @@ The evolutionary loop is the main cycle it uses to keep getting better:
 5.  **Iterate:** It starts the cycle all over again, but now it's a little bit smarter.
 
 > Sidenote:
+>
 > ```mermaid
 > graph TD
 >     Create --> Observe
@@ -70,8 +75,9 @@ One way to speed this up is to do many things at once. The system can try out ma
 In this way, the only thing slowing down evolution is how much computer power is available. With enough power, the system can run thousands of these improvement cycles at once, finding amazing solutions much faster than a team of people ever could. This changes problem-solving from a slow, step-by-step process into a massive hunt for the best possible answer.
 
 > Sidenote:
+>
 > - [101: Concept/Idea](./101_concept_idea.md)
-> - [012: Agent/Plan](./012_agent_plan.md)
+> - [013: Agent/Plan](./013_agent_plan.md)
 
 For you, the user, all these super-fast, tiny changes are invisible. It might look like the system just magically understood your complex request in one go. But really, what you're seeing is the final result of the AI having thousands of tiny conversations with itself, trying things out, and finally finding the perfect solution that fits what you asked for.
 

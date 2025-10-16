@@ -24,7 +24,8 @@ body {
   max-width: 1400px;
   margin: 0 auto;
   counter-reset: sidenote-counter;
-  background: #fffff8 linear-gradient(to bottom, rgba(200, 200, 200, 0.4), rgba(0, 0, 0, 0) 200px);
+  background: #fffff8
+    /* linear-gradient(to bottom, rgba(200, 200, 200, 0.4), rgba(0, 0, 0, 0) 200px)*/;
 }
 header {
   padding: 1rem 1rem 0;
@@ -270,8 +271,23 @@ html.dark-scheme {
     background-color: #151515;
     color: #ddd;
   }
+  .callout {
+    mix-blend-mode: lighten;
+  }
 }
 
+.dark-scheme {
+  p > code,
+  li > code,
+  h1 > code,
+  h2 > code,
+  h3 > code,
+  h4 > code,
+  strong > code,
+  em > code {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
 .dark-scheme pre code.hljs {
   display: block;
   overflow-x: auto;
@@ -853,8 +869,17 @@ label.margin-toggle:not(.sidenote-number) {
 
 .callout-title {
   margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
 }
 
+.callout-content {
+  margin-top: 1rem;
+}
+.callout-content > :first-child,
+.callout-content > .marginnote:first-child + * {
+  margin-top: 0;
+}
 .callout-content > :last-child {
   margin-bottom: 0;
 }
@@ -876,6 +901,39 @@ label.margin-toggle:not(.sidenote-number) {
   --rc-color-light: var(--callout-tip-color-light, rgb(197, 146, 7));
   --rc-color-dark: var(--callout-tip-color-dark, rgb(197, 146, 7));
 }
+[data-callout='definition'] {
+  --rc-color-light: var(--callout-tip-color-light, rgb(139, 123, 76));
+  --rc-color-dark: var(--callout-tip-color-dark, rgb(197, 146, 7));
+}
+[data-callout='definition'] > .callout-title {
+  display: inline-flex;
+  vertical-align: baseline;
+  align-items: baseline;
+  margin-top: 0;
+}
+[data-callout='definition'] > .callout-title .callout-title-text {
+  font-size: 1.35rem;
+}
+[data-callout='definition'] > .callout-title .callout-title-icon {
+  align-self: center;
+}
+[data-callout='definition'] > .callout-content {
+  display: inline;
+}
+[data-callout='definition'] > .callout-content > p:first-child {
+  display: inline;
+  &:before {
+    content: ' — ';
+  }
+}
+h1 + [data-callout='definition'],
+h1 + .marginnote + [data-callout='definition'] {
+  margin-left: 2rem;
+  width: calc(var(--left-size) - 2rem);
+}
+h1 + .marginnote {
+  margin-top: -3rem;
+}
 .anchor-link-button {
   position: absolute;
   padding: 0 10px;
@@ -893,4 +951,28 @@ label.margin-toggle:not(.sidenote-number) {
 
 .edgeLabel.edgeLabel.edgeLabel.edgeLabel {
   line-height: 1.2;
+}
+
+.columns {
+  display: flex;
+  gap: 1rem;
+  align-items: stretch;
+}
+.columns > .column {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.columns > .column > h4 {
+  margin-bottom: 0;
+}
+.columns > .column > pre:last-child {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+
+  code {
+    flex-grow: 1;
+  }
 }

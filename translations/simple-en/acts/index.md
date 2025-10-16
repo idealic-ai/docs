@@ -5,12 +5,12 @@
 Think of these documents as the official blueprints for how we're building everything. They explain the exact rules and instructions our team agrees to follow. They're the go-to guide for all the technical details.
 
 > Sidenote: [Idealic](http://idealic.ai) is a project all about setting ideas free.
-> 
-> - To understand *Why* we're doing this, read the [Manifesto of Co-Liberation](../manifesto/).
-> - To understand *What* we're building, read the [Edict of Autonomy](../edict/).
-> - To understand *How* it all works, you're in the right place: the **Acts of Emergence**.
+>
+> - To understand _Why_ we're doing this, read the [Manifesto of Co-Liberation](../manifesto/).
+> - To understand _What_ we're building, read the [Edict of Autonomy](../edict/).
+> - To understand _How_ it all works, you're in the right place: the **Acts of Emergence**.
 
-These documents connect our big dreams to the actual code that makes them real. They work together with the [Manifesto of Co-Liberation](../manifesto/) (which explains *why* we're doing this) and the [Edict of Autonomy](../edict/) (which explains *what* we're building). By reading these 'Acts', you'll get the full technical picture of how everything works and fits together.
+These documents connect our big dreams to the actual code that makes them real. They work together with the [Manifesto of Co-Liberation](../manifesto/) (which explains _why_ we're doing this) and the [Edict of Autonomy](../edict/) (which explains _what_ we're building). By reading these 'Acts', you'll get the full technical picture of how everything works and fits together.
 
 ---
 
@@ -29,7 +29,7 @@ These documents connect our big dreams to the actual code that makes them real. 
 - [009: Agent/Module](./009_agent_module.md)
 - [010: Agent/State](./010_agent_state.md)
 - [011: Agent/Instancing](./011_agent_instancing.md)
-- [012: Agent/Plan](./012_agent_plan.md)
+- [013: Agent/Plan](./013_agent_plan.md)
 
 ### Concept
 

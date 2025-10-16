@@ -69,8 +69,8 @@ The `Data` protocol is a foundational pattern that is specialized and extended b
   >
   > - [007: Agent/Input](./007_agent_input.md)
 
-## From Data to Actionable Input
+## From Data to Dynamic Connections
 
-The `Data` protocol provides a generic container for structured information. With this foundation established, we can now explore its first major application: providing structured parameters to a request. This is the critical step that turns a static document into a dynamic, executable tool.
+The `Data` protocol provides a generic container for structured information. With this foundation established, we can now explore how to dynamically connect these pieces of data. This is the critical step that allows an agent to create workflows where the output of one step becomes the input for another.
 
-The next document, **[007: Agent/Input](./007_agent_input.md)**, describes how this pattern is used to define a formal input interface for an `Idea`.
+The next document, **[011: Agent/Variables](./011_agent_variables.md)**, describes the protocol that makes these dynamic connections possible.

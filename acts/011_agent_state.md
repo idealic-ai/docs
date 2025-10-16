@@ -1,6 +1,7 @@
-# 010: Agent/State
+# 011: Agent/State
 
-> **State Message:** A persistent `Data` message that represents the live, evolving memory of a workflow. It acts as a set of local variables, enabling multi-step, stateful operations. — [Glossary](./000_glossary.md)
+> [!DEFINITION] [State Message](./000_glossary.md)
+> A persistent `Data` message that represents the live, evolving memory of a workflow. It acts as a set of local variables, enabling multi-step, stateful operations
 
 > Sidenote:
 >
@@ -10,97 +11,21 @@
 > - Enables:
 >   - [012: Agent/Plan](./012_agent_plan.md)
 > - Complemented by:
->   - [011: Agent/Instancing](./011_agent_instancing.md)
+>   - [013: Agent/Instancing](./013_agent_instancing.md)
 
-This document describes the **State message**, which provides a mechanism for managing persistent state within an agent's execution loop. The `State` message is a specialized application of the **Data** system, designed to create stateful, multi-step workflows. It functions as a container for the "local variables" of a process, allowing context to be maintained across a sequence of `Tool` executions.
+This document describes the **State message**, a specialized `Data` message that provides persistent memory for an agent's execution loop. While [Variables](./010_agent_variables.md) provide the "wires" to connect tools, the `State` object provides the "scratchpad" where the results of these connections are stored and maintained across multiple steps.
 
 The `State` object acts as the source of truth for the current status of a request and is the key to resilience and resumption. Because it captures the complete context of a workflow at a specific point in time, it allows a process to be paused and resumed. When a new iteration begins, the `State` from the previous tick provides the LLM with a clear understanding of where the process left off, ensuring subsequent operations can seamlessly continue the work.
+
+## Guiding the Workflow with a Schema
+
+Providing a `schema` for the `State` object is an optional but powerful step. The schema documents the intended data flow by defining a set of expected properties. This implicitly defines the interactions between `Tools` and hints at the overall process. This creates a strong feedback loop for the LLM: knowing what properties the `State` should contain, it is guided to generate `Tool Calls` with corresponding `_outputPath` values. This improves results by ensuring the agent's actions are structurally correct and aligned with the desired workflow.
 
 ## Multi-Step Tools
 
 The primary function of the `State` message is to allow different `Tools` to share information within a single, continuous process. It enables stateful operations by providing a shared canvas where `Tools` can store their results.
 
 This is achieved through a simple read/write mechanism: one `Tool` can write its output to the `State` object, and another `Tool` can then read that data as its input in a subsequent step. This allows for the creation of toolchains, where the output of one capability directly informs the input of the next, all without losing context between executions.
-
-## Inputs
-
-The primary mechanism for reading from the `State` is through **Variable References**. This system allows any parameter in a `Tool Call` to be a special string that references a variable from the context, rather than the value itself. The reference is a string that follows a specific syntax. This approach is highly efficient as it avoids duplicating large data objects, saving space and cost.
-
-The reference is a simple string syntax prefixed with a dagger (`†`). The syntax is `†<kind>.<path>`, where `<kind>` is the type of `Data` message (e.g., `state`, `input`) and `<path>` is the dot-notation path to the desired value.
-
-For example, a `Tool Call` for fetching a user profile might be defined as a data structure (e.g., in JSON) like this:
-
-```json
-{
-  "_tool": "fetchUserProfile",
-  "userId": "†state.currentUser.id"
-}
-```
-
-At execution time, the system resolves the `†state.currentUser.id` reference, making the call equivalent to the following TypeScript code:
-
-```typescript
-fetchUserProfile({
-  userId: state.currentUser.id,
-});
-```
-
-## Outputs
-
-The primary mechanism for writing to the `State` is the `_outputPath` meta-property on a `Call`. This string tells the execution engine where to place a tool's result.
-
-> Sidenote:
->
-> - [004: Agent/Call](./004_agent_call.md)
-
-The `schema` of the `State` message can be used to define a set of expected properties. This creates a powerful feedback loop for the LLM: when the `schema` requires certain properties, the LLM is guided to invoke `Tools` whose `_outputPath` matches those properties, ensuring the `Tool` sequence is structurally correct.
-
-### Path Syntax
-
-The `_outputPath` string can take several forms:
-
-- **Regular Path:** A simple string pointing to a single location. The optional `†state.` prefix is a convention to clarify that the path targets the `State` object.
-  ```json
-  "†state.user.summary"
-  ```
-- **Alternative Paths (Branching):** Using `||` to separate paths indicates a set of potential outcomes. The output will be written to one of the specified locations, with the choice often being resolved by the execution engine or a subsequent reasoning step.
-  ```json
-  "†state.summary.text || †state.summary.json"
-  ```
-- **Concurrent Paths (Fan-out):** Using `&&` directs the engine to perform a fan-out, writing the same output to all specified paths concurrently.
-  ```json
-  "†state.user.profile.summary && †state.audit.log.summary"
-  ```
-
-### Specification Methods
-
-The method for determining the `_outputPath` value is defined by its schema, a pattern similar to how the **Imports** system handles context:
-
-- **Dynamic (LLM-Decided):** The `Tool`'s schema for `_outputPath` can be flexible (e.g., `{ "type": "string" }`), giving the LLM the freedom to generate any of the path syntaxes above. This allows the agent to dynamically connect tools and construct novel data flows on the fly.
-
-  _Tool Schema:_
-
-  ```json
-  {
-    "_outputPath": {
-      "type": "string"
-    }
-  }
-  ```
-
-- **Prescribed (Hard-Coded):** Alternatively, the schema can use restrictive JSON Schema keywords like `const`, `enum`, or `oneOf` to lock down the tool's behavior. A `const` value forces a single, specific path, while `enum` can force the LLM to choose from a limited set of predefined options. This is crucial for creating stable workflows and robust error-handling patterns where the possible outcomes are known in advance.
-
-  _Tool Schema (Prescribing a choice of success/failure paths):_
-
-  ```json
-  {
-    "_outputPath": {
-      "enum": ["†state.success", "†state.failure"]
-    }
-  }
-  ```
-
-This provides a knob for workflow predictability, allowing a designer to move from a flexible, exploratory phase to a locked-down, deterministic one to ensure reliable outcomes.
 
 ## Planning vs. Execution
 
@@ -146,10 +71,10 @@ This graph of references can be validated, reused, and even simulated, making it
 
   > Sidenote:
   >
-  > - [011: Agent/Instancing](./011_agent_instancing.md)
+  > - [013: Agent/Instancing](./013_agent_instancing.md)
 
-## From Single State to Parallel Execution
+## From Single State to Orchestrated Workflows
 
-The `State` message provides the mechanism for managing the memory of a single, coherent workflow. However, to build truly scalable systems, agents must be able to apply the same workflow to many different pieces of data simultaneously. This requires a way to manage multiple, independent states in parallel within a single request, with operations like `Variable References` and `_outputPath` being correctly routed to the appropriate state.
+The `State` message provides the mechanism for managing the memory of a single, coherent workflow. With a persistent scratchpad and the variables to connect tools, we can now design and execute complex, multi-step workflows.
 
-The next document, **[011: Agent/Instancing](./011_agent_instancing.md)**, describes the system that makes this parallel execution possible.
+The next document, **[012: Agent/Plan](./012_agent_plan.md)**, describes the system for orchestrating these workflows as a graph of `Tool Calls`.

@@ -8,7 +8,7 @@
 >   - [004: Agent/Call](./004_agent_call.md)
 >   - [006: Agent/Data](./006_agent_data.md)
 > - Enables:
->   - [012: Agent/Plan](./012_agent_plan.md)
+>   - [013: Agent/Plan](./013_agent_plan.md)
 > - Complemented by:
 >   - [011: Agent/Instancing](./011_agent_instancing.md)
 
@@ -110,7 +110,7 @@ It can create a whole map of how different tools will connect to each other, lik
 > > Sidenote:
 > >
 > > - [005: Agent/Loop](./005_agent_loop.md)
-> > - [012: Agent/Plan](./012_agent_plan.md)
+> > - [013: Agent/Plan](./013_agent_plan.md)
 
 ## How `State` Works with Other Parts
 
