@@ -34,9 +34,7 @@ Use the Tool System when you need agents to:
 - **Execute different implementations** of the same capability (e.g., different search engines)
 - **Mix LLM reasoning with explicit logic** in their decision-making process
 
-## The Tool System Architecture
-
-### Core Principle: Schema as Interface
+## Schema as interface
 
 The Tool System is built on a fundamental principle: **Tools are pure schemas** that define interfaces without mandating implementations. This separation of interface from implementation is the key to the system's flexibility and composability.
 
@@ -83,17 +81,102 @@ Tool.register('sentimentAnalysis', {
 });
 ```
 
-## Schema Composition and Execution
+## Composing Schemas for the LLM
 
-While individual Tools define discrete capabilities, their power is realized when they are composed. The system presents all available `Tool` schemas to the LLM within a single request, typically as an array. This allows the LLM to select the most appropriate `Tool` for a given situation and provide the required parameters. The resulting instance of a tool use is a an object called `Call`.
+An agent doesn't just work with tools; it often needs to produce a final, structured output once its task is complete. To handle this, the agent runtime composes the schemas for all available `Tool`s with a user-defined _output schema_. This creates a single, unified schema that is provided to the LLM in a `Request`.
+
+This composition gives the LLM a choice in how it responds. Based on the prompt, it can:
+
+- **Generate `calls` only:** If the task requires intermediate steps, the LLM will invoke one or more tools and leave the `output` field `null`.
+- **Generate `output` only:** If the prompt can be answered directly without any tools, the LLM will provide the final result in the `output` field and leave `calls` empty.
+- **Generate both:** In some cases, the LLM might perform an action and produce the final output in a single step.
+
+This mechanism allows a single, flexible interface to handle simple, one-shot answers as well as complex, multi-tool tasks. The developer provides the `Tool` schemas and an output schema separately, and the system combines them into a structure that the LLM can use to decide on the best course of action.
+
+The example below illustrates how a `Tool` schema and an output schema are composed.
+
+::::columns
+:::column{title="Agent Configuration"}
+
+```typescript
+Agent.Request(
+  config, // Configuration for the request (e.g., model, temperature)
+  {
+    // Output Schema
+    type: 'object',
+    properties: {
+      summary: { type: 'string' },
+    },
+    required: ['summary'],
+  },
+  [
+    // Context
+    {
+      type: 'tool',
+      tool: {
+        greetUser: {
+          type: 'object',
+          properties: {
+            userName: { type: 'string' },
+          },
+          required: ['userName'],
+        },
+      },
+    },
+    { type: 'text', text: 'some prompt here' },
+  ]
+);
+```
+
+:::
+:::column{title="Composed Schema (for the LLM)"}
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "calls": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "_tool": { "const": "greetUser" },
+          "userName": { "type": "string" }
+        },
+        "required": ["_tool", "userName"]
+      }
+    },
+    "output": {
+      "type": ["object", "null"],
+      "properties": {
+        "summary": { "type": "string" }
+      },
+      "required": ["summary"],
+      "additionalProperties": false
+    }
+  },
+  "required": ["calls", "output"]
+}
+```
+
+:::
+::::
+
+## Enhancing Tools with Meta-Properties
+
+Beyond defining a tool's basic parameters, its schema can be enhanced when it is invoked. This is a different form of composition where new behaviors are layered onto a single tool.
+
+When an agent decides to use a tool, it creates a `Call`—a concrete instance of that tool. A `Call` includes the parameters for the tool, but it can also be augmented with special meta-properties (prefixed with `_`) that provide extra instructions for the execution engine. These properties control aspects of the tool's execution that go beyond its basic definition.
 
 > Sidenote:
 >
-> - [004: Agent/Call](./004_agent_call.md).
+> - [004: Agent/Call](./004_agent_call.md)
+
+This mechanism allows a simple, core tool schema to be used in powerful and flexible ways. The `Call` becomes a rich instruction that specifies _what_ to do (the tool and its parameters) and _how_ to do it (the meta-properties). The final piece of the puzzle is understanding the different ways a `Call` can actually be executed.
 
 ## Latent and Explicit Execution
 
-A `Tool` schema, by itself, is only an interface. Its execution can happen in one of two ways. The default is **latent execution**, where the LLM uses its own internal reasoning to generate the output, which is ideal for language or knowledge-based tasks. For actions that require interaction with the outside world—like calling an API or accessing a database—a `Tool` must be connected to a deterministic code function. This explicit implementation is called an **Activity**.
+Once a `Call` is generated, the system needs to execute it. A `Tool` schema, being just an interface, doesn't contain the execution logic itself. Instead, its execution can happen in one of two ways. The default is **latent execution**, where the LLM uses its own internal reasoning to generate the output, which is ideal for language or knowledge-based tasks. For actions that require interaction with the outside world—like calling an API or accessing a database—a `Tool` must be connected to a deterministic code function. This explicit implementation is called an **Activity**.
 
 The separation of the `Tool` interface from the `Activity` implementation is a core design principle. It allows an agent's capabilities to be defined and reasoned about abstractly, while the underlying execution logic can be swapped or updated independently. The next document, **[003: Agent/Activity](./003_agent_activity.md)**, describes how `Activities` provide the concrete logic for `Tools`.
 

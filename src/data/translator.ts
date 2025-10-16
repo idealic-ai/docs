@@ -29,6 +29,9 @@ const SHARED_TRANSLATION_PROMPT = `  * Ensure that in translation markdown heade
   * Data -> Данные
   * State -> Состояние
   * Heads up -> На заметку
+  * Delegate -> Делегат
+  * Instance -> Экземпляр
+  * Instancing -> Экземплирование
 `;
 
 const SHARED_STYLE_GUIDE = `

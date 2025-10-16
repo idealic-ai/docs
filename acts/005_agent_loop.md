@@ -18,28 +18,33 @@ This document describes the **execution loop**, which enables an agent to perfor
 >
 > ```mermaid
 > graph TD
->     Start((Start)) --> ContextAssembly(1. Context Assembly)
->     ContextAssembly --> RequestInvocation(2. Request Invocation)
->     RequestInvocation --> CallProcessing(3. Call Processing)
+>     Start((Start)) --> SchemaComposition(1. Schema Composition)
+>     SchemaComposition --> ContextAssembly(2. Context Assembly)
+>     ContextAssembly --> RequestInvocation(3. Request Invocation)
+>     RequestInvocation --> CallProcessing(4. Call Processing)
 >     CallProcessing --> HasCalls{Has Calls?}
->     HasCalls -- No --> Termination((5. Termination))
 >     HasCalls -- Yes --> HITL{Human-in-the-Loop}
->     HITL -- Approved --> Execution(4. Execution & Feedback)
+>     HITL -- Approved --> Execution(5. Execution & Feedback)
 >     Execution -- Results --> ContextAssembly
 >     HITL -- Corrected --> ContextAssembly
+>     HasCalls -- No --> Termination(6. Termination)
+>     Termination --> OutputGeneration(7. Output Generation)
+>     OutputGeneration --> End((End))
 >     classDef optional stroke-dasharray: 5, 5
 >     class HITL optional
 > ```
 
 The execution loop is the primary mechanism for autonomous, multi-step execution. It operates as follows:
 
-1.  **Context Assembly:** The loop begins by assembling the initial context, which may include the user's goal, the current `State`, and other relevant information.
-2.  **Request Invocation:** It invokes the [001: Agent/Request](./001_agent_request.md) with the current context and a schema of available `Tools`.
-3.  **Call Processing:** The `Request` returns a `solution` containing an array of zero or more [004: Agent/Call](./004_agent_call.md)s. Crucially, at this stage, these `Calls` are only proposed actions; they have not been executed yet.
-4.  **Execution & Feedback:**
-    - If the `solution` contains `Call`s, the loop executes them. For `Explicit` `Call`s, this involves invoking the corresponding `Activity` code.
+1.  **Schema Composition:** The loop is configured with a user-defined _output schema_ for the final result. This is automatically combined with the schemas of available [Tools](./002_agent_tool.md) to create a single schema for the `Request`, as described in [Tool Schema Composition](./002_agent_tool.md#composing-schemas-for-the-llm).
+2.  **Context Assembly:** The loop begins by assembling the initial context, which may include the user's goal and other relevant information.
+3.  **Request Invocation:** It invokes the [001: Agent/Request](./001_agent_request.md) with the current context and the composed schema from the previous step.
+4.  **Call Processing:** The `Request` returns a `solution` object containing an array of zero or more [004: Agent/Call](./004_agent_call.md)s in the `calls` property. Crucially, at this stage, these `Calls` are only proposed actions; they have not been executed yet.
+5.  **Execution & Feedback:**
+    - If the `solution`'s `calls` array is not empty, the loop executes them. For `Explicit` `Call`s, this involves invoking the corresponding `Activity` code.
     - The results of these `Call`s are then added back into the context for the next iteration.
-5.  **Termination:** If the `solution` contains zero `Call`s, the agent has determined its goal is complete, and the loop terminates.
+6.  **Termination:** If the `solution`'s `calls` array is empty, the agent has determined its goal is complete, and the loop terminates.
+7.  **Output Generation:** Upon termination, the `output` field of the `solution` contains the final result, conforming to the user-defined output schema. This mechanism allows an agent to not only perform actions but also to produce a structured, final response. The content of `output` can be a transformation or summary of the context accumulated during the loop. For instance, an agent tasked with data analysis could perform several steps of processing (each a `Call`) and then use the `output` field to return a final JSON report.
 
 ## Human-in-the-Loop (HITL)
 
@@ -54,6 +59,6 @@ This capability is critical for safety and for collaborative tasks where the age
 
 ## The Role of Data in the Loop
 
-The execution loop provides a dynamic structure for agent behavior, but its power is realized through the data that flows within it. The state, inputs, and outputs managed during each cycle are what allow an agent to maintain context, learn, and execute complex, multi-step plans.
+The execution loop provides a dynamic structure for agent behavior, but its power is realized through the data that flows within it. The context, inputs, and outputs managed during each cycle are what allow an agent to maintain context, learn, and execute complex, multi-step plans.
 
 The next document, [006: Agent/Data](./006_agent_data.md), explores the protocols for managing this data.
