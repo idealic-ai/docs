@@ -964,6 +964,7 @@ h1 + .marginnote {
 }
 .columns > .column {
   flex-grow: 1;
+  flex-basis: 20%;
   display: flex;
   flex-direction: column;
 }
@@ -971,7 +972,7 @@ h1 + .marginnote {
 .columns > .column > h4 {
   margin-bottom: 0;
 }
-.columns > .column > pre:last-child {
+.columns > .column > pre {
   flex-grow: 1;
   display: flex;
   flex-direction: column;

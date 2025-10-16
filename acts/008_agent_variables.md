@@ -12,7 +12,7 @@
 
 A parameter in a `Tool Call` can hold a **Variable Reference**—a special string that points to a value elsewhere in the context—instead of the value itself. This prevents the inefficient and error-prone process of having an LLM copy large data objects from its context into the parameters of a `Tool Call`. Using a reference is faster, cheaper, and more reliable, as it eliminates the risk of the LLM altering the data during reproduction.
 
-The reference is a simple string syntax prefixed with a dagger (`†`). The syntax is `†<kind>.<path>`, where `<kind>` is the type of `Data` message (e.g., `state`, `input`) and `<path>` is the dot-notation path to the desired value.
+The reference is a simple string syntax prefixed with a dagger (`†`). The syntax is `†<kind>.<path>`, where `<kind>` is the type of `Data` message (e.g., `state`, `input`) and `<path>` is the dot-notation path to the desired value
 
 > Sidenote:
 >
