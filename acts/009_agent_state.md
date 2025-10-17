@@ -21,7 +21,7 @@ The :term[State] object acts as the source of truth for the current status of a 
 
 ## Guiding the Workflow with a Schema
 
-Providing a `schema` for the :term[State] object is an optional but powerful step. The schema documents the intended data flow by defining a set of expected properties. This implicitly defines the interactions between :term[Tools] and hints at the overall process. This creates a strong feedback loop for the LLM: knowing what properties the :term[State] should contain, it is guided to generate :term[Tool Calls] with corresponding `_outputPath` values. This improves results by ensuring the agent's actions are structurally correct and aligned with the desired workflow.
+Providing a `schema` for the :term[State] object is an optional but powerful step. The schema documents the intended data flow by defining a set of expected properties. This implicitly defines the interactions between :term[Tools] and hints at the overall process. This creates a strong feedback loop for the LLM: knowing what properties the :term[State] should contain, it is guided to generate :term[Tool Calls]{canonical="Call"} with corresponding `_outputPath` values. This improves results by ensuring the agent's actions are structurally correct and aligned with the desired workflow.
 
 > Sidenote:
 >
@@ -35,12 +35,12 @@ This is achieved through a simple read/write mechanism: one :term[Tool] can writ
 
 ## Planning vs. Execution
 
-The combination of writing to state via `_outputPath` and reading from it with :term[Variable References] is the core mechanism that enables the separation of planning from execution. It allows an agent to construct a complete data-flow graph—a chain of :term[Tool Calls] linked by references—_before_ any tool is run.
+The combination of writing to state via `_outputPath` and reading from it with :term[Variable References] is the core mechanism that enables the separation of planning from execution. It allows an agent to construct a complete data-flow graph—a chain of :term[Tool Calls]{canonical="Call"} linked by references—_before_ any tool is run.
 
 This graph of references can be validated, reused, and even simulated, making it fully compatible with the latent execution of LLMs. The flexibility of this system comes from the ability to control both inputs and outputs at the schema level. A workflow designer can leave the :term[Variable References] (inputs) and the `_outputPath` (outputs) dynamic for the LLM to decide, or prescribe them to enforce a rigid, reliable data flow.
 
 > [!HEADSUP] Heads up
-> Creating :term[Tool Calls] that are connected to each other via the :term[State] is the act of planning. This system provides the technical groundwork for this process: a persistent :term[State] acts as the scratchpad, :term[Variable References] and `_outputPath` act as the wires, and the agent :term[Loop] provides the iterative engine. Together, these components allow an agent to construct a complete data-flow graph, which is the essence of a :term[Plan].
+> Creating :term[Tool Calls]{canonical="Call"} that are connected to each other via the :term[State] is the act of planning. This system provides the technical groundwork for this process: a persistent :term[State] acts as the scratchpad, :term[Variable References] and `_outputPath` act as the wires, and the agent :term[Loop] provides the iterative engine. Together, these components allow an agent to construct a complete data-flow graph, which is the essence of a :term[Plan].
 >
 > > Sidenote:
 > >
@@ -49,7 +49,7 @@ This graph of references can be validated, reused, and even simulated, making it
 
 ## Composition
 
-- **:term[Call]:** The :term[Call] system is intimately linked with :term[State] through the `_outputPath` meta-property. This property transforms a :term[Tool Call], which could otherwise be a stateless, pure function, into a state-modifying operation. By specifying an `_outputPath`, a :term[Call] directs the engine to write its result into the :term[State] object, making it the primary mechanism for an agent to record the outcome of its actions. This interaction allows a sequence of :term[Calls] to build upon each other, creating a chain of cause and effect that is recorded in the :term[State].
+- **:term[Call]:** The :term[Call] system is intimately linked with :term[State] through the `_outputPath` meta-property. This property transforms a :term[Tool Call]{canonical="Call"}, which could otherwise be a stateless, pure function, into a state-modifying operation. By specifying an `_outputPath`, a :term[Call] directs the engine to write its result into the :term[State] object, making it the primary mechanism for an agent to record the outcome of its actions. This interaction allows a sequence of :term[Calls] to build upon each other, creating a chain of cause and effect that is recorded in the :term[State].
 
   > Sidenote:
   >
@@ -67,13 +67,13 @@ This graph of references can be validated, reused, and even simulated, making it
   >
   > - [013: Agent/Scopes](./013_agent_scopes.md)
 
-- **:term[Instancing]:** The :term[State] message is fully compatible with the :term[Instancing] system. When a request processes multiple :term[Instances], each one maintains its own isolated :term[State] object, identified by a unique `_instance` key. :term[Variable References] (e.g., `†state.currentUser.id`) are automatically and transparently routed to the correct :term[State] object corresponding to the :term[Instance] the :term[Tool Call] is targeting. This allows a single, generic `Plan` to be executed across many different states in parallel with guaranteed data isolation.
+- **:term[Instancing]:** The :term[State] message is fully compatible with the :term[Instancing] system. When a request processes multiple :term[Instances], each one maintains its own isolated :term[State] object, identified by a unique `_instance` key. :term[Variable References] (e.g., `†state.currentUser.id`) are automatically and transparently routed to the correct :term[State] object corresponding to the :term[Instance] the :term[Tool Call]{canonical="Call"} is targeting. This allows a single, generic `Plan` to be executed across many different states in parallel with guaranteed data isolation.
 
   > Sidenote:
   >
   > - [011: Agent/Instancing](./011_agent_instancing.md)
 
-- **:term[Plan]:** While :term[State] enables simple tool sequences, its full power is realized when used as the backbone of the :term[Plan] system. In a :term[Plan], a workflow is represented as a directed acyclic graph (DAG) where :term[Tool Calls] are the nodes. The :term[State] object provides the connections—the edges—between these nodes. It allows one node to write into a variable and others to read from it, enabling complex patterns like logical forks (if-else) or parallel fan-outs.
+- **:term[Plan]:** While :term[State] enables simple tool sequences, its full power is realized when used as the backbone of the :term[Plan] system. In a :term[Plan] message, a workflow is represented as a directed acyclic graph (DAG) where :term[Tool Calls]{canonical="Call"} are the nodes. The :term[State] object provides the connections—the edges—between these nodes. It allows one node to write into a variable and others to read from it, enabling complex patterns like logical forks (if-else) or parallel fan-outs.
 
   > Sidenote:
   >
@@ -83,4 +83,4 @@ This graph of references can be validated, reused, and even simulated, making it
 
 The :term[State] message provides the mechanism for managing the memory of a single, coherent workflow. With a persistent scratchpad and the variables to connect tools, we can now design and execute complex, multi-step workflows.
 
-The next document, :term[010: Agent/Plan]{href="/010_agent_plan.md"}, describes the system for orchestrating these workflows as a graph of :term[Tool Calls].
+The next document, :term[010: Agent/Plan]{href="./010_agent_plan.md"}, describes the system for orchestrating these workflows as a graph of :term[Tool Calls]{canonical="Call"}.

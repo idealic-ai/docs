@@ -124,10 +124,10 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
       if (target.tagName !== 'A') return;
 
       const link = target as HTMLAnchorElement;
-      const canonical = link.getAttribute('canonical')?.toLowerCase();
+      const canonical = link.getAttribute('canonical');
       if (!canonical) return;
-      debugger;
-      const glossaryEntry = Object.values(glossary).find(entry => entry.slug === canonical);
+
+      const glossaryEntry = glossary[canonical];
       if (!glossaryEntry) return;
 
       const tooltip = document.createElement('div');

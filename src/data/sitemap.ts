@@ -20,6 +20,8 @@ export interface Sitemap {
 export interface GlossaryEntry {
   definition: string;
   slug: string;
+  canonical: string;
+  url?: string;
 }
 
 export type Glossary = Record<string, GlossaryEntry>;
@@ -54,7 +56,7 @@ export async function getGlossary(lang: string = 'en'): Promise<Glossary> {
       .trim()
       .replace(/[^a-z0-9\s-]/g, '')
       .replace(/\s+/g, '-');
-    glossary[term] = { definition, slug };
+    glossary[term] = { definition, slug, canonical: term };
   }
   return glossary;
 }

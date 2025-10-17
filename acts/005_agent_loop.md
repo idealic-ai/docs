@@ -6,9 +6,9 @@
 > Sidenote:
 >
 > - Requires:
->   - :term[001: Agent/Request]{href="/001_agent_request.md"}
->   - :term[002: Agent/Tool]{href="/002_agent_tool.md"}
->   - :term[004: Agent/Call]{href="/004_agent_call.md"}
+>   - :term[001: Agent/Request]{href="./001_agent_request.md"}
+>   - :term[002: Agent/Tool]{href="./002_agent_tool.md"}
+>   - :term[004: Agent/Call]{href="./004_agent_call.md"}
 
 This document describes the :term[Execution Loop], which enables an agent to perform multi-step tasks by iteratively making :term[Requests]. This iterative process of context assembly, tool use, and feedback is what is commonly meant when referring to an "agent."
 
@@ -36,7 +36,7 @@ This document describes the :term[Execution Loop], which enables an agent to per
 
 The execution loop is the primary mechanism for autonomous, multi-step execution. It operates as follows:
 
-1.  **Schema Composition:** The loop is configured with a user-defined _output schema_ for the final result. This is automatically combined with the schemas of available :term[Tools] to create a single schema for the :term[Request], as described in :term[Tool Schema Composition]{href="/002_agent_tool.md#composing-schemas-for-the-llm"}.
+1.  **Schema Composition:** The loop is configured with a user-defined _output schema_ for the final result. This is automatically combined with the schemas of available :term[Tools] to create a single schema for the :term[Request], as described in :term[Tool Schema Composition]{href="./002_agent_tool.md#composing-schemas-for-the-llm"}.
 2.  **Context Assembly:** The loop begins by assembling the initial context, which may include the user's goal and other relevant information.
 3.  **Request Invocation:** It invokes the :term[Request] with the current context and the composed schema from the previous step.
 4.  **Call Processing:** The :term[Request] returns a :term[Solution] object containing an array of zero or more :term[Calls] in the `calls` property. Crucially, at this stage, these :term[Calls] are only proposed actions; they have not been executed yet.

@@ -100,6 +100,12 @@ This document provides definitions for the key concepts used in the Idea Protoco
   >
   > - [009: Agent/State](./009_agent_state.md)
 
+- **Plan**: A context message carrying a data-flow graph of :term[Tool Calls] that represents an agent's strategy. It is passed between steps to enable iterative execution and adaptation.
+
+  > Sidenote:
+  >
+  > - [010: Agent/Plan](./010_agent_plan.md)
+
 - **Process Idea**: A self-contained [Idea](./101_concept_idea.md) that captures a strategic [Plan](./010_agent_plan.md) and its live execution state. Its `schema` is the library of [Tools](./002_agent_tool.md), its `solution` is the _new_ `Plan` for the current tick, and its `context` contains the `Input`, `State`, and the previous `Plan`.
 
   > Sidenote:
@@ -112,7 +118,7 @@ This document provides definitions for the key concepts used in the Idea Protoco
   >
   > - [202: Idea/Vessel](./202_idea_vessel.md)
 
-- **Instancing**: The process of handling multiple, independent `Instances` (each with its own `State Object` and unique identifier) within a single agent request.
+- **Instancing**: The process of handling multiple, independent `Instances` (each with its own unique identifier and corresponding `State` message) within a single agent request.
 
   > Sidenote:
   >

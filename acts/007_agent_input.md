@@ -126,7 +126,7 @@ The :term[Input] protocol is a specialization of the :term[Data] pattern, but it
   >
   > - [002: Agent/Tool](./002_agent_tool.md)
 
-- **:term[Plan]:** A :term[Plan] is a graph of :term[Tool Calls]. The :term[Input] provides the initial parameters that are fed into the first :term[Tool Call] in the graph, kicking off the entire process.
+- **:term[Plan]:** A :term[Plan] message contains a graph of :term[Tool Calls]{canonical="Call"}. The :term[Input] provides the initial parameters that are fed into the first :term[Tool Call]{canonical="Call"} in the graph, kicking off the entire process.
 
   > Sidenote:
   >
@@ -138,7 +138,7 @@ The :term[Input] protocol is a specialization of the :term[Data] pattern, but it
   >
   > - [011: Agent/Instancing](./011_agent_instancing.md)
 
-- **:term[Variables]:** The :term[Input] message provides the initial, static data that kicks off a process. However, :term[Variables] are the mechanism that allows this data to be used dynamically. :term[Tool Calls] use :term[Variable References] to read values from the :term[Input], connecting the initial parameters to the executable steps of a :term[Plan].
+- **:term[Variables]:** The :term[Input] message provides the initial, static data that kicks off a process. However, :term[Variables] are the mechanism that allows this data to be used dynamically. :term[Tool Calls]{canonical="Call"} use :term[Variable References] to read values from the :term[Input], connecting the initial parameters to the executable steps of a :term[Plan].
   > Sidenote:
   >
   > - [008: Agent/Variables](./008_agent_variables.md)

@@ -22,11 +22,17 @@ function findGlossaryEntry(term: string, glossary: Glossary): GlossaryEntry | un
 
   // 3. First word fall back match (e.g. "Variable" -> "Variable Reference")
   const glossaryKeys = Object.keys(glossary);
-  const matchingKey = glossaryKeys.find(key => key.startsWith(term));
+  const matchingKey = glossaryKeys.find(
+    key => key.startsWith(term) || key.startsWith(singularTerm)
+  );
   if (matchingKey) {
     return glossary[matchingKey];
   }
 
+  const matchingKeyEnd = glossaryKeys.find(key => term.endsWith(key) || singularTerm.endsWith(key));
+  if (matchingKeyEnd) {
+    return glossary[matchingKeyEnd];
+  }
   return undefined;
 }
 
@@ -45,15 +51,15 @@ export function linkGlossaryTerms(content: string, glossary: Glossary, lang: str
 
     const canonical = attrs.canonical || text;
     const glossaryEntry = findGlossaryEntry(canonical, glossary);
-
+    console.log(canonical, glossary);
     if (glossaryEntry) {
-      const basePath = `/${lang}`;
+      const basePath = lang === 'en' ? '' : `/${lang}`;
       const newAttrs = {
         ...attrs,
         href: glossaryEntry.url
           ? `${basePath}${glossaryEntry.url}`
-          : `${basePath}/acts/000_glossary.md#${glossaryEntry.slug}`,
-        canonical: canonical,
+          : `${basePath}/acts/000_glossary#${glossaryEntry.slug}`,
+        canonical: glossaryEntry.canonical,
       };
 
       const attrsString = Object.entries(newAttrs)

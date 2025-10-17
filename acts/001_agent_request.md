@@ -5,9 +5,10 @@
 
 > Sidenote:
 >
-> - Enables: :term[101: Concept/Idea]{href="/101_concept_idea.md"}
-
-> NPM: [https://www.npmjs.com/package/@augceo/agent](@idealic-ai/agent)
+> - Enables:
+>   - :term[101: Concept/Idea]{href="./101_concept_idea.md"}
+> - Links:
+>   - [NPM: @idealic/agent](https://www.npmjs.com/package/@augceo/agent)
 
 The :term[Request] is the core computational primitive of the agent system. It provides a structured, reproducible, and extensible pipeline for interacting with an LLM, turning a rich context and a declarative schema into a precise, structured solution. Unlike a simple prompt, a :term[Request] is a complete, self-contained unit of work that serves as the engine for all higher-level agent capabilities.
 
@@ -62,10 +63,10 @@ The system extends this basic `Message` structure by allowing the `content` fiel
 >
 > Custom message types described in Acts:
 >
-> - :term[006: Agent/Data]{href="/006_agent_data.md"} - present data and its meaning to LLM as a message
-> - :term[007: Agent/Input]{href="/007_agent_input.md"} - structured prompt for LLM to use
-> - :term[009: Agent/State]{href="/009_agent_state.md"} - persistent state retained within loop
-> - :term[010: Agent/Plan]{href="/010_agent_plan.md"} - prepared plan for multi-step execution
+> - :term[006: Agent/Data]{href="./006_agent_data.md"} - present data and its meaning to LLM as a message
+> - :term[007: Agent/Input]{href="./007_agent_input.md"} - structured prompt for LLM to use
+> - :term[009: Agent/State]{href="./009_agent_state.md"} - persistent state retained within loop
+> - :term[010: Agent/Plan]{href="./010_agent_plan.md"} - prepared plan for multi-step execution
 
 This capability makes the :term[context] the main point of extension within the system.
 
@@ -98,7 +99,7 @@ This process can be understood as the generation of a mini-narrative. Because an
 For example, if a schema first requires a field for meta-reasoning (e.g., `"thought_process"`) before a field for the final :term[data], the LLM is forced to first articulate its reasoning before producing the answer. The initial reasoning becomes part of the context that influences the generation of the subsequent data. This powerful mechanism allows us to guide the LLM's thinking, giving us significant control over the final result by shaping the very path it takes to get there.
 
 > [!HEADSUP] Heads up
-> This entire :term[Request] pipeline—the :term[context], the :term[schema], and the resulting :term[solution]—forms a self-contained, reproducible unit. When saved, this unit is what the system refers to as an :term[101: Concept/Idea]{href="/101_concept_idea.md"}.
+> This entire :term[Request] pipeline—the :term[context], the :term[schema], and the resulting :term[solution]—forms a self-contained, reproducible unit. When saved, this unit is what the system refers to as an :term[101: Concept/Idea]{href="./101_concept_idea.md"}.
 
 ## From Structured Output to Actionable Choices
 
@@ -106,6 +107,6 @@ A :term[Request] provides a robust mechanism for generating a single, schema-com
 
 > Sidenote:
 >
-> - :term[002: Agent/Tool]{href="/002_agent_tool.md"}
+> - :term[002: Agent/Tool]{href="./002_agent_tool.md"}
 
-The next document, :term[002: Agent/Tool]{href="/002_agent_tool.md"}, introduces the protocol for defining these capabilities.
+The next document, :term[002: Agent/Tool]{href="./002_agent_tool.md"}, introduces the protocol for defining these capabilities.

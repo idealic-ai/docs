@@ -5,7 +5,7 @@
 
 > Sidenote:
 >
-> - Requires: :term[002: Agent/Tool]{href="/002_agent_tool.md"}
+> - Requires: :term[002: Agent/Tool]{href="./002_agent_tool.md"}
 
 This document describes the **Activity Protocol**, which defines how :term[Tool]s are backed by concrete, executable code. While a :term[Tool] defines a capability's interface, an :term[Activity] provides its implementation.
 
@@ -68,7 +68,7 @@ The system supports two fundamentally different execution modes for a :term[Tool
 - **Latent Execution**: Uses the LLM's reasoning capabilities. The agent "thinks through" the problem and produces the output directly in the same invocation. This is the default mode when no :term[Activity] is found for a :term[Tool].
   > Sidenote:
   >
-  > - :term[104: Concept/Latent]{href="/104_concept_latent.md"}
+  > - :term[104: Concept/Latent]{href="./104_concept_latent.md"}
 - **Explicit Execution**: Delegates the :term[Call] to deterministic code. An :term[Activity] function is invoked to compute the output. This is essential for interacting with the outside world (e.g., APIs, databases) or for tasks requiring precise, repeatable logic.
 
 ## Activity Resolution Strategy
@@ -99,4 +99,4 @@ The dual registry architecture solves this by keeping :term[Tool] interfaces sta
 
 By separating the "what" (:term[Tool]) from the "how" (:term[Activity]), the system gains immense flexibility. But this is only part of the story. With interfaces and implementations defined, the final piece is orchestration: how these :term[Call]s are managed, executed, and sequenced.
 
-The next document, :term[004: Agent/Call]{href="/004_agent_call.md"}, explores the protocol that governs this execution, turning abstract definitions into concrete, stateful actions.
+The next document, :term[004: Agent/Call]{href="./004_agent_call.md"}, explores the protocol that governs this execution, turning abstract definitions into concrete, stateful actions.

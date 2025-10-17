@@ -5,8 +5,8 @@
 
 > Sidenote:
 >
-> - Requires: :term[001: Agent/Request]{href="/001_agent_request.md"}
-> - Complemented by: :term[003: Agent/Activity]{href="/003_agent_activity.md"}
+> - Requires: :term[001: Agent/Request]{href="./001_agent_request.md"}
+> - Complemented by: :term[003: Agent/Activity]{href="./003_agent_activity.md"}
 
 A :term[Tool] is a schema-driven interface that defines a structured capability an agent can use. It acts as the foundational building block for all agent actions, providing a way for the LLM to understand and select from a menu of possible behaviors.
 
@@ -23,7 +23,7 @@ Tools provide:
 
 When an agent fills specific parameters for a Tool, it creates a **:term[Call]**—an instance of a Tool with all required parameters filled, representing a concrete request for execution.
 
-> Sidenote: :term[004: Agent/Call]{href="/004_agent_call.md"}
+> Sidenote: :term[004: Agent/Call]{href="./004_agent_call.md"}
 
 ## When to Use the Tool System
 
@@ -45,10 +45,10 @@ A Tool's schema defines its complete interface:
 > Sidenote:
 > Extensions:
 >
-> - **`_activity`**: Connects the tool to a deterministic code function for explicit execution. See :term[003: Agent/Activity]{href="/003_agent_activity.md"}
-> - **`_delegate`**: Delegates the tool's execution to an isolated, external delegate. See :term[012: Agent/Delegate]{href="/012_agent_delegate.md"}
-> - **`_outputPath`**: Makes the tool stateful by writing its output to a persistent state object. See :term[009: Agent/State]{href="/009_agent_state.md"}
-> - **`_instance`**: Targets the tool's execution to a specific instance in a multi-instance request. See :term[011: Agent/Instancing]{href="/011_agent_instancing.md"}
+> - **`_activity`**: Connects the tool to a deterministic code function for explicit execution. See :term[003: Agent/Activity]{href="./003_agent_activity.md"}
+> - **`_delegate`**: Delegates the tool's execution to an isolated, external delegate. See :term[012: Agent/Delegate]{href="./012_agent_delegate.md"}
+> - **`_outputPath`**: Makes the tool stateful by writing its output to a persistent state object. See :term[009: Agent/State]{href="./009_agent_state.md"}
+> - **`_instance`**: Targets the tool's execution to a specific instance in a multi-instance request. See :term[011: Agent/Instancing]{href="./011_agent_instancing.md"}
 
 - **`title`**: A human-readable name for the schema (optional).
 - **`description`**: Explains what the tool does.
@@ -191,7 +191,7 @@ When an agent decides to use a tool, it creates a :term[Call]—a concrete insta
 
 > Sidenote:
 >
-> - :term[004: Agent/Call]{href="/004_agent_call.md"}
+> - :term[004: Agent/Call]{href="./004_agent_call.md"}
 
 This mechanism allows a simple, core tool schema to be used in powerful and flexible ways. The :term[Call] becomes a rich instruction that specifies _what_ to do (the tool and its parameters) and _how_ to do it (the meta-properties). The final piece of the puzzle is understanding the different ways a :term[Call] can actually be executed.
 
@@ -199,8 +199,8 @@ This mechanism allows a simple, core tool schema to be used in powerful and flex
 
 Once a :term[Call] is generated, the system needs to execute it. A `Tool` schema, being just an interface, doesn't contain the execution logic itself. Instead, its execution can happen in one of two ways. The default is **latent execution**, where the LLM uses its own internal reasoning to generate the output, which is ideal for language or knowledge-based tasks. For actions that require interaction with the outside world—like calling an API or accessing a database—a `Tool` must be connected to a deterministic code function. This explicit implementation is called an **:term[Activity]**.
 
-The separation of the :term[Tool] interface from the :term[Activity] implementation is a core design principle. It allows an agent's capabilities to be defined and reasoned about abstractly, while the underlying execution logic can be swapped or updated independently. The next document, :term[003: Agent/Activity]{href="/003_agent_activity.md"}, describes how :term[Activities] provide the concrete logic for :term[Tool]s.
+The separation of the :term[Tool] interface from the :term[Activity] implementation is a core design principle. It allows an agent's capabilities to be defined and reasoned about abstractly, while the underlying execution logic can be swapped or updated independently. The next document, :term[003: Agent/Activity]{href="./003_agent_activity.md"}, describes how :term[Activities] provide the concrete logic for :term[Tool]s.
 
 > Sidenote:
 >
-> - :term[003: Agent/Activity]{href="/003_agent_activity.md"}.
+> - :term[003: Agent/Activity]{href="./003_agent_activity.md"}.

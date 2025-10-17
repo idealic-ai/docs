@@ -1,16 +1,16 @@
 # 008: Agent/Variables
 
 > [!DEFINITION] [Variable Reference](./000_glossary.md)
-> A string with a special syntax (`†<kind>.<path>`) used in a :term[Tool Call]'s parameters to dynamically reference a value from the agent's context.
+> A string with a special syntax (`†<kind>.<path>`) used in a :term[Tool Call]{canonical="Call"}'s parameters to dynamically reference a value from the agent's context.
 
 :term[Variables] build upon the [Data](./006_agent_data.md) system to enable dynamic data flows. They make structured information interactive through two primary functions:
 
-- **Reading:** Referencing a value that exists within the agent's context (such as an :term[Input] or :term[State] message) without needing to copy the data directly into a :term[Tool Call]'s parameters.
+- **Reading:** Referencing a value that exists within the agent's context (such as an :term[Input] or :term[State] message) without needing to copy the data directly into a :term[Tool Call]{canonical="Call"}'s parameters.
 - **Writing:** Persisting a result to a :term[Data] object (most commonly :term[State]) so its value can be accessed in subsequent ticks of the agent's loop.
 
 ## Reading from Context
 
-A parameter in a :term[Tool Call] can hold a **Variable Reference**—a special string that points to a value elsewhere in the context—instead of the value itself. This prevents the inefficient and error-prone process of having an LLM copy large data objects from its context into the parameters of a :term[Tool Call]. Using a reference is faster, cheaper, and more reliable, as it eliminates the risk of the LLM altering the data during reproduction.
+A parameter in a :term[Tool Call]{canonical="Call"} can hold a **Variable Reference**—a special string that points to a value elsewhere in the context—instead of the value itself. This prevents the inefficient and error-prone process of having an LLM copy large data objects from its context into the parameters of a :term[Tool Call]{canonical="Call"}. Using a reference is faster, cheaper, and more reliable, as it eliminates the risk of the LLM altering the data during reproduction.
 
 The reference is a simple string syntax prefixed with a dagger (`†`). The syntax is `†<kind>.<path>`, where `<kind>` is the type of :term[Data] message (e.g., `state`, `input`) and `<path>` is the dot-notation path to the desired value
 
@@ -86,9 +86,9 @@ This approach enforces a strict, predictable behavior, ensuring the tool always 
 
 ## Declarative Connection
 
-The power of :term[Variables] comes from their ability to define operations on data that is not yet available. For instance, a :term[Tool Call] can be defined to operate on a value from an :term[Input] message, even if that specific input has not been provided. This allows for the creation of reusable, parameterized workflows.
+The power of :term[Variables] comes from their ability to define operations on data that is not yet available. For instance, a :term[Tool Call]{canonical="Call"} can be defined to operate on a value from an :term[Input] message, even if that specific input has not been provided. This allows for the creation of reusable, parameterized workflows.
 
-This concept extends to chaining :term[Tool Calls] together. A :term[Tool Call] can be created with a :term[Variable Reference] that points to the `_outputPath` of a _previous_ call in the same sequence. This creates a multi-step data flow where the output of one tool becomes the input for the next.
+This concept extends to chaining :term[Tool Calls]{canonical="Call"} together. A :term[Tool Call]{canonical="Call"} can be created with a :term[Variable Reference] that points to the `_outputPath` of a _previous_ call in the same sequence. This creates a multi-step data flow where the output of one tool becomes the input for the next.
 
 This declarative wiring becomes especially powerful when `Output Paths` are used to define potential outcomes.
 
@@ -148,7 +148,7 @@ This ability to define a full sequence of operations—including complex branchi
   >
   > - [009: Agent/State](./009_agent_state.md)
 
-- **:term[Plan]:** Variables are the fundamental technology that powers the :term[Plan] system. A :term[Plan] is a graph of :term[Tool Calls] where the connections (edges) are formed by :term[Variable References] pointing to `Output Paths`. This allows an agent to define a complete, executable workflow as a single, declarative data structure.
+- **:term[Plan]:** Variables are the fundamental technology that powers the :term[Plan] system. A :term[Plan] message contains a graph of :term[Tool Calls]{canonical="Call"} where the connections (edges) are formed by :term[Variable References] pointing to `Output Paths`. This allows an agent to define a complete, executable workflow as a single, declarative data structure.
 
   > Sidenote:
   >
