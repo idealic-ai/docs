@@ -1,99 +1,152 @@
 # 012: Agent/Delegate
 
-> [!DEFINITION] [Delegate](./000_glossary.md)
-> A set of rules for running a task in its own private workspace, like a "clean room." An agent can trigger this by using a special `_delegate` property in a `Call`. This runs the task in an isolated space, and the `_scopes` property carefully passes in only the information it needs from the outside world.
+> [!DEFINITION] Delegate
+> A way to run a task in its own separate, clean workspace. Think of it like hiring a specialist. When a task has a `_delegate` note on it, instead of doing the job yourself, you send it to an expert (another AI agent) who works in their own office. The `_scopes` property is a list of specific documents you give them so they have just the right information to do the job without seeing your messy desk.
 
 > Sidenote:
-> *   Needs to be read after:
->     *   [004: Agent/Call](./004_agent_call.md)
-> *   Works together with:
->     *   [013: Agent/Scopes](./013_agent_scopes.md)
+> - You should know about:
+>   - [004: Agent/Call](./004_agent_call.md)
+> - Pairs well with:
+>   - [013: Agent/Scopes](./013_agent_scopes.md)
 
-So far, we've talked about how individual `Tools` work. The **Delegate Protocol** is about how we can combine and build bigger things with these tools in a smart way.
+The **Delegate** pattern is how we solve a big problem: how to make AI agents more powerful by letting them work together without getting in each other's way. It’s a system for letting one agent hand off a job to another, giving it a clean, private workspace to get the job done. This prevents confusion and lets us build complex AI behaviors out of smaller, reusable expert agents.
 
-Think of it like hiring a specialist. Instead of trying to do everything yourself in a messy workshop, you can "delegate" a job to an expert who works in their own clean, organized room. This keeps things tidy, prevents mistakes, and lets you build complex projects by combining the work of many independent specialists.
+## The Problem: Giant Toolboxes and Messy Desks
 
-## The Problem: One Big Messy Workshop
+As an AI agent learns to do more things, just dumping all its tools into one big toolbox becomes a bad idea.
 
-As an AI agent gets more abilities, putting all its `Tools` in one giant toolbox becomes a problem.
+1.  **Too Many Choices**: Imagine trying to pick the right screwdriver from a toolbox with thousands of tools. AI models (LLMs) have a limit to how many tools they can look at and understand at once. If there are too many, they get confused.
+2.  **Messy Desks (Context Bleeding)**: When all tools are on the same desk, information from one task can accidentally influence another. It's like trying to write a history report when your math homework is sitting right on top of it — you might get your facts mixed up.
+3.  **Hard to Share**: A tool designed for one agent's specific toolbox is hard to give to another agent. You'd have to bring the whole messy toolbox with it.
 
-1.  **Too Many Options**: If you give an AI a toolbox with thousands of tools, it gets confused and can't pick the right one. It's like having a manual with too many pages to read.
-2.  **Mixing Things Up**: When all the tools are in the same workspace, the AI can get distracted by things that aren't relevant to the current job. This leads to it grabbing the wrong tool or using it incorrectly.
-3.  **Hard to Share**: A tool designed for one agent's specific workshop is hard to move to another agent's workshop. You'd have to bring all the clutter and context along with it.
+Delegation fixes this by creating **Isolated Workspaces**. It’s a way to hand off a task to an expert who works in their own clean office.
 
-The Delegate Protocol solves this by letting a `Call` be handled in a separate, isolated workshop.
+## How to Delegate a Task
 
-## The `_delegate` Property: The "Hire a Specialist" Tag
+You tell the system to delegate a task by adding a `_delegate` note to a tool's instructions. This note tells the system, "Don't do this job here. Send it to an expert."
 
-You tell the system to use a specialist by adding a `_delegate` property to a `Tool`. This tag is a note that says, "Don't do this task here. Hand it off to an expert."
+The `_delegate` note is a simple piece of text that works in two ways:
 
-The `_delegate` property can be used in two ways:
+- **Point to a Saved Expert**: The text can be a web link or a file path that points to another AI agent's complete instruction manual. This lets one tool hand off its work to a totally separate, pre-defined expert.
 
-*   **Point to a Known Specialist**: You can provide a link to a file that contains a complete set of instructions for another agent. This is like giving your `Tool` the business card of a specialist it can call on.
+  > Sidenote:
+  > A saved, reusable set of instructions (a `Request`) is the most common form of an `Idea`. The Delegate pattern is the main way to combine these `Ideas` to build bigger and more powerful systems. See [101: Concept/Idea](./101_concept_idea.md) for more.
 
-    > Sidenote:
-    > A saved, shareable set of instructions ([001: Agent/Request](./001_agent_request.md)) is the most common kind of `Idea`. The Delegate protocol is the main way we combine these `Ideas` to build more powerful things. See [101: Concept/Idea](./101_concept_idea.md) for more.
+- **Create a Temporary Expert**: If the text just says `'anonymous'`, it tells the system to create a brand new, empty workspace for this one task. It's like renting a clean, empty office for a single job.
 
-*   **Create a Temporary Workshop**: You can just say `'anonymous'`. This tells the system to instantly create a new, empty, and private workshop just for this one task. It’s perfect for quick jobs that need a clean space without needing a whole separate set of instructions.
+## Working in a Clean Workspace
 
-## Working in a Clean Room
+A delegate provides a "clean room" for a task. Instead of being done in the middle of the main agent's busy office, the task is handled in a quiet, separate space. The information in this new space isn't just copied over from the main office.
 
-A delegate provides a "clean room" for a task. Instead of running in the main agent's busy and cluttered environment, the `Call` is handled in a fresh, isolated space.
-
-This is where the [Scopes Protocol](./013_agent_scopes.md) is essential. Think of it like a secure delivery service. The `_scopes` property on the `Tool` is a list of exactly which items from the main workshop should be delivered to the specialist's clean room. This gives the main agent total control over what the specialist can see, preventing any mix-ups or confusion.
+This is where **Scopes** are so important. Think of the `_scopes` note on the tool as a checklist of specific documents to send over to the expert. It lets the main agent decide exactly what information the delegate gets to see, preventing the "messy desk" problem and keeping everything neat and tidy.
 
 > Sidenote:
-> *   [013: Agent/Scopes](./013_agent_scopes.md)
+> - [013: Agent/Scopes](./013_agent_scopes.md)
 
 ## Handling Huge, Complicated Tasks
 
-Delegates also help when a tool produces a very large or complex result.
+Delegation also helps when a tool produces a very big or complicated result. Instead of making the main agent's instruction manual huge by including all the details of the result, you can create a simple tool with just the inputs and a `_delegate` note.
 
-Imagine a tool that designs a whole car engine. Instead of making the main agent think about every single screw and bolt of the final engine design, you can use a delegate. The main agent just needs to know how to *order* the engine (the `input`).
+The AI can plan to use the tool knowing only what it needs to provide. The complicated result will be created inside the delegate's separate workspace. This lets an agent plan out a series of complex steps without needing to see every single tiny detail of every step at once. The agent trusts that the expert will do its job correctly and send back the right result.
 
-The `Call` is then sent to the delegate—the specialist engine designer—who does all the complex work in their own private workshop. The main agent trusts that the delegate will do its job and send back the finished engine. This lets the agent plan out big projects without getting bogged down in the tiny details of every single step.
+## When to Call the Expert
 
-## When to Call the Specialist
+Adding a `_delegate` note to a tool turns it into a request for an expert. But when does the system actually find and hire that expert? There are two ways to do it.
 
-A `Tool` becomes a `Delegate` just by having the `_delegate` property. But the big question is *when* the system figures out the details of that specialist's job. There are two ways to do this.
+### 1. Hire at the Last Minute (The Default Way)
 
-### 1. Figuring It Out on the Fly (The Default Way)
+The most common and flexible way is to find the expert right when the job needs to be done, after the main agent has already decided what to do.
 
-The most common and flexible way is to figure out the delegate's instructions only when the task is actually being run.
+This method allows for something amazing that normal computer code can't do: **the AI acts like smart glue.** An agent can ask for a task to be done, but the details it provides might not perfectly match what the expert expects. When the job is handed off, the AI in the expert's workspace is smart enough to figure out what the original agent meant.
 
-This allows the AI to act like smart "glue." The main agent can make a `Call` with instructions that don't perfectly match what the specialist expects. When the task is handed off, the AI inside the specialist's workshop is smart enough to look at the instructions it was given and figure out how to make them work. It can bridge the gap.
+This is a huge benefit because experts can update how they work without breaking everything. Even if an expert changes its forms, other agents can still send them requests, and the expert's AI will try its best to adapt. This makes the whole system flexible and stops it from being rigid.
 
-This is great because specialists can update their tools and methods, and the agents that hire them won't immediately break. The AI will try to adapt, making the whole system more resilient and flexible.
+The process works like this:
 
-Here’s how it works:
+1.  An agent decides to use a tool that needs an expert.
+2.  The system sees the `_delegate` note and starts the hand-off process.
+3.  **Gathering Info**: The system gets the expert's instruction manual. Then, it uses the `_scopes` note to copy over the specific information the expert needs from the main agent.
+4.  **Mapping the Request**: The details of the task from the main agent are packaged up and given to the expert. This is where the "smart glue" happens. The expert's AI will figure out how to use the information it was given to do its job, even if the names and labels don't match perfectly.
+5.  **Doing the Job**: A new, separate request is sent to the expert's workspace. The final result is sent back to the main agent.
 
-1.  An agent decides to use a `Tool` and makes a `Call`.
-2.  The system sees the `_delegate` tag and starts the process.
-3.  **Gathering the Tools**: The system gets the specialist's instruction manual and uses `_scopes` to deliver the necessary items from the main agent.
-4.  **Passing the Instructions**: The details of the `Call` are given to the specialist as a new request. This is where the AI acts as "glue," figuring out how to use the given instructions to do the job.
-5.  **Doing the Work**: A new, separate `Request` is run in the clean room. The final result is sent back to the main agent.
+### 2. Hire Before Starting (The Safe Way)
 
-### 2. Checking the Blueprints Upfront (The Safer Way)
+For situations where you need to be absolutely sure everything is perfect, you can find and prepare the expert **before** the main agent even starts its work.
 
-For jobs where you need everything to be perfect and predictable, you can check the specialist's blueprints *before* the main agent even starts working.
+In this mode, the system grabs the expert's instruction manual ahead of time and merges its requirements directly into the main agent's tool list. This means the main agent's AI can see the expert's exact requirements from the very beginning, ensuring the request it makes is perfectly formatted and correct. This can even include the exact format of the expert's final result.
 
-In this mode, the system grabs the delegate's instruction manual ahead of time and merges it with the `Tool`'s own information. The main agent's AI can then see the *exact* requirements of the specialist from the very beginning. This ensures the `Call` it makes is perfectly correct and will work exactly as expected.
+This method is like using a strict, official form. You know exactly what you need to provide and what you'll get back. It's safer but less flexible. It's best for important jobs where you don't want any surprises.
 
-This is like following a strict engineering blueprint where all the inputs and outputs are known and guaranteed. You lose the flexibility of the on-the-fly method, but you gain the safety of a predictable system. This is best for a critical job where you can't afford any surprises.
+:::::details{title="Example: Smart Glue for Sending a Message"}
 
-## Building Teams of Specialists
+This example shows how the "AI as smart glue" idea works. An expert can complete a job even if the request from the main agent doesn't perfectly match its own instructions. This is the normal, "last-minute" hiring behavior.
 
-Delegates let you build powerful teams by allowing different specialists to work together. You can have high-level agents that act as project managers, delegating specific tasks to low-level experts.
+::::columns
+:::column{title="What the Main Agent Does"}
 
-Imagine you're making a song. You have two specialists:
+A main agent needs to send a message. It knows about a `sendMessage` tool that hands the job off to an expert. Based on what it knows, it creates a request with `userId` and `text`, without knowing the expert's exact internal rules.
 
-*   A **`Sound-Designer`**: A low-level expert who knows everything about creating sounds with synthesizers.
-*   A **`Composer`**: A mid-level specialist who knows how to write melodies and structure a song. To create the actual sounds, the `Composer` makes `Calls` to the `Sound-Designer` delegate.
+```json
+// THE REQUEST FROM THE MAIN AGENT
+{
+  "_tool": "sendMessage",
+  "_delegate": "http://example.com/experts/speaker_EN",
+  "userId": "u_123",
+  "text": "Hello, world!"
+}
+```
 
-Now, a high-level **`Producer`** agent comes in. The `Producer`'s job is to create a finished record. Depending on the goal, the `Producer` can manage these specialists in different ways:
+:::
+:::column{title="What the Expert Sees"}
+
+The `speaker_EN` expert is a separate agent. When it gets the job, the system packages the main agent's request into an `input` message. But look closely: the expert's own instructions expect `recipientId` and `messageBody`, not `userId` and `text`. The expert's AI is smart enough to bridge this gap. It understands that `userId` means the same thing as `recipientId` and maps them correctly. This isn't a simple code trick; it's the AI understanding the meaning.
+
+```json
+// FINAL INSTRUCTIONS FOR THE EXPERT'S WORKSPACE
+[
+  {
+    "type": "system",
+    "message": "You are an expert in messaging in English."
+  },
+  {
+    "type": "input",
+    // This is the info the main agent provided.
+    "input": {
+      "userId": "u_123",
+      "text": "Hello, world!"
+    },
+    // This is the format the expert expects.
+    "schema": {
+      "type": "object",
+      "properties": {
+        "recipientId": { "type": "string" },
+        "messageBody": { "type": "string" }
+      }
+    }
+  }
+]
+```
+
+:::
+::::
+:::::
+
+:::details{title="Example: A Music Production Team"}
+
+Delegates allow different AI agents to work together like a team. You can have high-level managers who focus on the big picture and delegate specific jobs to low-level experts.
+
+Imagine a music workflow with two expert agents: a **`Composer`** and a **`Sound-Designer`**.
+
+- The **`Sound-Designer`** is the technical expert. It's a focused agent that knows how to use digital instruments to create specific sounds.
+
+- The **`Composer`** is the creative specialist. Its job is to write a song. It figures out the melody and structure, and then it delegates tasks to the `Sound-Designer` to actually create the sounds it needs.
+
+This two-level team is a common setup. But the real power comes from how they can be managed dynamically.
+
+Now, let's add a high-level **`Producer`** agent. The `Producer`'s job is to create a final, polished song. Depending on the goal, the `Producer` can manage its team in different ways:
 
 > Sidenote:
-> This setup allows for a flexible team. A high-level `Producer` can give a task to a `Composer`, who then uses a `Sound-Designer`. But the `Producer` can also skip the middleman and talk to the `Sound-Designer` directly if needed.
+> This setup allows for a flexible team. A high-level `Producer` can tell a `Composer` what to do, and the `Composer` will then manage a `Sound-Designer`. But the `Producer` can also skip the middleman and give orders directly to the `Sound-Designer` if needed.
 >
 > ```mermaid
 > graph TD
@@ -102,14 +155,14 @@ Now, a high-level **`Producer`** agent comes in. The `Producer`'s job is to crea
 >     Composer --> SoundDesigner(Sound-Designer)
 > ```
 
-*   **Top-Down Management**: The `Producer` could make one simple `Call` to the `Composer`, saying "I need a sad song." The `Composer` would then do its whole job, including making its own `Calls` to the `Sound-Designer`, without the `Producer` needing to worry about the details.
+- **Team-Based Approach**: To create a song, the `Producer` might just give one big task to the `Composer` delegate, saying "I need a sad song." The `Composer` then does its whole job, including managing the `Sound-Designer` on its own. The `Producer` doesn't even need to know the `Sound-Designer` exists.
 
-*   **Direct Management**: If the `Producer` also needs some special sound effects (like footsteps or rain), it can make `Calls` *directly* to the `Sound-Designer` for those specific tasks, while *at the same time* telling the `Composer` to work on the music.
+- **Direct Management Approach**: If the `Producer` also needs a specific sound effect, like a door slamming, it can give that task directly to the `Sound-Designer`, at the same time it's asking the `Composer` to write the music.
 
-This shows the power of the system: the team structure isn't fixed. The `Producer` can treat the `Composer` as a self-managed employee or it can micromanage the `Sound-Designer` directly, all depending on what the project needs. This allows the same group of experts to be combined in endless ways to solve new problems.
+This shows the main idea: the team structure isn't fixed. The `Producer` can treat the `Composer` as a self-managing unit or it can step in and manage the individual experts directly, depending on what the project needs. This flexibility lets you combine the same group of experts in many different ways to get things done.
 
-## From Single Tasks to Long-Term Memory
+:::
 
-Delegates are great for managing one-off tasks with experts. But for complex, multi-step projects, an agent needs a memory. It needs a way to keep track of its progress, learn from what it has done, and follow a long-term plan. This is the next step: moving from isolated actions to intelligent, ongoing work.
+## From Delegation to Scopes
 
-The next document, [009: Agent/State](./009_agent_state.md), explains how we give agents a memory to manage this state.
+Delegating a task gives it a clean workspace, but to be useful, an expert needs to get information from the agent that hired it. The `_scopes` property is the tool for this, acting as a secure bridge for sharing information. We'll explore exactly how that bridge works in the **Scopes** pattern.

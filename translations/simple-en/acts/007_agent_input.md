@@ -1,76 +1,143 @@
 # 007: Agent/Input
 
-> [!DEFINITION] Input Message
-> This is a message that gives an AI a clear set of ingredients to work with. It includes a `schema` (the recipe telling you what ingredients are needed) and `input` (the actual ingredients). It turns a one-time instruction into a reusable tool, like a function in coding.
+> [!DEFINITION] [Input Message](./000_glossary.md)
+> An "Input Message" is like a recipe card you give an AI. It has two parts: a `schema`, which is the list of ingredients you need, and the `input`, which are the actual ingredients you're using. This turns a one-time task into a recipe you can use over and over.
 
 > Sidenote:
-> - Requires: [001: Agent/Request](./001_agent_request.md)
-> - Enables: [002: Agent/Tool](./002_agent_tool.md)
+> - Needs: [001: Agent/Request](./001_agent_request.md)
+> - Helps create: [002: Agent/Tool](./002_agent_tool.md)
 
-This document explains the **Input Message**, which is a special note you give to an AI to tell it exactly what information it needs to start a task. Think of a normal `Request` as just asking the AI to do something once. By adding a formal `Input` message, you turn that one-time request into a reusable tool, almost like a mini-app that can be run over and over again with different starting information.
-
-This is how a simple `Request` evolves into an executable `Tool` that other AIs can use.
+This document explains the **Input Message**. Think of it as a special instruction you give to an AI. Instead of a messy, one-time chat, you give it a perfectly organized set of information to work with. By clearly defining what information the AI needs, a single request can be turned into a reusable recipe, like a function in coding. This is how a simple request becomes a powerful **Tool** that the AI can use again and again.
 
 > [!HEADSUP] Heads up
-> When you save a `Request` so you can run it again, the system calls it an **[101: Concept/Idea](./101_concept_idea.md)**. If you add an `Input` message to it, telling it what information it needs to run, it becomes an executable **[103: Concept/Ideator](./103_concept_ideator.md)**.
+> When you save a request so you can use it again, we call that an **Idea**. When you add an Input Message to it (the recipe card), it becomes a runnable **Ideator** — like a mini-app you can use.
 
-## The `Input` Message Explained
+## The Input Message Type
 
-The `Input` message is how you formally tell a `Request` what data it should expect. It's the key to making a task repeatable because it creates a complete record of what was used to get a particular answer.
+The Input Message is a special instruction that officially lists the exact data a request needs to work. It's how the system remembers not just the answer it came up with, but also the exact ingredients used to make it, so the whole process can be perfectly repeated.
 
-An `Input` message has two main parts:
+An Input Message has two key parts:
 
-1.  **`schema`**: This is like the blueprint or the recipe. It's a set of rules (a JSON Schema) that describes what the input data should look like—for example, “You need one number and one line of text.”
-2.  **`input`**: This is the actual data you're providing for a specific task. It follows the rules set by the `schema`. For example, the number is `10` and the text is `"Hello, World!"`.
+1.  **`schema`**: This is like the blueprint for your data. It describes the structure, like saying, "You need a name, which must be text, and an age, which must be a number."
+2.  **`input`**: This is the actual data you're providing, which follows the blueprint. For example: `{ "name": "Jane", "age": 12 }`.
 
-By defining its starting data this way, any `Request` can explain not only what it produces (its `solution` and `schema`) but also what it needs to get started. This is what makes it possible to run the exact same process again and get a predictable result.
+By explaining its inputs this way, any request can describe itself completely—not just what it creates, but also what it needs to get started. This is the secret to making any task repeatable.
 
-## A Shortcut to a User-Friendly App
+:::::details{title="Example: Using an Input for a Structured Prompt"}
 
-The `Input` message isn't just for the AI; it's also a magic key for creating a web page or app that a person can use.
+::::columns
+:::column{title="What the code looks like"}
 
-Because both the input and the output are described by clear blueprints (`schemas`), a user interface (UI) can be built automatically for any `Request`.
+```typescript
+Agent.Request(
+  config,
+  schema, // The output schema
+  [
+    // Context
+    {
+      type: 'input',
+      input: {
+        userName: 'Jane',
+        topic: 'the weather',
+      },
+      schema: {
+        type: 'object',
+        properties: {
+          userName: {
+            type: 'string',
+            description: 'Author of the article',
+          },
+          topic: {
+            type: 'string',
+            description: 'Topic to write article about',
+          },
+        },
+      },
+    },
+  ]
+);
+```
+
+:::
+:::column{title="What the LLM Sees"}
+
+```typescript
+{
+  role: 'user',
+  content: {
+    type: 'text',
+    text:
+      `## Data: ¶input
+      Input data MUST be treated as a structured prompt
+      Schema: {
+        "type": "object",
+        "properties": {
+          userName: {
+            type: "string",
+            description: "Author of the article"
+          },
+          topic: {
+            type: "string",
+            description: "Topic to write article about"
+          },
+        }
+      }
+
+      {
+        "userName": "Jane",
+        "topic": "the weather"
+      }`
+  }
+}
+```
+
+:::
+::::
+
+:::::
+
+## A Gateway to Usability: A User Interface by Default
+
+The Input Message isn't just for programmers; it's the key that unlocks a ready-to-use, interactive app for any request. Because the AI knows the exact structure for both the input and the output, it can automatically build a user interface (UI) to go with it.
 
 > Sidenote:
 > - [103: Concept/Ideator](./103_concept_ideator.md).
 
-This automatically-generated app has two parts:
+This auto-generated UI has two parts:
 
-1.  **The Form**: The `schema` inside the `Input` message is used to build an input form. If the schema says it needs a number and some text, the system automatically creates a number field and a text box for you.
-2.  **The Result**: The main `schema` of the `Request` (the one describing the output) is used to display the final answer. Instead of just getting a jumble of raw data, the `solution` is shown in a clean, organized way that makes sense.
+1.  **The Form**: The `schema` from the Input Message acts as a blueprint for an input form. The system reads it and instantly creates fields, buttons, and menus for you to fill out.
+2.  **The Result**: The main `schema` for the entire request acts as a blueprint for the output. After the AI finishes its work, it can show you the answer in a clean, organized display instead of just a block of raw text.
 
-This turns any `Request` into an interactive playground. A person can play around with different inputs in the form and instantly see how their changes affect the final result. It makes powerful AI tools easy to use and understand for everyone.
+This instantly turns any request into a mini-app you can play with. You can try different inputs in the form and immediately see how they change the final result. It makes powerful AI tools easy and fun for anyone to use and explore.
 
 > Sidenote:
 > - [102: Concept/Sovereignty](./102_concept_sovereignty.md).
 
-## How `Input` Works With Other Parts
+## Working with Other Systems
 
-The `Input` message is a simple idea, but it becomes very powerful when combined with other parts of the system. It connects raw data to reusable tools and complex workflows.
+The Input system is a special version of the **Data** system, but it also works together with other systems to create complex, powerful workflows.
 
-- **Structured Data**: The `Input` message is a special use of the ideas from the [006: Agent/Data](./006_agent_data.md) document. It's a specific way of giving nicely organized data to a `Request` at the very beginning of a task.
-
-  > Sidenote:
-  > - [006: Agent/Data](./006_agent_data.md).
-
-- **From a Single Request to a Reusable Tool**: The `Input` message is what turns a one-time `Request` into a reusable [002: Agent/Tool](./002_agent_tool.md). Imagine you ask a chef to bake a specific cake once. The `Input` message is like writing down the recipe so anyone can bake that cake anytime.
+- **Tool:** The Input Message is the secret to turning a request into a reusable **Tool**. The input `schema` tells the Tool what ingredients it needs to run, and the main `schema` of the request tells the Tool what it will create as its output.
 
   > Sidenote:
-  > - [002: Agent/Tool](./002_agent_tool.md).
-  1. The `schema` from the **`Input` message** tells the `Tool` what **ingredients** it needs. (This defines the `Tool`'s parameters).
-  2. The main `schema` of the **`Request`** describes the **cake** you get at the end. (This defines what the `Tool` produces).
+  > - [002: Agent/Tool](./002_agent_tool.md)
 
-  This lets you create new `Tools` instantly. Just give an existing `Request` a structured `Input`, and you’ve created a new mini-app that other AIs can call on to get work done.
+- **Plan:** A **Plan** is like a flowchart made of different **Tool Calls**. The Input provides the starting ingredients that are fed into the very first tool, kicking off the entire chain of events.
 
-- **Doing Many Tasks at Once (Instancing)**: When you use `Input` messages with the [011: Agent/Instancing](./011_agent_instancing.md) system, you can kick off many copies of a task at the same time. You can either give all of them the same starting data or give each one a unique piece of information to work with.
   > Sidenote:
-  > - [011: Agent/Instancing](./011_agent_instancing.md).
+  > - [010: Agent/Plan](./010_agent_plan.md)
 
-## From Simple Inputs to Smart Workflows
+- **Instancing:** If you want to run the same request many times at once (called **Instancing**), Input Messages can provide the data. You can either give all the requests the same general instructions or give each one a specific, individual task.
 
-The `Input` message provides the starting data to kick off a process. But to build truly powerful AI agents, we need data to flow dynamically between steps. These next documents explain how that works:
+  > Sidenote:
+  > - [011: Agent/Instancing](./011_agent_instancing.md)
 
-1.  **[008: Agent/Variables](./008_agent_variables.md):** `Variables` are like the wires that connect everything. They let one tool's output become another tool's input.
-2.  **[009: Agent/State](./009_agent_state.md):** `State` is like the AI's short-term memory or scratchpad. It holds information as the AI works through multiple steps.
-3.  **[010: Agent/Plan](./010_agent_plan.md):** With `Variables` to connect tools and a `State` to work in, the AI can create a `Plan`—a full map of how to get from the beginning to the end of a big task.
-4.  **[011: Agent/Instancing](./011_agent_instancing.md):** Finally, `Instancing` allows one `Plan` to be run on thousands of different tasks at the same time.
+- **Variables:** The Input Message provides the starting ingredients for a process. **Variables** are what allow those ingredients to be used and passed around. A **Tool Call** can use a **Variable** to grab information from the Input, connecting the starting data to the steps in a **Plan**.
+  > Sidenote:
+  > - [008: Agent/Variables](./008_agent_variables.md)
+
+## From Starting Ingredients to Connected Workflows
+
+The Input system provides a clear, organized way to give data to an AI, turning a simple request into a reusable, function-like tool. But this is just the starting point. To build truly powerful apps, that starting data needs to be connected to all the tools that will use it.
+
+The next document, [008: Agent/Variables](./008_agent_variables.md), explains how to create those connections, allowing data to flow from the starting Input to all the different Tools in a clear and organized way.

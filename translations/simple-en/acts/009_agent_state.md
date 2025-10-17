@@ -1,81 +1,81 @@
 # 009: Agent/State
 
 > [!DEFINITION] State Message
-> A special message that works like an ongoing memory for a process. Think of it as a set of digital sticky notes or a scratchpad where the process can keep track of what it's doing, allowing it to handle tasks that require multiple steps.
+> A special message that works like a live, changing memory for a multi-step task. It holds information, like a set of notes, so the agent can remember what it's doing from one step to the next.
 
 > Sidenote:
-> - Requires:
+> - Needs these ideas first:
 >   - [004: Agent/Call](./004_agent/call.md)
 >   - [006: Agent/Data](./006_agent/data.md)
-> - Enables:
+> - Helps create this idea:
 >   - [010: Agent/Plan](./010_agent/plan.md)
-> - Complemented by:
+> - Works together with:
 >   - [011: Agent/Instancing](./011_agent/instancing.md)
 >   - [012: Agent/Delegate](./012_agent/delegate.md)
 >   - [013: Agent/Scopes](./013_agent/scopes.md)
 
-This document explains the **State message**, which gives an agent a memory that sticks around. While [Variables](./008_agent_variables.md) are like the wires connecting different tools, the `State` is the **scratchpad** where the agent jots down notes and results as it works through a task.
+This document explains the **State message**, which is a special type of message that acts like a memory for an agent while it works. Think of it like this: if an agent needs to do a big job with many steps, it needs a place to write things down so it doesn't get lost. The State is that place—it's the agent's personal scratchpad.
 
-The `State` keeps track of everything happening with a request. This is super important because it allows a process to be paused and then restarted later, right where it left off, kind of like saving your progress in a video game. When the process wakes up, it just looks at the `State` to remember what it was doing and what to do next.
+This scratchpad keeps track of everything important for the current task. This is super useful because it allows the agent to pause its work and come back to it later without forgetting anything. When the agent starts again, it just looks at its scratchpad (the State message from the last step) to see exactly where it left off and what to do next.
 
-## Giving the Scratchpad Some Rules
+## Guiding the Workflow with a Schema
 
-You can give the `State` a `schema`, which is like a template or a form to fill out. It’s not required, but it’s very helpful. This template tells the AI what kind of information it should expect to collect and where to write it down.
+You can give the agent a template for its scratchpad, called a `schema`. This is like giving someone a fill-in-the-blanks form. The form has spaces for specific pieces of information, which tells the agent what it needs to find and where to write it down. This helps guide the agent to do its job correctly and make sure all the necessary steps are taken in the right order.
 
-This helps guide the AI. If it knows the scratchpad is supposed to have a spot for a `user_email` and a `final_summary`, it will focus on using tools that can find that information. This makes the whole process more reliable and less likely to get confused.
+When the agent is told what information goes where, it's more likely to use its tools in a way that fills out the form perfectly, creating a smooth and predictable process.
 
 > Sidenote:
 > - [008: Agent/Variables](./008_agent_variables.md)
 
-## Making Tools Work Together in Steps
+## Multi-Step Tools
 
-The main job of the `State` message is to let different tools share information. It’s a shared space where one tool can leave a result, and another tool can pick it up and use it.
+The main reason for the State scratchpad is to let different tools share information. It allows for complex, multi-step jobs where tools work together.
 
-Imagine an assembly line. One robot arm paints a car door and puts it on the conveyor belt (writes to `State`). The next robot arm down the line picks up that painted door (reads from `State`) and attaches it to the car's body. The `State` is the conveyor belt that connects their work.
+Imagine an assembly line. One tool builds a car door and places it on the conveyor belt (writes its result to the State). The next tool down the line picks up the door from the belt (reads the data from the State) and attaches it to the car. The State acts as the conveyor belt, passing information from one tool to the next so they can work together on the same project.
 
-## Planning First, Acting Second
+## Planning vs. Execution
 
-Using the `State` to save results (`_outputPath`) and using **Variables** to read them is what allows the agent to separate planning from doing. The agent can map out an entire set of steps—like a flowchart showing how data moves from one tool to the next—*before* it actually runs any of them.
+By using the State, an agent can separate planning from doing. It can figure out a whole plan first—like drawing a blueprint—before a single tool starts working. The agent can map out which tool will do what, where it will get its information from, and where it will put its result.
 
-This flowchart of actions can be checked for errors, saved, and reused. It's like a chef writing out the entire recipe before even turning on the stove. The person creating the workflow can either let the AI figure out the recipe on its own or give it a strict set of instructions to follow for a super-reliable result.
+This blueprint can be checked, saved, and reused. It's like a recipe where you list all the ingredients and all the steps before you even start cooking. You can decide to follow the recipe exactly, or you can let the agent figure out some of the steps on its own. This makes the system both powerful and flexible.
 
 > [!HEADSUP] Heads up
-> When an agent creates a series of tool actions that are connected through the `State`, it is **planning**. This system provides all the pieces needed for it: the `State` is the scratchpad, Variables and `_outputPath` are the wires connecting the dots, and the agent's **Loop** is the engine that runs through the steps. Together, they let an agent build a complete flowchart of actions, which is the core of what a **Plan** is.
-> 
+> When an agent decides how its tools will connect to each other using the State scratchpad, it's creating a plan. This system gives the agent everything it needs to do this: a scratchpad (the State), wires to connect things (`_outputPath` and Variable References), and a process to work through the steps (the Loop). Together, these parts let an agent build a complete roadmap for solving a problem, which is what a Plan is.
+>
 > > Sidenote:
-> > 
+> >
 > > - [005: Agent/Loop](./005_agent_loop.md)
 > > - [010: Agent/Plan](./010_agent_plan.md)
 
-## How It Works With Other Parts
+## Composition
 
-- **Call:** A `Call` is an instruction to use a tool. By itself, it’s just a one-off action. But when you add the `_outputPath` property, you're telling the tool, "Hey, once you're done, write your result to this specific spot on the `State` scratchpad." This turns a simple action into one that changes the agent's memory, allowing future steps to build on what it just did.
+- **Call:** A `Call` is a command to use a tool. It's connected to the State through a special instruction called `_outputPath`. This instruction tells the tool where on the scratchpad to write its result. This turns a simple tool action into a step that changes the agent's memory, allowing a series of actions to build on each other.
 
   > Sidenote:
   > - [004: Agent/Call](./004_agent_call.md)
 
-- **Data:** The `State` message is just a special kind of `Data` message, specifically one with `kind: "state"`. It uses all the features of `Data` messages to create a memory for the agent. For example, it uses the `schema` property to define the memory's structure. It also uses the `Data` system's ability to be updated in small pieces, like adding new sticky notes to a whiteboard instead of erasing and re-drawing the whole thing every time.
+- **Data:** The State system is built on top of the `Data` message system. It's just a `Data` message that is specifically labeled as `"state"`. It uses all the cool features of `Data` messages, like using a `schema` to define its structure. It also means the State can be updated in small pieces, and the system will automatically merge those pieces together to keep the scratchpad organized and up-to-date.
 
   > Sidenote:
   > - [006: Agent/Data](./006_agent_data.md)
 
-- **Scopes:** The `Scopes` system is how a tool running in a separate, clean workspace (a **Delegate**) can get access to the main `State` scratchpad. When a task is delegated, you can specify that the `state` should be included. This allows the isolated tool to read from and write to the main workflow's memory in a safe and controlled way.
+- **Scopes:** Scopes are like giving a tool a temporary, clean workspace to do its job. If you want a tool to have access to the main scratchpad, you can use the `_scopes` property to include the State in that workspace. This lets tools that work in isolation still see and use the information from the main task in a safe and controlled way.
 
   > Sidenote:
   > - [013: Agent/Scopes](./013_agent_scopes.md)
 
-- **Instancing:** The `State` message works perfectly with `Instancing`. If you have a task that needs to run for 100 different users at once (`Instances`), each user gets their own private `State` scratchpad. When a tool needs to get information, like `†state.currentUser.id`, the system automatically knows which user's scratchpad to look at. This allows a single, general-purpose plan to work for many different cases at the same time without them interfering with each other.
+- **Instancing:** The State system works perfectly with `Instancing`, which is when you run the same task on many different things at once (like sending a personalized email to 100 people). Each person's information gets its own separate scratchpad. When a tool needs to find the `currentUser.id`, the system automatically knows which person's scratchpad to look at. This allows a single plan to work on many separate tasks at the same time without getting them mixed up.
 
   > Sidenote:
   > - [011: Agent/Instancing](./011_agent_instancing.md)
 
-- **Plan:** While `State` is useful for simple, step-by-step tasks, its real power shines when it's the foundation of a `Plan`. In a `Plan`, all the tool actions are mapped out like a flowchart. The `State` object acts as the arrows connecting the boxes in that flowchart. It’s what lets one action save a result that can be used by several other actions later, enabling complex logic like branching paths (if-then-else) or running multiple tasks at once.
+- **Plan:** While the State is great for chaining tools in a simple line, it becomes truly powerful when used to build a `Plan`. A `Plan` is like a flowchart where tools are the boxes and the State is the arrows connecting them. The State allows one tool to write a piece of information that other tools can then read, making it possible to create complex workflows with forks (if-then decisions) or parallel branches.
 
   > Sidenote:
   > - [010: Agent/Plan](./010_agent_plan.md)
 
-## From a Single Memory to a Full Orchestra
+## From Single State to Orchestrated Workflows
 
-The `State` message gives us a way to manage the memory for a single process. Now that we have a scratchpad and a way to connect tools, we can start building and running complex projects with many steps.
+The State message gives us the memory an agent needs to handle a single task with many steps. Now that we have a scratchpad and a way to connect tools, we can start designing and running much more complex jobs.
 
-The next document, **[010: Agent/Plan](./010_agent_plan.md)**, explains how to manage these projects by organizing all the tool actions into a smart flowchart.
+The next document, [010: Agent/Plan](./010_agent_plan.md), explains how to organize these jobs into a smart flowchart of tool actions.

@@ -1,107 +1,121 @@
-# A Dictionary of Our Terms
+# What Do These Words Mean?
 
-This guide explains the main words we use in the Idea Protocol and all the systems connected to it.
+This paper explains the main words we use to talk about the Idea system.
 
-- **Idea**: Think of an `Idea` as a smart, digital recipe card. It's not just a temporary note. It's a complete package of knowledge with three parts: the ingredients list (`schema`), the cooking instructions (`solution`), and notes on how it turned out before (`context`).
-
-  > Sidenote:
-  > - [101: Concept/Idea](./101_concept_idea.md)
-
-- **Ideator**: An `Ideator` is an `Idea` that can actually *do* something. It’s like a magical chef who takes your ingredients (input) and uses a recipe card (`Idea`) to create a finished dish (output).
+- **Idea**: Think of an `Idea` as a self-contained digital recipe card. It holds three things: the rules for what it is (`schema`), the final result or answer (`solution`), and the story of how it got there (`context`). It's a permanent building block, not just a quick, forgettable command.
 
   > Sidenote:
-  > - [103: Concept/Ideator](./103_concept_ideator.md)
+  > - [101: About Ideas](./101_concept_idea.md)
 
-- **Idea Transformer**: This is a special kind of `Ideator` that works on other `Ideas`. Instead of taking ingredients, it takes an entire recipe card and improves it, creating a brand new recipe.
+- **Ideator**: This is an `Idea` that can actually do something. It's like a machine that takes something you give it (`input`) and turns it into something else (`output`).
 
   > Sidenote:
-  > - [103: Concept/Ideator](./103_concept_ideator.md)
+  > - [103: About Ideators](./103_concept_ideator.md)
 
-- **Input Message**: This is like an order form for an `Ideator`. It clearly lists what ingredients are expected and provides the exact ones you're giving it. This makes sure the `Ideator` knows exactly what it's working with.
+- **Idea Transformer**: A special kind of `Ideator` that takes another `Idea` as its input. Imagine a machine that doesn't just bake a cake, but takes an entire recipe card and improves it.
+
+  > Sidenote:
+  > - [103: About Ideators](./103_concept_ideator.md)
+
+- **Input Message**: A small packet of information that tells an `Ideator` what it needs to work with. It's like the label on a box that says, "This box contains apples," along with the actual apples inside.
 
   > Sidenote:
   > - [007: Agent/Input](./007_agent_input.md)
 
-- **Tool**: A `Tool` is a description of a skill an AI can use, like a button in a video game that says "Jump.” It tells the AI *what* it can do and what it needs to do it, but it doesn't do the action itself.
+- **Tool**: A description of a special power or ability the AI can use. Think of it like a list of spells a wizard can cast. The AI looks at this list and decides which one to use. For example, a `Tool` might be "Look up the weather."
 
   > Sidenote:
   > - [002: Agent/Tool](./002_agent_tool.md)
 
-- **Activity**: An `Activity` is the real-world action that happens when a `Tool` is used. If a `Tool` is the "Check Weather" button, the `Activity` is the actual computer code that connects to a weather service to get the forecast.
+- **Activity**: The actual computer program that makes a `Tool` work. If the `Tool` is "Look up the weather," the `Activity` is the real code that connects to a weather website to get the forecast. It's the engine that powers the tool.
 
   > Sidenote:
   > - [003: Agent/Activity](./003_agent_activity.md)
 
-- **Call**: A `Call` is the moment the AI decides to use a `Tool`. It’s like pressing the "Check Weather" button and saying, “Do it for London, right now.” It’s the specific command to perform an action.
+- **Call**: A specific command to use a `Tool`. It’s the action of the AI saying, "I want to use the 'Look up the weather' tool for 'Paris, France' right now." It's turning the *ability* into an *action*.
 
   > Sidenote:
   > - [004: Agent/Call](./004_agent_call.md)
 
-- **Scope**: This decides *where* a `Call` gets handled.
-  - **Inline Scope**: The job is done right here, within the current workflow.
-  - **Delegate Scope**: The job is handed off to a specialist in another room to handle it separately.
+- **Scope**: This is the place where a `Call` happens.
+  - **Inline Scope**: The action happens right here, within the AI's current thought process.
+  - **Delegate Scope**: The action is handed off to a separate, fresh helper to do the job without being distracted.
     > Sidenote:
     > - [004: Agent/Call](./004_agent_call.md)
 
-- **Method**: This decides *how* a `Call` gets handled.
-  - **Explicit Execution**: The result is produced by exact computer code (an `Activity`). It's like using a calculator—you always get the same, precise answer.
+- **Method**: This is *how* a `Call` gets its answer.
+  - **Explicit Execution**: A real computer program (`Activity`) runs and gives a predictable, exact answer.
 
     > Sidenote:
     > - [003: Agent/Activity](./003_agent_activity.md)
 
-  - **Latent Execution**: The result is answered by the AI's own creative understanding. It's like asking a poet to describe a sunset—the answer is generated, not calculated.
+  - **Latent Execution**: The AI uses its own creative brain to come up with the answer, like when it writes a story or answers a tricky question.
 
     > Sidenote:
-    > - [104: Concept/Latent](./104_concept_latent.md)
+    > - [104: About Latency](./104_concept_latent.md)
 
-- **Delegate**: Imagine you have a sensitive task. A `Delegate` is like hiring a contractor and giving them a separate, clean workshop to do the job. You can pass them specific tools and information they need from your own workshop, but they work in their own space without messing up yours.
+- **Delegate**: A helper that does a job in a separate, clean workspace. When the main AI needs a task done without any outside mess, it gives the job to a `Delegate`, which works in isolation and then reports back the result.
 
   > Sidenote:
   > - [012: Agent/Delegate](./012_agent_delegate.md)
 
-- **Scope**: A `Scope` is like a key that gives a task access to a specific piece of information from the main project. When you send a job to a `Delegate`, you use `Scopes` to give them only the information they need to see, keeping everything else private.
+- **Scope**: A way to give a helperaccess to only the specific information it needs from the main workspace. It's like giving a chef only the ingredients for one dish, so they don't get confused by everything else in the kitchen.
 
   > Sidenote:
   > - [013: Agent/Scopes](./013_agent_scopes.md)
 
-- **Loop**: A `Loop` is how an AI works towards a goal. It repeatedly makes a request, gets a result, and uses that result to figure out the next step. It keeps going around this cycle until the job is done and it has no more actions to take.
+- **Loop**: A cycle of thinking and acting. The AI looks at a problem, makes a `Call` to a tool, sees the result, and uses that new information to decide what to do next. It keeps 'looping' like this until the job is done.
 
   > Sidenote:
   > - [005: Agent/Loop](./005_agent_loop.md)
 
-- **Evolution**: This is the process of an AI system learning and improving on its own. It's like a video game character that not only levels up its skills but can also change its own rules or abilities over time based on its experiences.
+- **HITL (Human-in-the-Loop)**: A step where a person can jump in and check the AI's work. Before the AI performs an important action (a `Call`), it can pause and ask a human, "Is this okay?" You can then approve, change, or cancel its plan.
 
   > Sidenote:
-  > - [106: Concept/Evolution](./106_concept_evolution.md)
+  > - [005: Agent/Loop#human-in-the-loop-hitl](./005_agent_loop.md#human-in-the-loop-hitl)
 
-- **State Message**: This is a message that acts like the AI’s memory. It holds the current status of a task—like the score in a game or items in a shopping cart—so the AI knows where it left off in the last step.
+- **Evolution**: The process of the AI system learning and improving on its own over time. Like a character in a game leveling up, the system can change its own rules and abilities to get better at its job based on what it experiences.
+
+  > Sidenote:
+  > - [106: About Evolution](./106_concept_evolution.md)
+
+- **State Message**: A message that acts like the system's memory. It holds onto important information between steps of the `Loop`, so the AI doesn't forget what it's doing.
 
   > Sidenote:
   > - [009: Agent/State](./009_agent_state.md)
 
-- **Process Idea**: This is a special `Idea` that works like a project manager. It holds the library of possible `Tools` (the team's skills), the current `Plan` (the to-do list for today), and the memory of the previous plan and current goal.
+- **Plan**: A blueprint or strategy made of `Tool Calls` that shows how the AI is going to solve a problem. The AI can adjust this `Plan` as it goes, learning and adapting at each step.
 
   > Sidenote:
   > - [010: Agent/Plan](./010_agent_plan.md)
 
-- **Vessel Idea**: This `Idea` is like a Swiss Army knife. It holds every possible `Tool` you might ever need. When something happens, it chooses the right tools for the situation and records exactly which ones it used to respond.
+- **Process Idea**: An `Idea` that holds a whole project: the library of available `Tools`, the `Plan` for what to do next, and the current memory of what's happened so far.
+
+  > Sidenote:
+  > - [010: Agent/Plan](./010_agent_plan.md)
+
+- **Vessel Idea**: An `Idea` that knows all the possible actions it could take and also remembers which specific action it chose. It’s like a choose-your-own-adventure book that not only shows you all the paths but also keeps a bookmark on the one you picked.
 
   > Sidenote:
   > - [202: Idea/Vessel](./202_idea_vessel.md)
 
-- **Instancing**: This is a way to handle many similar tasks at once, without getting them mixed up. It's like a teacher grading papers for 30 different students on the same assignment; each paper is its own `Instance` with its own unique student name and grade.
+- **Instancing**: The skill of handling many different tasks or users at the same time, without mixing them up. Each task gets its own unique ID and its own memory (`State`).
 
   > Sidenote:
   > - [011: Agent/Instancing](./011_agent_instancing.md)
 
-- **Instance**: An `Instance` is one of those individual tasks being handled in an `Instancing` operation. In the teacher example, each student's paper is a separate `Instance`.
+- **Request**: A single question or command sent to the AI. You give it some background information (`context`) and a set of rules (`schema`), and it gives you back a final answer (`solution`).
+
+- **Instance**: A single, self-contained task being worked on during an `Instancing` process. If the AI is juggling ten balls, each ball is one `Instance`.
 
   > Sidenote:
   > - [011: Agent/Instancing](./011_agent_instancing.md)
 
-- **Reactor**: A `Reactor` is a master `Idea Transformer` built to handle back-and-forth interactions, like in a game. You give it the current state of the game (an `Idea`), and it produces the next state of the game (a new `Idea`).
+- **Reactor**: A special `Ideator` built to handle back-and-forth interactions, like a game. It takes the current state of the game (`Idea`), figures out the next move, and produces the new state of the game (`Idea`).
 
   > Sidenote:
   > - [303: Ideator/Reactor](./303_ideator_reactor.md)
 
-- **Variable Reference**: This is a special code that acts like a shortcut. It lets an AI say, "For this tool, use the answer that we got from the *last* tool." It's how the AI connects different tools together, creating a chain of actions.
+- **Variable Reference**: A special code (like `†state.score`) that lets the AI connect its tools together. It can use the answer from one tool as the input for another. It's like telling the AI, "Take the number you just got and plug it into this next step."
+
+- **Solution**: The final, organized answer that the AI gives back after a `Request`. It contains any actions (`Tool Calls`) it decided to take and the final result of its work.

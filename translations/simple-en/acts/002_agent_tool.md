@@ -1,70 +1,70 @@
 # 002: Agent/Tool
 
-> [!DEFINITION] [Tool](./000_glossary.md)
-> Think of a Tool as a recipe for a special skill an AI can use. It describes what the skill does and what information it needs to work. The AI reads this recipe and, if it decides to use the skill, it fills in the recipe with the right information. This creates a `Call`, which is the command to actually perform the action. The action can be carried out either by the AI itself, using its own knowledge, or by running a separate piece of code (an `Activity`).
+> [!DEFINITION] Tool
+> A Tool is like a recipe that describes a special power an AI assistant (called an agent) can use. This recipe is shown to the AI, giving it a clear menu of possible actions. The AI can then choose to use the tool by filling in the recipe's ingredients (called parameters). This action is either handled by the AI itself or triggers a separate piece of code to run.
 
 > Sidenote:
-> - You should read this first: [001: Agent/Request](./001_agent_request.md)
-> - This goes well with: [003: Agent/Activity](./003_agent_activity.md)
+> - You should first read: [001: Agent/Request](./001_agent_request.md)
+> - Works together with: [003: Agent/Activity](./003_agent_activity.md)
 
-A `Tool` is a set of instructions that defines a special ability an agent can have. It's the most basic building block for everything an agent can do. You can think of it as giving the AI a menu of special moves it can choose from to get a job done.
+A Tool is a blueprint that defines a specific skill an agent can use. Think of it as the basic building block for every action an agent can take. It gives the main AI a way to understand and choose from a list of available behaviors.
 
 ## What Are Tools?
 
-**Tools are the most important part** of how an agent acts. They unlock a new superpower for the AI: the ability to **choose the right action in the moment**, based on what's happening.
+**Tools are the most important part** of how an agent acts. They give agents a brand-new ability: **choosing the right action for the right moment**. This lets an agent look at a situation and decide the best thing to do.
 
-Tools give the AI:
+Tools provide:
 
-- **Clear Instructions**: Well-defined descriptions of what each skill does.
-- **No Guesswork**: The rules for what information a tool needs and what it gives back are crystal clear.
-- **Mix and Match**: You can combine simple tools to create more complex and interesting behaviors.
-- **AI-Friendly Format**: They are described in a way that an AI can understand and reason about, helping it choose the best one.
+- **Clear Instructions**: Blueprints that tell an agent what a skill does and how to use it.
+- **Safety**: Like a contract that says, "If you give me this kind of information, I'll give you that kind of result."
+- **Mix and Match**: They are like building blocks that can be combined to create more complex agent behaviors.
+- **AI-Friendly Format**: The blueprints are written in a way that a smart AI can read, understand, and choose from them.
 
-When an agent fills in the specific information a Tool needs, it creates a **Call**. A Call is like a filled-out order form for a specific action, ready to be sent off and completed.
+When an agent decides to use a Tool and fills in all the necessary information, it creates a **Call**—which is like a complete order form, ready to be sent off and executed.
 
 > Sidenote:
-> [004: Agent/Call](./004_agent_call.md)
->
+> Learn more about this in [004: Agent/Call](./004_agent_call.md)
 
-## When Should You Use Tools?
+## When to Use Tools
 
-Use the Tool system when you want your agents to:
+You should use Tools when you need an agent to:
 
-- **Choose actions on the fly** depending on the situation.
-- **Pick from many different skills** to figure out the best way to solve a problem.
-- **Use different versions** of the same skill (like choosing between Google or DuckDuckGo for a search).
-- **Combine the AI's smart thinking with plain, straightforward code** to make decisions.
+- **Think on its feet** and pick the best action based on what's happening.
+- **Choose from many different skills** to figure out how to complete a goal.
+- **Use different versions** of the same skill (like choosing between two different map apps to find a location).
+- **Combine the AI's smart thinking with plain, straightforward instructions** to make decisions.
 
-## How the Tool System is Built
+## A Blueprint is Just an Idea
 
-### The Big Idea: The Recipe is Not the Meal
+The system is built on one big idea: **Tools are just blueprints**. They describe *what* a skill does, but not *how* it's done. Separating the "what" from the "how" is what makes the whole system so powerful and flexible.
 
-The whole system is built on one simple rule: **Tools are just the recipes**. They describe what a skill does, but they don't actually do it. This separation between the description (the Tool) and the action (the code that runs it) is what makes the system so powerful and flexible.
+Imagine a light switch. The switch on the wall is the interface—you know what it does (turn the light on or off). You don't need to know about the wires inside the wall (the implementation) to use it. A Tool is like that light switch.
 
-A `Tool` recipe is written in a standard format called JSON Schema. Any field that doesn't start with an underscore (`_`) is an ingredient the tool needs. The system uses special fields that *do* start with an underscore to control how the tool works behind the scenes.
-
-A Tool's recipe defines everything about it:
+A Tool's blueprint defines its entire interface:
 
 > Sidenote:
 > Special Instructions:
 >
-> - **`_activity`**: Connects the tool to a real piece of code to perform an action. ([003: Agent/Activity](./003_agent_activity.md))
-> - **`_delegate`**: Asks another, separate agent to handle this tool's action. ([012: Agent/Delegate](./012_agent_delegate.md))
-> - **`_outputPath`**: Tells the system to save the tool's result in a specific place so it can be remembered and used later. ([009: Agent/State](./009_agent_state.md))
-> - **`_instance`**: Aims the tool at a specific copy when you're running many copies of the same task at once. ([011: Agent/Instancing](./011_agent_instancing.md))
+> - **`_activity`**: Connects the tool to a real piece of code that does the work. See [003: Agent/Activity](./003_agent_activity.md)
+> - **`_delegate`**: Hands off the tool's job to a separate, specialized helper. See [012: Agent/Delegate](./012_agent_delegate.md)
+> - **`_outputPath`**: Lets the tool save its result so it can be remembered and used later. See [009: Agent/State](./009_agent_state.md)
+> - **`_instance`**: Tells the tool which specific item to work on when handling many items at once. See [011: Agent/Instancing](./011_agent_instancing.md)
 
-- **`title`**: A simple, human-friendly name for the recipe (optional).
-- **`description`**: A sentence explaining what the tool does.
-- **`parameters`**: The ingredients the tool needs to work.
-- **`_tool`**: A unique name to make sure we know exactly which tool we're talking about.
-- **`_output`**: A description of what the tool will produce when it's finished.
-- **`_reasoningForCall`**: A special spot where the AI can write a note to itself explaining why it chose this particular tool.
+- **`title`**: A simple, human-friendly name for the tool.
+- **`description`**: A sentence explaining what the tool is for.
+- **`parameters`**: The ingredients, or information, the tool needs to do its job.
+- **`_tool`**: A unique name the system uses to identify the tool.
+- **`_output`**: A description of what the result should look like.
+- **`_reasoningForCall`**: A space where the AI can explain *why* it chose to use that particular tool.
 
-More advanced systems can then use these simple recipes to build complex workflows and manage how and when actions happen.
+Other parts of the system can then build on these simple blueprints to create complex workflows and manage how things get done.
 
-## Defining a Tool
+## How to Define a Tool
 
-Tools are defined using that JSON Schema format. The example below shows a `Tool` for figuring out if a piece of text sounds happy, sad, or neutral. This tool is designed to be used by the AI's own brainpower, since understanding language is something it's already good at. It doesn't need to run any extra code.
+Tools are written down as simple blueprints (JSON schemas). The example below shows a Tool that can figure out if a piece of text sounds happy, sad, or neutral. This tool doesn't need a separate program to run; the main AI is smart enough to figure out the answer on its own.
+
+::::columns
+:::column{title="The Tool's Blueprint"}
 
 ```typescript
 Tool.register('sentimentAnalysis', {
@@ -84,28 +84,48 @@ Tool.register('sentimentAnalysis', {
 });
 ```
 
-## Combining Recipes for the AI
+:::
+:::column{title="Example of How the AI Uses It"}
 
-An agent doesn't just use tools; it also needs to give a final answer when its job is done. To make this work, the system takes all the available `Tool` recipes and mixes them with another recipe for the final `output`. This creates one giant menu that it gives to the AI.
+```json
+// The AI is asked: "What is the sentiment of 'This is the best!'"
+{
+  "_tool": "sentimentAnalysis",
+  "text": "This is the best!",
+  "_output": {
+    "sentiment": "positive",
+    "confidence": 0.99
+  }
+}
+```
 
-This all-in-one menu gives the AI a choice. Depending on the question it was asked, it can:
+:::
+::::
 
-- **Use only tools:** If the job needs a few steps, the AI will use one or more tools and wait to give the final answer.
-- **Give the final answer only:** If the question is simple, the AI can answer it directly without needing any tools.
-- **Do both at once:** Sometimes, the AI can use a tool and give the final answer in the same step.
+## Putting the Blueprints Together for the AI
 
-This clever setup allows the same system to handle both simple questions and complex, multi-step jobs. The person building the agent just provides the tool recipes and the final answer recipe, and the system combines them into a single menu that the AI can use to decide the best way to respond.
+An agent doesn't just use tools; it often has a final goal, like writing a summary. To handle this, the system takes all the available tool blueprints and combines them with the blueprint for the final goal. This creates one big master blueprint that it gives to the AI.
 
-Here’s how a `Tool` recipe and a final answer recipe are combined.
+It's like telling the AI: "Here is a kitchen full of tools—a mixer, an oven, a knife. Your final goal is to bake a cake. You can use the tools if you need them, or you can just present the cake if you already have it."
+
+Based on the request, the AI can choose to:
+
+- **Use only tools:** If the job requires several steps, the AI will use one or more tools and wait to give the final answer.
+- **Give only the final answer:** If the question is simple, the AI can answer it directly without using any tools.
+- **Do both:** Sometimes, the AI might use a tool and give the final answer all at once.
+
+This lets one smart system handle everything from simple questions to complicated tasks that require many steps. You just provide the tools and the final goal, and the system figures out how to present the options to the AI.
+
+The example below shows how a "greetUser" tool and a final "summary" goal are combined into one master blueprint.
 
 ::::columns
 :::column{title="What the Developer Sets Up"}
 
 ```typescript
 Agent.Request(
-  config, // Settings for the AI (like which model to use)
+  config, // Settings for the AI
   {
-    // The recipe for the final answer
+    // Blueprint for the Final Answer
     type: 'object',
     properties: {
       summary: { type: 'string' },
@@ -113,7 +133,7 @@ Agent.Request(
     required: ['summary'],
   },
   [
-    // Any extra information or tools
+    // List of Tools and the user's question
     {
       type: 'tool',
       tool: {
@@ -132,12 +152,20 @@ Agent.Request(
 ```
 
 :::
-:::column{title="The Combined Menu for the AI"}
+:::column{title="The Combined Blueprint for the AI"}
 
 ```json
 {
   "type": "object",
   "properties": {
+    "output": {
+      "type": ["object", "null"],
+      "properties": {
+        "summary": { "type": "string" }
+      },
+      "required": ["summary"],
+      "additionalProperties": false
+    },
     "calls": {
       "type": "array",
       "items": {
@@ -148,14 +176,6 @@ Agent.Request(
         },
         "required": ["_tool", "userName"]
       }
-    },
-    "output": {
-      "type": ["object", "null"],
-      "properties": {
-        "summary": { "type": 'string' }
-      },
-      "required": ["summary"],
-      "additionalProperties": false
     }
   },
   "required": ["calls", "output"]
@@ -165,22 +185,25 @@ Agent.Request(
 :::
 ::::
 
-## Supercharging Tools with Special Instructions
+## Adding Special Instructions to Tools
 
-Besides just describing what a tool needs, you can add extra instructions when you ask the AI to use it. This is like adding a special note to your food order, like "extra spicy" or "on the side".
+You can also add extra instructions to a tool right when you use it. Think of it like adding a sticky note to an order form.
 
-When an agent decides to use a tool, it creates a `Call`. This `Call` contains the information the tool needs, but you can also add special instructions (properties starting with `_`) that tell the system *how* to run the tool. These instructions control things that go beyond the basic recipe.
+When an agent decides to use a tool, it creates a **Call**. This Call includes the normal information the tool needs, but you can also add special instructions (they always start with `_`). These instructions tell the system *how* to run the tool, going beyond its basic blueprint.
 
 > Sidenote:
 > - [004: Agent/Call](./004_agent_call.md)
 
-This lets you use a single, simple tool recipe in many powerful and different ways. The `Call` becomes a detailed order that not only says *what* to do (the tool and its information) but also *how* to do it (the special instructions).
+This lets you use a simple tool in many powerful ways. The Call becomes a rich set of instructions that says *what* to do (the tool and its ingredients) and *how* to do it (the special instructions).
 
-## Two Ways to Get Things Done: Thinking vs. Doing
+## Running the Tools: Two Different Ways
 
-Once the AI creates a `Call`, the system has to actually run it. But since a `Tool` is just a recipe, it doesn't contain the code for the action itself. Instead, the action can happen in one of two ways. The first way is **thinking** (latent execution), where the AI uses its own powerful brain to figure out the answer. This is great for tasks that involve language or knowledge. The second way is **doing** (explicit execution). For actions that need to interact with the real world—like searching the web or looking something up in a database—the `Tool` recipe must be connected to a real piece of code. This piece of code is called an **Activity**.
+Once the AI decides to use a tool, the system has to run it. Since a Tool is just a blueprint, it doesn't contain the actual code to do the work. The work can be done in one of two ways:
 
-The separation of the `Tool` (the recipe) from the `Activity` (the real-world action) is a key idea. It lets the AI think about its skills in an abstract way, while the code that actually performs those skills can be changed or updated separately. The next document, **[003: Agent/Activity](./003_agent_activity.md)**, explains how `Activities` provide the real-world power for `Tools`.
+1.  **Imagined Execution**: The AI is so smart that it can often just imagine the result. This is perfect for tasks involving language or general knowledge, like figuring out if a sentence is happy or sad.
+2.  **Real-World Execution**: For actions that need to interact with the outside world—like searching the web or looking up something in a database—the Tool's blueprint must be connected to a real piece of code. This real-world code is called an **Activity**.
+
+The separation of the Tool (the idea) from the Activity (the action) is a key part of the design. It allows an agent's skills to be thought about and planned at a high level, while the actual code that does the work can be changed or updated separately. The next document, **003: Agent/Activity**, explains how Activities provide the real-world power for Tools.
 
 > Sidenote:
-> - [003: Agent/Activity](./003_agent_activity.md).
+> - [003: Agent/Activity](./003_agent_activity.md)

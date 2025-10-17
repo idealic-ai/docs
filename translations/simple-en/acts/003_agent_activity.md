@@ -1,71 +1,102 @@
 # 003: Agent/Activity
 
-> [!DEFINITION] [Activity](./000_glossary.md)
-> An Activity is the real, hands-on code that does the work for a `Tool`. Think of it as the engine that makes the car move. It’s what lets the system do things in the real world, like calling a weather service, checking a database, or doing any job that the AI can't just "think up" an answer for.
+> [!DEFINITION] :term[Activity]
+> An Activity is like the engine inside a tool. If a :term[Tool] is the button on a remote control, the Activity is the code that actually changes the channel. It's a specific, separate piece of code that does a real-world job, like calling an online service, checking a database, or any other task the AI can't just “think up” on its own.
 
 > Sidenote:
-> *   Requires: [002: Agent/Tool](./002_agent_tool.md)
+> *   You should read this first: :term[002: Agent/Tool]{href="./002_agent_tool.md"}
 
-This document explains how `Tools` get their power from real, runnable code. A `Tool` describes *what* a special ability does, but an **Activity** is the code that *how* it actually does it.
+This paper explains the **Activity Protocol**, which is the set of rules for how :term[Tool]s get their power from real, working code. While a :term[Tool] describes *what* a special ability can do, an :term[Activity] is the code that *actually does it*.
 
-## The Two-List System
+## The Two-Library System
 
-Our system uses two separate lists to keep things organized. This separation is what makes the system so flexible.
+The system uses two different libraries to keep a tool's description separate from its real code. Think of it like a cookbook:
 
-*   **The Tool List (Tool Registry):** This is like a menu at a restaurant. It lists all the things you can order (like `getWeather` or `searchForFile`), but it doesn’t tell you how they're made.
-*   **The Activity List (Activity Registry):** This is like the restaurant's cookbook. It contains the actual recipes (the code) for making each item on the menu.
+*   **:term[Tool Registry]**: This is the **recipe index**. It lists all the available dishes (:term[Tool]s) and what they are, like "Chocolate Chip Cookies."
+*   **:term[Activity Registry]**: This is the **instruction section**. It holds the actual step-by-step instructions (the :term[Activities]) for how to make each dish.
 
-By keeping the menu and the cookbook separate, we can easily change a recipe without having to reprint the entire menu. For example, we could switch from one weather service to another without changing how the AI asks for the weather.
+Separating them like this is super useful. It means an AI can know about a :term[Tool] and even try to guess the outcome on its own ("latent-only mode"). It also means you can swap out the recipe — maybe use a different, better one for the same cookies — without having to change the recipe index at all.
 
-## How to Add a Recipe (Activity)
+## Linking an Activity to a Tool
 
-You register a new piece of code (an Activity) by giving it a name that matches its `Tool`.
+An :term[Activity] is given a unique name so it can be linked up with its matching :term[Tool].
+
+::::columns
+:::column{title="The Activity's Code"}
 
 ```typescript
-// This is like adding a recipe to the cookbook.
-// By convention, we give it the same name as the menu item.
+// This code creates the actual 'weatherCheck' Activity.
+// Usually, an Activity is linked to a Tool with the same name.
+// The system is smart enough to figure out what kind
+// of information it needs from the Tool's description.
 Activity.register('weatherCheck', async call => {
-  // Go to the real weather service and get the data
   const data = await weatherAPI.get(call.location);
-  // Return the result
   return { temperature: data.temp, conditions: data.desc };
 });
 ```
 
-## Two Ways to Get an Answer: Guessing vs. Doing
+:::
+:::column{title="The Tool's Description"}
 
-When a `Tool` is used, the system can get the answer in one of two ways:
+```typescript
+// This code describes the 'weatherCheck' Tool.
+Tool.register('weatherCheck', {
+  type: 'object',
+  description: 'Gets the current weather for a location.',
+  properties: {
+    _tool: { type: 'string', const: 'weatherCheck' },
+    location: { type: 'string' },
+    _output: {
+      type: 'object',
+      properties: {
+        temperature: { type: 'number' },
+        conditions: { type: 'string' },
+      },
+      required: ['temperature', 'conditions'],
+    },
+  },
+  required: ['location'],
+});
+```
 
-*   **Imagined Answer (Latent Execution):** This is like asking a really smart friend a question. They use everything they've learned to give you a very good guess, right on the spot. This is the default if there's no real code (Activity) for a `Tool`.
-    > Sidenote:
-    > *   [104: Concept/Latent](./104_concept_latent.md)
-*   **Real Answer (Explicit Execution):** This is like handing your friend a phone and asking them to look up the answer. The system runs the actual Activity code to get a precise, real-world result. This is necessary for things like checking an API, reading a file, or anything that requires interacting with the outside world.
+:::
+::::
 
-## How the System Decides Which Method to Use
+## Two Ways of Working: Imagined vs. Real
 
-The system has a simple, automatic way of deciding whether to guess or do.
+The system can use a :term[Tool]'s special ability in two very different ways:
 
-1.  **Specific Instructions:** If the `Tool`'s definition specifically says, "Use *this* recipe," it will always look for that recipe (Activity) in the cookbook.
-2.  **Matching Names (Recommended):** If there are no specific instructions, the system looks for a recipe in the cookbook that has the **exact same name** as the menu item (`Tool`). If it finds one, it uses it.
-3.  **Default to Imagining:** If it can't find a matching recipe after checking the first two rules, it falls back to imagining the answer. The AI will just think it through and give its best guess.
+*   **Imagined Execution**: The AI uses its own brainpower to figure out the answer. It “thinks through” the problem and gives you the result directly, all in one go. This is the default way it works if it can't find any real code (:term[Activity]) for a :term[Tool].
+  > Sidenote:
+  > *   Learn more about the AI's 'imagination': :term[104: Concept/Latent]{href="./104_concept_latent.md"}
+*   **Real Execution**: The system passes the job to actual, solid code. It runs the :term[Activity] function to get the answer. This is necessary for talking to the outside world (like websites or databases) or for doing things that need to be perfectly accurate and repeatable every time.
 
-This makes things easy:
+## How It Decides Which Way to Go
 
-*   **To make a `Tool` do real work, just create an `Activity` with the same name.**
-*   `Tool`s that are just for thinking or organizing ideas don't need code and will work automatically.
+The system has a simple, automatic way to choose between using its imagination or running real code. It looks at a special property in the :term[Tool]'s description called `_activity`.
 
-## Why This Separation Is a Big Deal
+1.  **Direct Instructions**: If the :term[Tool]'s description has an `_activity` property with a name in it, the system uses that name to find the right code in the :term[Activity] library.
+2.  **Matching Names (Recommended)**: If there's no `_activity` property, the system looks for an :term[Activity] with the **exact same name** as the :term[Tool]. If it finds one, it links them up automatically.
+3.  **Imagination as a Backup**: If it can't find a matching :term[Activity] using the first two rules, it assumes there is no real code for this :term[Tool] and decides to handle it using its imagination.
 
-If we didn't separate the menu (`Tool`) from the cookbook (`Activity`), every menu item would be permanently tied to its recipe. To change how a `Tool` works (like switching from a test weather service to a real one), you'd have to find every agent that uses that menu and teach it the new recipe.
+This smart setup makes things easy for developers:
 
-With our two-list system, you can just swap out the recipe in the cookbook. The agents keep ordering from the same menu and don't even know the recipe changed. This lets us:
+*   **Just give your :term[Activity] the same name as your :term[Tool], and it will just work.**
+*   :term[Tool]s that don't have real code will safely and automatically be handled by the AI's imagination.
+*   You can always override this by directly telling a :term[Tool] which :term[Activity] to use, which is useful if one piece of code can handle several different tools.
 
-*   **Update how things work without breaking agents.**
-*   **Test different ways of getting the same job done** (e.g., see if the AI's guess is as good as a real API call).
-*   **Slowly roll out new features** by giving the new recipe to only some agents at first.
+## Why This Separation is a Big Deal
+
+If we didn't separate the :term[Tool]'s description from the :term[Activity]'s code, a tool's purpose would be stuck forever to how it works. To change from having the AI imagine the weather to using a real weather website, you'd have to find every program that uses that weather :term[Tool] and change it.
+
+This two-library system solves that problem. The :term[Tool] description stays the same, while the real code behind it can be changed or updated. The programs using the :term[Tool] never know the difference. This means:
+
+*   **Upgrades don't break things**: You can switch from imagined to real code without rewriting your programs.
+*   **Easy testing**: You can test two different ways of getting something done (like the AI's guess vs. a real website) and see which one works better.
+*   **Slow, safe updates**: You can give a new, real-world :term[Activity] to a few programs to test it out, while everyone else keeps using the old version.
 
 ## From Idea to Action
 
-By separating the "what" (`Tool`) from the "how" (`Activity`), we've built a very flexible system. We have our menu of abilities and our cookbook of recipes. The last piece of the puzzle is the waiter — the part of the system that takes the order and makes sure the kitchen cooks it correctly.
+By separating the “what” (the :term[Tool]) from the “how” (the :term[Activity]), the system becomes incredibly flexible. But that's not the whole picture. Now that we have descriptions of what to do and the code for how to do it, the last step is making it all happen: managing, running, and organizing these actions.
 
-The next document, [004: Agent/Call](./004_agent_call.md), explains how the system manages and executes these requests, turning ideas into real actions.
+The next document, :term[004: Agent/Call]{href="./004_agent_call.md"}, explains the rules for how these actions are brought to life.

@@ -1,70 +1,153 @@
 # 006: Agent/Data
 
-> [!DEFINITION] Data Message
-> Think of a a **Data Message** as a special kind of message that sticks around. It holds a piece of information (`data`) and sometimes a guide (`schema`) that explains what that information means. It’s like a sticky note that an agent keeps in front of it so it doesn’t forget important details while it works.
+> [!DEFINITION] [Data Message](./000_glossary.md)
+> Imagine a special kind of sticky note that doesn't get thrown away. It holds a piece of information (`data`) and sometimes has instructions (`schema`) on how to read it. An AI agent keeps these special notes around while it works, so it always has important information ready.
 
 > Sidenote:
-> - Requires:
+> - Needs this first:
 >   - [001: Agent/Request](./001_agent_request.md)
-> - Enables:
+> - Makes these possible:
 >   - [007: Agent/Input](./007_agent_input.md)
 >   - [009: Agent/State](./009_agent_state.md)
-> - Complemented by:
+> - Works well with:
 >   - [005: Agent/Loop](./005_agent_loop.md)
 >   - [011: Agent/Instancing](./011_agent_instancing.md)
 
-This document explains the **Data Protocol**, which is a basic set of rules for handling information in a neat, organized way. It’s like the alphabet of our system — other, more complex parts, like [Input](./007_agent_input.md) and [State](./009_agent_state.md), use these rules to manage information. Unlike quick messages that disappear after being read, `Data` messages are designed to stay, giving the agent a stable memory to work with, especially when a task takes multiple steps.
+This document explains the Data Protocol, which is a basic set of rules for sharing information in a clear and organized way. Think of it as the grammar for the AI's memory. Other parts of the system, like those handling Inputs or remembering the AI's State, use this grammar to manage information inside the agent's workspace, called the `context`.
+
+Unlike quick, temporary messages that disappear, Data messages are permanent. They stick around as the agent thinks and works through different steps, giving it a stable memory for complex jobs.
 
 ## The Data Message
 
 > Sidenote:
 > - [001: Agent/Request](./001_agent_request.md)
 
-A `Data` message is a simple but really useful way to add organized information to a computer’s to-do list ([Request](./001_agent_request.md)). It has three main parts:
+A Data message is a simple but smart way to add organized information to a request for the AI. It’s a message that contains a few key parts:
 
-- **`data`**: This is the actual information, like a name, a number, a list, or a whole collection of details.
-- **`schema`**: This is an optional instruction manual. It tells the computer (the AI) what the `data` is supposed to look like and what it means. It’s like a blueprint that says, "This part is a name, and it has to be text. This other part is an age, and it has to be a number."
-- **`kind`**: This is an optional label, like `"state"` or `"input"`, that tells everyone what the message's job is. It helps the AI tell the difference between memory and new instructions.
+- **`data`**: The actual information, which can be anything like a name, a number, a list, or a more detailed object.
+- **`schema`**: An optional guide that explains what the `data` means. Think of it as a blueprint or a legend on a map. It tells the AI, "This piece of data is a person's name, and it should be text," or "This is a number that has to be between 1 and 100."
+- **`kind`**: An optional label that tells everyone the purpose of the data, like `"state"` (memory) or `"input"` (new information). This helps the AI tell the difference between all the pieces of info it has.
 
-By putting the information and its instruction manual together, a `Data` message makes everything easy for the computer to understand. It guides the AI and also shows humans what kind of information they can add or change.
+By putting the data and its blueprint (the schema) together, the message becomes easy for computers to understand. The blueprint helps the AI make smarter decisions and also acts as a user manual, showing people what kind of information they can add or change.
 
-## Combining and Identifying Messages
+## Merging and Identity
 
-Our system is built to handle many `Data` messages at once. If it sees several messages that seem to be about the same thing, it can merge them into one. This is super helpful when you get a bunch of small updates and want to combine them into a single, complete picture.
+Sometimes, the AI might get several Data messages that are about the same thing. The system is designed to cleverly combine them into one single, neat package. This is super helpful when you're updating something piece by piece, like adding different toppings to a pizza one at a time.
 
-The system knows which messages to combine by looking at their `kind` label. For example, all messages labeled `kind: "state"` are usually considered part of the same thing. Other rules, like the **[011: Agent/Instancing](./011_agent_instancing.md)** protocol, can add extra labels to keep things separate when the agent is working on many similar tasks at the same time.
+The system knows which messages belong together by looking at their `kind` label. For example, all messages labeled `kind: "state"` are usually considered part of the same thing. Other rules, like the Instancing protocol, can add more specific labels to keep different streams of thought separate, like handling multiple customer orders at the same time without mixing them up.
 
 > Sidenote:
 > - [011: Agent/Instancing](./011_agent_instancing.md)
 
-When there are multiple messages to combine, the system has two choices. First, it can tidy them up and merge them into one clean piece of information before showing it to the AI. This makes the AI's job easier. Second, the AI is smart enough to look at all the separate pieces and mentally combine them, understanding that they all describe different parts of the same whole.
+When there are many messages to combine (like several updates to the AI's memory), the system has two ways to handle it. First, the AI’s main thinking process can neatly merge them all into one object before showing it to the AI brain (the LLM). This makes it easier for the AI to understand. Second, the AI itself is smart enough to look at all the separate pieces and understand in its own mind how they fit together to form a single idea.
 
-## How It Works with Other Rules
+:::::details{title="Example of how data message are seen by LLM" open=false}
 
-The `Data` rules are the foundation that other, more advanced rules are built on.
+- The regular `text` message is sent as is.
+- The two `data` messages are combined into one organized block of text for the AI.
 
-- **Loop:** When an agent works in a repeating cycle (a loop), it uses `Data` messages to remember what happened in the last cycle. Specifically, it uses a `State` message, which is just a special type of `Data` message, to carry its memory forward.
+::::columns
+:::column{title="What the code looks like"}
+
+```typescript
+Agent.Request(config, schema, [
+  {
+    type: 'text',
+    text: "Update the user's city to Austin",
+  },
+
+  // Schema is serialized for LLM to understand semantics
+  {
+    type: 'data',
+    kind: 'user',
+    description: 'Represents the current user.',
+    data: { name: 'John Doe' },
+    schema: {
+      type: 'object',
+      properties: {
+        name: { type: 'string' },
+        age: { type: 'number' },
+        city: { type: 'string' },
+      },
+    },
+  },
+
+  // Second `user` message will merge with the first
+  {
+    type: 'data',
+    kind: 'user',
+    data: { age: 30 },
+  },
+]);
+```
+
+:::
+:::column{title="What the LLM Sees"}
+
+```typescript
+[
+  {
+    role: 'user',
+    content: {
+      type: 'text',
+      text: "Update the user's city to Austin",
+    },
+  },
+  {
+    role: 'user',
+    content: {
+      type: 'text',
+      text: `
+        ## Data: ¶user
+        {
+          "name": "John Doe",
+          "age": 30
+        }
+        Represents the current user.
+        Schema for ¶user:
+        {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "age": { "type": "number" },
+            "city": { "type": "string" }
+          }
+        }`,
+    },
+  },
+];
+```
+
+:::
+::::
+:::::
+
+## How It Works with Other Protocols
+
+The Data protocol is a basic building block that other, more advanced rules use and build upon.
+
+- **Loop:** The agent's thinking cycle relies on Data messages to remember things from one thought to the next. The State message, which is just a special kind of Data message, is how it holds on to information as it works.
 
   > Sidenote:
   > - [005: Agent/Loop](./005_agent_loop.md)
 
-- **State:** The `State` rules use a `Data` message to act as the long-term memory for a task. The `schema` for this message defines the structure of that memory, like what details it can remember.
+- **State:** The State rules use a Data message to act as the agent's long-term, changing memory. The message's schema defines the structure of this memory, explaining what it can remember.
 
   > Sidenote:
   > - [010: Agent/State](./010_agent_state.md)
 
-- **Instancing:** The `Instancing` rules make sure that when an agent is doing many tasks in parallel, the `Data` for one task doesn't get mixed up with another. It gives each task a unique ID, so their `Data` messages are kept separate and aren't merged.
+- **Instancing:** Instancing rules apply to all Data messages. A special property called `_instance` acts like a lane marker on a highway, keeping data for one task separate from another. Data messages in different lanes won't get mixed up, which allows the AI to work on many things at once safely.
 
   > Sidenote:
   > - [011: Agent/Instancing](./011_agent_instancing.md)
 
-- **Input:** The `Input` rules use a `Data` message to officially list what kind of information a task needs to get started. This turns a simple task into a reusable tool, like a calculator button that knows it needs numbers to work.
+- **Input:** The Input rules use a Data message to officially list the ingredients a task needs to start. This is what turns a simple instruction into a reusable tool, much like turning a recipe into something anyone can follow.
 
   > Sidenote:
   > - [007: Agent/Input](./007_agent_input.md)
 
-## From Information to Connections
+## From Data to Dynamic Connections
 
-The `Data` protocol gives us a neat way to store organized information. Now that we have these organized containers, the next step is to figure out how to connect them. This is how we let an agent build amazing things where the result of one step automatically becomes the starting point for the next one.
+The Data protocol gives us a standard box for holding organized information. Now that we have these boxes, the next step is to learn how to connect them together. This is the magic that lets an AI build workflows where the result of one step automatically becomes the starting point for the next.
 
-The next document, **[008: Agent/Variables](./008_agent_variables.md)**, explains how we make those dynamic connections happen.
+The next document, [008: Agent/Variables](./008_agent_variables.md), explains the rules that make these dynamic connections work.

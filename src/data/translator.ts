@@ -51,17 +51,19 @@ const SHARED_STYLE_GUIDE = `
 * Avoid messing up syntax for output/input in mermaid: \`Solution[/"The Final Answer (Solution)"/]\` - slashes are in between square brackets and quotes.
 * IMPORTANT: Ensure that all parts of the source document are translated, including content in between
 * When simplifyin english, keep words Edict/Manifesto/Acts as is.
-    * Do not translate placeholders like __SIDENOTE_TRANSLATION_SEPARATOR__ or __SIDENOTE_PLACEHOLDER_\d__ . Keep them as is, but translate the content between them.
+    * Do not translate placeholders like ⁒ . Keep them as is, but translate the content between them.
 * Idealic is the name of our company, so dont translate it
 * Idealic — это проект, цель которого — освободить идеи.
 * Dont use LEGO as a metaphor for the system, it is too common and doesnt fit the context. Attempt to find other metaphors.
 * Simple ru -> Простой Ру
 * DO NOT STOP at \` character, always continue to the end of the file
 * DO NOT try to complicate diagrams. keep labels of nodes without extra text or parenthesis. Do not try to rephase the diagram labels if simplifying.
-* Do not attempt to rearrange placeholders like __SIDENOTE_PLACEHOLDER_\d__ or __SIDENOTE_TRANSLATION_SEPARATOR__, process the content between them as is.
+* Do not attempt to rearrange placeholders like ⁒ or \d, process the content between them as is.
 * underscored properties like \`_activity\` or \`reasoningForCall\` -> meta properties
 * do not add extra content to :::columns blocks, just translate the existing content
 * In mermand, shape syntax is this: Node@{ shape: cloud, label: "Язык" } - pay attention to that @, dont lose it.
+* Never remove, adjust, improve or change directive blocks like :::::details or ::::columns. Ensure that colon count remain as in original document.
+* Avoid adding same-line comments in code blocks within columns - add them on new line instead
 `;
 async function translateELI5(
   documentContent: string,
@@ -274,7 +276,7 @@ function extractSidenotes(content: string): { mainContent: string; sidenotes: st
         : restOfContent;
 
       sidenotes.push(sidenoteContent);
-      newLines.push(`${indentation}__SIDENOTE_PLACEHOLDER_${sidenotes.length - 1}__`);
+      newLines.push(`${indentation}⁒${sidenotes.length - 1}`);
 
       i = j; // Move index past the sidenote block
     } else {
@@ -295,7 +297,7 @@ function extractSidenotes(content: string): { mainContent: string; sidenotes: st
  */
 function reassembleSidenotes(translatedMainContent: string, translatedSidenotes: string[]): string {
   const finalContent = translatedMainContent.replace(
-    /( *)__SIDENOTE_PLACEHOLDER_(\d+)__/g,
+    /( *)⁒(\d+)/g,
     (match, indentation, placeholderIndex) => {
       const sidenoteIndex = parseInt(placeholderIndex, 10);
       let translatedSidenote = translatedSidenotes[sidenoteIndex];
