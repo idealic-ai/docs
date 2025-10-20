@@ -52,7 +52,7 @@ A Tool's schema defines its complete interface:
 
 - **`title`**: A human-readable name for the schema (optional).
 - **`description`**: Explains what the tool does.
-- **`parameters`**: Any non-underscored fields define the inputs the tool needs.
+- **`properties`**: Any non-underscored fields define the inputs the tool needs.
 - **`_tool`**: Provides a unique name to identify the tool.
 - **`_output`**: Defines the expected structure of the tool's result.
 - **`_reasoningForCall`**: A field added by the system for the agent to explain why it chose the tool.

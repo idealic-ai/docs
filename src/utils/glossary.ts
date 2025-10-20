@@ -58,7 +58,7 @@ export function linkGlossaryTerms(content: string, glossary: Glossary, lang: str
         ...attrs,
         href: glossaryEntry.url
           ? `${basePath}${glossaryEntry.url}`
-          : `${basePath}/acts/000_glossary#${glossaryEntry.slug}`,
+          : `${basePath}/acts/000_glossary.md#${glossaryEntry.slug}`,
         canonical: glossaryEntry.canonical,
       };
 
