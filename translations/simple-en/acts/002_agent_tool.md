@@ -52,7 +52,7 @@ A Tool's blueprint defines its entire interface:
 
 - **`title`**: A simple, human-friendly name for the tool.
 - **`description`**: A sentence explaining what the tool is for.
-- **`parameters`**: The ingredients, or information, the tool needs to do its job.
+- **`properties`**: The ingredients, or information, the tool needs to do its job.
 - **`_tool`**: A unique name the system uses to identify the tool.
 - **`_output`**: A description of what the result should look like.
 - **`_reasoningForCall`**: A space where the AI can explain *why* it chose to use that particular tool.
