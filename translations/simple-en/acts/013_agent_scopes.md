@@ -1,16 +1,16 @@
 # 013: Agent/Scopes
 
-> [!DEFINITION] :term[Scope]
-> Think of a scope as a set of blinders for an AI. It's a rule that lets a task see only a specific part of the information it needs, blocking out everything else. The `_scopes` property is like a VIP list, saying exactly what data a :term[Call] is allowed to look at.
+> [!DEFINITION] :term[Scope]{canonical="Scope"}
+> Think of a scope as a set of blinders for an AI. It's a rule that lets a task see only a specific part of the information it needs, blocking out everything else. The `_scopes` property is like a VIP list, saying exactly what data a :term[Call]{canonical="Call"} is allowed to look at.
 
 > Sidenote:
 > - You should know about:
 >   - :term[002: Agent/Tool]{href="./002_agent_tool.md"}
 >   - :term[004: Agent/Call]{href="./004_agent_call.md"}
 
-The **:term[Scoped context]{canonical="scope"}** idea is a core rule for managing what an AI can see when it performs a task, or :term[Call]. In a big AI system, a task doesn't just happen on its own; it needs information from its surroundings, like what a user asked for, what happened in previous steps, or the current situation. Scopes provide a safe and clear way to control what information gets passed along.
+The **:term[Scoped context]{canonical="scope"}** idea is a core rule for managing what an AI can see when it performs a task, or :term[Call]{canonical="Call"}. In a big AI system, a task doesn't just happen on its own; it needs information from its surroundings, like what a user asked for, what happened in previous steps, or the current situation. Scopes provide a safe and clear way to control what information gets passed along.
 
-By limiting what the AI sees, scopes make the system safer, prevent it from accidentally sharing private data, and help the AI focus. This makes its actions more predictable and saves money. This controlled view is also a key reason why different parts of the system, like :term[Ideas] and :term[Activities], can be built like self-contained and reusable tools. This document explains how scopes work and how they fit together with other AI abilities.
+By limiting what the AI sees, scopes make the system safer, prevent it from accidentally sharing private data, and help the AI focus. This makes its actions more predictable and saves money. This controlled view is also a key reason why different parts of the system, like :term[Ideas]{canonical="Idea"} and :term[Activities]{canonical="Activity"}, can be built like self-contained and reusable tools. This document explains how scopes work and how they fit together with other AI abilities.
 
 ## Giving vs. Asking For Information
 
@@ -73,14 +73,14 @@ Depending on how you set up the `_scopes` rule, the AI can either be **given** t
 
 ## How Scopes Help Different Tasks Work Together
 
-The `_scopes` property is the main way to control what an AI :term[Call] can see. It's like a permission slip that filters out all the unneeded information, giving the task a very limited and focused view. This is essential for how different kinds of tasks work, from simple thinking to using pre-built tools.
+The `_scopes` property is the main way to control what an AI :term[Call]{canonical="Call"} can see. It's like a permission slip that filters out all the unneeded information, giving the task a very limited and focused view. This is essential for how different kinds of tasks work, from simple thinking to using pre-built tools.
 
 - **Latent Execution (AI Thinking)**: When the AI is just thinking and figuring things out, `_scopes` act like a friendly **hint** to focus its attention on the important stuff. It's a gentle guide, not a strict rule, but it's very helpful for making the AI's thinking more reliable and cheaper by cutting out distracting information. See the [Focusing on the Right User](#example-disambiguation-with-scopes) example.
 
   > Sidenote:
   > - :term[002: Agent/Tool]{href="./002_agent_tool.md"}.
 
-- **Explicit Execution (Using a Tool)**: When a :term[Call] uses a pre-programmed tool, or :term[Activity], the scope's job is much more direct. The information it points to is handed directly to the tool as a package of extra data. This gives the tool all the context it needs to work, even if that info wasn't directly part of the AI's main command. See the [Giving a Tool Extra Information](#example-providing-context-to-an-activity) example.
+- **Explicit Execution (Using a Tool)**: When a :term[Call]{canonical="Call"} uses a pre-programmed tool, or :term[Activity]{canonical="Activity"}, the scope's job is much more direct. The information it points to is handed directly to the tool as a package of extra data. This gives the tool all the context it needs to work, even if that info wasn't directly part of the AI's main command. See the [Giving a Tool Extra Information](#example-providing-context-to-an-activity) example.
 
   > Sidenote:
   > - :term[003: Agent/Activity]{href="./003_agent_activity.md"}.
@@ -90,7 +90,7 @@ The `_scopes` property is the main way to control what an AI :term[Call] can see
   > Sidenote:
   > - :term[011: Agent/Instancing]{href="./011_agent_instancing.md"}
 
-- **Delegated Isolation (Asking another AI for Help)**: When one AI agent asks a specialized agent (a :term[Delegate]) to handle a task, scopes act like a gatekeeper. They decide what information from the first agent's world gets **added** to the specialist's world. Nothing gets through unless it's on the list, making sure the specialist agent works in its own secure bubble. See the [Giving Information to a Specialist Agent](#example-scoping-a-delegates-context) and [Handling Batches with Specialist Agents](#example-instancing-with-scoped-delegates) examples.
+- **Delegated Isolation (Asking another AI for Help)**: When one AI agent asks a specialized agent (a :term[Delegate]{canonical="Delegate"}) to handle a task, scopes act like a gatekeeper. They decide what information from the first agent's world gets **added** to the specialist's world. Nothing gets through unless it's on the list, making sure the specialist agent works in its own secure bubble. See the [Giving Information to a Specialist Agent](#example-scoping-a-delegates-context) and [Handling Batches with Specialist Agents](#example-instancing-with-scoped-delegates) examples.
 
   > Sidenote:
   > - :term[012: Agent/Delegate]{href="./012_agent_delegate.md"}
@@ -140,12 +140,12 @@ By adding `_scopes: ["input"]`, the person making the request gives the AI a big
 
 :::::details{title="Example: Giving a Tool Extra Information"}
 
-Here, a pre-programmed tool (:term[Activity]) needs to know something that isn't one of its main inputs. The `logEvent` tool only asks for an `eventName`, but the code behind it also needs to know the `userId` to work properly.
+Here, a pre-programmed tool (:term[Activity]{canonical="Activity"}) needs to know something that isn't one of its main inputs. The `logEvent` tool only asks for an `eventName`, but the code behind it also needs to know the `userId` to work properly.
 
 ::::columns
 :::column{title="`Call` with a Scope"}
 
-The :term[Call] is simple; it just gives the `eventName`. But the `_scopes: ["state"]` part tells the system to also hand the entire `state` object to the tool.
+The :term[Call]{canonical="Call"} is simple; it just gives the `eventName`. But the `_scopes: ["state"]` part tells the system to also hand the entire `state` object to the tool.
 
 ```json
 {

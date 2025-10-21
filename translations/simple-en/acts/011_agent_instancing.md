@@ -1,6 +1,6 @@
 # 011: Agent/Instancing
 
-> [!DEFINITION] :term[Instancing]
+> [!DEFINITION] :term[Instancing]{canonical="Instancing"}
 > Think of this as giving a unique nametag to different pieces of information. This lets a computer work on many separate tasks at the same time within a single request, like a chef cooking several different meals at once.
 
 > Sidenote:
@@ -10,17 +10,17 @@
 >   - :term[013: Agent/Scopes]{href="/013_agent_scopes.md"}
 >   - :term[010: Agent/Plan]{href="/010_agent_plan.md"}
 
-The **Instancing Protocol** is a clever way to help an AI agent do a lot more work at once. It lets the agent handle many separate jobs in a single request, without needing to change how the agent thinks. It works by attaching a unique ID, or a nametag, to each job's information (like its current :term[State] or starting :term[Input]).
+The **Instancing Protocol** is a clever way to help an AI agent do a lot more work at once. It lets the agent handle many separate jobs in a single request, without needing to change how the agent thinks. It works by attaching a unique ID, or a nametag, to each job's information (like its current :term[State]{canonical="State"} or starting :term[Input]{canonical="Input"}).
 
-This means you can have one master :term[Plan] (like a recipe) and tell the AI to use it on a hundred different tasks all at once. It's a huge boost for speed and making sure the results are consistent.
+This means you can have one master :term[Plan]{canonical="Plan"} (like a recipe) and tell the AI to use it on a hundred different tasks all at once. It's a huge boost for speed and making sure the results are consistent.
 
 ## How Instancing Works
 
-Instancing lets an agent process many separate jobs by adding a special layer on top of messages that carry data, like the :term[State] message. Instead of sending one :term[State], you can send a whole list of them, where each one is a different task, or **Instance**.
+Instancing lets an agent process many separate jobs by adding a special layer on top of messages that carry data, like the :term[State]{canonical="State"} message. Instead of sending one :term[State]{canonical="State"}, you can send a whole list of them, where each one is a different task, or **Instance**.
 
-To keep these tasks from getting mixed up, each :term[State] message is given a **unique ID** using a special `_instance` property. These IDs are like little nametags (for example, `①`, `②`) that help the AI know which task it's working on and keep everything organized.
+To keep these tasks from getting mixed up, each :term[State]{canonical="State"} message is given a **unique ID** using a special `_instance` property. These IDs are like little nametags (for example, `①`, `②`) that help the AI know which task it's working on and keep everything organized.
 
-Using Instancing is optional. You turn it on by adding the `_instance` nametag to a message like :term[State] or :term[Input]. This tells the system, "Treat this as its own separate workspace." If a message doesn't have an `_instance` nametag, it's treated as a public announcement that all the tasks can see and use.
+Using Instancing is optional. You turn it on by adding the `_instance` nametag to a message like :term[State]{canonical="State"} or :term[Input]{canonical="Input"}. This tells the system, "Treat this as its own separate workspace." If a message doesn't have an `_instance` nametag, it's treated as a public announcement that all the tasks can see and use.
 
 This method has big advantages:
 
@@ -31,17 +31,17 @@ This method has big advantages:
 
 The real power of this idea comes from how the `_instance` nametag changes how other messages behave.
 
-- **:term[State]:** The :term[State] message is the heart of the system. Each :term[Instance] is just a :term[State] message with its own unique `_instance` nametag. This gives each task its own private workbench, so different jobs don’t get in each other's way.
+- **:term[State]{canonical="State"}:** The :term[State]{canonical="State"} message is the heart of the system. Each :term[Instance]{canonical="Instance"} is just a :term[State]{canonical="State"} message with its own unique `_instance` nametag. This gives each task its own private workbench, so different jobs don’t get in each other's way.
 
   > Sidenote:
   > - :term[009: Agent/State]{href="/009_agent_state.md"}
 
-- **:term[Input]:** An :term[Input] message can be used in two ways. An :term[Input] without a nametag is a general instruction for *all* tasks. An :term[Input] *with* a nametag is a specific instruction for just that one task, overriding any general instructions.
+- **:term[Input]{canonical="Input"}:** An :term[Input]{canonical="Input"} message can be used in two ways. An :term[Input]{canonical="Input"} without a nametag is a general instruction for *all* tasks. An :term[Input]{canonical="Input"} *with* a nametag is a specific instruction for just that one task, overriding any general instructions.
 
   > Sidenote:
   > - :term[007: Agent/Input]{href="/007_agent_input.md"}
 
-- **:term[Scopes]:** The `_instance` nametag is crucial for keeping data private using :term[Scopes]. When an action (:term[Call]) is aimed at a specific instance, its private data (`_scopes`) is also locked to that instance's workbench. This is how another agent, a :term[Delegate], can be asked to help with one of many tasks and only see the information it needs for that single job.
+- **:term[Scopes]{canonical="Scope"}:** The `_instance` nametag is crucial for keeping data private using :term[Scopes]{canonical="Scope"}. When an action (:term[Call]{canonical="Call"}) is aimed at a specific instance, its private data (`_scopes`) is also locked to that instance's workbench. This is how another agent, a :term[Delegate]{canonical="Delegate"}, can be asked to help with one of many tasks and only see the information it needs for that single job.
 
   > Sidenote:
   > - :term[013: Agent/Scopes]{href="/013_agent_scopes.md"}
@@ -54,7 +54,7 @@ Without instancing, the agent would have to check each comment one by one. To re
 
 With the **Instancing Protocol**, all 100 comments are checked at the same time in one request.
 
-1.  **Group the Inputs**: The agent gets a list of 100 :term[Input] messages. Each one is given a unique `_instance` nametag and contains a different user comment.
+1.  **Group the Inputs**: The agent gets a list of 100 :term[Input]{canonical="Input"} messages. Each one is given a unique `_instance` nametag and contains a different user comment.
 
     ```json
     // A batch of comments sent to the AI
@@ -78,9 +78,9 @@ With the **Instancing Protocol**, all 100 comments are checked at the same time 
     ]
     ```
 
-2.  **One Plan for Everything**: The AI can now see all the comments at once. It might use a single :term[Plan] that says: first, figure out the feeling of the comment, then check it against a list of bad words. This same plan is used for all 100 comments at the same time.
+2.  **One Plan for Everything**: The AI can now see all the comments at once. It might use a single :term[Plan]{canonical="Plan"} that says: first, figure out the feeling of the comment, then check it against a list of bad words. This same plan is used for all 100 comments at the same time.
 
-3.  **Get Tagged Results**: The agent's final answer (:term[solution]) will be one big list of actions (:term[Calls]), but each action is aimed at a specific comment using its `_instance` nametag.
+3.  **Get Tagged Results**: The agent's final answer (:term[solution]{canonical="Solution"}) will be one big list of actions (:term[Calls]{canonical="Call"}), but each action is aimed at a specific comment using its `_instance` nametag.
 
     ```json
     // The answer from the AI
@@ -173,16 +173,16 @@ The AI reads the manager's command and understands it perfectly, even though it 
 
 Instancing also works together with other system rules to control how things get done.
 
-- **:term[Calls]:** The `_instance` nametag on an action (:term[Call]) is how you tell it which task to work on. It makes sure that any changes—like saving a result or reading information—happen on the correct workbench for that specific :term[Instance].
+- **:term[Calls]{canonical="Call"}:** The `_instance` nametag on an action (:term[Call]{canonical="Call"}) is how you tell it which task to work on. It makes sure that any changes—like saving a result or reading information—happen on the correct workbench for that specific :term[Instance]{canonical="Instance"}.
 
   > Sidenote:
   > - :term[004: Agent/Call]{href="/004_agent_call.md"}
 
-- **:term[Plan]:** The :term[Plan] itself doesn't use nametags; it's like a single master blueprint for all tasks. You can use one global plan with many different :term[State] messages, each with its own nametag. This lets you run the same process on many separate sets of data at the same time.
+- **:term[Plan]{canonical="Plan"}:** The :term[Plan]{canonical="Plan"} itself doesn't use nametags; it's like a single master blueprint for all tasks. You can use one global plan with many different :term[State]{canonical="State"} messages, each with its own nametag. This lets you run the same process on many separate sets of data at the same time.
 
   > Sidenote:
   > - :term[010: Agent/Plan]{href="/010_agent_plan.md"}
 
 ## From a Plan to a Process
 
-If a :term[Plan] is the recipe for a task, and :term[Instancing] is the method for cooking many dishes at once, then a **:term[Process Idea]{href="/203_idea_process.md"}** is the final cookbook page that shows the recipe and a picture of all the finished dishes. It's the complete record of the plan and how it was carried out across all the different instances.
+If a :term[Plan]{canonical="Plan"} is the recipe for a task, and :term[Instancing]{canonical="Instancing"} is the method for cooking many dishes at once, then a **:term[Process Idea]{href="/203_idea_process.md"}** is the final cookbook page that shows the recipe and a picture of all the finished dishes. It's the complete record of the plan and how it was carried out across all the different instances.

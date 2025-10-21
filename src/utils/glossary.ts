@@ -54,7 +54,7 @@ export function linkGlossaryTerms(content: string, glossary: Glossary, lang: str
     const canonical = attrs.canonical || text;
     const glossaryEntry = findGlossaryEntry(canonical, glossary);
     if (glossaryEntry) {
-      const basePath = lang === 'en' ? '' : `/${lang}`;
+      const basePath = `/${lang}`;
       const newAttrs = {
         ...attrs,
         href: glossaryEntry.url

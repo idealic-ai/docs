@@ -12,6 +12,8 @@ const ruTermMap: Record<string, string> = {
   вызовом: 'Call',
   вызову: 'Call',
   вызовам: 'Call',
+  вызове: 'Call',
+  вызовами: 'Call',
 
   // Tool
   инструмент: 'Tool',
@@ -20,8 +22,13 @@ const ruTermMap: Record<string, string> = {
   инструментам: 'Tool',
   инструментом: 'Tool',
   инструменты: 'Tool',
+  инструменту: 'Tool',
+  инструментами: 'Tool',
+  инструменте: 'Tool',
   'вызовов инструментов': 'Tool Call',
   'вызов инструмента': 'Tool Call',
+  'вызовы инструментов': 'Tool Call',
+  'вызова инструмента': 'Tool Call',
 
   // Request
   запрос: 'Request',
@@ -29,10 +36,15 @@ const ruTermMap: Record<string, string> = {
   запросу: 'Request',
   запросом: 'Request',
   запросов: 'Request',
+  запросы: 'Request',
+  запросе: 'Request',
 
   // Activity
   действие: 'Activity',
   действием: 'Activity',
+  действия: 'Activity',
+  действию: 'Activity',
+  действий: 'Activity',
 
   // Delegate
   делегат: 'Delegate',
@@ -41,12 +53,20 @@ const ruTermMap: Record<string, string> = {
 
   // Scope
   'область видимости': 'Scope',
+  'области видимости': 'Scope',
   'областей видимости': 'Scope',
   'контекст с ограниченным доступом': 'Scope',
+  скоупы: 'Scope',
+  скоупов: 'Scope',
+  областивидимости: 'Scope',
+  области: 'Scope',
+  областей: 'Scope',
 
   // State
   состояние: 'State',
   состоянии: 'State',
+  состояния: 'State',
+  состоянием: 'State',
   'сообщение о состоянии': 'State Message',
 
   // Instance
@@ -54,6 +74,11 @@ const ruTermMap: Record<string, string> = {
   экземпляров: 'Instance',
   экземплирование: 'Instancing',
   экземпляры: 'Instance',
+  экземпляром: 'Instance',
+  экземпляру: 'Instance',
+  экземплирования: 'Instancing',
+  экземплированием: 'Instancing',
+  экземплированию: 'Instancing',
 
   // Vessel
   носитель: 'Vessel',
@@ -62,44 +87,126 @@ const ruTermMap: Record<string, string> = {
   // Idea
   идея: 'Idea',
   идею: 'Idea',
+  идеи: 'Idea',
+  идей: 'Idea',
+  идеей: 'Idea',
 
   // Ideator
   идеатор: 'Ideator',
+  идеатором: 'Ideator',
 
   // Transformers
   'трансформатор идей': 'Idea Transformer',
 
   // Messages
   'входное сообщение': 'Input Message',
+  'входного сообщения': 'Input Message',
   'сообщение с данными': 'Data Message',
+  ввод: 'Input',
+  ввода: 'Input',
+  входное: 'Input',
+  входном: 'Input',
+  входного: 'Input',
+  входные: 'Input',
+  'входные данные': 'Input',
+  'входных данных': 'Input',
+  данные: 'Data',
+  данными: 'Data',
+  данных: 'Data',
 
   // Loop
   цикл: 'Loop',
+  цикла: 'Loop',
   'цикла выполнения': 'Execution Loop',
+  'цикл выполнения': 'Execution Loop',
+  'циклом выполнения': 'Execution Loop',
+  'цикле выполнения': 'Execution Loop',
+  'цикле исполнения': 'Execution Loop',
 
   // Other Concepts
   'hitl (человек-в-цикле)': 'HITL (Human-in-the-Loop)',
+  'человек-в-цикле': 'HITL (Human-in-the-Loop)',
+  hitl: 'HITL (Human-in-the-Loop)',
   эволюция: 'Evolution',
   'ии-центричная': 'AI-Native',
   план: 'Plan',
+  плана: 'Plan',
+  планом: 'Plan',
+  плану: 'Plan',
+  планов: 'Plan',
+  плане: 'Plan',
   'процесс-идея': 'Process Idea',
+  'идея процесса': 'Process Idea',
   'идея-носитель': 'Vessel Idea',
   реактор: 'Reactor',
   решение: 'Solution',
+  решения: 'Solution',
+  решении: 'Solution',
   контекст: 'context',
+  контексте: 'context',
+  контекста: 'context',
   схема: 'schema',
+  схему: 'schema',
+  схеме: 'schema',
+  схемы: 'schema',
   'ссылка на переменную': 'Variable Reference',
+  'ссылки на переменную': 'Variable Reference',
+  'ссылкой на переменную': 'Variable Reference',
+  'ссылками на переменные': 'Variable Reference',
+  'ссылки на переменные': 'Variable Reference',
+  'ссылок на переменные': 'Variable Reference',
+  'ссылку на переменную': 'Variable Reference',
+  переменные: 'Variable',
+  переменных: 'Variable',
+  'протокол данных': 'Data',
+  'реестр инструментов': 'Tool',
+  'реестр действий': 'Activity',
+
+  // English terms
+  input: 'Input',
+  data: 'Data',
+  plan: 'Plan',
+};
+
+const enTermMap: Record<string, string> = {
+  input: 'Input',
+  data: 'Data',
+  plan: 'Plan',
+  scope: 'Scope',
+  scopes: 'Scope',
+  call: 'Call',
+  calls: 'Call',
+  idea: 'Idea',
+  ideas: 'Idea',
+  activity: 'Activity',
+  activities: 'Activity',
+  delegate: 'Delegate',
+  instancing: 'Instancing',
+  state: 'State',
+  instance: 'Instance',
+  solution: 'Solution',
+  tool: 'Tool',
+  tools: 'Tool',
+  vessel: 'Vessel',
+  request: 'Request',
+  'tool registry': 'Tool',
+  'activity registry': 'Activity',
+  context: 'context',
+  schema: 'schema',
 };
 
 const langTermMaps: Record<string, Record<string, string>> = {
   ru: ruTermMap,
+  'simple-ru': ruTermMap,
+  'simple-en': enTermMap,
+  en: enTermMap,
 };
 
 async function processFile(filePath: string, termMap: Record<string, string>) {
   let content = await fs.readFile(filePath, 'utf-8');
   let changed = false;
 
-  const regex = /:term\[([^\]]+)\](?![\s]*\{[^\}]*canonical)/g;
+  const regex = /:term\[([^\]{}]+)\](?!\s*\{)/g;
 
   const newContent = content.replace(regex, (match, term) => {
     const termKey = term.toLowerCase().trim();
@@ -122,7 +229,7 @@ async function processFile(filePath: string, termMap: Record<string, string>) {
 
 async function main() {
   console.log('Starting script to add canonical tags to :term definitions...');
-  const targetLangs = ['ru'];
+  const targetLangs = ['ru', 'simple-ru', 'en', 'simple-en'];
 
   for (const lang of targetLangs) {
     const termMap = langTermMaps[lang];
@@ -132,7 +239,7 @@ async function main() {
     }
 
     console.log(`\nProcessing language: ${lang}`);
-    const files = await glob(`docs/translations/${lang}/**/*.md`);
+    const files = await glob(`./translations/${lang}/**/*.md`);
     if (files.length === 0) {
       console.log(`No markdown files found for ${lang}.`);
       continue;
