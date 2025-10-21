@@ -2,49 +2,49 @@
 
 This document provides definitions for the key concepts used in the Idea Protocol and its related systems.
 
-- **Idea**: A self-contained, stateful data triplet (`schema`, `solution`, `context`) representing a unit of knowledge. It's a persistent, computational primitive, not an ephemeral prompt.
+- :dfn[Idea]{canonical="Idea" href="./101_concept_idea.md"}: A self-contained, stateful data triplet (`schema`, `solution`, `context`) representing a unit of knowledge. It's a persistent, computational primitive, not an ephemeral prompt.
 
   > Sidenote:
   >
   > - [101: Concept/Idea](./101_concept_idea.md)
 
-- **Ideator**: An `Idea` that accepts input, signified by a context message of `type: "input"`. It acts as a function, transforming input to output.
+- :dfn[Ideator]{canonical="Ideator" href="./103_concept_ideator.md"}: An `Idea` that accepts input, signified by a context message of `type: "input"`. It acts as a function, transforming input to output.
 
   > Sidenote:
   >
   > - [103: Concept/Ideator](./103_concept_ideator.md)
 
-- **Idea Transformer**: A specialized `Ideator` that takes another `Idea` as its input.
+- :dfn[Idea Transformer]{canonical="Idea Transformer" href="./103_concept_ideator.md"}: A specialized `Ideator` that takes another `Idea` as its input.
 
   > Sidenote:
   >
   > - [103: Concept/Ideator](./103_concept_ideator.md)
 
-- **Input Message**: A context message containing a `schema` and `input` data. It defines the expected inputs for a `Request`, making it a reusable, function-like component.
+- :dfn[Input Message]{canonical="Input Message" href="./007_agent_input.md"}: A context message containing a `schema` and `input` data. It defines the expected inputs for a `Request`, making it a reusable, function-like component.
 
   > Sidenote:
   >
   > - [007: Agent/Input](./007_agent_input.md)
 
-- **Tool**: A schema that defines a capability an agent can use. It is presented to an LLM as part of a request, acting as a structured interface for a potential action. The LLM activates the tool by generating a `Call` with specific parameters, which is then executed either latently by the LLM or explicitly by a registered code function (`Activity`).
+- :dfn[Tool]{canonical="Tool" href="./002_agent_tool.md"}: A schema that defines a capability an agent can use. It is presented to an LLM as part of a request, acting as a structured interface for a potential action. The LLM activates the tool by generating a `Call` with specific parameters, which is then executed either latently by the LLM or explicitly by a registered code function (`Activity`).
 
   > Sidenote:
   >
   > - [002: Agent/Tool](./002_agent_tool.md)
 
-- **Activity**: An explicit, deterministic code function that implements the logic for a `Tool`. It is the mechanism for executing actions that require external API calls, database operations, or any task that cannot be handled by an LLM's latent space.
+- :dfn[Activity]{canonical="Activity" href="./003_agent_activity.md"}: An explicit, deterministic code function that implements the logic for a `Tool`. It is the mechanism for executing actions that require external API calls, database operations, or any task that cannot be handled by an LLM's latent space.
 
   > Sidenote:
   >
   > - [003: Agent/Activity](./003_agent_activity.md)
 
-- **Call**: A concrete, executable instance of a `Tool`, with specific values for its `params`. It's an invocation-focused request for what _should be done_.
+- :dfn[Call]{canonical="Call" href="./004_agent_call.md"}: A concrete, executable instance of a `Tool`, with specific values for its `params`. It's an invocation-focused request for what \_should be done\_.
 
   > Sidenote:
   >
   > - [004: Agent/Call](./004_agent_call.md)
 
-- **Scope**: The locus of execution for a `Call`.
+- :dfn[Scope]{canonical="Scope" href="./004_agent_call.md"}: The locus of execution for a `Call`.
   - **Inline Scope**: The `Call` is processed in the current agent's context.
   - **Delegate Scope**: The `Call` is delegated to an external, isolated delegate.
     > Sidenote:
@@ -64,75 +64,77 @@ This document provides definitions for the key concepts used in the Idea Protoco
     >
     > - [104: Concept/Latent](./104_concept_latent.md)
 
-- **Delegate**: A protocol for isolating execution context. Invoked by a `Call`'s `_delegate` property, it executes an `Activity` or a new `Request` in a "clean room" environment, with the `_scopes` property providing controlled access to the parent context.
+- :dfn[Delegate]{canonical="Delegate" href="./012_agent_delegate.md"}: A protocol for isolating execution context. Invoked by a `Call`'s `_delegate` property, it executes an `Activity` or a new `Request` in a "clean room" environment, with the `_scopes` property providing controlled access to the parent context.
 
   > Sidenote:
   >
   > - [012: Agent/Delegate](./012_agent_delegate.md)
 
-- **Scope**: A key that identifies a piece of context from the parent environment to be made available (`scoped`) to an execution. It can be used to focus an LLM's attention in a **Latent Inline** execution or to construct the entire context for a **Delegate Scope** execution. Controlled by the `_scopes` property.
+- :dfn[Scope]{canonical="Scope" href="./013_agent_scopes.md"}: A key that identifies a piece of context from the parent environment to be made available (`scoped`) to an execution. It can be used to focus an LLM's attention in a **Latent Inline** execution or to construct the entire context for a **Delegate Scope** execution. Controlled by the `_scopes` property.
 
   > Sidenote:
   >
   > - [013: Agent/Scopes](./013_agent_scopes.md)
 
-- **Loop**: A sequence of `Request`s aimed at achieving a goal. The agent continues to invoke `Request`s, process the resulting `Call`s, and feed the output back into the context of the next `Request` until no more `Call`s are generated.
+- :dfn[Loop]{canonical="Loop" href="./005_agent_loop.md"}: A sequence of `Request`s aimed at achieving a goal. The agent continues to invoke `Request`s, process the resulting `Call`s, and feed the output back into the context of the next `Request` until no more `Call`s are generated.
 
   > Sidenote:
   >
   > - [005: Agent/Loop](./005_agent_loop.md)
 
-- **HITL (Human-in-the-Loop)**: The practice of inserting a human checkpoint into an automated process. In the context of the `Execution Loop`, this refers to the opportunity for a user to approve, deny, or modify an agent's proposed `Call`s before they are executed.
+- :dfn[HITL (Human-in-the-Loop)]{canonical="HITL (Human-in-the-Loop)" href="./005_agent_loop.md#human-in-the-loop-hitl"}: The practice of inserting a human checkpoint into an automated process. In the context of the `Execution Loop`, this refers to the opportunity for a user to approve, deny, or modify an agent's proposed `Call`s before they are executed.
 
   > Sidenote:
   >
   > - [005: Agent/Loop](./005_agent_loop.md#human-in-the-loop-hitl)
 
-- **Evolution**: The process by which an AI-Native system autonomously or semi-autonomously adapts, improves, and changes its own structure, logic, and capabilities over time in response to new data, feedback, or changing goals.
+- :dfn[Evolution]{canonical="Evolution" href="./106_concept_evolution.md"}: The process by which an AI-Native system autonomously or semi-autonomously adapts, improves, and changes its own structure, logic, and capabilities over time in response to new data, feedback, or changing goals.
 
   > Sidenote:
   >
   > - [106: Concept/Evolution](./106_concept_evolution.md)
 
-- **State Message**: A context message containing a `state` object and an optional `schema`. It represents a persistent state maintained between ticks of an agent's execution loop.
+- :dfn[State Message]{canonical="State Message" href="./009_agent_state.md"}: A context message containing a `state` object and an optional `schema`. It represents a persistent state maintained between ticks of an agent's execution loop.
 
   > Sidenote:
   >
   > - [009: Agent/State](./009_agent_state.md)
 
-- **Plan**: A context message carrying a data-flow graph of :term[Tool Calls] that represents an agent's strategy. It is passed between steps to enable iterative execution and adaptation.
+- :dfn[Data Message]{canonical="Data Message" href="./006_agent_data.md"}: A persistent context message containing a `data` value and an optional `schema`. It is retained across an agent's execution loop to provide a stable, structured context.
+
+- :dfn[Plan]{canonical="Plan" href="./010_agent_plan.md"}: A context message carrying a data-flow graph of :term[Tool Calls] that represents an agent's strategy. It is passed between steps to enable iterative execution and adaptation.
 
   > Sidenote:
   >
   > - [010: Agent/Plan](./010_agent_plan.md)
 
-- **Process Idea**: A self-contained [Idea](./101_concept_idea.md) that captures a strategic [Plan](./010_agent_plan.md) and its live execution state. Its `schema` is the library of [Tools](./002_agent_tool.md), its `solution` is the _new_ `Plan` for the current tick, and its `context` contains the `Input`, `State`, and the previous `Plan`.
+- :dfn[Process Idea]{canonical="Process Idea" href="./010*agent_plan.md"}: A self-contained [Idea](./101_concept_idea.md) that captures a strategic [Plan](./010_agent_plan.md) and its live execution state. Its `schema` is the library of [Tools](./002_agent_tool.md), its `solution` is the \_new* `Plan` for the current tick, and its `context` contains the `Input`, `State`, and the previous `Plan`.
 
   > Sidenote:
   >
   > - [010: Agent/Plan](./010_agent_plan.md)
 
-- **Vessel Idea**: A self-contained `Idea` that is both the definition of a reactive capability and the record of its chosen reaction. Its `schema` defines the full universe of possible `Tools`, and its `solution` captures the specific `Calls` (instances of those `Tools`) that were chosen in response to a stimulus.
+- :dfn[Vessel Idea]{canonical="Vessel Idea" href="./202_idea_vessel.md"}: A self-contained `Idea` that is both the definition of a reactive capability and the record of its chosen reaction. Its `schema` defines the full universe of possible `Tools`, and its `solution` captures the specific `Calls` (instances of those `Tools`) that were chosen in response to a stimulus.
 
   > Sidenote:
   >
   > - [202: Idea/Vessel](./202_idea_vessel.md)
 
-- **Instancing**: The process of handling multiple, independent `Instances` (each with its own unique identifier and corresponding `State` message) within a single agent request.
+- :dfn[Instancing]{canonical="Instancing" href="./011_agent_instancing.md"}: The process of handling multiple, independent `Instances` (each with its own unique identifier and corresponding `State` message) within a single agent request.
 
   > Sidenote:
   >
   > - [011: Agent/Instancing](./011_agent_instancing.md)
 
-- **Request**: A single, self-contained LLM invocation, which takes a `context` and a `schema` and produces a `solution`.
+- :dfn[Request]{canonical="Request" href="./001_agent_request.md"}: A single, self-contained LLM invocation, which takes a `context` and a `schema` and produces a `solution`.
 
-- **Instance**: A single, uniquely identified state object and its associated context, processed as one of many within an `Instancing` operation.
+- :dfn[Instance]{canonical="Instance" href="./011_agent_instancing.md"}: A single, uniquely identified state object and its associated context, processed as one of many within an `Instancing` operation.
 
   > Sidenote:
   >
   > - [011: Agent/Instancing](./011_agent_instancing.md)
 
-- **Reactor**: A specific `Idea Transformer` designed as a universal runtime for stateful, turn-based agent interactions. It takes a game/process state (`Idea`) and produces the next state (`Idea`).
+- :dfn[Reactor]{canonical="Reactor" href="./303_ideator_reactor.md"}: A specific `Idea Transformer` designed as a universal runtime for stateful, turn-based agent interactions. It takes a game/process state (`Idea`) and produces the next state (`Idea`).
 
   > Sidenote:
   >
@@ -140,4 +142,4 @@ This document provides definitions for the key concepts used in the Idea Protoco
 
 - **Variable Reference**: A string with a special syntax (`†<kind>.<path>`) used in a `Tool Call`'s parameters to reference a value from the context (e.g., from a `State` or `Input` message). It allows an agent to dynamically wire tools together by using the output of one tool as the input for another.
 
-- **Solution**: The structured object returned by a `Request`. It contains the proposed `Tool Calls` and the final `output`, conforming to a predefined JSON Schema.
+- :dfn[Solution]{canonical="Solution" href="./001_agent_request.md"}: The structured object returned by a `Request`. It contains the proposed `Tool Calls` and the final `output`, conforming to a predefined JSON Schema.

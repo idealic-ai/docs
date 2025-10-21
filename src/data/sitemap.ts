@@ -1,6 +1,7 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { getMarkdownContent } from '../utils/i18n';
+import { processMarkdown } from '../utils/markdown';
 
 // Define types
 export interface Chapter {
@@ -20,6 +21,7 @@ export interface Sitemap {
 export interface GlossaryEntry {
   definition: string;
   slug: string;
+  term: string;
   canonical: string;
   url?: string;
 }
@@ -31,32 +33,22 @@ const DOC_FOLDERS = ['manifesto', 'edict', 'acts', 'blueprint'];
 export async function getGlossary(lang: string = 'en'): Promise<Glossary> {
   const { markdownContent } = await getMarkdownContent('acts', '000_glossary.md', lang);
   const glossary: Glossary = {};
-  const regex = /^- \*\*(.+?)\*\*:\s*(.*)/gm;
+  const regex = /^- :dfn\[(.+?)\]\{canonical="(.+?)" href="(.+?)"\}:\s*(.*)/gm;
 
   let match;
   while ((match = regex.exec(markdownContent)) !== null) {
     const term = match[1].trim();
-    let definition = match[2].trim();
+    const canonical = match[2].trim();
+    const url = match[3].trim();
+    const definition = await processMarkdown(match[4].trim());
 
-    // Look for a sidenote and append it.
-    const sidenoteRegex = /Sidenote:\s*-\s*\[.*?\]\((.*?)\)/;
-    const nextLineIndex = markdownContent.indexOf('\n', match.index + match[0].length);
-    const subsequentLines = markdownContent.substring(
-      match.index + match[0].length,
-      nextLineIndex !== -1 ? markdownContent.indexOf('\n', nextLineIndex + 1) : undefined
-    );
-    const sidenoteMatch = subsequentLines.match(sidenoteRegex);
-
-    if (sidenoteMatch) {
-      definition += ` <a href="${sidenoteMatch[1]}">See also.</a>`;
-    }
-    const slug = term
+    const slug = canonical
       .toLowerCase()
       .replace(/\(.*\)/g, '')
       .trim()
       .replace(/[^a-z0-9\s-]/g, '')
       .replace(/\s+/g, '-');
-    glossary[term] = { definition, slug, canonical: term };
+    glossary[canonical] = { definition, slug, term, url, canonical };
   }
   return glossary;
 }

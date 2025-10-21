@@ -132,7 +132,12 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
 
       const tooltip = document.createElement('div');
       tooltip.className = 'glossary-tooltip';
-      tooltip.innerHTML = sanitizeTooltipContent(glossaryEntry.definition);
+      tooltip.innerHTML = sanitizeTooltipContent(
+        glossaryEntry.definition.replace(
+          '<p>',
+          '<p><strong>' + glossaryEntry.term + '</strong> &mdash; '
+        )
+      );
       document.body.appendChild(tooltip);
 
       const rect = link.getBoundingClientRect();

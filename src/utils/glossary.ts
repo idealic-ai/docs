@@ -51,13 +51,12 @@ export function linkGlossaryTerms(content: string, glossary: Glossary, lang: str
 
     const canonical = attrs.canonical || text;
     const glossaryEntry = findGlossaryEntry(canonical, glossary);
-    console.log(canonical, glossary);
     if (glossaryEntry) {
       const basePath = lang === 'en' ? '' : `/${lang}`;
       const newAttrs = {
         ...attrs,
         href: glossaryEntry.url
-          ? `${basePath}${glossaryEntry.url}`
+          ? `${basePath}${glossaryEntry.url.replace('./', '')}`
           : `${basePath}/acts/000_glossary.md#${glossaryEntry.slug}`,
         canonical: glossaryEntry.canonical,
       };

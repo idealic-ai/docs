@@ -229,6 +229,8 @@ function myRemarkPlugin() {
           const tagName = 'span';
           (node.attributes ||= {}).className = 'term';
 
+          console.log(data, 'canonicalllllll');
+
           data.hName = node.attributes.href ? 'a' : tagName;
           data.hProperties = h(tagName, node.attributes || {}).properties;
         }

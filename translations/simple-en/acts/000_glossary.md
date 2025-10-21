@@ -1,121 +1,123 @@
-# What Do These Words Mean?
+# List of Important Words
 
-This paper explains the main words we use to talk about the Idea system.
+This page explains the main words and ideas you'll see in the Idea Protocol and other related systems.
 
-- **Idea**: Think of an `Idea` as a self-contained digital recipe card. It holds three things: the rules for what it is (`schema`), the final result or answer (`solution`), and the story of how it got there (`context`). It's a permanent building block, not just a quick, forgettable command.
-
-  > Sidenote:
-  > - [101: About Ideas](./101_concept_idea.md)
-
-- **Ideator**: This is an `Idea` that can actually do something. It's like a machine that takes something you give it (`input`) and turns it into something else (`output`).
+- :dfn[Idea]{canonical="Idea" href="./101_concept_idea.md"}: Think of an `Idea` as a smart digital building block. It holds a piece of knowledge in three parts: the rules (`schema`), the answer or result (`solution`), and the backstory (`context`). It's not just a temporary question; it's a permanent piece of information that the system can use.
 
   > Sidenote:
-  > - [103: About Ideators](./103_concept_ideator.md)
+  > - [101: Concept/Idea](./101_concept_idea.md)
 
-- **Idea Transformer**: A special kind of `Ideator` that takes another `Idea` as its input. Imagine a machine that doesn't just bake a cake, but takes an entire recipe card and improves it.
+- :dfn[Ideator]{canonical="Ideator" href="./103_concept_ideator.md"}: An `Ideator` is a special kind of `Idea` that can receive new information and do something with it. It works like a mini-program or a function: you give it an input, and it gives you an output.
 
   > Sidenote:
-  > - [103: About Ideators](./103_concept_ideator.md)
+  > - [103: Concept/Ideator](./103_concept_ideator.md)
 
-- **Input Message**: A small packet of information that tells an `Ideator` what it needs to work with. It's like the label on a box that says, "This box contains apples," along with the actual apples inside.
+- :dfn[Idea Transformer]{canonical="Idea Transformer" href="./103_concept_ideator.md"}: This is a special `Ideator` whose job is to take another whole `Idea` as its input. It's like a workshop that modifies or improves other `Ideas`.
+
+  > Sidenote:
+  > - [103: Concept/Ideator](./103_concept_ideator.md)
+
+- :dfn[Input Message]{canonical="Input Message" href="./007_agent_input.md"}: This is a message that tells an AI exactly what kind of information it needs to do a job. It includes the rules for the input (`schema`) and the actual information (`input`) itself. This makes asking the AI to do things repeatable and predictable.
 
   > Sidenote:
   > - [007: Agent/Input](./007_agent_input.md)
 
-- **Tool**: A description of a special power or ability the AI can use. Think of it like a list of spells a wizard can cast. The AI looks at this list and decides which one to use. For example, a `Tool` might be "Look up the weather."
+- :dfn[Tool]{canonical="Tool" href="./002_agent_tool.md"}: A `Tool` is like a description of a skill an AI can use, like "look up the weather" or "send a message." It tells the AI what the skill is called and what information it needs to use it. To actually use the skill, the AI makes a `Call`.
 
   > Sidenote:
   > - [002: Agent/Tool](./002_agent_tool.md)
 
-- **Activity**: The actual computer program that makes a `Tool` work. If the `Tool` is "Look up the weather," the `Activity` is the real code that connects to a weather website to get the forecast. It's the engine that powers the tool.
+- :dfn[Activity]{canonical="Activity" href="./003_agent_activity.md"}: An `Activity` is the actual computer code that performs the action for a `Tool`. If the `Tool` is "look up the weather," the `Activity` is the program that connects to a weather service to get the forecast. It's the real-world action behind the skill.
 
   > Sidenote:
   > - [003: Agent/Activity](./003_agent_activity.md)
 
-- **Call**: A specific command to use a `Tool`. It’s the action of the AI saying, "I want to use the 'Look up the weather' tool for 'Paris, France' right now." It's turning the *ability* into an *action*.
+- :dfn[Call]{canonical="Call" href="./004_agent_call.md"}: A `Call` is a specific instruction to use a `Tool`. For example, if the `Tool` is "look up weather," a `Call` would be "look up weather for London." It's the decision to *do* something.
 
   > Sidenote:
   > - [004: Agent/Call](./004_agent_call.md)
 
-- **Scope**: This is the place where a `Call` happens.
-  - **Inline Scope**: The action happens right here, within the AI's current thought process.
-  - **Delegate Scope**: The action is handed off to a separate, fresh helper to do the job without being distracted.
+- :dfn[Scope]{canonical="Scope" href="./004_agent_call.md"}: This decides *where* a `Call` is handled.
+  - **Inline Scope**: The `Call` is handled right here, within the current process.
+  - **Delegate Scope**: The `Call` is handed off to a separate, specialized helper to handle it.
     > Sidenote:
     > - [004: Agent/Call](./004_agent_call.md)
 
-- **Method**: This is *how* a `Call` gets its answer.
-  - **Explicit Execution**: A real computer program (`Activity`) runs and gives a predictable, exact answer.
+- **Method**: This decides *how* a `Call` is handled.
+  - **Explicit Execution**: The `Call` is handled by a predictable piece of code (an `Activity`).
 
     > Sidenote:
     > - [003: Agent/Activity](./003_agent_activity.md)
 
-  - **Latent Execution**: The AI uses its own creative brain to come up with the answer, like when it writes a story or answers a tricky question.
+  - **Latent Execution**: The `Call` is handled by an AI model, which uses its own understanding to come up with the answer.
 
     > Sidenote:
-    > - [104: About Latency](./104_concept_latent.md)
+    > - [104: Concept/Latent](./104_concept_latent.md)
 
-- **Delegate**: A helper that does a job in a separate, clean workspace. When the main AI needs a task done without any outside mess, it gives the job to a `Delegate`, which works in isolation and then reports back the result.
+- :dfn[Delegate]{canonical="Delegate" href="./012_agent_delegate.md"}: A `Delegate` is like a specialist you can hand a task to. When a `Call` is sent to a `Delegate`, the task is done in a separate, clean workspace. This keeps the main process from getting cluttered. You can give the `Delegate` specific, limited information from the main process to help it do its job.
 
   > Sidenote:
   > - [012: Agent/Delegate](./012_agent_delegate.md)
 
-- **Scope**: A way to give a helperaccess to only the specific information it needs from the main workspace. It's like giving a chef only the ingredients for one dish, so they don't get confused by everything else in the kitchen.
+- :dfn[Scope]{canonical="Scope" href="./013_agent_scopes.md"}: Think of a `Scope` as a key that unlocks a specific piece of information from the main workspace. When a task is performed, you can use `Scopes` to give the AI only the memories or data it needs, helping it focus on the job at hand.
 
   > Sidenote:
   > - [013: Agent/Scopes](./013_agent_scopes.md)
 
-- **Loop**: A cycle of thinking and acting. The AI looks at a problem, makes a `Call` to a tool, sees the result, and uses that new information to decide what to do next. It keeps 'looping' like this until the job is done.
+- :dfn[Loop]{canonical="Loop" href="./005_agent_loop.md"}: A `Loop` is how an AI works on a big goal. It makes a `Request`, gets a `Call` to do something, does it, and then feeds the result back to itself to decide what to do next. It keeps repeating this cycle until the goal is complete.
 
   > Sidenote:
   > - [005: Agent/Loop](./005_agent_loop.md)
 
-- **HITL (Human-in-the-Loop)**: A step where a person can jump in and check the AI's work. Before the AI performs an important action (a `Call`), it can pause and ask a human, "Is this okay?" You can then approve, change, or cancel its plan.
+- :dfn[HITL (Human-in-the-Loop)]{canonical="HITL (Human-in-the-Loop)" href="./005_agent_loop.md#human-in-the-loop-hitl"}: This means having a person step in to approve the AI's actions. During an AI's work `Loop`, a human can check the `Calls` the AI wants to make and say "yes," "no," or "change this" before the action happens.
 
   > Sidenote:
-  > - [005: Agent/Loop#human-in-the-loop-hitl](./005_agent_loop.md#human-in-the-loop-hitl)
+  > - [005: Agent/Loop](./005_agent_loop.md#human-in-the-loop-hitl)
 
-- **Evolution**: The process of the AI system learning and improving on its own over time. Like a character in a game leveling up, the system can change its own rules and abilities to get better at its job based on what it experiences.
+- :dfn[Evolution]{canonical="Evolution" href="./106_concept_evolution.md"}: This is the process where an AI system can learn and change itself over time. It can update its own rules, skills, and logic based on new information or feedback, all on its own (or with a little help).
 
   > Sidenote:
-  > - [106: About Evolution](./106_concept_evolution.md)
+  > - [106: Concept/Evolution](./106_concept_evolution.md)
 
-- **State Message**: A message that acts like the system's memory. It holds onto important information between steps of the `Loop`, so the AI doesn't forget what it's doing.
+- :dfn[State Message]{canonical="State Message" href="./009_agent_state.md"}: This is a message that holds an AI's memory. It contains a `state` object that the AI remembers from one step of its work `Loop` to the next.
 
   > Sidenote:
   > - [009: Agent/State](./009_agent_state.md)
 
-- **Plan**: A blueprint or strategy made of `Tool Calls` that shows how the AI is going to solve a problem. The AI can adjust this `Plan` as it goes, learning and adapting at each step.
+- :dfn[Data Message]{canonical="Data Message" href="./006_agent_data.md"}: This is a message containing information that stays the same throughout the AI's work `Loop`. It provides a stable background context for the AI to refer to.
+
+- :dfn[Plan]{canonical="Plan" href="./010_agent_plan.md"}: A `Plan` is a message that contains the AI's step-by-step strategy for solving a problem. It's like a flowchart of `Tool Calls` that the AI will follow and update as it works.
 
   > Sidenote:
   > - [010: Agent/Plan](./010_agent_plan.md)
 
-- **Process Idea**: An `Idea` that holds a whole project: the library of available `Tools`, the `Plan` for what to do next, and the current memory of what's happened so far.
+- :dfn[Process Idea]{canonical="Process Idea" href="./010*agent_plan.md"}: This is an `Idea` that holds both a `Plan` and the current status of that plan. Think of it as a living to-do list: the `schema` is the list of all possible actions, the `solution` is the updated `Plan` for the next step, and the `context` is all the information needed to make that next step.
 
   > Sidenote:
   > - [010: Agent/Plan](./010_agent_plan.md)
 
-- **Vessel Idea**: An `Idea` that knows all the possible actions it could take and also remembers which specific action it chose. It’s like a choose-your-own-adventure book that not only shows you all the paths but also keeps a bookmark on the one you picked.
+- :dfn[Vessel Idea]{canonical="Vessel Idea" href="./202_idea_vessel.md"}: This is a special `Idea` that acts as both a list of possible reactions and a record of the reaction that was chosen. Its `schema` is the complete menu of `Tools` it could use, and its `solution` is the specific `Call` it decided to make in a situation.
 
   > Sidenote:
   > - [202: Idea/Vessel](./202_idea_vessel.md)
 
-- **Instancing**: The skill of handling many different tasks or users at the same time, without mixing them up. Each task gets its own unique ID and its own memory (`State`).
+- :dfn[Instancing]{canonical="Instancing" href="./011_agent_instancing.md"}: This is the ability to handle many separate tasks at the same time in a single request. Each task, called an `Instance`, has its own unique ID and its own memory (`State` message).
 
   > Sidenote:
   > - [011: Agent/Instancing](./011_agent_instancing.md)
 
-- **Request**: A single question or command sent to the AI. You give it some background information (`context`) and a set of rules (`schema`), and it gives you back a final answer (`solution`).
+- :dfn[Request]{canonical="Request" href="./001_agent_request.md"}: A `Request` is a single, complete question you ask an AI model. You give it some background information (`context`) and a set of rules (`schema`), and it gives you back an answer (`solution`).
 
-- **Instance**: A single, self-contained task being worked on during an `Instancing` process. If the AI is juggling ten balls, each ball is one `Instance`.
+- :dfn[Instance]{canonical="Instance" href="./011_agent_instancing.md"}: An `Instance` is one of many individual tasks being handled at the same time. It has its own unique ID and memory, kept separate from all the others.
 
   > Sidenote:
   > - [011: Agent/Instancing](./011_agent_instancing.md)
 
-- **Reactor**: A special `Ideator` built to handle back-and-forth interactions, like a game. It takes the current state of the game (`Idea`), figures out the next move, and produces the new state of the game (`Idea`).
+- :dfn[Reactor]{canonical="Reactor" href="./303_ideator_reactor.md"}: A `Reactor` is a special `Idea Transformer` built to run turn-based processes, like a game or a conversation. You give it the current state of the game (`Idea`), and it gives you back the next state (`Idea`).
 
   > Sidenote:
   > - [303: Ideator/Reactor](./303_ideator_reactor.md)
 
-- **Variable Reference**: A special code (like `†state.score`) that lets the AI connect its tools together. It can use the answer from one tool as the input for another. It's like telling the AI, "Take the number you just got and plug it into this next step."
+- **Variable Reference**: This is a special piece of text (like `†input.name`) that lets an AI connect its tools together. It's like a pointer that says, "take the result from that last step and use it as the input for this next step."
 
-- **Solution**: The final, organized answer that the AI gives back after a `Request`. It contains any actions (`Tool Calls`) it decided to take and the final result of its work.
+- :dfn[Solution]{canonical="Solution" href="./001_agent_request.md"}: The `Solution` is the final, organized answer that an AI gives back after a `Request`. It includes the actions (`Tool Calls`) it wants to take and any final output for the user.

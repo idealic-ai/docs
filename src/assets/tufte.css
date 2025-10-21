@@ -1127,6 +1127,15 @@ details {
   line-height: 1.5;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   pointer-events: none;
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  > :last-child {
+    margin-bottom: 0;
+  }
 }
 
 .dark-scheme .glossary-tooltip {
