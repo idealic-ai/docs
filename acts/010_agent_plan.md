@@ -480,7 +480,7 @@ By providing the `schema`, the caller gives the LLM a clear blueprint for the da
 
 :::::
 
-This iterative cycle of planning and execution is the core of a :term[Process]{href="/idea/203_idea_process.md"}. It is is a self-contained snapshot of a workflow, capturing the :term[Tools]{canonical="Tool"} available, the live :term[State]{canonical="State"}, and the :term[Plan]{canonical="Plan"} itself.
+This iterative cycle of planning and execution is the core of a :term[Process]{href="./203_idea_process.md"}. It is is a self-contained snapshot of a workflow, capturing the :term[Tools]{canonical="Tool"} available, the live :term[State]{canonical="State"}, and the :term[Plan]{canonical="Plan"} itself.
 
 ## From Single Plan to Reusable Workflows
 

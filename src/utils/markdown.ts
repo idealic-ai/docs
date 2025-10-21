@@ -197,9 +197,9 @@ export function replaceRelativeLinks(htmlContent: string, baseUrl: string, lang:
 
   return htmlContent.replace(relativeLinkRegex, (_match, prefix, linkUrl, suffix) => {
     // Prepend the baseUrl to the relative link.
-    const cleanedLinkUrl = linkUrl.replace(/^\.\//, ''); // remove leading ./
+    const cleanedLinkUrl = linkUrl.replace(/^\.\/|\//, ''); // remove leading ./
     const start = `${process.env.VITE_BASE_PATH || ''}/${lang}`;
-    if (cleanedLinkUrl.includes('://') || cleanedLinkUrl.startsWith(start)) {
+    if (linkUrl.includes('://') || linkUrl.startsWith(start)) {
       return `${prefix}${linkUrl}${suffix}`;
     }
     return `${prefix}${start}/${baseUrl.replace(/^\/|\/$/g, '')}/${cleanedLinkUrl}${suffix}`;
