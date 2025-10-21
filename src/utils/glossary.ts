@@ -1,6 +1,8 @@
 import { Glossary, GlossaryEntry } from '../data/sitemap';
 
 function findGlossaryEntry(term: string, glossary: Glossary): GlossaryEntry | undefined {
+  term = term.toLowerCase();
+
   // 1. Direct match
   if (glossary[term]) {
     return glossary[term];

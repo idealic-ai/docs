@@ -38,7 +38,7 @@ export async function getGlossary(lang: string = 'en'): Promise<Glossary> {
   let match;
   while ((match = regex.exec(markdownContent)) !== null) {
     const term = match[1].trim();
-    const canonical = match[2].trim();
+    const canonical = match[2].trim()?.toLowerCase();
     const url = match[3].trim();
     const definition = await processMarkdown(match[4].trim());
 
