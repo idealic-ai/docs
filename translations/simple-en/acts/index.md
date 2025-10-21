@@ -1,25 +1,24 @@
-# Acts of Emergence
+# Acts of Emergence: The Blueprints
 
 ---
 
-These are the official blueprints our team uses to build the system. Think of them as the detailed instruction manuals that explain exactly how everything should work. They set the rules we all agree to follow.
+These documents are the official blueprints our team uses to build things. Think of them as the rulebook that explains exactly how all the technical parts of our system should work together. We've agreed to follow these plans as we build.
 
 > Sidenote:
-> [Idealic](http://idealic.ai) is a project that aims to set ideas free.
+> [Idealic](http://idealic.ai) is a project to set ideas free.
 >
-> - *Why are we doing this?* [Manifesto of Co-Liberation](../manifesto/)
-> - *What are we building?* [Edict of Autonomy](../edict/)
-> - *How are we building it?* **Acts of Emergence**
+> - *Why?* [Manifesto of Co-Liberation](../manifesto/)
+> - *What?* [Edict of Autonomy](../edict/)
+> - *How?* **Acts of Emergence**
 
-This collection of documents connects our big vision with the actual, hands-on work of building it. To get the full picture, you can also read the [Manifesto of Co-Liberation](../manifesto/) (which explains *The Why*) and the [Edict of Autonomy](../edict/) (which explains *The What*). These Acts of Emergence will give you the complete technical story of how every piece is built.
+These documents are the bridge connecting our big dream to the actual nuts and bolts of how it's built. They work together with the [Manifesto of Co-Liberation](../manifesto/) (which explains *Why* we're doing this) and the [Edict of Autonomy](../edict/) (which explains *What* we're building). By reading these Acts, you'll get a full picture of how every piece of the system works.
 
 ---
 
 ### Agent
 
 > Sidenote:
-> This section is about the AI "workers" in our system—how they think, act, and get things done.
->
+> This section is about how our AI helpers, or "Agents," can think and get things done.
 
 - [001: Agent/Request](./001_agent_request.md)
 - [002: Agent/Tool](./002_agent_tool.md)
@@ -38,8 +37,7 @@ This collection of documents connects our big vision with the actual, hands-on w
 ### Concept
 
 > Sidenote:
-> These documents explain the fundamental building blocks of our digital world and the rules for how different parts can talk to each other.
->
+> This part explains the main building blocks of our system and the rules for how they talk to each other.
 
 - [101: Concept/Idea](./101_concept_idea.md)
 - [102: Concept/Sovereignty](./102_concept_sovereignty.md)
@@ -51,8 +49,7 @@ This collection of documents connects our big vision with the actual, hands-on w
 ### Ideas
 
 > Sidenote:
-> This explains what an "idea" is actually made of in our system, breaking it down into its smallest parts.
->
+> This describes the basic parts that make up an idea in our system.
 
 - [201: Idea/Record](./201_idea_record.md)
 - [202: Idea/Vessel](./202_idea_vessel.md)
@@ -63,7 +60,7 @@ This collection of documents connects our big vision with the actual, hands-on w
 ### Ideator
 
 > Sidenote:
-> This is about the services and digital machinery that run in the background to support everything and keep it working.
+> This explains the main tools and services that keep everything running.
 
 - [301: Ideator/Storage](./301_ideator_storage.md)
 - [302: Ideator/Resolver](./302_ideator_resolver.md)
@@ -73,3 +70,7 @@ This collection of documents connects our big vision with the actual, hands-on w
 ### Glossary
 
 [Read the full glossary](./000_glossary.md)
+
+### Style Guide
+
+Before you help out, please read our [Style Guide for Acts](./000_STYLE_GUIDE.md), which helps make sure our AI friends can read what we write.
