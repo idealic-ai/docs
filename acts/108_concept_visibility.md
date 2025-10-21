@@ -25,15 +25,26 @@ The rules for evolving a version are:
 
 ## Selection: Choosing the Visible State
 
-With a rich history of versions available, a selection mechanism is needed to choose the correct one. This is handled by a clear separation between how an `Idea` is published and how it is retrieved.
+With a rich history of versions available, a selection mechanism is needed to choose the correct one. This is handled by a clear separation between how an `Idea` is published and how it is retrieved. The process has two retrieval dimensions: **spatial** (which partitions to search) and **temporal** (as of what point in time).
 
 ### Branches: Publication and Partitioning
 
-Every :term[Idea]{canonical="Idea"} version in the database is associated with one or more **Branches** (e.g., `["main", "feature/new-billing"]`). Branches act as tags or labels that partition the visibility space. Associating an :term[Idea]{canonical="Idea"} with a branch is an act of **publication**, making it available within that specific partition.
+> [!DEFINITION] :term[Branch]{canonical="Branch"}
+> A named tag that partitions the visibility space, creating a parallel, isolated environment for development and experimentation. Associating an :term[Idea]{canonical="Idea"} with a branch is an act of publication.
+
+For example, every :term[Idea]{canonical="Idea"} version in the database is associated with one or more branches like `["main", "feature/new-billing"]`. This act of publication makes the :term[Idea]{canonical="a Idea"} available within those specific partitions, enabling a safe workflow.
+
+This provides two fundamental benefits:
+
+- **Isolation**: Work on a new feature (e.g., on a `feature/new-billing` branch) doesn't interfere with the stable `main` branch. This prevents half-finished or buggy work from affecting production systems.
+- **Experimentation**: Branches are cheap and easy to create. This encourages experimentation, allowing developers to discard a branch if an experiment doesn't work out, with no impact on the main system.
 
 ### The Search Path: Prioritized Retrieval
 
-The **Search Path** is the core of the **retrieval** mechanism. It is an ordered list of branch names that tells the resolver which partitions to look in, and in what order of priority. A typical search path during development might be: `['feature/my-new-idea', 'staging', 'main']`
+> [!DEFINITION] :term[Search Path]{canonical="Search Path"}
+> An ordered list of branch names that defines the retrieval mechanism. It tells the resolver which partitions to look in, and in what order of priority, creating a cascading overlay system.
+
+This retrieval mechanism is core to the development workflow and answers the **spatial** question. For example, a developer's typical search path might be set to `['feature/my-new-idea', 'staging', 'main']`.
 
 This configuration creates a cascading overlay system for retrieval:
 
@@ -41,4 +52,23 @@ This configuration creates a cascading overlay system for retrieval:
 2.  If not found, search in the `staging` partition.
 3.  Finally, fall back to searching in the `main` partition.
 
-This allows a developer to see a specific, intended reality composed of their local changes seamlessly layered on top of the stable system. The practical syntax for requesting these views is detailed in the next document, :term[Addressing]{href="./109_concept_addressing.md"}.
+This allows a developer to see a specific, intended reality composed of their local changes seamlessly layered on top of the stable system.
+
+### The Cutoff Time: Temporal Retrieval
+
+> [!DEFINITION] :term[Cutoff Time]{canonical="Cutoff Time"}
+> A timestamp that accompanies a resolution request, instructing the resolver to find the version of an :term[Idea]{canonical="Idea"} that was considered latest as of that specific moment in time.
+
+The second dimension of retrieval is **temporal**. Every resolution query is performed against the state of the system as it existed at a specific moment. This is controlled by the **Cutoff Time**.
+
+If a cutoff time is not provided, it defaults to the current time (`now()`), retrieving the most recent visible versions. However, by providing a timestamp from the past, you can perform a "time-traveling query." This instructs the resolver to find the version of an :term[Idea]{canonical="Idea"}—and all its dependencies—that was latest according to the search path at that exact moment. This capability is the technical foundation for perfect reproducibility.
+
+> Sidenote:
+>
+> - :term[107: Concept/Identity]{href="./107_concept_identity.md"}
+
+## From Model to Application
+
+This chapter has defined the theoretical model for visibility—the mechanisms for creating different states and selecting between them. With this model in place, the final piece is the practical language for interacting with it.
+
+The next document, :term[109: Concept/Addressing]{href="./109_concept_addressing.md"}, introduces the `idea:` URI scheme, the concrete syntax used to request a specific view and navigate this rich, versioned, and branched reality.

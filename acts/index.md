@@ -66,10 +66,8 @@ This document is the bridge between high-level vision and ground-level implement
 - [303: Ideator/Reactor](./303_ideator_reactor.md)
 - [304: Ideator/Watcher](./304_ideator_watcher.md)
 
-### Glossary
+### Extras
 
 [Read the full glossary](./000_glossary.md)
-
-### Style Guide
 
 Before contributing, please review the LLM-friendly [Style Guide for Acts](./000_STYLE_GUIDE.md).
