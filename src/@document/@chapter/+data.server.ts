@@ -60,17 +60,18 @@ export async function data(pageContext: PageContextServer): Promise<PageData> {
     const fixedLinksContent = replaceRelativeLinks(contentWithGlossary, document, lang);
     const htmlContent = await processMarkdown(fixedLinksContent);
 
-    const title = `${chapter.name} | ${document.charAt(0).toUpperCase() + document.slice(1)}`;
+    const title = `${chapter.name} - ${uiStrings[document as keyof UIStrings].long}`;
     const description =
-      markdownContent
-        .split('\n')
-        .filter(line => line.trim() && !line.trim().startsWith('#'))
-        .slice(0, 2)
-        .join(' ')
-        .replace(/[*_`[\]()]/g, '')
-        .replace('\s*---*\s*', '')
-        .replace('!DEFINITION', '')
-        .replace(':term', '')
+      (
+        await processMarkdown(
+          markdownContent
+            .split('\n')
+            .filter(line => line.trim() && !line.trim().startsWith('#'))
+            .slice(0, 2)
+            .join(' ')
+        )
+      )
+        .replace(/<[^>]*>/g, '')
         .substring(0, 240) + '...';
 
     const nextChapter = chapterIndex < chapters.length - 1 ? chapters[chapterIndex + 1] : null;
