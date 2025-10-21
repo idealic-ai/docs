@@ -69,7 +69,8 @@ export async function data(pageContext: PageContextServer): Promise<PageData> {
         .join(' ')
         .replace(/[*_`[\]()]/g, '')
         .replace('\s*---*\s*', '')
-        .substring(0, 160) + '...';
+        .replace('!DEFINITION :term', '')
+        .substring(0, 240) + '...';
 
     const nextChapter = chapterIndex < chapters.length - 1 ? chapters[chapterIndex + 1] : null;
     const prevChapter = chapterIndex > 0 ? chapters[chapterIndex - 1] : null;
