@@ -33,7 +33,7 @@ const DOC_FOLDERS = ['manifesto', 'edict', 'acts', 'blueprint'];
 export async function getGlossary(lang: string = 'en'): Promise<Glossary> {
   const { markdownContent } = await getMarkdownContent('acts', '000_glossary.md', lang);
   const glossary: Glossary = {};
-  const regex = /^- :dfn\[(.+?)\]\{canonical="(.+?)" href="(.+?)"\}:\s*(.*)/gm;
+  const regex = /:dfn\[(.+?)\]\{canonical="(.+?)" href="(.+?)"\}:\s*(.*)/gm;
 
   let match;
   while ((match = regex.exec(markdownContent)) !== null) {

@@ -37,7 +37,7 @@ An :term[idea:]{canonical="idea:"} reference can exist in several states:
     - This is a fully-qualified request that targets a specific domain, ignoring the current namespace.
 
 3.  **Explicit Branch Request:** `idea:~main/schemas/UserProfile` (or `idea:/schemas/UserProfile`)
-    - The `~` prefix indicates an explicit **:term[Branch]{canonical="Branch"}** request. This ignores the :term[Search Path]{canonical="Search Path" href="./108_concept_visibility.md#the-search-path-prioritized-retrieval"} and targets the `main` :term[branch]{canonical="Branch"} directly, within the current (or specified) namespace.
+    - The `~` prefix indicates an explicit :term[Branch]{canonical="Branch"} request. This ignores the :term[Search Path]{canonical="Search Path" href="./108_concept_visibility.md#the-search-path-prioritized-retrieval"} and targets the `main` :term[branch]{canonical="Branch"} directly, within the current (or specified) namespace.
 
 4.  **Resolved Reference (The "Answer"):** `idea://my-project.com/:staging/schemas/UserProfile?1.2:1.2.staging.4`
     - This is a permanent, unambiguous record of a resolution. It shows the request was resolved within the `my-project.com` domain, on the `staging` :term[branch]{canonical="Branch"}, and found the exact version `1.2.staging.4`.

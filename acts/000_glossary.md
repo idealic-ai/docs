@@ -98,9 +98,9 @@ This document provides definitions for the key concepts used in the Idea Protoco
 - :dfn[idea:]{canonical="idea:" href="./109_concept_addressing.md"}: A URI scheme for navigating the versioned, branched reality of the :term[Idea]{canonical="Idea"} ecosystem. It provides syntax for both simple, dynamic requests and fully resolved, permanent references.
 
 - :dfn[Identity Relationships]{canonical="Identity Relationships" href="./107_concept_identity.md#the-relational-fabric-of-identity"}: The set of connections that give rise to an :term[Emergent Identity]{canonical="Emergent Identity"}.
-  - :dfn[Lineage]{canonical="Lineage"}: The historical chain of versions that links an :term[Idea]{canonical="Idea"} to its past and future iterations.
-  - :dfn[Causality]{canonical="Causality"}: A relationship where one :term[Idea]{canonical="Idea"} directly causes or triggers the creation of another.
-  - :dfn[Grouping]{canonical="Grouping"}: The mechanism for bundling multiple related :term[Ideas]{canonical="Idea"} into a single, manageable unit.
+  - :dfn[Lineage]{canonical="Lineage" href="./107_concept_identity.md#the-relational-fabric-of-identity"}: The historical chain of versions that links an :term[Idea]{canonical="Idea"} to its past and future iterations.
+  - :dfn[Causality]{canonical="Causality" href="./107_concept_identity.md#the-relational-fabric-of-identity"}: A relationship where one :term[Idea]{canonical="Idea"} directly causes or triggers the creation of another.
+  - :dfn[Grouping]{canonical="Grouping" href="./107_concept_identity.md#the-relational-fabric-of-identity"}: The mechanism for bundling multiple related :term[Ideas]{canonical="Idea"} into a single, manageable unit.
 
 - :dfn[State Message]{canonical="State Message" href="./009_agent_state.md"}: A context message containing a `state` object and an optional `schema`. It represents a persistent state maintained between ticks of an agent's execution loop.
 
@@ -116,7 +116,7 @@ This document provides definitions for the key concepts used in the Idea Protoco
   >
   > - [010: Agent/Plan](./010_agent_plan.md)
 
-- :dfn[Process Idea]{canonical="Process Idea" href="./010*agent_plan.md"}: A self-contained [Idea](./101_concept_idea.md) that captures a strategic [Plan](./010_agent_plan.md) and its live execution state. Its `schema` is the library of [Tools](./002_agent_tool.md), its `solution` is the \_new* `Plan` for the current tick, and its `context` contains the `Input`, `State`, and the previous `Plan`.
+- :dfn[Process Idea]{canonical="Process Idea" href="./010_agent_plan.md"}: A self-contained [Idea](./101_concept_idea.md) that captures a strategic [Plan](./010_agent_plan.md) and its live execution state. Its `schema` is the library of [Tools](./002_agent_tool.md), its `solution` is the new `Plan` for the current tick, and its `context` contains the `Input`, `State`, and the previous `Plan`.
 
   > Sidenote:
   >
@@ -151,6 +151,8 @@ This document provides definitions for the key concepts used in the Idea Protoco
 - :dfn[Refiner]{canonical="Refiner" href="./103_concept_ideator.md#the-refiner-an-ideator-for-evolution"}: A specialized `Idea Transformer` that evolves an `Idea`'s structure. It takes an `Idea` and a prompt as input and produces a new `Idea` with an updated `schema` and migrated `solution`.
 
 - :dfn[Search Path]{canonical="Search Path" href="./108_concept_visibility.md#the-search-path-prioritized-retrieval"}: An ordered list of branch names that defines the retrieval mechanism. It tells the resolver which partitions to look in, and in what order of priority, creating a cascading overlay system.
+
+- :dfn[Sovereignty]{canonical="Sovereignty" href="./102_concept_sovereignty.md"}: The principle that an :term[Idea]{canonical="Idea"}'s identity and canonical location are controlled by its owner through a decentralized mechanism, typically DNS. It establishes ownership over a namespace in which :term[Ideas]{canonical="Idea"} reside and evolve.
 
 - :dfn[Variable Reference]{canonical="Variable Reference" href="./004_agent_call.md"}: A string with a special syntax (`†<kind>.<path>`) used in a `Tool Call`'s parameters to reference a value from the context (e.g., from a `State` or `Input` message). It allows an agent to dynamically wire tools together by using the output of one tool as the input for another.
 
