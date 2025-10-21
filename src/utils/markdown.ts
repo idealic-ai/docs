@@ -190,21 +190,19 @@ export async function processMarkdown(markdownContent: string): Promise<string> 
   return htmlContent;
 }
 
-export function replaceRelativeLinks(
-  markdownContent: string,
-  baseUrl: string,
-  lang: string
-): string {
-  // This regex finds markdown links that are relative.
+export function replaceRelativeLinks(htmlContent: string, baseUrl: string, lang: string): string {
+  // This regex finds anchor tags with relative hrefs.
   // It avoids absolute URLs (http, https, //), root-relative URLs (/), and anchor links (#).
-  const relativeLinkRegex = /\[([^\]]+)\]\((?!<?https?:\/\/|\/\/|\/|#)([^)]+)\)?\)/g;
+  const relativeLinkRegex = /(<a\s+(?:[^>]*?\s+)?href=")((?!https?:\/\/|\/\/|\/|.\/|#|#)[^"]+)(")/g;
 
-  return markdownContent.replace(relativeLinkRegex, (match, linkText, linkUrl) => {
+  return htmlContent.replace(relativeLinkRegex, (_match, prefix, linkUrl, suffix) => {
     // Prepend the baseUrl to the relative link.
     const cleanedLinkUrl = linkUrl.replace(/^\.\//, ''); // remove leading ./
     const finalBaseUrl = `/${baseUrl.replace(/^\/|\/$/g, '')}`;
-    const absoluteUrl = `${process.env.VITE_BASE_PATH || ''}/${lang}${finalBaseUrl}/${cleanedLinkUrl}`;
-    return `[${linkText}](${absoluteUrl})`;
+    const absoluteUrl = `${
+      process.env.VITE_BASE_PATH || ''
+    }/${lang}${finalBaseUrl}/${cleanedLinkUrl}`;
+    return `${prefix}${absoluteUrl}${suffix}`;
   });
 }
 

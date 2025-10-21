@@ -57,8 +57,8 @@ export async function data(pageContext: PageContextServer): Promise<PageData> {
 
     // Convert markdown to HTML
     const contentWithGlossary = linkGlossaryTerms(markdownContent, glossary, lang);
-    const fixedLinksContent = replaceRelativeLinks(contentWithGlossary, document, lang);
-    const htmlContent = await processMarkdown(fixedLinksContent);
+    const htmlContentPreLinks = await processMarkdown(contentWithGlossary);
+    const htmlContent = replaceRelativeLinks(htmlContentPreLinks, document, lang);
 
     const title = `${chapter.name} - ${uiStrings[document as keyof UIStrings].long}`;
     const description =

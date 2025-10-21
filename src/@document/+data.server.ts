@@ -19,8 +19,8 @@ export async function data(pageContext: PageContextServer) {
   try {
     const { markdownContent } = await getMarkdownContent(document, 'index.md', lang);
     const contentWithGlossary = linkGlossaryTerms(markdownContent, glossary, lang);
-    const fixedLinksContent = replaceRelativeLinks(contentWithGlossary, document, lang);
-    const htmlContent = await processMarkdown(fixedLinksContent);
+    const htmlContentPreLinks = await processMarkdown(contentWithGlossary);
+    const htmlContent = replaceRelativeLinks(htmlContentPreLinks, document, lang);
     const description =
       markdownContent
         .split('\n')
