@@ -67,8 +67,4 @@ This capability is critical for safety and for collaborative tasks where the age
 
 ## The Role of Data in the Loop
 
-The :term[Execution Loop]{canonical="Execution Loop"} provides a dynamic structure for agent behavior, but its power comes from the data flowing within it. This is managed by the :term[Data message type]{canonical="Data Message"}, which is explored in :term[006: Agent/Data]{href="./006_agent_data.md"}.
-
-```
-
-```
+The :term[Execution Loop]{canonical="Execution Loop"} provides a dynamic structure for agent behavior, but its power comes from the data flowing within it. This is managed by the :term[Data message]{canonical="Data Message"}, which is explored in :term[006: Agent/Data]{href="./006_agent_data.md"}.
