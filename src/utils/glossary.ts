@@ -56,7 +56,7 @@ export function linkGlossaryTerms(content: string, glossary: Glossary, lang: str
       const newAttrs = {
         ...attrs,
         href: glossaryEntry.url
-          ? `${basePath}${glossaryEntry.url.replace('./', '')}`
+          ? `${basePath}${glossaryEntry.url.replace('./', '/acts/')}`
           : `${basePath}/acts/000_glossary.md#${glossaryEntry.slug}`,
         canonical: glossaryEntry.canonical,
       };

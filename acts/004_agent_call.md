@@ -16,7 +16,7 @@
 > - Extended by:
 >   - [012: Agent/Delegate](./012_agent_delegate.md)
 
-The :term[Tool] protocol establishes the foundational schema-driven interface that enables agents to understand structured capabilities. This document describes the **:term[Call]** protocol, which builds upon :term[Tools] to define how execution happens
+The :term[Tool] protocol establishes the foundational schema-driven interface that enables agents to understand structured capabilities. This document describes the **:term[Call]** protocol, which builds upon :term[Tools] to define how execution happens.
 
 A :term[Call] is a concrete instance of a :term[Tool] with specific parameter values, ready for execution. Where :term[Tools] define _what can be done_, :term[Calls] define _how it gets executed_.
 

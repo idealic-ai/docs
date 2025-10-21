@@ -1,68 +1,68 @@
 # 004: Agent/Call
 
 > [!DEFINITION] [Call](./000_glossary.md)
-> Think of a Tool as a recipe. A Call is when you actually use that recipe with specific amounts of ingredients to bake something. It's the plan put into action.
+> A :term[Call] is a ready-to-go action. Think of a :term[Tool] as a recipe. A :term[Call] is when you actually use that recipe with specific ingredients to cook something. It’s an instruction for what *should be done right now*.
 
 > Sidenote:
-> - Needs this first:
+> - Needs:
 >   - [002: Agent/Tool](./002_agent_tool.md)
-> - Helps make these possible:
+> - Makes Possible:
 >   - [103: Concept/Ideator](./103_concept_ideator.md)
 >   - [013: Agent/Scopes](./013_agent_scopes.md)
 >   - [011: Agent/Instancing](./011_agent_instancing.md)
 >   - [202: Idea/Vessel](./202_idea_vessel.md)
 >   - [203: Idea/Process](./203_idea_process.md)
-> - Is improved by:
+> - Is Extended By:
 >   - [012: Agent/Delegate](./012_agent_delegate.md)
 
-The Tool is the blueprint that describes what a helper AI can do. This document explains the **Call**, which is the next step: telling the AI how to actually *do* it.
+The :term[Tool] protocol sets up the basic menu of what an AI agent can do. This document explains the **:term[Call]** protocol, which is all about how the agent actually *does* those things.
 
-A Call is a filled-out order for a Tool, with all the details filled in, ready to go. If a Tool tells you *what can be done*, a Call tells you *how it gets done right now*.
+A :term[Call] is a specific action, based on a :term[Tool], that is filled out and ready to go. While :term[Tools] tell you *what's possible*, :term[Calls] are the commands that say *how to do it now*.
 
 > [!HEADSUP] Heads up
-> When an AI receives a Request and decides to make a set of Calls, that entire package is called a Vessel. A Vessel is like a single moment of decision, where the AI picks the right Tools from its toolbox to get a job done.
+> When an agent gets a :term[Request]{href="./001_agent_request.md"} and decides on a set of actions (:term[Calls]), that whole decision package is called a :term[Vessel]{href="./202_idea_vessel.md"}. A :term[Vessel] is like a snapshot of the agent's plan at a single moment, choosing from its available :term[Tools] to figure out what to do next.
 >
 > > Sidenote:
 > >
 > > - [001: Agent/Request](./001_agent_request.md)
 > > - [202: Idea/Vessel](./202_idea_vessel.md)
 
-## Putting It All Together
+## Combining Calls with Context
 
-A Call by itself is just a simple instruction. Its real power comes from how it connects with other parts of the system that manage how it runs. These connections are turned on by special instructions in the Tool's blueprint (these instructions start with an `_`). This allows a single Call to trigger all sorts of interesting behaviors.
+A :term[Call] on its own is just a simple instruction. Its real power comes from combining it with other rules that control how and where it runs. These rules are activated by special instructions (they start with an `_` symbol) inside a :term[Tool]'s design. This lets a single :term[Call] command trigger all sorts of interesting behaviors.
 
-By giving these special `_` instructions clear meanings, we let the AI (the LLM) become a creative planner. It can think about all the different ways to combine these instructions to build complex plans, almost like a chef deciding not just which ingredients to use, but how to prep and cook them together in a new way.
+By giving these special instructions clear meanings, we let the AI (LLM) become a smart planner. It can think about how to mix and match these instructions to build clever and complex chains of actions. It's not just picking a tool from a list; it's building a custom workflow on the fly.
 
 > [!TIP]
-> The next part explains how a Call connects to other ideas we'll talk about later. You don't need to click the links and read ahead now; we'll get to everything in order. You can always come back here later.
+> The next few points explain how this connects to other parts of the system. You don't need to jump ahead and read about them now; we'll get to them in order. You can always come back here later.
 
-- **Running Real Code (`_activity`)**: The most basic special instruction is connecting a Call to a reliable piece of code. The `_activity` instruction tells the system, "Don't just think about this; run this specific program to get the answer."
+- **Doing Real Work (`_activity`)**: The most basic upgrade is connecting a :term[Call] to a piece of computer code that performs a specific task. The `_activity` instruction tells the system that this :term[Call] should be handled by a real program (:term[Activity]), not just thought about by the AI.
 
   > Sidenote:
   > - [003: Agent/Activity](./003_agent_activity.md).
 
-- **Giving the Job to Someone Else (`_delegate`)**: A Call can pass its job to an external helper, called a Delegate. The `_delegate` instruction usually points to a saved set of instructions, letting you reuse a complex task like it's a simple tool. This is like giving a task to a specialist in a separate, clean workshop, so they don't get distracted by what you're doing.
+- **Passing the Job to Someone Else (`_delegate`)**: A :term[Call] can hand off its job to another, separate agent (:term[Delegate]). The `_delegate` instruction usually points to a saved :term[Request], turning that request into a reusable tool. This gives the task its own clean workspace, so it doesn't get confused by other things happening at the same time.
 
   > Sidenote:
   > - [012: Agent/Delegate](./012_agent_delegate.md).
 
-- **Focusing Attention (`_scopes`)**: The Scopes system controls what information a Call can see. It's like giving the AI blinders so it can only focus on the important details for the task. This prevents it from getting confused by other information and helps it produce more reliable results. When used with a Delegate, this is even more powerful: it defines the *only* information the specialist in their clean workshop is allowed to see.
+- **Focusing Attention (`_scopes`)**: The :term[Scopes] protocol is like putting blinders on the AI to help it focus. It tells a :term[Call] exactly what information it's allowed to see. This prevents the AI from getting distracted by too much information and helps it give more reliable answers. When used with `_delegate`, it's even more powerful: it creates a completely sealed-off environment for the delegated task, defining *everything* it's allowed to know.
 
   > Sidenote:
   > - [013: Agent/Scopes](./013_agent_scopes.md).
 
-- **Saving the Result (`_outputPath`)**: A Call can be told where to save its result. The `_outputPath` instruction is like telling it, "When you're done, put the answer in this specific file folder." This allows you to build assembly lines where the output of one step becomes the input for the next.
+- **Saving the Result (`_outputPath`)**: You can make a :term[Call] save its work. The `_outputPath` instruction tells the :term[Call] where to put its result in a shared memory space called the :term[State]. This allows you to build step-by-step processes where the result of one action becomes the starting point for the next.
 
   > Sidenote:
   > - [009: Agent/State](./009_agent_state.md).
 
-- **Working on a Specific Item (`_instance`)**: When you have a list of many similar things to process, a Call can be told to focus on just one of them. The `_instance` instruction is like an item's serial number, telling the Call to do all its work (like reading information and saving results) on that single item. This lets you process many items at the same time, each with its own focused helper.
+- **Working on a Specific Item (`_instance`)**: When you have a list of things to process, a :term[Call] can be told to work on just one specific item (:term[Instance]). The `_instance` instruction acts like a label, telling the :term[Call] which item to read from and write to in the shared :term[State]. This is great for doing the same job on many different items at the same time.
   > Sidenote:
   > - [011: Agent/Instancing](./011_agent_instancing.md).
 
 ## Different Ways to Run Calls
 
-When an AI creates several Calls at once, you can choose how to run them:
+When an agent creates a list of :term[Calls] to run, you can choose how to execute them:
 
 ```typescript
 // Run just one Call
@@ -74,19 +74,19 @@ const results = await Tool.all(calls);
 // Run all Calls and stop as soon as one succeeds
 const result = await Tool.any(calls);
 
-// Run all Calls and stop as soon as the first one finishes (whether it succeeded or failed)
+// Run all Calls and stop as soon as one finishes (whether it succeeded or failed)
 const result = await Tool.race(calls);
 ```
 
-These choices let you:
+These different ways of running things allow for:
 
-- **Control Every Step**: Handle Calls one by one, with your own logic in between.
-- **Work in Batches**: Run many independent Calls at the same time for speed.
-- **Find the Quickest Answer**: Stop a search as soon as you get a good result (`.any()`) or any result at all (`.race()`).
-- **Succeed or Fail Together**: Make sure a group of related Calls all finish successfully (`.all()`), which is important when they depend on each other.
+- **Step-by-Step Control**: Handle :term[Calls] one by one, with your own logic in between.
+- **Doing Things in Parallel**: Run a bunch of independent :term[Calls] at the same time to go faster.
+- **Quick-Exit Plans**: Stop as soon as you get what you need (`.any()`) or as soon as something finishes (`.race()`).
+- **All-or-Nothing Jobs**: Make sure a whole group of :term[Calls] succeeds together (`.all()`), which is important when they depend on each other.
 
-## Chaining Calls Together
+## Chaining Calls Together in a Loop
 
-While these patterns help run a single batch of Calls, sometimes you need to do things in multiple steps, where the result of one Call is needed to start the next. This is handled by a bigger system that manages the back-and-forth between making `Requests` and running `Calls`.
+These patterns are great for managing a single batch of :term[Calls], but agents often need to do tasks that have multiple steps, where the result of one action is needed for the next. This is handled by a bigger system that manages the flow of `Requests` and :term[Calls] in a sequence.
 
-The next document, :term[005: Agent/Loop]{href="./005_agent_loop.md"}, explains how this continuous cycle works.
+The next document, :term[005: Agent/Loop]{href="./005_agent_loop.md"}, explains how this bigger process works.

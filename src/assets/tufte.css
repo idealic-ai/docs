@@ -1117,25 +1117,17 @@ details {
 .glossary-tooltip {
   position: absolute;
   z-index: 100;
-  padding: 0.5rem 1rem;
+  padding: 0 1rem;
   background: #ffc;
   border: 1px solid #e6e6e6;
   border-radius: 3px;
-  max-width: 350px;
+  width: 100%;
+  max-width: 450px;
   font-size: 1.15rem;
   color: #111;
   line-height: 1.5;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   pointer-events: none;
-  h2 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    margin-top: 0.5rem;
-  }
-  > :last-child {
-    margin-bottom: 0;
-  }
 }
 
 .dark-scheme .glossary-tooltip {
