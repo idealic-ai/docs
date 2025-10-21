@@ -11,3 +11,4 @@ This document outlines the stylistic conventions to be used when writing or edit
 - **Sidenote References**: When linking to other relevant `Acts` or concepts, use a `> Sidenote:` block. This keeps the main text clean and provides contextual, non-interruptive links.
 - When marking terms, dont singularize the terms. Use plural e.g. `:term[Activities]{canonical="Activity"}`, the system will match it against `Activity` automatically.
 - Avoid meta references like "This document", or "Next document". Make it a smoother narrative.
+- Use `:dfn[Term]{canonical="..." href="..."}` to define terms within glossary
