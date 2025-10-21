@@ -479,6 +479,11 @@ ul {
   line-height: 2rem;
 }
 
+svg p {
+  font-size: inherit;
+  line-height: inherit;
+}
+
 p {
   margin-top: 1.4rem;
   margin-bottom: 1.4rem;
@@ -1053,7 +1058,7 @@ h1 + .marginnote {
   grid-row: 1;
 }
 .columns .column > * {
-  width: 100%;
+  width: auto;
 }
 
 .columns .column > pre {

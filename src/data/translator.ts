@@ -32,6 +32,7 @@ const SHARED_TRANSLATION_PROMPT = `  * Ensure that in translation markdown heade
   * Delegate -> Делегат
   * Instance -> Экземпляр
   * Instancing -> Экземплирование
+  * IMPORTANT: When translating terms, add (or keep) canonical attribute to the link with original english term, e.g. :term[Запросы]{canonical="Request"}. You can inflect the term within square brackets, but ensure canonical attribute is present.
 `;
 
 const SHARED_STYLE_GUIDE = `
@@ -64,6 +65,7 @@ const SHARED_STYLE_GUIDE = `
 * In mermand, shape syntax is this: Node@{ shape: cloud, label: "Язык" } - pay attention to that @, dont lose it.
 * Never remove, adjust, improve or change directive blocks like :::::details or ::::columns. Ensure that colon count remain as in original document.
 * Avoid adding same-line comments in code blocks within columns - add them on new line instead
+* IMPORTANT: When translating terms, add (or keep) canonical attribute to the link with original english term, e.g. :term[Запросы]{canonical="Request"}. You can inflect the term within square brackets, but ensure canonical attribute is present.
 `;
 async function translateELI5(
   documentContent: string,

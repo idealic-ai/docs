@@ -1,62 +1,73 @@
 # 005: Agent/Loop
 
 > [!DEFINITION] Loop
-> A series of steps, like a recipe, that an AI agent follows to reach a goal. The agent makes a request, sees what happens, and uses that new information to figure out its next move. It keeps repeating this cycle until the job is done.
+> Think of a loop as a series of steps an agent takes to reach a goal. The agent keeps making requests, carrying out the resulting actions (called "Calls"), and uses the results to figure out the next step. It continues this until there are no more actions to take.
 
 > Sidenote:
-> *   You should read these first:
->     *   [001: Agent/Request](./001_agent_request.md)
->     *   [002: Agent/Tool](./002_agent_tool.md)
->     *   [004: Agent/Call](./004_agent_call.md)
+> - This builds on:
+>   - [001: Agent/Request](./001_agent_request.md)
+>   - [002: Agent/Tool](./002_agent_tool.md)
+>   - [004: Agent/Call](./004_agent_call.md)
 
-This paper explains the **Execution Loop**, which is how an AI agent can tackle big problems by breaking them down into smaller steps. This process of thinking, acting, and learning from the results is what we mean when we talk about an "agent."
+This document explains the "Execution Loop," which is the process that lets an agent handle multi-step jobs. This back-and-forth process of figuring out what to do, using tools, and learning from the results is what people usually mean when they talk about an "agent."
 
 ## The Execution Loop
 
-> Sidenote:
-> ```mermaid
-> graph TD
->     Start((Start)) --> SchemaComposition(1. Put Blueprints Together)
->     SchemaComposition --> ContextAssembly(2. Gather Info)
->     ContextAssembly --> RequestInvocation(3. Make a Request)
->     RequestInvocation --> CallProcessing(4. Plan Next Steps)
->     CallProcessing --> HasCalls{Is there a to-do list?}
->     HasCalls -- Yes --> HITL{Human Can Check}
->     HITL -- Looks Good --> Execution(5. Take Action & Learn)
->     Execution -- New Info --> ContextAssembly
->     HITL -- Needs a Change --> ContextAssembly
->     HasCalls -- No / Done --> Termination(6. Finish the Job)
->     Termination --> OutputGeneration(7. Give Final Answer)
->     OutputGeneration --> End((End))
->     classDef optional stroke-dasharray: 5, 5
->     class HITL optional
-> ```
+The execution loop is how an agent works on its own to complete a big task. It's like a big loop with a smaller loop running inside of it.
 
-The execution loop is the engine that lets an agent work on its own to solve problems one step at a time. Here’s how it works:
+::::columns
+:::column
 
-1.  **Putting Blueprints Together:** First, you give the agent a blueprint for what the final answer should look like. The agent then automatically combines this with the blueprints for all the tools it knows how to use. This creates one giant blueprint for its overall plan.
-2.  **Gathering Information:** The agent starts by collecting all the information it needs, like what the user's main goal is.
-3.  **Making a Request:** Using the information it gathered, the agent makes a request, asking the system what it should do next.
-4.  **Planning the Next Steps:** The system gives back a plan, which is a list of proposed actions called `Calls`. Think of these as a to-do list. At this point, the agent has only decided *what* to do, but hasn't done it yet.
-5.  **Taking Action & Learning:**
-    - If the to-do list isn't empty, the agent starts doing the tasks. This means using the tools it planned to use.
-    - It then takes the results of its actions and adds them to its memory, so it can use this new information in the next cycle.
-6.  **Finishing the Job:** If the to-do list is empty, it means the agent believes it has finished the goal, so the loop stops.
-7.  **Giving the Final Answer:** Once the loop is finished, the agent puts together the final answer in the format you asked for at the very beginning. This allows the agent to not just do things, but also to give you a clean, final report. For example, an agent could do a lot of work analyzing numbers (each as a `Call`) and then use this final step to give you a tidy summary.
+1.  **Big Loop (Making a Request):** An agent's job is a series of requests. It starts with some information and enters a loop to figure out the first big step.
+2.  **Getting Instructions:** Inside this loop, it makes a single `Request`. As it thinks, it sends back a stream of smaller actions, called `Calls`, which are lined up in a waiting list.
+3.  **Small Loop (Doing the Actions):** For each `Request`, a smaller loop inside handles all the `Calls` that came with it. This part is super fast because it does things at the same time:
+    - It constantly checks the waiting list for any `Calls` that are ready to go (meaning, any steps they depend on are already finished).
+    - All the ready `Calls` can be shown to a human for an okay, and then they all run at once. This works because the agent's memory is set up so one action can't mess up another's results. It's like several cooks working in a kitchen, but each has their own cutting board and ingredients, so they don't get in each other's way.
+    - As each `Call` finishes, its result is added to the shared knowledge. This might make other waiting `Calls` ready to start.
+    - This system of reacting and working in parallel continues until the agent has sent all its `Calls` for the current step and the waiting list is empty. This makes everything much faster, because the agent can start working on different parts of a problem at the same time, even before it has the full plan.
+4.  **Checking if it's Done:** Once the small loop is finished, the agent looks at the final answer. If the answer contains no more actions, it means the main goal is complete, and the big loop stops.
+5.  **Continuing the Work:** If the answer did have more actions, the agent goes back to step 2. It makes a new `Request`, but this time with all the new knowledge it gained from the last round.
+6.  **The Final Answer:** When the loop finally stops, the final answer is ready, formatted just the way the user asked for it.
+
+:::
+:::column
+
+```mermaid
+graph TD
+    Start[/"Start Agent"/] --> Request["Make a Request"];
+    Request -- streams actions --> FindUnblocked{"Find ready actions"};
+
+    FindUnblocked -- "some are ready" --> ConfirmAndLaunch["Confirm & run them (at the same time)"];
+    ConfirmAndLaunch -- "any finish" --> UpdateContext["Add result to knowledge"];
+    UpdateContext --> FindUnblocked;
+
+    FindUnblocked -- "none are ready" --> CheckStreamAndPending{"Still thinking or actions waiting?"};
+    CheckStreamAndPending -- Yes --> Wait["Wait for new actions or for some to finish"];
+    Wait --> FindUnblocked;
+
+    CheckStreamAndPending -- No --> CheckTermination{"Did the request have any actions?"};
+    CheckTermination -- Yes --> Request;
+    CheckTermination -- No --> End[\"Give back the final answer"\];
+```
+
+:::
+::::
 
 ## Human-in-the-Loop (HITL)
 
-A really cool feature of this loop is that it gives a human a chance to step in and help. Because the agent first plans what to do and then does it, there's a pause where a person can check its work.
+The new execution loop is great for letting a person supervise the agent. The agent always asks for confirmation right before it acts. This makes sure the user is only asked about things that are actually ready to happen.
 
-- **Approval:** Before the agent takes action, the system can show you its to-do list and ask, "Is this okay?" The loop will wait for you to say yes.
-- **Correction:** You can even change the plan. Maybe you want the agent to use a different tool, or change some of a tool's settings.
+- **Approval:** Before a ready `Call` is run, the system can show it to a user to get an "okay." This is smart because the user doesn't waste time looking at actions that might never run because they are waiting on something else.
+- **Correction:** The user can change the details of an action or even swap it out for a completely different one.
 
-It's important to know that the main system doesn't force a specific way to do this. It just creates a natural break between planning and acting. This lets anyone building with this system create their own ways for humans to interact, from a simple "yes/no" button to more advanced review systems.
+It’s important to know that these specific ways of getting human feedback aren't built into the core system. The system is just designed to separate *planning* an action from *doing* it. This gives builders the freedom to add any kind of human check they want, from a simple "yes/no" button to more complex safety systems.
 
-This is super important for staying safe and for working together with the AI. When a person gives feedback, the agent can use it to get smarter and improve its strategy.
-
-
+This is really important for safety and for tasks where the agent is more like an assistant. The agent can use the human's changes and feedback to get smarter and adjust its plan.
 
 ## The Role of Data in the Loop
 
-The loop provides the structure for how the agent behaves, but its real power comes from the information that flows through it. We'll explore how that data is handled in the next document, [006: Agent/Data](./006_agent_data.md).
+The execution loop gives the agent a way to behave, but its real power comes from the information that flows through it. This information is handled by a special `Data` message, which we'll explore in [006: Agent/Data](./006_agent_data.md).
+
+```
+
+```
