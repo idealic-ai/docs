@@ -1,7 +1,7 @@
 # 011: Agent/Instancing
 
-> [!DEFINITION] :term[Instancing]
-> A protocol for grouping context messages by assigning them a shared, unique identifier. This creates distinct :term[Instances] within a single request, enabling parallel, multiplexed computation.
+> [!DEFINITION] :term[Instancing]{canonical="Instancing"}
+> A protocol for grouping context messages by assigning them a shared, unique identifier. This creates distinct :term[Instances]{canonical="Instance"} within a single request, enabling parallel, multiplexed computation.
 
 > Sidenote:
 >
@@ -11,15 +11,15 @@
 >   - :term[013: Agent/Scopes]{href="/013_agent_scopes.md"}
 >   - :term[010: Agent/Plan]{href="/010_agent_plan.md"}
 
-The **Instancing Protocol** is a powerful pattern for scaling agentic workflows by enabling multiple threads of computation within a single request. It allows any agent to operate on multiple, independent data contexts concurrently without requiring any changes to its core logic. This is achieved by associating context messages, such as :term[State] or :term[Input], with unique instance identifiers. As a result, a single, reusable :term[Plan] can be executed across many instances in parallel, but the protocol is generic and supports any combination of messages, dramatically improving throughput and consistency.
+The **Instancing Protocol** is a powerful pattern for scaling agentic workflows by enabling multiple threads of computation within a single request. It allows any agent to operate on multiple, independent data contexts concurrently without requiring any changes to its core logic. This is achieved by associating context messages, such as :term[State]{canonical="State"} or :term[Input]{canonical="Input"}, with unique instance identifiers. As a result, a single, reusable :term[Plan]{canonical="Plan"} can be executed across many instances in parallel, but the protocol is generic and supports any combination of messages, dramatically improving throughput and consistency.
 
 ## The Instancing Mechanism
 
-Instancing provides a way to process multiple, independent data contexts by layering on top of data-carrying messages like :term[State]{href="/009_agent_state.md"}. Instead of providing a single :term[State] message, a request can include an array of them, each representing a distinct :term[Instance] of a task.
+Instancing provides a way to process multiple, independent data contexts by layering on top of data-carrying messages like :term[State]{href="/009_agent_state.md"}. Instead of providing a single :term[State]{canonical="State"} message, a request can include an array of them, each representing a distinct :term[Instance]{canonical="Instance"} of a task.
 
-To manage these concurrent contexts, each :term[State] message is assigned a **unique identifier** via a special `_instance` property. These identifiers are short, unique tokens (e.g., `①`, `②`) that allow the LLM to associate operations with a specific :term[Instance].
+To manage these concurrent contexts, each :term[State]{canonical="State"} message is assigned a **unique identifier** via a special `_instance` property. These identifiers are short, unique tokens (e.g., `①`, `②`) that allow the LLM to associate operations with a specific :term[Instance]{canonical="Instance"}.
 
-Instancing is an opt-in feature enabled by the caller on a per-message basis. By adding the `_instance` property to a data message like :term[State] or :term[Input], the caller signals that this message should be treated as a distinct, thread-safe execution context. If the `_instance` property is omitted, the message is treated as a global resource available to all instances.
+Instancing is an opt-in feature enabled by the caller on a per-message basis. By adding the `_instance` property to a data message like :term[State]{canonical="State"} or :term[Input]{canonical="Input"}, the caller signals that this message should be treated as a distinct, thread-safe execution context. If the `_instance` property is omitted, the message is treated as a global resource available to all instances.
 
 This approach provides significant benefits:
 
@@ -30,19 +30,19 @@ This approach provides significant benefits:
 
 The protocol's power comes from how the `_instance` identifier scopes the behavior of different context message types.
 
-- **:term[State]:** The :term[State] message is the core of the protocol. Each :term[Instance] is a distinct :term[State] message, uniquely identified by the `_instance` property. This provides an isolated canvas for a sequence of operations, ensuring that parallel workflows do not interfere with one another.
+- **:term[State]{canonical="State"}:** The :term[State]{canonical="State"} message is the core of the protocol. Each :term[Instance]{canonical="Instance"} is a distinct :term[State]{canonical="State"} message, uniquely identified by the `_instance` property. This provides an isolated canvas for a sequence of operations, ensuring that parallel workflows do not interfere with one another.
 
   > Sidenote:
   >
   > - :term[009: Agent/State]{href="/009_agent_state.md"}
 
-- **:term[Input]:** An :term[Input] message can be used in two ways. A global :term[Input] message (without an `_instance` identifier) provides configuration for all instances in a batch. A targeted :term[Input] message (with an `_instance` identifier) provides data for a specific :term[State] message, overriding any global input.
+- **:term[Input]{canonical="Input"}:** An :term[Input]{canonical="Input"} message can be used in two ways. A global :term[Input]{canonical="Input"} message (without an `_instance` identifier) provides configuration for all instances in a batch. A targeted :term[Input]{canonical="Input"} message (with an `_instance` identifier) provides data for a specific :term[State]{canonical="State"} message, overriding any global input.
 
   > Sidenote:
   >
   > - :term[007: Agent/Input]{href="/007_agent_input.md"}
 
-- **:term[Scopes]:** The `_instance` identifier provides critical data isolation for :term[Scopes]. When a :term[Call] targets a specific instance, its `_scopes` are also scoped to that instance's context. This is what allows a :term[Delegate] to see only the data relevant to its specific unit of work, even when it is being orchestrated as one of many within a larger, multi-instance request.
+- **:term[Scopes]{canonical="Scope"}:** The `_instance` identifier provides critical data isolation for :term[Scopes]{canonical="Scope"}. When a :term[Call]{canonical="Call"} targets a specific instance, its `_scopes` are also scoped to that instance's context. This is what allows a :term[Delegate]{canonical="Delegate"} to see only the data relevant to its specific unit of work, even when it is being orchestrated as one of many within a larger, multi-instance request.
 
   > Sidenote:
   >
@@ -52,11 +52,11 @@ The protocol's power comes from how the `_instance` identifier scopes the behavi
 
 Instancing transforms single-task agents into powerful batch processors. Consider an agent designed to moderate user comments against a set of community guidelines.
 
-Without instancing, the agent would operate sequentially. To review 100 comments, it would require 100 separate :term[Requests]. This is not only slow but also context-blind; the agent judges each comment in complete isolation, which can lead to inconsistent rulings on similar content.
+Without instancing, the agent would operate sequentially. To review 100 comments, it would require 100 separate :term[Requests]{canonical="Request"}. This is not only slow but also context-blind; the agent judges each comment in complete isolation, which can lead to inconsistent rulings on similar content.
 
-With the **Instancing Protocol**, the workflow is parallelized within a single :term[Request].
+With the **Instancing Protocol**, the workflow is parallelized within a single :term[Request]{canonical="Request"}.
 
-1.  **Batch Input**: The agent receives a `context` containing an array of 100 :term[Input] messages. Each message is assigned a unique `_instance` identifier and contains a different user comment.
+1.  **Batch Input**: The agent receives a `context` containing an array of 100 :term[Input]{canonical="Input"} messages. Each message is assigned a unique `_instance` identifier and contains a different user comment.
 
     ```json
     // Batch of Input messages provided to the LLM
@@ -80,9 +80,9 @@ With the **Instancing Protocol**, the workflow is parallelized within a single :
     ]
     ```
 
-2.  **Parallel Plan Execution**: The LLM can now see the entire batch. It might use a single :term[Plan] that defines a two-step process: first, analyze the sentiment, then check against a list of forbidden keywords. This same plan is applied to all instances.
+2.  **Parallel Plan Execution**: The LLM can now see the entire batch. It might use a single :term[Plan]{canonical="Plan"} that defines a two-step process: first, analyze the sentiment, then check against a list of forbidden keywords. This same plan is applied to all instances.
 
-3.  **Targeted Output**: The agent's :term[solution] will contain a flat list of :term[Calls], but each `Call` is directed at a specific comment via the `_instance` property.
+3.  **Targeted Output**: The agent's :term[solution]{canonical="Solution"} will contain a flat list of :term[Calls]{canonical="Call"}, but each `Call` is directed at a specific comment via the `_instance` property.
 
     ```json
     // Solution generated by the LLM
@@ -175,13 +175,13 @@ Despite the `Input` being global, the LLM correctly interprets the natural langu
 
 Instancing integrates with higher-level protocols to manage execution flow.
 
-- **:term[Calls]:** The `_instance` property on a :term[Call] is the core mechanism that directs its execution. It ensures that all state manipulations—whether writing to an `_outputPath` or reading a value from the state to use as an input—are correctly scoped to the intended :term[Instance].
+- **:term[Calls]{canonical="Call"}:** The `_instance` property on a :term[Call]{canonical="Call"} is the core mechanism that directs its execution. It ensures that all state manipulations—whether writing to an `_outputPath` or reading a value from the state to use as an input—are correctly scoped to the intended :term[Instance]{canonical="Instance"}.
 
   > Sidenote:
   >
   > - :term[004: Agent/Call]{href="/004_agent_call.md"}
 
-- **:term[Plan]:** The :term[Plan] message is not subject to instancing; it acts as a single, global template for a workflow. It can be combined with multiple, instanced :term[State] messages, allowing the same plan to be executed concurrently across many independent data contexts in a single request.
+- **:term[Plan]{canonical="Plan"}:** The :term[Plan]{canonical="Plan"} message is not subject to instancing; it acts as a single, global template for a workflow. It can be combined with multiple, instanced :term[State]{canonical="State"} messages, allowing the same plan to be executed concurrently across many independent data contexts in a single request.
 
   > Sidenote:
   >
@@ -189,4 +189,4 @@ Instancing integrates with higher-level protocols to manage execution flow.
 
 ## From Planning to Process
 
-Where a :term[Plan] provides the reusable template for a workflow, and :term[Instancing] provides the mechanism to execute it at scale, a **:term[Process Idea]{href="/203_idea_process.md"}** is the artifact that captures the result. It is the complete, self-contained record of a strategic plan and its live execution state across all instances.
+Where a :term[Plan]{canonical="Plan"} provides the reusable template for a workflow, and :term[Instancing]{canonical="Instancing"} provides the mechanism to execute it at scale, a **:term[Process Idea]{href="/203_idea_process.md"}** is the artifact that captures the result. It is the complete, self-contained record of a strategic plan and its live execution state across all instances.

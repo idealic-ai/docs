@@ -1,14 +1,14 @@
 # 002: Agent/Tool
 
-> [!DEFINITION] :term[Tool]
-> A schema that defines a capability an agent can use. It is presented to an LLM as part of a request, acting as a structured interface for a potential action. The LLM activates the tool by generating a :term[Call] with specific parameters, which is then executed either latently by the LLM or explicitly by a registered code function (:term[Activity]).
+> [!DEFINITION] :term[Tool]{canonical="Tool"}
+> A schema that defines a capability an agent can use. It is presented to an LLM as part of a request, acting as a structured interface for a potential action. The LLM activates the tool by generating a :term[Call]{canonical="Call"} with specific parameters, which is then executed either latently by the LLM or explicitly by a registered code function (:term[Activity]{canonical="Activity"}).
 
 > Sidenote:
 >
 > - Requires: :term[001: Agent/Request]{href="./001_agent_request.md"}
 > - Complemented by: :term[003: Agent/Activity]{href="./003_agent_activity.md"}
 
-A :term[Tool] is a schema-driven interface that defines a structured capability an agent can use. It acts as the foundational building block for all agent actions, providing a way for the LLM to understand and select from a menu of possible behaviors.
+A :term[Tool]{canonical="Tool"} is a schema-driven interface that defines a structured capability an agent can use. It acts as the foundational building block for all agent actions, providing a way for the LLM to understand and select from a menu of possible behaviors.
 
 ## What Are Tools?
 
@@ -21,7 +21,7 @@ Tools provide:
 - **Composability**: Building blocks that combine into complex agent behaviors
 - **LLM Integration**: Schemas that language models can reason about and select
 
-When an agent fills specific parameters for a Tool, it creates a **:term[Call]**—an instance of a Tool with all required parameters filled, representing a concrete request for execution.
+When an agent fills specific parameters for a Tool, it creates a **:term[Call]{canonical="Call"}**—an instance of a Tool with all required parameters filled, representing a concrete request for execution.
 
 > Sidenote: :term[004: Agent/Call]{href="./004_agent_call.md"}
 
@@ -104,7 +104,7 @@ Tool.register('sentimentAnalysis', {
 
 ## Composing Schemas for the LLM
 
-An agent doesn't just work with tools; it often needs to produce a final, structured output once its task is complete. To handle this, the agent runtime composes the schemas for all available :term[Tool]s with a user-defined _output schema_. This creates a single, unified schema that is provided to the LLM in a :term[Request].
+An agent doesn't just work with tools; it often needs to produce a final, structured output once its task is complete. To handle this, the agent runtime composes the schemas for all available :term[Tool]{canonical="Tool"}s with a user-defined _output schema_. This creates a single, unified schema that is provided to the LLM in a :term[Request]{canonical="Request"}.
 
 This composition gives the LLM a choice in how it responds. Based on the prompt, it can:
 
@@ -187,19 +187,19 @@ Agent.Request(
 
 Beyond defining a tool's basic parameters, its schema can be enhanced when it is invoked. This is a different form of composition where new behaviors are layered onto a single tool.
 
-When an agent decides to use a tool, it creates a :term[Call]—a concrete instance of that tool. A :term[Call] includes the parameters for the tool, but it can also be augmented with special meta-properties (prefixed with `_`) that provide extra instructions for the execution engine. These properties control aspects of the tool's execution that go beyond its basic definition.
+When an agent decides to use a tool, it creates a :term[Call]{canonical="Call"}—a concrete instance of that tool. A :term[Call]{canonical="Call"} includes the parameters for the tool, but it can also be augmented with special meta-properties (prefixed with `_`) that provide extra instructions for the execution engine. These properties control aspects of the tool's execution that go beyond its basic definition.
 
 > Sidenote:
 >
 > - :term[004: Agent/Call]{href="./004_agent_call.md"}
 
-This mechanism allows a simple, core tool schema to be used in powerful and flexible ways. The :term[Call] becomes a rich instruction that specifies _what_ to do (the tool and its parameters) and _how_ to do it (the meta-properties). The final piece of the puzzle is understanding the different ways a :term[Call] can actually be executed.
+This mechanism allows a simple, core tool schema to be used in powerful and flexible ways. The :term[Call]{canonical="Call"} becomes a rich instruction that specifies _what_ to do (the tool and its parameters) and _how_ to do it (the meta-properties). The final piece of the puzzle is understanding the different ways a :term[Call]{canonical="Call"} can actually be executed.
 
 ## Latent and Explicit Execution
 
-Once a :term[Call] is generated, the system needs to execute it. A `Tool` schema, being just an interface, doesn't contain the execution logic itself. Instead, its execution can happen in one of two ways. The default is **latent execution**, where the LLM uses its own internal reasoning to generate the output, which is ideal for language or knowledge-based tasks. For actions that require interaction with the outside world—like calling an API or accessing a database—a `Tool` must be connected to a deterministic code function. This explicit implementation is called an **:term[Activity]**.
+Once a :term[Call]{canonical="Call"} is generated, the system needs to execute it. A `Tool` schema, being just an interface, doesn't contain the execution logic itself. Instead, its execution can happen in one of two ways. The default is **latent execution**, where the LLM uses its own internal reasoning to generate the output, which is ideal for language or knowledge-based tasks. For actions that require interaction with the outside world—like calling an API or accessing a database—a `Tool` must be connected to a deterministic code function. This explicit implementation is called an **:term[Activity]{canonical="Activity"}**.
 
-The separation of the :term[Tool] interface from the :term[Activity] implementation is a core design principle. It allows an agent's capabilities to be defined and reasoned about abstractly, while the underlying execution logic can be swapped or updated independently. The next document, :term[003: Agent/Activity]{href="./003_agent_activity.md"}, describes how :term[Activities] provide the concrete logic for :term[Tool]s.
+The separation of the :term[Tool]{canonical="Tool"} interface from the :term[Activity]{canonical="Activity"} implementation is a core design principle. It allows an agent's capabilities to be defined and reasoned about abstractly, while the underlying execution logic can be swapped or updated independently. The next document, :term[003: Agent/Activity]{href="./003_agent_activity.md"}, describes how :term[Activities]{canonical="Activity"} provide the concrete logic for :term[Tool]{canonical="Tool"}s.
 
 > Sidenote:
 >

@@ -184,15 +184,30 @@ const enTermMap: Record<string, string> = {
   instancing: 'Instancing',
   state: 'State',
   instance: 'Instance',
+  instances: 'Instance',
   solution: 'Solution',
   tool: 'Tool',
   tools: 'Tool',
   vessel: 'Vessel',
   request: 'Request',
+  requests: 'Request',
   'tool registry': 'Tool',
   'activity registry': 'Activity',
   context: 'context',
   schema: 'schema',
+  'tool call': 'Tool Call',
+  'tool calls': 'Tool Call',
+  'input message': 'Input Message',
+  'variable reference': 'Variable Reference',
+  'variable references': 'Variable Reference',
+  'execution loop': 'Execution Loop',
+  plans: 'Plan',
+  variables: 'Variable',
+  loop: 'Loop',
+  ideator: 'Ideator',
+  'data protocol': 'Data',
+  'data message type': 'Data Message',
+  'term name': 'Term Name',
 };
 
 const langTermMaps: Record<string, Record<string, string>> = {
@@ -229,7 +244,7 @@ async function processFile(filePath: string, termMap: Record<string, string>) {
 
 async function main() {
   console.log('Starting script to add canonical tags to :term definitions...');
-  const targetLangs = ['ru', 'simple-ru', 'en', 'simple-en'];
+  const targetLangs = ['en'];
 
   for (const lang of targetLangs) {
     const termMap = langTermMaps[lang];

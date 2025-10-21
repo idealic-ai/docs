@@ -102,7 +102,7 @@ This document provides definitions for the key concepts used in the Idea Protoco
 
 - :dfn[Data Message]{canonical="Data Message" href="./006_agent_data.md"}: A persistent context message containing a `data` value and an optional `schema`. It is retained across an agent's execution loop to provide a stable, structured context.
 
-- :dfn[Plan]{canonical="Plan" href="./010_agent_plan.md"}: A context message carrying a data-flow graph of :term[Tool Calls] that represents an agent's strategy. It is passed between steps to enable iterative execution and adaptation.
+- :dfn[Plan]{canonical="Plan" href="./010_agent_plan.md"}: A context message carrying a data-flow graph of :term[Tool Calls]{canonical="Tool Call"} that represents an agent's strategy. It is passed between steps to enable iterative execution and adaptation.
 
   > Sidenote:
   >
