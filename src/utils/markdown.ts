@@ -193,16 +193,16 @@ export async function processMarkdown(markdownContent: string): Promise<string> 
 export function replaceRelativeLinks(htmlContent: string, baseUrl: string, lang: string): string {
   // This regex finds anchor tags with relative hrefs.
   // It avoids absolute URLs (http, https, //), root-relative URLs (/), and anchor links (#).
-  const relativeLinkRegex = /(<a\s+(?:[^>]*?\s+)?href=")((?!https?:\/\/|\/\/|\/|.\/|#|#)[^"]+)(")/g;
+  const relativeLinkRegex = /(<a[^>]+href=")([^"]+)(")/g;
 
   return htmlContent.replace(relativeLinkRegex, (_match, prefix, linkUrl, suffix) => {
     // Prepend the baseUrl to the relative link.
     const cleanedLinkUrl = linkUrl.replace(/^\.\//, ''); // remove leading ./
-    const finalBaseUrl = `/${baseUrl.replace(/^\/|\/$/g, '')}`;
-    const absoluteUrl = `${
-      process.env.VITE_BASE_PATH || ''
-    }/${lang}${finalBaseUrl}/${cleanedLinkUrl}`;
-    return `${prefix}${absoluteUrl}${suffix}`;
+    const start = `${process.env.VITE_BASE_PATH || ''}/${lang}`;
+    if (cleanedLinkUrl.includes('://') || cleanedLinkUrl.startsWith(start)) {
+      return `${prefix}${linkUrl}${suffix}`;
+    }
+    return `${prefix}${start}/${baseUrl.replace(/^\/|\/$/g, '')}/${cleanedLinkUrl}${suffix}`;
   });
 }
 
