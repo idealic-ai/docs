@@ -123,6 +123,17 @@ The "Full API Execution" layer is therefore not a requirement but a powerful con
 
 This private implementation is the creator's "secret sauce." It might involve proprietary models, specialized hardware, unique data sources, or sophisticated methods for handling incomplete or imperfect information. The service becomes a reliable "black box" that fulfills the public promise of the `Idea`, creating a marketplace where open, portable protocols and valuable, private implementations can coexist and build upon one another.
 
+## From a Sovereign Idea to a Sovereign Namespace
+
+While DNS provides sovereignty over a single `Idea`, its true power is in establishing a **Sovereign Namespace**. A domain name like `my-project.com` does not just point to one `Idea`; it defines the root of a digital estate over which the owner has full control.
+
+This namespace can be structured using paths, just like a website.
+
+- The root of the domain (`my-project.com`) can resolve to a primary `Idea` (like a bot, a process, or a project overview).
+- Paths within that domain (`my-project.com/schemas/User`) can resolve to other, nested `Ideas`.
+
+This creates a clear hierarchy: the **domain** establishes sovereignty over the entire namespace, and the **path** provides structure within it. This allows a single sovereign identity to host and manage a whole collection of interconnected `Ideas`, from a single component to an entire application. This model of addressing is detailed further in the :term[Addressing]{href="./109_concept_addressing.md"} concept.
+
 ## API Specification
 
 All HTTP interactions happen at the root of the Idea's domain (`/`).

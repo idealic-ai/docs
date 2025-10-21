@@ -140,6 +140,8 @@ This document provides definitions for the key concepts used in the Idea Protoco
   >
   > - [303: Ideator/Reactor](./303_ideator_reactor.md)
 
+- :dfn[Refiner]{canonical="Refiner" href="./103_concept_ideator.md#the-refiner-an-ideator-for-evolution"}: A specialized `Idea Transformer` that evolves an `Idea`'s structure. It takes an `Idea` and a prompt as input and produces a new `Idea` with an updated `schema` and migrated `solution`.
+
 - :dfn[Variable Reference]{canonical="Variable Reference" href="./004_agent_call.md"}: A string with a special syntax (`†<kind>.<path>`) used in a `Tool Call`'s parameters to reference a value from the context (e.g., from a `State` or `Input` message). It allows an agent to dynamically wire tools together by using the output of one tool as the input for another.
 
 - :dfn[Solution]{canonical="Solution" href="./001_agent_request.md"}: The structured object returned by a `Request`. It contains the proposed `Tool Calls` and the final `output`, conforming to a predefined JSON Schema.

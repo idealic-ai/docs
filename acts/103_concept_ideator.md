@@ -53,4 +53,18 @@ For example, the **Reactor** system is a higher-order `Ideator`. To manage a gam
 3.  Call a public `Storage` service to log the game's history.
 4.  Return the new game state `Idea` via its public API.
 
-From the outside, the Reactor is just another `Ideator`. Its complexity is managed internally by composing other independent, public services. This ensures that the entire system remains modular, transparent, and scalable.
+From the outside, the Reactor is just another `Ideator`. Its complexity is managed internally by composing other independent, public services.
+
+## The Refiner: An Ideator for Evolution
+
+While most `Ideators` work within the constraints of a given `schema` to produce a `solution`, a special class of `Idea Transformer` exists to evolve the `schema` itself. This is the **Refiner**.
+
+A Refiner is a meta-operation that handles the structural evolution of an :term[Idea]{canonical="Idea"}. It takes an existing :term[Idea]{canonical="Idea"} and a prompt (e.g., "Add an 'author' field to this article") as input, and produces a _new_ :term[Idea]{canonical="Idea"} as output.
+
+This new :term[Idea]{canonical="Idea"} has:
+
+- An **updated `schema`**.
+- An **updated `solution`** that conforms to the new `schema`.
+- **Migrated data** from the original `solution`. The LLM, knowing both the old and new schemas, attempts to migrate the data intelligently.
+
+The Refiner is the primary mechanism for advancing an :term[Idea]{canonical="Idea"}'s **:term[lineage]{canonical="Lineage"}**. If the schema change is backward-incompatible, the new :term[Idea]{canonical="Idea"} will represent a new major version in its version chain. This allows for safe, explicit evolution of the system's core data structures, orchestrated by a dedicated, reusable Ideator.
