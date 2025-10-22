@@ -16,7 +16,31 @@ For a system of evolving, interconnected :term[Ideas]{canonical="Idea" href="./1
 
 Before a version can be selected, it must exist. :term[Hierarchical Versioning]{canonical="Hierarchical Versioning"} is the mechanism for creating and tracking the different states of an :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} over time. A version is not just a simple number but a rich, dot-separated hierarchy that tells the story of an :term[Idea]{canonical="Idea" href="./101_concept_idea.md"}'s evolution.
 
+<<<<<<< Updated upstream
 Versions consist of **integer revisions** for sequential, public releases (like `1.2`) and **branched revisions** for named development lines (like `feature-x`). For example, a version like `1.2.feature-x.3` tells us this is the third revision of a `feature-x` branch that was created from version `1.2`.
+=======
+::::columns
+:::column
+Versions consist of **integer revisions** for sequential, public releases (like `1.2`) and **branched revisions** for named development lines (like `feature-x`). For example, a version like `1.2.feature-x.3` tells us this is the third revision of a `feature-x` branch that was created from version `1.2`.
+:::
+:::column
+
+```mermaid
+gitGraph
+    commit id: "1.1"
+    commit id: "1.2"
+    branch "feature-x"
+    checkout "feature-x"
+    commit id: "1.2.feature-x.1"
+    commit id: "1.2.feature-x.2"
+    commit id: "1.2.feature-x.3"
+    checkout main
+    commit id: "1.3"
+```
+
+:::
+::::
+>>>>>>> Stashed changes
 
 The rules for evolving a version are:
 
