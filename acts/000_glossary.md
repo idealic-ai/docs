@@ -109,7 +109,7 @@ This document provides definitions for the key concepts used in the Idea Protoco
 
 - :dfn[Emergent Identity]{canonical="Emergent Identity" href="./107_concept_identity.md"}: A recognizable pattern that arises from the web of relationships connecting a collection of :term[Ideas]{canonical="Idea"}. Identity is not an intrinsic property of a single :term[Idea]{canonical="Idea"}, but a quality that emerges from its context.
 
-- :dfn[idea:]{canonical="idea:" href="./109_concept_addressing.md"}: A URI scheme for navigating the versioned, branched reality of the :term[Idea]{canonical="Idea"} ecosystem. It provides syntax for both simple, dynamic requests and fully resolved, permanent references.
+- :dfn[idea:]{canonical="idea:" href="./110_concept_addressing.md"}: A URI scheme for navigating the versioned, branched reality of the :term[Idea]{canonical="Idea"} ecosystem. It provides syntax for both simple, dynamic requests and fully resolved, permanent references.
 
 - :dfn[Identity Relationships]{canonical="Identity Relationships" href="./107_concept_identity.md#the-relational-fabric-of-identity"}: The set of connections that give rise to an :term[Emergent Identity]{canonical="Emergent Identity"}.
   - :dfn[Lineage]{canonical="Lineage" href="./107_concept_identity.md#the-relational-fabric-of-identity"}: The historical chain of versions that links an :term[Idea]{canonical="Idea"} to its past and future iterations.
