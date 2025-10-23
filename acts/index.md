@@ -71,4 +71,4 @@ This document is the bridge between high-level vision and ground-level implement
 
 [Read the full glossary](./000_glossary.md)
 
-Before contributing, please review the LLM-friendly [Style Guide for Acts](./000_STYLE_GUIDE.md).
+Before contributing, please review the LLM-friendly [Style Guide for Acts](./000_style_guide.md).

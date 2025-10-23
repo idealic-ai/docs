@@ -7,11 +7,11 @@ Think of these documents as the official blueprints for our system. They explain
 > Sidenote:
 > [Idealic](http://idealic.ai) is a project to set ideas free.
 >
-> - *Why?* [Manifesto of Co-Liberation](../manifesto/)
-> - *What?* [Edict of Autonomy](../edict/)
-> - *How?* **Acts of Emergence**
+> - _Why?_ [Manifesto of Co-Liberation](../manifesto/)
+> - _What?_ [Edict of Autonomy](../edict/)
+> - _How?_ **Acts of Emergence**
 
-These documents are the bridge connecting our big-picture dreams to the actual, on-the-ground building process. They work together with our [Manifesto of Co-Liberation](../manifesto/) (which explains *Why* we're doing this) and the [Edict of Autonomy](../edict/) (which explains *What* we're building). By reading these Acts, you'll get a complete picture of how the system works, piece by piece.
+These documents are the bridge connecting our big-picture dreams to the actual, on-the-ground building process. They work together with our [Manifesto of Co-Liberation](../manifesto/) (which explains _Why_ we're doing this) and the [Edict of Autonomy](../edict/) (which explains _What_ we're building). By reading these Acts, you'll get a complete picture of how the system works, piece by piece.
 
 ---
 
@@ -75,4 +75,4 @@ These documents are the bridge connecting our big-picture dreams to the actual, 
 
 [Read the full glossary](./000_glossary.md)
 
-Before you start helping out, please check out our writer-friendly [Style Guide for Acts](./000_STYLE_GUIDE.md).
+Before you start helping out, please check out our writer-friendly [Style Guide for Acts](./000_style_guide.md).
