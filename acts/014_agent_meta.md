@@ -28,7 +28,7 @@ This cycle transforms the LLM from a simple processor into an active participant
 > This entire :term[Request]{href="./001_agent_request.md"} pipeline—the `context` (including the `Meta` message), the `schema`, and the resulting `solution`—forms a self-contained, reproducible unit. When saved, this unit is what the system refers to as an :term[Idea]{href="./101_concept_idea.md"}. The `Meta` object is the key that transforms an ephemeral `Request` into a persistent, addressable `Idea`.
 >
 > > Sidenote:
-> > :term[101: Concept/Idea]{href="./101_concept_idea.md"}.
+> > :term[101: Concept/Idea]{href="./101_concept_idea.md"}
 
 ::::columns
 :::column{title="Example Request Structure"}
