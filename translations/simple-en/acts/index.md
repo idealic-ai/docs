@@ -47,13 +47,12 @@ These documents are the bridge connecting our big-picture dreams to the actual, 
 - [106: Concept/Evolution](./106_concept_evolution.md)
 - [107: Concept/Identity](./107_concept_identity.md)
 - [108: Concept/Visibility](./108_concept_visibility.md)
-- [109: Concept/Addressing](./109_concept_addressing.md)
-- [110: Concept/Life](./111_concept_life.md)
+- [110: Concept/Addressing](./110_concept_addressing.md)
+- [111: Concept/Life](./111_concept_life.md)
 
 ### Ideas
 
-> Sidenote:
-> This section explains how ideas themselves are structured and what they're made of.
+> Sidenote: Describes the core primitives of ideas.
 
 - [201: Idea/Record](./201_idea_record.md)
 - [202: Idea/Vessel](./202_idea_vessel.md)

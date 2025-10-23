@@ -45,8 +45,8 @@ This document is the bridge between high-level vision and ground-level implement
 - [106: Concept/Evolution](./106_concept_evolution.md)
 - [107: Concept/Identity](./107_concept_identity.md)
 - [108: Concept/Visibility](./108_concept_visibility.md)
-- [109: Concept/Addressing](./109_concept_addressing.md)
-- [110: Concept/Life](./111_concept_life.md)
+- [110: Concept/Addressing](./110_concept_addressing.md)
+- [111: Concept/Life](./111_concept_life.md)
 
 ### Ideas
 

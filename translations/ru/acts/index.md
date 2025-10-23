@@ -47,8 +47,8 @@
 - [106: Концепция/Эволюция](./106_concept_evolution.md)
 - [107: Концепция/Идентичность](./107_concept_identity.md)
 - [108: Концепция/Видимость](./108_concept_visibility.md)
-- [109: Концепция/Адресация](./109_concept_addressing.md)
-- [110: Концепция/Жизнь](./111_concept_life.md)
+- [110: Концепция/Адресация](./110_concept_addressing.md)
+- [111: Концепция/Жизнь](./111_concept_life.md)
 
 ### Идеи
 

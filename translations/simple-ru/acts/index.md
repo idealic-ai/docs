@@ -44,11 +44,11 @@
 - [103: Концепция/Идеатор](./103_concept_ideator.md)
 - [104: Концепция/Скрытое](./104_concept_latent.md)
 - [105: Концепция/ИИ-центричность](./105_concept_ai_native.md)
-- [106: Концепция/Эволюция](./106_concept_evolution.md)
-- [107: Концепция/Идентичность](./107_concept_identity.md)
-- [108: Концепция/Видимость](./108_concept_visibility.md)
-- [109: Концепция/Адресация](./109_concept_addressing.md)
-- [110: Концепция/Жизнь](./111_concept_life.md)
+- [106: Понятие/Эволюция](./106_concept_evolution.md)
+- [107: Понятие/Сущность](./107_concept_identity.md)
+- [108: Понятие/Видимость](./108_concept_visibility.md)
+- [110: Понятие/Адресация](./110_concept_addressing.md)
+- [111: Понятие/Жизнь](./111_concept_life.md)
 
 ### Идеи
 
