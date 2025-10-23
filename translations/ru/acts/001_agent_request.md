@@ -1,6 +1,6 @@
 # 001: Агент/Запрос
 
-> [!DEFINITION] [Запрос](../../acts/000_glossary.md)
+> [!DEFINITION] [Запрос](./000_glossary.md)
 > Единый, автономный вызов LLM, который принимает :term[контекст]{canonical="context"} и :term[схему]{canonical="schema"} и производит :term[решение]{canonical="Solution"}.
 
 > Sidenote:

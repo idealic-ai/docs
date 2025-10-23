@@ -1,6 +1,6 @@
 # 005: Агент/Цикл
 
-> [!DEFINITION] [Цикл](../../acts/000_glossary.md)
+> [!DEFINITION] [Цикл](./000_glossary.md)
 > Последовательность :term[Запросов]{canonical="Request"}, направленная на достижение цели. Агент продолжает вызывать :term[Запросы]{canonical="Request"}, обрабатывать полученные :term[Вызовы]{canonical="Call"} и передавать результат обратно в контекст следующего :term[Запроса]{canonical="Request"}, пока не перестанут генерироваться новые :term[Вызовы]{canonical="Call"}.
 
 > Sidenote:

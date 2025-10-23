@@ -1,6 +1,6 @@
 # 109: Naming and Finding Ideas
 
-> [!DEFINITION] [idea:](../../acts/000_glossary.md)
+> [!DEFINITION] [idea:](./000_glossary.md)
 > A special kind of web address used to find different versions and drafts of an :term[Idea]{canonical="Idea"}. It's a way to both ask for an Idea and to create a permanent link to a specific version you've found.
 
 > Sidenote:

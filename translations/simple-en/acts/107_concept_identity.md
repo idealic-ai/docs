@@ -1,6 +1,6 @@
 # 107: Concept/Identity
 
-> [!DEFINITION] [Emergent Identity](../../acts/000_glossary.md)
+> [!DEFINITION] [Emergent Identity](./000_glossary.md)
 > An identity that isn't assigned, but appears naturally from the way a bunch of :term[Ideas]{canonical="Idea"} are connected. It’s like getting to know a character in a book — their personality comes from their actions and relationships, not from a label on page one.
 
 > Sidenote:
@@ -18,13 +18,13 @@ Instead, identity **emerges**. It’s the recognizable pattern we see when we lo
 
 An identity is made from three main types of connections, like threads in a tapestry:
 
-> [!DEFINITION] [Lineage](../../acts/000_glossary.md)
+> [!DEFINITION] [Lineage](./000_glossary.md)
 > This is the history of an :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} — a chain connecting all its past and future versions. It’s like a flipbook that shows you exactly how something has changed from its very first draft to its latest one.
 
-> [!DEFINITION] [Causality](../../acts/000_glossary.md)
+> [!DEFINITION] [Causality](./000_glossary.md)
 > This is the “cause and effect” link. It shows when one :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} directly makes another one happen. This helps you track not just *how* an :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} changed, but *why* it changed.
 
-> [!DEFINITION] [Grouping](../../acts/000_glossary.md)
+> [!DEFINITION] [Grouping](./000_glossary.md)
 > This is how you can bundle a bunch of related :term[Ideas]{canonical="Idea" href="./101_concept_idea.md"} together into one package. Think of it like putting files into a folder. Together, the group represents something bigger than any single file inside it.
 
 ## The "Joe" Constellation

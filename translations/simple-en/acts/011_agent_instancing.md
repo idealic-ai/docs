@@ -1,6 +1,6 @@
 # 011: Agent/Instancing
 
-> [!DEFINITION] [Instancing](../../acts/000_glossary.md)
+> [!DEFINITION] [Instancing](./000_glossary.md)
 > Think of this as giving a unique nametag to different pieces of information. This lets a computer work on many separate tasks at the same time within a single request, like a chef cooking several different meals at once.
 
 > Sidenote:

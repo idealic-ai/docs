@@ -964,6 +964,7 @@ label.margin-toggle:not(.sidenote-number) {
 
 .callout {
   max-width: var(--left-size);
+  width: auto;
 }
 
 .callout-title-icon {

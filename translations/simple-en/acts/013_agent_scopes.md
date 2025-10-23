@@ -1,6 +1,6 @@
 # 013: Agent/Scopes
 
-> [!DEFINITION] [Scope](../../acts/000_glossary.md)
+> [!DEFINITION] [Scope](./000_glossary.md)
 > Think of a scope as a set of blinders for an AI. It's a rule that lets a task see only a specific part of the information it needs, blocking out everything else. The `_scopes` property is like a VIP list, saying exactly what data a :term[Call]{canonical="Call"} is allowed to look at.
 
 > Sidenote:

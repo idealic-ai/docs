@@ -1,6 +1,6 @@
 # 109: Concept/Versioning
 
-> [!DEFINITION] [Hierarchical Versioning](../../acts/000_glossary.md)
+> [!DEFINITION] [Hierarchical Versioning](./000_glossary.md)
 > A way of labeling versions using numbers and words separated by dots (like `1.2.new-feature.3`). This single system combines official releases, experimental copies (branches), and early drafts into one organized structure.
 
 > Sidenote:

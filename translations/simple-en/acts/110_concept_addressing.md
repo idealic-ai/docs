@@ -1,6 +1,6 @@
 # 110: Concept/Addressing
 
-> [!DEFINITION] [idea:](../../acts/000_glossary.md)
+> [!DEFINITION] [idea:](./000_glossary.md)
 > Think of `idea:` as a special kind of address, like a web address, but for finding things inside the world of :term[Ideas]{canonical="Idea"}. Since an :term[Idea]{canonical="Idea"} can have many different versions and even separate drafts, this address system lets you ask for exactly what you need, whether it's the latest version or a specific, permanent one.
 
 > Sidenote:
