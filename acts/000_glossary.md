@@ -89,6 +89,10 @@ This document provides definitions for the key concepts used in the Idea Protoco
   >
   > - [005: Agent/Loop](./005_agent_loop.md)
 
+- :dfn[Meta Message]{canonical="Meta Message" href="./014_agent_meta.md"}: A context message that provides an :term[Idea]{canonical="Idea"}'s explicit identity (:term[Meta Properties]{canonical="Meta Properties"}) to the LLM.
+
+- :dfn[Meta Properties]{canonical="Meta Properties" href="./014_agent_meta.md"}: A structured object within an :term[Idea]{canonical="Idea"} that holds its explicit identity, including its name, namespace, and version.
+
 - :dfn[HITL (Human-in-the-Loop)]{canonical="HITL (Human-in-the-Loop)" href="./005_agent_loop.md#human-in-the-loop-hitl"}: The practice of inserting a human checkpoint into an automated process. In the context of the `Execution Loop`, this refers to the opportunity for a user to approve, deny, or modify an agent's proposed `Call`s before they are executed.
 
   > Sidenote:

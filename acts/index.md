@@ -32,6 +32,7 @@ This document is the bridge between high-level vision and ground-level implement
 - [011: Agent/Instancing](./011_agent_instancing.md)
 - [012: Agent/Delegate](./012_agent_delegate.md)
 - [013: Agent/Scopes](./013_agent_scopes.md)
+- [014: Agent/Meta](./014_agent_meta.md)
 
 ### Concept
 

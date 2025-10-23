@@ -10,6 +10,8 @@
 >   - :term[Vessel Idea]{href="./202_idea_vessel.md"}
 > - Complemented by:
 >   - :term[Sovereignty]{href="./102_concept_sovereignty.md"}
+> - Enables:
+>   - :term[014: Agent/Meta]{href="./014_agent_meta.md"}
 
 This document explores the concept of **Identity** within the system. Unlike :term[Sovereignty]{canonical="Sovereignty" href="./102_concept_sovereignty.md"}, which deals with ownership and naming, this form of identity is not a persistent label assigned to a single object. An :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} in isolation has no tangible identity; it is merely a self-contained unit of data.
 

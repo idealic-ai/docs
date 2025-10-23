@@ -108,9 +108,9 @@ An agent doesn't just work with tools; it often needs to produce a final, struct
 
 This composition gives the LLM a choice in how it responds. Based on the prompt, it can:
 
-- **Generate `calls` only:** If the task requires intermediate steps, the LLM will invoke one or more tools and leave the `output` field `null`.
-- **Generate `output` only:** If the prompt can be answered directly without any tools, the LLM will provide the final result in the `output` field and leave `calls` empty.
-- **Generate both:** In some cases, the LLM might perform an action and produce the final output in a single step.
+- **Generate `meta` and `calls` only:** If the task requires intermediate steps, the LLM will invoke one or more tools, update the :term[Idea]{canonical="Idea"}'s version in the `meta` object, and leave the `output` field `null`.
+- **Generate `meta` and `output` only:** If the prompt can be answered directly without any tools, the LLM will provide the final result in the `output` field, update the `meta`, and leave `calls` empty.
+- **Generate all:** In some cases, the LLM might perform an action and produce the final output in a single step, updating `meta` accordingly.
 
 This mechanism allows a single, flexible interface to handle simple, one-shot answers as well as complex, multi-tool tasks. The developer provides the `Tool` schemas and an output schema separately, and the system combines them into a structure that the LLM can use to decide on the best course of action.
 
@@ -156,6 +156,18 @@ Agent.Request(
 {
   "type": "object",
   "properties": {
+    "meta": {
+      "type": "object",
+      "description": "Metadata about the idea, including version and identity. The LLM is expected to update this, for example by bumping the version.",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
     "output": {
       "type": ["object", "null"],
       "properties": {
@@ -176,7 +188,7 @@ Agent.Request(
       }
     }
   },
-  "required": ["calls", "output"]
+  "required": ["meta", "calls", "output"]
 }
 ```
 
