@@ -38,6 +38,8 @@ This document provides definitions for the key concepts used in the Idea Protoco
   >
   > - [003: Agent/Activity](./003_agent_activity.md)
 
+- :dfn[AI-Native]{canonical="AI-Native" href="./105_concept_ai_native.md"}: An architectural paradigm where an AI is the primary engine for a system's entire lifecycle, including its design, execution, evolution, and continuous improvement. It treats AI not as an integrated tool, but as the fundamental medium in which the system operates.
+
 - :dfn[Agency]{canonical="Agency" href="./111_concept_life.md"}: The capacity for subjective experience, intentionality, and action. It is the quality of being an agent that perceives, processes information, and interacts with its environment to effect change.
 
 - :dfn[Boundaries]{canonical="Boundaries" href="./111_concept_life.md"}: The property of having a distinct, non-fungible identity, whether physical or conceptual. This integrity means the entity is a self-contained unit. For a human, this is their single body and continuous consciousness. For an :term[Idea]{canonical="Idea"}, it's its specific definition—change the :term[Idea]{canonical="Idea"}, and it becomes a new one.

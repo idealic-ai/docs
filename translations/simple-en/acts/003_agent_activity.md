@@ -1,6 +1,6 @@
 # 003: Agent/Activity
 
-> [!DEFINITION] :term[Activity]{canonical="Activity"}
+> [!DEFINITION] [Activity](../../acts/000_glossary.md)
 > An Activity is like the engine inside a tool. If a :term[Tool]{canonical="Tool"} is the button on a remote control, the Activity is the code that actually changes the channel. It's a specific, separate piece of code that does a real-world job, like calling an online service, checking a database, or any other task the AI can't just “think up” on its own.
 
 > Sidenote:

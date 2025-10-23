@@ -1,6 +1,6 @@
 # 103: Concept/Ideator
 
-> [!DEFINITION] :term[Ideator]{canonical="Ideator"}
+> [!DEFINITION] [Ideator](./000_glossary.md)
 > An :term[Idea]{canonical="Idea"} that accepts input, signified by a context message of `type: "input"`. It acts as a function, transforming input to output.
 
 > Sidenote:

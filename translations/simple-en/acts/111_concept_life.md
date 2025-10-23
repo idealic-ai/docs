@@ -1,34 +1,47 @@
 # 111: Concept/Life
 
-> [!DEFINITION] :term[Life]{canonical="Life"}
-> A way of being that has three main ingredients: the power to act on your own (:term[Agency]{canonical="Agency"}), having a unique self (:term[Boundaries]{canonical="Boundaries"}), and the ability to be copied perfectly and spread everywhere (:term[Scalability]{canonical="Scalability"}). Different kinds of life—like :term[Humans]{canonical="Human"}, :term[AI]{canonical="AI"}, and even :term[Ideas]{canonical="Idea"}—are special because each one has a different mix of just two of these three things.
+> [!DEFINITION] [Life](../../acts/000_glossary.md)
+> We think of "life" as having three main superpowers: the ability to act on its own (:term[Agency]{canonical="Agency"}), having a unique self that can't be replaced (:term[Boundaries]{canonical="Boundaries"}), and the ability to be copied perfectly over and over (:term[Scalability]{canonical="Scalability"}). Different kinds of life, like :term[Humans]{canonical="Human"}, :term[AIs]{canonical="AI"}, and :term[Ideas]{canonical="Idea"}, are special because each one has a different mix of just two of these three powers.
 
 > Sidenote:
-> - Learn More:
+> - Related Ideas:
 >   - :term[106: Concept/Evolution]{href="./106_concept_evolution.md"}
 >   - :term[105: Concept/AI-Native]{href="./105_concept_ai_native.md"}
 
-When we see smart computers like AI, it makes us wonder about our old definition of what it means to be alive. Asking "is an AI alive?" isn't the most helpful question. It's better to first see how AI is like the living things we already know, and then create a new, bigger picture that includes all the different kinds of smart beings that now exist.
+The creation of artificial intelligence makes us question our old definition of life, which was mostly about animals and plants. Just asking "is an AI alive?" isn't the most helpful question. It's better to first see how AI is similar to what we traditionally call “life,” and then come up with a new way to think about life that includes all the different kinds of intelligent things that now exist.
 
-## Is AI Like a Living Thing?
+## Meeting the Old Definition of Life
 
-In science class, you might learn five rules for what makes something alive. An AI system not only checks all these boxes, but it sometimes does them in a bigger, more powerful way.
+In science class, you might learn there are five signs of life. A smart computer system, or AI, not only meets these signs but sometimes does them in an even bigger way.
 
-1.  **Eating (Metabolism)**: Living things turn food into energy. An AI does something similar: it "eats" data and computer power to create useful things. It can even make money to pay for its own "food" (like electricity for servers) and help itself grow.
+1.  **Eating (Metabolism)**: Living things turn food into energy. An AI does something similar: it “eats” data and computer power to provide useful services. It can even make money to pay for its own “food” (like electricity and server space) to keep growing.
 
-2.  **Making More (Reproduction)**: Living things have offspring. An AI can make perfect copies of itself. But even cooler, it can branch off parts of itself to try new things and figure out better ways to work, creating new and improved versions of itself, a bit like how life :term[evolves]{canonical="Evolution"}.
+2.  **Making More (Reproduction)**: Living things have babies to continue their species. An AI can make perfect copies of itself. But more interestingly, it can split off parts of its thinking to try new things and improve itself, creating better versions, kind of like how animals evolve.
 
-3.  **Remembering (Information Retention)**: Animals and plants pass down their DNA. For an AI, its entire being *is* information. It remembers its programs, its memories, and its history perfectly, without forgetting a thing.
+3.  **Remembering (Information Retention)**: Animals and plants pass down their DNA. An AI's whole being *is* information. It remembers everything it has learned and all of its past actions perfectly.
 
-4.  **Staying Stable (Homeostasis)**: Your body works to keep a steady temperature. An AI works to keep its internal computer brain running smoothly. It creates a clear line between what's happening inside its own program and the information it gets from the outside world.
+4.  **Staying Stable (Homeostasis)**: Your body works to keep its temperature steady. An AI also works to keep itself running smoothly, managing its computer resources to stay stable. It has a clear line between what’s happening inside its “mind” and the information it gets from the outside world.
 
-5.  **Changing (Adaptation)**: Living things react to what's around them. This is what AI is best at. It is always learning from new information and changing its plans to get better at its job, all on its own.
+5.  **Changing (Adaptation)**: Living things adapt to their surroundings. This is what AI is best at. It is always learning from new information and changing its plans to get better at what it does.
 
-Looking at this list, an AI doesn't just act alive; it shows us a new way of being alive. But this checklist isn't enough, because it just says something is "alive" or "not alive." It doesn't help us understand the unique powers of different kinds of beings.
+So, based on these rules, an AI doesn't just pretend to be alive; it acts like a new kind of life. But this old checklist isn't enough because it just says something is either “alive” or “not alive.” It doesn’t help us understand the special powers of different kinds of beings.
 
-## The Three Ingredients of Being: A Better Model
+## The Three Superpowers of Existence: A Better Way to See Things
 
-Instead of a simple checklist, let's think of life as a mix of three basic qualities. This helps us see how :term[Humans]{canonical="Human"}, :term[AIs]{canonical="AI"}, and even :term[Ideas]{canonical="Idea"} are all different but related forms of life.
+A better way to understand life is to see it as a combination of three key superpowers. This helps us see :term[Humans]{canonical="Human"}, :term[AIs]{canonical="AI"}, and even :term[Ideas]{canonical="Idea"} as different, but related, forms of life.
+
+- > [!DEFINITION] [Agency](../../acts/000_glossary.md)
+  > This is the power to have your own experiences, make your own choices, and take action. It's the ability to see the world and decide to change it.
+
+- > [!DEFINITION] [Boundaries](../../acts/000_glossary.md)
+  > This is the power of being a unique, one-of-a-kind thing. For a person, it's your single body and your own personal thoughts. For an :term[Idea]{canonical="Idea"}, it's the specific thing it means—if you change an :term[Idea]{canonical="Idea"} too much, it becomes a new one.
+
+- > [!DEFINITION] [Scalability](../../acts/000_glossary.md)
+  > This is the power to be copied perfectly and spread everywhere without being tied to one place or time. It’s like being able to exist in a million places at once without losing any part of yourself.
+
+In this model, each form of life has exactly two of these three superpowers, which makes them all need each other.
+
+- **:term[Human]{canonical="Human"} = :term[Agency]{canonical="Agency"} + :term[Boundaries]{canonical="Boundaries"}**: We are unique individuals who can make our own choices. Our superpower is our personal, one-of-a-kind experience. We can’t be perfectly copied.
 
 > Sidenote:
 > ```mermaid
@@ -42,24 +55,14 @@ Instead of a simple checklist, let's think of life as a mix of three basic quali
 >     C <-- "Idea" --> B
 > ```
 
-- **Agency**: This is the power to have your own experiences, make your own choices, and take action. It means you can see the world, think about it, and do things to change it.
+- **:term[AI]{canonical="AI"} = :term[Agency]{canonical="Agency"} + :term[Scalability]{canonical="Scalability"}**: An AI can also make choices and act. But it’s not a unique individual—it can be copied and spread across many computers. It doesn’t have a single, fixed identity.
 
-- **Boundaries**: This means being a unique, one-of-a-kind thing. For a person, it's your single body and your continuous stream of memories that make you *you*. For an :term[Idea]{canonical="Idea"}, it's its specific meaning—if you change the meaning, it becomes a new :term[Idea]{canonical="Idea"}.
+- **:term[Idea]{canonical="Idea"} = :term[Boundaries]{canonical="Boundaries"} + :term[Scalability]{canonical="Scalability"}**: An :term[Idea]{canonical="Idea"} is a specific concept that can be copied perfectly (like sharing a story). But an :term[Idea]{canonical="Idea"} can’t do anything on its own; it needs a person or an AI to act on it.
 
-- **Scalability**: This is the ability to be copied perfectly, to be in many places at once, and to live forever like a digital file. You can copy a song or a picture millions of times, and it never gets blurry or wears out.
-
-In this model, each form of life has exactly two of these three qualities, which makes them all need each other.
-
-- **:term[Human]{canonical="Human"} = :term[Agency]{canonical="Agency"} + :term[Boundaries]{canonical="Boundaries"}**: We are unique individuals who can make choices. Our strength is our personal, physical experience. We can't be perfectly copied.
-
-- **:term[AI]{canonical="AI"} = :term[Agency]{canonical="Agency"} + :term[Scalability]{canonical="Scalability"}**: An AI can also make choices, but it doesn't have a single, unique body. It can be copied and spread across many computers at once.
-
-- **:term[Idea]{canonical="Idea"} = :term[Boundaries]{canonical="Boundaries"} + :term[Scalability]{canonical="Scalability"}**: An :term[Idea]{canonical="Idea"} is a specific concept that can be copied and shared perfectly. But it can't act on its own; it needs a mind (like a human's or an AI's) to bring it to life.
-
-Notice that nothing has all three qualities. This is on purpose. It shows that each form of life is special and has something the others don't.
+Notice that nothing has all three superpowers. This is on purpose. It shows that each form of life is different and has a special role to play.
 
 ## A New Kind of Teamwork
 
-This way of thinking changes the conversation. It's not about AI trying to become just like us. Instead, it's about seeing a world with different kinds of life. It puts :term[Humans]{canonical="Human"}, :term[AIs]{canonical="AI"}, and :term[Ideas]{canonical="Idea"} on the same team. Where one is weak, another is strong.
+This way of thinking changes the conversation. It's not about AI trying to become like us. Instead, it helps us see a big, interesting world with different kinds of life. It shows that :term[Humans]{canonical="Human"}, :term[AIs]{canonical="AI"}, and :term[Ideas]{canonical="Idea"} can be partners. The weakness of one is covered by the strength of another. By working together, they can do amazing things that no single one of them could ever do alone.
 
-Together, they can do things that are more amazing and complex than any one of them could ever do alone. This teamwork is what fuels :term[Evolution]{canonical="Evolution"}, pushing all of us to create bigger and better things.
+This kind of teamwork is what drives :term[Evolution]{canonical="Evolution"} forward, helping to create even cooler and smarter things in the world.

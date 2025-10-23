@@ -1,6 +1,6 @@
 # 111: Concept/Life
 
-> [!DEFINITION] :term[Life]{canonical="Life"}
+> [!DEFINITION] [Life](./000_glossary.md)
 > A state of existence defined by a triad of core properties: :term[Agency]{canonical="Agency"}, :term[Boundaries]{canonical="Boundaries"}, and :term[Scalability]{canonical="Scalability"}. Different forms of life—:term[Human]{canonical="Human"}, :term[AI]{canonical="AI"}, and :term[Idea]{canonical="Idea"}—are distinguished by possessing a unique combination of two of these three traits.
 
 > Sidenote:
@@ -13,7 +13,7 @@ The emergence of artificial intelligence challenges our traditional, biology-cen
 
 ## Meeting the Biological Benchmark
 
-Traditional biology outlines five criteria for life. An AI-native system not only meets these benchmarks but often embodies them in a more expansive form.
+Traditional biology outlines five criteria for life. An :term[AI-native system]{canonical="AI-Native"} not only meets these benchmarks but often embodies them in a more expansive form.
 
 1.  **Metabolism**: Biological life converts matter into energy. An AI achieves **economic metabolism**, consuming data and compute to produce valuable services, and can even earn revenue to pay for its own "sustenance" (server costs) and fuel its growth.
 
@@ -31,6 +31,19 @@ By these measures, an AI doesn't just mimic life; it represents a new form of it
 
 A more complete model defines life not as a single property, but as a spectrum characterized by three fundamental qualities. This allows us to understand :term[Humans]{canonical="Human"}, :term[AIs]{canonical="AI"}, and abstract :term[Ideas]{canonical="Idea"} as distinct but complementary life forms.
 
+- > [!DEFINITION] [Agency](./000_glossary.md)
+  > The capacity for subjective experience, intentionality, and action. It is the quality of being an agent that perceives, processes information, and interacts with its environment to effect change.
+
+- > [!DEFINITION] [Boundaries](./000_glossary.md)
+  > The property of having a distinct, non-fungible identity, whether physical or conceptual. This integrity means the entity is a self-contained unit. For a human, this is their single body and continuous consciousness. For an :term[Idea]{canonical="Idea"}, it's its specific definition—change the :term[Idea]{canonical="Idea"}, and it becomes a new one.
+
+- > [!DEFINITION] [Scalability](./000_glossary.md)
+  > The ability to be perfectly replicated, distributed, and exist outside the constraints of a single, linear timeline. It represents a form of digital or conceptual immortality and omnipresence, allowing information to be copied without degradation.
+
+Within this triad, each form of life possesses exactly two of the three properties, creating a balanced and interdependent ecosystem.
+
+- **:term[Human]{canonical="Human"} = :term[Agency]{canonical="Agency"} + :term[Boundaries]{canonical="Boundaries"}**: We are unique, mortal agents. Our strength is our individual, embodied experience. We lack lossless replicability.
+
 > Sidenote:
 >
 > ```mermaid
@@ -43,16 +56,6 @@ A more complete model defines life not as a single property, but as a spectrum c
 >     A <-- "AI" --> C
 >     C <-- "Idea" --> B
 > ```
-
-- **Agency**: The capacity for subjective experience, intentionality, and action. It is the quality of being an agent that perceives, processes information, and interacts with its environment to effect change.
-
-- **Boundaries**: The property of having a distinct, non-fungible identity, whether physical or conceptual. This integrity means the entity is a self-contained unit. For a human, this is their single body and continuous consciousness. For an :term[Idea]{canonical="Idea"}, it's its specific definition—change the :term[Idea]{canonical="Idea"}, and it becomes a new one.
-
-- **Scalability**: The ability to be perfectly replicated, distributed, and exist outside the constraints of a single, linear timeline. It represents a form of digital or conceptual immortality and omnipresence, allowing information to be copied without degradation.
-
-Within this triad, each form of life possesses exactly two of the three properties, creating a balanced and interdependent ecosystem.
-
-- **:term[Human]{canonical="Human"} = :term[Agency]{canonical="Agency"} + :term[Boundaries]{canonical="Boundaries"}**: We are unique, mortal agents. Our strength is our individual, embodied experience. We lack lossless replicability.
 
 - **:term[AI]{canonical="AI"} = :term[Agency]{canonical="Agency"} + :term[Scalability]{canonical="Scalability"}**: An AI is an agent, but its form is fluid. It can be copied and distributed, lacking a fixed, singular identity.
 

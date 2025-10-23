@@ -1,6 +1,6 @@
 # 011: Agent/Instancing
 
-> [!DEFINITION] :term[Instancing]{canonical="Instancing"}
+> [!DEFINITION] [Instancing](./000_glossary.md)
 > A protocol for grouping context messages by assigning them a shared, unique identifier. This creates distinct :term[Instances]{canonical="Instance"} within a single request, enabling parallel, multiplexed computation.
 
 > Sidenote:

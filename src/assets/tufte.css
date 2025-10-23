@@ -6,7 +6,7 @@
 /* Tufte CSS styles */
 html {
   font-size: 15px;
-  --left-size: calc(100% - 300px - 50px);
+  --left-size: calc(min(100vw, 1240px) - 300px - 50px);
   --right-size: 300px;
 }
 
@@ -21,7 +21,6 @@ body {
   font-family:
     et-book, Palatino, 'Palatino Linotype', 'Palatino LT STD', 'Book Antiqua', Georgia, serif;
   color: #111;
-  max-width: 1400px;
   margin: 0 auto;
   counter-reset: sidenote-counter;
   background: #fffff8

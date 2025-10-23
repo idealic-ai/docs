@@ -1,6 +1,6 @@
 # 012: Agent/Delegate
 
-> [!DEFINITION] :term[Delegate]{canonical="Delegate"}
+> [!DEFINITION] [Delegate](./000_glossary.md)
 > A protocol for isolating execution context. Invoked by a :term[Call]{canonical="Call"}'s `_delegate` property, it executes an :term[Activity]{canonical="Activity"} or a new :term[Request]{canonical="Request"} in an isolated environment, with the `_scopes` property providing controlled access to the parent context.
 
 > Sidenote:

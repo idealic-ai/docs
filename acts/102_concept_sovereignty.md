@@ -1,6 +1,6 @@
 # 102: Concept/Sovereignty
 
-> [!DEFINITION] :term[Sovereignty]{canonical="Sovereignty"}
+> [!DEFINITION] [Sovereignty](./000_glossary.md)
 > The principle that an :term[Idea]{canonical="Idea"}'s identity and canonical location are controlled by its owner through a decentralized mechanism, typically DNS. It establishes ownership over a namespace in which :term[Ideas]{canonical="Idea"} reside and evolve.
 
 > Sidenote:

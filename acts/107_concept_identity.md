@@ -1,6 +1,6 @@
 # 107: Concept/Identity
 
-> [!DEFINITION] :term[Emergent Identity]{canonical="Emergent Identity"}
+> [!DEFINITION] [Emergent Identity](./000_glossary.md)
 > A recognizable pattern that arises from the web of relationships connecting a collection of :term[Ideas]{canonical="Idea"}. Identity is not an intrinsic property of a single :term[Idea]{canonical="Idea"}, but a quality that emerges from its context.
 
 > Sidenote:
@@ -19,13 +19,13 @@ Identity is an **:term[Emergent Identity]{canonical="Emergent Identity"}**. It i
 
 The identity of an entity is woven from three fundamental threads of connection:
 
-> [!DEFINITION] :term[Lineage]{canonical="Lineage"}
+> [!DEFINITION] [Lineage](./000_glossary.md)
 > The historical chain of versions that links an :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} to its past and future iterations. It is the thread that connects a sequence of immutable snapshots, providing a complete, auditable history of an :term[Idea]{canonical="Idea" href="./101_concept_idea.md"}'s evolution.
 
-> [!DEFINITION] :term[Causality]{canonical="Causality"}
+> [!DEFINITION] [Causality](./000_glossary.md)
 > A relationship where one :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} directly causes or triggers the creation of another. This vector tracks the flow of work and decision-making, showing not just how an :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} changed, but why.
 
-> [!DEFINITION] :term[Grouping]{canonical="Grouping"}
+> [!DEFINITION] [Grouping](./000_glossary.md)
 > The mechanism for bundling multiple related :term[Ideas]{canonical="Idea" href="./101_concept_idea.md"} into a single, manageable unit. This defines a collective identity, where the group is more than the sum of its parts.
 
 ## The "Joe" Constellation

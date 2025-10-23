@@ -1,6 +1,6 @@
 # 109: Concept/Versioning
 
-> [!DEFINITION] :term[Hierarchical Versioning]{canonical="Hierarchical Versioning"}
+> [!DEFINITION] [Hierarchical Versioning](./000_glossary.md)
 > A versioning scheme where versions are dot-separated identifiers (e.g., `1.2.feature-x.3`) that unify the concepts of linear releases, branches, and drafts into a single, hierarchical structure.
 
 > Sidenote:

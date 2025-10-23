@@ -1,6 +1,6 @@
 # 108: Concept/Visibility
 
-> [!DEFINITION] :term[Visibility]{canonical="Visibility"}
+> [!DEFINITION] [Visibility](./000_glossary.md)
 > The set of mechanisms that control which version of an :term[Idea]{canonical="Idea"} is resolved in a given context. Visibility is determined by a combination of an :term[Idea]{canonical="Idea"}'s version history, its branch associations, and the requester's search path.
 
 > Sidenote:
@@ -50,7 +50,7 @@ With a rich history of versions available, a selection mechanism is needed to ch
 
 ### Branches: Publication and Partitioning
 
-> [!DEFINITION] :term[Branch]{canonical="Branch"}
+> [!DEFINITION] [Branch](./000_glossary.md)
 > A named tag that partitions the visibility space, creating a parallel, isolated environment for development and experimentation. Associating an :term[Idea]{canonical="Idea"} with a branch is an act of publication.
 
 For example, every :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} version in the database is associated with one or more :term[branches]{canonical="Branch"} like `["main", "feature/new-billing"]`. This act of publication makes the :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} available within those specific partitions, enabling a safe workflow.
@@ -62,7 +62,7 @@ This provides two fundamental benefits:
 
 ### The Search Path: Prioritized Retrieval
 
-> [!DEFINITION] :term[Search Path]{canonical="Search Path"}
+> [!DEFINITION] [Search Path](./000_glossary.md)
 > An ordered list of branch names that defines the retrieval mechanism. It tells the resolver which partitions to look in, and in what order of priority, creating a cascading overlay system.
 
 This retrieval mechanism is core to the development workflow and answers the **spatial** question. For example, a developer's typical :term[search path]{canonical="Search Path"} might be set to `['feature/my-new-idea', 'staging', 'main']`.
@@ -77,7 +77,7 @@ This allows a developer to see a specific, intended reality composed of their lo
 
 ### The Cutoff Time: Temporal Retrieval
 
-> [!DEFINITION] :term[Cutoff Time]{canonical="Cutoff Time"}
+> [!DEFINITION] [Cutoff Time](./000_glossary.md)
 > A timestamp that accompanies a resolution request, instructing the resolver to find the version of an :term[Idea]{canonical="Idea"} that was considered latest as of that specific moment in time.
 
 The second dimension of retrieval is **temporal**. Every resolution query is performed against the state of the system as it existed at a specific moment. This is controlled by the :term[Cutoff Time]{canonical="Cutoff Time"}.

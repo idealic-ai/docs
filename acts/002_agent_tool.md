@@ -1,6 +1,6 @@
 # 002: Agent/Tool
 
-> [!DEFINITION] :term[Tool]{canonical="Tool"}
+> [!DEFINITION] [Tool](./000_glossary.md)
 > A schema that defines a capability an agent can use. It is presented to an LLM as part of a request, acting as a structured interface for a potential action. The LLM activates the tool by generating a :term[Call]{canonical="Call"} with specific parameters, which is then executed either latently by the LLM or explicitly by a registered code function (:term[Activity]{canonical="Activity"}).
 
 > Sidenote:

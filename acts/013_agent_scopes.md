@@ -1,6 +1,6 @@
 # 013: Agent/Scopes
 
-> [!DEFINITION] :term[Scope]{canonical="Scope"}
+> [!DEFINITION] [Scope](./000_glossary.md)
 > A mechanism for making a controlled subset of context from a parent environment available to an execution. The `_scopes` property acts as an allow-list, defining a focused and secure view of the data a :term[Call]{canonical="Call"} can access.
 
 > Sidenote:

@@ -1,6 +1,6 @@
 # 001: Agent/Request
 
-> [!DEFINITION] :term[Request]{canonical="Request"}
+> [!DEFINITION] [Request](./000_glossary.md)
 > A single, self-contained LLM invocation, which takes a :term[context]{canonical="context"} and a :term[schema]{canonical="schema"} and produces a :term[solution]{canonical="Solution"}.
 
 > Sidenote:

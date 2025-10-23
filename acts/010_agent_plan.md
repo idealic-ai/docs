@@ -1,6 +1,6 @@
 # 010: Agent/Plan
 
-> [!DEFINITION] :term[Plan]{canonical="Plan"}
+> [!DEFINITION] [Plan](./000_glossary.md)
 > A context message carrying a data-flow graph of :term[Tool Calls]{canonical="Tool Call"} that represents an agent's strategy. It is passed between steps to enable iterative execution and adaptation.
 
 > Sidenote:

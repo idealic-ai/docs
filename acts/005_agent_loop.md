@@ -1,6 +1,6 @@
 # 005: Agent/Loop
 
-> [!DEFINITION] :term[Loop]{canonical="Loop"}
+> [!DEFINITION] [Loop](./000_glossary.md)
 > A sequence of :term[Request]{canonical="Request"}s aimed at achieving a goal. The agent continues to invoke :term[Request]{canonical="Request"}s, process the resulting :term[Call]{canonical="Call"}s, and feed the output back into the context of the next :term[Request]{canonical="Request"} until no more :term[Call]{canonical="Call"}s are generated.
 
 > Sidenote:

@@ -1,6 +1,6 @@
 # 108: Concept/Visibility
 
-> [!DEFINITION] :term[Visibility]{canonical="Visibility"}
+> [!DEFINITION] [Visibility](../../acts/000_glossary.md)
 > This is how the system decides which version of an :term[Idea]{canonical="Idea"} you should see at any given time. It's like asking for a book in a library that has many different editions and drafts; visibility rules figure out exactly which copy to hand you based on the :term[Idea]{canonical="Idea"}'s history, where it's being worked on, and the order you've asked to search for it.
 
 > Sidenote:
@@ -53,7 +53,7 @@ Now that we have all these different versions, we need a way to pick the right o
 
 ### Branches: Different Shelves for Your Ideas
 
-> [!DEFINITION] :term[Branch]{canonical="Branch"}
+> [!DEFINITION] [Branch](../../acts/000_glossary.md)
 > A branch is like a separate workspace or a different shelf in the library where you can work on things without messing up the main collection. Putting an :term[Idea]{canonical="Idea"} on a branch is like publishing it to that specific shelf.
 
 For instance, every version of an :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} is tagged with the :term[branches]{canonical="Branch"} it belongs to, like `["main", "feature/new-billing"]`. This makes the :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} visible only in those workspaces.
@@ -65,7 +65,7 @@ This gives us two big advantages:
 
 ### The Search Path: The Order You Check the Shelves
 
-> [!DEFINITION] :term[Search Path]{canonical="Search Path"}
+> [!DEFINITION] [Search Path](../../acts/000_glossary.md)
 > This is your personal set of instructions that tells the system which branches to look in and in what order. It's like telling the librarian, "First, check my personal desk, then check the 'New Arrivals' shelf, and finally, check the main library."
 
 This answers the **where** question. For example, a developer's :term[search path]{canonical="Search Path"} might look like `['feature/my-new-idea', 'staging', 'main']`.
@@ -80,7 +80,7 @@ This lets you see your own in-progress work as if it were already part of the ma
 
 ### The Cutoff Time: Finding a Version from the Past
 
-> [!DEFINITION] :term[Cutoff Time]{canonical="Cutoff Time"}
+> [!DEFINITION] [Cutoff Time](../../acts/000_glossary.md)
 > This is a timestamp you can add to your request. It tells the system to find the version of an :term[Idea]{canonical="Idea"} that was the latest at that exact moment in the past.
 
 This answers the **when** question. It's like asking the librarian for the book as it existed last Tuesday. Every search you do is for a specific point in time.
