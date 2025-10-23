@@ -1,4 +1,4 @@
-# 109: Concept/Addressing
+# 110: Concept/Addressing
 
 > [!DEFINITION] :term[idea:]{canonical="idea:"}
 > A URI scheme for navigating the versioned, branched reality of the :term[Idea]{canonical="Idea"} ecosystem. It provides syntax for both simple, dynamic requests and fully resolved, permanent references.

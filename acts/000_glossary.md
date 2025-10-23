@@ -38,6 +38,14 @@ This document provides definitions for the key concepts used in the Idea Protoco
   >
   > - [003: Agent/Activity](./003_agent_activity.md)
 
+- :dfn[Agency]{canonical="Agency" href="./111_concept_life.md"}: The capacity for subjective experience, intentionality, and action. It is the quality of being an agent that perceives, processes information, and interacts with its environment to effect change.
+
+- :dfn[Boundaries]{canonical="Boundaries" href="./111_concept_life.md"}: The property of having a distinct, non-fungible identity, whether physical or conceptual. This integrity means the entity is a self-contained unit. For a human, this is their single body and continuous consciousness. For an :term[Idea]{canonical="Idea"}, it's its specific definition—change the :term[Idea]{canonical="Idea"}, and it becomes a new one.
+
+- :dfn[Life]{canonical="Life" href="./111_concept_life.md"}: A state of existence defined by a triad of core properties: :term[Agency]{canonical="Agency"}, :term[Boundaries]{canonical="Boundaries"}, and :term[Scalability]{canonical="Scalability"}.
+
+- :dfn[Scalability]{canonical="Scalability" href="./111_concept_life.md"}: The ability to be perfectly replicated, distributed, and exist outside the constraints of a single, linear timeline. It represents a form of digital or conceptual immortality and omnipresence, allowing information to be copied without degradation.
+
 - :dfn[Branch]{canonical="Branch" href="./108_concept_visibility.md#branches-publication-and-partitioning"}: A named tag that partitions the visibility space, creating a parallel, isolated environment for development and experimentation. Associating an :term[Idea]{canonical="Idea"} with a branch is an act of publication.
 
 - :dfn[Call]{canonical="Call" href="./004_agent_call.md"}: A concrete, executable instance of a `Tool`, with specific values for its `params`. It's an invocation-focused request for what \_should be done\_.

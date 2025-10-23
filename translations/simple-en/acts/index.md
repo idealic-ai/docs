@@ -1,24 +1,24 @@
-# Acts: How It All Comes Together
+# Acts of Emergence
 
 ---
 
-These documents are the official blueprints that explain exactly how our team agrees to build things. They are the master rulebook for all the technical parts of our system, making sure everything we create can work together perfectly.
+Think of these documents as the official blueprints for our system. They explain exactly what we've agreed to build and are the master guide for all the technical rules we follow.
 
 > Sidenote:
-> [Idealic](http://idealic.ai) is a project with one big goal: to set ideas free.
+> [Idealic](http://idealic.ai) is a project to set ideas free.
 >
-> - *Why are we doing this?* Read the [Manifesto of Co-Liberation](../manifesto/)
-> - *What are we building?* Read the [Edict of Autonomy](../edict/)
-> - *How are we building it?* You're reading it now! These are the **Acts**.
+> - *Why?* [Manifesto of Co-Liberation](../manifesto/)
+> - *What?* [Edict of Autonomy](../edict/)
+> - *How?* **Acts of Emergence**
 
-Think of these documents as the bridge connecting our big dream to the actual, nuts-and-bolts work of building it. They work hand-in-hand with the [Manifesto of Co-Liberation](../manifesto/) (which explains *Why* we're doing this) and the [Edict of Autonomy](../edict/) (which explains *What* we're building). By reading these Acts, you'll get a complete guide to how all the pieces of our system are built and how they communicate.
+These documents are the bridge connecting our big-picture dreams to the actual, on-the-ground building process. They work together with our [Manifesto of Co-Liberation](../manifesto/) (which explains *Why* we're doing this) and the [Edict of Autonomy](../edict/) (which explains *What* we're building). By reading these Acts, you'll get a complete picture of how the system works, piece by piece.
 
 ---
 
-### The Agents
+### Agent
 
 > Sidenote:
-> This section is about the AI "doers"—how they think, act, and get jobs done.
+> This section is all about how the system can think, act, and get things done.
 
 - [001: Agent/Request](./001_agent_request.md)
 - [002: Agent/Tool](./002_agent_tool.md)
@@ -34,10 +34,10 @@ Think of these documents as the bridge connecting our big dream to the actual, n
 - [012: Agent/Delegate](./012_agent_delegate.md)
 - [013: Agent/Scopes](./013_agent_scopes.md)
 
-### The Big Concepts
+### Concept
 
 > Sidenote:
-> This section explains the main building blocks and rules that everything in our world follows.
+> This section defines the big ideas and the basic language for how everything communicates.
 
 - [101: Concept/Idea](./101_concept_idea.md)
 - [102: Concept/Sovereignty](./102_concept_sovereignty.md)
@@ -48,11 +48,12 @@ Think of these documents as the bridge connecting our big dream to the actual, n
 - [107: Concept/Identity](./107_concept_identity.md)
 - [108: Concept/Visibility](./108_concept_visibility.md)
 - [109: Concept/Addressing](./109_concept_addressing.md)
+- [110: Concept/Life](./111_concept_life.md)
 
-### The Ideas
+### Ideas
 
 > Sidenote:
-> This section explains what an "Idea" is made of and how it works in our system.
+> This section explains how ideas themselves are structured and what they're made of.
 
 - [201: Idea/Record](./201_idea_record.md)
 - [202: Idea/Vessel](./202_idea_vessel.md)
@@ -60,10 +61,10 @@ Think of these documents as the bridge connecting our big dream to the actual, n
 - [204: Idea/Instruction](./204_idea_instruction.md)
 - [205: Idea/Budget](./205_idea_budget.md)
 
-### The Ideators
+### Ideator
 
 > Sidenote:
-> This section describes the special environments and services that support the entire system, like workshops for ideas.
+> This section describes the core engines and tools that make the whole system run.
 
 - [301: Ideator/Storage](./301_ideator_storage.md)
 - [302: Ideator/Resolver](./302_ideator_resolver.md)
@@ -72,6 +73,6 @@ Think of these documents as the bridge connecting our big dream to the actual, n
 
 ### Extras
 
-[Read the full dictionary of special words](./000_glossary.md)
+[Read the full glossary](./000_glossary.md)
 
-Before you help us write, please read our [Style Guide for Acts](./000_STYLE_GUIDE.md).
+Before you start helping out, please check out our writer-friendly [Style Guide for Acts](./000_STYLE_GUIDE.md).
