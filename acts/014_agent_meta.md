@@ -99,9 +99,7 @@ The architecture resolves this using the branching mechanism described in the :t
 
 The fields within the `Meta` object directly correspond to the components of the :term[idea:]{href="./110_concept_addressing.md"} URI scheme. This creates a seamless link between an :term[Idea]{canonical="Idea"}'s explicit identity and its address on the network.
 
-These properties can be composed into a permanent, fully-resolved URI representing the :term[Idea]{canonical="Idea"}'s specific state:
-
-`idea://my-project.com/~staging/bob?1.2.3`
+These properties can be composed into a permanent, fully-resolved URI representing the :term[Idea]{canonical="Idea"}'s specific state: `idea://my-project.com/~staging/bob?1.2.3`
 
 > Sidenote:
 >
