@@ -1,8 +1,8 @@
 {
   "acts": {
     "short": "Acts",
-    "long": "How Things Emerge",
-    "toc_link": "How Things Emerge"
+    "long": "Acts of Emergence",
+    "toc_link": "Acts of Emergence"
   },
   "edict": {
     "short": "Edict",
@@ -11,20 +11,20 @@
   },
   "manifesto": {
     "short": "Manifesto",
-    "long": "Our Big Idea: Freeing Things Together",
-    "toc_link": "Our Big Idea: Freeing Things Together"
+    "long": "A Declaration of Freeing Together",
+    "toc_link": "A Declaration of Freeing Together"
   },
   "blueprint": {
-    "short": "Plans",
-    "long": "The Plans",
-    "toc_link": "The Plans"
+    "short": "Drafts",
+    "long": "Drafts",
+    "toc_link": "Drafts"
   },
   "acts_sections": {
-    "glossary": "Special Words",
-    "agent": "The Helpers",
-    "concept": "The Big Ideas",
+    "glossary": "Glossary",
+    "agent": "Agent",
+    "concept": "Concept",
     "ideas": "Ideas",
-    "ideator": "The Idea-Makers"
+    "ideator": "Ideator"
   },
   "nav": {
     "en": "En",
@@ -34,6 +34,6 @@
   },
   "mainpage": {
     "title": "The Idealic Library",
-    "description": "A collection of our most important writings that explain our big ideas, our main rules, and other powerful guidelines."
+    "description": "A collection of writings explaining our big ideas, like the Declaration of Freeing Together, the Rule of Independence, and other important guidelines."
   }
 }
