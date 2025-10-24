@@ -4,6 +4,7 @@
 > Think of a :term[Request]{canonical="Request"} as a single, complete mission you give to an AI. You give it a packet of information (the :term[context]{canonical="context"}) and a fill-in-the-blanks answer sheet (the :term[schema]{canonical="schema"}), and it gives you back the filled-out sheet (the :term[solution]{canonical="Solution"}).
 
 > Sidenote:
+>
 > - Used in:
 >   - :term[101: Concept/Idea]{href="./101_concept_idea.md"}
 > - Learn more:
@@ -23,15 +24,15 @@ The :term[Request]{canonical="Request"} is the most basic building block of this
 > graph TD
 >     subgraph User Input
 >         direction LR
->         Context[\Context (Briefing)\]
->         Schema[\Schema (Blueprint)\]
+>         Context[\"Context (Briefing)"\]
+>         Schema[\"Schema (Blueprint)"\]
 >     end
 >
 >     Process{{"Request"}}
 >
 >     subgraph LLM Output
 >         direction LR
->         Solution[/Solution (Answer)/]
+>         Solution[/"Solution (Answer)"/]
 >     end
 >
 >     Context --> Process
@@ -85,6 +86,7 @@ This powerful assembly line allows the AI to work with complex ideas, automatica
 > A blueprint (specifically, a JSON Schema) that tells the AI the exact structure of the answer it needs to give. It’s like a fill-in-the-blanks form that the AI must follow, making sure the final answer is always perfectly organized.
 
 > Sidenote:
+>
 > - Learn more about the blueprint format at [json-schema.org](https://json-schema.org/)
 
 The :term[schema]{canonical="schema"} is a blueprint that defines the exact structure of the perfect answer, or :term[solution]{canonical="Solution"}. This is a very powerful system that can describe any kind of data, from a single word to a really complicated structure with many nested parts. The AI is required to create a :term[solution]{canonical="Solution"} that perfectly matches this blueprint, which guarantees that the output is always neat, organized, and predictable.
@@ -112,6 +114,7 @@ For example, if a blueprint first asks for a field called `"my_thinking_process"
 A :term[Request]{canonical="Request"} is a great way to get a single, well-structured answer from an AI. But to build truly smart agents, we need more than just answers. We need a way to give the AI a menu of different tools or actions it can choose from to solve a problem. This means we need a system for defining these actions so the AI can pick the right one for the job.
 
 > Sidenote:
+>
 > - :term[002: Agent/Tool]{href="./002_agent_tool.md"}
 
 The next document, :term[002: Agent/Tool]{href="./002_agent_tool.md"}, explains how we create this menu of capabilities.
