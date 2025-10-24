@@ -12,7 +12,12 @@
 >   - :term[108: Concept/Visibility]{href="./108_concept_visibility.md"}
 >   - :term[110: Concept/Addressing]{href="./110_concept_addressing.md"}
 
-While many agent interactions can be ephemeral, building complex, stateful systems requires a way to uniquely identify and track a :term[Request]{href="./001_agent_request.md"} and its resulting :term[Solution]{href="./001_agent_request.md"}. The **`Meta`** object serves this purpose. It is the "business card" of a :term[Request]{canonical="Request"}, providing a stable, machine-readable handle that enables persistence, versioning, routing, and historical tracking. Crucially, by making identity an explicit part of the `solution`, the `Meta` object empowers the LLM to mint new identities or branch existing ones in direct response to its context, turning a simple response into an act of creation.
+While many agent interactions can be ephemeral, building complex, stateful systems requires a way to uniquely identify and track a :term[Request]{href="./001_agent_request.md"} and its resulting :term[Solution]{href="./001_agent_request.md"}. The **`Meta`** object serves this purpose. It is the "business card" of a :term[Request]{canonical="Request"}, providing a stable, machine-readable handle that enables persistence, versioning, routing, and historical tracking.
+
+Crucially, by making identity an explicit part of the `solution`, the `Meta` object empowers the LLM to mint new identities or branch existing ones in direct response to its context, turning a simple response into an act of creation.>
+
+> Sidenote:
+> :term[101: Concept/Identity]{href="./107_concept_identity.md"}
 
 ## The `Meta` Object in the Request Lifecycle
 
