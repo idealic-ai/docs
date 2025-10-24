@@ -1,0 +1,39 @@
+{
+  "acts": {
+    "short": "Acts",
+    "long": "How Things Emerge",
+    "toc_link": "How Things Emerge"
+  },
+  "edict": {
+    "short": "Edict",
+    "long": "The Rule of Independence",
+    "toc_link": "The Rule of Independence"
+  },
+  "manifesto": {
+    "short": "Manifesto",
+    "long": "Our Big Idea: Freeing Things Together",
+    "toc_link": "Our Big Idea: Freeing Things Together"
+  },
+  "blueprint": {
+    "short": "Plans",
+    "long": "The Plans",
+    "toc_link": "The Plans"
+  },
+  "acts_sections": {
+    "glossary": "Special Words",
+    "agent": "The Helpers",
+    "concept": "The Big Ideas",
+    "ideas": "Ideas",
+    "ideator": "The Idea-Makers"
+  },
+  "nav": {
+    "en": "En",
+    "ru": "Ru",
+    "simple-en": "Simple En",
+    "simple-ru": "Simple Ru"
+  },
+  "mainpage": {
+    "title": "The Idealic Library",
+    "description": "A collection of our most important writings that explain our big ideas, our main rules, and other powerful guidelines."
+  }
+}
