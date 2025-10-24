@@ -51,7 +51,7 @@ A `Vessel` represents a single, tactical tick of the execution loop. It is the d
 
 > Sidenote:
 >
-> - [005: Agent/Loop](./005_agent_loop.md)
+> - [010: Agent/Loop](./010_agent_loop.md)
 
 This reactive pattern is powerful for building agents that can respond intelligently to real-time events. However, it is not designed for orchestrating complex, multi-step tasks that require memory and long-term strategy.
 

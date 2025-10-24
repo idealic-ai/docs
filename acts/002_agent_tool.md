@@ -21,7 +21,7 @@ Tools provide:
 - **Composability**: Building blocks that combine into complex agent behaviors
 - **LLM Integration**: Schemas that language models can reason about and select
 
-When an agent fills specific parameters for a Tool, it creates a **:term[Call]{canonical="Call"}**—an instance of a Tool with all required parameters filled, representing a concrete request for execution.
+When an agent fills specific parameters for a Tool, it creates a :term[Call]{canonical="Call"}—an instance of a Tool with all required parameters filled, representing a concrete request for execution.
 
 > Sidenote: :term[004: Agent/Call]{href="./004_agent_call.md"}
 
@@ -46,9 +46,9 @@ A Tool's schema defines its complete interface:
 > Extensions:
 >
 > - **`_activity`**: Connects the tool to a deterministic code function for explicit execution. See :term[003: Agent/Activity]{href="./003_agent_activity.md"}
-> - **`_delegate`**: Delegates the tool's execution to an isolated, external delegate. See :term[012: Agent/Delegate]{href="./012_agent_delegate.md"}
-> - **`_outputPath`**: Makes the tool stateful by writing its output to a persistent state object. See :term[009: Agent/State]{href="./009_agent_state.md"}
-> - **`_instance`**: Targets the tool's execution to a specific instance in a multi-instance request. See :term[011: Agent/Instancing]{href="./011_agent_instancing.md"}
+> - **`_delegate`**: Delegates the tool's execution to an isolated, external delegate. See :term[013: Agent/Delegate]{href="./013_agent_delegate.md"}
+> - **`_outputPath`**: Makes the tool stateful by writing its output to a persistent data object. See :term[008: Agent/Output]{href="./008_agent_output.md"}
+> - **`_instance`**: Targets the tool's execution to a specific instance in a multi-instance request. See :term[012: Agent/Instancing]{href="./012_agent_instancing.md"}
 
 - **`title`**: A human-readable name for the schema (optional).
 - **`description`**: Explains what the tool does.

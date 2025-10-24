@@ -1,106 +1,106 @@
 # 203: Idea/Process
 
-> [!DEFINITION] Process Idea
-> A self-contained Idea that holds both a strategic Plan and the live progress of that plan. Think of it like a smart recipe: its `schema` is the list of all possible ingredients and kitchen tools you can use, its `solution` is the *next* step you're going to take, and its `context` contains the original request, your current messy countertop (the State), and the step you just finished.
+> [!DEFINITION] [Process Idea](./000_glossary.md)
+> An [Idea](./101_concept_idea.md) that holds a strategic [Plan](./011_agent_plan.md) and keeps track of its progress. Think of it as a complete recipe book for a task. The `schema` is its list of all possible cooking techniques ([Tools](./002_agent_tool.md)), the `solution` is the *next* step in the recipe (`Plan`), and the `context` is everything it needs to know right now, like the original food request (`Input`), the current state of the dish (`State`), and the last recipe step it finished.
 
 > Sidenote:
-> - Requires:
+> - You should know about:
 >   - [101: Concept/Idea](./101_concept_idea.md)
->   - [010: Agent/Plan](./010_agent_plan.md)
+>   - [011: Agent/Plan](./011_agent_plan.md)
 >   - [009: Agent/State](./009_agent_state.md)
->   - [007: Agent/Input](./007_agent_input.md)
-> - Complemented by:
->   - [011: Agent/Instancing](./011_agent_instancing.md)
+>   - [006: Agent/Input](./006_agent_input.md)
+> - Works well with:
+>   - [012: Agent/Instancing](./012_agent_instancing.md)
 
-While a [Vessel Idea](./202_idea_vessel.md) is like a single, quick reaction, a **Process Idea** is a whole project with multiple steps. It’s the artifact created by the system's planner as it manages a complex task over time. This makes it a complete diary of both the tools the AI had and the strategy it chose to use.
+While a [Vessel Idea](./202_idea_vessel.md) is for a single, one-off decision, a **Process Idea** is for a whole journey—a project with multiple steps. It’s the official record created by an AI as it works through a complicated task from start to finish. This makes it a complete log of what the AI *could* do and what it *chose* to do.
 
-## The Anatomy of a Plan
+## How a Plan is Built
 
-A `Process Idea` uses its three main parts to give a complete snapshot of a workflow. This picture includes not just the AI's strategy (the `Plan`), but also all the tools it could have used and the live status of the project.
+A `Process Idea` uses its three parts to give a complete picture of a project at any given moment. This picture shows not just the agent's strategy (the `Plan`), but also all the tools it has and the current status of the work.
 
-- **`schema` (The Toolbox):** This defines the library of all available **Tools** the AI can use to build a `Plan`. It’s a list of everything the AI is capable of doing.
+- **`schema` (The Toolbox):** This is the full collection of all available [Tools](./002_agent_tool.md) that an agent can use to build its `Plan`. It’s like a toolbox containing every screwdriver, hammer, and wrench the agent might need.
 
-- **`context` (The Current Situation):** This holds all the information the AI needs to plan and perform the current step.
-  - **Input Message:** The original command that started the whole process. This usually stays the same from beginning to end.
+- **`context` (What's Happening Now):** This holds all the information the agent needs to figure out the next step.
+  - **Input Message:** The original request or problem that started the whole process. This usually doesn't change.
 
     > Sidenote:
-    > - [007: Agent/Input](./007_agent_input.md)
+    > - [006: Agent/Input](./006_agent_input.md)
 
-  - **State Message:** This is the live, changing data for the workflow. Think of it as a scratchpad where the AI keeps its notes and the results of previous steps. These notes connect one action to the next.
+  - **State Message:** This is the project's live data that changes and grows as work gets done. It holds all the information that connects one step of the plan to the next.
 
     > Sidenote:
     > - [009: Agent/State](./009_agent_state.md)
 
-  - **Plan Message:** This message contains the confirmed plan from the *previous* step, which the AI can decide to stick with or change.
+  - **Plan Message:** This message contains the confirmed plan from the *last* step. The agent can look at it and decide whether to stick with it or change course.
 
     > Sidenote:
-    > - [010: Agent/Plan](./010_agent_plan.md)
+    > - [011: Agent/Plan](./011_agent_plan.md)
 
-- **`solution` (The New Plan):** This is the AI's strategic decision for the *current* step. It's a flowchart of actions to take right now. This then becomes the `Plan Message` for the next step.
+- **`solution` (The Next Move):** This is the agent's strategy for the *current* step, laid out as a series of actions (`Calls`). This `solution` becomes the `Plan Message` for the very next step in the process.
 
-### The Unity of Planning and Execution
+### Planning and Doing are the Same Thing
 
-A key idea here is that planning and doing happen at the same time. In many systems, you first make a complete plan, and then you follow it. Here, the very act of figuring out the next step *is* the next step.
+A key idea here is that planning and doing happen at the same time. In many systems, you first make a big plan, and then you follow it. Here, they are merged into one. The agent doesn't create a blueprint and then start building. The act of figuring out the next `solution` (the new `Plan`) *is* the work for that moment.
 
-This makes the system very fast and flexible. The AI doesn't need a perfect, finished plan to start working. It can have a rough draft, see the results from the last step, and adjust its plan on the fly. When the AI generates the next action, it's simultaneously checking its work, updating its strategy, and executing the next part of the task. There's no separate, time-consuming step for re-planning; it all happens in one go.
+This makes the system very quick and flexible. The `Plan` is like a living map that is being drawn as the journey happens. It doesn't have to be complete to be useful. When the AI generates the next step, it's not just planning; it's also checking its previous work, adjusting based on new information, and taking the next action, all in one go. There's no separate, slow step for re-planning if something changes.
 
 > Sidenote:
 > - [004: Agent/Call](./004_agent_call.md)
 
-This combined approach gives two big advantages. First, you can design and test a complex workflow just by giving the AI the list of its tools, even before you have real data. The AI can "pretend" to run each step to see if the plan makes sense. Second, the AI acts like a smart adapter between steps. If one tool produces an output that doesn't quite fit what the next tool needs, the AI can smooth over the difference. This makes the whole system incredibly stable and prevents the small errors that would crash a more rigid system.
+This all-in-one approach gives us two big advantages. First, you can test out a `Plan` just by looking at its toolbox (`schemas`), even before you have any real data. The AI can pretend to do each step, letting you design and check complex projects from the very beginning. Second, the AI acts like a smart adapter between steps. If one tool produces an output that isn't exactly what the next tool needs, the AI can smooth things over and make it fit. This makes the whole system very stable and prevents the kind of chain-reaction failures you see in rigid, old-fashioned systems.
 
 > Sidenote:
 > - [105: Concept/AI-Native](./105_concept_ai_native.md)
 
-### The Flexibility Spectrum of a Plan
+### How a Plan Can Grow Up
 
-The `State` object allows a `Plan` to grow up, starting as a flexible brainstorm and hardening into a predictable, reliable process:
+The `State` object allows a `Plan` to grow and mature through three stages, starting as a flexible sketch and becoming a reliable procedure:
 
 > Sidenote:
 > - [009: Agent/State](./009_agent_state.md)
 
-1.  **Freeform Plan:** At the start, the `State` can be like a blank whiteboard. This gives the AI total freedom to figure out a plan by inventing new ways to connect steps as it goes.
+1.  **Freeform Plan:** At the start, the `State` might not have a strict structure. This gives the agent total freedom to explore and figure out a `Plan`, creating new data pathways as it goes. Think of it as brainstorming.
 
-2.  **Specified Connections:** The next stage is to pencil in the main highways of the plan. You define what the key data connections should be, but you can still allow for some flexibility:
-    - **Open Connections:** You can define the main roads but still let the AI create new, smaller paths for special cases.
-    - **Closed Connections:** You can lock down the plan, forcing the AI to stick exactly to the predefined roads and not build any new ones.
+2.  **Specified Connections:** The next step is to lock down the main data pathways by giving the `State` a `schema` (a structure). You can do this in two ways:
+    - **Open Connections:** You can set the main pathways but still allow the agent to create new, minor ones if needed. It's like having a recipe but giving the chef freedom to add an extra spice.
+    - **Closed Connections:** You can lock the structure down completely, forcing the agent to follow the exact recipe with no changes.
 
-3.  **Resolved Plan:** This is the final, mature stage where a plan is predictable. This **Committed Plan** is then used as the starting point for future steps. A resolved plan can be:
-    - **Happy Plan:** A plan that works perfectly for the ideal, best-case scenario. It's very efficient but might need changes if something unexpected happens.
-    - **Complete Plan:** A fully-developed plan that has been updated over time to handle common errors and different situations, making it super reliable.
+3.  **Resolved Plan:** This is the final stage, where a plan is considered fully grown and predictable. A `Resolved Plan` is the trusted plan that gets passed along at each step. It can be:
+    - **Happy Plan:** A plan that works perfectly for the ideal, best-case scenario. It's fast but might need a change if something unexpected happens.
+    - **Complete Plan:** A plan that has been tested and updated over time to handle common problems and different situations, making it extremely reliable.
 
-This progression lets a `Process Idea` evolve from a rough sketch into a trustworthy, reusable machine.
+This growth process allows a `Process Idea` to change from a fluid sketch into a rock-solid, reusable tool.
 
-## Immutable Workflows: Orchestration, Analysis, and Scaling
+## Unchangeable Workflows: Running, Analyzing, and Growing
 
-The real power of a `Process Idea` is that it's **immutable**, meaning unchangeable. Every step in a workflow creates a new, complete snapshot of the `Plan` and `State`, keeping a perfect, permanent record. Think of it like saving a new version of a document every time you make a change, instead of just overwriting the old one. This chain of snapshots is what makes the system's most powerful features possible.
+The real power of a `Process Idea` is that it's unchangeable. Every step in a project creates a new, complete snapshot of the `Plan` and `State`, keeping a perfect history of everything that happened. This idea of creating a chain of unchangeable records is what makes advanced features like managing, analyzing, and scaling up the work possible.
 
-- **Reliable, Adaptive Execution:** The step-by-step process is naturally reliable because each new step works from a complete picture of the previous one. This prevents confusion and ensures the AI's decisions are based on a clear reality. The result of each step is a new `Process Idea`, moving the project forward safely.
+- **Reliable, Flexible Work:** The step-by-step process is naturally reliable because each new step starts with a complete picture of the last one. This prevents confusion and makes sure the agent's decision to stick to the `Plan` or change it is based on a clear and stable view of the world. The result of each step is a new `Process Idea`, moving the project forward safely.
 
   > Sidenote:
-  > - [005: Agent/Loop](./005_agent_loop.md)
-  > - [010: Agent/Plan](./010_agent_plan.md)
+  > - [010: Agent/Loop](./010_agent_loop.md)
+  > - [011: Agent/Plan](./011_agent_plan.md)
 
-- **Resilient Orchestration:** Because a `Process Idea` is a self-contained package, managing workflows is very robust. You can pause a project simply by saving its latest snapshot. A human or another system can then look at this frozen state and make decisions. Any changes, like updating the plan, create a *new* `Process Idea` that can be used to resume the project without messing up the historical record.
+- **Super-Stable Management:** Because a `Process Idea` is a self-contained package, managing projects becomes very sturdy. You can pause a project just by saving its latest snapshot. Then, other systems—or a human—can look at that frozen state to make decisions. Any changes, like re-planning or tweaking the data, create a *new* `Process Idea`. This lets you safely restart the project without messing up the historical record.
 
   > Sidenote:
   > - [009: Agent/State](./009_agent_state.md)
 
-- **High-Fidelity Simulation:** This architecture is what makes "time travel" debugging possible. Every historical `Process Idea` is a perfect snapshot of the workflow at a specific moment. This lets users or other AIs load any point in the project's history to review what happened, figure out bugs, or run "what-if" scenarios by starting a new branch from that point.
+- **High-Quality Time Travel:** This system is what makes interactive time travel possible. Every historical `Process Idea` is a perfect snapshot of the project at a specific moment. This lets you load any point in the project's past to check what happened, figure out problems, or run "what-if" scenarios by creating a new branch of the project from that point.
 
   > Sidenote:
   > - [202: Idea/Vessel](./202_idea_vessel.md)
 
-- **Consistent Parallel Processing:** The snapshot system allows for massive scaling. You can run one `Plan` on thousands of different tasks at once. Imagine giving one set of instructions to a huge class, where each student has their own copy of a worksheet (`State`). The AI can plan the next step for everyone simultaneously, creating customized actions for each student based on their individual progress, all in one go. This guarantees consistent results across all tasks while being incredibly efficient.
+- **Doing Many Things at Once:** The snapshot system allows for massive growth through a method called Instancing. This treats each task in a big batch as its own separate project, each with its own private `State` snapshot. A single `Plan` acts as the master strategy for all of them. In one single step, the agent plans for the entire batch at once, creating a unique set of actions for each task. This ensures all the tasks are handled in a consistent way while being incredibly efficient.
 
   > Sidenote:
-  > - [011: Agent/Instancing](./011_agent_instancing.md)
+  > - [012: Agent/Instancing](./012_agent_instancing.md)
 
-## From a Predictable Plan to Guided Execution
+## From a Predictable Plan to Smart Guidance
 
-A `Process Idea` can become a **Resolved Plan**—a reliable and predictable workflow. But sometimes, being too rigid is a bad thing. The system needs a way to add expert guidance for specific situations without tearing up the trusted plan.
+A `Process Idea` can become a **Resolved Plan**—a very predictable and reliable workflow. But being too rigid can be a bad thing. The system needs a way to add smart, situation-specific advice without breaking the trustworthy plan.
 
-This is where an **[Instruction Idea](./204_idea_instruction.md)** comes in. An `Instruction` is like a coach's playbook or a set of guiding principles. It helps the workflow in two ways: it guides the AI in picking or creating the best `Plan` for the job, and it gives advice on individual choices during the plan's execution. In short, an `Instruction` adds wisdom and reasoning to the workflow, making sure both the grand strategy and the small steps align with a certain way of thinking.
+This is where an **[Instruction Idea](./204_idea_instruction.md)** comes in. An `Instruction` is like a recipe for thinking that gives higher-level advice. It acts as a "mental checklist" that helps the workflow in two ways: it guides the agent in picking or creating the best `Plan` for the situation, and it gives specific tips during the plan's execution. In short, an `Instruction` makes the project's *thinking* better, ensuring that both the big-picture strategy and the small, moment-to-moment actions are aligned with the right approach.
 
 > Sidenote:
 > - [204: Idea/Instruction](./204_idea_instruction.md)

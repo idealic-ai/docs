@@ -9,9 +9,7 @@
 >   - [101: Concept/Idea](./101_concept_idea.md)
 >   - [103: Concept/Ideator](./103_concept_ideator.md)
 
-## Introduction
-
-The protocol for :term[Sovereignty]{canonical="Sovereignty"} defines the spectrum of autonomy available to creators in the ecosystem. It outlines a layered architecture for hosting and execution, allowing participants to choose their desired level of control, from using fully managed services to self-hosting a complete, sovereign implementation.
+The protocol for :term[Sovereignty]{canonical="Sovereignty"} defines the spectrum of autonomy available to creators in the ecosystem, outlining a layered architecture for hosting and execution. This allows participants to choose their desired level of control, from using fully managed services to self-hosting a complete, sovereign implementation.
 
 This model is the practical bridge between an abstract :term[Ideator]{canonical="Ideator"} and a concrete, running service.
 
@@ -135,7 +133,7 @@ This namespace can be structured using paths, just like a website.
 - The root of the domain (`my-project.com`) can resolve to a primary :term[Idea]{canonical="Idea"} (like a bot, a process, or a project overview).
 - Paths within that domain (`my-project.com/schemas/User`) can resolve to other, nested :term[Ideas]{canonical="Idea"}.
 
-This creates a clear hierarchy: the **domain** establishes sovereignty over the entire namespace, and the **path** provides structure within it. This allows a single sovereign identity to host and manage a whole collection of interconnected :term[Ideas]{canonical="Idea"}, from a single component to an entire application. This model of addressing is detailed further in the :term[Addressing]{href="./109_concept_addressing.md"} concept.
+This creates a clear hierarchy: the **domain** establishes sovereignty over the entire namespace, and the **path** provides structure within it. This allows a single sovereign identity to host and manage a whole collection of interconnected :term[Ideas]{canonical="Idea"}, from a single component to an entire application. This model of addressing is detailed further in the :term[Addressing]{href="./110_concept_addressing.md"} concept.
 
 ## API Specification
 

@@ -10,7 +10,7 @@
 > - Enables:
 >   - [103: Concept/Ideator](./103_concept_ideator.md)
 
-This document outlines the architecture for a decentralized web of living documents. It covers the protocol's core data structure (the **Idea**) and the decentralized discovery mechanism for publishing and resolving them via **DNS**.
+A decentralized web of living documents is enabled by the architecture outlined here, which covers the protocol's core data structure (the **Idea**) and the decentralized discovery mechanism for publishing and resolving them via **DNS**.
 
 For details on how `Ideas` become executable services, see [103: Concept/Ideator](./103_concept_ideator.md). For details on the spectrum of hosting models, see [102: Concept/Sovereignty](./102_concept_sovereignty.md).
 

@@ -7,7 +7,7 @@
 >
 > - Requires: :term[002: Agent/Tool]{href="./002_agent_tool.md"}
 
-This document describes the **Activity Protocol**, which defines how :term[Tool]{canonical="Tool"}s are backed by concrete, executable code. While a :term[Tool]{canonical="Tool"} defines a capability's interface, an :term[Activity]{canonical="Activity"} provides its implementation.
+The **Activity Protocol** defines how :term[Tool]{canonical="Tool"}s are backed by concrete, executable code. While a :term[Tool]{canonical="Tool"} defines a capability's interface, an :term[Activity]{canonical="Activity"} provides its implementation.
 
 ## The Dual Registry Architecture
 

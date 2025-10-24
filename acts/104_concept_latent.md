@@ -10,9 +10,7 @@
 > [!DEFINITION] [Latent](./000_glossary.md)
 > The use of a Large Language Model's (LLM) internal knowledge and reasoning capabilities (its "latent space") to generate outputs without explicit, deterministic code.
 
-## Introduction
-
-The concept of **Latent** is fundamental to the system's architecture, encompassing both the process (**Latent Execution**) and the source of knowledge (**Latent Space**). It is the system's default computational method, relying on a Large Language Model (LLM) to function as a universal interpreter. This approach allows the system to bridge the gap between an `Idea`'s input (`context`) and its output (`solution`) by navigating and arranging the LLM's vast internal knowledge.
+**Latent** is a fundamental concept in the system's architecture, encompassing both the process (**Latent Execution**) and the source of knowledge (**Latent Space**). It is the system's default computational method, relying on a Large Language Model (LLM) to function as a universal interpreter. This approach allows the system to bridge the gap between an `Idea`'s input (`context`) and its output (`solution`) by navigating and arranging the LLM's vast internal knowledge.
 
 This approach is fundamental to the system's flexibility, allowing for the composition and execution of workflows even when no explicit, deterministic code has been written for the constituent tasks.
 

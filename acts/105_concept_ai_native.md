@@ -8,10 +8,10 @@
 > - Requires:
 >   - [101: Concept/Idea](./101_concept_idea.md)
 >   - [103: Concept/Ideator](./103_concept_ideator.md)
->   - [010: Agent/Plan](./010_agent_plan.md)
->   - [011: Agent/Instancing](./011_agent_instancing.md)
+>   - [011: Agent/Plan](./011_agent_plan.md)
+>   - [012: Agent/Instancing](./012_agent_instancing.md)
 
-This document outlines the **AI-Native** concept, a new architectural approach for building complex, adaptive systems. It explains how this paradigm fundamentally differs from traditional models like node-based programming and why it enables the creation of systems that can scale in complexity and autonomy far beyond what was previously possible.
+The **AI-Native** concept represents a new architectural approach for building complex, adaptive systems. It explains how this paradigm fundamentally differs from traditional models like node-based programming and why it enables the creation of systems that can scale in complexity and autonomy far beyond what was previously possible.
 
 ## Beyond the Buzzword: What "AI-Native" Truly Means
 

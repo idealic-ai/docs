@@ -7,9 +7,9 @@
 >
 > - Requires:
 >   - :term[Visibility]{href="./108_concept_visibility.md"}
->   - :term[Meta]{href="./014_agent_meta.md"}
+>   - :term[Meta]{href="./015_agent_meta.md"}
 
-The :term[idea:]{canonical="idea:"} URI scheme is the language for navigating the versioned, branched reality described in the previous document. It provides a robust syntax for requesting :term[Ideas]{canonical="Idea" href="./101_concept_idea.md"} and for creating permanent, reproducible links to specific, resolved versions.
+The :term[idea:]{canonical="idea:"} URI scheme provides the language for navigating the versioned, branched reality described in the previous document. It offers a robust syntax for requesting :term[Ideas]{canonical="Idea" href="./101_concept_idea.md"} and for creating permanent, reproducible links to specific, resolved versions.
 
 > Sidenote:
 >

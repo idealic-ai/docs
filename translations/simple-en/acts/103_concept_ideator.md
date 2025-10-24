@@ -1,57 +1,69 @@
 # 103: Concept/Ideator
 
 > [!DEFINITION] [Ideator](./000_glossary.md)
-> An `Ideator` is an `Idea` that can do work. It's like a function in math: it takes something in (an input) and produces something new (an output). We know an `Idea` can do this when it has a special message inside it labeled `type: "input"`.
+> An :term[Idea]{canonical="Idea"} that's designed to accept information (input). Think of it like a function: it takes something in, processes it, and gives something new back (output).
 
 > Sidenote:
-> - Relies on these documents:
+> - Builds On:
 >   - [101: Concept/Idea](./101_concept_idea.md)
->   - [007: Agent/Input](./007_agent_input.md)
-> - Makes these documents possible:
+>   - [006: Agent/Input](./006_agent_input.md)
+> - Makes Possible:
 >   - [004: Agent/Call](./004_agent_call.md)
 >   - [102: Concept/Sovereignty](./102_concept_sovereignty.md)
 
-## Introduction
+This document explains how we make :term[Ideators]{canonical="Ideator"} and :term[Idea Transformers]{canonical="Idea Transformer"} into active, usable services that can perform tasks. It builds on the basic structure of an :term[Idea]{canonical="Idea"} (from [101: Concept/Idea](./101_concept_idea.md)) and shows how we turn that data into something that can be run like a program.
 
-This document explains how an **`Idea`** can become an **`Ideator`** — an active, thinking machine that you can give tasks to. This builds on the first document, [101: Concept/Idea](./101_concept_idea.md), which described what an `Idea` is made of. 
-
-To learn about all the different ways you can run an `Ideator`, like on your own computer or on the internet, you can read [102: Concept/Sovereignty](./102_concept_sovereignty.md).
+To learn about the different ways these can be hosted and run, see [102: Concept/Sovereignty](./102_concept_sovereignty.md).
 
 ## From Idea to Ideator
 
-An **`Ideator`** isn't a totally new thing; it's just an `Idea` that has a job to do. Think of it like a recipe that can actually cook for you. It takes ingredients (input) and makes a meal (output).
+An **:term[Ideator]{canonical="Ideator"}** isn't a totally new thing, but rather a job that any :term[Idea]{canonical="Idea"} can perform. You can think of it as a tool that does work by turning an input into an output. This work happens in a :term[latent space]{canonical="Latent Execution"}, which is a fancy way of saying its logic doesn't come from traditional code. Instead, an AI (like a large language model) reads the :term[Idea]{canonical="Idea"}'s `context`—its rules, examples, and plain English instructions—to figure out what to do.
 
-Its instructions aren't written in normal computer code. Instead, an AI reads the `Idea`'s descriptions, examples, and rules to figure out what to do. This is a bit like a chef who can look at a list of ingredients and a picture of a dish and figure out all the steps on their own.
-
-The one thing that officially turns an `Idea` into an `Ideator` is a message inside it that says `type: "input"`. This message tells everyone what kind of ingredients the `Ideator` needs to do its job. Sometimes, an `Ideator` might also have a message with `type: "code"` that points to a specific set of instructions, just in case.
+The single clue that tells you an :term[Idea]{canonical="Idea"} is an :term[Ideator]{canonical="Ideator"} is a message in its `context` that says `type: "input"`. This message describes the kind of data the :term[Ideator]{canonical="Ideator"} is expecting. An :term[Ideator]{canonical="Ideator"} that can be run might also include a `context` message with `type: "code"`, which points to a specific piece of code to run.
 
 ### The Idea Transformer: A Special Case
 
-One very cool type of `Ideator` is one that takes *another `Idea`* as its input. We call this an **Idea Transformer**. It’s like a special kitchen machine whose only job is to take one recipe and make it better or change it into a new one. This is how we can chain `Ideas` together to build amazing things.
+A very useful and common pattern is an :term[Ideator]{canonical="Ideator"} that takes another :term[Idea]{canonical="Idea"} as its input. We call this special kind of :term[Ideator]{canonical="Ideator"} an **:term[Idea Transformer]{canonical="Idea Transformer"}**. This is the key to creating assembly lines where :term[Ideas]{canonical="Idea"} are passed from one tool to the next to be changed and improved.
 
-## How They Work and Connect
+## Implementations and Composition
 
-The rules in this document create a **handshake agreement** for how any `Ideator` should behave. This isn't for one single program, but a standard that lets lots of different `Ideator` programs, built by different people, all understand each other and work together.
+The rules described here create a **behavioral contract**, which is like a promise for how any :term[Ideator]{canonical="Ideator"} service should behave. This isn't for just one program, but a common standard that allows many different versions to exist and work together smoothly.
 
-### Many Ways to Build an `Ideator`
+### A Plurality of Implementations
 
-As long as an `Ideator` follows the handshake agreement (it accepts an `Idea` and returns another one), it can be built in many different ways:
+An :term[Ideator]{canonical="Ideator"} service's promise is kept as long as it follows its public rules (it accepts an :term[Idea]{canonical="Idea"} and returns another one). This allows for different ways to build them, each good for different situations:
 
-- **Online Services**: A company can run `Ideators` on the internet for you. You don't have to worry about the computers or the setup; you just use it. This is explained more in the [Sovereignty Protocol](./102_concept_sovereignty.md).
-- **Do-It-Yourself**: You can run an `Ideator` on your own computer or server. This gives you total control over how it works.
-- **Just for Practice**: For building and testing, you can run an `Ideator` right inside your code on your laptop. It works the same way but doesn't need to connect to the internet at all.
+- **Managed Services**: A company can offer to run your :term[Ideators]{canonical="Ideator"} for you on their powerful computers in the cloud. This way, you don't have to worry about the technical setup, as explained in the [:term[Sovereignty]{href="./102_concept_sovereignty.md"} Protocol](./102_concept_sovereignty.md).
+- **Self-Hosted Instances**: A developer can run the service on their own computer or server, giving them complete control.
+- **In-Memory Implementations**: For practice and testing on a local machine, an :term[Ideator]{canonical="Ideator"}'s logic can be run directly inside a program without needing a network connection, while still following the same basic rules.
 
-### Building Bigger Things by Connecting `Ideators`
+### Composition and Higher-Order Systems
 
-In this world, there are no secret passages or private doors. Every `Ideator` uses the same public handshake to talk to others.
+In this system, there are no secret or "private" connections. All services are designed to talk to each other through their public, agreed-upon rules.
 
-More powerful tools, which we can call **Higher-Order Systems**, are built by connecting simple `Ideators` together. The big system does its job by asking smaller, public `Ideators` to do theirs.
+More advanced services, which you can think of as **Higher-Order Systems**, are built by combining several simpler :term[Ideators]{canonical="Ideator"} together. The inner workings of a higher-order service involve it calling out to other public :term[Ideators]{canonical="Ideator"} to get parts of its job done.
 
-For example, imagine a system called **Reactor** that runs a game. Here’s how it might work:
+For example, the **:term[Reactor]{canonical="Reactor"}** system is a higher-order :term[Ideator]{canonical="Ideator"}. To run a game, it might:
 
-1.  You give Reactor the current game information as an `Idea`.
-2.  Inside, Reactor calls a public `Player` `Ideator` to create new players.
-3.  Then, it calls a public `Storage` `Ideator` to save what happened in the game.
-4.  Finally, it gives you back the new, updated game information as an `Idea`.
+1.  Receive the current game's status as an :term[Idea]{canonical="Idea"} from the outside world.
+2.  Internally, it calls a public `Player` service to create and keep track of players.
+3.  It then calls a public `Storage` service to save a record of what happened in the game.
+4.  Finally, it returns the newly updated game status :term[Idea]{canonical="Idea"} back to the outside world.
 
-From the outside, Reactor just looks like any other `Ideator`. All its complicated work is done by combining other simple, public `Ideators`. This keeps everything neat, easy to understand, and able to grow bigger and bigger.
+From an outsider's perspective, the :term[Reactor]{canonical="Reactor"} just looks like any other :term[Ideator]{canonical="Ideator"}. Its complexity is hidden inside, managed by using other separate, public services.
+
+## The Refiner: An Ideator for Evolution
+
+While most :term[Ideators]{canonical="Ideator"} work with the rules (`schema`) they're given to create a :term[Solution]{canonical="Solution"}, a special type of :term[Idea Transformer]{canonical="Idea Transformer"} exists to change the rules themselves. This tool is called the **:term[Refiner]{canonical="Refiner"}**.
+
+A :term[Refiner]{canonical="Refiner"} is a tool for evolving the core structure of an :term[Idea]{canonical="Idea"}. It takes an existing :term[Idea]{canonical="Idea"} and a command (like, "Add a spot for the author's name to this article") as its input, and produces a brand *new* :term[Idea]{canonical="Idea"} as its output.
+
+This new :term[Idea]{canonical="Idea"} has:
+
+- An **updated `schema`** (the new set of rules).
+- An **updated :term[Solution]{canonical="Solution"}** that follows the new rules.
+- **Migrated data** from the old :term[Solution]{canonical="Solution"}. The AI, because it understands both the old and new rules, intelligently tries to move the information over to the new structure.
+
+The :term[Refiner]{canonical="Refiner"} is the main way an :term[Idea]{canonical="Idea"}'s family tree, or **:term[lineage]{canonical="Lineage"}**, grows. If the rule change breaks compatibility with the old version, the new :term[Idea]{canonical="Idea"} gets a new major version number. This allows the system's fundamental building blocks to evolve safely and clearly, all handled by a dedicated, reusable :term[Ideator]{canonical="Ideator"}.
+
+Now that we have the :term[Ideator]{canonical="Ideator"} as a way to get things done, the next question is how that work actually happens. This leads us to the concept of :term[Latent Execution]{canonical="Latent Execution"}, where an AI uses an :term[Idea]{canonical="Idea"}'s context to produce a result without needing to be given step-by-step code.

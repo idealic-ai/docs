@@ -3,12 +3,7 @@
 > [!DEFINITION] [Evolution](./000_glossary.md)
 > The process by which an AI-Native system autonomously or semi-autonomously adapts, improves, and changes its own structure, logic, and capabilities over time in response to new data, feedback, or changing goals.
 
-> Sidenote:
->
-> - Requires:
->   - [105: Concept/AI-Native](./105_concept_ai_native.md)
-
-This document describes the **concept of Evolution**, the philosophical and technical cornerstone of the AI-Native paradigm. It defines how a system can transcend static design and become a living architecture, capable of adapting, learning, and growing in response to its environment.
+The **concept of Evolution** is the philosophical and technical cornerstone of the AI-Native paradigm, defining how a system can transcend static design and become a living architecture, capable of adapting, learning, and growing in response to its environment.
 
 > Sidenote:
 >
@@ -38,7 +33,7 @@ The profound difference with an AI-Native system is its capacity for **autonomou
 
 > Sidenote:
 >
-> - [005: Agent/Loop](./005_agent_loop.md)
+> - [010: Agent/Loop](./010_agent_loop.md)
 > - [203: Idea/Process](./203_idea_process.md)
 
 The evolutionary loop is a core process of continuous improvement:
@@ -70,7 +65,7 @@ A key enabler of this scaling is parallelism. Multiple evolutionary loops can be
 > Sidenote:
 >
 > - [101: Concept/Idea](./101_concept_idea.md)
-> - [010: Agent/Plan](./010_agent_plan.md)
+> - [011: Agent/Plan](./011_agent_plan.md)
 
 For the end-user, these rapid, hidden iterations can be abstracted away. From their perspective, the system may appear to understand and fulfill a complex request in a single step. In reality, this "understanding" is the emergent result of numerous high-speed evolutionary loops, where the AI has simulated communication between its components, analyzed outcomes, and progressively converged on a solution that truly fits the context.
 

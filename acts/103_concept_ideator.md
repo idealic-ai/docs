@@ -7,12 +7,10 @@
 >
 > - Requires:
 >   - [101: Concept/Idea](./101_concept_idea.md)
->   - [007: Agent/Input](./007_agent_input.md)
+>   - [006: Agent/Input](./006_agent_input.md)
 > - Enables:
 >   - [004: Agent/Call](./004_agent_call.md)
 >   - [102: Concept/Sovereignty](./102_concept_sovereignty.md)
-
-## Introduction
 
 The protocol for :term[Ideators]{canonical="Ideator"} and :term[Idea Transformers]{canonical="Idea Transformer"} defines them as executable, service-based components. It builds upon the foundational [101: Concept/Idea](./101_concept_idea.md), which defines the core data structure, and describes how an :term[Idea]{canonical="Idea"} is transformed into a functional, invocable entity.
 

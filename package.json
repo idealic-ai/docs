@@ -1,6 +1,11 @@
 {
+  "name": "docs",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "vike dev",
+    "dev": "astro dev",
+    "start": "astro dev",
     "build": "vike build",
     "preview": "vike preview",
     "deploy": "npm run build && touch dist/.nojekyll && node scripts/push-to-docs-repo.js",
@@ -34,6 +39,5 @@
     "simple-git": "^3.22.0",
     "typescript": "^5.8.3",
     "vite": "^7.0.0"
-  },
-  "type": "module"
+  }
 }

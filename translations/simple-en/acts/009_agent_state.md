@@ -1,81 +1,82 @@
 # 009: Agent/State
 
-> [!DEFINITION] State Message
-> A special message that works like a live, changing memory for a multi-step task. It holds information, like a set of notes, so the agent can remember what it's doing from one step to the next.
+> [!DEFINITION] [State Message](./000_glossary.md)
+> A special message that works like a workflow's live memory. Think of it as a set of sticky notes that the agent can read from and write on, letting it remember things across many steps.
 
 > Sidenote:
-> - Needs these ideas first:
->   - [004: Agent/Call](./004_agent/call.md)
->   - [006: Agent/Data](./006_agent/data.md)
-> - Helps create this idea:
->   - [010: Agent/Plan](./010_agent/plan.md)
-> - Works together with:
->   - [011: Agent/Instancing](./011_agent/instancing.md)
->   - [012: Agent/Delegate](./012_agent/delegate.md)
->   - [013: Agent/Scopes](./013_agent/scopes.md)
+> - Needs These Ideas First:
+>   - [004: Agent/Call](./004_agent_call.md)
+>   - [005: Agent/Data](./005_agent_data.md)
+> - Makes These Ideas Possible:
+>   - [011: Agent/Plan](./011_agent_plan.md)
+> - Works Together With:
+>   - [012: Agent/Instancing](./012_agent_instancing.md)
+>   - [013: Agent/Delegate](./013_agent_delegate.md)
+>   - [014: Agent/Scopes](./014_agent_scopes.md)
 
-This document explains the **State message**, which is a special type of message that acts like a memory for an agent while it works. Think of it like this: if an agent needs to do a big job with many steps, it needs a place to write things down so it doesn't get lost. The State is that place—it's the agent's personal scratchpad.
+The **State message** is a special kind of :term[Data]{canonical="Data"} message that gives an agent a working memory during its :term[Execution Loop]{canonical="Execution Loop"}. If you think of :term[Variables]{canonical="Variable"} as the cables that connect different tools, then the :term[State]{canonical="State"} is the **whiteboard** where the agent jots down the results. It’s where information is stored and updated as the agent works through a task.
 
-This scratchpad keeps track of everything important for the current task. This is super useful because it allows the agent to pause its work and come back to it later without forgetting anything. When the agent starts again, it just looks at its scratchpad (the State message from the last step) to see exactly where it left off and what to do next.
+The :term[State]{canonical="State"} is the single source of truth for what's happening. It's the key to making the agent's work robust. Because it saves a complete snapshot of the workflow, a task can be paused and started again later right where it left off. When the agent starts a new cycle, it looks at the :term[State]{canonical="State"} from the last cycle to understand what's already been done and what to do next.
 
 ## Guiding the Workflow with a Schema
 
-You can give the agent a template for its scratchpad, called a `schema`. This is like giving someone a fill-in-the-blanks form. The form has spaces for specific pieces of information, which tells the agent what it needs to find and where to write it down. This helps guide the agent to do its job correctly and make sure all the necessary steps are taken in the right order.
+You can give the :term[State]{canonical="State"} a `schema`, which is like a template or a set of rules for what the agent's memory should look like. This is optional but very helpful. A schema outlines what kind of information should be stored, which gives the AI hints about how the different :term[Tools]{canonical="Tool"} are supposed to work together.
 
-When the agent is told what information goes where, it's more likely to use its tools in a way that fills out the form perfectly, creating a smooth and predictable process.
+This creates a helpful guide for the AI. When it knows what kind of information belongs in the :term[State]{canonical="State"}, it's more likely to call the right :term[Tools]{canonical="Tool"} and tell them to save their results in the right place (using an :term[Output Path]{canonical="Output Path"}). This helps make sure the agent's actions are logical and follow the plan.
 
 > Sidenote:
-> - [008: Agent/Variables](./008_agent_variables.md)
+> - [007: Agent/Variables](./007_agent_variables.md)
+> - [008: Agent/Output](./008_agent_output.md)
 
 ## Multi-Step Tools
 
-The main reason for the State scratchpad is to let different tools share information. It allows for complex, multi-step jobs where tools work together.
+The main job of the :term[State]{canonical="State"} message is to let different :term[Tools]{canonical="Tool"} share information as part of one continuous process. It acts as a shared whiteboard where tools can post their results for others to see.
 
-Imagine an assembly line. One tool builds a car door and places it on the conveyor belt (writes its result to the State). The next tool down the line picks up the door from the belt (reads the data from the State) and attaches it to the car. The State acts as the conveyor belt, passing information from one tool to the next so they can work together on the same project.
+This works with a simple read-and-write system. One :term[Tool]{canonical="Tool"} writes its result to the :term[State]{canonical="State"}, and a later :term[Tool]{canonical="Tool"} can read that information and use it as its starting point. This lets you build chains of tools where the output of one becomes the input for the next, all without losing track of what’s going on.
 
 ## Planning vs. Execution
 
-By using the State, an agent can separate planning from doing. It can figure out a whole plan first—like drawing a blueprint—before a single tool starts working. The agent can map out which tool will do what, where it will get its information from, and where it will put its result.
+Using the :term[Output Path]{canonical="Output Path"} to write to the state and :term[Variable References]{canonical="Variable Reference"} to read from it is the secret to how an agent can separate planning from doing. It allows the agent to map out a full workflow—a chain of :term[Tool Calls]{canonical="Call"} connected by a flow of information—*before* a single tool is actually run.
 
-This blueprint can be checked, saved, and reused. It's like a recipe where you list all the ingredients and all the steps before you even start cooking. You can decide to follow the recipe exactly, or you can let the agent figure out some of the steps on its own. This makes the system both powerful and flexible.
+This map of how data will move can be checked for errors, saved for later, or even simulated. It works perfectly with how AIs think, which is to figure out the whole plan first. The system is flexible because a designer can either let the AI decide where to get its inputs and save its outputs, or they can set those paths in stone to create a very predictable and reliable process.
 
 > [!HEADSUP] Heads up
-> When an agent decides how its tools will connect to each other using the State scratchpad, it's creating a plan. This system gives the agent everything it needs to do this: a scratchpad (the State), wires to connect things (`_outputPath` and Variable References), and a process to work through the steps (the Loop). Together, these parts let an agent build a complete roadmap for solving a problem, which is what a Plan is.
+> When you create a set of :term[Tool Calls]{canonical="Call"} that are linked together through the :term[State]{canonical="State"}, you are creating a plan. This system provides all the pieces needed for that: a lasting :term[State]{canonical="State"} to act as the whiteboard, :term[Variable References]{canonical="Variable Reference"} and the :term[Output Path]{canonical="Output Path"} to act as the connectors, and the agent's :term[Loop]{canonical="Loop"} to provide the engine that runs it all. Together, these allow the agent to build a complete map of how data will flow, which is the heart of a :term[Plan]{canonical="Plan"}.
 >
 > > Sidenote:
 > >
-> > - [005: Agent/Loop](./005_agent_loop.md)
-> > - [010: Agent/Plan](./010_agent_plan.md)
+> > - [010: Agent/Loop](./010_agent_loop.md)
+> > - [011: Agent/Plan](./011_agent_plan.md)
 
-## Composition
+## How It Works with Other Parts
 
-- **Call:** A `Call` is a command to use a tool. It's connected to the State through a special instruction called `_outputPath`. This instruction tells the tool where on the scratchpad to write its result. This turns a simple tool action into a step that changes the agent's memory, allowing a series of actions to build on each other.
+- **:term[Call]{canonical="Call"}:** A :term[Tool Call]{canonical="Call"} is deeply connected to the :term[State]{canonical="State"} through its :term[Output Path]{canonical="Output Path"} property. This property turns a simple action (like using a tool) into an action that changes the agent's memory. By telling the :term[Call]{canonical="Call"} where to save its result, the agent can record what happened. This allows a series of :term[Calls]{canonical="Call"} to build on each other's results, creating a chain of actions recorded in the :term[State]{canonical="State"}.
 
   > Sidenote:
   > - [004: Agent/Call](./004_agent_call.md)
 
-- **Data:** The State system is built on top of the `Data` message system. It's just a `Data` message that is specifically labeled as `"state"`. It uses all the cool features of `Data` messages, like using a `schema` to define its structure. It also means the State can be updated in small pieces, and the system will automatically merge those pieces together to keep the scratchpad organized and up-to-date.
+- **:term[Data]{canonical="Data"}:** The :term[State]{canonical="State"} is just a special version of a :term[Data]{canonical="Data"} message (specifically one with `kind: "state"`). It uses all the core features of :term[Data]{canonical="Data"} messages to give the agent a memory. The `schema` property is used to define the structure of this memory, giving the AI a blueprint to follow. The way :term[Data]{canonical="Data"} messages can be merged is also very important, as it allows the :term[State]{canonical="State"} to be updated in small pieces, which the system then combines into one clear picture.
 
   > Sidenote:
-  > - [006: Agent/Data](./006_agent_data.md)
+  > - [005: Agent/Data](./005_agent_data.md)
 
-- **Scopes:** Scopes are like giving a tool a temporary, clean workspace to do its job. If you want a tool to have access to the main scratchpad, you can use the `_scopes` property to include the State in that workspace. This lets tools that work in isolation still see and use the information from the main task in a safe and controlled way.
-
-  > Sidenote:
-  > - [013: Agent/Scopes](./013_agent_scopes.md)
-
-- **Instancing:** The State system works perfectly with `Instancing`, which is when you run the same task on many different things at once (like sending a personalized email to 100 people). Each person's information gets its own separate scratchpad. When a tool needs to find the `currentUser.id`, the system automatically knows which person's scratchpad to look at. This allows a single plan to work on many separate tasks at the same time without getting them mixed up.
+- **:term[Scopes]{canonical="Scope"}:** :term[Scopes]{canonical="Scope"} are how a tool running in an isolated space (like a :term[Delegate]{canonical="Delegate"}) can be given access to the main workflow's memory. When an agent hands off a task, the `_scopes` property can tell it to include the :term[State]{canonical="State"} in the tool's private workspace. This lets tools that are sealed off for safety still read from the main :term[State]{canonical="State"} in a controlled way.
 
   > Sidenote:
-  > - [011: Agent/Instancing](./011_agent_instancing.md)
+  > - [014: Agent/Scopes](./014_agent_scopes.md)
 
-- **Plan:** While the State is great for chaining tools in a simple line, it becomes truly powerful when used to build a `Plan`. A `Plan` is like a flowchart where tools are the boxes and the State is the arrows connecting them. The State allows one tool to write a piece of information that other tools can then read, making it possible to create complex workflows with forks (if-then decisions) or parallel branches.
+- **:term[Instancing]{canonical="Instancing"}:** The :term[State]{canonical="State"} works perfectly with the :term[Instancing]{canonical="Instancing"} system. If a task needs to be run on many different items at once, each item gets its own separate :term[State]{canonical="State"} (its own memory). When a tool needs to get some information (e.g., `†state.currentUser.id`), the system automatically knows which item's memory to look in. This lets a single, general-purpose Plan run on many different tasks at the same time without them getting mixed up.
 
   > Sidenote:
-  > - [010: Agent/Plan](./010_agent_plan.md)
+  > - [012: Agent/Instancing](./012_agent_instancing.md)
+
+- **:term[Plan]{canonical="Plan"}:** While the :term[State]{canonical="State"} is useful for simple sequences of tools, it truly shines as the foundation of the :term[Plan]{canonical="Plan"} system. A :term[Plan]{canonical="Plan"} describes a workflow as a map where the :term[Tool Calls]{canonical="Call"} are the locations. The :term[State]{canonical="State"} provides the roads connecting these locations. It allows one tool to leave a result and others to pick it up, which makes complex workflows with choices (if/then) or parallel tasks possible.
+
+  > Sidenote:
+  > - [011: Agent/Plan](./011_agent_plan.md)
 
 ## From Single State to Orchestrated Workflows
 
-The State message gives us the memory an agent needs to handle a single task with many steps. Now that we have a scratchpad and a way to connect tools, we can start designing and running much more complex jobs.
+The :term[State]{canonical="State"} message gives us a way to manage the memory of a single workflow. With a whiteboard for remembering things and variables to connect tools, we can now build and run complex, multi-step projects.
 
-The next document, [010: Agent/Plan](./010_agent_plan.md), explains how to organize these jobs into a smart flowchart of tool actions.
+The next document, :term[011: Agent/Plan]{href="./011_agent_plan.md"}, explains how we can organize these workflows into a map of :term[Tool Calls]{canonical="Call"}.

@@ -14,6 +14,9 @@ The :term[Request]{canonical="Request"} is the core computational primitive of t
 
 ## Context: A Pipeline of Messages
 
+> [!DEFINITION] Context
+> A curated array of `Message` objects that provides the complete set of information—instructions, data, and conversation history—that an LLM needs to perform a specific task.
+
 > Sidenote:
 >
 > LLM will process the :term[context]{canonical="context"} to generate a :term[solution]{canonical="Solution"} that conforms to the :term[schema]{canonical="schema"}.
@@ -63,10 +66,11 @@ The system extends this basic `Message` structure by allowing the `content` fiel
 >
 > Custom message types described in Acts:
 >
-> - :term[006: Agent/Data]{href="./006_agent_data.md"} - present data and its meaning to LLM as a message
-> - :term[007: Agent/Input]{href="./007_agent_input.md"} - structured prompt for LLM to use
+> - :term[005: Agent/Data]{href="./005_agent_data.md"} - present data and its meaning to LLM as a message
+> - :term[006: Agent/Input]{href="./006_agent_input.md"} - structured prompt for LLM to use
 > - :term[009: Agent/State]{href="./009_agent_state.md"} - persistent state retained within loop
-> - :term[010: Agent/Plan]{href="./010_agent_plan.md"} - prepared plan for multi-step execution
+> - :term[011: Agent/Plan]{href="./011_agent_plan.md"} - prepared plan for multi-step execution
+> - :term[015: Agent/Meta]{href="./015_agent_meta.md"} - provides an Idea's identity to the LLM
 
 This capability makes the :term[context]{canonical="context"} the main point of extension within the system.
 
@@ -80,6 +84,9 @@ This powerful pipeline mechanism allows the agent to work with high-level, struc
 
 ## Schema: Guiding the Solution
 
+> [!DEFINITION] Schema
+> A JSON Schema that defines the exact structure of the desired :term[solution]{canonical="Solution"}. It acts as a fill-in-the-blanks template that the LLM must adhere to, ensuring the output is always well-structured and predictable.
+
 > Sidenote:
 >
 > - Read more at [json-schema.org](https://json-schema.org/)
@@ -91,6 +98,9 @@ As schemas grow in complexity, they can be designed to guide not only the final 
 A core principle of this architecture is the composition of schemas. More complex capabilities are built by combining simpler, reusable schema components, allowing for a modular and scalable approach to defining the agent's knowledge and abilities.
 
 ## Execution and the Solution
+
+> [!DEFINITION] Solution
+> The structured, JSON-based document returned by the LLM that strictly conforms to the provided :term[schema]{canonical="schema"}. It is the final, well-formed result of a :term[Request]{canonical="Request"}.
 
 After the :term[context]{canonical="context"} is processed, the final array of messages and the :term[schema]{canonical="schema"} are sent to the LLM in a single request. The LLM's response is the :term[solution]{canonical="Solution"}—a structured, JSON-based document that strictly conforms to the provided :term[schema]{canonical="schema"}.
 

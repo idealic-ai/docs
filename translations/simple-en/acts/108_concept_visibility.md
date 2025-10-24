@@ -1,28 +1,28 @@
 # 108: Concept/Visibility
 
 > [!DEFINITION] [Visibility](./000_glossary.md)
-> This is how the system decides which version of an :term[Idea]{canonical="Idea"} you should see at any given time. It's like asking for a book in a library that has many different editions and drafts; visibility rules figure out exactly which copy to hand you based on the :term[Idea]{canonical="Idea"}'s history, where it's being worked on, and the order you've asked to search for it.
+> This is the set of rules that decides which version of an :term[Idea]{canonical="Idea"} you see at any given time. It depends on the :term[Idea]{canonical="Idea"}'s history, which work-in-progress area it belongs to, and how you are looking for it.
 
 > Sidenote:
-> - You should know about:
+> - You should read this first:
 >   - :term[107: Concept/Identity]{href="./107_concept_identity.md"}
 > - This helps you understand:
->   - :term[109: Concept/Addressing]{href="./109_concept_addressing.md"}
+>   - :term[015: Agent/Meta]{href="./015_agent_meta.md"}
+>   - :term[110: Concept/Addressing]{href="./110_concept_addressing.md"}
 
-Imagine a world full of :term[Ideas]{canonical="Idea" href="./101_concept_idea.md"} that are always growing and connecting to each other. For this to work without being a confusing mess, we need a clear way to know which version of an :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} we're looking at. This is called **visibility**. It's a two-part system:
+For a system full of evolving, connected :term[Ideas]{canonical="Idea" href="./101_concept_idea.md"} to work well, we need a clear way to know which version of an :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} we're looking at. Think of it like a document that has many drafts and final versions. How do you know which one to open?
 
-1.  **Versioning:** This is how we create and keep track of all the different drafts and editions of an Idea.
-2.  **Selection:** This is how we choose the right version to show you from all the ones that exist.
+The system for this has two parts: one part that creates and keeps track of all the different versions, and another part that chooses which version to show you.
 
-## Versioning: Creating All the Different Versions
+## Versioning: Creating the Different Drafts
 
-Before you can see a version, someone has to make it. We use a system called :term[Hierarchical Versioning]{canonical="Hierarchical Versioning"} to track how an :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} changes. A version isn't just a simple number; it's like a family tree that tells the story of the :term[Idea]{canonical="Idea" href="./101_concept_idea.md"}'s life.
+Before the system can show you a version, that version has to exist. We use something called :term[Hierarchical Versioning]{canonical="Hierarchical Versioning"}, which is just a fancy way of creating and tracking the different states of an :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} as it changes. A version number isn't just a simple number; it's a series of numbers separated by dots that tells the story of how the :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} grew and changed.
 
-Versions have two parts: **number updates** for official public releases (like `1.2`) and **named updates** for new experiments (like `feature-x`). For example, a version named `1.2.feature-x.3` tells you it's the third update on an experiment called `feature-x`, which started from the official version `1.2`.
+Versions have two parts: **integer parts** for official public releases (like `1.2`) and **branch parts** for new features being developed (like `feature-x`). For example, a version like `1.2.feature-x.3` tells you a story: "This is the third change made on the `feature-x` project, which itself started from version `1.2`."
 
 ::::columns
 :::column
-Versions have two parts: **number updates** for official public releases (like `1.2`) and **named updates** for new experiments (like `feature-x`). For example, a version named `1.2.feature-x.3` tells you it's the third update on an experiment called `feature-x`, which started from the official version `1.2`.
+Versions have two parts: **integer parts** for official public releases (like `1.2`) and **branch parts** for new features being developed (like `feature-x`). For example, a version like `1.2.feature-x.3` tells you a story: "This is the third change made on the `feature-x` project, which itself started from version `1.2`."
 :::
 :::column
 
@@ -42,56 +42,56 @@ gitGraph
 :::
 ::::
 
-Here are the rules for changing an Idea's version:
+Here are the rules for creating a new version:
 
-- **Compatible Changes**: These are small, safe edits, like fixing a typo or adding extra information. The new version works just like the old one. This kind of change adds a new number at the end (for example, `1.2` becomes `1.2.1`).
-- **Breaking Changes**: These are big changes that make the new version incompatible with the old one, like completely changing how a part of it works. These changes require a bigger version jump (for example, a big change to `1.2` would create a new version `1.3`).
+- **Compatible Changes**: This is a small update that doesn't break anything. The new version can be used in place of the old one without causing problems. For example, fixing a typo or adding a new, optional piece of information. This kind of change creates a small revision (like `1.2` becomes `1.2.1`).
+- **Breaking Changes**: This is a big change where the new version can't simply replace the old one. This usually happens when you remove or change something important. This kind of change requires a bigger version number jump (for example, a breaking change to version `1.2` would lead to `1.3`). The system can automatically tell when a change is a breaking one.
 
-## Selection: Choosing Which Version to See
+## Selection: Choosing Which Version to Show You
 
-Now that we have all these different versions, we need a way to pick the right one. This is done by separating how an :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} is saved from how you ask for it. Think of it like a librarian finding a book for you. They need to know two things: **where** to look (which shelf) and **when** it was published (from what time period).
+Now that we have all these different versions, we need a way to pick the right one to show you. The system does this by separating how an :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} is saved from how it is requested. When you ask for an :term[Idea]{canonical="Idea"}, you can specify two things: **where** to look (which project area) and **when** to look (at what point in time).
 
-### Branches: Different Shelves for Your Ideas
+### Branches: Creating Separate Workspaces
 
 > [!DEFINITION] [Branch](./000_glossary.md)
-> A branch is like a separate workspace or a different shelf in the library where you can work on things without messing up the main collection. Putting an :term[Idea]{canonical="Idea"} on a branch is like publishing it to that specific shelf.
+> Think of a :term[branch]{canonical="Branch"} as a separate copy or a parallel universe for your work. It lets you experiment and develop new things in a safe, isolated space.
 
-For instance, every version of an :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} is tagged with the :term[branches]{canonical="Branch"} it belongs to, like `["main", "feature/new-billing"]`. This makes the :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} visible only in those workspaces.
+For example, every version of an :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} is tagged with one or more :term[branches]{canonical="Branch"}, like `["main", "feature/new-billing"]`. This makes the :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} visible only inside those specific workspaces.
 
 This gives us two big advantages:
 
-- **Safety**: You can work on a new feature (on a `feature/new-billing` :term[branch]{canonical="Branch"}) without affecting the stable, official `main` :term[branch]{canonical="Branch"}. This keeps messy, unfinished work away from everyone else.
-- **Freedom to Experiment**: It's super easy to create new :term[branches]{canonical="Branch"}. This lets you try out new things freely. If an experiment doesn't work, you can just delete the :term[branch]{canonical="Branch"}, and it's like it never happened.
+- **Isolation**: You can work on a new feature (in the `feature/new-billing` :term[branch]{canonical="Branch"}) without messing up the stable, main version of the project (the `main` :term[branch]{canonical="Branch"}). This keeps unfinished work from causing problems for others.
+- **Experimentation**: Creating :term[branches]{canonical="Branch"} is quick and easy. This encourages people to try out new ideas. If an experiment doesn't work, you can just delete the :term[branch]{canonical="Branch"}, and it won't affect anything else.
 
-### The Search Path: The Order You Check the Shelves
+### The Search Path: Telling the System Where to Look
 
 > [!DEFINITION] [Search Path](./000_glossary.md)
-> This is your personal set of instructions that tells the system which branches to look in and in what order. It's like telling the librarian, "First, check my personal desk, then check the 'New Arrivals' shelf, and finally, check the main library."
+> A :term[search path]{canonical="Search Path"} is an ordered list of :term[branch]{canonical="Branch"} names. It tells the system which workspaces to check for an :term[Idea]{canonical="Idea"} and in what order.
 
-This answers the **where** question. For example, a developer's :term[search path]{canonical="Search Path"} might look like `['feature/my-new-idea', 'staging', 'main']`.
+This is how we answer the "where to look" question. For example, a developer working on a new feature might set their :term[search path]{canonical="Search Path"} to `['feature/my-new-idea', 'staging', 'main']`.
 
-This tells the system how to find an :term[Idea]{canonical="Idea" href="./101_concept_idea.md"}:
+This tells the system how to find an :term[Idea]{canonical="Idea"} by looking in layers:
 
-1.  First, look for it on the experimental `feature/my-new-idea` shelf.
-2.  If it's not there, look on the `staging` shelf (where things are tested).
-3.  If you still haven't found it, look on the official `main` shelf.
+1.  First, look in the `feature/my-new-idea` workspace.
+2.  If you don't find it there, look in the `staging` workspace (a place for testing).
+3.  If you still don't find it, look in the final `main` workspace.
 
-This lets you see your own in-progress work as if it were already part of the main system, without actually changing the main system for anyone else.
+This lets a developer see their own changes layered on top of the stable system, all working together seamlessly.
 
-### The Cutoff Time: Finding a Version from the Past
+### The Cutoff Time: Looking at the Past
 
 > [!DEFINITION] [Cutoff Time](./000_glossary.md)
-> This is a timestamp you can add to your request. It tells the system to find the version of an :term[Idea]{canonical="Idea"} that was the latest at that exact moment in the past.
+> A :term[Cutoff Time]{canonical="Cutoff Time"} is a specific timestamp you can include with your request. It tells the system to find the version of an :term[Idea]{canonical="Idea"} that was the latest at that exact moment in the past.
 
-This answers the **when** question. It's like asking the librarian for the book as it existed last Tuesday. Every search you do is for a specific point in time.
+The second part of finding an :term[Idea]{canonical="Idea"} is answering "when to look." Every time you ask for an :term[Idea]{canonical="Idea"}, the system checks against a specific point in time. This is controlled by the :term[Cutoff Time]{canonical="Cutoff Time"}.
 
-If you don't give a :term[cutoff time]{canonical="Cutoff Time"}, the system just assumes you mean right now. But if you provide a timestamp from the past, you can do a "time-traveling search." The system will find the version of the :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} (and everything it depends on) that was considered the latest at that moment. This is super important because it means we can perfectly recreate how things were at any point in history.
+If you don't specify a time, the system just uses the current time (`now()`), showing you the newest versions. But you can also provide a time from the past, which is like a "time-traveling query." This tells the system to find the version of the :term[Idea]{canonical="Idea"}—and all the other :term[Ideas]{canonical="Idea"} it depends on—that was considered the latest at that specific moment. This is what makes it possible to perfectly recreate any past state of the system.
 
 > Sidenote:
 > - :term[107: Concept/Identity]{href="./107_concept_identity.md"}
 
 ## From Rules to Reality
 
-So far, we've talked about the rules for how visibility works — how different versions are made and how we choose between them. Now, we need a simple way to actually use these rules.
+This document explained the rules for **visibility**—how different versions of an :term[Idea]{canonical="Idea"} are created and how the system chooses which one to show you. Now that we have these rules, the last step is to learn the language we use to actually ask for an :term[Idea]{canonical="Idea"}.
 
-The next document, :term[109: Concept/Addressing]{href="./109_concept_addressing.md"}, will show you the special kind of web address we use, called the :term[idea:]{canonical="idea:"} address, to ask for exactly the version you want to see.
+The next document, :term[110: Concept/Addressing]{href="./110_concept_addressing.md"}, will introduce you to the `idea:` web address format. It's the specific command you use to request and navigate this world of different versions and branches.

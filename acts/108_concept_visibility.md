@@ -8,10 +8,10 @@
 > - Requires:
 >   - :term[107: Concept/Identity]{href="./107_concept_identity.md"}
 > - Enables:
->   - :term[014: Agent/Meta]{href="./014_agent_meta.md"}
+>   - :term[015: Agent/Meta]{href="./015_agent_meta.md"}
 >   - :term[110: Concept/Addressing]{href="./110_concept_addressing.md"}
 
-For a system of evolving, interconnected :term[Ideas]{canonical="Idea" href="./101_concept_idea.md"} to be useful, there must be a clear and predictable way to determine which version of an :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} is seen—or **visible**—in any given context. This document describes the two-part model that governs :term[visibility]{canonical="Visibility"}: the versioning system that creates the possible states of an :term[Idea]{canonical="Idea" href="./101_concept_idea.md"}, and the selection mechanism that chooses which state becomes visible.
+For a system of evolving, interconnected :term[Ideas]{canonical="Idea" href="./101_concept_idea.md"} to be useful, there must be a clear and predictable way to determine which version of an :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} is seen—or **visible**—in any given context. The two-part model governing :term[visibility]{canonical="Visibility"} includes the versioning system that creates the possible states of an :term[Idea]{canonical="Idea" href="./101_concept_idea.md"}, and the selection mechanism that chooses which state becomes visible.
 
 ## Versioning: Creating the States to Be Seen
 
@@ -93,4 +93,4 @@ If a :term[cutoff time]{canonical="Cutoff Time"} is not provided, it defaults to
 
 This chapter has defined the theoretical model for :term[visibility]{canonical="Visibility"}—the mechanisms for creating different states and selecting between them. With this model in place, the final piece is the practical language for interacting with it.
 
-The next document, :term[109: Concept/Addressing]{href="./109_concept_addressing.md"}, introduces the :term[idea:]{canonical="idea:"} URI scheme, the concrete syntax used to request a specific view and navigate this rich, versioned, and branched reality.
+The next document, :term[110: Concept/Addressing]{href="./110_concept_addressing.md"}, introduces the :term[idea:]{canonical="idea:"} URI scheme, the concrete syntax used to request a specific view and navigate this rich, versioned, and branched reality.

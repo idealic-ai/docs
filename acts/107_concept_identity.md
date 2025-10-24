@@ -11,9 +11,9 @@
 > - Complemented by:
 >   - :term[Sovereignty]{href="./102_concept_sovereignty.md"}
 > - Enables:
->   - :term[014: Agent/Meta]{href="./014_agent_meta.md"}
+>   - :term[015: Agent/Meta]{href="./015_agent_meta.md"}
 
-This document explores the concept of **Identity** within the system. Unlike :term[Sovereignty]{canonical="Sovereignty" href="./102_concept_sovereignty.md"}, which deals with ownership and naming, this form of identity is not a persistent label assigned to a single object. An :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} in isolation has no tangible identity; it is merely a self-contained unit of data.
+**Identity** within the system is an emergent concept, not a persistent label. Unlike :term[Sovereignty]{canonical="Sovereignty" href="./102_concept_sovereignty.md"}, which deals with ownership and naming, this form of identity is not assigned to a single object. An :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} in isolation has no tangible identity; it is merely a self-contained unit of data.
 
 Identity is an **:term[Emergent Identity]{canonical="Emergent Identity"}**. It is a recognizable pattern that arises from the rich web of relationships connecting a collection of :term[Ideas]{canonical="Idea" href="./101_concept_idea.md"}. It is the narrative that forms when we observe how :term[Ideas]{canonical="Idea" href="./101_concept_idea.md"} evolve, cause one another, and are grouped together.
 
@@ -52,4 +52,4 @@ The relationships described above provide a powerful way to understand how :term
 > Sidenote:
 >
 > - :term[108: Concept/Visibility]{href="./108_concept_visibility.md"}
-> - :term[109: Concept/Addressing]{href="./109_concept_addressing.md"}
+> - :term[110: Concept/Addressing]{href="./110_concept_addressing.md"}
