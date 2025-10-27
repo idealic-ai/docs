@@ -1,6 +1,6 @@
 # Style Guide for Acts
 
-This document outlines the stylistic conventions to be used when writing or editing `Acts` to ensure consistency and readability across the documentation.
+To ensure consistency and readability, all `Acts` must adhere to the following stylistic conventions.
 
 - **No Bold Links**: Links should not be bolded. The standard link styling is sufficient to indicate interactivity.
 - **Glossary Terms**: All terms defined in the [Glossary](./000_glossary.md) must be referenced using the `:term[Term Name]{canonical="Term Name"}` syntax. This ensures they are automatically linked and styled consistently.

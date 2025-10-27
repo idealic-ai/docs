@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const projectRoot = path.resolve(__dirname, '../..');
 
 const mainActsDir = path.resolve(__dirname, '../acts');
 const translationsDir = path.resolve(__dirname, '../translations');
@@ -25,15 +26,31 @@ const getCanonicalNumbering = (dir: string): Map<string, string> => {
   return numberingMap;
 };
 
-const syncLinksInDir = (dir: string, canonicalMap: Map<string, string>) => {
+const syncLinksInDir = (dir: string, canonicalMap: Map<string, string>, renameFiles: boolean) => {
   if (!fs.existsSync(dir)) {
     console.warn(`Directory not found, skipping: ${dir}`);
     return;
   }
   const files = fs.readdirSync(dir).filter(f => f.endsWith('.md'));
 
-  for (const file of files) {
-    const filePath = path.join(dir, file);
+  for (let file of files) {
+    let filePath = path.join(dir, file);
+    if (renameFiles) {
+      const match = file.match(/^(\d{3})_(.*)\.md$/);
+      if (match) {
+        const [, number, name] = match;
+        const canonicalNumber = canonicalMap.get(name);
+
+        if (canonicalNumber && canonicalNumber !== number) {
+          const newFileName = `${canonicalNumber}_${name}.md`;
+          const newFilePath = path.join(dir, newFileName);
+          console.log(`In ${path.relative(projectRoot, dir)}: Renaming ${file} -> ${newFileName}`);
+          fs.renameSync(filePath, newFilePath);
+          file = newFileName;
+          filePath = newFilePath;
+        }
+      }
+    }
     let content = fs.readFileSync(filePath, 'utf-8');
     const originalContent = content;
 
@@ -85,7 +102,7 @@ const main = () => {
   ];
 
   for (const dir of dirsToSync) {
-    syncLinksInDir(dir, canonicalMap);
+    syncLinksInDir(dir, canonicalMap, dir !== mainActsDir);
   }
 
   console.log('Link synchronization complete.');
