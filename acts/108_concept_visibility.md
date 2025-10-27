@@ -8,7 +8,7 @@
 > - Requires:
 >   - :term[107: Concept/Identity]{href="./107_concept_identity.md"}
 > - Enables:
->   - :term[015: Agent/Meta]{href="./015_agent_meta.md"}
+>   - :term[016: Agent/Meta]{href="./016_agent_meta.md"}
 >   - :term[110: Concept/Addressing]{href="./110_concept_addressing.md"}
 
 For a system of evolving, interconnected :term[Ideas]{canonical="Idea" href="./101_concept_idea.md"} to be useful, there must be a clear and predictable way to determine which version of an :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} is seen—or **visible**—in any given context. The two-part model governing :term[visibility]{canonical="Visibility"} includes the versioning system that creates the possible states of an :term[Idea]{canonical="Idea" href="./101_concept_idea.md"}, and the selection mechanism that chooses which state becomes visible.

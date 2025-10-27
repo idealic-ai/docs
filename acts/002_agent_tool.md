@@ -46,9 +46,9 @@ A Tool's schema defines its complete interface:
 > Extensions:
 >
 > - **`_activity`**: Connects the tool to a deterministic code function for explicit execution. See :term[003: Agent/Activity]{href="./003_agent_activity.md"}
-> - **`_delegate`**: Delegates the tool's execution to an isolated, external delegate. See :term[013: Agent/Delegate]{href="./013_agent_delegate.md"}
+> - **`_delegate`**: Delegates the tool's execution to an isolated, external delegate. See :term[014: Agent/Delegate]{href="./014_agent_delegate.md"}
 > - **`_outputPath`**: Makes the tool stateful by writing its output to a persistent data object. See :term[008: Agent/Output]{href="./008_agent_output.md"}
-> - **`_instance`**: Targets the tool's execution to a specific instance in a multi-instance request. See :term[012: Agent/Instancing]{href="./012_agent_instancing.md"}
+> - **`_instance`**: Targets the tool's execution to a specific instance in a multi-instance request. See :term[013: Agent/Instancing]{href="./013_agent_instancing.md"}
 
 - **`title`**: A human-readable name for the schema (optional).
 - **`description`**: Explains what the tool does.

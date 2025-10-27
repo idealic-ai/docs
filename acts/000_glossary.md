@@ -99,17 +99,17 @@ This glossary defines the key concepts used in the Idea Protocol and its related
     >
     > - [104: Concept/Latent](./104_concept_latent.md)
 
-- :dfn[Delegate]{canonical="Delegate" href="./013_agent_delegate.md"}: A protocol for isolating execution context. Invoked by a `Call`'s `_delegate` property, it executes an `Activity` or a new `Request` in a "clean room" environment, with the `_scopes` property providing controlled access to the parent context.
+- :dfn[Delegate]{canonical="Delegate" href="./014_agent_delegate.md"}: A protocol for isolating execution context. Invoked by a `Call`'s `_delegate` property, it executes an `Activity` or a new `Request` in a "clean room" environment, with the `_scopes` property providing controlled access to the parent context.
 
   > Sidenote:
   >
-  > - [013: Agent/Delegate](./013_agent_delegate.md)
+  > - [014: Agent/Delegate](./014_agent_delegate.md)
 
-- :dfn[Scope]{canonical="Scope" href="./014_agent_scopes.md"}: A key that identifies a piece of context from the parent environment to be made available (`scoped`) to an execution. It can be used to focus an LLM's attention in a **Latent Inline** execution or to construct the entire context for a **Delegate Scope** execution. Controlled by the `_scopes` property.
+- :dfn[Scope]{canonical="Scope" href="./015_agent_scopes.md"}: A key that identifies a piece of context from the parent environment to be made available (`scoped`) to an execution. It can be used to focus an LLM's attention in a **Latent Inline** execution or to construct the entire context for a **Delegate Scope** execution. Controlled by the `_scopes` property.
 
   > Sidenote:
   >
-  > - [014: Agent/Scopes](./014_agent_scopes.md)
+  > - [015: Agent/Scopes](./015_agent_scopes.md)
 
 - :dfn[Loop]{canonical="Loop" href="./010_agent_loop.md"}: An iterative process where an agent makes a sequence of :term[Request]{canonical="Request"}s to achieve a goal. The process continues as long as the LLM determines more information is needed, signified by it returning a list of :term[Call]{canonical="Call"}s instead of a :term[Final Output]{canonical="Final Output"}.
 
@@ -129,17 +129,17 @@ This glossary defines the key concepts used in the Idea Protocol and its related
   >
   > - [008: Agent/Output](./008_agent_output.md)
 
-- :dfn[Meta Message]{canonical="Meta Message" href="./015_agent_meta.md"}: A context message that provides an :term[Idea]{canonical="Idea"}'s explicit identity (:term[Meta Properties]{canonical="Meta Properties"}) to the LLM.
+- :dfn[Meta Message]{canonical="Meta Message" href="./016_agent_meta.md"}: A context message that provides an :term[Idea]{canonical="Idea"}'s explicit identity (:term[Meta Properties]{canonical="Meta Properties"}) to the LLM.
 
   > Sidenote:
   >
-  > - [015: Agent/Meta](./015_agent_meta.md)
+  > - [016: Agent/Meta](./016_agent_meta.md)
 
-- :dfn[Meta Properties]{canonical="Meta Properties" href="./015_agent_meta.md"}: A structured object within an :term[Idea]{canonical="Idea"} that holds its explicit identity, including its name, namespace, and version.
+- :dfn[Meta Properties]{canonical="Meta Properties" href="./016_agent_meta.md"}: A structured object within an :term[Idea]{canonical="Idea"} that holds its explicit identity, including its name, namespace, and version.
 
   > Sidenote:
   >
-  > - [015: Agent/Meta](./015_agent_meta.md)
+  > - [016: Agent/Meta](./016_agent_meta.md)
 
 - :dfn[HITL (Human-in-the-Loop)]{canonical="HITL (Human-in-the-Loop)" href="./010_agent_loop.md#human-in-the-loop-hitl"}: The practice of inserting a human checkpoint into an automated process. In the context of an agent's iterative process, this refers to the opportunity for a user to approve, deny, or modify proposed :term[Call]{canonical="Call"}s before they are executed.
 
@@ -192,17 +192,17 @@ This glossary defines the key concepts used in the Idea Protocol and its related
   >
   > - [005: Agent/Data](./005_agent_data.md)
 
-- :dfn[Plan]{canonical="Plan" href="./011_agent_plan.md"}: A context message carrying a data-flow graph of :term[Tool Calls]{canonical="Tool Call"} that represents an agent's strategy. It is passed between steps to enable iterative execution and adaptation.
+- :dfn[Plan]{canonical="Plan" href="./012_agent_plan.md"}: A context message carrying a data-flow graph of :term[Tool Calls]{canonical="Tool Call"} that represents an agent's strategy. It is passed between steps to enable iterative execution and adaptation.
 
   > Sidenote:
   >
-  > - [011: Agent/Plan](./011_agent_plan.md)
+  > - [012: Agent/Plan](./012_agent_plan.md)
 
-- :dfn[Process Idea]{canonical="Process Idea" href="./011_agent_plan.md"}: A self-contained [Idea](./101_concept_idea.md) that captures a strategic [Plan](./011_agent_plan.md) and its live execution state. Its `schema` is the library of [Tools](./002_agent_tool.md), its `solution` is the new `Plan` for the current tick, and its `context` contains the `Input`, `State`, and the previous `Plan`.
+- :dfn[Process Idea]{canonical="Process Idea" href="./012_agent_plan.md"}: A self-contained [Idea](./101_concept_idea.md) that captures a strategic [Plan](./012_agent_plan.md) and its live execution state. Its `schema` is the library of [Tools](./002_agent_tool.md), its `solution` is the new `Plan` for the current tick, and its `context` contains the `Input`, `State`, and the previous `Plan`.
 
   > Sidenote:
   >
-  > - [011: Agent/Plan](./011_agent_plan.md)
+  > - [012: Agent/Plan](./012_agent_plan.md)
 
 - :dfn[Vessel Idea]{canonical="Vessel Idea" href="./202_idea_vessel.md"}: A self-contained `Idea` that is both the definition of a reactive capability and the record of its chosen reaction. Its `schema` defines the full universe of possible `Tools`, and its `solution` captures the specific `Calls` (instances of those `Tools`) that were chosen in response to a stimulus.
 
@@ -210,11 +210,11 @@ This glossary defines the key concepts used in the Idea Protocol and its related
   >
   > - [202: Idea/Vessel](./202_idea_vessel.md)
 
-- :dfn[Instancing]{canonical="Instancing" href="./012_agent_instancing.md"}: The process of handling multiple, independent `Instances` (each with its own unique identifier and corresponding `State` message) within a single agent request.
+- :dfn[Instancing]{canonical="Instancing" href="./013_agent_instancing.md"}: The process of handling multiple, independent `Instances` (each with its own unique identifier and corresponding `State` message) within a single agent request.
 
   > Sidenote:
   >
-  > - [012: Agent/Instancing](./012_agent_instancing.md)
+  > - [013: Agent/Instancing](./013_agent_instancing.md)
 
 - :dfn[Request]{canonical="Request" href="./001_agent_request.md"}: A single, self-contained LLM invocation, which takes a `context` and a `schema` and produces a `solution`.
 
@@ -222,11 +222,11 @@ This glossary defines the key concepts used in the Idea Protocol and its related
   >
   > - [001: Agent/Request](./001_agent_request.md)
 
-- :dfn[Instance]{canonical="Instance" href="./012_agent_instancing.md"}: A single, uniquely identified state object and its associated context, processed as one of many within an `Instancing` operation.
+- :dfn[Instance]{canonical="Instance" href="./013_agent_instancing.md"}: A single, uniquely identified state object and its associated context, processed as one of many within an `Instancing` operation.
 
   > Sidenote:
   >
-  > - [012: Agent/Instancing](./012_agent_instancing.md)
+  > - [013: Agent/Instancing](./013_agent_instancing.md)
 
 - :dfn[Reactor]{canonical="Reactor" href="./303_ideator_reactor.md"}: A specific `Idea Transformer` designed as a universal runtime for stateful, turn-based agent interactions. It takes a game/process state (`Idea`) and produces the next state (`Idea`).
 

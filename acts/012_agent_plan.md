@@ -10,7 +10,7 @@
 >   - :term[010: Agent/Loop]{href="./010_agent_loop.md"}
 >   - :term[007: Agent/Variables]{href="./007_agent_variables.md"}
 >   - :term[009: Agent/State]{href="./009_agent_state.md"}
->   - :term[012: Agent/Instancing]{href="./012_agent_instancing.md"}
+>   - :term[013: Agent/Instancing]{href="./013_agent_instancing.md"}
 
 The :term[Plan]{canonical="Plan"} message is the cornerstone of iterative execution. When the LLM receives the current :term[Plan]{canonical="Plan"} alongside the live :term[State]{canonical="State"} object, it can determine its exact position in the workflow. This situational awareness is what allows an agent to be truly adaptive. It can follow the existing plan, generate new :term[Tool Calls]{canonical="Tool Call"} to expand it, or discard it entirely and replan in response to unexpected outcomes. This creates a flexible execution model that can range from a rigid, predefined procedure to a fluid, exploratory strategy.
 
@@ -490,4 +490,4 @@ This iterative cycle of planning and execution is the core of a :term[Process]{h
 
 A :term[Plan]{canonical="Plan"} message defines a sequence of actions for a specific task. To make these workflows truly powerful, we need a way to encapsulate them into reusable components that can be called from other :term[Plans]{canonical="Plan"}.
 
-The protocol for this parallel execution is described in :term[012: Agent/Instancing]{href="./012_agent_instancing.md"}.
+The protocol for this parallel execution is described in :term[013: Agent/Instancing]{href="./013_agent_instancing.md"}.

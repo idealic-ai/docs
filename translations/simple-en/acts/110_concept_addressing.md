@@ -6,7 +6,7 @@
 > Sidenote:
 > - You'll want to understand these first:
 >   - :term[Visibility]{href="./108_concept_visibility.md"} (How things are found and seen)
->   - :term[Meta]{href="./015_agent_meta.md"} (Data about data)
+>   - :term[Meta]{href="./016_agent_meta.md"} (Data about data)
 
 The `idea:` address system is the language we use to get around in the world of branching, versioned :term[Ideas]{canonical="Idea" href="./101_concept_idea.md"}. It lets you ask for :term[Ideas]{canonical="Idea" href="./101_concept_idea.md"} in a flexible way and also create permanent links that will always work, so you can always find the exact same thing again.
 

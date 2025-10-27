@@ -65,7 +65,7 @@ A key enabler of this scaling is parallelism. Multiple evolutionary loops can be
 > Sidenote:
 >
 > - [101: Concept/Idea](./101_concept_idea.md)
-> - [011: Agent/Plan](./011_agent_plan.md)
+> - [012: Agent/Plan](./012_agent_plan.md)
 
 For the end-user, these rapid, hidden iterations can be abstracted away. From their perspective, the system may appear to understand and fulfill a complex request in a single step. In reality, this "understanding" is the emergent result of numerous high-speed evolutionary loops, where the AI has simulated communication between its components, analyzed outcomes, and progressively converged on a solution that truly fits the context.
 

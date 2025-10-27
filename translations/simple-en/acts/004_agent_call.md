@@ -8,12 +8,12 @@
 >   - [002: Agent/Tool](./002_agent_tool.md)
 > - Enables:
 >   - [103: Concept/Ideator](./103_concept_ideator.md)
->   - [014: Agent/Scopes](./014_agent_scopes.md)
->   - [012: Agent/Instancing](./012_agent_instancing.md)
+>   - [015: Agent/Scopes](./015_agent_scopes.md)
+>   - [013: Agent/Instancing](./013_agent_instancing.md)
 >   - [202: Idea/Vessel](./202_idea_vessel.md)
 >   - [203: Idea/Process](./203_idea_process.md)
 > - Extended by:
->   - [013: Agent/Delegate](./013_agent_delegate.md)
+>   - [014: Agent/Delegate](./014_agent_delegate.md)
 
 The :term[Tool]{canonical="Tool"} system sets up the list of things an AI agent knows how to do. The **:term[Call]{canonical="Call"}** system is all about how the agent actually does them.
 
@@ -61,12 +61,12 @@ Think of it like adding special modifiers to a video game character's ability. B
 - **Asking for help (`_delegate`)**: A :term[Call]{canonical="Call"} can pass a job to another expert agent, called a :term[Delegate]{canonical="Delegate"}. It's like a manager giving a task to a specialist. The `_delegate` property usually points to a saved :term[Request]{canonical="Request"}, letting the agent reuse complex tasks easily. This keeps the work separate and organized.
 
   > Sidenote:
-  > - [013: Agent/Delegate](./013_agent_delegate.md).
+  > - [014: Agent/Delegate](./014_agent_delegate.md).
 
 - **Focusing its attention (`_scopes`)**: The :term[Scopes]{canonical="Scope"} system tells a :term[Call]{canonical="Call"} exactly what information it's allowed to look at. This is like giving someone only the documents they need for a specific task instead of the whole library. It helps the AI focus and produce better answers. When used with a :term[Delegate]{canonical="Delegate"}, it's even stricter, defining the *only* information the helper agent can see.
 
   > Sidenote:
-  > - [014: Agent/Scopes](./014_agent_scopes.md).
+  > - [015: Agent/Scopes](./015_agent_scopes.md).
 
 - **Saving the result (`_outputPath`)**: A :term[Call]{canonical="Call"} can be told where to save its result. It's like telling someone to put a finished document in a specific folder. The :term[Output Path]{canonical="Output Path"} property points to a spot in the agent's memory (:term[State]{canonical="State"}). This lets you chain tasks together, where the result of one :term[Call]{canonical="Call"} becomes the starting point for the next one.
 
@@ -76,7 +76,7 @@ Think of it like adding special modifiers to a video game character's ability. B
 
 - **Working on many things at once (`_instance`)**: A :term[Call]{canonical="Call"} can be told to work on one specific item in a big batch of items. The `_instance` property gives each item a unique ID, so the agent can run the same plan on many different things at the same time without getting confused. It’s like having an assembly line where each worker focuses only on the product right in front of them.
   > Sidenote:
-  > - [012: Agent/Instancing](./012_agent_instancing.md).
+  > - [013: Agent/Instancing](./013_agent_instancing.md).
 
 ## From Actions to Data
 

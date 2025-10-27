@@ -7,8 +7,8 @@
 > - Needs: :term[009: Agent/State]{href="./009_agent_state.md"}
 > - Works with:
 >   - :term[006: Agent/Input]{href="./006_agent_input.md"}
->   - :term[014: Agent/Scopes]{href="./014_agent_scopes.md"}
->   - :term[011: Agent/Plan]{href="./011_agent_plan.md"}
+>   - :term[015: Agent/Scopes]{href="./015_agent_scopes.md"}
+>   - :term[012: Agent/Plan]{href="./012_agent_plan.md"}
 
 The **Instancing Protocol** is a clever way to help an AI agent do many things at once. It lets the agent work on several separate tasks at the same time, all within a single command, without needing to change how the agent thinks.
 
@@ -44,7 +44,7 @@ The real power of Instancing comes from how the `_instance` sticker changes the 
 - **:term[Scopes]{canonical="Scope"}:** The `_instance` sticker is very important for keeping work private. It acts like a wall around each workbench. When a command (:term[Call]{canonical="Call"}) is sent to a specific instance, its tools and information (`_scopes`) are also locked to that instance. This ensures that a helper agent (:term[Delegate]{canonical="Delegate"}) only sees the information relevant to its task, even if it's one of many helpers working on a big project.
 
   > Sidenote:
-  > - :term[014: Agent/Scopes]{href="./014_agent_scopes.md"}
+  > - :term[015: Agent/Scopes]{href="./015_agent_scopes.md"}
 
 :::details{title="Example: Checking Many Comments at Once"}
 
@@ -181,7 +181,7 @@ Instancing works with other parts of the system to control how things get done.
 - **:term[Plan]{canonical="Plan"}:** A :term[Plan]{canonical="Plan"} is like a master blueprint that isn't tied to any single instance. It can be used with many different workbenches (:term[State]{canonical="State"} messages), allowing the same set of steps to run on many separate jobs at the same time.
 
   > Sidenote:
-  > - :term[011: Agent/Plan]{href="./011_agent_plan.md"}
+  > - :term[012: Agent/Plan]{href="./012_agent_plan.md"}
 
 ## From a Plan to a Process
 

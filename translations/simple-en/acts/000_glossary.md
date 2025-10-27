@@ -83,15 +83,15 @@ This glossary explains the main words we use in our system, like a dictionary fo
     > Sidenote:
     > - [104: Concept/Latent](./104_concept_latent.md)
 
-- :dfn[Delegate]{canonical="Delegate" href="./013_agent_delegate.md"}: This is like hiring a specialist to do a job in a separate, clean workshop. You give them only the specific tools and information they need, so they can work without being distracted by anything else or accidentally messing up your main project.
+- :dfn[Delegate]{canonical="Delegate" href="./014_agent_delegate.md"}: This is like hiring a specialist to do a job in a separate, clean workshop. You give them only the specific tools and information they need, so they can work without being distracted by anything else or accidentally messing up your main project.
 
   > Sidenote:
-  > - [013: Agent/Delegate](./013_agent_delegate.md)
+  > - [014: Agent/Delegate](./014_agent_delegate.md)
 
-- :dfn[Scope]{canonical="Scope" href="./014_agent_scopes.md"}: A Scope is the specific set of information you give a specialist when you :term[Delegate]{canonical="Delegate"} a task. It's like handing a chef only the ingredients for one dish so they can focus on making it perfectly.
+- :dfn[Scope]{canonical="Scope" href="./015_agent_scopes.md"}: A Scope is the specific set of information you give a specialist when you :term[Delegate]{canonical="Delegate"} a task. It's like handing a chef only the ingredients for one dish so they can focus on making it perfectly.
 
   > Sidenote:
-  > - [014: Agent/Scopes](./014_agent_scopes.md)
+  > - [015: Agent/Scopes](./015_agent_scopes.md)
 
 - :dfn[Loop]{canonical="Loop" href="./010_agent_loop.md"}: This is when an AI works on a problem step-by-step. It will keep thinking and using its tools in a cycle, or `Loop`, until it finally has enough information to give the final answer.
 
@@ -108,15 +108,15 @@ This glossary explains the main words we use in our system, like a dictionary fo
   > Sidenote:
   > - [008: Agent/Output](./008_agent_output.md)
 
-- :dfn[Meta Message]{canonical="Meta Message" href="./015_agent_meta.md"}: This is a special message that tells an AI the official name and address of an `Idea`. It's like an ID card for the `Idea`, so the AI knows exactly which one it's working with.
+- :dfn[Meta Message]{canonical="Meta Message" href="./016_agent_meta.md"}: This is a special message that tells an AI the official name and address of an `Idea`. It's like an ID card for the `Idea`, so the AI knows exactly which one it's working with.
 
   > Sidenote:
-  > - [015: Agent/Meta](./015_agent_meta.md)
+  > - [016: Agent/Meta](./016_agent_meta.md)
 
-- :dfn[Meta Properties]{canonical="Meta Properties" href="./015_agent_meta.md"}: This is the information on the `Idea`'s ID card. It includes details like its name, where it belongs, and which version it is.
+- :dfn[Meta Properties]{canonical="Meta Properties" href="./016_agent_meta.md"}: This is the information on the `Idea`'s ID card. It includes details like its name, where it belongs, and which version it is.
 
   > Sidenote:
-  > - [015: Agent/Meta](./015_agent_meta.md)
+  > - [016: Agent/Meta](./016_agent_meta.md)
 
 - :dfn[HITL (Human-in-the-Loop)]{canonical="HITL (Human-in-the-Loop)" href="./010_agent_loop.md#human-in-the-loop-hitl"}: This means having a person step in to check the AI's work. Before the AI takes a big action, a human can look at what it plans to do and say "Yes, go ahead," "No, stop," or "Change it a little bit."
 
@@ -161,35 +161,35 @@ This glossary explains the main words we use in our system, like a dictionary fo
   > Sidenote:
   > - [005: Agent/Data](./005_agent_data.md)
 
-- :dfn[Plan]{canonical="Plan" href="./011_agent_plan.md"}: This is the AI's strategy, like a flowchart of the steps it will take. It's the AI's game plan for how it will use its tools to reach a goal. The AI can even update the plan as it goes.
+- :dfn[Plan]{canonical="Plan" href="./012_agent_plan.md"}: This is the AI's strategy, like a flowchart of the steps it will take. It's the AI's game plan for how it will use its tools to reach a goal. The AI can even update the plan as it goes.
 
   > Sidenote:
-  > - [011: Agent/Plan](./011_agent_plan.md)
+  > - [012: Agent/Plan](./012_agent_plan.md)
 
-- :dfn[Process Idea]{canonical="Process Idea" href="./011_agent_plan.md"}: A special `Idea` that holds both the AI's game `Plan` and keeps track of where it is in that plan. It's a living recipe that not only tells you the steps but also remembers which step you're on.
+- :dfn[Process Idea]{canonical="Process Idea" href="./012_agent_plan.md"}: A special `Idea` that holds both the AI's game `Plan` and keeps track of where it is in that plan. It's a living recipe that not only tells you the steps but also remembers which step you're on.
 
   > Sidenote:
-  > - [011: Agent/Plan](./011_agent_plan.md)
+  > - [012: Agent/Plan](./012_agent_plan.md)
 
 - :dfn[Vessel Idea]{canonical="Vessel Idea" href="./202_idea_vessel.md"}: This is a special `Idea` that knows all the possible moves in a game or situation, and also remembers the exact move it chose to make. It's like a chess master who knows every possible move but also records the one specific move they decided to play.
 
   > Sidenote:
   > - [202: Idea/Vessel](./202_idea_vessel.md)
 
-- :dfn[Instancing]{canonical="Instancing" href="./012_agent_instancing.md"}: The process of handling many different tasks at the same time, but keeping each one separate. Imagine playing ten different games of tic-tac-toe at once, but having a different notepad to track the moves for each game so you don't get them mixed up.
+- :dfn[Instancing]{canonical="Instancing" href="./013_agent_instancing.md"}: The process of handling many different tasks at the same time, but keeping each one separate. Imagine playing ten different games of tic-tac-toe at once, but having a different notepad to track the moves for each game so you don't get them mixed up.
 
   > Sidenote:
-  > - [012: Agent/Instancing](./012_agent_instancing.md)
+  > - [013: Agent/Instancing](./013_agent_instancing.md)
 
 - :dfn[Request]{canonical="Request" href="./001_agent_request.md"}: This is a single, complete job you give to the AI. You provide the background information (`context`) and the rules for the answer (`schema`), and the AI gives you back a single `solution`.
 
   > Sidenote:
   > - [001: Agent/Request](./001_agent_request.md)
 
-- :dfn[Instance]{canonical="Instance" href="./012_agent_instancing.md"}: In an `Instancing` process, an Instance is one single task out of the many you are handling. It's like one of the ten tic-tac-toe games you're playing at the same time.
+- :dfn[Instance]{canonical="Instance" href="./013_agent_instancing.md"}: In an `Instancing` process, an Instance is one single task out of the many you are handling. It's like one of the ten tic-tac-toe games you're playing at the same time.
 
   > Sidenote:
-  > - [012: Agent/Instancing](./012_agent_instancing.md)
+  > - [013: Agent/Instancing](./013_agent_instancing.md)
 
 - :dfn[Reactor]{canonical="Reactor" href="./303_ideator_reactor.md"}: A special `Idea Transformer` that acts like a universal game engine. You give it the current state of a game, and it figures out and gives you back the *next* state of the game after one turn.
 

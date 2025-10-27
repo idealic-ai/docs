@@ -88,12 +88,12 @@ The `_scopes` property is the main way to control the information a :term[Call]{
 - **Batch Tasks (`_instance`)**: Imagine you need to do the same task on a big batch of items, like translating 100 different sentences at once. Scopes make sure that when the AI works on one item, it only sees the information for *that specific item*. This is crucial to keep data separate and prevent information from one task from spilling over into another.
 
   > Sidenote:
-  > - See :term[012: Agent/Instancing]{href="./012_agent_instancing.md"}
+  > - See :term[013: Agent/Instancing]{href="./013_agent_instancing.md"}
 
 - **Delegated Tasks (`_delegate`)**: When a task is handed off to another specialized AI agent (a :term[Delegate]{canonical="Delegate"}), scopes act as gatekeepers. They decide what information from the main agent's environment gets added to the specialized agent's world. The specialized agent can't see anything from the main agent unless the scope explicitly allows it, which keeps its work completely separate. See the [Scoping a Delegate's Information](#example-scoping-a-delegates-context) and [Working on Batches with Scoped Delegates](#example-instancing-with-scoped-delegates) examples.
 
   > Sidenote:
-  > - See :term[013: Agent/Delegate]{href="./013_agent_delegate.md"}
+  > - See :term[014: Agent/Delegate]{href="./014_agent_delegate.md"}
 
 The `_scopes` property is the bridge that connects a task to the information it needs. We've seen how this one simple idea can adapt to different situations—from gently guiding an AI to strictly defining everything it can see for a delegated task. This flexibility makes it a foundational part of building powerful, secure, and well-organized AI systems.
 

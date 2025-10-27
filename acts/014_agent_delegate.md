@@ -8,7 +8,7 @@
 > - Requires:
 >   - :term[004: Agent/Call]{href="./004_agent_call.md"}
 > - Complemented by:
->   - :term[014: Agent/Scopes]{href="./014_agent_scopes.md"}
+>   - :term[015: Agent/Scopes]{href="./015_agent_scopes.md"}
 
 The **Delegation** pattern addresses the critical challenge of scaling and composing agent capabilities. It provides a powerful mechanism for executing :term[Tools]{canonical="Tool"} in sandboxed contexts, preventing context bleeding and enabling true reusability. By delegating a :term[Call]{canonical="Call"} to an external delegate—either another :term[Request]{canonical="Request"} definition or an :term[Activity]{canonical="Activity"} in a sub-request—the system can build complex agentic behaviors from self-contained, independently developed components.
 
@@ -40,11 +40,11 @@ The `_delegate` property is a `string` and can be used in two ways:
 
 A delegate provides a "clean room" for execution. Instead of running inside the parent agent's bustling context, the :term[Call]{canonical="Call"} is processed in a new, self-contained session. The context for this sub-request is carefully constructed, not inherited.
 
-This is where the :term[Scoped context]{canonical="scope" href="./014_agent_scopes.md"} becomes critical. The `_scopes` property on the :term[Tool]{canonical="Tool"} schema acts as a bridge, explicitly declaring which pieces of the parent context should be "imported" into the delegate's dedicated workspace. This gives the parent agent precise control over what the delegate can see, preventing context bleeding and enabling true encapsulation.
+This is where the :term[Scoped context]{canonical="scope" href="./015_agent_scopes.md"} becomes critical. The `_scopes` property on the :term[Tool]{canonical="Tool"} schema acts as a bridge, explicitly declaring which pieces of the parent context should be "imported" into the delegate's dedicated workspace. This gives the parent agent precise control over what the delegate can see, preventing context bleeding and enabling true encapsulation.
 
 > Sidenote:
 >
-> - :term[014: Agent/Scopes]{href="./014_agent_scopes.md"}
+> - :term[015: Agent/Scopes]{href="./015_agent_scopes.md"}
 
 ## Handling Large Schemas
 
@@ -169,4 +169,4 @@ This demonstrates the key principle: the composition is not fixed within the too
 
 ## From Delegation to Scopes
 
-Delegated execution provides an isolated environment, but for it to be useful, a delegate needs a way to receive information from its parent. The `_scopes` property provides this mechanism, acting as a controlled bridge between contexts. The specifics of how this bridge works are defined by the :term[Scoped context]{canonical="scope" href="./014_agent_scopes.md"} pattern.
+Delegated execution provides an isolated environment, but for it to be useful, a delegate needs a way to receive information from its parent. The `_scopes` property provides this mechanism, acting as a controlled bridge between contexts. The specifics of how this bridge works are defined by the :term[Scoped context]{canonical="scope" href="./015_agent_scopes.md"} pattern.

@@ -11,7 +11,7 @@
 > - Complemented by:
 >   - :term[Sovereignty]{href="./102_concept_sovereignty.md"}
 > - Enables:
->   - :term[015: Agent/Meta]{href="./015_agent_meta.md"}
+>   - :term[016: Agent/Meta]{href="./016_agent_meta.md"}
 
 **Identity** within the system is an emergent concept, not a persistent label. Unlike :term[Sovereignty]{canonical="Sovereignty" href="./102_concept_sovereignty.md"}, which deals with ownership and naming, this form of identity is not assigned to a single object. An :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} in isolation has no tangible identity; it is merely a self-contained unit of data.
 

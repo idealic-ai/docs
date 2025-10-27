@@ -47,9 +47,9 @@ A Tool's blueprint defines its entire interface:
 > Special Powers:
 >
 > - **`_activity`**: Connects the tool to a real piece of code to do work. See :term[003: Agent/Activity]{href="./003_agent_activity.md"}
-> - **`_delegate`**: Hands off the tool's job to another helper agent. See :term[013: Agent/Delegate]{href="./013_agent_delegate.md"}
+> - **`_delegate`**: Hands off the tool's job to another helper agent. See :term[014: Agent/Delegate]{href="./014_agent_delegate.md"}
 > - **`_outputPath`**: Makes the tool remember its result by saving it somewhere. See :term[008: Agent/Output]{href="./008_agent_output.md"}
-> - **`_instance`**: Tells the tool to run for a specific item when working on a big list of things. See :term[012: Agent/Instancing]{href="./012_agent_instancing.md"}
+> - **`_instance`**: Tells the tool to run for a specific item when working on a big list of things. See :term[013: Agent/Instancing]{href="./013_agent_instancing.md"}
 
 - **`title`**: A simple, human-friendly name for the blueprint (optional).
 - **`description`**: Explains what the tool is for.

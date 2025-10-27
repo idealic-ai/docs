@@ -1,16 +1,16 @@
 # 203: Idea/Process
 
 > [!DEFINITION] [Process Idea](./000_glossary.md)
-> An [Idea](./101_concept_idea.md) that holds a strategic [Plan](./011_agent_plan.md) and keeps track of its progress. Think of it as a complete recipe book for a task. The `schema` is its list of all possible cooking techniques ([Tools](./002_agent_tool.md)), the `solution` is the *next* step in the recipe (`Plan`), and the `context` is everything it needs to know right now, like the original food request (`Input`), the current state of the dish (`State`), and the last recipe step it finished.
+> An [Idea](./101_concept_idea.md) that holds a strategic [Plan](./012_agent_plan.md) and keeps track of its progress. Think of it as a complete recipe book for a task. The `schema` is its list of all possible cooking techniques ([Tools](./002_agent_tool.md)), the `solution` is the *next* step in the recipe (`Plan`), and the `context` is everything it needs to know right now, like the original food request (`Input`), the current state of the dish (`State`), and the last recipe step it finished.
 
 > Sidenote:
 > - You should know about:
 >   - [101: Concept/Idea](./101_concept_idea.md)
->   - [011: Agent/Plan](./011_agent_plan.md)
+>   - [012: Agent/Plan](./012_agent_plan.md)
 >   - [009: Agent/State](./009_agent_state.md)
 >   - [006: Agent/Input](./006_agent_input.md)
 > - Works well with:
->   - [012: Agent/Instancing](./012_agent_instancing.md)
+>   - [013: Agent/Instancing](./013_agent_instancing.md)
 
 While a [Vessel Idea](./202_idea_vessel.md) is for a single, one-off decision, a **Process Idea** is for a whole journey—a project with multiple steps. It’s the official record created by an AI as it works through a complicated task from start to finish. This makes it a complete log of what the AI *could* do and what it *chose* to do.
 
@@ -34,7 +34,7 @@ A `Process Idea` uses its three parts to give a complete picture of a project at
   - **Plan Message:** This message contains the confirmed plan from the *last* step. The agent can look at it and decide whether to stick with it or change course.
 
     > Sidenote:
-    > - [011: Agent/Plan](./011_agent_plan.md)
+    > - [012: Agent/Plan](./012_agent_plan.md)
 
 - **`solution` (The Next Move):** This is the agent's strategy for the *current* step, laid out as a series of actions (`Calls`). This `solution` becomes the `Plan Message` for the very next step in the process.
 
@@ -79,7 +79,7 @@ The real power of a `Process Idea` is that it's unchangeable. Every step in a pr
 
   > Sidenote:
   > - [010: Agent/Loop](./010_agent_loop.md)
-  > - [011: Agent/Plan](./011_agent_plan.md)
+  > - [012: Agent/Plan](./012_agent_plan.md)
 
 - **Super-Stable Management:** Because a `Process Idea` is a self-contained package, managing projects becomes very sturdy. You can pause a project just by saving its latest snapshot. Then, other systems—or a human—can look at that frozen state to make decisions. Any changes, like re-planning or tweaking the data, create a *new* `Process Idea`. This lets you safely restart the project without messing up the historical record.
 
@@ -94,7 +94,7 @@ The real power of a `Process Idea` is that it's unchangeable. Every step in a pr
 - **Doing Many Things at Once:** The snapshot system allows for massive growth through a method called Instancing. This treats each task in a big batch as its own separate project, each with its own private `State` snapshot. A single `Plan` acts as the master strategy for all of them. In one single step, the agent plans for the entire batch at once, creating a unique set of actions for each task. This ensures all the tasks are handled in a consistent way while being incredibly efficient.
 
   > Sidenote:
-  > - [012: Agent/Instancing](./012_agent_instancing.md)
+  > - [013: Agent/Instancing](./013_agent_instancing.md)
 
 ## From a Predictable Plan to Smart Guidance
 

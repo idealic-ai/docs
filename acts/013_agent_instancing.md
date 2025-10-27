@@ -8,8 +8,8 @@
 > - Requires: :term[009: Agent/State]{href="./009_agent_state.md"}
 > - Compatible:
 >   - :term[006: Agent/Input]{href="./006_agent_input.md"}
->   - :term[014: Agent/Scopes]{href="./014_agent_scopes.md"}
->   - :term[011: Agent/Plan]{href="./011_agent_plan.md"}
+>   - :term[015: Agent/Scopes]{href="./015_agent_scopes.md"}
+>   - :term[012: Agent/Plan]{href="./012_agent_plan.md"}
 
 The **Instancing Protocol** is a powerful pattern for scaling agentic workflows by enabling multiple threads of computation within a single request. It allows any agent to operate on multiple, independent data contexts concurrently without requiring any changes to its core logic. This is achieved by associating context messages, such as :term[State]{canonical="State"} or :term[Input]{canonical="Input"}, with unique instance identifiers. As a result, a single, reusable :term[Plan]{canonical="Plan"} can be executed across many instances in parallel, but the protocol is generic and supports any combination of messages, dramatically improving throughput and consistency.
 
@@ -46,7 +46,7 @@ The protocol's power comes from how the `_instance` identifier scopes the behavi
 
   > Sidenote:
   >
-  > - :term[014: Agent/Scopes]{href="./014_agent_scopes.md"}
+  > - :term[015: Agent/Scopes]{href="./015_agent_scopes.md"}
 
 :::details{title="Example: Content Moderation at Scale"}
 
@@ -185,7 +185,7 @@ Instancing integrates with higher-level protocols to manage execution flow.
 
   > Sidenote:
   >
-  > - :term[011: Agent/Plan]{href="./011_agent_plan.md"}
+  > - :term[012: Agent/Plan]{href="./012_agent_plan.md"}
 
 ## From Planning to Process
 

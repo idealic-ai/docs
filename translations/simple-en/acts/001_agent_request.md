@@ -67,8 +67,8 @@ The system makes this even more powerful by allowing the `content` of a message 
 > - :term[005: Agent/Data]{href="./005_agent_data.md"} - Gives data and its meaning to the AI.
 > - :term[006: Agent/Input]{href="./006_agent_input.md"} - A structured prompt for the AI to use.
 > - :term[009: Agent/State]{href="./009_agent_state.md"} - A way to remember things between steps.
-> - :term[011: Agent/Plan]{href="./011_agent_plan.md"} - A pre-made plan for a multi-step job.
-> - :term[015: Agent/Meta]{href="./015_agent_meta.md"} - Tells the AI about the Idea's identity.
+> - :term[012: Agent/Plan]{href="./012_agent_plan.md"} - A pre-made plan for a multi-step job.
+> - :term[016: Agent/Meta]{href="./016_agent_meta.md"} - Tells the AI about the Idea's identity.
 
 This ability to send special packages makes the :term[context]{canonical="context"} the main place where the system can be expanded and taught new tricks.
 

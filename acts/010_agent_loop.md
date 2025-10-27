@@ -74,4 +74,4 @@ This capability is critical for safety and for collaborative tasks where the age
 
 The :term[Execution Loop]{canonical="Execution Loop"} provides a dynamic structure for agent behavior, but its power is in executing tactical, single-shot :term[Requests]{canonical="Request"}. To manage complex, multi-step workflows with dependencies, a more advanced system of strategic planning is required.
 
-The next document, :term[011: Agent/Plan]{href="./011_agent_plan.md"}, introduces the protocol for defining these long-term strategies as a graph of interconnected :term[Tool Calls]{canonical="Call"}.
+The next document, :term[011: Agent/Expressions]{href="./011_agent_expressions.md"}, introduces the protocol for defining these long-term strategies as a graph of interconnected :term[Tool Calls]{canonical="Call"}.

@@ -7,7 +7,7 @@
 > - You should read this first:
 >   - :term[107: Concept/Identity]{href="./107_concept_identity.md"}
 > - This helps you understand:
->   - :term[015: Agent/Meta]{href="./015_agent_meta.md"}
+>   - :term[016: Agent/Meta]{href="./016_agent_meta.md"}
 >   - :term[110: Concept/Addressing]{href="./110_concept_addressing.md"}
 
 For a system full of evolving, connected :term[Ideas]{canonical="Idea" href="./101_concept_idea.md"} to work well, we need a clear way to know which version of an :term[Idea]{canonical="Idea" href="./101_concept_idea.md"} we're looking at. Think of it like a document that has many drafts and final versions. How do you know which one to open?

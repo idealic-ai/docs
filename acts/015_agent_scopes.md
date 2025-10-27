@@ -93,13 +93,13 @@ The `_scopes` property is the primary mechanism for controlling the context avai
 
   > Sidenote:
   >
-  > - :term[012: Agent/Instancing]{href="./012_agent_instancing.md"}
+  > - :term[013: Agent/Instancing]{href="./013_agent_instancing.md"}
 
 - **Delegated Isolation (`_delegate`)**: When a :term[Call]{canonical="Call"} is delegated to an external :term[Delegate]{canonical="Delegate"}, scopes act as the gatekeepers of context. They define what from the parent's environment gets _appended_ to the delegate's own internal context, creating the final context for the isolated sub-request. Nothing from the parent is available unless explicitly scoped, ensuring true encapsulation. See the [Scoping a Delegate's Context](#example-scoping-a-delegates-context) and [Instancing with Scoped Delegates](#example-instancing-with-scoped-delegates) examples.
 
   > Sidenote:
   >
-  > - :term[013: Agent/Delegate]{href="./013_agent_delegate.md"}
+  > - :term[014: Agent/Delegate]{href="./014_agent_delegate.md"}
 
 The `_scopes` property is the bridge that allows a :term[Call]{canonical="Call"} to receive context. This chapter has shown how this single mechanism adapts to different execution modes—from gently guiding a latent call to strictly defining the entire context for a delegated one. This flexibility is what makes it a cornerstone of building complex, secure, and modular agentic systems.
 

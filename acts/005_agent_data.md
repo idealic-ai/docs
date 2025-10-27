@@ -12,7 +12,7 @@
 >   - [009: Agent/State](./009_agent_state.md)
 > - Complemented by:
 >   - [010: Agent/Loop](./010_agent_loop.md)
->   - [012: Agent/Instancing](./012_agent_instancing.md)
+>   - [013: Agent/Instancing](./013_agent_instancing.md)
 
 The :term[Data Protocol]{canonical="Data"} is a low-level pattern for providing structured, self-describing information. It serves as a foundational mechanism used by other subsystems, such as :term[Input]{canonical="Input"} and :term[State]{canonical="State"}, to manage structured data within an agent's `context`. Unlike ephemeral messages, :term[Data]{canonical="Data"} messages are persistent and are retained across multiple steps of an agent's process, providing a stable context for multi-step tasks.
 
@@ -38,7 +38,7 @@ A message's identity is primarily determined by its `kind`. For example, all mes
 
 > Sidenote:
 >
-> - [012: Agent/Instancing](./012_agent_instancing.md)
+> - [013: Agent/Instancing](./013_agent_instancing.md)
 
 When multiple mergeable messages are present (e.g., several `state` objects representing patches), the system can handle this in two ways. First, the agent's execution logic can explicitly merge these objects into a single, coherent state object before presenting it to the LLM. This reduces the cognitive load on the model. Second, the LLM itself can "mentally merge" the information in its latent space, understanding that the separate messages represent different facets of a single concept.
 
@@ -149,7 +149,7 @@ The generic :term[Data]{canonical="Data"} message is a foundational pattern. It 
 
   > Sidenote:
   >
-  > - [012: Agent/Instancing](./012_agent_instancing.md)
+  > - [013: Agent/Instancing](./013_agent_instancing.md)
 
 - **:term[Loop]{canonical="Loop"}:** The :term[Execution Loop]{canonical="Execution Loop"} relies on :term[Data]{canonical="Data"} messages to maintain continuity. Specifically, the :term[State Message]{canonical="State Message"} is the primary vehicle for persisting information across the ticks of a :term[Loop]{canonical="Loop"}.
 

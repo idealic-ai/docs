@@ -7,6 +7,6 @@
 > - Needs to be read with:
 >   - :term[004: Agent/Call]{href="./004_agent_call.md"}
 > - Works together with:
->   - :term[014: Agent/Scopes]{href="./014_agent_scopes.md"}
+>   - :term[015: Agent/Scopes]{href="./015_agent_scopes.md"}
 
 The **Delegation** pattern is how we solve a big problem: how to make AI agents more powerful without making them messy and confused. It's like a manager delegating a task to a specialist. This lets us run special :term[Tools]{canonical="Tool"} in their own 

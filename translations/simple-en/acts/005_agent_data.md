@@ -13,7 +13,7 @@
 >   - [009: Agent/State](./009_agent_state.md)
 > - Works Together With:
 >   - [010: Agent/Loop](./010_agent_loop.md)
->   - [012: Agent/Instancing](./012_agent_instancing.md)
+>   - [013: Agent/Instancing](./013_agent_instancing.md)
 
 The :term[Data Protocol]{canonical="Data"} is a simple, basic way for the system to handle information that is organized and explains itself. Think of it as a set of rules for creating labeled containers for information. Other parts of the system, like those that handle the agent's starting instructions (:term[Input]{canonical="Input"}) or its memory (:term[State]{canonical="State"}), use these containers to keep their data neat and tidy inside the agent's workspace, called the `context`. Unlike quick, temporary messages that disappear, :term[Data]{canonical="Data"} messages stick around for many steps, giving the agent a reliable source of information for complex jobs.
 
@@ -37,7 +37,7 @@ The system is designed to handle many :term[Data]{canonical="Data"} messages at 
 What makes two messages "about the same thing" is their identity, which is mostly decided by their `kind` label. For example, all messages with the `kind: "state"` are usually seen as parts of the same memory. Other systems, like :term[Instancing]{canonical="Instancing"}, can give messages more specific identities, which helps the agent work on many things at once without mixing them up.
 
 > Sidenote:
-> - [012: Agent/Instancing](./012_agent_instancing.md)
+> - [013: Agent/Instancing](./013_agent_instancing.md)
 
 When there are several messages that can be combined (like a few different updates to the agent's memory), the system can handle it in two ways. First, the agent's code can merge them into one single memory object before showing it to the AI, which makes it easier for the AI to understand. Second, the AI itself can be smart enough to mentally connect the dots, understanding that all these separate pieces of information are about the same concept.
 
@@ -144,7 +144,7 @@ The basic :term[Data]{canonical="Data"} message is a general-purpose container f
 - **:term[Instancing]{canonical="Instancing"}:** This system uses a special `_instance` property to tell :term[Data]{canonical="Data"} messages apart. This lets the agent work on a batch of similar tasks at the same time, keeping the data for each task separate. Messages with different `_instance` values are never merged.
 
   > Sidenote:
-  > - [012: Agent/Instancing](./012_agent_instancing.md)
+  > - [013: Agent/Instancing](./013_agent_instancing.md)
 
 - **:term[Loop]{canonical="Loop"}:** The agent's work cycle, or :term[Execution Loop]{canonical="Execution Loop"}, depends on :term[Data]{canonical="Data"} messages to remember what's happening from one step to the next. The :term[State Message]{canonical="State Message"} is the main way it keeps track of information over time.
 

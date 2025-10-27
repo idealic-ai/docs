@@ -8,7 +8,7 @@
 >
 > - Requires:
 >   - [301: Ideator/Storage](./301_ideator_storage.md)
->   - [011: Agent/Plan](./011_agent_plan.md)
+>   - [012: Agent/Plan](./012_agent_plan.md)
 
 ## 1. Introduction
 
@@ -25,7 +25,7 @@ The typical workflow is as follows:
 1.  An `Idea` is committed to `Storage`, completing the initial transaction.
 2.  The `Storage` service emits an event notifying subscribers of the change.
 3.  A `Watcher`, subscribed to these events, receives the notification.
-4.  The `Watcher` initiates a new, independent transaction. This usually involves invoking a [011: Agent/Plan](./011_agent_plan.md) and passing the new `Idea` as context, kicking off a new workflow.
+4.  The `Watcher` initiates a new, independent transaction. This usually involves invoking a [012: Agent/Plan](./012_agent_plan.md) and passing the new `Idea` as context, kicking off a new workflow.
 
 ## 3. Handling Asynchronicity and Long-Running Processes
 

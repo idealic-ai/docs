@@ -69,8 +69,8 @@ The system extends this basic `Message` structure by allowing the `content` fiel
 > - :term[005: Agent/Data]{href="./005_agent_data.md"} - present data and its meaning to LLM as a message
 > - :term[006: Agent/Input]{href="./006_agent_input.md"} - structured prompt for LLM to use
 > - :term[009: Agent/State]{href="./009_agent_state.md"} - persistent state retained within loop
-> - :term[011: Agent/Plan]{href="./011_agent_plan.md"} - prepared plan for multi-step execution
-> - :term[015: Agent/Meta]{href="./015_agent_meta.md"} - provides an Idea's identity to the LLM
+> - :term[012: Agent/Plan]{href="./012_agent_plan.md"} - prepared plan for multi-step execution
+> - :term[016: Agent/Meta]{href="./016_agent_meta.md"} - provides an Idea's identity to the LLM
 
 This capability makes the :term[context]{canonical="context"} the main point of extension within the system.
 

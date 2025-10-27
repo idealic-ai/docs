@@ -9,12 +9,12 @@
 >   - [002: Agent/Tool](./002_agent_tool.md)
 > - Enables:
 >   - [103: Concept/Ideator](./103_concept_ideator.md)
->   - [014: Agent/Scopes](./014_agent_scopes.md)
->   - [012: Agent/Instancing](./012_agent_instancing.md)
+>   - [015: Agent/Scopes](./015_agent_scopes.md)
+>   - [013: Agent/Instancing](./013_agent_instancing.md)
 >   - [202: Idea/Vessel](./202_idea_vessel.md)
 >   - [203: Idea/Process](./203_idea_process.md)
 > - Extended by:
->   - [013: Agent/Delegate](./013_agent_delegate.md)
+>   - [014: Agent/Delegate](./014_agent_delegate.md)
 
 The :term[Tool]{canonical="Tool"} protocol establishes the foundational schema-driven interface that enables agents to understand structured capabilities, and the **:term[Call]{canonical="Call"}** protocol builds upon :term[Tools]{canonical="Tool"} to define how execution happens.
 
@@ -65,13 +65,13 @@ By giving these meta-properties clear semantic meaning, we enable the LLM to be 
 
   > Sidenote:
   >
-  > - [013: Agent/Delegate](./013_agent_delegate.md).
+  > - [014: Agent/Delegate](./014_agent_delegate.md).
 
 - **Context Bridging (`_scopes`)**: The :term[Scopes]{canonical="Scope"} protocol controls what context is available to a :term[Call]{canonical="Call"}. Its primary use is to focus an LLM's attention during a latent execution by specifying which parts of the parent context it should consider. This prevents context bleeding and leads to more reliable outputs. When used with a `_delegate`, its role becomes even more powerful: it strictly defines the _entire_ context for the delegate's isolated execution.
 
   > Sidenote:
   >
-  > - [014: Agent/Scopes](./014_agent_scopes.md).
+  > - [015: Agent/Scopes](./015_agent_scopes.md).
 
 - **Stateful Execution (`_outputPath`)**: A :term[Call]{canonical="Call"} can be made stateful by instructing it where to write its output. The :term[Output Path]{canonical="Output Path"} property specifies a path within a persistent :term[State]{canonical="State"} where the result of the :term[Call]{canonical="Call"} should be stored. This allows for the creation of multi-step workflows where the output of one :term[Call]{canonical="Call"} can be used as the input for another.
 
@@ -83,7 +83,7 @@ By giving these meta-properties clear semantic meaning, we enable the LLM to be 
 - **Instanced Execution (`_instance`)**: A :term[Call]{canonical="Call"} can be directed to operate on a specific item within a batch process, allowing a single request to manage multiple data contexts in parallel. The `_instance` property acts as a unique identifier, focusing all operations of that :term[Call]{canonical="Call"} (like reading inputs from and writing outputs to the :term[State]{canonical="State"}) on a particular context. This enables efficient, parallel processing of multiple states with the same set of tools.
   > Sidenote:
   >
-  > - [012: Agent/Instancing](./012_agent_instancing.md).
+  > - [013: Agent/Instancing](./013_agent_instancing.md).
 
 ## From Actions to Data
 

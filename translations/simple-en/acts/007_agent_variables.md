@@ -58,7 +58,7 @@ greetUser({
 - **:term[Plan]{canonical="Plan"}:** A :term[Plan]{canonical="Plan"} is basically a flowchart of tool actions connected by variables. Each step uses a shortcut to grab the result from a previous step. This is how an agent can create a complete, ready-to-run workflow all at once.
 
   > Sidenote:
-  > - [011: Agent/Plan](./011_agent_plan.md)
+  > - [012: Agent/Plan](./012_agent_plan.md)
 
 ## From Quick Connections to Lasting Memory
 

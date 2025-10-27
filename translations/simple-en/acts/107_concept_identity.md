@@ -10,7 +10,7 @@
 > - It works together with:
 >   - :term[Sovereignty]{href="./102_concept_sovereignty.md"}
 > - It makes this possible:
->   - :term[015: Agent/Meta]{href="./015_agent_meta.md"}
+>   - :term[016: Agent/Meta]{href="./016_agent_meta.md"}
 
 In our system, **Identity** isn't a permanent name tag you stick on something. It’s a quality that shows up on its own. It's different from :term[Sovereignty]{canonical="Sovereignty" href="./102_concept_sovereignty.md"}, which is about who owns something and what its official name is. This kind of identity isn't given to just one object.
 

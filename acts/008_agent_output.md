@@ -132,43 +132,41 @@ The engine appends a new message containing the output, which includes metadata 
 
 :::::
 
-### Declarative Data Flow
-
 The power of combining :term[Variable References]{canonical="Variable Reference"} with :term[Output Paths]{canonical="Output Path"} comes from their ability to define operations on data that is not yet available. For instance, a :term[Tool Call]{canonical="Call"} can be defined to operate on a value from an :term[Input]{canonical="Input"} message, even if that specific input has not been provided. This allows for the creation of reusable, parameterized workflows.
 
 This concept extends to chaining :term[Tool Calls]{canonical="Call"} together. A :term[Tool Call]{canonical="Call"} can be created with a :term[Variable Reference]{canonical="Variable Reference"} that points to the :term[Output Path]{canonical="Output Path"} of a _previous_ call in the same sequence. This creates a multi-step data flow where the output of one tool becomes the input for the next.
 
-This declarative wiring becomes especially powerful when :term[Output Paths]{canonical="Output Path"} are used to define potential outcomes.
+## Interactions with other systems
 
-::::columns
-:::column{title="Alternative Paths (Branching)"}
-Using `||` in an :term[Output Path]{canonical="Output Path"} allows a tool to declare its possible outcomes. The tool's internal logic then determines which path to write the result to.
+- **:term[Data Message]{canonical="Data Message"}:** The `_outputPath` is the primary mechanism for creating and updating :term[Data Messages]{canonical="Data Message"} within a workflow. It transforms a stateless :term[Tool Call]{canonical="Tool Call"} into a stateful operation by persisting its result to the context, making it available for subsequent steps.
 
-```json
-// If `verifyUser` succeeds, the result is written to `data.user.verified`;
-// otherwise, it's written to `data.user.failed`.
-{
-  "_tool": "verifyUser",
-  "userId": "perfect-stranger",
-  "_outputPath": "†data.user.verified || †data.user.failed"
-}
-```
+  > Sidenote:
+  >
+  > - :term[005: Agent/Data]{href="./005_agent_data.md"}
 
-:::
-:::column{title="Concurrent Paths (Fan-out)"}
-Using `&&` in an :term[Output Path]{canonical="Output Path"} directs the engine to perform a fan-out, writing the same output to multiple paths at once.
+- **:term[State Message]{canonical="State Message"}:** While any :term[Data Message]{canonical="Data Message"} can be a target, the most common use case is writing to a :term[State Message]{canonical="State Message"}. This makes the :term[State]{canonical="State"} object the "scratchpad" for a workflow, allowing different tools to share information and build upon each other's results across multiple ticks of an :term[Execution Loop]{canonical="Execution Loop"}.
 
-```json
-// Writing to `user` and `audit` objects in the state simultaneously.
-{
-  "_tool": "generateSummary",
-  "text": "Long body of text here...",
-  "_outputPath": "†data.user.summary && †data.audit.summary"
-}
-```
+  > Sidenote:
+  >
+  > - :term[009: Agent/State]{href="./009_agent_state.md"}
 
-:::
-::::
+- **:term[Variable Reference]{canonical="Variable Reference"}:** The :term[Output Path]{canonical="Output Path"} is the direct counterpart to the :term[Variable Reference]{canonical="Variable Reference"}. The :term[Output Path]{canonical="Output Path"} writes data to the context, and the :term[Variable Reference]{canonical="Variable Reference"} reads it. Together, they form a complete, declarative circuit for data flow, connecting the output of one tool to the input of another.
+
+  > Sidenote:
+  >
+  > - :term[007: Agent/Variables]{href="./007_agent_variables.md"}
+
+- **:term[Expressions]{canonical="Expression"}:** Expressions introduce logic directly into the data flow wiring. By using `||` and `&&` in an :term[Output Path]{canonical="Output Path"}, a :term[Tool Call]{canonical="Tool Call"} can declare conditional outcomes or fan-out its result to multiple destinations. This moves the system away from rigid, hard-coded data pipelines toward a flexible structure that adapts to runtime conditions.
+
+  > Sidenote:
+  >
+  > - :term[011: Agent/Expressions]{href="./011_agent_expressions.md"}
+
+- **:term[Plan]{canonical="Plan"}:** In the context of a :term[Plan]{canonical="Plan"}, :term[Output Paths]{canonical="Output Path"} act as the "wires" that connect the different :term[Tool Calls]{canonical="Tool Call"} (the "nodes") into a complete data-flow graph. This allows an agent to define and execute an entire multi-step strategy as a single, declarative object.
+
+  > Sidenote:
+  >
+  > - :term[012: Agent/Plan]{href="./012_agent_plan.md"}
 
 ## From Ephemeral Outputs to Persistent State
 

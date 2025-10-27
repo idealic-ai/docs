@@ -8,11 +8,11 @@
 >   - [004: Agent/Call](./004_agent_call.md)
 >   - [005: Agent/Data](./005_agent_data.md)
 > - Makes These Ideas Possible:
->   - [011: Agent/Plan](./011_agent_plan.md)
+>   - [012: Agent/Plan](./012_agent_plan.md)
 > - Works Together With:
->   - [012: Agent/Instancing](./012_agent_instancing.md)
->   - [013: Agent/Delegate](./013_agent_delegate.md)
->   - [014: Agent/Scopes](./014_agent_scopes.md)
+>   - [013: Agent/Instancing](./013_agent_instancing.md)
+>   - [014: Agent/Delegate](./014_agent_delegate.md)
+>   - [015: Agent/Scopes](./015_agent_scopes.md)
 
 The **State message** is a special kind of :term[Data]{canonical="Data"} message that gives an agent a working memory during its :term[Execution Loop]{canonical="Execution Loop"}. If you think of :term[Variables]{canonical="Variable"} as the cables that connect different tools, then the :term[State]{canonical="State"} is the **whiteboard** where the agent jots down the results. It’s where information is stored and updated as the agent works through a task.
 
@@ -46,7 +46,7 @@ This map of how data will move can be checked for errors, saved for later, or ev
 > > Sidenote:
 > >
 > > - [010: Agent/Loop](./010_agent_loop.md)
-> > - [011: Agent/Plan](./011_agent_plan.md)
+> > - [012: Agent/Plan](./012_agent_plan.md)
 
 ## How It Works with Other Parts
 
@@ -63,20 +63,20 @@ This map of how data will move can be checked for errors, saved for later, or ev
 - **:term[Scopes]{canonical="Scope"}:** :term[Scopes]{canonical="Scope"} are how a tool running in an isolated space (like a :term[Delegate]{canonical="Delegate"}) can be given access to the main workflow's memory. When an agent hands off a task, the `_scopes` property can tell it to include the :term[State]{canonical="State"} in the tool's private workspace. This lets tools that are sealed off for safety still read from the main :term[State]{canonical="State"} in a controlled way.
 
   > Sidenote:
-  > - [014: Agent/Scopes](./014_agent_scopes.md)
+  > - [015: Agent/Scopes](./015_agent_scopes.md)
 
 - **:term[Instancing]{canonical="Instancing"}:** The :term[State]{canonical="State"} works perfectly with the :term[Instancing]{canonical="Instancing"} system. If a task needs to be run on many different items at once, each item gets its own separate :term[State]{canonical="State"} (its own memory). When a tool needs to get some information (e.g., `†state.currentUser.id`), the system automatically knows which item's memory to look in. This lets a single, general-purpose Plan run on many different tasks at the same time without them getting mixed up.
 
   > Sidenote:
-  > - [012: Agent/Instancing](./012_agent_instancing.md)
+  > - [013: Agent/Instancing](./013_agent_instancing.md)
 
 - **:term[Plan]{canonical="Plan"}:** While the :term[State]{canonical="State"} is useful for simple sequences of tools, it truly shines as the foundation of the :term[Plan]{canonical="Plan"} system. A :term[Plan]{canonical="Plan"} describes a workflow as a map where the :term[Tool Calls]{canonical="Call"} are the locations. The :term[State]{canonical="State"} provides the roads connecting these locations. It allows one tool to leave a result and others to pick it up, which makes complex workflows with choices (if/then) or parallel tasks possible.
 
   > Sidenote:
-  > - [011: Agent/Plan](./011_agent_plan.md)
+  > - [012: Agent/Plan](./012_agent_plan.md)
 
 ## From Single State to Orchestrated Workflows
 
 The :term[State]{canonical="State"} message gives us a way to manage the memory of a single workflow. With a whiteboard for remembering things and variables to connect tools, we can now build and run complex, multi-step projects.
 
-The next document, :term[011: Agent/Plan]{href="./011_agent_plan.md"}, explains how we can organize these workflows into a map of :term[Tool Calls]{canonical="Call"}.
+The next document, :term[012: Agent/Plan]{href="./012_agent_plan.md"}, explains how we can organize these workflows into a map of :term[Tool Calls]{canonical="Call"}.

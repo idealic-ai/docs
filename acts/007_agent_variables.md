@@ -61,7 +61,7 @@ greetUser({
 
   > Sidenote:
   >
-  > - [011: Agent/Plan](./011_agent_plan.md)
+  > - :term[012: Agent/Plan]{href="./012_agent_plan.md"}
 
 ## From Ephemeral Connections to Persistent Memory
 

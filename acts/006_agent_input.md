@@ -132,13 +132,13 @@ The :term[Input Message]{canonical="Input Message"} is a specialization of the :
 
   > Sidenote:
   >
-  > - [011: Agent/Plan](./011_agent_plan.md)
+  > - [012: Agent/Plan](./012_agent_plan.md)
 
 - **:term[Instancing]{canonical="Instancing"}:** When used with the :term[Instancing]{canonical="Instancing"} protocol, :term[Input]{canonical="Input"} messages can provide data for multi-instance requests, either as a global configuration for all instances or as a targeted input for a specific instance.
 
   > Sidenote:
   >
-  > - [012: Agent/Instancing](./012_agent_instancing.md)
+  > - [013: Agent/Instancing](./013_agent_instancing.md)
 
 - **:term[Variables]{canonical="Variable"}:** The :term[Input]{canonical="Input"} message provides the initial, static data that kicks off a process. However, :term[Variables]{canonical="Variable"} are the mechanism that allows this data to be used dynamically. :term[Tool Calls]{canonical="Call"} use :term[Variable References]{canonical="Variable Reference"} to read values from the :term[Input]{canonical="Input"}, connecting the initial parameters to the executable steps of a :term[Plan]{canonical="Plan"}.
   > Sidenote:

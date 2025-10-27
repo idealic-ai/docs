@@ -9,7 +9,7 @@
 >   - :term[010: Agent/Loop]{href="./010_agent_loop.md"}
 >   - :term[007: Agent/Variables]{href="./007_agent_variables.md"}
 >   - :term[009: Agent/State]{href="./009_agent_state.md"}
->   - :term[012: Agent/Instancing]{href="./012_agent_instancing.md"}
+>   - :term[013: Agent/Instancing]{href="./013_agent_instancing.md"}
 
 The :term[Plan]{canonical="Plan"} is the secret to how the AI works step-by-step. The agent looks at the current situation (the :term[State]{canonical="State"}) and its game plan (the :term[Plan]{canonical="Plan"}) to figure out exactly where it is and what to do next. This helps the agent be really smart and flexible. It can follow the plan, add new steps to it, or even throw the whole plan away and start over if something unexpected happens. It's like a detective who can either follow their original clues or create a new strategy when they find a surprising piece of evidence.
 
@@ -485,4 +485,4 @@ This cycle of planning and doing is the heart of a :term[Process]{href="./203_id
 
 A :term[Plan]{canonical="Plan"} creates a set of steps for one specific task. To make these plans really useful, we need a way to wrap them up into reusable recipes that can be used as steps in other, bigger :term[Plans]{canonical="Plan"}.
 
-The way to do this is explained in :term[012: Agent/Instancing]{href="./012_agent_instancing.md"}.
+The way to do this is explained in :term[013: Agent/Instancing]{href="./013_agent_instancing.md"}.

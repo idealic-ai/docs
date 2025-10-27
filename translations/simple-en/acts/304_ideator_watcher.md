@@ -7,7 +7,7 @@
 > Sidenote:
 > - This depends on:
 >   - [301: Ideator/Storage](./301_ideator_storage.md)
->   - [011: Agent/Plan](./011_agent_plan.md)
+>   - [012: Agent/Plan](./012_agent_plan.md)
 
 ## 1. Introduction
 

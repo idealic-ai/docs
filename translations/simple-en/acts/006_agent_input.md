@@ -127,12 +127,12 @@ The :term[Input Message]{canonical="Input Message"} is a special version of the 
 - **:term[Plan]{canonical="Plan"}:** A :term[Plan]{canonical="Plan"} message outlines a series of :term[Tool Calls]{canonical="Call"} to be executed in order. The :term[Input]{canonical="Input"} provides the starting information for the very first :term[Tool Call]{canonical="Call"} in the plan, kicking off the whole process.
 
   > Sidenote:
-  > - [011: Agent/Plan](./011_agent_plan.md)
+  > - [012: Agent/Plan](./012_agent_plan.md)
 
 - **:term[Instancing]{canonical="Instancing"}:** When working on many things at once (:term[Instancing]{canonical="Instancing"}), :term[Input]{canonical="Input"} messages can provide data for all of them (like a general setting) or give specific instructions to just one of them.
 
   > Sidenote:
-  > - [012: Agent/Instancing](./012_agent_instancing.md)
+  > - [013: Agent/Instancing](./013_agent_instancing.md)
 
 - **:term[Variables]{canonical="Variable"}:** The :term[Input]{canonical="Input"} message provides the starting data for a process. But :term[Variables]{canonical="Variable"} are how that data is actually used throughout the workflow. :term[Tool Calls]{canonical="Call"} use references to these :term[Variables]{canonical="Variable"} to grab the values from the :term[Input]{canonical="Input"}, connecting the initial settings to the steps in a :term[Plan]{canonical="Plan"}.
   > Sidenote:

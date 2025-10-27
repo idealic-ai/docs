@@ -9,11 +9,11 @@
 >   - [004: Agent/Call](./004_agent_call.md)
 >   - [005: Agent/Data](./005_agent_data.md)
 > - Enables:
->   - [011: Agent/Plan](./011_agent_plan.md)
+>   - :term[012: Agent/Plan]{href="./012_agent_plan.md"}
 > - Complemented by:
->   - [012: Agent/Instancing](./012_agent_instancing.md)
->   - [013: Agent/Delegate](./013_agent_delegate.md)
->   - [014: Agent/Scopes](./014_agent_scopes.md)
+>   - :term[013: Agent/Instancing]{href="./013_agent_instancing.md"}
+>   - :term[014: Agent/Delegate]{href="./014_agent_delegate.md"}
+>   - :term[015: Agent/Scopes]{href="./015_agent_scopes.md"}
 
 The **State message** is a specialized :term[Data]{canonical="Data"} message that provides persistent memory for an agent's :term[Execution Loop]{canonical="Execution Loop"}. While :term[Variables]{canonical="Variable"} provide the "wires" to connect tools, the :term[State]{canonical="State"} object provides the "scratchpad" where the results of these connections are stored and maintained across multiple steps.
 
@@ -46,7 +46,7 @@ This graph of references can be validated, reused, and even simulated, making it
 > > Sidenote:
 > >
 > > - [010: Agent/Loop](./010_agent_loop.md)
-> > - [011: Agent/Plan](./011_agent_plan.md)
+> > - :term[012: Agent/Plan]{href="./012_agent_plan.md"}
 
 ## Interactions with other systems
 
@@ -66,22 +66,22 @@ This graph of references can be validated, reused, and even simulated, making it
 
   > Sidenote:
   >
-  > - [014: Agent/Scopes](./014_agent_scopes.md)
+  > - [015: Agent/Scopes](./015_agent_scopes.md)
 
 - **:term[Instancing]{canonical="Instancing"}:** The :term[State]{canonical="State"} message is fully compatible with the :term[Instancing]{canonical="Instancing"} system. When a request processes multiple :term[Instances]{canonical="Instance"}, each one maintains its own isolated :term[State]{canonical="State"} object, identified by a unique `_instance` key. :term[Variable References]{canonical="Variable Reference"} (e.g., `†state.currentUser.id`) are automatically and transparently routed to the correct :term[State]{canonical="State"} object corresponding to the :term[Instance]{canonical="Instance"} the :term[Tool Call]{canonical="Call"} is targeting. This allows a single, generic `Plan` to be executed across many different states in parallel with guaranteed data isolation.
 
   > Sidenote:
   >
-  > - [012: Agent/Instancing](./012_agent_instancing.md)
+  > - :term[013: Agent/Instancing]{href="./013_agent_instancing.md"}
 
 - **:term[Plan]{canonical="Plan"}:** While :term[State]{canonical="State"} enables simple tool sequences, its full power is realized when used as the backbone of the :term[Plan]{canonical="Plan"} system. In a :term[Plan]{canonical="Plan"} message, a workflow is represented as a directed acyclic graph (DAG) where :term[Tool Calls]{canonical="Call"} are the nodes. The :term[State]{canonical="State"} object provides the connections—the edges—between these nodes. It allows one node to write into a variable and others to read from it, enabling complex patterns like logical forks (if-else) or parallel fan-outs.
 
   > Sidenote:
   >
-  > - [011: Agent/Plan](./011_agent_plan.md)
+  > - :term[012: Agent/Plan]{href="./012_agent_plan.md"}
 
 ## From Single State to Orchestrated Workflows
 
 The :term[State]{canonical="State"} message provides the mechanism for managing the memory of a single, coherent workflow. With a persistent scratchpad and the variables to connect tools, we can now design and execute complex, multi-step workflows.
 
-The next document, :term[011: Agent/Plan]{href="./011_agent_plan.md"}, describes the system for orchestrating these workflows as a graph of :term[Tool Calls]{canonical="Call"}.
+The next document, :term[010: Agent/Loop]{href="./010_agent_loop.md"}, describes the system for orchestrating these workflows as a graph of :term[Tool Calls]{canonical="Call"}. But first, we will introduce :term[011: Agent/Expressions]{href="./011_agent_expressions.md"}.

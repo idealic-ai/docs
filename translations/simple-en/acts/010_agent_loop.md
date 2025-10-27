@@ -72,4 +72,4 @@ This ability is very important for safety and for situations where the agent is 
 
 The :term[Execution Loop]{canonical="Execution Loop"} gives the agent a powerful way to act and react, but it's best for handling one main :term[Request]{canonical="Request"} at a time. To manage really complex projects with many steps that depend on each other, we need a better system for long-term planning.
 
-The next document, :term[011: Agent/Plan]{href="./011_agent_plan.md"}, explains the rules for creating these big-picture strategies as a map of connected :term[Tool Calls]{canonical="Call"}.
+The next document, :term[012: Agent/Plan]{href="./012_agent_plan.md"}, explains the rules for creating these big-picture strategies as a map of connected :term[Tool Calls]{canonical="Call"}.
