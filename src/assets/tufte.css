@@ -6,7 +6,7 @@
 /* Tufte CSS styles */
 html {
   font-size: 15px;
-  --left-size: calc(min(100vw, 1240px) - 300px - 50px);
+  --left-size: calc(min(100vw, 1240px - 300px) - 50px);
   --right-size: 300px;
 }
 
@@ -653,6 +653,11 @@ img {
   }
 }
 @media (min-width: 760px) {
+  h1 + [data-callout='definition'],
+  h1 + .marginnote + [data-callout='definition'] {
+    margin-left: 2rem;
+    width: calc(var(--left-size) - 4.5rem);
+  }
   .sidenote,
   .marginnote {
     position: absolute;
@@ -1005,11 +1010,6 @@ label.margin-toggle:not(.sidenote-number) {
     content: ' — ';
   }
 }
-h1 + [data-callout='definition'],
-h1 + .marginnote + [data-callout='definition'] {
-  margin-left: 2rem;
-  width: calc(var(--left-size) - 2rem);
-}
 h1 + .marginnote {
   margin-top: -3rem;
 }
@@ -1076,8 +1076,9 @@ details {
 
 @media (max-width: 760px) {
   .columns {
+    display: flex;
     flex-direction: column;
-    gap: 0;
+    gap: 2rem;
   }
 }
 
