@@ -2,24 +2,23 @@
 
 ---
 
-These documents are the official blueprints that explain exactly how our team will build everything. Think of them as the rulebook for our system. They set the standards that we promise to follow as we create new things.
+These documents are the official blueprints that explain our team's plan for building the system. They are the main guide for all the technical rules, setting the standards that we promise to follow and build on.
 
 > Sidenote:
-> [Idealic](http://idealic.ai) is a project that wants to set ideas free.
+> [Idealic](http://idealic.ai) is a project that aims to set ideas free.
 >
-> - *Why are we doing this?* [Manifesto of Co-Liberation](../manifesto/)
-> - *What are we building?* [Edict of Autonomy](../edict/)
-> - *How are we building it?* **Acts of Emergence**
+> - _Why?_ [Manifesto of Co-Liberation](../manifesto/)
+> - _What?_ [Edict of Autonomy](../edict/)
+> - _How?_ **Acts of Emergence**
 
-These 'Acts' connect our big dream to the hands-on instructions. They are the 'How' that follows the [Manifesto of Co-Liberation](../manifesto/) (The 'Why') and the [Edict of Autonomy](../edict/) (The 'What'). Reading these 'Acts' will give you the complete technical guide to how all the pieces of our system are built and work together.
+This document is the bridge connecting the big vision with the hands-on building process. It's the 'How' that complements the 'Why' ([Manifesto of Co-Liberation](../manifesto/)) and the 'What' ([Edict of Autonomy](../edict/)). Reading these Acts will give you a full technical understanding of how every part of the system is built and works together.
 
 ---
 
 ### Agent
 
 > Sidenote:
-> This section explains how the system's 'workers' (agents) think, act, and get things done.
->
+> This section is about what our digital helpers (Agents) can do and the instructions they follow to get things done.
 
 - [001: Agent/Request](./001_agent_request.md)
 - [002: Agent/Tool](./002_agent_tool.md)
@@ -31,6 +30,7 @@ These 'Acts' connect our big dream to the hands-on instructions. They are the 'H
 - [008: Agent/Output](./008_agent_output.md)
 - [009: Agent/State](./009_agent_state.md)
 - [010: Agent/Loop](./010_agent_loop.md)
+- [011: Agent/Expressions](./011_agent_expressions.md)
 - [012: Agent/Plan](./012_agent_plan.md)
 - [013: Agent/Instancing](./013_agent_instancing.md)
 - [014: Agent/Delegate](./014_agent_delegate.md)
@@ -40,8 +40,7 @@ These 'Acts' connect our big dream to the hands-on instructions. They are the 'H
 ### Concept
 
 > Sidenote:
-> This explains the big ideas and rules for how everything in our world fits together and talks to each other.
->
+> This explains the basic building blocks of information and the rules for how all the different parts of the system talk to each other.
 
 - [101: Concept/Idea](./101_concept_idea.md)
 - [102: Concept/Sovereignty](./102_concept_sovereignty.md)
@@ -57,8 +56,7 @@ These 'Acts' connect our big dream to the hands-on instructions. They are the 'H
 ### Ideas
 
 > Sidenote:
-> This describes the basic building blocks of ideas themselves.
->
+> This describes the simplest, most essential parts that make up an 'idea' in our system.
 
 - [201: Idea/Record](./201_idea_record.md)
 - [202: Idea/Vessel](./202_idea_vessel.md)
@@ -69,8 +67,7 @@ These 'Acts' connect our big dream to the hands-on instructions. They are the 'H
 ### Ideator
 
 > Sidenote:
-> This explains the core machinery and services that run in the background to keep everything working smoothly.
->
+> This explains the main support systems—like the power plants and roads of a city—that everything else is built on.
 
 - [301: Ideator/Storage](./301_ideator_storage.md)
 - [302: Ideator/Resolver](./302_ideator_resolver.md)
@@ -81,4 +78,4 @@ These 'Acts' connect our big dream to the hands-on instructions. They are the 'H
 
 [Read the full glossary](./000_glossary.md)
 
-Before you help us build, please read our special [Style Guide for Acts](./000_style_guide.md) so the AI can understand your writing.
+Before you contribute, please check out the [Style Guide for Acts](./000_style_guide.md), which helps us write in a way that AI can easily understand.

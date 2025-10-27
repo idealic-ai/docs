@@ -17,7 +17,7 @@ Expressions use `||` (OR) for conditional logic and `&&` (AND) for concurrent op
 
 ## Input Expressions (Many-to-One)
 
-When used in a :term[Tool Call]{canonical="Tool Call"}'s input parameters, expressions allow a single parameter to draw data from multiple sources. This creates a **many-to-one (M:1)** data flow, enabling flexible data aggregation patterns like fallbacks and merges.
+When used in a :term[Tool Call]{canonical="Tool Call"}'s input parameters, expressions allow a single parameter to draw data from multiple sources. This creates a **many-to-one (`M:1`)** data flow, enabling flexible data aggregation patterns like fallbacks and merges.
 
 > Sidenote:
 >
@@ -60,7 +60,7 @@ When used in a :term[Variable Reference]{canonical="Variable Reference"}, `&&` a
 
 ## Output Expressions (One-to-Many)
 
-When used in an :term[Output Path]{canonical="Output Path"}, expressions allow a single tool's result to be written to multiple destinations. This creates a **one-to-many (1:M)** data flow, enabling patterns like conditional branching and fan-out.
+When used in an :term[Output Path]{canonical="Output Path"}, expressions allow a single tool's result to be written to multiple destinations. This creates a **one-to-many (`1:M`)** data flow, enabling patterns like conditional branching and fan-out.
 
 > Sidenote:
 >

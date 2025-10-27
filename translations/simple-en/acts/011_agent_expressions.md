@@ -4,6 +4,7 @@
 > An Expression is a special instruction that lets you combine different data paths. Think of it as a way to create choices or make things happen at the same time.
 
 > Sidenote:
+>
 > - You should know about:
 >   - :term[007: Agent/Variables]{href="./007_agent_variables.md"}
 >   - :term[008: Agent/Output]{href="./008_agent_output.md"}
@@ -13,6 +14,7 @@
 Imagine you're building a robot. :term[Variable References]{canonical="Variable Reference"} and :term[Output Paths]{canonical="Output Path"} are like the basic wires that carry electricity and information. **Expressions** are like adding switches and splitters to those wires. They let your robot make simple decisions, like choosing which path to take or waiting for multiple signals before it acts.
 
 Expressions use two simple symbols:
+
 - `||` means **OR**. It's for making a choice between two options.
 - `&&` means **AND**. It's for doing several things at once or waiting for multiple things to be ready.
 
@@ -20,9 +22,10 @@ You can use these in two main ways: when a tool is gathering its ingredients (in
 
 ## Input Expressions (Getting Information from Many Places)
 
-When a tool needs information to do its job, an expression lets it look in more than one place. This creates a **many-to-one** flow, like several small streams flowing into a single river.
+When a tool needs information to do its job, an expression lets it look in more than one place. This creates a **many-to-one (`M:1`)** flow, like several small streams flowing into a single river.
 
 > Sidenote:
+>
 > ```mermaid
 > graph TD
 >     SourceA["†state.userInput"] --> ToolInput["processData(data)"]
@@ -48,7 +51,7 @@ When you use `||` to get an input, it acts as a backup. The instruction `†stat
 :::
 :::column{title="Waiting for Everything with &&"}
 
-When you use `&&` to get an input, it's like a gate that only opens when everyone has arrived. It checks to make sure all the data you listed is actually there. If everything is ready, it uses the value from the *last* item on the list. This ensures a tool doesn't start its job until it has all the information it needs.
+When you use `&&` to get an input, it's like a gate that only opens when everyone has arrived. It checks to make sure all the data you listed is actually there. If everything is ready, it uses the value from the _last_ item on the list. This ensures a tool doesn't start its job until it has all the information it needs.
 
 ```json
 // This tool won't start until we have both the user's profile and their permissions.
@@ -64,9 +67,10 @@ When you use `&&` to get an input, it's like a gate that only opens when everyon
 
 ## Output Expressions (Sending Information to Many Places)
 
-When a tool finishes its job, an expression lets it send the result to more than one destination. This creates a **one-to-many** flow, like a water sprinkler sending water from one hose to many different spots on the lawn.
+When a tool finishes its job, an expression lets it send the result to more than one destination. This creates a **one-to-many (`1:M`)** flow, like a water sprinkler sending water from one hose to many different spots on the lawn.
 
 > Sidenote:
+>
 > ```mermaid
 > graph TD
 >     ToolOutput["verifyUser()"] --> DestA["†data.user.verified"]
