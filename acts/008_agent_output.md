@@ -168,6 +168,12 @@ This concept extends to chaining :term[Tool Calls]{canonical="Call"} together. A
   >
   > - :term[012: Agent/Plan]{href="./012_agent_plan.md"}
 
+- **:term[Instancing]{canonical="Instancing"}:** When a :term[Tool Call]{canonical="Tool Call"} includes an `_instance` property, any `_outputPath` it specifies is automatically scoped to that specific instance's data context. This ensures data isolation in parallel processing, guaranteeing that the output of a tool operating on one instance will not interfere with the state of another.
+
+  > Sidenote:
+  >
+  > - :term[013: Agent/Instancing]{href="./013_agent_instancing.md"}
+
 ## From Ephemeral Outputs to Persistent State
 
 The :term[Output Path]{canonical="Output Path"} mechanism provides a robust way to manage the flow of data between individual :term[Tool Calls]{canonical="Tool Call"}, and it can target any :term[Data Message]{canonical="Data Message"}. However, to build complex, multi-step agents that can reason and adapt over time, a specialized form of memory is required—a message type specifically designed to persist information across multiple, independent requests.

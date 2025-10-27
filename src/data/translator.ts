@@ -164,6 +164,8 @@ Now, translate and simplify the content of the following JSON object, returning 
     ]
   );
 
+  console.log(response);
+
   if (response) {
     return response[0] as Record<string, string>;
   }
