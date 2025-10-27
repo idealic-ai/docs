@@ -78,7 +78,7 @@ Using `||` in an :term[Output Path]{canonical="Output Path"} allows a tool to de
 
 ```json
 // If `verifyUser` succeeds, the result is written to `data.user.verified`;
-// otherwise, it's written to `data.user.failed`.
+// otherwise, it's written to `data.user.failed`
 {
   "_tool": "verifyUser",
   "userId": "perfect-stranger",

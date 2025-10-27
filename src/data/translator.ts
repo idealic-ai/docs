@@ -148,7 +148,7 @@ Now, translate and simplify the content of the following JSON object, returning 
       provider: 'vertexai',
       model: 'gemini-2.5-pro',
       maxTokens: 128000,
-      thinkingBudget: 1024,
+      thinkingBudget: 4096,
       apiKey: process.env.VERTEXAI_API_KEY,
     },
     schema,

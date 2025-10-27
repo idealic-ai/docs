@@ -128,7 +128,7 @@ The engine appends a new message containing the output, which includes metadata 
 **4. Variable Resolution**
 
 - To resolve `†data.user.status`, the engine checks the last message first. It finds `user.status` and returns `"inactive"`.
-- To resolve `†data.user.name`, the engine checks the last message, doesn't find `user.name`, then checks the previous message. It finds it there and returns `"Alex"`.
+- To resolve `†data.user.name`, the engine checks the last message, doesn't find `user.name`, then checks the previous message. It finds it there and returns `"Alex"`
 
 :::::
 
