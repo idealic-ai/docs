@@ -9,7 +9,8 @@
     "build": "vike build",
     "preview": "vike preview",
     "deploy": "npm run build && touch dist/.nojekyll && node scripts/push-to-docs-repo.js",
-    "translate": "vite-node scripts/translate.ts"
+    "translate": "vite-node scripts/translate.ts",
+    "sync:links": "vite-node scripts/sync-links.ts"
   },
   "dependencies": {
     "@primer/octicons": "^19.19.0",
