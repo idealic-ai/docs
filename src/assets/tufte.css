@@ -292,9 +292,6 @@ html.dark-scheme {
     background-color: #151515;
     color: #ddd;
   }
-  .callout {
-    mix-blend-mode: lighten;
-  }
 }
 
 .dark-scheme {
@@ -307,6 +304,12 @@ html.dark-scheme {
   strong > code,
   em > code {
     background: rgba(78, 49, 0, 0.3);
+    color: rgba(218, 182, 120, 0.8);
+  }
+  .term,
+  a.term,
+  a.term:link,
+  a.term:visited {
     color: rgba(218, 182, 120, 0.8);
   }
 
@@ -603,6 +606,9 @@ img {
     position: absolute;
     left: calc(100% - 1.25rem);
     background-color: rgba(0, 0, 0, 0.35);
+    .dark-scheme & {
+      background-color: rgba(255, 255, 255, 0.35);
+    }
     color: #fff;
     padding: 1rem 1rem 1rem 1.25rem;
     border-radius: 8px 0 0 8px;
@@ -645,6 +651,13 @@ img {
         opacity: 0;
       }
       box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.5);
+      .dark-scheme & {
+        box-shadow: 0 0 30px 0 rgba(255, 255, 255, 0.5);
+        background-color: rgba(0, 0, 0, 1);
+      }
+    }
+    .dark-scheme &:focus {
+      background-color: rgba(0, 0, 0, 1);
     }
     > ul,
     > ol {
@@ -970,6 +983,7 @@ label.margin-toggle:not(.sidenote-number) {
 .callout {
   max-width: var(--left-size);
   width: auto;
+  mix-blend-mode: normal;
 }
 
 .callout-title-icon {
