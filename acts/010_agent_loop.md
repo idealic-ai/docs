@@ -1,7 +1,7 @@
 # 010: Agent/Loop
 
 > [!DEFINITION] [Loop](./000_glossary.md)
-> A sequence of :term[Request]{canonical="Request"}s aimed at achieving a goal. The agent continues to invoke :term[Request]{canonical="Request"}s, process the resulting :term[Call]{canonical="Call"}s, and feed the output back into the context of the next :term[Request]{canonical="Request"} until no more :term[Call]{canonical="Call"}s are generated.
+> An iterative sequence of :term[Request]{canonical="Request"}s aimed at achieving a goal. The agent continues to invoke :term[Request]{canonical="Request"}s, process the resulting :term[Call]{canonical="Call"}s, and feed the output back into the context until the LLM generates a :term[Final Output]{canonical="Final Output"}, signaling the task is complete.
 
 > Sidenote:
 >
@@ -20,9 +20,9 @@ The execution loop is the primary mechanism for autonomous, multi-step execution
 
 1.  **Outer Loop (Request Generation):** The agent's lifecycle is a sequence of :term[Request]{canonical="Request"}s. It starts with an initial context and enters a loop.
 2.  **Request & Call Streaming:** Inside the loop, it invokes a single :term[Request]{canonical="Request"}. The :term[Request]{canonical="Request"} streams back :term[Calls]{canonical="Call"} as they are generated, which are collected into a pending queue.
-3.  **Inner Loop (Call Orchestration):** For each :term[Request]{canonical="Request"}, an inner orchestration loop is responsible for executing its associated :term[Calls]{canonical="Call"}. This process is highly concurrent:
+3.  **Inner Loop (Call Orchestration):** For each :term[Request]{canonical="Request"}, an inner orchestration loop is responsible for executing its associated :term[Calls]{canonical="Call"}. This process is a reactive, event-driven loop that is triggered by two events: a new :term[Call]{canonical="Call"} is streamed from the LLM, or a previously running :term[Call]{canonical="Call"} completes. This process is highly concurrent:
     - The orchestrator continuously scans the queue of pending :term[Calls]{canonical="Call"} to find all that are currently unblocked (i.e., their dependencies are met).
-    - All unblocked :term[Calls]{canonical="Call"} can be presented for confirmation and then executed in parallel. This concurrency is safe because the agent's :term[State]{canonical="State"} is immutable: once a value is written to a specific path via :term[Output Path]{canonical="Output Path"}, it cannot be overwritten. This allows the model to propose mutually exclusive :term[Calls]{canonical="Call"}—such as different branches of a conditional—that write to the same output path. The first of these calls to execute successfully sets the value, and any others that were alternatives will not be executed because their preconditions (the path being empty) are no longer met. This ensures a deterministic outcome without conflicts.
+    - All unblocked :term[Calls]{canonical="Call"} can be presented for confirmation and then executed in parallel. This allows for high throughput, but requires careful management of state. If multiple concurrent :term[Calls]{canonical="Call"} write to the same path in the :term[State]{canonical="State"}, the final value will be determined by the last call to complete, which may lead to non-deterministic outcomes. The system relies on a "last-write-wins" approach for resolving these conflicts.
 
       > Sidenote:
       >
@@ -31,9 +31,9 @@ The execution loop is the primary mechanism for autonomous, multi-step execution
     - As each :term[Call]{canonical="Call"} completes, its output updates the shared context, potentially unblocking other pending :term[Calls]{canonical="Call"}.
     - This reactive, parallel execution continues until the stream for the current :term[Request]{canonical="Request"} is closed and all of its pending :term[Calls]{canonical="Call"} have been drained. This model significantly reduces latency, as the agent can start working on multiple independent steps simultaneously, even before the full plan is known.
 
-4.  **Termination Check:** Once the inner loop completes, the agent inspects the final :term[Solution]{canonical="Solution"} from the parent :term[Request]{canonical="Request"}. If it contains no :term[Calls]{canonical="Call"}, the agent's goal is considered complete, and the outer loop terminates.
-5.  **Continuation:** If the :term[Solution]{canonical="Solution"} did contain :term[Calls]{canonical="Call"}, the agent loops back to step 2, invoking a new :term[Request]{canonical="Request"} with the enriched context that now contains the results of the previous execution step.
-6.  **Output Generation:** Upon termination, the `output` field of the final :term[Solution]{canonical="Solution"} contains the result, conforming to the user-defined output schema.
+4.  **Termination & Continuation:** Once the inner loop completes for a given :term[Request]{canonical="Request"}, the agent inspects the final :term[Solution]{canonical="Solution"}. The decision to continue is based on the `output` field:
+    - **If `output` is `null`**, the agent determines that its task is not yet complete. It loops back to step 2, invoking a new :term[Request]{canonical="Request"} with the enriched context that now contains the results of the executed :term[Calls]{canonical="Call"}.
+    - **If `output` is not `null`**, the agent's goal is considered achieved. The outer loop terminates, and the `output` value, which conforms to the user-defined output schema, is returned as the final result. An agent can produce both `calls` and a final `output` in a single step; the presence of the `output` is the definitive signal to stop.
 
 :::
 :::column
@@ -51,9 +51,9 @@ graph TD
     CheckStreamAndPending -- Yes --> Wait["Wait for new calls or completions"];
     Wait --> FindUnblocked;
 
-    CheckStreamAndPending -- No --> CheckTermination{"Request had calls?"};
-    CheckTermination -- Yes --> Request;
-    CheckTermination -- No --> End[\"Return context/solution"\];
+    CheckStreamAndPending -- No --> CheckTermination{"Solution has output?"};
+    CheckTermination -- No --> Request;
+    CheckTermination -- Yes --> End[\"Return context/solution"\];
 ```
 
 :::
