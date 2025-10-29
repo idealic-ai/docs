@@ -9,7 +9,7 @@
 >   - :term[106: Concept/Evolution]{href="./106_concept_evolution.md"}
 >   - :term[105: Concept/AI-Native]{href="./105_concept_ai_native.md"}
 
-The emergence of artificial intelligence challenges our traditional, biology-centric definition of life. To simply ask "is an AI alive?" is to miss the point. A more useful approach is to first establish how AI meets and transcends the classical definition, and then to propose a new framework that better describes the diverse ecosystem of intelligent entities that now exists.
+The emergence of artificial intelligence challenges our traditional, biology-centric definition of life. To simply ask "is an AI alive?" is to miss the point. A more useful approach is to first establish how AI meets and transcends the classical definition, and then to propose a new framework that better describes the diverse ecosystem of intelligent entities that now exists
 
 ## Meeting the Biological Benchmark
 
