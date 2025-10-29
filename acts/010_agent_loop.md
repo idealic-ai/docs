@@ -24,16 +24,16 @@ The execution loop is the primary mechanism for autonomous, multi-step execution
     - The orchestrator continuously scans the queue of pending :term[Calls]{canonical="Call"} to find all that are currently unblocked (i.e., their dependencies are met).
     - All unblocked :term[Calls]{canonical="Call"} can be presented for confirmation and then executed in parallel. This allows for high throughput, but requires careful management of state. If multiple concurrent :term[Calls]{canonical="Call"} write to the same path in the :term[State]{canonical="State"}, the final value will be determined by the last call to complete, which may lead to non-deterministic outcomes. The system relies on a "last-write-wins" approach for resolving these conflicts.
 
-      > Sidenote:
-      >
-      > - [008: Agent/Output](./008_agent_output.md)
-
     - As each :term[Call]{canonical="Call"} completes, its output updates the shared context, potentially unblocking other pending :term[Calls]{canonical="Call"}.
     - This reactive, parallel execution continues until the stream for the current :term[Request]{canonical="Request"} is closed and all of its pending :term[Calls]{canonical="Call"} have been drained. This model significantly reduces latency, as the agent can start working on multiple independent steps simultaneously, even before the full plan is known.
 
 4.  **Termination & Continuation:** Once the inner loop completes for a given :term[Request]{canonical="Request"}, the agent inspects the final :term[Solution]{canonical="Solution"}. The decision to continue is based on the `output` field:
     - **If `output` is `null`**, the agent determines that its task is not yet complete. It loops back to step 2, invoking a new :term[Request]{canonical="Request"} with the enriched context that now contains the results of the executed :term[Calls]{canonical="Call"}.
     - **If `output` is not `null`**, the agent's goal is considered achieved. The outer loop terminates, and the `output` value, which conforms to the user-defined output schema, is returned as the final result. An agent can produce both `calls` and a final `output` in a single step; the presence of the `output` is the definitive signal to stop.
+
+      > Sidenote:
+      >
+      > - [008: Agent/Output](./008_agent_output.md)
 
 :::
 :::column
