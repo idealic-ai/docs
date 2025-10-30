@@ -26,6 +26,8 @@ An :term[Activity]{canonical="Activity"} is registered with a unique name, which
 - **`tool`**: The schema definition of the :term[Tool]{canonical="Tool"} being executed. This allows the activity to inspect its own interface, such as the expected `_output` schema.
 - **`context`**: An array of messages selectively imported from the parent environment. This is not the full context of the parent, but a limited view controlled by the :term[Scopes]{canonical="Scope"} protocol, making contextual information an explicit, opt-in feature.
 
+An `Activity`'s return value is flexible. If it returns a `Message` object (such as a `Data Message`), the :term[Execution Loop]{canonical="Execution Loop"} will append it to the context directly. This gives the `Activity` full control over its output, allowing it to construct the precise message needed for the workflow. If any other value is returned (e.g., a raw object or string), the loop will automatically wrap it in a `Data Message`, using the `_outputPath` from the original call to determine where to write the result.
+
 ::::columns
 :::column{title="Activity Implementation"}
 
@@ -106,6 +108,8 @@ An :term[Activity]{canonical="Activity"} does not execute in isolation. It relie
   > Sidenote:
   >
   > - :term[015: Agent/Scopes]{href="./015_agent_scopes.md"}
+
+- **Resolving Branching Paths:** The ability for an `Activity` to return a full `Message` is the key to proactive error handling and other complex branching logic. The `_outputPath` on a `call` now serves as a contract or guide. When an `Activity` receives a call with a branching expression like `_outputPath: '†state.success || †state.error'`, its internal logic can determine the outcome and then construct and return the correct `Data Message` to write the result to the chosen path (e.g., a message containing `{ data: { success: { ... } } }`). This gives deterministic code full control over directing the flow of the plan.
 
 ## Why Separate Activities Matter
 

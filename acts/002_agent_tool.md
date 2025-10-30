@@ -112,9 +112,14 @@ This composition gives the LLM a choice in how it responds. Based on the prompt,
 - **Generate `meta` and `output` only:** If the prompt can be answered directly without any tools, the LLM will provide the final result in the `output` field, update the `meta`, and leave `calls` empty.
 - **Generate all:** In some cases, the LLM might perform an action and produce the final output in a single step, updating `meta` accordingly.
 
-This mechanism allows a single, flexible interface to handle simple, one-shot answers as well as complex, multi-tool tasks. The developer provides the `Tool` schemas and an output schema separately, and the system combines them into a structure that the LLM can use to decide on the best course of action.
+To reduce ambiguity and prevent common LLM hallucinations, the system intelligently modifies a tool's schema based on its execution mode.
 
-The example below illustrates how a `Tool` schema and an output schema are composed.
+- If a :term[Tool]{canonical="Tool"} is **latent** (no corresponding :term[Activity]{canonical="Activity"}), its `_output` schema is included as-is, as the LLM is responsible for generating the result.
+- If a :term[Tool]{canonical="Tool"} is **explicit** (backed by an :term[Activity]{canonical="Activity"}), its `_output` property is **dynamically removed** from the schema before it is sent to the LLM. This provides a clear and unambiguous contract: the LLM's only job is to provide the correct inputs for the tool. Information about the tool's return value should be included in its `description` to guide the LLM's planning without giving it a field to incorrectly fill.
+
+This mechanism allows a single, flexible interface to handle simple, one-shot answers as well as complex, multi-tool tasks. The developer provides the :term[Tool]{canonical="Tool"} schemas and an output schema separately, and the system combines them into a structure that the LLM can use to decide on the best course of action.
+
+The example below illustrates how a :term[Tool]{canonical="Tool"} schema and an output schema are composed.
 
 ::::columns
 :::column{title="Agent Configuration"}

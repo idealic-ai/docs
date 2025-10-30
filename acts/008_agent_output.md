@@ -25,6 +25,7 @@ This new message is a standard :term[Data Message]{canonical="Data Message"}, bu
 
 - **`_call`**: The original :term[Tool Call]{canonical="Tool Call"} that generated this output.
 - **`_date`**: An ISO timestamp of when the output was written.
+- **`_outputMethod`**: The method specified in the original call, which defines how this data should be combined with other data.
 
 This provides a complete, auditable trail of how the context was mutated, which is invaluable for debugging and tracing an agent's reasoning.
 
@@ -66,11 +67,16 @@ This approach enforces a strict, predictable behavior, ensuring the tool always 
 :::
 ::::
 
-### Last-Write-Wins Resolution
+### Dynamic Variable Resolution
 
-Crucially, these output messages are **appended**, not merged. This design decision simplifies the system and aligns with the natural flow of a process where newer information supersedes older information.
+Crucially, these output messages are **appended**, not merged at write time. This design allows the final state of any variable to be constructed dynamically at read time, based on the `_outputMethod` stored in each message.
 
-When a :term[Variable Reference]{canonical="Variable Reference" href="./007_agent_variables.md"} like `†data.user.name` needs to be resolved, the engine searches the context messages in **reverse chronological order**. It inspects each message from the newest to the oldest, and the first one that contains the requested path (`user.name`) provides the value. This "last-write-wins" strategy ensures that the most recent value is always used, without complex merging logic.
+When a :term[Variable Reference]{canonical="Variable Reference" href="./007_agent_variables.md"} like `†data.user.name` needs to be resolved, the engine searches the context messages in **reverse chronological order** (newest to oldest).
+
+- If the resolver finds a message for the target path with an `_outputMethod` of **`set`** (or no method, as `set` is the default), it stops immediately. That message's value is the final value, and all older messages for that path are ignored. This is the "last-write-wins" behavior.
+- If the resolver finds messages with methods like **`merge`**, **`push`**, or **`concat`**, it continues searching backward, collecting all such messages until it either reaches a `set` message or the beginning of the context. It then reconstructs the final value by applying these collected operations in chronological order (oldest to newest).
+
+This dynamic resolution ensures that the state is always consistent and accurately reflects the history of operations, enabling complex and reliable state manipulations.
 
 :::::details{title="Example: Appending and Resolving"}
 

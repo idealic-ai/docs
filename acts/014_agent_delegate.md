@@ -12,6 +12,18 @@
 
 The **Delegation** pattern addresses the critical challenge of scaling and composing agent capabilities. It provides a powerful mechanism for executing :term[Tools]{canonical="Tool"} in sandboxed contexts, preventing context bleeding and enabling true reusability. By delegating a :term[Call]{canonical="Call"} to an external delegate—either another :term[Request]{canonical="Request"} definition or an :term[Activity]{canonical="Activity"} in a sub-request—the system can build complex agentic behaviors from self-contained, independently developed components.
 
+## Implementation as an Activity
+
+Conceptually, delegation is not a new or separate protocol, but a powerful application of the existing :term[Activity]{canonical="Activity"} system. The execution of a delegate is handled by a special, generic "catch-all" :term[Activity]{canonical="Activity"} that is registered by the system to handle any :term[Call]{canonical="Call"} containing the `_delegate` property.
+
+This `Delegate Activity` receives the standard three arguments:
+
+- **`call`**: The full call object, including the parameters intended for the sub-request.
+- **`tool`**: The tool schema, from which the activity reads the `_delegate` property to know _what_ to invoke.
+- **`context`**: The array of messages scoped from the parent, which will be forwarded to the sub-request.
+
+The activity's logic is simple: it uses these three arguments to assemble and issue a new, isolated :term[Request]{canonical="Request"}. This elegant implementation demonstrates the power of the core protocols: by making the `Activity` signature so robust, even complex patterns like delegation can be built on top of it as a standard implementation rather than requiring a new set of rules.
+
 ## The Problem: Monolithic Tools and Context Bleeding
 
 As agent capabilities grow, defining all :term[Tools]{canonical="Tool"} within a single, monolithic context becomes untenable.
