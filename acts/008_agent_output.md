@@ -136,6 +136,26 @@ The power of combining :term[Variable References]{canonical="Variable Reference"
 
 This concept extends to chaining :term[Tool Calls]{canonical="Call"} together. A :term[Tool Call]{canonical="Call"} can be created with a :term[Variable Reference]{canonical="Variable Reference"} that points to the :term[Output Path]{canonical="Output Path"} of a _previous_ call in the same sequence. This creates a multi-step data flow where the output of one tool becomes the input for the next.
 
+## Calls Without an Output Path
+
+Not every :term[Tool Call]{canonical="Call"} needs to persist its result. The omission of the `_outputPath` property is a deliberate choice that signals different behaviors for latent and explicit calls.
+
+### Ephemeral Reasoning for Latent Calls
+
+For a latent call, omitting the `_outputPath` allows it to function as an ephemeral reasoning step—a "thought" that informs subsequent actions within the same turn but is not saved to the persistent :term[State]{canonical="State"}. This is a powerful technique for structuring an LLM's reasoning process.
+
+For example, an agent can be designed to first use a latent `think` tool to analyze a problem and outline a strategy. This "thought" is not saved, but its generation immediately enriches the LLM's own internal context. In the very next step of the same `solution`, the LLM can then generate concrete, explicit :term[Tool Calls]{canonical="Call"} that are more effective and better-aligned because of the preceding, un-persisted reasoning step.
+
+### Fire-and-Forget for Explicit Calls
+
+For an explicit call to an :term[Activity]{canonical="Activity"}, omitting the `_outputPath` signals a "fire-and-forget" operation. The :term[Execution Loop]{canonical="Execution Loop"} will invoke the :term[Activity]{canonical="Activity"}, but it will not wait for a result or store one in the context.
+
+This is useful for side effects where a return value is not needed for the current workflow to proceed. Common examples include:
+
+- Logging an event to an external analytics service.
+- Sending a notification to a user or another system.
+- Triggering a long-running background process without needing to block the current plan.
+
 ## Interactions with other systems
 
 - **:term[Data Message]{canonical="Data Message"}:** The `_outputPath` is the primary mechanism for creating and updating :term[Data Messages]{canonical="Data Message"} within a workflow. It transforms a stateless :term[Tool Call]{canonical="Tool Call"} into a stateful operation by persisting its result to the context, making it available for subsequent steps.
