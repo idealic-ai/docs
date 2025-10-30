@@ -4,6 +4,7 @@
 > Think of it like giving a special nametag to a group of messages. This lets you create separate work zones, called :term[Instances]{canonical="Instance"}, inside a single request. It’s like running many different conversations at the same time in one chat window, without them getting mixed up.
 
 > Sidenote:
+>
 > - Needs: :term[009: Agent/State]{href="./009_agent_state.md"}
 > - Works with:
 >   - :term[006: Agent/Input]{href="./006_agent_input.md"}
@@ -34,16 +35,19 @@ The real power of Instancing comes from how the `_instance` sticker changes the 
 - **:term[State]{canonical="State"}:** The :term[State]{canonical="State"} message is the heart of the system. Each :term[Instance]{canonical="Instance"} is its own :term[State]{canonical="State"}, with its own unique `_instance` ID. Think of it as a separate workbench for each project, so tools and materials don't get mixed up.
 
   > Sidenote:
+  >
   > - :term[009: Agent/State]{href="./009_agent_state.md"}
 
-- **:term[Input]{canonical="Input"}:** An :term[Input]{canonical="Input"} message, or instruction, can be used in two ways. A shared :term[Input]{canonical="Input"} (with no `_instance` sticker) gives the same instructions to *all* jobs. A targeted :term[Input]{canonical="Input"} (with an `_instance` sticker) gives a special instruction to just *one* specific job, overriding the shared instructions.
+- **:term[Input]{canonical="Input"}:** An :term[Input]{canonical="Input"} message, or instruction, can be used in two ways. A shared :term[Input]{canonical="Input"} (with no `_instance` sticker) gives the same instructions to _all_ jobs. A targeted :term[Input]{canonical="Input"} (with an `_instance` sticker) gives a special instruction to just _one_ specific job, overriding the shared instructions.
 
   > Sidenote:
+  >
   > - :term[006: Agent/Input]{href="./006_agent_input.md"}
 
 - **:term[Scopes]{canonical="Scope"}:** The `_instance` sticker is very important for keeping work private. It acts like a wall around each workbench. When a command (:term[Call]{canonical="Call"}) is sent to a specific instance, its tools and information (`_scopes`) are also locked to that instance. This ensures that a helper agent (:term[Delegate]{canonical="Delegate"}) only sees the information relevant to its task, even if it's one of many helpers working on a big project.
 
   > Sidenote:
+  >
   > - :term[015: Agent/Scopes]{href="./015_agent_scopes.md"}
 
 :::details{title="Example: Checking Many Comments at Once"}
@@ -173,14 +177,16 @@ Even though the instruction was part of a general message, the AI understood who
 
 Instancing works with other parts of the system to control how things get done.
 
-- **:term[Calls]{canonical="Call"}:** Putting an `_instance` sticker on a :term[Call]{canonical="Call"} is the main way you direct an action. It makes sure that any changes—like saving a result to an `:term[Output Path]{canonical="Output Path"}` or reading information to use as an input—happen in the correct work area (:term[Instance]{canonical="Instance"}).
+- **:term[Calls]{canonical="Call"}:** Putting an `_instance` sticker on a :term[Call]{canonical="Call"} is the main way you direct an action. It makes sure that any changes—like saving a result to an :term[Output Path]{canonical="Output Path"} or reading information to use as an input—happen in the correct work area (:term[Instance]{canonical="Instance"}).
 
   > Sidenote:
+  >
   > - [008: Agent/Output](./008_agent_output.md)
 
 - **:term[Plan]{canonical="Plan"}:** A :term[Plan]{canonical="Plan"} is like a master blueprint that isn't tied to any single instance. It can be used with many different workbenches (:term[State]{canonical="State"} messages), allowing the same set of steps to run on many separate jobs at the same time.
 
   > Sidenote:
+  >
   > - :term[012: Agent/Plan]{href="./012_agent_plan.md"}
 
 ## From a Plan to a Process

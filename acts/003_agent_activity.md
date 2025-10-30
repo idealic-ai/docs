@@ -20,7 +20,11 @@ This separation is the key to the system's flexibility. It allows :term[Tool]{ca
 
 ## Activity Registration
 
-An :term[Activity]{canonical="Activity"} is registered with a unique name, which is used to bind it to a :term[Tool]{canonical="Tool"}.
+An :term[Activity]{canonical="Activity"} is registered with a unique name, which is used to bind it to a :term[Tool]{canonical="Tool"}. The handler is an `async` function that receives three arguments:
+
+- **`call`**: The concrete :term[Call]{canonical="Call"} object. This contains all parameters for the tool, including any meta-properties (prefixed with `_`) that guide execution.
+- **`tool`**: The schema definition of the :term[Tool]{canonical="Tool"} being executed. This allows the activity to inspect its own interface, such as the expected `_output` schema.
+- **`context`**: An array of messages selectively imported from the parent environment. This is not the full context of the parent, but a limited view controlled by the :term[Scopes]{canonical="Scope"} protocol, making contextual information an explicit, opt-in feature.
 
 ::::columns
 :::column{title="Activity Implementation"}
@@ -29,7 +33,7 @@ An :term[Activity]{canonical="Activity"} is registered with a unique name, which
 // Register an Activity implementation.
 // By convention, an Activity can be bound to a Tool of the same name.
 // Types are automatically inferred from the Tool.
-Activity.register('weatherCheck', async call => {
+Activity.register('weatherCheck', async (call, tool, context) => {
   const data = await weatherAPI.get(call.location);
   return { temperature: data.temp, conditions: data.desc };
 });
@@ -84,6 +88,24 @@ This convention-based approach simplifies development:
 - **For zero-configuration, register your :term[Activity]{canonical="Activity"} under the same name as your :term[Tool]{canonical="Tool"}.**
 - :term[Tool]{canonical="Tool"}s without a corresponding :term[Activity]{canonical="Activity"} will automatically and safely default to latent execution.
 - An explicit `_activity` field in a :term[Tool]{canonical="Tool"} schema will always take precedence, allowing a single :term[Activity]{canonical="Activity"} to implement multiple :term[Tool]{canonical="Tool"} interfaces.
+
+## Interactions with Other Systems
+
+An :term[Activity]{canonical="Activity"} does not execute in isolation. It relies on other protocols to receive its parameters and contextual information in a structured and secure way.
+
+- **:term[Call]{canonical="Call"}:** The `call` argument provides the :term[Activity]{canonical="Activity"} with the complete invocation object. This is more than just a simple dictionary of parameters; it's a rich structure that can include meta-properties like `_outputPath` to direct where the result should be stored or `_instance` to target a specific item in a batch process. This allows an :term[Activity]{canonical="Activity"} to participate in complex, stateful workflows.
+
+  > Sidenote:
+  >
+  > - :term[004: Agent/Call]{href="./004_agent_call.md"}
+  > - :term[008: Agent/Output]{href="./008_agent_output.md"}
+  > - :term[013: Agent/Instancing]{href="./013_agent_instancing.md"}
+
+- **:term[Scopes]{canonical="Scope"}:** The `context` argument is populated via the :term[Scopes]{canonical="Scope"} protocol. The `_scopes` property on a :term[Call]{canonical="Call"} acts as an allow-list, specifying which messages from the parent environment (like :term[State]{canonical="State"} or :term[Input]{canonical="Input"}) should be passed to the :term[Activity]{canonical="Activity"}. This provides a controlled and explicit mechanism for an :term[Activity]{canonical="Activity"} to access the information it needs without being exposed to the entire, potentially noisy, parent context.
+
+  > Sidenote:
+  >
+  > - :term[015: Agent/Scopes]{href="./015_agent_scopes.md"}
 
 ## Why Separate Activities Matter
 

@@ -19,7 +19,7 @@ The :term[Plan]{canonical="Plan"} message is the cornerstone of iterative execut
 The connections in the graph are not created with explicit pointers, but through a simple and powerful data-flow convention using the :term[State]{canonical="State"} object.
 
 - **Nodes (:term[Tool Calls]{canonical="Tool Call"}):** Each step in the workflow is a :term[Tool Call]{canonical="Tool Call"}, representing an action to be performed.
-- **Edges (:term[State]{canonical="State"} Object):** The connections between steps are created by writing to and reading from the :term[State]{canonical="State"} object. One :term[Tool]{canonical="Tool"} writes its output to a specific path in the :term[State]{canonical="State"} using the `:term[Output Path]{canonical="Output Path"}` meta-property. A subsequent :term[Tool]{canonical="Tool"} can then use that output as an input by referencing the same path with a **:term[Variable Reference]{canonical="Variable Reference"}**.
+- **Edges (:term[State]{canonical="State"} Object):** The connections between steps are created by writing to and reading from the :term[State]{canonical="State"} object. One :term[Tool]{canonical="Tool"} writes its output to a specific path in the :term[State]{canonical="State"} using the :term[Output Path]{canonical="Output Path"} meta-property. A subsequent :term[Tool]{canonical="Tool"} can then use that output as an input by referencing the same path with a **:term[Variable Reference]{canonical="Variable Reference"}**.
 
   > Sidenote:
   >
@@ -449,7 +449,7 @@ The caller provides an `Input` and a `State` message that contains only a `schem
 :::
 :::column{title="LLM's `solution`"}
 
-The LLM uses the `State` schema as a guide to construct a valid plan, correctly wiring the `:term[Output Path]{canonical="Output Path"}` of one tool to the input of the next.
+The LLM uses the `State` schema as a guide to construct a valid plan, correctly wiring the :term[Output Path]{canonical="Output Path"} of one tool to the input of the next.
 
 ```json
 {

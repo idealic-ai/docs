@@ -4,6 +4,7 @@
 > Think of a Plan as a recipe or a game plan for an AI agent. It's a list of steps using different :term[Tools]{canonical="Tool"} that tells the agent what to do. This plan isn't set in stone; the agent can change it as it learns new things.
 
 > Sidenote:
+>
 > - You'll want to know about:
 >   - :term[004: Agent/Call]{href="./004_agent_call.md"}
 >   - :term[010: Agent/Loop]{href="./010_agent_loop.md"}
@@ -18,9 +19,10 @@ The :term[Plan]{canonical="Plan"} is the secret to how the AI works step-by-step
 The steps in the plan are connected, not by drawing lines, but by passing information between them using a shared notepad called the :term[State]{canonical="State"} object.
 
 - **Steps (:term[Tool Calls]{canonical="Tool Call"}):** Each step in the plan is an action the agent will take, like using a specific :term[Tool]{canonical="Tool"}.
-- **Connections (:term[State]{canonical="State"} Object):** The connections are made when one step writes a result onto the notepad, and the next step reads it. For example, one :term[Tool]{canonical="Tool"} might write its answer on a line called `:term[Output Path]{canonical="Output Path"}`. Another :term[Tool]{canonical="Tool"} can then use that answer by looking at the same line, using a **:term[Variable Reference]{canonical="Variable Reference"}**.
+- **Connections (:term[State]{canonical="State"} Object):** The connections are made when one step writes a result onto the notepad, and the next step reads it. For example, one :term[Tool]{canonical="Tool"} might write its answer on a line called :term[Output Path]{canonical="Output Path"}. Another :term[Tool]{canonical="Tool"} can then use that answer by looking at the same line, using a **:term[Variable Reference]{canonical="Variable Reference"}**.
 
   > Sidenote:
+  >
   > - [008: Agent/Output](./008_agent_output.md)
 
 This creates a clear order: the second step can't start until the first one has finished and written its result on the notepad.
@@ -45,6 +47,7 @@ For example, if the plan is to get a user's profile and then write a summary of 
 ```
 
 > Sidenote:
+>
 > ```mermaid
 > graph TD
 >     state_var{{"Notepad: user.profile"}}
@@ -78,14 +81,14 @@ A :term[Plan]{canonical="Plan"} is basically a flowchart showing how data moves 
 
 This flowchart structure is very useful. An agent could also be asked to create a flowchart that isn't a plan of action, but a picture of something else—like a map of a friend group, a diagram of a computer program, or the layout of a database.
 
-It's important to know the difference. Even if these diagrams look like plans, they aren't *actual* plans unless they are given to the agent as a list of instructions to carry out. This avoids mix-ups between just drawing a picture of something and creating a real to-do list for the agent.
+It's important to know the difference. Even if these diagrams look like plans, they aren't _actual_ plans unless they are given to the agent as a list of instructions to carry out. This avoids mix-ups between just drawing a picture of something and creating a real to-do list for the agent.
 
 While a :term[Plan]{canonical="Plan"} can be used for brainstorming or just “thinking out loud,” its main job in this system is to create a list of steps that the agent can actually follow. To do this, we use a special kind of flowchart called a **Directed Acyclic Graph (DAG)**, where every box in the chart is a :term[Tool Call]{canonical="Tool Call"}.
 
 A DAG has a few simple rules that make it perfect for getting things done:
 
 - **Graph:** This is the whole plan—all the steps (the boxes) and the data that connects them (the arrows).
-- **Directed:** The connections only go one way. A step that creates information has to come *before* a step that uses it.
+- **Directed:** The connections only go one way. A step that creates information has to come _before_ a step that uses it.
 - **Acyclic:** The flowchart can't have any loops that lead back to the beginning. This rule is very important because it stops the agent from getting stuck in an endless circle. The system always checks for loops before running a plan.
 
 > Sidenote:
@@ -93,7 +96,7 @@ A DAG has a few simple rules that make it perfect for getting things done:
 
 ## Separating the Planning from the Doing
 
-The best thing about this system is that it completely separates planning what to do from actually doing it. Because a :term[Plan]{canonical="Plan"} is just a set of instructions, an agent can map out the entire flowchart of steps *before* a single line of code is run.
+The best thing about this system is that it completely separates planning what to do from actually doing it. Because a :term[Plan]{canonical="Plan"} is just a set of instructions, an agent can map out the entire flowchart of steps _before_ a single line of code is run.
 
 The AI acts as the planner, putting together the list of actions for the mission. This list of instructions can then be:
 
@@ -105,7 +108,7 @@ Actually doing the steps is handled by the :term[Execution Loop]{canonical="Exec
 
 ## The Plan as a Living Strategy
 
-A :term[Plan]{canonical="Plan"} isn't just a fixed to-do list; it's a living strategy that can be updated at every turn. When an agent first comes up with a list of actions, it's just a suggestion. It only becomes a real :term[Plan]{canonical="Plan"} when it's passed into the *next* step of the loop as the official game plan.
+A :term[Plan]{canonical="Plan"} isn't just a fixed to-do list; it's a living strategy that can be updated at every turn. When an agent first comes up with a list of actions, it's just a suggestion. It only becomes a real :term[Plan]{canonical="Plan"} when it's passed into the _next_ step of the loop as the official game plan.
 
 This cycle turns a one-time idea into an ongoing mission:
 
@@ -131,22 +134,22 @@ The process starts with the customer's request. Based on this, the AI creates a 
 // Agent.Request(config, schema, context)
 {
   "schema": {
-    "type": 'object',
+    "type": "object",
     "properties": {
-      "calls": { "type": 'array' },
+      "calls": { "type": "array" },
       "output": {
-        "type": 'object',
+        "type": "object",
         "nullable": true,
         "properties": {
-          "confirmationId": { "type": 'string' },
-          "message": { "type": 'string' }
+          "confirmationId": { "type": "string" },
+          "message": { "type": "string" }
         }
       }
     }
   },
   "context": [
     {
-      "type": 'input',
+      "type": "input",
       "request": "I'd like a refund for my last order.",
       "customerId": "cust_123",
       "amount": 50.0
@@ -182,7 +185,7 @@ The process starts with the customer's request. Based on this, the AI creates a 
 
 The system runs the `checkBillingHistory` action and updates its notepad (the :term[State]{canonical="State"}). The history shows something tricky, like a previous problem with a payment. An agent without a plan might get confused and use a different tool, like `escalateToSupervisor`.
 
-However, because the `Plan` is included, the agent knows what it's supposed to do next. It combines what it *knows* (the tricky situation) with what it *should do* (the `Plan`), and understands it's still on the right path. So, it sticks to the plan.
+However, because the `Plan` is included, the agent knows what it's supposed to do next. It combines what it _knows_ (the tricky situation) with what it _should do_ (the `Plan`), and understands it's still on the right path. So, it sticks to the plan.
 
 ::::columns
 :::column{title="What the Agent Sees Next"}
