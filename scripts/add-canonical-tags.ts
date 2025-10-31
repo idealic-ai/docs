@@ -229,7 +229,7 @@ async function processFile(filePath: string, termMap: Record<string, string>) {
 
     if (canonical) {
       changed = true;
-      return `:term[${term}]{canonical="${canonical}"}`;
+      return :term[${term}]{canonical="${canonical}"};
     } else {
       console.warn(`- No canonical form found for term "${term}" in ${path.basename(filePath)}`);
       return match;

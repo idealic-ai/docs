@@ -175,7 +175,7 @@ Despite the `Input` being global, the LLM correctly interprets the natural langu
 
 Instancing integrates with higher-level protocols to manage execution flow.
 
-- **:term[Calls]{canonical="Call"}:** The `_instance` property on a :term[Call]{canonical="Call"} is the core mechanism that directs its execution. It ensures that all state manipulations—whether writing to an `:term[Output Path]{canonical="Output Path"}` or reading a value from the state to use as an input—are correctly scoped to the intended :term[Instance]{canonical="Instance"}.
+- **:term[Calls]{canonical="Call"}:** The `_instance` property on a :term[Call]{canonical="Call"} is the core mechanism that directs its execution. It ensures that all state manipulations—whether writing to an :term[Output Path]{canonical="Output Path"} or reading a value from the state to use as an input—are correctly scoped to the intended :term[Instance]{canonical="Instance"}.
 
   > Sidenote:
   >

@@ -1,47 +1,47 @@
 # 003: Agent/Activity
 
 > [!DEFINITION] [Activity](./000_glossary.md)
-> An :term[Activity]{canonical="Activity"} is a piece of real code that does a job for a :term[Tool]{canonical="Tool"}. Think of a :term[Tool]{canonical="Tool"} as a button on a remote, and an :term[Activity]{canonical="Activity"} as the wiring inside that makes the button actually change the channel. It’s used for things the AI can’t just think up, like getting real-time information from the internet or a database.
+> An Activity is the real code that does the work for a :term[Tool]{canonical="Tool"}. Think of it as a special function that can run in the background to do things the AI can't do just by thinking, like checking a live weather website or looking something up in a database.
 
 > Sidenote:
-> - To understand this page, you should first know about: :term[002: Agent/Tool]{href="./002_agent_tool.md"}
+> - You should read about :term[002: Agent/Tool]{href="./002_agent_tool.md"} first.
 
-The **Activity Protocol** is the set of rules for connecting these real code workers (:term[Tool]{canonical="Tool"}s) to the tool descriptions (:term[Tool]{canonical="Tool"}s). While a :term[Tool]{canonical="Tool"} describes *what* can be done, an :term[Activity]{canonical="Activity"} provides the code that *how* to do it.
+The **Activity Protocol** is the set of rules for how :term[Tool]{canonical="Tool"}s get their power from real, runnable code. If a :term[Tool]{canonical="Tool"} is like a button on a controller that says "Jump," the :term[Activity]{canonical="Activity"} is the actual code that makes the character jump.
 
-## The Two-List System
+## The Dual Registry Architecture
 
-The whole system uses two separate lists to keep the description of a tool separate from the code that makes it work.
+The system uses two separate lists to keep things organized. This is key to how it all works.
 
-- **:term[Tool Registry]{canonical="Tool"}**: A list that stores the blueprints for all the :term[Tool]{canonical="Tool"}s (what they do, what they need).
-- **:term[Activity Registry]{canonical="Activity"}**: A list that stores the actual code functions (:term[Activities]{canonical="Activity"}) that carry out the jobs for the :term[Tool]{canonical="Tool"}s.
+- **:term[Tool Registry]{canonical="Tool"}**: A list of all the tool descriptions (the "what"). It's like a restaurant menu that shows you all the dishes you can order.
+- **:term[Activity Registry]{canonical="Activity"}**: A list of all the code functions (:term[Activities]{canonical="Activity"}) that actually do the work (the "how"). This is like the kitchen's recipe book that tells the chef exactly how to make each dish.
 
-Separating them is what makes the system so flexible. It's like having a restaurant menu separate from the kitchen. The menu (:term[Tool Registry]{canonical="Tool"}) tells you what you can order. The kitchen (:term[Activity Registry]{canonical="Activity"}) is where the chefs (the code) actually cook your food. You can change a recipe in the kitchen without having to reprint the whole menu.
+This separation is super flexible. It lets us define a tool separately from how it works. A tool can even work by having the AI just *imagine* the result. It also means you can swap out the recipe (the :term[Activity]{canonical="Activity"})—maybe for a faster one—without having to reprint the whole menu (the :term[Tool]{canonical="Tool"}).
 
-This means :term[Tool]{canonical="Tool"}s can be used in two ways: either the AI can just pretend to know the answer, or you can plug in different real-world code to get the answer, like switching between a practice kitchen and a real one for a big event.
+## Activity Registration
 
-## Registering an Activity
+When you create an :term[Activity]{canonical="Activity"}, you give it a unique name so the system can find it and connect it to a :term[Tool]{canonical="Tool"}. The code for an Activity always gets three pieces of information to work with:
 
-You tell the system about a new :term[Activity]{canonical="Activity"} by giving it a unique name. This name is how you connect it to a :term[Tool]{canonical="Tool"}.
+- **`call`**: The specific instructions for this one job. It includes all the details the tool needs, plus some extra notes (starting with `_`) that help guide the process.
+- **`tool`**: A copy of the :term[Tool]{canonical="Tool"}'s own description. This is like giving the chef the menu description of the dish so they know what it's supposed to look like in the end.
+- **`context`**: A few key messages from the main conversation. It's not the whole conversation, just the important bits the :term[Activity]{canonical="Activity"} is allowed to see. This is a security feature to make sure the code only gets the information it's supposed to have.
+
+An `Activity`'s return value is flexible. If it returns a fully formatted `Message` object, the system will use it directly. This gives the `Activity` total control over its output. If it returns anything else (like a raw number or text), the system will automatically wrap it in a `Data Message` for it.
 
 ::::columns
-:::column{title="The Activity Code"}
-This is like writing the recipe for the chef.
+:::column{title="How an Activity is Coded"}
 
 ```typescript
-// Tell the system about an Activity (the worker code).
-// The easiest way is to give the Activity the same name as the Tool.
-// The system can then figure out the details from the Tool's blueprint.
-Activity.register('weatherCheck', async call => {
-  // Go to the real weather service and get data
+// Register an Activity implementation.
+// By convention, an Activity can be bound to a Tool of the same name.
+// Types are automatically inferred from the Tool.
+Activity.register('weatherCheck', async (call, tool, context) => {
   const data = await weatherAPI.get(call.location);
-  // Give back the result
   return { temperature: data.temp, conditions: data.desc };
 });
 ```
 
 :::
-:::column{title="The Matching Tool Blueprint"}
-This is the description on the menu.
+:::column{title="The Matching Tool's Blueprint"}
 
 ```typescript
 Tool.register('weatherCheck', {
@@ -49,9 +49,7 @@ Tool.register('weatherCheck', {
   description: 'Gets the current weather for a location.',
   properties: {
     _tool: { type: 'string', const: 'weatherCheck' },
-    // It needs to know the location
     location: { type: 'string' },
-    // And this is what the result should look like
     _output: {
       type: 'object',
       properties: {
@@ -68,41 +66,59 @@ Tool.register('weatherCheck', {
 :::
 ::::
 
-## How It Works: Thinking vs. Doing
+## Execution Modes: Thinking vs. Doing
 
-The system has two completely different ways of handling a request for a :term[Tool]{canonical="Tool"}:
+The system has two ways it can use a :term[Tool]{canonical="Tool"}'s :term[Call]{canonical="Call"}:
 
-- **Thinking It Through (Latent Execution)**: The AI uses its own brain to come up with an answer. The agent "imagines" what the output should be and gives it to you right away. This is the default if there's no real code hooked up to the :term[Tool]{canonical="Tool"}.
+- **Thinking Mode (Latent Execution)**: The AI uses its own brain to figure out the answer. It "thinks through" the problem and gives you the result right away. This is the default if it can't find any real code for the :term[Tool]{canonical="Tool"}.
   > Sidenote:
-  > - Learn more about "Thinking it Through" here: :term[104: Concept/Latent]{href="./104_concept_latent.md"}
-- **Actually Doing It (Explicit Execution)**: The request is handed off to a real piece of code. An :term[Activity]{canonical="Activity"} function is called to get a real-world result. You have to use this method for talking to the outside world (like websites or databases) or for doing math that needs to be perfectly correct every time.
+  > - :term[104: Concept/Latent]{href="./104_concept_latent.md"} (More about how AI's 'thinking' works)
+- **Action Mode (Explicit Execution)**: The AI runs real, predictable code to get the answer. An :term[Activity]{canonical="Activity"} function is called to do the work. This is necessary for things that need a guaranteed, correct answer, like talking to a website API or doing precise math.
 
-## How it Decides Which Way to Go
+## How the System Picks an Activity
 
-The system automatically figures out whether to "think" or "do" when a :term[Tool]{canonical="Tool"} is used. It looks at a special field called `_activity` in the :term[Tool]{canonical="Tool"}'s blueprint. Here's how it decides:
+The system has a simple, automatic way to decide which mode to use. It looks at a special field called `_activity` in the :term[Tool]{canonical="Tool"}'s description.
 
-1.  **Direct Instructions**: If the :term[Tool]{canonical="Tool"}'s blueprint has an `_activity` field with a name in it, the system uses that name to find the right worker code in the registry.
-2.  **Matching Names (Recommended)**: If there are no direct instructions, the system checks if there's an :term[Activity]{canonical="Activity"} in the registry with the **exact same name** as the :term[Tool]{canonical="Tool"}. If it finds one, it automatically wires them together.
-3.  **Fallback to Thinking**: If it can't find a matching :term[Activity]{canonical="Activity"} using the rules above, it sets the `_activity` field to be empty. This tells the system to just have the AI "think" up an answer instead.
+1.  **Direct Order**: If the :term[Tool]{canonical="Tool"} description has an `_activity` field with a name in it, the system looks for an :term[Activity]{canonical="Activity"} with that exact name.
+2.  **Same-Name Rule (The Easy Way)**: If there's no `_activity` field, the system looks for an :term[Activity]{canonical="Activity"} that has the **exact same name** as the :term[Tool]{canonical="Tool"}. If it finds one, it connects them automatically.
+3.  **Fallback to Thinking**: If it can't find a matching :term[Activity]{canonical="Activity"} using the rules above, it leaves the `_activity` field blank. This tells the system to use its imagination (Thinking Mode).
 
-This simple system makes building things much easier:
+This makes things easy:
 
-- **Just give your :term[Activity]{canonical="Activity"} and your :term[Tool]{canonical="Tool"} the same name, and they'll automatically connect.**
-- :term[Tool]{canonical="Tool"}s that don't have any real worker code will safely use the AI's imagination by default.
-- You can always give a direct instruction in the :term[Tool]{canonical="Tool"}'s blueprint if you want one piece of code to handle many different :term[Tool]{canonical="Tool"}s.
+- **For it to work automatically, just give your :term[Activity]{canonical="Activity"} the same name as your :term[Tool]{canonical="Tool"}.**
+- :term[Tool]{canonical="Tool"}s that are just for thinking don't need any matching code.
+- You can always override this by manually setting the `_activity` field, which lets one piece of code power many different tools.
 
-## Why This Separation is a Big Deal
+## Teamwork with Other Systems
 
-If we didn't separate the :term[Tool]{canonical="Tool"} blueprints from the :term[Activity]{canonical="Activity"} code, a tool's description would be stuck forever to how it works. To change from having the AI guess the weather to using a real weather website, you would have to find and change every single AI agent that uses that weather :term[Tool]{canonical="Tool"}.
+An :term[Activity]{canonical="Activity"} works as part of a team with other parts of the system.
 
-By keeping them in two separate lists, the :term[Tool]{canonical="Tool"} blueprints stay the same, even if you completely change the code that runs behind them. AI agents use the same simple :term[Tool]{canonical="Tool"} description, and they don't care if the answer comes from the AI's imagination or from a real-world :term[Activity]{canonical="Activity"}. This means:
+- **:term[Call]{canonical="Call"}:** The `call` it receives is more than just a list of instructions. It's a complete package that can include special notes like where to save the result (`_outputPath`) or which specific task it's for. This lets an :term[Activity]{canonical="Activity"} be a smart player in a bigger game.
 
-- **You can change the code without breaking the AI**: You can switch from the AI guessing to using real code, and the agent won't even notice.
-- **You can test different approaches**: You can easily compare how well the AI guesses an answer versus how well the real code performs.
-- **You can update things slowly**: You can give a new :term[Activity]{canonical="Activity"} to just a few agents to test it out, while everyone else keeps using the old version.
+  > Sidenote:
+  > - :term[004: Agent/Call]{href="./004_agent_call.md"}
+  > - :term[008: Agent/Output]{href="./008_agent_output.md"}
+  > - :term[013: Agent/Instancing]{href="./013_agent_instancing.md"}
 
-## From Idea to Action
+- **:term[Scopes]{canonical="Scope"}:** The `context` it receives is carefully controlled by :term[Scopes]{canonical="Scope"}. A list called `_scopes` on the :term[Call]{canonical="Call"} acts like a permission slip, saying exactly which messages from the main conversation the :term[Activity]{canonical="Activity"} is allowed to see. It's like passing a secret note with only the necessary info, instead of shouting the whole conversation across the room.
 
-By separating the "what" (the :term[Tool]{canonical="Tool"}) from the "how" (the :term[Activity]{canonical="Activity"}), the system becomes incredibly powerful and flexible. But this is just one part of the puzzle. Now that we have the blueprints (Tools) and the workers (Activities), we need a manager to tell them what to do.
+  > Sidenote:
+  > - :term[015: Agent/Scopes]{href="./015_agent_scopes.md"}
 
-The next document, :term[004: Agent/Call]{href="./004_agent_call.md"}, explains how all these requests are managed, run, and organized into a series of steps, turning ideas into real actions.
+- **Choosing a Path:** An :term[Activity]{canonical="Activity"} can be smart about where its answer goes. Sometimes the instructions might say, "Put the result in the 'success' box or the 'error' box." The :term[Activity]{canonical="Activity"}'s code can check if everything worked and then build the final `Message` that puts the result in the correct box. This gives the real code full control over the workflow.
+
+## Why Separate Activities Matter
+
+Why go to all the trouble of keeping the "what" (:term[Tool]{canonical="Tool"} blueprints) and the "how" (:term[Activity]{canonical="Activity"} code) separate? Imagine if the buttons on your game controller were permanently wired to the game's code. To change what the "Jump" button does, you'd have to rewire the whole controller.
+
+By separating them, we keep the controller's layout (:term[Tool]{canonical="Tool"}s) the same, but we can easily change what the buttons do in the background (:term[Activities]{canonical="Activity"}). This means:
+
+- **Easy Upgrades**: You can change how a tool works without breaking the agents that use it.
+- **Testing New Ideas**: You can have two versions of a tool—one where the AI thinks and one where it uses a real website—and see which one works better.
+- **Safe Rollouts**: You can give a new, improved :term[Activity]{canonical="Activity"} to some users while everyone else keeps using the old, trusted one or just lets the AI think.
+
+## From Blueprint to Action
+
+By separating what a tool does (:term[Tool]{canonical="Tool"}) from how it does it (:term[Activity]{canonical="Activity"}), the system becomes very powerful and flexible. But that's not the whole picture. Now that we have the blueprints and the code, the final piece is organizing it all: how the system calls these tools, runs them, and puts them in the right order.
+
+The next document, :term[004: Agent/Call]{href="./004_agent_call.md"}, explains how the system turns these ideas into real actions.

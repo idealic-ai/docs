@@ -70,6 +70,34 @@ It is important to note that these specific :term[HITL]{canonical="HITL (Human-i
 
 This capability is critical for safety and for collaborative tasks where the agent acts as an assistant. User adjustments and feedback can be leveraged by the :term[Plan]{canonical="Plan"}, allowing the agent to refine its strategy based on human input.
 
+## Error Handling and Self-Correction
+
+The Execution Loop is designed to be resilient, providing a reactive safety net that allows the agent to handle and recover from both its own planning mistakes and unexpected runtime failures. This is achieved by catching errors and feeding them back to the LLM as structured, contextual information.
+
+### The Error Message
+
+To facilitate this, the system uses a specialized **`Error Message`**, which is based on the `Data Message`. When an error is caught, the loop generates an `Error Message` and appends it to the context for the next iteration. Its `data` property contains two critical pieces of information:
+
+- **`call`**: The full, serialized `call` object that failed.
+- **`error`**: An object or string detailing the reason for failure.
+
+### The Self-Correction Loop
+
+The loop catches two primary types of unhandled failures:
+
+1.  **Structural Errors**: Caught _before_ execution. This includes schema validation failures on a call's parameters, mismatched types, or invalid :term[Variable References]{canonical="Variable Reference"}.
+2.  **Runtime Errors**: Caught _during_ execution. This occurs when an explicit :term[Activity]{canonical="Activity"} throws an unhandled exception (e.g., due to an API failure or internal logic error).
+
+When either error type is caught, the loop generates the `Error Message` and adds it to a temporary list. At the end of the execution tick (when no more calls are unblocked), all `Error Messages` collected during that turn are appended to the context.
+
+This provides the LLM with direct, actionable feedback. On its next turn, it sees the failed call and the specific error it produced, allowing it to debug and generate a corrected plan.
+
+> [!HEADSUP] Proactive vs. Reactive Error Handling
+>
+> The loop's ability to catch errors and report them back to the LLM is a **reactive** safety net for unplanned failures. However, the most robust workflows are designed with failure in mind from the start.
+>
+> Using the :term[Plan]{href="./012_agent_plan.md"} system with branching :term[Expressions]{href="./011_agent_expressions.md"}, you can create explicit "happy" and "unhappy" paths for your tools. An :term[Activity]{canonical="Activity"} can handle its own errors internally and, instead of throwing an exception, return a specific `Data Message` that directs the workflow down a pre-planned error-handling branch. This **proactive** approach is detailed further in the Plan chapter.
+
 ## From Simple Loops to Strategic Plans
 
 The :term[Execution Loop]{canonical="Execution Loop"} provides a dynamic structure for agent behavior, but its power is in executing tactical, single-shot :term[Requests]{canonical="Request"}. To manage complex, multi-step workflows with dependencies, a more advanced system of strategic planning is required.

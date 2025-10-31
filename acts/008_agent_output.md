@@ -25,6 +25,7 @@ This new message is a standard :term[Data Message]{canonical="Data Message"}, bu
 
 - **`_call`**: The original :term[Tool Call]{canonical="Tool Call"} that generated this output.
 - **`_date`**: An ISO timestamp of when the output was written.
+- **`_outputMethod`**: The method specified in the original call, which defines how this data should be combined with other data.
 
 This provides a complete, auditable trail of how the context was mutated, which is invaluable for debugging and tracing an agent's reasoning.
 
@@ -66,11 +67,16 @@ This approach enforces a strict, predictable behavior, ensuring the tool always 
 :::
 ::::
 
-### Last-Write-Wins Resolution
+### Dynamic Variable Resolution
 
-Crucially, these output messages are **appended**, not merged. This design decision simplifies the system and aligns with the natural flow of a process where newer information supersedes older information.
+Crucially, these output messages are **appended**, not merged at write time. This design allows the final state of any variable to be constructed dynamically at read time, based on the `_outputMethod` stored in each message.
 
-When a :term[Variable Reference]{canonical="Variable Reference" href="./007_agent_variables.md"} like `†data.user.name` needs to be resolved, the engine searches the context messages in **reverse chronological order**. It inspects each message from the newest to the oldest, and the first one that contains the requested path (`user.name`) provides the value. This "last-write-wins" strategy ensures that the most recent value is always used, without complex merging logic.
+When a :term[Variable Reference]{canonical="Variable Reference" href="./007_agent_variables.md"} like `†data.user.name` needs to be resolved, the engine searches the context messages in **reverse chronological order** (newest to oldest).
+
+- If the resolver finds a message for the target path with an `_outputMethod` of **`set`** (or no method, as `set` is the default), it stops immediately. That message's value is the final value, and all older messages for that path are ignored. This is the "last-write-wins" behavior.
+- If the resolver finds messages with methods like **`merge`**, **`push`**, or **`concat`**, it continues searching backward, collecting all such messages until it either reaches a `set` message or the beginning of the context. It then reconstructs the final value by applying these collected operations in chronological order (oldest to newest).
+
+This dynamic resolution ensures that the state is always consistent and accurately reflects the history of operations, enabling complex and reliable state manipulations.
 
 :::::details{title="Example: Appending and Resolving"}
 
@@ -135,6 +141,26 @@ The engine appends a new message containing the output, which includes metadata 
 The power of combining :term[Variable References]{canonical="Variable Reference"} with :term[Output Paths]{canonical="Output Path"} comes from their ability to define operations on data that is not yet available. For instance, a :term[Tool Call]{canonical="Call"} can be defined to operate on a value from an :term[Input]{canonical="Input"} message, even if that specific input has not been provided. This allows for the creation of reusable, parameterized workflows.
 
 This concept extends to chaining :term[Tool Calls]{canonical="Call"} together. A :term[Tool Call]{canonical="Call"} can be created with a :term[Variable Reference]{canonical="Variable Reference"} that points to the :term[Output Path]{canonical="Output Path"} of a _previous_ call in the same sequence. This creates a multi-step data flow where the output of one tool becomes the input for the next.
+
+## Calls Without an Output Path
+
+Not every :term[Tool Call]{canonical="Call"} needs to persist its result. The omission of the `_outputPath` property is a deliberate choice that signals different behaviors for latent and explicit calls.
+
+### Ephemeral Reasoning for Latent Calls
+
+For a latent call, omitting the `_outputPath` allows it to function as an ephemeral reasoning step—a "thought" that informs subsequent actions within the same turn but is not saved to the persistent :term[State]{canonical="State"}. This is a powerful technique for structuring an LLM's reasoning process.
+
+For example, an agent can be designed to first use a latent `think` tool to analyze a problem and outline a strategy. This "thought" is not saved, but its generation immediately enriches the LLM's own internal context. In the very next step of the same `solution`, the LLM can then generate concrete, explicit :term[Tool Calls]{canonical="Call"} that are more effective and better-aligned because of the preceding, un-persisted reasoning step.
+
+### Fire-and-Forget for Explicit Calls
+
+For an explicit call to an :term[Activity]{canonical="Activity"}, omitting the `_outputPath` signals a "fire-and-forget" operation. The :term[Execution Loop]{canonical="Execution Loop"} will invoke the :term[Activity]{canonical="Activity"}, but it will not wait for a result or store one in the context.
+
+This is useful for side effects where a return value is not needed for the current workflow to proceed. Common examples include:
+
+- Logging an event to an external analytics service.
+- Sending a notification to a user or another system.
+- Triggering a long-running background process without needing to block the current plan.
 
 ## Interactions with other systems
 

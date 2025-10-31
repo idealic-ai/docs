@@ -1,4 +1,4 @@
-# 011: Agent/Plan
+# 012: Agent/Plan
 
 > [!DEFINITION] [Plan](./000_glossary.md)
 > A context message carrying a data-flow graph of :term[Tool Calls]{canonical="Tool Call"} that represents an agent's strategy. It is passed between steps to enable iterative execution and adaptation.
@@ -12,14 +12,16 @@
 >   - :term[009: Agent/State]{href="./009_agent_state.md"}
 >   - :term[013: Agent/Instancing]{href="./013_agent_instancing.md"}
 
-The :term[Plan]{canonical="Plan"} message is the cornerstone of iterative execution. When the LLM receives the current :term[Plan]{canonical="Plan"} alongside the live :term[State]{canonical="State"} object, it can determine its exact position in the workflow. This situational awareness is what allows an agent to be truly adaptive. It can follow the existing plan, generate new :term[Tool Calls]{canonical="Tool Call"} to expand it, or discard it entirely and replan in response to unexpected outcomes. This creates a flexible execution model that can range from a rigid, predefined procedure to a fluid, exploratory strategy.
+The :term[Plan]{canonical="Plan"} message is the primary mechanism for enabling stateful, iterative execution. While the agent system is capable of handling simple, one-shot requests, providing a `Plan` message in the context signals a shift to a persistent workflow. Its presence instructs the :term[Execution Loop]{canonical="Execution Loop"} to retain the generated plan and the resulting :term[State]{canonical="State"} across multiple turns.
+
+This persistence is the cornerstone of building adaptive agents. When the LLM receives the current :term[Plan]{canonical="Plan"} alongside the live :term[State]{canonical="State"} object, it gains complete situational awareness of its position in the workflow. This allows it to intelligently follow the existing plan, generate new :term[Tool Calls]{canonical="Tool Call"} to expand it, or discard it entirely and replan in response to unexpected outcomes. Without a `Plan` message, a request is treated as a stateless operation, and no state or strategy is carried over to subsequent steps.
 
 ## How a Plan is Formed
 
 The connections in the graph are not created with explicit pointers, but through a simple and powerful data-flow convention using the :term[State]{canonical="State"} object.
 
 - **Nodes (:term[Tool Calls]{canonical="Tool Call"}):** Each step in the workflow is a :term[Tool Call]{canonical="Tool Call"}, representing an action to be performed.
-- **Edges (:term[State]{canonical="State"} Object):** The connections between steps are created by writing to and reading from the :term[State]{canonical="State"} object. One :term[Tool]{canonical="Tool"} writes its output to a specific path in the :term[State]{canonical="State"} using the `:term[Output Path]{canonical="Output Path"}` meta-property. A subsequent :term[Tool]{canonical="Tool"} can then use that output as an input by referencing the same path with a **:term[Variable Reference]{canonical="Variable Reference"}**.
+- **Edges (:term[State]{canonical="State"} Object):** The connections between steps are created by writing to and reading from the :term[State]{canonical="State"} object. One :term[Tool]{canonical="Tool"} writes its output to a specific path in the :term[State]{canonical="State"} using the :term[Output Path]{canonical="Output Path"} meta-property. A subsequent :term[Tool]{canonical="Tool"} can then use that output as an input by referencing the same path with a **:term[Variable Reference]{canonical="Variable Reference"}**.
 
   > Sidenote:
   >
@@ -96,15 +98,35 @@ A DAG has a few key properties that make it perfect for execution:
 >
 > To implement iterative logic like a "for loop," a pattern of nested, delegated execution is used. An outer :term[Plan]{canonical="Plan"} manages the loop's state (e.g., an iteration counter), and for each iteration, it invokes a sub-request via a :term[Delegate]{canonical="Delegate"}. This sub-request contains its own separate, acyclic :term[Plan]{canonical="Plan"} that performs the logic for a single iteration. This ensures that loops are created explicitly and safely.
 
-## Separation of Planning and Execution
+## Planning vs. Execution Strategies
 
-The most powerful feature of this architecture is the complete separation of planning from execution. Because a :term[Plan]{canonical="Plan"} is just a declarative data structure, an agent can generate the entire graph of :term[Tool Calls]{canonical="Tool Call"} _before_ any code is run.
+The most powerful feature of this architecture is the relationship between the declarative `Plan` and its execution. This is controlled by a `mode` property within the `Plan` message itself, allowing for different strategies.
 
-The LLM acts as the planner, assembling the array of :term[Calls]{canonical="Call"} that represents the intended workflow. This data structure can then be:
+The LLM always acts as the planner. The `mode` determines whether the LLM should also act as an immediate executor for latent tasks.
+
+### Eager Execution (Default)
+
+By default, the `Plan` operates in `eager` mode. In this mode, **planning is execution**. There is no round-trip between generating a plan and acting on it. When the LLM generates a `solution`, it is performing a single, continuous act of reasoning and execution for any latent steps it can resolve.
+
+- If a task requires a latent tool (e.g., summarizing text), the LLM will generate the `call` and its `_output` in the same thought process.
+- If a task requires an explicit :term[Activity]{canonical="Activity"}, the LLM generates the `call`, which is then immediately dispatched to the activity runner by the :term[Execution Loop]{canonical="Execution Loop"} orchestrator.
+
+This mode is optimized for speed and autonomy. The key trade-off, specifically in the **first iteration** of a plan, is that branching logic is resolved immediately. A tool's schema may allow for a branching `_outputPath` (e.g., `†state.sunny || †state.rainy`), but in `eager` mode, the LLM's continuous reasoning process collapses this potential into a single, concrete path within the `solution` it generates.
+
+Therefore, the `solution` in the first turn of an eager execution will never contain a latent call with an unresolved branching expression. The choice is made as part of the initial planning/execution step. This is what makes the execution linear at that point in the process. In subsequent iterations, the LLM has access to the state produced by previous steps and can make more complex branching decisions based on that existing state.
+
+### Lazy Execution (Deliberate Planning)
+
+A user can opt into a more deliberate workflow by setting the `mode` to `lazy`. This strategy enforces a strict separation of planning from execution. In this mode, the LLM is instructed to act as a pure planner.
+
+- It will **not** perform latent execution.
+- Its sole objective is to generate a complete, declarative data-flow graph of :term[Tool Calls]{canonical="Tool Call"}. If a tool's schema allows for a branching `_outputPath`, the LLM will preserve this expression in the plan, deferring the choice to the execution phase.
+
+The result is a pure data structure representing the entire strategy, which is not executed. This creates a critical checkpoint where the plan can be:
 
 - **Validated:** The system can check the graph for circular dependencies or other structural errors.
 - **Simulated:** A "dry run" can be performed to anticipate the workflow's behavior.
-- **Presented for Approval:** The :term[Plan]{canonical="Plan"} can be shown to a human for review, modification, or approval before execution, creating a critical safety and collaboration layer.
+- **Presented for Approval:** The :term[Plan]{canonical="Plan"} can be shown to a human for review, modification, or approval before execution (:term[HITL]{canonical="HITL (Human-in-the-Loop)"}).
 
 Execution is handled by the :term[Execution Loop]{canonical="Execution Loop"}, which interprets the :term[Plan]{canonical="Plan"} message and runs the :term[Tool Calls]{canonical="Tool Call"} in the correct order based on their dependencies, populating the :term[State]{canonical="State"} object as it proceeds.
 
@@ -449,7 +471,7 @@ The caller provides an `Input` and a `State` message that contains only a `schem
 :::
 :::column{title="LLM's `solution`"}
 
-The LLM uses the `State` schema as a guide to construct a valid plan, correctly wiring the `:term[Output Path]{canonical="Output Path"}` of one tool to the input of the next.
+The LLM uses the `State` schema as a guide to construct a valid plan, correctly wiring the :term[Output Path]{canonical="Output Path"} of one tool to the input of the next.
 
 ```json
 {
