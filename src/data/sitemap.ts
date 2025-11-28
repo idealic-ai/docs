@@ -28,7 +28,7 @@ export interface GlossaryEntry {
 
 export type Glossary = Record<string, GlossaryEntry>;
 
-const DOC_FOLDERS = ['manifesto', 'edict', 'acts', 'blueprint'];
+const DOC_FOLDERS = ['manifesto', 'edict', 'acts', 'blueprint', 'company'];
 
 export async function getGlossary(lang: string = 'en'): Promise<Glossary> {
   const { markdownContent } = await getMarkdownContent('acts', '000_glossary.md', lang);

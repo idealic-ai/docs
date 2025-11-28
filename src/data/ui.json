@@ -35,5 +35,10 @@
   "mainpage": {
     "title": "Idealic Knowledgebase",
     "description": "A collection of documents detailing the Manifesto of Co-Liberation, the Edict of Autonomy, and other normative acts."
+  },
+  "company": {
+    "short": "Company",
+    "long": "Company",
+    "toc_link": "Company"
   }
 }

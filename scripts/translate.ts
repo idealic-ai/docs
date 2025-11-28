@@ -35,7 +35,8 @@ async function getChangedMarkdownFiles(): Promise<string[]> {
       return filePath;
     })
     .filter(
-      filePath => filePath && filePath.endsWith('.md') && filePath.match(/acts|edict|manifesto/)
+      filePath =>
+        filePath && filePath.endsWith('.md') && filePath.match(/company|acts|edict|manifesto/)
     );
 
   return filePaths.map(p => path.resolve(process.cwd(), p));

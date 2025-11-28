@@ -3,7 +3,7 @@ import { LANGUAGES } from '../../utils/languages';
 
 export function route(pageContext: PageContext) {
   const langPattern = `/(${LANGUAGES.join('|')})`;
-  const docPattern = `/(manifesto|acts|blueprint|edict)/([^/]+)/?`;
+  const docPattern = `/(manifesto|acts|blueprint|edict|company)/([^/]+)/?`;
   const regex = new RegExp(`^${langPattern}${docPattern}$`);
   const match = pageContext.urlPathname.match(regex);
 

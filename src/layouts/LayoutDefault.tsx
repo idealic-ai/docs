@@ -186,6 +186,7 @@ export default function LayoutDefault({ children }: { children: React.ReactNode 
             const isManifesto = doc === 'manifesto' || doc === 'edict';
             const isCurrentDoc = doc === currentDoc;
             const docStrings = ui ? ui[doc as keyof UIStrings] : null;
+            if (doc === 'company') return;
             return (
               <div key={doc} className="document">
                 <strong>
