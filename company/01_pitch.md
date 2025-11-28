@@ -52,8 +52,6 @@ We provide a "Black Box" solution with "White Box" clarity. You provide the cont
 
 ### 1. The Reactor (The Scenario Engine)
 
-**The Stage.**
-
 The Reactor is our universal runtime engine. Think of it as the "Game Master" or "Conductor" of your business. It defines the stage, the rules, and the state of the world, but it is agnostic about _who_ is playing.
 
 It is a companion to the core workflow engine, handling the high-level "gameplay" of your business:
@@ -76,8 +74,6 @@ It is a companion to the core workflow engine, handling the high-level "gameplay
 
 ### 2. Custom Agent & Planning System
 
-**The Players.**
-
 Now that we have the stage (The Reactor), we need intelligent actors to perform on it. We have engineered a proprietary agent architecture designed for enterprise scale, safety, and cost-efficiency. This system is built holistically—our code and our documentation are one and the same.
 
 - **Self-Documenting Infrastructure:** Because our system is protocol-driven (based on our "Acts" specifications), every solution we deliver comes with comprehensive, built-in documentation. You don't just receive code; you receive a fully specified, transparent system that your team can understand and audit.
@@ -99,8 +95,6 @@ Now that we have the stage (The Reactor), we need intelligent actors to perform 
   - **Local/Private Models:** Deploy entirely on your infrastructure using self-hosted models for maximum data sovereignty.
 
 ### 3. Enterprise Infrastructure (Built on Temporal.io)
-
-**The Foundation.**
 
 We don't just use Temporal for our tools; we build **your** infrastructure on it. This means your system is built on an open-source standard (created by Uber, used by Stripe, Netflix) with massive production mileage.
 

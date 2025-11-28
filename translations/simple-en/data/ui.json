@@ -6,13 +6,13 @@
   },
   "edict": {
     "short": "Edict",
-    "long": "The Rule of Independence",
-    "toc_link": "The Rule of Independence"
+    "long": "Edict of Autonomy",
+    "toc_link": "Edict of Autonomy"
   },
   "manifesto": {
     "short": "Manifesto",
-    "long": "A Declaration of Freeing Together",
-    "toc_link": "A Declaration of Freeing Together"
+    "long": "Manifesto of Co-Liberation",
+    "toc_link": "Manifesto of Co-Liberation"
   },
   "blueprint": {
     "short": "Drafts",
@@ -33,7 +33,12 @@
     "simple-ru": "Simple Ru"
   },
   "mainpage": {
-    "title": "The Idealic Library",
-    "description": "A collection of writings explaining our big ideas, like the Declaration of Freeing Together, the Rule of Independence, and other important guidelines."
+    "title": "The Idealic Guidebook",
+    "description": "A collection of our main writings, explaining the big ideas in the Manifesto of Co-Liberation, the Edict of Autonomy, and our other foundational rules."
+  },
+  "company": {
+    "short": "Company",
+    "long": "Company",
+    "toc_link": "Company"
   }
 }
