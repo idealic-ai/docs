@@ -11,7 +11,7 @@
 > - Enables:
 >   - :term[012: Agent/Plan]{href="./012_agent_plan.md"}
 
-While :term[Variable References]{canonical="Variable Reference"} and :term[Output Paths]{canonical="Output Path"} provide the basic wiring for data flow, **Expressions** introduce logic into this wiring. They are a simple yet powerful syntax for creating conditional branches and parallel data flows, allowing an agent to define more complex and adaptive behaviors declaratively.
+While :term[Variable References]{canonical="Variable Reference"} and :term[Output Paths]{canonical="Output Path"} provide the basic wiring for data flow, **Expressions** introduce logic into this wiring. They are a syntax for creating conditional branches and parallel data flows, allowing an agent to define more complex and adaptive behaviors declaratively.
 
 Expressions use `||` (OR) for conditional logic and `&&` (AND) for concurrent operations. They can be applied in two primary ways: gathering inputs for a tool and distributing outputs from a tool.
 
@@ -44,7 +44,7 @@ When used in a :term[Variable Reference]{canonical="Variable Reference"}, `||` a
 :::
 :::column{title="Concurrent Dependency with &&"}
 
-When used in a :term[Variable Reference]{canonical="Variable Reference"}, `&&` acts as a gate, ensuring that all specified data paths exist in the context before proceeding. If all paths are present, the expression resolves to the value of the _last_ path in the sequence. This is a powerful way to enforce dependencies, ensuring a tool only runs after all its prerequisite data is available.
+When used in a :term[Variable Reference]{canonical="Variable Reference"}, `&&` acts as a gate, ensuring that all specified data paths exist in the context before proceeding. If all paths are present, the expression resolves to the value of the _last_ path in the sequence. This enforces dependencies, ensuring a tool only runs after all its prerequisite data is available.
 
 ```json
 // This tool will only run if both a user profile and their permissions are loaded.
@@ -106,4 +106,4 @@ Using `&&` in an :term[Output Path]{canonical="Output Path"} directs the engine 
 
 Expressions provide the logical glue to connect individual :term[Tool Calls]{canonical="Tool Call"}. With this capability, an agent can move beyond simple, linear sequences of actions and begin to construct sophisticated, branching workflows.
 
-The next document, :term[012: Agent/Plan]{href="./012_agent_plan.md"}, describes how these expressive connections are used to build a complete, strategic :term[Plan]{canonical="Plan"}.
+:term[012: Agent/Plan]{href="./012_agent_plan.md"} describes how these expressive connections are used to build a complete, strategic :term[Plan]{canonical="Plan"}.

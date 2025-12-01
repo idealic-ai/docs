@@ -80,7 +80,7 @@ Each custom content type is registered with a handler, and these handlers form a
 - **:term[Schema]{canonical="schema"}**: Modifying the JSON schema that the final output must conform to.
 - **:term[Context]{canonical="context"}**: Altering the final list of messages that will be sent to the LLM, for example by transforming the custom type into a text-based representation or adding new messages.
 
-This powerful pipeline mechanism allows the agent to work with high-level, structured concepts, dynamically constructing the precise LLM invocation needed to perform a task.
+This pipeline mechanism allows the agent to work with high-level, structured concepts, dynamically constructing the precise LLM invocation needed to perform a task.
 
 ## Schema: Guiding the Solution
 
@@ -106,7 +106,7 @@ After the :term[context]{canonical="context"} is processed, the final array of m
 
 This process can be understood as the generation of a mini-narrative. Because an LLM operates as a next-token predictor, it generates the :term[solution]{canonical="Solution"} from top to bottom, following the structure of the :term[schema]{canonical="schema"}. The order and design of the schema's fields have a direct impact on the narrative the LLM produces.
 
-For example, if a schema first requires a field for meta-reasoning (e.g., `"thought_process"`) before a field for the final :term[data]{canonical="Data"}, the LLM is forced to first articulate its reasoning before producing the answer. The initial reasoning becomes part of the context that influences the generation of the subsequent data. This powerful mechanism allows us to guide the LLM's thinking, giving us significant control over the final result by shaping the very path it takes to get there.
+For example, if a schema first requires a field for meta-reasoning (e.g., `"thought_process"`) before a field for the final :term[data]{canonical="Data"}, the LLM is forced to first articulate its reasoning before producing the answer. The initial reasoning becomes part of the context that influences the generation of the subsequent data. This mechanism allows us to guide the LLM's thinking, giving us significant control over the final result by shaping the very path it takes to get there.
 
 > [!HEADSUP] Heads up
 > This entire :term[Request]{canonical="Request"} pipeline—the :term[context]{canonical="context"}, the :term[schema]{canonical="schema"}, and the resulting :term[solution]{canonical="Solution"}—forms a self-contained, reproducible unit. When saved, this unit is what the system refers to as an :term[101: Concept/Idea]{href="./101_concept_idea.md"}.
@@ -119,4 +119,4 @@ A :term[Request]{canonical="Request"} provides a robust mechanism for generating
 >
 > - :term[002: Agent/Tool]{href="./002_agent_tool.md"}
 
-The next document, :term[002: Agent/Tool]{href="./002_agent_tool.md"}, introduces the protocol for defining these capabilities.
+The :term[002: Agent/Tool]{href="./002_agent_tool.md"} protocol defines these capabilities.

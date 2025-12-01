@@ -9,7 +9,7 @@
 >   - :term[002: Agent/Tool]{href="./002_agent_tool.md"}
 >   - :term[004: Agent/Call]{href="./004_agent_call.md"}
 
-The **:term[Scoped context]{canonical="scope"}** pattern is a fundamental mechanism for managing the context available to a :term[Call]{canonical="Call"}. In a complex agentic system, a :term[Call]{canonical="Call"} rarely executes in a vacuum; it often needs access to information from its parent environment, such as user input, current state, or the results of previous steps. Scoped context provides a secure and explicit way to control this flow of information.
+The **:term[Scoped context]{canonical="scope"}** pattern is a mechanism for managing the context available to a :term[Call]{canonical="Call"}. In a complex agentic system, a :term[Call]{canonical="Call"} rarely executes in a vacuum; it often needs access to information from its parent environment, such as user input, current state, or the results of previous steps. Scoped context provides a secure and explicit way to control this flow of information.
 
 By restricting the context, scopes enhance security, prevent accidental data leakage, and focus the LLM, leading to more predictable and cost-effective executions. This controlled context is also the key to modularity, allowing components like :term[Ideas]{canonical="Idea"} and :term[Activities]{canonical="Activity"} to be truly self-contained and reusable. This document explains how this pattern works and how it composes with other agent capabilities.
 
@@ -71,11 +71,11 @@ The schema for the `_scopes` property determines whether context is statically *
   }
   ```
 
-  This dynamic pattern is especially powerful when combined with a human-in-the-loop approval system, providing a critical layer of transparency and control.
+  This dynamic pattern is effective when combined with a human-in-the-loop approval system, providing a critical layer of transparency and control.
 
 ## The Role of Scopes in Call Composition
 
-The `_scopes` property is the primary mechanism for controlling the context available to a :term[Call]{canonical="Call"}. It acts as an allow-list, filtering the parent environment to provide a focused, limited field of view for the execution. This controlled context is fundamental to how a :term[Call]{canonical="Call"} is processed, and its role adapts to support a compositional model of execution where different capabilities like explicit logic, instancing, and modularity can be combined.
+The `_scopes` property is the mechanism for controlling the context available to a :term[Call]{canonical="Call"}. It acts as an allow-list, filtering the parent environment to provide a focused, limited field of view for the execution. This controlled context is fundamental to how a :term[Call]{canonical="Call"} is processed, and its role adapts to support a compositional model of execution where different capabilities like explicit logic, instancing, and modularity can be combined.
 
 - **Latent Execution**: In the default latent execution, `_scopes` serve as a "nudge" to focus the LLM's attention on relevant parts of the parent context. This is a best-effort guide, not a strict filter, but it is crucial for improving the reliability and cost-effectiveness of LLM-driven reasoning by reducing noise from irrelevant data. See the [Disambiguation with Scopes](#example-disambiguation-with-scopes) example.
 
@@ -101,7 +101,7 @@ The `_scopes` property is the primary mechanism for controlling the context avai
   >
   > - :term[014: Agent/Delegate]{href="./014_agent_delegate.md"}
 
-The `_scopes` property is the bridge that allows a :term[Call]{canonical="Call"} to receive context. This chapter has shown how this single mechanism adapts to different execution modes—from gently guiding a latent call to strictly defining the entire context for a delegated one. This flexibility is what makes it a cornerstone of building complex, secure, and modular agentic systems.
+The `_scopes` property is the bridge that allows a :term[Call]{canonical="Call"} to receive context. This chapter has shown how this single mechanism adapts to different execution modes—from gently guiding a latent call to strictly defining the entire context for a delegated one. This flexibility supports building complex, secure, and modular agentic systems.
 
 ## Examples
 

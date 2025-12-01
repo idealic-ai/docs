@@ -48,7 +48,7 @@ This clear separation between intermediate results (handled via :term[Output Pat
 
 ## Interactions with other systems
 
-A :term[Call]{canonical="Call"} by itself is a simple data structure. Its power comes from its composition with other protocols that manage its execution environment. These protocols are activated by special meta-properties (prefixed with `_`) within a :term[Tool]{canonical="Tool"}'s schema, allowing a single :term[Call]{canonical="Call"} object to trigger a variety of execution behaviors.
+A :term[Call]{canonical="Call"} by itself is a simple data structure. Its utility comes from its composition with other protocols that manage its execution environment. These protocols are activated by special meta-properties (prefixed with `_`) within a :term[Tool]{canonical="Tool"}'s schema, allowing a single :term[Call]{canonical="Call"} object to trigger a variety of execution behaviors.
 
 By giving these meta-properties clear semantic meaning, we enable the LLM to be an active participant in the composition. It can reason about the various permutations of these properties to construct complex and novel execution chains, moving beyond simple tool selection to dynamic workflow orchestration. This interaction between :term[Calls]{canonical="Call"} and the various execution protocols is the foundation of the agent's ability to perform complex, multi-step tasks.
 
@@ -89,4 +89,4 @@ By giving these meta-properties clear semantic meaning, we enable the LLM to be 
 
 While :term[Calls]{canonical="Call"} define what an agent does, they are only one half of the equation. The other half is the structured data that flows into and out of them. A :term[Call]{canonical="Call"} needs structured data to operate on, and its results must be stored in a structured way for the next :term[Call]{canonical="Call"} to use.
 
-The next document, :term[005: Agent/Data]{href="./005_agent_data.md"}, describes the foundational protocol for structuring and managing this data within the agent's context.
+:term[005: Agent/Data]{href="./005_agent_data.md"} describes the foundational protocol for structuring and managing this data within the agent's context.

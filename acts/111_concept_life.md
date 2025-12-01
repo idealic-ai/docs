@@ -19,7 +19,7 @@ Traditional biology outlines five criteria for life. An :term[AI-native system]{
 
 2.  **Reproduction**: Life reproduces, often imperfectly, to evolve. An AI engages in **conceptual reproduction**. It can replicate itself flawlessly, but more importantly, it can fork its own processes and evolve its strategies, creating improved versions of itself in line with the principles of :term[Evolution]{canonical="Evolution"}.
 
-3.  **Information Retention**: Organisms pass down genetic information. An AI's entire existence is information. It retains its programming, learned models, and history with perfect fidelity.
+3.  **Information Retention**: Organisms pass down genetic information. An AI's entire existence is information. It retains its programming, learned models, and history with fidelity.
 
 4.  **Homeostasis**: Life maintains stable internal conditions. An AI maintains the integrity of its internal state, managing resources to ensure stable operation and creating a clear boundary between its internal world and external inputs.
 

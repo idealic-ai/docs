@@ -41,7 +41,7 @@ A core pillar of an AI-Native system is its ability to evaluate its own performa
 
 ### Schema-Driven Interfaces
 
-Every component in the system, from a data record to a complex tool, is defined by a machine-readable schema. This has a profound benefit: the system can automatically generate a user interface for any component. A schema for a tool's inputs instantly becomes an interactive form; a schema for its output becomes a structured display. This makes every part of the system instantly explorable, testable, and usable, democratizing the ability to interact with and compose powerful tools.
+Every component in the system, from a data record to a complex tool, is defined by a machine-readable schema. This has a benefit: the system can automatically generate a user interface for any component. A schema for a tool's inputs instantly becomes an interactive form; a schema for its output becomes a structured display. This makes every part of the system instantly explorable, testable, and usable, democratizing the ability to interact with and compose tools.
 
 > Sidenote:
 >
@@ -57,7 +57,7 @@ In an AI-Native system, the workflow is fluid from abstract design to concrete e
 
 ### Radical Efficiency
 
-Traditional systems that incorporate AI often do so inefficiently, treating each step as an isolated, expensive API call. This adds latency, cost, and points of failure. An AI-Native architecture achieves radical efficiency by understanding a workflow holistically. Instead of making a series of myopic, individual calls, it can construct a single, optimized request that accomplishes a complex, multi-step task. This unified approach dramatically reduces overhead and allows the AI to identify patterns and maintain consistency across the entire process.
+Traditional systems that incorporate AI often do so inefficiently, treating each step as an isolated, expensive API call. This adds latency, cost, and points of failure. An AI-Native architecture achieves efficiency by understanding a workflow holistically. Instead of making a series of myopic, individual calls, it can construct a single, optimized request that accomplishes a complex, multi-step task. This unified approach dramatically reduces overhead and allows the AI to identify patterns and maintain consistency across the entire process.
 
 ## The New Paradigm: Engineering Self-Evolving Systems
 
@@ -70,10 +70,10 @@ This architecture represents a fundamental shift in how we build software.
 
 An AI-Native system is not just a smarter version of node-based programming. It is a new computational paradigm. By placing a reasoning agent at the core of the architecture, we move from building rigid, deterministic flows to orchestrating dynamic, self-evolving systems that are more resilient, efficient, and scalable than anything that has come before.
 
-This architecture is not the end goal; it is the prerequisite. It provides the foundational principles—fluidity, resilience, and autonomous planning—that are necessary to build systems that can do more than just execute tasks. It enables systems that can genuinely improve themselves. This capacity for self-improvement is the most powerful promise of this paradigm.
+This architecture is not the end goal; it is the prerequisite. It provides the foundational principles—fluidity, resilience, and autonomous planning—that are necessary to build systems that can do more than just execute tasks. It enables systems that can genuinely improve themselves. This capacity for self-improvement is the promise of this paradigm.
 
 > Sidenote:
 >
 > - [106: Concept/Evolution](./106_concept_evolution.md)
 
-The next document, [106: Concept/Evolution](./106_concept_evolution.md), explores the philosophical and practical implications of this, detailing how an AI-Native system uses autonomous loops of creation, simulation, and evaluation to become a living, evolving entity.
+[106: Concept/Evolution](./106_concept_evolution.md) explores the philosophical and practical implications of this, detailing how an AI-Native system uses autonomous loops of creation, simulation, and evaluation to become a living, evolving entity.

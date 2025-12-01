@@ -11,7 +11,7 @@
 >   - :term[015: Agent/Scopes]{href="./015_agent_scopes.md"}
 >   - :term[012: Agent/Plan]{href="./012_agent_plan.md"}
 
-The **Instancing Protocol** is a powerful pattern for scaling agentic workflows by enabling multiple threads of computation within a single request. It allows any agent to operate on multiple, independent data contexts concurrently without requiring any changes to its core logic. This is achieved by associating context messages, such as :term[State]{canonical="State"} or :term[Input]{canonical="Input"}, with unique instance identifiers. As a result, a single, reusable :term[Plan]{canonical="Plan"} can be executed across many instances in parallel, but the protocol is generic and supports any combination of messages, dramatically improving throughput and consistency.
+The **Instancing Protocol** is a pattern for scaling agentic workflows by enabling multiple threads of computation within a single request. It allows any agent to operate on multiple, independent data contexts concurrently without requiring any changes to its core logic. This is achieved by associating context messages, such as :term[State]{canonical="State"} or :term[Input]{canonical="Input"}, with unique instance identifiers. As a result, a single, reusable :term[Plan]{canonical="Plan"} can be executed across many instances in parallel, but the protocol is generic and supports any combination of messages, improving throughput and consistency.
 
 ## The Instancing Mechanism
 
@@ -21,14 +21,14 @@ To manage these concurrent contexts, each :term[State]{canonical="State"} messag
 
 Instancing is an opt-in feature enabled by the caller on a per-message basis. By adding the `_instance` property to a data message like :term[State]{canonical="State"} or :term[Input]{canonical="Input"}, the caller signals that this message should be treated as a distinct, thread-safe execution context. If the `_instance` property is omitted, the message is treated as a global resource available to all instances.
 
-This approach provides significant benefits:
+This approach provides benefits:
 
 - **Efficiency**: It multiplies the throughput of the system by processing many instances in a single LLM request.
 - **Consistency**: By allowing the LLM to see multiple related instances in a single context, it can generate more consistent and higher-quality plans.
 
 ## Composition with Context Messages
 
-The protocol's power comes from how the `_instance` identifier scopes the behavior of different context message types.
+The protocol relies on how the `_instance` identifier scopes the behavior of different context message types.
 
 - **:term[State]{canonical="State"}:** The :term[State]{canonical="State"} message is the core of the protocol. Each :term[Instance]{canonical="Instance"} is a distinct :term[State]{canonical="State"} message, uniquely identified by the `_instance` property. This provides an isolated canvas for a sequence of operations, ensuring that parallel workflows do not interfere with one another.
 
@@ -50,7 +50,7 @@ The protocol's power comes from how the `_instance` identifier scopes the behavi
 
 :::details{title="Example: Content Moderation at Scale"}
 
-Instancing transforms single-task agents into powerful batch processors. Consider an agent designed to moderate user comments against a set of community guidelines.
+Instancing transforms single-task agents into batch processors. Consider an agent designed to moderate user comments against a set of community guidelines.
 
 Without instancing, the agent would operate sequentially. To review 100 comments, it would require 100 separate :term[Requests]{canonical="Request"}. This is not only slow but also context-blind; the agent judges each comment in complete isolation, which can lead to inconsistent rulings on similar content.
 

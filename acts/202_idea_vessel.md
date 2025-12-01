@@ -26,9 +26,9 @@ A `Vessel Idea` uses the core `Idea` triplet to capture both the potential for a
 
 Because a `Vessel` contains both the universe of possibilities (`schema`) and the specific outcome (`solution`), it provides a complete picture of a decision-making event.
 
-## 2. The Power of Self-Contained Decisions
+## 2. Self-Contained Decisions
 
-This self-contained structure is what enables the system's advanced capabilities. By packaging the definition with the instance, a `Vessel Idea` inherently supports:
+This self-contained structure enables the system's capabilities. By packaging the definition with the instance, a `Vessel Idea` inherently supports:
 
 - **Human Verification and Adjustment:** A person can review a `Vessel` and see not only what the agent did, but what it _could have_ done. They can then approve the action, or modify the `solution` by choosing different `Calls` from the provided `schema`.
 - **Replanning:** If a `Call` fails, the agent can re-evaluate the situation. It already has the full `context` and the complete `schema` of its options, allowing it to easily select an alternative `Call` and generate a new `Vessel`.
@@ -43,7 +43,7 @@ The `schema` guarantees that the agent's capabilities are frozen in time; even i
 - **Replay History:** Perfectly reconstruct a past decision.
 - **Explore Alternatives:** Provide a different `context` to the historical `Vessel` to run "what-if" scenarios, exploring how that past version of the agent would have reacted to different inputs.
 
-This provides a powerful mechanism for debugging, auditing, and understanding the evolution of an agent's behavior over time.
+This provides a mechanism for debugging, auditing, and understanding the evolution of an agent's behavior over time.
 
 ## 3. The Vessel in the Execution Loop
 
@@ -59,6 +59,4 @@ This reactive pattern is powerful for building agents that can respond intellige
 
 While a `Vessel` provides a complete record of a single reaction, achieving larger goals requires a structure for proactive, multi-step execution. This is the role of a **Process Idea**, which applies the same principles of self-containment to a strategic, stateful workflow.
 
-> Sidenote:
->
-> - [203: Idea/Process](./203_idea_process.md)
+:term[203: Idea/Process](./203_idea_process.md) describes this structure.

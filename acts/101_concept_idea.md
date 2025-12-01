@@ -16,7 +16,7 @@ For details on how `Ideas` become executable services, see [103: Concept/Ideator
 
 ## The Mechanics of a Living Web
 
-The architecture is built on a radical principle: **the content is the protocol.** The system's entire grammar consists of a single unit: a self-contained "triplet" called the **Idea**. This structure enables true ownership and portability; because there is no hidden state, you are never locked in.
+The architecture is built on a principle: **the content is the protocol.** The system's entire grammar consists of a single unit: a self-contained "triplet" called the **Idea**. This structure enables true ownership and portability; because there is no hidden state, you are never locked in.
 
 - **Context:** All the instructions, source material, and references used to generate the solution.
 - **Schema:** The `jsonschema` blueprint that gives the Idea's data a universal, semantic meaning, allowing any AI to understand and modify it.
@@ -31,7 +31,7 @@ Ideas are **immutable by design**. The protocol has only one action: sharing an 
 
 ## Beyond the Prompt: A New Computational Primitive
 
-At first glance, an `Idea` might seem like a glorified prompt for a large language model (LLM). This is a common misconception. The key difference lies in the shift from single, ephemeral interactions to a system of persistent, composable assets.
+At first glance, an `Idea` might seem like a prompt for a large language model (LLM). The key difference lies in the shift from single, ephemeral interactions to a system of persistent, composable assets.
 
 Unlike a simple, ephemeral request to a chatbot, an `Idea` is a self-contained, stateful artifact. It packages the `input`, the `output` (`solution`), the rules (`schema`), and the entire `context` of its creation into a single, portable unit. It's not just a question; it's the question, the answer, and the complete formula that connects them, enabling a persistent, composable system, not just a one-off transaction.
 
@@ -62,4 +62,4 @@ is considered backward-compatible if it adds new fields to the `schema`. An `Ide
 
 For an `Idea` to be useful, it must be published and discoverable. To achieve this in a decentralized way, every `Idea` is given a globally unique, resolvable name, which serves as its identity. This decouples the `Idea` from any specific storage location, making it truly portable and sovereign.
 
-This is achieved by giving each `Idea` a unique domain name and using DNS records to point to its canonical definition. The specific mechanics of this decentralized identity and the progressive layers of hosting that build upon it are detailed in the next document, [102: Concept/Sovereignty](./102_concept_sovereignty.md).
+This is achieved by giving each `Idea` a unique domain name and using DNS records to point to its canonical definition. The specific mechanics of this decentralized identity and the progressive layers of hosting that build upon it are detailed in [102: Concept/Sovereignty](./102_concept_sovereignty.md).

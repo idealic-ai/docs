@@ -10,11 +10,11 @@
 > - Complemented by:
 >   - :term[015: Agent/Scopes]{href="./015_agent_scopes.md"}
 
-The **Delegation** pattern addresses the critical challenge of scaling and composing agent capabilities. It provides a powerful mechanism for executing :term[Tools]{canonical="Tool"} in sandboxed contexts, preventing context bleeding and enabling true reusability. By delegating a :term[Call]{canonical="Call"} to an external delegate—either another :term[Request]{canonical="Request"} definition or an :term[Activity]{canonical="Activity"} in a sub-request—the system can build complex agentic behaviors from self-contained, independently developed components.
+The **Delegation** pattern addresses the challenge of scaling and composing agent capabilities. It provides a mechanism for executing :term[Tools]{canonical="Tool"} in sandboxed contexts, preventing context bleeding and enabling true reusability. By delegating a :term[Call]{canonical="Call"} to an external delegate—either another :term[Request]{canonical="Request"} definition or an :term[Activity]{canonical="Activity"} in a sub-request—the system can build complex agentic behaviors from self-contained, independently developed components.
 
 ## Implementation as an Activity
 
-Conceptually, delegation is not a new or separate protocol, but a powerful application of the existing :term[Activity]{canonical="Activity"} system. The execution of a delegate is handled by a special, generic "catch-all" :term[Activity]{canonical="Activity"} that is registered by the system to handle any :term[Call]{canonical="Call"} containing the `_delegate` property.
+Conceptually, delegation is not a new or separate protocol, but an application of the existing :term[Activity]{canonical="Activity"} system. The execution of a delegate is handled by a special, generic "catch-all" :term[Activity]{canonical="Activity"} that is registered by the system to handle any :term[Call]{canonical="Call"} containing the `_delegate` property.
 
 This `Delegate Activity` receives the standard three arguments:
 
@@ -22,7 +22,7 @@ This `Delegate Activity` receives the standard three arguments:
 - **`tool`**: The tool schema, from which the activity reads the `_delegate` property to know _what_ to invoke.
 - **`context`**: The array of messages scoped from the parent, which will be forwarded to the sub-request.
 
-The activity's logic is simple: it uses these three arguments to assemble and issue a new, isolated :term[Request]{canonical="Request"}. This elegant implementation demonstrates the power of the core protocols: by making the `Activity` signature so robust, even complex patterns like delegation can be built on top of it as a standard implementation rather than requiring a new set of rules.
+The activity's logic is simple: it uses these three arguments to assemble and issue a new, isolated :term[Request]{canonical="Request"}. This implementation demonstrates the utility of the core protocols: by making the `Activity` signature so robust, even complex patterns like delegation can be built on top of it as a standard implementation rather than requiring a new set of rules.
 
 ## The Problem: Monolithic Tools and Context Bleeding
 
@@ -72,7 +72,7 @@ A :term[Tool]{canonical="Tool"} becomes a :term[Delegate]{canonical="Delegate"} 
 
 The default and most flexible approach is to resolve the delegate at **execution time**, after an agent has already generated a :term[Call]{canonical="Call"}.
 
-This method enables a powerful paradigm that is not possible with traditional code: **the LLM acts as an intelligent glue layer.** An agent can generate a :term[Call]{canonical="Call"} with parameters that don't perfectly match the delegate's expected `input` schema. At execution time, the system assembles the delegate's context and the caller's provided input, and the LLM in the sub-request is tasked with bridging the gap.
+This method enables a paradigm that is not possible with traditional code: **the LLM acts as an intelligent glue layer.** An agent can generate a :term[Call]{canonical="Call"} with parameters that don't perfectly match the delegate's expected `input` schema. At execution time, the system assembles the delegate's context and the caller's provided input, and the LLM in the sub-request is tasked with bridging the gap.
 
 This is a significant advantage, as it allows delegates to be updated and evolve independently. Even if a delegate changes its input structure, calling agents won't immediately break. The LLM will attempt to adapt the old :term[Call]{canonical="Call"} format to the new `input` schema, providing a level of resilience and loose coupling that is unique to this architecture.
 
@@ -148,7 +148,7 @@ The `speaker_EN` delegate is a separate :term[Request]{canonical="Request"} defi
 
 :::details{title="Example: Music makers"}
 
-Delegates enable powerful composition by allowing :term[Request]{canonical="Request"} definitions to act as standalone services that can be orchestrated by other agents. This creates a clear, dynamic hierarchy: high-level agents can focus on orchestration while delegating specialized tasks to low-level, reusable delegates.
+Delegates enable composition by allowing :term[Request]{canonical="Request"} definitions to act as standalone services that can be orchestrated by other agents. This creates a clear, dynamic hierarchy: high-level agents can focus on orchestration while delegating specialized tasks to low-level, reusable delegates.
 
 Consider a workflow with two specialist delegates: a **`Composer`** and a **`Sound-Designer`**.
 

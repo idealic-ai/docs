@@ -18,7 +18,7 @@ This persistence is the cornerstone of building adaptive agents. When the LLM re
 
 ## How a Plan is Formed
 
-The connections in the graph are not created with explicit pointers, but through a simple and powerful data-flow convention using the :term[State]{canonical="State"} object.
+The connections in the graph are not created with explicit pointers, but through a data-flow convention using the :term[State]{canonical="State"} object.
 
 - **Nodes (:term[Tool Calls]{canonical="Tool Call"}):** Each step in the workflow is a :term[Tool Call]{canonical="Tool Call"}, representing an action to be performed.
 - **Edges (:term[State]{canonical="State"} Object):** The connections between steps are created by writing to and reading from the :term[State]{canonical="State"} object. One :term[Tool]{canonical="Tool"} writes its output to a specific path in the :term[State]{canonical="State"} using the :term[Output Path]{canonical="Output Path"} meta-property. A subsequent :term[Tool]{canonical="Tool"} can then use that output as an input by referencing the same path with a **:term[Variable Reference]{canonical="Variable Reference"}**.
@@ -100,7 +100,7 @@ A DAG has a few key properties that make it perfect for execution:
 
 ## Planning vs. Execution Strategies
 
-The most powerful feature of this architecture is the relationship between the declarative `Plan` and its execution. This is controlled by a `mode` property within the `Plan` message itself, allowing for different strategies.
+A feature of this architecture is the relationship between the declarative `Plan` and its execution. This is controlled by a `mode` property within the `Plan` message itself, allowing for different strategies.
 
 The LLM always acts as the planner. The `mode` determines whether the LLM should also act as an immediate executor for latent tasks.
 
@@ -510,6 +510,6 @@ This iterative cycle of planning and execution is the core of a :term[Process]{h
 
 ## From Single Plan to Reusable Workflows
 
-A :term[Plan]{canonical="Plan"} message defines a sequence of actions for a specific task. To make these workflows truly powerful, we need a way to encapsulate them into reusable components that can be called from other :term[Plans]{canonical="Plan"}.
+A :term[Plan]{canonical="Plan"} message defines a sequence of actions for a specific task. To make these workflows reusable, we need a way to encapsulate them into components that can be called from other :term[Plans]{canonical="Plan"}.
 
-The protocol for this parallel execution is described in :term[013: Agent/Instancing]{href="./013_agent_instancing.md"}.
+:term[013: Agent/Instancing]{href="./013_agent_instancing.md"} describes the protocol for this parallel execution.

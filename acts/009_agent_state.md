@@ -21,7 +21,7 @@ The :term[State]{canonical="State"} object acts as the source of truth for the c
 
 ## Guiding the Workflow with a Schema
 
-Providing a `schema` for the :term[State]{canonical="State"} object is an optional but powerful step. The schema documents the intended data flow by defining a set of expected properties. This implicitly defines the interactions between :term[Tools]{canonical="Tool"} and hints at the overall process. This creates a strong feedback loop for the LLM: knowing what properties the :term[State]{canonical="State"} should contain, it is guided to generate :term[Tool Calls]{canonical="Call"} with corresponding :term[Output Path]{canonical="Output Path"} values. This improves results by ensuring the agent's actions are structurally correct and aligned with the desired workflow.
+Providing a `schema` for the :term[State]{canonical="State"} object is an optional step. The schema documents the intended data flow by defining a set of expected properties. This implicitly defines the interactions between :term[Tools]{canonical="Tool"} and hints at the overall process. This creates a strong feedback loop for the LLM: knowing what properties the :term[State]{canonical="State"} should contain, it is guided to generate :term[Tool Calls]{canonical="Call"} with corresponding :term[Output Path]{canonical="Output Path"} values. This improves results by ensuring the agent's actions are structurally correct and aligned with the desired workflow.
 
 > Sidenote:
 >
@@ -84,4 +84,4 @@ This graph of references can be validated, reused, and even simulated, making it
 
 The :term[State]{canonical="State"} message provides the mechanism for managing the memory of a single, coherent workflow. With a persistent scratchpad and the variables to connect tools, we can now design and execute complex, multi-step workflows.
 
-The next document, :term[010: Agent/Loop]{href="./010_agent_loop.md"}, describes the system for orchestrating these workflows as a graph of :term[Tool Calls]{canonical="Call"}. But first, we will introduce :term[011: Agent/Expressions]{href="./011_agent_expressions.md"}.
+:term[010: Agent/Loop]{href="./010_agent_loop.md"} describes the system for orchestrating these workflows as a graph of :term[Tool Calls]{canonical="Call"}. But first, we will introduce :term[011: Agent/Expressions]{href="./011_agent_expressions.md"}.

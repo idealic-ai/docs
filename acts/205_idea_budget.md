@@ -11,7 +11,7 @@ A **Budget Idea** transforms static financial planning into a living economic en
 > - Requires:
 >   - [Concept: Idea](./101_concept_idea.md)
 
-This document outlines the core concepts of Budget Ideas, which introduce a revolutionary way to think about budgets and economic systems. Traditional budgets are static numbers; Budget Ideas are living economic engines with their own rules, goals, and even custom currencies.
+This document outlines the core concepts of Budget Ideas, which introduce a way to think about budgets and economic systems. Traditional budgets are static numbers; Budget Ideas are living economic engines with their own rules, goals, and even custom currencies.
 
 ## The Living Budget
 
@@ -110,7 +110,7 @@ Combined with a time-series stats engine, a `Budget` becomes temporally fluid, e
 
 1.  **Decomposition (Zooming In):** A high-level, long-term `Budget` can be automatically decomposed into actionable, short-term chunks. A yearly budget can be viewed quarterly or monthly.
 2.  **Composition (Zooming Out):** Daily tactical actions are continuously aggregated upwards, providing a real-time, strategic view of progress against goals.
-3.  **Extrapolation and "What-If" Scenarios:** The temporal hierarchy supercharges simulation, allowing extrapolation of current trends to forecast future impacts.
+3.  **Extrapolation and "What-If" Scenarios:** The temporal hierarchy enables simulation, allowing extrapolation of current trends to forecast future impacts.
 
 ```llm
 Fractal planning enables Budgets to fluidly scale across time horizons.

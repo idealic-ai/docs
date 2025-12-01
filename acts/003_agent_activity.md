@@ -123,6 +123,6 @@ The dual registry architecture solves this by keeping :term[Tool]{canonical="Too
 
 ## From Definition to Action
 
-By separating the "what" (:term[Tool]{canonical="Tool"}) from the "how" (:term[Activity]{canonical="Activity"}), the system gains immense flexibility. But this is only part of the story. With interfaces and implementations defined, the final piece is orchestration: how these :term[Call]{canonical="Call"}s are managed, executed, and sequenced.
+By separating the "what" (:term[Tool]{canonical="Tool"}) from the "how" (:term[Activity]{canonical="Activity"}), the system gains flexibility. But this is only part of the story. With interfaces and implementations defined, the final piece is orchestration: how these :term[Call]{canonical="Call"}s are managed, executed, and sequenced.
 
-The next document, :term[004: Agent/Call]{href="./004_agent_call.md"}, explores the protocol that governs this execution, turning abstract definitions into concrete, stateful actions.
+:term[004: Agent/Call]{href="./004_agent_call.md"} explores the protocol that governs this execution, turning abstract definitions into concrete, stateful actions.

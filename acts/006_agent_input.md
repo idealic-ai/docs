@@ -101,7 +101,7 @@ Agent.Request(
 
 ## A Gateway to Usability: UI by Default
 
-The `Input` message is more than just a technical detail; it is the key that unlocks a complete, interactive experience for any :term[Request]{canonical="Request"}. Because a :term[Request]{canonical="Request"} is defined by structured schemas for both its input and its output, a user interface can be generated for it automatically.
+The `Input` message enables the generation of interactive user interfaces for any :term[Request]{canonical="Request"}. Because a :term[Request]{canonical="Request"} is defined by structured schemas for both its input and its output, a user interface can be generated for it automatically.
 
 > Sidenote:
 >
@@ -149,4 +149,4 @@ The :term[Input Message]{canonical="Input Message"} is a specialization of the :
 
 The :term[Input Message]{canonical="Input Message"} provides a formal mechanism for supplying structured data to an agent, turning a simple :term[Request]{canonical="Request"} into a reusable, function-like component. However, this only defines the starting point of a process. To build sophisticated workflows, this static input data needs to be connected to the tools that will operate on it.
 
-The next document, :term[007: Agent/Variables]{href="./007_agent_variables.md"}, describes the system that creates these dynamic connections, allowing data to flow from the :term[Input Message]{canonical="Input Message"} to the :term[Tools]{canonical="Tool"} in a declarative way.
+:term[007: Agent/Variables]{href="./007_agent_variables.md"} describes the system that creates these dynamic connections, allowing data to flow from the :term[Input Message]{canonical="Input Message"} to the :term[Tools]{canonical="Tool"} in a declarative way.

@@ -22,7 +22,7 @@ The :term[Data Protocol]{canonical="Data"} is a low-level pattern for providing 
 >
 > - [001: Agent/Request](./001_agent_request.md)
 
-A :term[Data]{canonical="Data"} message is a simple but powerful construct for adding structured context to a :term[Request]{canonical="Request"}. It is a message object that contains the following properties:
+A :term[Data]{canonical="Data"} message is a simple construct for adding structured context to a :term[Request]{canonical="Request"}. It is a message object that contains the following properties:
 
 - **`data`**: Any JSON value (e.g., string, number, object, array) that contains the payload.
 - **`schema`**: An optional JSON Schema that defines the structure and semantic meaning of the `data`.
@@ -167,4 +167,4 @@ The generic :term[Data]{canonical="Data"} message is a foundational pattern. It 
 
 The :term[Data]{canonical="Data"} message provides a generic container for structured information. However, for an agent to use this data effectively, it needs to understand the data's role in the process. The following chapters describe how this generic :term[Data]{canonical="Data"} message is specialized for specific purposes, such as providing initial parameters for a workflow.
 
-The next document, :term[006: Agent/Input]{href="./006_agent_input.md"}, describes how a `Data` message is used to create a structured prompt for an agent.
+:term[006: Agent/Input]{href="./006_agent_input.md"} describes how a `Data` message is used to create a structured prompt for an agent.

@@ -93,4 +93,4 @@ If a :term[cutoff time]{canonical="Cutoff Time"} is not provided, it defaults to
 
 This chapter has defined the theoretical model for :term[visibility]{canonical="Visibility"}—the mechanisms for creating different states and selecting between them. With this model in place, the final piece is the practical language for interacting with it.
 
-The next document, :term[110: Concept/Addressing]{href="./110_concept_addressing.md"}, introduces the :term[idea:]{canonical="idea:"} URI scheme, the concrete syntax used to request a specific view and navigate this rich, versioned, and branched reality.
+:term[110: Concept/Addressing]{href="./110_concept_addressing.md"} introduces the :term[idea:]{canonical="idea:"} URI scheme, the concrete syntax used to request a specific view and navigate this rich, versioned, and branched reality.

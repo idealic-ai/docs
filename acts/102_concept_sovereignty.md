@@ -120,9 +120,9 @@ console.log('New solution for idea', idea.solution, 'conforming to schema', idea
 
 A core principle of this architecture is the separation of the public manifest (:term[Idea]{canonical="Idea"}) from its execution. An :term[Idea]{canonical="Idea"} is a complete, self-contained blueprint. It contains the schema, context, and :term[Solution]{canonical="Solution"}—everything needed for a capable agent to run it. This empowers any user to fetch an :term[Idea]{canonical="Idea"} and execute it within their own local environment, allowing for experimentation, remixing, and sovereign use on their own terms.
 
-The "Full API Execution" layer is therefore not a requirement but a powerful convenience and a commercial opportunity. It allows a creator to offer their :term[Idea]{canonical="Idea"} as a robust, managed service. This is where commerce and trade secrets can thrive within an open ecosystem. A creator can publish a public :term[Idea]{canonical="Idea"} as a transparent contract—a manifest of what the service does and what it returns—while keeping their specific implementation details private.
+The "Full API Execution" layer is therefore not a requirement but a convenience and a commercial opportunity. It allows a creator to offer their :term[Idea]{canonical="Idea"} as a robust, managed service. This is where commerce and trade secrets can thrive within an open ecosystem. A creator can publish a public :term[Idea]{canonical="Idea"} as a transparent contract—a manifest of what the service does and what it returns—while keeping their specific implementation details private.
 
-This private implementation is the creator's "secret sauce." It might involve proprietary models, specialized hardware, unique data sources, or sophisticated methods for handling incomplete or imperfect information. The service becomes a reliable "black box" that fulfills the public promise of the :term[Idea]{canonical="Idea"}, creating a marketplace where open, portable protocols and valuable, private implementations can coexist and build upon one another.
+This private implementation is the creator's proprietary logic. It might involve proprietary models, specialized hardware, unique data sources, or sophisticated methods for handling incomplete or imperfect information. The service becomes a reliable "black box" that fulfills the public promise of the :term[Idea]{canonical="Idea"}, creating a marketplace where open, portable protocols and valuable, private implementations can coexist and build upon one another.
 
 ## From a Sovereign Idea to a Sovereign Namespace
 
@@ -149,11 +149,3 @@ All HTTP interactions happen at the root of the :term[Idea]{canonical="Idea"}'s 
   - The request body is a JSON object containing the payload, e.g., `{"context": "The user's input to be processed"}`.
 
 With the principle of :term[Sovereignty]{canonical="Sovereignty"} establishing ownership and control over an :term[Idea]{canonical="Idea"} and its namespace, the next logical step is to explore what makes an :term[Idea]{canonical="Idea"} executable. This leads to the concept of the :term[Ideator]{canonical="Ideator"}, a specialized type of :term[Idea]{canonical="Idea"} that can act as a function.
-
-```
-
-```
-
-```
-
-```

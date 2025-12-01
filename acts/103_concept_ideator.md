@@ -24,7 +24,7 @@ The definitive signal that an :term[Idea]{canonical="Idea"} is an :term[Ideator]
 
 ### The Idea Transformer: A Special Case
 
-A common and powerful pattern is an :term[Ideator]{canonical="Ideator"} whose input is itself another :term[Idea]{canonical="Idea"}. We call this specific type of :term[Ideator]{canonical="Ideator"} an **:term[Idea Transformer]{canonical="Idea Transformer"}**. This is what enables the compositional pipelines where :term[Ideas]{canonical="Idea"} are chained together and evolved.
+A common pattern is an :term[Ideator]{canonical="Ideator"} whose input is itself another :term[Idea]{canonical="Idea"}. We call this specific type of :term[Ideator]{canonical="Ideator"} an **:term[Idea Transformer]{canonical="Idea Transformer"}**. This is what enables the compositional pipelines where :term[Ideas]{canonical="Idea"} are chained together and evolved.
 
 ## Implementations and Composition
 

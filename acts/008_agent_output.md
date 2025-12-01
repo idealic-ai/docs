@@ -148,7 +148,7 @@ Not every :term[Tool Call]{canonical="Call"} needs to persist its result. The om
 
 ### Ephemeral Reasoning for Latent Calls
 
-For a latent call, omitting the `_outputPath` allows it to function as an ephemeral reasoning step—a "thought" that informs subsequent actions within the same turn but is not saved to the persistent :term[State]{canonical="State"}. This is a powerful technique for structuring an LLM's reasoning process.
+For a latent call, omitting the `_outputPath` allows it to function as an ephemeral reasoning step—a "thought" that informs subsequent actions within the same turn but is not saved to the persistent :term[State]{canonical="State"}. This is a technique for structuring an LLM's reasoning process.
 
 For example, an agent can be designed to first use a latent `think` tool to analyze a problem and outline a strategy. This "thought" is not saved, but its generation immediately enriches the LLM's own internal context. In the very next step of the same `solution`, the LLM can then generate concrete, explicit :term[Tool Calls]{canonical="Call"} that are more effective and better-aligned because of the preceding, un-persisted reasoning step.
 
@@ -202,6 +202,6 @@ This is useful for side effects where a return value is not needed for the curre
 
 ## From Ephemeral Outputs to Persistent State
 
-The :term[Output Path]{canonical="Output Path"} mechanism provides a robust way to manage the flow of data between individual :term[Tool Calls]{canonical="Tool Call"}, and it can target any :term[Data Message]{canonical="Data Message"}. However, to build complex, multi-step agents that can reason and adapt over time, a specialized form of memory is required—a message type specifically designed to persist information across multiple, independent requests.
+The :term[Output Path]{canonical="Output Path"} mechanism provides a way to manage the flow of data between individual :term[Tool Calls]{canonical="Tool Call"}, and it can target any :term[Data Message]{canonical="Data Message"}. However, to build complex, multi-step agents that can reason and adapt over time, a specialized form of memory is required—a message type specifically designed to persist information across multiple, independent requests.
 
-The next document, :term[009: Agent/State]{href="./009_agent_state.md"}, describes the protocol for this persistent memory.
+:term[009: Agent/State]{href="./009_agent_state.md"} describes the protocol for this persistent memory.

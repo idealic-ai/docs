@@ -61,7 +61,7 @@ graph TD
 
 ## :term[Human-in-the-Loop]{canonical="HITL"}
 
-The new :term[Execution Loop]{canonical="Execution Loop"} provides robust support for human oversight by placing the confirmation step just before execution. This ensures the user is only prompted to act on calls that are ready to run:
+The new :term[Execution Loop]{canonical="Execution Loop"} provides support for human oversight by placing the confirmation step just before execution. This ensures the user is only prompted to act on calls that are ready to run:
 
 - **Approval:** Before an unblocked :term[Call]{canonical="Call"} is executed, the system can present it to a user for approval. This is an efficient approach, as it prevents the user from having to review and confirm calls that might be blocked by dependencies and never run.
 - **Correction:** The user can modify the parameters of a :term[Call]{canonical="Call"} or even replace it with a different one
@@ -102,4 +102,4 @@ This provides the LLM with direct, actionable feedback. On its next turn, it see
 
 The :term[Execution Loop]{canonical="Execution Loop"} provides a dynamic structure for agent behavior, but its power is in executing tactical, single-shot :term[Requests]{canonical="Request"}. To manage complex, multi-step workflows with dependencies, a more advanced system of strategic planning is required.
 
-The next document, :term[011: Agent/Expressions]{href="./011_agent_expressions.md"}, introduces the protocol for defining these long-term strategies as a graph of interconnected :term[Tool Calls]{canonical="Call"}.
+:term[011: Agent/Expressions]{href="./011_agent_expressions.md"} introduces the protocol for defining these long-term strategies as a graph of interconnected :term[Tool Calls]{canonical="Call"}.

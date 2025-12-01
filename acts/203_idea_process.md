@@ -52,7 +52,7 @@ This unity is what makes the system so dynamic and efficient. The `Plan` is a li
 >
 > - [004: Agent/Call](./004_agent_call.md)
 
-This unified model provides two powerful advantages. First, a `Plan` can be established and simulated based on its schemas alone, even before concrete data is available. The LLM can "role-play" the behavior of each step, allowing for the design and validation of complex workflows from day one. Second, the LLM acts as an intelligent adapter between steps. If the output of one `Call` doesn't perfectly match the expected input of the next, the LLM can bridge the gap, providing extraordinary stability as the system evolves. This resilience prevents the cascading failures that plague traditional, rigidly-connected systems.
+This unified model provides two advantages. First, a `Plan` can be established and simulated based on its schemas alone, even before concrete data is available. The LLM can "role-play" the behavior of each step, allowing for the design and validation of complex workflows from day one. Second, the LLM acts as an intelligent adapter between steps. If the output of one `Call` doesn't perfectly match the expected input of the next, the LLM can bridge the gap, providing stability as the system evolves. This resilience prevents the cascading failures that plague traditional, rigidly-connected systems.
 
 > Sidenote:
 >
@@ -60,7 +60,7 @@ This unified model provides two powerful advantages. First, a `Plan` can be esta
 
 ### The Flexibility Spectrum of a Plan
 
-The `State` object enables a powerful, three-stage lifecycle for a `Plan`, allowing it to evolve from a flexible discovery process into a predictable, deterministic workflow:
+The `State` object enables a three-stage lifecycle for a `Plan`, allowing it to evolve from a flexible discovery process into a predictable, deterministic workflow:
 
 > Sidenote:
 >
@@ -113,6 +113,4 @@ A `Process Idea` can mature into a **Resolved Plan**—a highly predictable and 
 
 This is the role of an **[Instruction Idea](./204_idea_instruction.md)**. An `Instruction` is a structured recipe for action that provides a higher level of strategic guidance. It acts as a "mental checklist" or a set of principles that influences the workflow at two levels: guiding the agent in selecting or generating the most appropriate `Plan` for a given context, and providing targeted guidance for individual choices and reasoning steps during the execution of that `Plan`. In essence, an `Instruction` enhances the _logic_ and _reasoning_ of a workflow, ensuring that both the overall strategy and the tactical execution align with a desired methodology.
 
-> Sidenote:
->
-> - [204: Idea/Instruction](./204_idea_instruction.md)
+:term[204: Idea/Instruction](./204_idea_instruction.md) describes this structure.

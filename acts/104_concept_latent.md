@@ -35,7 +35,7 @@ This transforms the LLM from a simple text generator into a dynamic execution en
 
 ## Context Management: Arranging the Latent Space
 
-The system's most critical function is to **optimize the arrangement of the latent space** within a single request. It does this through sophisticated context management, using a variety of "tool-like tricks" to focus the LLM's attention and guide its reasoning.
+The system's most critical function is to **arrange the latent space** within a single request. It does this through context management, using a variety of "tool-like tricks" to focus the LLM's attention and guide its reasoning.
 
 - **Rich Context**: By providing a structured history of messages, state objects, and user queries, the system primes the LLM with the necessary background to understand the task.
 - **Schema-Based Reasoning**: JSON Schema is used not just to validate the final output, but to guide the generation process itself. It provides a blueprint for the desired `solution`, forcing the LLM to structure its reasoning and constrain its path through the latent space.
@@ -47,7 +47,7 @@ Effective context management is what makes latent execution reliable. It is how 
 
 Latent Execution is not an exception; it is the default behavior. The system operates on an "optimistic" principle: it assumes any defined interface can be fulfilled by arranging the latent space correctly. An `Activity` with deterministic code is treated as a progressive enhancement—an optimization for tasks that require speed, reliability, or access to external APIs.
 
-This default has a profound impact on development:
+This default has a impact on development:
 
 - **Rapid Prototyping**: Developers can define and chain together multiple `Tools` and `Ideas` into a complex `Plan` without writing a single line of implementation code. The LLM executes the entire workflow latently.
 - **Seamless Composition**: It allows for the combination of `Ideas` and `Tools` from different authors and sources, even if their underlying implementations are not available.
@@ -59,7 +59,7 @@ By making latent execution the default, the system prioritizes flexibility and s
 
 ## The Engine of AI-Native Architecture
 
-The principle of latent execution is not just a feature; it is the engine that drives the entire AI-Native paradigm. The ability to prototype, compose, and execute complex workflows without first writing deterministic code is the fundamental enabler of the fluidity and resilience that an AI-Native system requires. It is what allows an AI to act as the architect, planner, and executor of its own processes.
+The principle of latent execution is not just a feature; it is the engine that drives the entire AI-Native paradigm. The ability to prototype, compose, and execute complex workflows without first writing deterministic code is the enabler of the fluidity and resilience that an AI-Native system requires. It is what allows an AI to act as the architect, planner, and executor of its own processes.
 
 This concept is the key to moving beyond systems that simply _use_ AI as a tool, to systems that are fundamentally built _in the medium_ of AI.
 
@@ -67,4 +67,4 @@ This concept is the key to moving beyond systems that simply _use_ AI as a tool,
 >
 > - [105: Concept/AI-Native](./105_concept_ai_native.md)
 
-The next document, [105: Concept/AI-Native](./105_concept_ai_native.md), explores this architectural shift in detail.
+[105: Concept/AI-Native](./105_concept_ai_native.md) explores this architectural shift in detail.

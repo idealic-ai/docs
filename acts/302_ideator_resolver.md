@@ -1,6 +1,6 @@
 # 302: Ideator/Resolver
 
-**System: Resolver** is a powerful `Idea Transformer` that enables the composition and dynamic linking of `Ideas`. As a critical companion to [System: Storage](./301_ideator_storage.md), the Resolver's purpose is to take a high-level `Idea` containing references to other `Ideas` and transform it into a complete, self-contained, and executable `Idea` with all references resolved.
+**System: Resolver** is an `Idea Transformer` that enables the composition and dynamic linking of `Ideas`. As a critical companion to [System: Storage](./301_ideator_storage.md), the Resolver's purpose is to take a high-level `Idea` containing references to other `Ideas` and transform it into a complete, self-contained, and executable `Idea` with all references resolved.
 
 This mechanism allows `Ideas` to become modular and reusable building blocks, preventing data duplication and enabling the creation of complex systems from simpler, versioned components.
 
@@ -32,4 +32,4 @@ _Example: A schema composing multiple `Ideas` using `allOf`._
 
 ### 3.2. Deep (Recursive) Resolution
 
-The resolution process is recursive. If a resolved `Idea` itself contains further references, the Resolver will continue to fetch and embed them until the entire dependency graph is resolved, resulting in a final `
+The resolution process is recursive. If a resolved `Idea` itself contains further references, the Resolver will continue to fetch and embed them until the entire dependency graph is resolved, resulting in a final `Idea` that contains all necessary information.

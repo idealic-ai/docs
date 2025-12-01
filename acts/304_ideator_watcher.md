@@ -12,7 +12,7 @@
 
 ## 1. Introduction
 
-This document defines the **Watcher Protocol**, a critical component for building asynchronous, event-driven workflows within the ecosystem. A `Watcher` (also referred to as a Subscriber) is a persistent service that observes a `Storage` provider for changes and triggers new processes in response.
+The **Watcher Protocol** is a component for building asynchronous, event-driven workflows within the ecosystem. A `Watcher` (also referred to as a Subscriber) is a persistent service that observes a `Storage` provider for changes and triggers new processes in response.
 
 It is the primary mechanism for bridging the gap between stateful and stateless services and for handling long-running tasks that cannot be managed in a simple request-response cycle.
 
@@ -35,4 +35,4 @@ Consider a `Plan` that involves a step that may take hours or days to complete (
 
 Instead, the `Plan` can delegate the long-running task to an external service and then terminate. That external service, upon completion, writes its result back to `Storage`. A `Watcher`, configured to listen for this specific result, can then trigger a _new_ `Plan` to continue the workflow.
 
-This pattern allows for highly resilient and scalable processes that are not constrained by the memory or lifespan of any single runtime. It enables true asynchronicity by breaking down a long process into a series of smaller, event-triggered transactions.
+This pattern allows for resilient and scalable processes that are not constrained by the memory or lifespan of any single runtime. It enables true asynchronicity by breaking down a long process into a series of smaller, event-triggered transactions.

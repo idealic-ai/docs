@@ -12,7 +12,7 @@ A :term[Tool]{canonical="Tool"} is a schema-driven interface that defines a stru
 
 ## What Are Tools?
 
-**Tools are the cornerstone** of agent action systems. They enable a new type of capability: **action selection in context** - allowing agents to choose and execute appropriate behaviors based on the situation at hand.
+**Tools are the foundation** of agent action systems. They enable a new type of capability: **action selection in context** - allowing agents to choose and execute appropriate behaviors based on the situation at hand.
 
 Tools provide:
 
@@ -210,13 +210,13 @@ When an agent decides to use a tool, it creates a :term[Call]{canonical="Call"}�
 >
 > - :term[004: Agent/Call]{href="./004_agent_call.md"}
 
-This mechanism allows a simple, core tool schema to be used in powerful and flexible ways. The :term[Call]{canonical="Call"} becomes a rich instruction that specifies _what_ to do (the tool and its parameters) and _how_ to do it (the meta-properties). The final piece of the puzzle is understanding the different ways a :term[Call]{canonical="Call"} can actually be executed.
+This mechanism allows a simple, core tool schema to be used in flexible ways. The :term[Call]{canonical="Call"} becomes a rich instruction that specifies _what_ to do (the tool and its parameters) and _how_ to do it (the meta-properties). The final piece of the puzzle is understanding the different ways a :term[Call]{canonical="Call"} can actually be executed.
 
 ## Latent and Explicit Execution
 
 Once a :term[Call]{canonical="Call"} is generated, the system needs to execute it. A `Tool` schema, being just an interface, doesn't contain the execution logic itself. Instead, its execution can happen in one of two ways. The default is **latent execution**, where the LLM uses its own internal reasoning to generate the output, which is ideal for language or knowledge-based tasks. For actions that require interaction with the outside world—like calling an API or accessing a database—a `Tool` must be connected to a deterministic code function. This explicit implementation is called an **:term[Activity]{canonical="Activity"}**.
 
-The separation of the :term[Tool]{canonical="Tool"} interface from the :term[Activity]{canonical="Activity"} implementation is a core design principle. It allows an agent's capabilities to be defined and reasoned about abstractly, while the underlying execution logic can be swapped or updated independently. The next document, :term[003: Agent/Activity]{href="./003_agent_activity.md"}, describes how :term[Activities]{canonical="Activity"} provide the concrete logic for :term[Tool]{canonical="Tool"}s.
+The separation of the :term[Tool]{canonical="Tool"} interface from the :term[Activity]{canonical="Activity"} implementation is a core design principle. It allows an agent's capabilities to be defined and reasoned about abstractly, while the underlying execution logic can be swapped or updated independently. :term[003: Agent/Activity]{href="./003_agent_activity.md"} describes how :term[Activities]{canonical="Activity"} provide the concrete logic for :term[Tool]{canonical="Tool"}s.
 
 > Sidenote:
 >

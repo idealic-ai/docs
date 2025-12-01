@@ -67,4 +67,4 @@ greetUser({
 
 :term[Variables]{canonical="Variable"} provide the mechanism for wiring data to tools within a single, atomic request. However, to build complex agents that execute tasks over multiple steps, a more persistent form of memory is required—a "scratchpad" where results can be stored and accessed across multiple, independent requests in an execution loop.
 
-The next document, [008: Agent/Output](./008_agent_output.md), describes the mechanics of how results are written to the context.
+[008: Agent/Output](./008_agent_output.md) describes the mechanics of how results are written to the context.
