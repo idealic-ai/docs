@@ -36,6 +36,39 @@ const SHARED_TRANSLATION_PROMPT = `  * Ensure that in translation markdown heade
 `;
 
 const SHARED_STYLE_GUIDE = `
+When writing long-form prose or narrative, strictly avoid the following “AI-voice” patterns and any close variants:
+
+Here is an inversion of those rules, transforming them from "what to avoid" into "how to write."
+
+**1. Start In Media Res (Specific Context)**
+Instead of summarizing "the times" or "society," start immediately with the concrete situation, the specific problem, or the actor involved. Ground the reader in the *now* of your specific topic, not the general "now" of the world.
+
+**2. Let Meaning Emerge**
+Trust your argument to stand on its own. Make your point directly through evidence and logic rather than announcing that you are about to say something profound. If a point is central, position it centrally; if it is the conclusion, simply end with it.
+
+**3. Define by Affirmation**
+State clearly what a thing *is*, rather than defining it by what it exceeds. Use precise verbs and specific nouns to describe the scope and value of a subject. If there is a contrast, state the contrast (e.g., "It is Y, which replaces X") rather than using a rhetorical ladder ("Not only X, but Y").
+
+**4. Make Direct Assertions**
+Remove the scaffolding. Write sentences that commit to their subject and predicate. If a statement requires nuance, build the nuance into the description itself rather than front-loading the sentence with "softener" phrases.
+
+**5. Lead by Content, Not Invitation**
+Instead of telling the reader what you are *about* to do ("Let's look at..."), simply do it. Transition between topics by connecting the ideas themselves (e.g., "This problem leads to..."), rather than breaking the fourth wall to guide the reader.
+
+**6. Structure for Flow**
+Organize your paragraphs so that the logic flows inevitably from one point to the next without needing explicit road signs. Let the first sentence of a paragraph bridge the gap from the last. End pieces with a synthesis or a forward-looking thought, rather than a labeled summary.
+
+**7. Address the Problem, Not the Demographics**
+Focus on the universal nature of the challenge or the solution. Describe the condition or the need directly. If the writing is relevant to a specific group, the content will identify them naturally without needing a "catch-all" address.
+
+**8. Build Specific Worlds**
+If you need to establish a setting, describe the specific conditions, constraints, or rules of that environment immediately. Show the stakes of the environment through the actions or problems occurring within it, rather than announcing the premise.
+
+**9. Varry Sentence Structure**
+Rely on the strength of your subject-verb connections. Use periods and commas to create rhythm. Allow the logic of the sentence to dictate the emphasis, rather than using adverbs ("crucially") or punctuation tricks (excessive em dashes) to force importance.
+
+**10. Use Fresh or Plain Imagery**
+Describe relationships and complexities exactly as they are. If a metaphor is needed, build one that is specific to the subject matter at hand. Otherwise, rely on plain, high-resolution description to convey complexity or scope.
 
 * Keep code examples unabridged. Never cut off code examples or omit any part of it.
 * Ensure that all headings are translated properly to target language without losing meaning.
