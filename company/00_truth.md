@@ -27,7 +27,29 @@ Documentation is work. We do this work upfront because **we cannot jump immediat
 - **Pre-Computation:** A good document is "pre-computed" thinking. It organizes chaos into a structure that maps cleanly to **downstream artifacts** (Classes, Slides, Procedures).
 - **Decomposition:** Big ideas must be broken down. A document that grows too large should be refactored into smaller, atomic documents, just as we refactor monolithic code.
 
-## 4. The Standards of Voice
+## 4. Content Integrity
+
+To ensure the document is actionable and unambiguous:
+
+- **Segregation of Uncertainty:** Do not mix known intent with uncertain implementation. Clearly demarcate firm decisions from areas of exploration or risk.
+- **Temporal Precision:** Use the present tense for specifications ("The system _validates_ input"). Use the future tense _only_ for unimplemented roadmaps. Never mix them in the same paragraph.
+- **Concrete Anchoring:** Every abstract concept must be immediately followed by a concrete example, scenario, or data structure. Abstractions without examples are hallucinations waiting to happen.
+- **Falsifiability:** Avoid vague adjectives like "fast," "scalable," or "user-friendly." Use falsifiable constraints ("renders in <16ms," "stateless," "max 3 clicks").
+- **Negative Space:** Define the boundaries of a system by explicitly stating what it _does not_ handle. Constraints are as important as capabilities.
+
+## 5. Composability
+
+We build documents as modular primitives designed for synthesis.
+
+- **Atomic Scope:** A single document must not attempt to explain the whole. It focuses on one domain and relies on combination with others to solve complex problems.
+- **Generative Utility:** Value is created at the intersection of documents. Combining distinct contexts (e.g., Technical Guidelines + Feature Spec) generates novel solutions or targeted pitches on demand.
+- **LLM Optimization:** We structure information for machine composition. LLMs excel at joining contexts; our role is to provide distinct, high-fidelity nodes that can be assembled into larger, cohesive truths.
+
+## Summary
+
+We write to think. We write to bind ourselves to truth. We write to build.
+
+## Appendix: The Standards of Voice
 
 We define our style by **direct assertion** and the rejection of "AI fluff."
 
@@ -39,17 +61,3 @@ We define our style by **direct assertion** and the rejection of "AI fluff."
 6.  **Flow Without Signs:** Let logic bridge paragraphs. **Avoid:** Explicit road signs or labeled summaries.
 7.  **Universal Context:** Address the condition/need directly, not the demographics. Build the world and stakes immediately.
 8.  **Respect the Reader:** Assume a responsible adult. **Avoid:** Unsolicited moral lectures or safety guardrails.
-
-## 5. Content Integrity
-
-To ensure the document is actionable and unambiguous:
-
-- **Segregation of Uncertainty:** Do not mix known intent with uncertain implementation. Clearly demarcate firm decisions from areas of exploration or risk.
-- **Temporal Precision:** Use the present tense for specifications ("The system _validates_ input"). Use the future tense _only_ for unimplemented roadmaps. Never mix them in the same paragraph.
-- **Concrete Anchoring:** Every abstract concept must be immediately followed by a concrete example, scenario, or data structure. Abstractions without examples are hallucinations waiting to happen.
-- **Falsifiability:** Avoid vague adjectives like "fast," "scalable," or "user-friendly." Use falsifiable constraints ("renders in <16ms," "stateless," "max 3 clicks").
-- **Negative Space:** Define the boundaries of a system by explicitly stating what it _does not_ handle. Constraints are as important as capabilities.
-
-## Summary
-
-We write to think. We write to bind ourselves to truth. We write to build.

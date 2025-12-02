@@ -1,55 +1,63 @@
-# 00: Our Guide to Writing
+# 00: Company/Writing Standard
 
-> The Rulebook
-> This guide is our promise that every document we write is the single source of truth—clear, logical, and without any confusing robot-speak.
+> Our Rule
+> These rules make sure our documents are the ultimate source of truth. They must be perfectly clear, logical, and written by a human, not a confused robot.
 
-## 1. A Document is a Decision
+## 1. A Document is the Truth
 
-When we write a document, we are making a final decision, not just talking about possibilities.
+A document isn't a conversation; it's a **final choice**.
 
-- **Goal First, Method Second:** We have to agree on exactly _what_ we want to do before we figure out _how_ to do it. This goal is our only measure of success, and it must be kept separate from the details of building it.
-- **Make a Choice:** The point isn't to list all the options, but to pick one. If we can't decide, we must write down exactly what information we need to make that choice.
-- **Facts, Not Fluff:** Never hide how complex something is just to make it sound easy. And never use persuasive language to try and sell an idea. The only thing that matters is being accurate.
-- **All the Details:** The main document—our source of truth—must contain all the necessary details, even the complicated bits. It's okay to use expert terms to be precise. We can always create simpler versions for other people later, but the original must be complete.
-- **Always Up-to-Date:** Think of our documents as living blueprints. If a plan changes, the document is the very first thing that gets updated.
+- **The Goal Comes First:** First, figure out *what* you're trying to do. Only after that can you think about *how* to do it. The 'what' is your goal, and it's the only way to know if you've succeeded. Don't mix it up with the steps you take to get there.
+- **Make the Call:** The point of a document is to state a final decision, not to list all the options. If you're stuck and can't decide, the document should clearly explain what information you're missing.
+- **Be Accurate, Not Convincing:** Don't hide the complicated parts (that's like lying), and don't try to 'sell' an idea with fancy words. Just state the facts. Truth is the only thing that matters.
+- **The Master Blueprint:** The main document—our source of truth—needs to contain every single detail, even if it uses tricky technical words. We can make simpler versions for others later, but the original must be complete.
+- **Always Up-to-Date:** Our documents are alive. If our plan changes, the document must be the very first thing that gets updated.
 
-## 2. Straight Lines and Untangled Knots
+## 2. Clear Order and Connections
 
-Writing helps us find the flaws in our ideas. The act of writing is how we debug our own thinking.
+Writing helps us find mistakes in our own ideas. It's like debugging a computer program, but for our brain.
 
-- **Tell a Straight Story:** Explain your idea from start to finish. If you find yourself jumping back and forth, it’s a big clue that your idea has tangled parts that depend on each other in a confusing circle.
-- **Untangle the Knots:** Rework those circular ideas until each part makes sense on its own. If a concept is so tangled that you can't separate the parts, draw a diagram of it. A picture can show the whole messy loop as one simple shape.
+- **A to B to C:** Explain things in order, from beginning to end. If you have to keep jumping back to explain something you mentioned earlier, it means your idea has a tangled loop, like a hose that’s been knotted up.
+- **Untangle the Knots:** Unravel messy, circular ideas so each part can be understood on its own. If you have a loop you just can't get rid of—like the chicken and the egg—draw a picture of it. A diagram can show the whole loop as one single, understandable thing.
 
-## 3. Why We Write First
+## 3. Why This Helps Us Work
 
-Writing is hard work, but we do it before anything else. It's because you can't just jump into building something complex without a plan. Things like computer code or a final presentation are hard to change once you've started making them. Writing forces us to figure out all the confusing parts *before* we get to the expensive and difficult stage of actually building.
+Writing documents is hard work, but we do it first for a good reason. You can't just start building something complicated without a plan. Writing code is like using paint that dries instantly—it’s hard to make big changes. Writing is our chance to figure everything out with a pencil before starting the expensive, permanent work.
 
-- **Thinking Ahead:** A good document is like doing all the hard thinking for a project upfront. It takes a jumble of ideas and organizes them into a clear plan that can easily be turned into code, a slideshow, or a set of rules.
-- **Break It Down:** Big ideas are easier to handle in small pieces. If one document becomes too big and complicated, we split it into several smaller, simpler ones—just like a programmer breaks a giant program into smaller parts.
+- **Thinking Ahead:** A great document is like doing all your thinking ahead of time. It takes a messy cloud of ideas and turns it into an organized plan. This plan can then be easily turned into real things, like code or presentation slides.
+- **Break It Down:** You have to break big ideas into smaller pieces. If a document gets too long and complicated, it should be split into several smaller, focused documents, just like you’d break a huge program into smaller parts.
 
-## 4. How We Sound
+## 4. Keeping the Content Honest and Clear
 
-Our writing style is simple: get straight to the point and avoid the fluffy, vague language that sounds like it was written by a boring robot.
+To make sure a document is useful and perfectly clear:
 
-1.  **Get Right to It:** Jump straight into the specific problem. **Don't start with:** big, general statements like, “In today’s fast-paced world…” or explaining really basic stuff.
-2.  **Be Confident, Not Vague:** State clearly what something *is*. **Don't say:** “It depends” without explaining exactly what it depends on.
-3.  **Let Ideas Flow:** Connect your thoughts naturally. For example, say, “This causes another problem…” instead of, “Now, let’s look at the next section…”
-4.  **Explain Why:** Your logic should be strong enough on its own. **Don't say:** something is good just because “everyone does it” or try to make it sound important by adding words like “crucially.”
-5.  **Be Clear and Normal:** Use simple, everyday words. Talk like a real person explaining something to a friend. **Don't use:** stuffy, corporate words like “utilize” when you can just say “use.”
-6.  **Connect Your Paragraphs:** Make sure your writing flows smoothly from one idea to the next so you don't need to add signs like “In conclusion…”
-7.  **Focus on the Problem:** Talk about the situation or the need itself, not the type of person who has the problem. Explain what's at stake right away.
-8.  **Trust Your Reader:** Assume the person reading is smart. **Don't:** give them moral lectures or add unnecessary warnings.
+- **Separate Facts from Guesses:** Keep what you *know* separate from what you're *not sure about*. Make it obvious which parts are final decisions and which parts are still just ideas we need to explore.
+- **Be Clear About Time:** When you describe how something works, use the present tense (like 'The app *checks* the password'). Only use the future tense ('The app *will check* fingerprints') for things we plan to build later. Don't mix them together.
+- **Always Give an Example:** Every time you talk about a big, general idea, you must immediately give a real, specific example. An idea without an example is just a daydream that can cause confusion.
+- **Use Testable Facts:** Don't use fuzzy words like 'fast' or 'easy to use.' Instead, give specific, testable rules. For example, instead of 'fast,' say 'loads in less than one second.' That way, we can actually measure if we succeeded.
+- **Draw the Line:** Clearly state what your system or idea *doesn't* do. Knowing the limits is just as important as knowing what it can do. It's like drawing the border on a map so everyone knows where it ends.
 
-## 5. Keeping It Real
+## 5. Making Documents That Work Together
 
-To make sure our documents are useful and impossible to misunderstand:
+We write our documents like ingredients for a recipe. Each one is a simple, separate part that can be combined with others to create something new.
 
-- **Separate Facts from Guesses:** Keep the things you've decided on separate from the things you're still exploring. Clearly mark what is a firm plan and what is still a question.
-- **Use the Right Tense:** When describing how something works, use the present tense (e.g., “The system *checks* the password”). Only use the future tense (“The system *will check*…”) for plans you haven't built yet. Never mix the two in the same thought.
-- **Show, Don't Just Tell:** Whenever you explain a big, abstract idea, immediately give a specific example to show what you mean. Without an example, an idea is just a daydream.
-- **Use Real Numbers, Not Vague Words:** Avoid fuzzy words like “fast” or “easy.” Instead, use specific goals that can be tested, like “loads in under 1 second” or “takes less than 3 clicks.”
-- **Say What It *Doesn't* Do:** It’s just as important to explain the limits of a system as it is to explain what it can do. A boundary is a key part of the design.
+- **One Thing at a Time:** One document shouldn't try to explain everything. Each document should focus on just one topic. You solve big problems by combining these different 'ingredient' documents.
+- **Mix and Match:** The real magic happens when you combine documents. Mixing a `Tech Guide` with a `New Feature Plan` can help you invent new solutions or explain an idea to a specific person instantly.
+- **Write for the Robots:** We organize our documents so computers, especially advanced AI, can understand them. An AI is great at snapping these 'ingredient' documents together to create a big, clear picture of the truth for us.
 
-## In a Nutshell
+## Summary
 
-We write to make our thinking clear. We write to hold ourselves to the truth. We write so we can build great things.
+We write to think clearly. We write to stick to the facts. We write to build great things.
+
+## Appendix: Our Style Guide
+
+We write by being direct and avoiding fluffy, robotic-sounding language.
+
+1.  **Get Straight to the Point:** Start with the actual problem. **Don't:** Give a history lesson or explain things everyone already knows.
+2.  **State Facts, Don't Guess:** Say what something *is*. Make a clear statement. **Don't:** Say "it depends" without explaining what it depends on.
+3.  **Let the Idea Lead:** Connect your thoughts smoothly. **Don't:** Say things like "Now, let's look at..." or "It is important to note."
+4.  **Show, Don't Just Tell:** Let your logic and facts make the point. **Don't:** Just say your idea is good because it's an "industry standard" or add words like "Clearly..." to sound more important.
+5.  **Be Specific and Normal:** Use simple, clear descriptions. Talk like a real person. **Don't:** Use stiff, corporate words like "utilize" or "leverage."
+6.  **Trust Your Flow:** Let one idea naturally lead to the next. **Don't:** Use titles like "Summary" at the end of every section.
+7.  **Focus on the Problem:** Talk about the core challenge, not who it affects. Just explain the situation and what's at stake.
+8.  **Talk to an Equal:** Assume the person reading is smart and responsible. **Don't:** Preach or add unnecessary warnings.
