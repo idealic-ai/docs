@@ -80,8 +80,6 @@ Quantitative data like "calls" is encoded as **Inline JSON** within a string fie
 :::
 :::column{title="The LLM's Response"}
 
-The `calls` field contains a JSON string, as defined by the system prompt.
-
 ```json
 {
   "advisors": [

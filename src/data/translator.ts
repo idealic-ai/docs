@@ -169,6 +169,20 @@ ${SHARED_STYLE_GUIDE}
 
 ${targetLang.includes('en') ? '' : SHARED_TRANSLATION_PROMPT}
 
+${
+  !targetLang.includes('en')
+    ? `
+CRITICAL INSTRUCTION FOR SIMPLIFIED TRANSLATION:
+You are currently performing a "Simplified Translation". In this mode, **SIMPLIFICATION IS THE ABSOLUTE PRIORITY** over strict translation accuracy.
+
+1. **Retell, Don't Just Translate**: Do not translate sentence-by-sentence. Understand the meaning of the paragraph, then retell it in simple, flowing natural language.
+2. **Drop Complexity**: Break down complex clauses. Replace high-register or academic words with common, everyday words.
+3. **Avoid "Translationese"**: The result must sound like it was originally written in the target language. Avoid calques or awkward sentence structures inherited from English.
+4. **Terminology**: Adhere to the required terminology (defined in previous instructions), but ensure the surrounding text remains simple and accessible.
+`
+    : ''
+}
+
 
 IMPORTANT: When translating, ensure that you are following style guides, especially around syntax, structure and nesting of markdown/diagrams. Keep empty nodes in diagram empty.
 
