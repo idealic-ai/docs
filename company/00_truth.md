@@ -12,6 +12,8 @@ A document is a **decision**, not a discussion.
 - **Precision over Persuasion:** Never simplify complexity ("Do Not Lie") and never use persuasive language ("Do Not Sell"). Accuracy is our only metric.
 - **Maximum Fidelity:** The source of truth must be internally self-sufficient and fully nuanced. It may use complex jargon to establish specific concepts. We simplify for the audience later; we never simplify the source.
 - **Evergreen by Design:** Documents are living specifications. If the concept changes, the document changes first.
+- **Assertive Finality:** A finalized document permits no unresolved questions or ambiguity. While open questions mark a draft, the final standard is defined by total assertiveness. Confusion is a failure of the document.
+- **Truth over Correction:** We do not create historical records of errors. Instead of explaining why a previous misconception was wrong, focus entirely on stating the correct reality. Present the truth, not the correction.
 
 ## 2. Linearity & Dependencies
 
