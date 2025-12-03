@@ -35,6 +35,7 @@ This document is the bridge between high-level vision and ground-level implement
 - [014: Agent/Delegate](./014_agent_delegate.md)
 - [015: Agent/Scopes](./015_agent_scopes.md)
 - [016: Agent/Meta](./016_agent_meta.md)
+- [017: Agent/Expert](./017_agent_expert.md)
 
 ### Concept
 

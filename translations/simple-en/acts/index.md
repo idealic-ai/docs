@@ -2,23 +2,23 @@
 
 ---
 
-These documents are the official blueprints that explain our team's plan for building the system. They are the main guide for all the technical rules, setting the standards that we promise to follow and build on.
+These documents are the official blueprints for how we build our system. They're like the rulebook that explains all the technical details, setting the standards that we promise to follow as we create.
 
 > Sidenote:
-> [Idealic](http://idealic.ai) is a project that aims to set ideas free.
+> [Idealic](http://idealic.ai) is a project with one big goal: to set ideas free.
 >
-> - _Why?_ [Manifesto of Co-Liberation](../manifesto/)
-> - _What?_ [Edict of Autonomy](../edict/)
-> - _How?_ **Acts of Emergence**
+> - To understand *Why* we're doing this, read the [Manifesto of Co-Liberation](../manifesto/).
+> - To learn *What* we're building, check out the [Edict of Autonomy](../edict/).
+> - To see *How* it all works, you're in the right place: the **Acts of Emergence**.
 
-This document is the bridge connecting the big vision with the hands-on building process. It's the 'How' that complements the 'Why' ([Manifesto of Co-Liberation](../manifesto/)) and the 'What' ([Edict of Autonomy](../edict/)). Reading these Acts will give you a full technical understanding of how every part of the system is built and works together.
+These "Acts" are the bridge connecting our big dream to the actual code. They work together with the [Manifesto of Co-Liberation](../manifesto/) (which explains *Why* we're doing this) and the [Edict of Autonomy](../edict/) (which explains *What* we're building). By reading these documents, you'll get a full picture of how the system works and how every piece is put together.
 
 ---
 
 ### Agent
 
 > Sidenote:
-> This section is about what our digital helpers (Agents) can do and the instructions they follow to get things done.
+> This part explains what our digital helpers (called Agents) can do and the step-by-step ways they carry out their tasks.
 
 - [001: Agent/Request](./001_agent_request.md)
 - [002: Agent/Tool](./002_agent_tool.md)
@@ -36,11 +36,12 @@ This document is the bridge connecting the big vision with the hands-on building
 - [014: Agent/Delegate](./014_agent_delegate.md)
 - [015: Agent/Scopes](./015_agent_scopes.md)
 - [016: Agent/Meta](./016_agent_meta.md)
+- [017: Agent/Expert](./017_agent_expert.md)
 
 ### Concept
 
 > Sidenote:
-> This explains the basic building blocks of information and the rules for how all the different parts of the system talk to each other.
+> This section lays out the basic rules for how information is organized and how all the different parts of the system talk to each other. Think of it as the grammar and vocabulary for our digital world.
 
 - [101: Concept/Idea](./101_concept_idea.md)
 - [102: Concept/Sovereignty](./102_concept_sovereignty.md)
@@ -56,7 +57,7 @@ This document is the bridge connecting the big vision with the hands-on building
 ### Ideas
 
 > Sidenote:
-> This describes the simplest, most essential parts that make up an 'idea' in our system.
+> Here, we break down what an "Idea" is made of in our system, describing its simplest and most essential parts.
 
 - [201: Idea/Record](./201_idea_record.md)
 - [202: Idea/Vessel](./202_idea_vessel.md)
@@ -67,7 +68,7 @@ This document is the bridge connecting the big vision with the hands-on building
 ### Ideator
 
 > Sidenote:
-> This explains the main support systems—like the power plants and roads of a city—that everything else is built on.
+> This part is about the foundational systems that support everything else. It’s like the engine room and plumbing that keeps the whole project running smoothly.
 
 - [301: Ideator/Storage](./301_ideator_storage.md)
 - [302: Ideator/Resolver](./302_ideator_resolver.md)
@@ -78,4 +79,4 @@ This document is the bridge connecting the big vision with the hands-on building
 
 [Read the full glossary](./000_glossary.md)
 
-Before you contribute, please check out the [Style Guide for Acts](./000_style_guide.md), which helps us write in a way that AI can easily understand.
+If you want to help write these documents, please check out our special [Style Guide for Acts](./000_style_guide.md) that makes it easy for AI to read.

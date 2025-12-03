@@ -2,6 +2,12 @@
 
 This glossary defines the key concepts used in the Idea Protocol and its related systems.
 
+- :dfn[Advisor]{canonical="Advisor" href="./017_agent_advisor.md"}: A specialized context message that defines a persona or analytical model. It instructs the agent to generate a structured "opinion" or confidence score _before_ selecting a :term[Tool]{canonical="Tool"} or generating an :term[Output]{canonical="Output"}.
+
+  > Sidenote:
+  >
+  > - [017: Agent/Advisor](./017_agent_advisor.md)
+
 - :dfn[Idea]{canonical="Idea" href="./101_concept_idea.md"}: A self-contained, stateful data triplet (`schema`, `solution`, `context`) representing a unit of knowledge. It's a persistent, computational primitive, not an ephemeral prompt.
 
   > Sidenote:

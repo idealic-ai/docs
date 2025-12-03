@@ -102,6 +102,17 @@ Tool.register('sentimentAnalysis', {
 :::
 ::::
 
+## Tool Overriding
+
+Tools are identified by their unique `_tool` name. If a request contains multiple definitions for the same tool (e.g., in the message history), the **latest definition takes precedence**.
+
+This "last-one-wins" behavior enables powerful composition patterns:
+
+- **Default & Override**: Agents can be initialized with a standard set of tools, which can then be customized for specific tasks by simply appending a new definition.
+- **Contextual Adaptation**: A tool's description or parameters can be refined mid-conversation to better suit the evolving context.
+
+When a conflict occurs, the earlier definition is ignored and excluded from the final schema presented to the LLM.
+
 ## Composing Schemas for the LLM
 
 An agent doesn't just work with tools; it often needs to produce a final, structured output once its task is complete. To handle this, the agent runtime composes the schemas for all available :term[Tool]{canonical="Tool"}s with a user-defined _output schema_. This creates a single, unified schema that is provided to the LLM in a :term[Request]{canonical="Request"}.
