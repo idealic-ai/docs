@@ -1,117 +1,188 @@
 # 802: Package/UI
 
 > [!DEFINITION] Tree Style Architecture
-> This is a very fast and flexible system for drawing user interfaces on the screen. It's speedy because of its special 'controller' brain, its ability to check every little piece for correctness, and a smart system that understands how different parts depend on each other.
+> An engine that automatically builds user interfaces (the part of an app you see and interact with) directly from a data blueprint, called a **Schema**. The Schema acts like the frame of a house. You can then use separate stylesheets to paint and decorate the house, and different "adapters" to build it with various tools, all without changing the original frame.
 
 > Sidenote:
 > - Requires:
 >   - :term[800: Package/Schemistry]{href="./800_package_schemistry.md"}
 
-The **UI Package** is a toolkit that uses this **Tree Style Architecture**. Think of it as an engine that automatically builds user interfaces, not just simple forms. It's an **Auto-Design Engine**.
+The **UI Package** is a system where the **Structure of your data IS the Design of your app**. Instead of building every screen by hand, this engine looks at your data's blueprint (the JSON Schema) and builds the user interface for you automatically. If you change the blueprint, like adding a new field, the interface changes instantly to match.
 
-## Vision: Beyond Forms
+## Core Idea: The Blueprint is the Only Truth
 
-This system was inspired by tools that build forms automatically from a set of rules, but it goes much further. It works like a powerful template engine: you give it a **Schema** (the blueprint for your data) and the **Data** itself (the actual information), and it automatically builds the right user interface for it.
+In many apps, the data and the user interface are built separately and can fall out of sync. This package fixes that by making the **Schema** the single, undisputed plan that the interface must follow.
 
-This "Auto-Design" power means the same information can be shown in different ways:
+- **Built on the Fly**: The UI isn't fixed or pre-built. It's created directly from the Schema. Change the Schema, and the UI changes with it.
+- **Always Correct**: Because the UI is just a visual representation of the Schema, you get rid of bugs where the screen doesn't match the data behind it.
 
-- **Edit Mode**: A form with text boxes and buttons, where you can change the information.
-- **Show Mode**: A clean, read-only page that just displays the information, like a finished profile page.
+## Easy Redecorating
 
-This way, the Schema acts as the single source of truth that controls how information is both entered and displayed.
+While the Schema decides _what_ to show, a **Stylesheet** decides _how_ it looks. This separation lets you completely redesign the app without touching the data's structure.
 
-## Core Architecture
+- **A Layer for Looks**: Stylesheets are like a set of instructions that tell the system how to style each part of the blueprint.
+- **Swappable Themes**: You can change the entire layout, colors, and feel of the app just by swapping out the stylesheet. It’s like putting a new theme or skin on your app.
 
-### A Smart System of Interconnected Properties
+## Adapters: Use Any Tools You Like
 
-The whole system is built around a central controller that can learn new tricks. Instead of having a fixed set of features, different parts called **Properties** can be plugged in. These Properties tell the controller what they do and what other Properties they need to work, creating a network of dependencies.
+The engine doesn't care what UI toolkit you use. It uses **Adapters** to translate its abstract plan into real UI elements you can see on the screen.
 
-- **Self-Registration**: Properties (like `data`, `schema`, or `styles`) are like building blocks that announce themselves to the system when they're added.
-- **Dependency Declaration**: Each Property declares what it needs. For example, the `styles` property might say, "I need to know about `vars` (variables) and `settings` to do my job."
-- **Chain Reactions**: When a basic property changes (like the data), the controller automatically updates all the other properties that depend on it, in the right order. This keeps everything in sync.
-- **Type Safety**: The system is smart enough to figure out its own complete set of rules based on all the properties that have been plugged in.
+- **Connects to Design Systems**: An adapter can connect to popular toolkits (like Material UI or Ant Design), turning your simple blueprint into beautiful, ready-made components.
+- **Works Anywhere**: There's a basic adapter that can turn any Schema into a simple, clean HTML webpage, so it always works out of the box.
 
-### User-Defined Properties
+## Different Views for Different Jobs
 
-This plug-in system makes it easy for developers to add their own custom logic. They can create new properties to handle special tasks, such as:
+You can show the same data in different ways using **View Modes**.
 
-- **Slots**: Deciding which icon or button to show based on the current `styles`.
-- **Errors**: Checking the `data` against the `schema` to find any mistakes.
-- **Custom Logic**: Creating special behaviors, like showing a warning message if a user enters a specific value.
+- **Edit Mode**: Creates a form with text boxes, buttons, and dropdowns, so you can change the data.
+- **Show Mode**: Creates a clean, read-only page for just looking at the data.
 
-### A Themed System of Components
+This means one data blueprint can be used for multiple purposes, so you don't have to build separate screens for creating and viewing information.
 
-The engine that builds the UI isn't locked into one specific look. It uses a **Theme** system that acts as a translator, turning abstract data into actual pixels on the screen. Here’s how it works:
+## Core Concepts
 
-1.  **Schema**: The blueprint that defines the structure.
-2.  **Controller**: The project manager that processes the blueprint and data, figuring out the exact `state` for every part of the UI.
-3.  **Vars**: A style guide that tells the system which tiny components, called `Atoms`, to use for different parts, known as `slots`.
-4.  **Atoms**: The most basic UI pieces, like an input box or a label.
-5.  **Fields**: The construction crew that assembles the `Atoms` into a complete UI element based on the style guide (`vars`).
+### A Smart System of Cause and Effect
 
-This separation means you can change the look and feel at any level, from how data is processed to the final button you see on the screen.
+The engine is managed by a central "brain" where different modules or "workers" report for duty. Each worker manages one piece of information (like data, styles, or settings) and tells the brain what other workers it depends on. This creates a chain reaction.
 
-## State Management
+- **Workers Announce Themselves**: When a new module is added, it tells the brain what it does.
+- **Workers Declare Needs**: A worker can say, "I can't calculate the `styles` until I know the `settings`."
+- **Automatic Updates**: If the `settings` change, the brain automatically tells the `styles` worker to recalculate. Everything stays in sync without any manual effort.
+- **Type Safety**: The system is smart enough to understand the types of all the data, making code safer and easier to write.
+- **Add New Skills Easily**: You can add new workers with new abilities without having to change any of the old ones.
 
-The controller is the central brain that manages all the information for the entire UI tree. It uses a technique called **Structural Sharing** to be as efficient as possible with computer memory.
+### Creating Your Own Workers
 
-- **Raw Props**: This is the original,unchanged information (`data`, `vars`). It's the source of truth.
-- **Current State (`controller.current`)**: The fully processed information that is sent out to all the UI components.
-- **Last State (`controller.last`)**: A snapshot of the previous state, used to quickly see what has changed.
+You can extend the system by creating and registering your own custom workers to add new features. This lets you build powerful tools that are specific to your app's needs. For example, you could create:
 
-Instead of each UI component keeping its own copy of the data, they all look at slices of the central `controller.current` state. This ensures a single source of truth and keeps the entire app consistent.
+- A `slots` worker that decides which UI pieces to show based on the `styles`.
+- An `errors` worker that checks the `data` against the `schema` to find mistakes.
+- A styling worker that changes the look of a field based on its value.
 
-## The Update & Derivation Pipeline
+### How the Interface Gets Built
 
-The controller follows the same set of steps for every update, making the whole process predictable and reliable.
+The system keeps everything separate, allowing the engine to work with any UI tools. The process is like baking a cake:
 
-1.  **Trigger**: An action, like a user typing or new data arriving, kicks off an `update`.
-2.  **Process**: The raw, new information is processed into the `controller.current` state.
-3.  **Distribute**: The controller compares the `current` state to the `last` state to find exactly which UI components have changed.
-4.  **Invalidate & Derive**:
-    - **`rederive()`**: It re-calculates any dependent properties (like `styles`) for the changed components.
-    - **`cascade()`**: It passes down any changes (like design variables) to all the components nested inside the one that changed.
-5.  **Render**: All the required screen updates are gathered up and performed in one single, efficient batch.
+1.  **Schema is the Recipe**: The recipe defines the ingredients and the structure of the cake.
+2.  **Controller is the Baker**: The baker reads the recipe and prepares a `state` (a plan) for every part of the cake.
+3.  **Variables are Decoration Choices**: These are notes like, "Use 'StarSprinkles' for the 'top' part of the cake."
+4.  **Atoms are the Raw Ingredients**: These are the basic UI building blocks, like an `<Input />` box or a `<Button />`.
+5.  **Fields are the Recipe Steps**: A `Field` is an instruction that looks at its decoration notes to see which ingredients (Atoms) it needs.
+6.  **Baking is Data-Driven**: A `Field` only uses an `Atom` if its part of the state actually has data for it. No empty decorations.
+7.  **Fields for Simple Inputs**: One `Field` might represent a single data point, like a text input with a label.
+8.  **Fields for Groups**: Another `Field` can be a container, like a big section of a form that organizes other child `Fields` inside it.
 
-### Architecture Diagram: Update Lifecycle
+This clean process allows you to customize every part of the system, from how data is handled to the final look of the app.
+
+### Smart Memory Management
+
+The brain (the controller) keeps track of the app's entire state in one central place. It cleverly remembers the original instructions, the current plan, and the last plan to see what's changed.
+
+- **Original Instructions (`controller.props`, `controller.data`)**: The original data you give the app. The system never changes this, so you always have a clean copy.
+- **Current Plan (`controller.current`)**: After processing the original instructions, the brain creates a new, clean plan. This is the single source of truth that all the UI components look at.
+- **Previous Plan (`controller.last`)**: A snapshot of the plan from the last update. The brain compares the `current` plan to the `last` one to see exactly what changed.
+
+**Sharing the Plan:**
+
+To save memory and keep things simple, every part of the UI shares the same central plan.
+
+- **No Copies**: Instead of giving every component its own copy of the data, they get a shortcut that points to their specific part of the main plan.
+- **Always Consistent**: Because everyone is looking at the same plan, the UI is always perfectly in sync.
+- **Parents Can See Children**: A bigger component (like a whole form section) can see the full plan for all the smaller components inside it.
+
+### The Update Process
+
+The system uses the same simple, predictable process for the first time it builds the app and for every single update after that.
+
+- **Trigger**: Something happens (like a user typing). A worker checks if the change is important. If not, it stops.
+
+- **Restart**: If the change matters, the brain kicks off a full update cycle.
+
+- **Store Instructions**: The brain reads the latest set of instructions for the app.
+
+- **Process Plan**: It turns those instructions into a new `current` plan.
+
+- **Assign Jobs**: The brain makes sure every part of the plan has a component ready to handle it.
+
+- **Distribute Changes**: The brain compares the new plan to the old one to find the exact parts that changed.
+
+- **Update and Recalculate**: It tells each changed part to update itself. This starts a chain reaction:
+  - `rederive()`: Any other parts that depend on the changed part are recalculated (e.g., styles change if data changes).
+  - `cascade()`: The change is passed down to any child components, which then run their own updates.
+  - Any component that ends up with a new look is added to a list of things to redraw.
+
+- **Draw to Screen**: After all the planning is done, the system updates all the changed parts on the screen in one single, quick batch.
+
+## Performance & Efficiency
+
+### Efficient Updates
+
+The system is built to be fast by doing as little work as possible.
+
+- **Finds Tiny Changes**: By comparing the old and new plans, the system knows exactly which tiny piece of the UI needs to be updated, instead of rebuilding everything.
+- **Only Recalculates What's Needed**: It only runs calculations for components that are actually affected by a change.
+- **One Update at a Time**: It gathers all the screen updates into a single list and does them all at once, so your screen doesn't flicker.
+- **No Wasted Renders**: If multiple changes happen to the same component in one cycle, it still only gets redrawn once.
+
+### Smart Inheritance
+
+The system smartly passes down settings (like CSS variables) from parent components to children, much like how styles work in CSS, without doing extra work.
+
+- **Dependency Map**: The system figures out which parts depend on which other parts once and saves that map. It uses this map to run updates in the right order every time.
+- **Lazy Inheritance**: A child component only asks its parent for a setting when it actually needs it.
+- **Stops When Overridden**: If a setting is passed down, the process stops at any child component that has its own, more specific setting.
+- **No Change, No Update**: If a change to a setting doesn't actually result in a different final look for a component (because it was overridden), the component isn't redrawn. This prevents wasted effort.
+- **Real Consequences Only**: This means a change only causes a screen update if it has a real, visible consequence on the UI.
+
+## Example Update Flow
+
+Every update follows the same path. Let's see what happens when a user changes a color setting.
+
+```typescript
+// User updates a CSS variable on the 'user.name' field
+await controller.update('user.name', 'vars', { '--field-color': 'red' });
+```
+
+Here's what goes on behind the scenes:
+
+- The brain is told that the `vars` (CSS variables) for the `user.name` field have changed.
+- It sees this is an important change and starts a full update cycle.
+- It creates a new plan (`controller.current`) that includes this new color.
+- It compares the new plan to the old one and sees that `vars` on `user.name` is different.
+- This triggers the chain reaction: the `styles` for `user.name` are recalculated based on the new variable. The change is also passed down to any children.
+- Because the `styles` changed, the `user.name` field is added to the list of things to redraw on the screen.
+- Finally, the system draws the updated component with the new red color.
+
+## Architecture Diagram: Update Lifecycle
 
 ```mermaid
 graph TD
     subgraph "Trigger & Process"
-        A["User Action / API Call"] --> B["<b>Property.update()</b>"];
+        A["Event Happens (User Input)"] --> B["<b>Check for Change</b>"];
         B -- "No change" --> Stop([Stop]);
-        B -- "Change detected" --> C["<b>controller.render()</b><br/>Triggers root re-render"];
-        C --> D["Store Raw Props"];
-        D --> E["Process Properties<br/>(e.g., collapse schema)"];
-        E --> F["Build Field Tree"];
+        B -- "Change detected" --> C["<b>Start Update Cycle</b>"];
+        C --> D["1. Store Inputs"];
+        D --> E["2. Process into New Plan"];
+        E --> F["3. Build Component Tree"];
     end
 
     subgraph "Distribute & Derive"
-        F --> G["Distribute Changes<br/>Diff current vs. last state"];
-        G --> H["<b>controller.invalidate(field)</b>"];
-        H --> I["<b>controller.rederive(field)</b><br/>Computes new derived state"];
-        I --> J{"Changed state?"};
-        J -- Yes --> K["Queue field for re-render"];
+        F --> G["4. Compare New vs. Old Plan"];
+        G --> H["<b>Flag Changed Components</b>"];
+        H --> I["<b>Recalculate Derived Values</b><br/>(e.g., styles)"];
+        I --> J{"Did final look change?"};
+        J -- Yes --> K["Add to 'Redraw' List"];
         J -- No --> L;
-        K --> L["<b>controller.cascade(field)</b>"];
-        L --> M["...propagate to children..."];
+        K --> L["<b>Cascade to Children</b>"];
+        L --> M["...and they tell their children..."];
     end
 
     subgraph "Render"
-        K --> N["<b>useLayoutEffect</b><br/>(after React render)"];
-        N --> O["<b>controller.flushRenderQueue()</b>"];
-        O --> P["Affected Fields<br/>Re-render in DOM"];
+        K --> N["<b>After Planning Finishes...</b>"];
+        N --> O["<b>Process the 'Redraw' List</b>"];
+        O --> P["Update Changed Components<br/>on the Screen"];
     end
 ```
-
-## Performance
-
-The system is designed to be very fast by avoiding unnecessary work:
-
-- **Precise Change Detection**: It does a deep check to make sure something *really* changed before deciding to update it.
-- **Selective Invalidation**: Thanks to the dependency map, only the properties that are actually affected by a change are recalculated.
-- **Batched Rendering**: It groups many small changes together into a single update to the screen, which is much faster.
-- **Smart Cascading**: When a style variable changes, it only forces a component to re-render if its final appearance actually changes. This prevents a storm of pointless updates.
 
 ## API Reference
 
@@ -136,12 +207,20 @@ controller.register(path: string, forceRender: () => void): () => void
 
 ### Property Registration Example
 
+Properties are self-contained modules that tell the brain how to manage a specific piece of the app's state.
+
 ```typescript
 const StylesProperty = {
   priority: 50,
   fieldDefaults: { styles: {} },
+
+  // Declare that this property depends on 'vars' and 'settings'
   dependencies: ['vars', 'settings'],
 
+  // --- Lifecycle Methods ---
+
+  // Calculates the 'styles' object. Runs automatically
+  // when 'vars' or 'settings' change.
   derive: field => {
     const newStyles = getComputedFieldStyles(
       field.mode,
@@ -151,11 +230,22 @@ const StylesProperty = {
     return { styles: newStyles };
   },
 
+  // How to handle direct updates. Not common for a derived
+  // property like styles, which are calculated automatically.
+  update: (field, controller, value) => {
+    return false; // Tells the system that this property isn't updated directly.
+  },
+
+  // This function is part of the chain reaction.
+  // It tells the controller to recalculate styles for this field and its children.
   invalidate: (field, controller, newValue, oldValue) => {
     controller.rederive(field, ['styles']);
     controller.cascade(field, ['styles']);
   },
 };
 
+// Tell the system about our new property worker
 Property.register('styles', StylesProperty);
 ```
+
+This system provides a powerful and organized way to build complex, fast user interfaces that are easy to manage and extend.
