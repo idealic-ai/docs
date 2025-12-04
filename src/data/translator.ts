@@ -33,6 +33,8 @@ const SHARED_TRANSLATION_PROMPT = `  * Ensure that in translation markdown heade
   * Instance -> Экземпляр
   * Instancing -> Экземплирование
   * IMPORTANT: When translating terms, add (or keep) canonical attribute to the link with original english term, e.g. :term[Запросы]{canonical="Request"}. You can inflect the term within square brackets, but ensure canonical attribute is present.
+  * Schemistry -> Схимия
+  * Package -> Пакет
 `;
 
 const SHARED_STYLE_GUIDE = `
