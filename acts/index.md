@@ -76,6 +76,10 @@ This document is the bridge between high-level vision and ground-level implement
 > Sidenote: Documentation for the core libraries that power the ecosystem.
 
 - [800: Package/Schemistry](./800_package_schemistry.md)
+- [801: Package/Agent](./801_package_agent.md)
+- [850: Package/Game Service](./850_package_game_service.md)
+- [851: Package/Poker Engine](./851_package_poker_engine.md)
+- [852: Package/Poker UI](./852_package_poker_ui.md)
 
 ### Extras
 

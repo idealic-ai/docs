@@ -2,23 +2,23 @@
 
 ---
 
-These documents are the official blueprints for how our system works. Think of them as the master plan that our team has agreed to build. They explain the technical rules for everything, making sure all the parts we create fit together perfectly.
+These documents are the official blueprints that explain exactly how we're building our system. They are the ultimate rulebook for all the technical details, a set of instructions that our team agrees to follow as we create.
 
 > Sidenote:
-> [Idealic](http://idealic.ai) is a project that aims to set ideas free.
+> [Idealic](http://idealic.ai) is a project with a mission to set ideas free.
 >
-> - To learn *Why* we're doing this, read the [Manifesto of Co-Liberation](../manifesto/).
-> - To learn *What* we're building, read the [Edict of Autonomy](../edict/).
-> - To learn *How* it all works, you're in the right place: the **Acts of Emergence**.
+> - *The Dream (Why?)* [Manifesto of Co-Liberation](../manifesto/)
+> - *The Rules (What?)* [Edict of Autonomy](../edict/)
+> - *The Blueprints (How?)* **Acts of Emergence**
 
-This collection of documents connects our big dream with the actual nuts and bolts of building it. To get the full picture, it helps to read them along with the [Manifesto of Co-Liberation](../manifesto/) (which explains *The Why*) and the [Edict of Autonomy](../edict/) (*The What*). By reading these Acts, you’ll understand exactly *how* the system works and how every piece is built.
+This guide connects our big dream to the actual work of building it. It works together with the [Manifesto of Co-Liberation](../manifesto/) (which explains *Why* we're doing this) and the [Edict of Autonomy](../edict/) (which explains *What* we're building). Reading these Acts will give you a complete picture of how all the pieces of our system are designed to work together.
 
 ---
 
 ### Agent
 
 > Sidenote:
-> This section is about the system's digital workers, called 'agents.' It explains what they can do and the step-by-step instructions they follow to get things done.
+> This is about the system's smart "workers." It explains what they can do and how they get tasks done.
 
 - [001: Agent/Request](./001_agent_request.md)
 - [002: Agent/Tool](./002_agent_tool.md)
@@ -41,7 +41,7 @@ This collection of documents connects our big dream with the actual nuts and bol
 ### Concept
 
 > Sidenote:
-> This defines the basic language and communication rules for our entire digital world. It's like setting the alphabet and grammar so all the different parts can understand each other.
+> This part defines the most basic building blocks and the official language that all parts of our world use to understand each other.
 
 - [101: Concept/Idea](./101_concept_idea.md)
 - [102: Concept/Sovereignty](./102_concept_sovereignty.md)
@@ -57,7 +57,7 @@ This collection of documents connects our big dream with the actual nuts and bol
 ### Ideas
 
 > Sidenote:
-> This explains what an 'Idea' is made of at its simplest level. Think of it like describing the basic particles—the protons and neutrons—that make up everything.
+> This section describes the simplest, most essential parts that make up an "idea" in our system.
 
 - [201: Idea/Record](./201_idea_record.md)
 - [202: Idea/Vessel](./202_idea_vessel.md)
@@ -68,7 +68,7 @@ This collection of documents connects our big dream with the actual nuts and bol
 ### Ideator
 
 > Sidenote:
-> This describes the essential background systems that keep everything running smoothly. It’s like the power plants and internet cables for a city—you don’t see them, but nothing works without them.
+> This explains the support systems that our world needs to run, like the power grid and roads in a city.
 
 - [301: Ideator/Storage](./301_ideator_storage.md)
 - [302: Ideator/Resolver](./302_ideator_resolver.md)
@@ -78,12 +78,16 @@ This collection of documents connects our big dream with the actual nuts and bol
 ### Packages
 
 > Sidenote:
-> This is the collection of instruction manuals for our main programming toolkits. These toolkits give builders pre-made parts to help them create new things more quickly.
+> These are the instruction manuals for the toolkits we use. A toolkit, or "library," is a bundle of pre-made code that helps us build things faster.
 
 - [800: Package/Schemistry](./800_package_schemistry.md)
+- [801: Package/Agent](./801_package_agent.md)
+- [850: Package/Game Service](./850_package_game_service.md)
+- [851: Package/Poker Engine](./851_package_poker_engine.md)
+- [852: Package/Poker UI](./852_package_poker_ui.md)
 
 ### Extras
 
-[Read the full glossary](./000_glossary.md)
+[See all the special words we use](./000_glossary.md)
 
-Before you help us write, please read our [Style Guide for Acts](./000_style_guide.md). It helps keep our writing clear for both people and AIs.
+Before you help us write, please read our [Style Guide for Acts](./000_style_guide.md).
