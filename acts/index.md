@@ -71,6 +71,12 @@ This document is the bridge between high-level vision and ground-level implement
 - [303: Ideator/Reactor](./303_ideator_reactor.md)
 - [304: Ideator/Watcher](./304_ideator_watcher.md)
 
+### Packages
+
+> Sidenote: Documentation for the core libraries that power the ecosystem.
+
+- [800: Package/Schemistry](./800_package_schemistry.md)
+
 ### Extras
 
 [Read the full glossary](./000_glossary.md)

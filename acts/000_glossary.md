@@ -2,7 +2,7 @@
 
 This glossary defines the key concepts used in the Idea Protocol and its related systems.
 
-- :dfn[Advisor]{canonical="Advisor" href="./017_agent_advisor.md"}: A specialized context message that defines a persona or analytical model. It instructs the agent to generate a structured "opinion" or confidence score _before_ selecting a :term[Tool]{canonical="Tool"} or generating an :term[Output]{canonical="Output"}.
+- :dfn[Advisor]{canonical="Advisor" href="./017*agent_advisor.md"}: A specialized context message that defines a persona or analytical model. It instructs the agent to generate a structured "opinion" or confidence score \_before* selecting a :term[Tool]{canonical="Tool"} or generating an :term[Output]{canonical="Output"}.
 
   > Sidenote:
   >
@@ -239,6 +239,8 @@ This glossary defines the key concepts used in the Idea Protocol and its related
   > Sidenote:
   >
   > - [303: Ideator/Reactor](./303_ideator_reactor.md)
+
+- :dfn[Schemistry]{canonical="Schemistry" href="./800_package_schemistry.md"}: A library that establishes the **Schema** as the single source of truth for the application. It drives runtime validation, TypeScript types, LLM integration, and application logic from a unified definition.
 
 - :dfn[Variable Reference]{canonical="Variable Reference" href="./007_agent_variables.md"}: A string with a special syntax (`†<kind>.<path>`) used in a :term[Tool Call]{canonical="Call"}'s parameters to dynamically reference a value from the agent's context.
 

@@ -2,23 +2,23 @@
 
 ---
 
-These documents are the official rulebooks that explain what our team has agreed to build. They are the main guide for how the system's technology works, setting the standards we all promise to follow.
+These documents are the official blueprints for how our system works. Think of them as the master plan that our team has agreed to build. They explain the technical rules for everything, making sure all the parts we create fit together perfectly.
 
 > Sidenote:
-> [Idealic](http://idealic.ai) is a project about setting ideas free.
+> [Idealic](http://idealic.ai) is a project that aims to set ideas free.
 >
-> - _Why?_ [Manifesto of Co-Liberation](../manifesto/)
-> - _What?_ [Edict of Autonomy](../edict/)
-> - _How?_ **Acts of Emergence**
+> - To learn *Why* we're doing this, read the [Manifesto of Co-Liberation](../manifesto/).
+> - To learn *What* we're building, read the [Edict of Autonomy](../edict/).
+> - To learn *How* it all works, you're in the right place: the **Acts of Emergence**.
 
-This collection of documents connects our big-picture dream to the nitty-gritty details of how we build it. It works together with the [Manifesto of Co-Liberation](../manifesto/) (which explains *Why* we're doing this) and the [Edict of Autonomy](../edict/) (which explains *What* we are building). By reading these Acts of Emergence, you'll get a full technical picture of how the system is designed and put together.
+This collection of documents connects our big dream with the actual nuts and bolts of building it. To get the full picture, it helps to read them along with the [Manifesto of Co-Liberation](../manifesto/) (which explains *The Why*) and the [Edict of Autonomy](../edict/) (*The What*). By reading these Acts, you’ll understand exactly *how* the system works and how every piece is built.
 
 ---
 
 ### Agent
 
 > Sidenote:
-> This section is about what our smart programs (Agents) can do and how they do it.
+> This section is about the system's digital workers, called 'agents.' It explains what they can do and the step-by-step instructions they follow to get things done.
 
 - [001: Agent/Request](./001_agent_request.md)
 - [002: Agent/Tool](./002_agent_tool.md)
@@ -41,7 +41,7 @@ This collection of documents connects our big-picture dream to the nitty-gritty 
 ### Concept
 
 > Sidenote:
-> This section explains the basic ways we organize information and the rules for how different parts of the system talk to each other.
+> This defines the basic language and communication rules for our entire digital world. It's like setting the alphabet and grammar so all the different parts can understand each other.
 
 - [101: Concept/Idea](./101_concept_idea.md)
 - [102: Concept/Sovereignty](./102_concept_sovereignty.md)
@@ -57,7 +57,7 @@ This collection of documents connects our big-picture dream to the nitty-gritty 
 ### Ideas
 
 > Sidenote:
-> This section describes the most basic ingredients that make up an 'Idea' in our system.
+> This explains what an 'Idea' is made of at its simplest level. Think of it like describing the basic particles—the protons and neutrons—that make up everything.
 
 - [201: Idea/Record](./201_idea_record.md)
 - [202: Idea/Vessel](./202_idea_vessel.md)
@@ -68,15 +68,22 @@ This collection of documents connects our big-picture dream to the nitty-gritty 
 ### Ideator
 
 > Sidenote:
-> This section covers the essential background services and digital foundation that keep the whole system running.
+> This describes the essential background systems that keep everything running smoothly. It’s like the power plants and internet cables for a city—you don’t see them, but nothing works without them.
 
 - [301: Ideator/Storage](./301_ideator_storage.md)
 - [302: Ideator/Resolver](./302_ideator_resolver.md)
 - [303: Ideator/Reactor](./303_ideator_reactor.md)
 - [304: Ideator/Watcher](./304_ideator_watcher.md)
 
+### Packages
+
+> Sidenote:
+> This is the collection of instruction manuals for our main programming toolkits. These toolkits give builders pre-made parts to help them create new things more quickly.
+
+- [800: Package/Schemistry](./800_package_schemistry.md)
+
 ### Extras
 
 [Read the full glossary](./000_glossary.md)
 
-Before you help out, please check out our writer-friendly [Style Guide for Acts](./000_style_guide.md).
+Before you help us write, please read our [Style Guide for Acts](./000_style_guide.md). It helps keep our writing clear for both people and AIs.

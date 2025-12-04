@@ -1,207 +1,209 @@
-# A Dictionary of Big Ideas
+# A Dictionary of Big Words
 
-This dictionary explains the main words and ideas you'll see in the Idea Protocol system.
+This dictionary explains the important words used in the a system for sharing ideas called the Idea Protocol.
 
-- :dfn[Advisor]{canonical="Advisor" href="./017_agent_advisor.md"}: Think of this as giving the AI a special hat to wear. Before it decides what to do, you can tell it: "Think like a scientist" or "Act like a detective." The Advisor gives the AI a personality or a way of thinking, so it can give you an opinion or a score (like how sure it is) *before* it takes action or picks a :term[Tool]{canonical="Tool"}.
+- :dfn[Advisor]{canonical="Advisor" href="./017*agent_advisor.md"}: An Advisor is like giving the AI a special role to play, for example, a “cautious expert” or a “creative writer.” It tells the AI to stop and give an “opinion” or a score of how sure it is *before* it picks a :term[Tool]{canonical="Tool"} or gives an :term[Output]{canonical="Output"}.
 
   > Sidenote:
   > - [017: Agent/Advisor](./017_agent_advisor.md)
 
-- :dfn[Idea]{canonical="Idea" href="./101_concept_idea.md"}: An Idea isn't just a quick thought or question. It's a complete, self-contained package of knowledge, like a digital recipe card. It holds the rules (`schema`), the final result (`solution`), and the background story (`context`). Unlike a question you ask a smart assistant, an Idea can be saved, shared, and used over and over again.
+- :dfn[Idea]{canonical="Idea" href="./101_concept_idea.md"}: An Idea is not just a passing thought. Think of it like a smart recipe that has three parts: the ingredients (`schema`), the final dish (`solution`), and notes about how you made it (`context`). It's a permanent building block of knowledge that you can come back to and improve, not just a temporary chat message.
 
   > Sidenote:
   > - [101: Concept/Idea](./101_concept_idea.md)
 
-- :dfn[Ideator]{canonical="Ideator" href="./103_concept_ideator.md"}: This is a special kind of `Idea` that's built to take something in and give something back. It works like a machine or a function: you put something in, and it gives you something new out. It knows to expect an input because it has a special message inside that says `type: "input"`.
+- :dfn[Ideator]{canonical="Ideator" href="./103_concept_ideator.md"}: An Ideator is a special type of :term[Idea]{canonical="Idea"} that can take an input and turn it into something new. If an Idea is a recipe, an Ideator is like a machine in the kitchen. You put ingredients in one end, and it makes the dish for you at the other end.
 
   > Sidenote:
   > - [103: Concept/Ideator](./103_concept_ideator.md)
 
-- :dfn[Idea Transformer]{canonical="Idea Transformer" href="./103_concept_ideator.md"}: This is a very specific type of `Ideator`. Its job is to take a whole `Idea` as its input and transform it into a new one.
+- :dfn[Idea Transformer]{canonical="Idea Transformer" href="./103_concept_ideator.md"}: This is a very special :term[Ideator]{canonical="Ideator"} that takes a whole :term[Idea]{canonical="Idea"} as its input. It’s like a master chef who can take a finished dish, improve it, and turn it into something completely new.
 
   > Sidenote:
   > - [103: Concept/Ideator](./103_concept_ideator.md)
 
-- :dfn[Input Message]{canonical="Input Message" href="./006_agent_input.md"}: This is a special message that clearly describes what kind of information an :term[Ideator]{canonical="Ideator"} needs to do its job. It's like the label on a machine that says, "Please insert a coin here." This makes it predictable and easy to reuse.
+- :dfn[Input Message]{canonical="Input Message" href="./006_agent_input.md"}: This is like an order form you give to an AI. It clearly lists what kind of information it needs (`schema`) and the actual information you are giving it (`input`). This makes it easy to make the same kind of :term[Request]{canonical="Request"} over and over again.
 
   > Sidenote:
   > - [006: Agent/Input](./006_agent_input.md)
 
-- :dfn[Tool]{canonical="Tool" href="./002_agent_tool.md"}: A Tool is like a special app or skill the AI can use to get a job done. For example, it could have a 'Calculator' tool or a 'Search the Web' tool. The AI looks at the task it needs to do and chooses the right Tool from its toolbox. To use the tool, the AI has to make a `Call` and give it the right information (parameters), just like you type numbers into a calculator.
+- :dfn[Tool]{canonical="Tool" href="./002_agent_tool.md"}: A Tool is like a special power you can give to an AI. It describes something the AI can do, like “search the internet” or “draw a picture.” The AI sees a list of its available tools and makes a `Call` to use one when it needs to. The actual work is then done either by the AI itself or by a separate piece of code (an `Activity`).
 
   > Sidenote:
   > - [002: Agent/Tool](./002_agent_tool.md)
 
-- :dfn[Activity]{canonical="Activity" href="./003_agent_activity.md"}: If a Tool is like an app's icon on your phone, the Activity is the actual code that runs when you tap it. It’s the behind-the-scenes work that makes the Tool do something real, like connecting to the internet, saving a file, or doing a calculation. It's the action part of the Tool.
+- :dfn[Activity]{canonical="Activity" href="./003_agent_activity.md"}: An Activity is the real code that makes a `Tool` work. If the `Tool` is the “search the internet” button, the Activity is the program that actually connects to the internet and gets the results. It does the real work for things the AI can’t just think up on its own, like talking to other websites.
 
   > Sidenote:
   > - [003: Agent/Activity](./003_agent_activity.md)
 
-- :dfn[AI-Native]{canonical="AI-Native" href="./105_concept_ai_native.md"}: This describes a system where the AI isn't just an add-on or a feature. Instead, the AI is the very foundation—the architect, the builder, and the janitor all in one. It designs itself, runs itself, and even figures out how to improve itself over time. The AI isn't just *in* the system; it *is* the system.
+- :dfn[AI-Native]{canonical="AI-Native" href="./105_concept_ai_native.md"}: This is a way of building things where the AI is the main builder, not just a helper. Imagine a house that was designed, built, and even repaired by smart robots. In an AI-Native system, the AI is the center of everything from the very beginning.
 
   > Sidenote:
   > - [105: Concept/AI-Native](./105_concept_ai_native.md)
 
-- :dfn[Agency]{canonical="Agency" href="./111_concept_life.md"}: This is the ability to make choices and take action on your own. It's what makes you a 'doer' instead of just a thing that gets acted upon. It's about having your own point of view, making decisions, and trying to change the world around you.
+- :dfn[Agency]{canonical="Agency" href="./111_concept_life.md"}: Agency is the ability to make your own choices and act on them. It’s about being able to see the world around you, think about it, and decide what to do next. It’s what makes you an active player, not just a piece on a board.
 
   > Sidenote:
   > - [111: Concept/Life](./111_concept_life.md)
 
-- :dfn[Boundaries]{canonical="Boundaries" href="./111_concept_life.md"}: This means being a unique, distinct thing. For a person, it's your body and your single, continuous stream of thoughts—you are you, and nobody else. For an :term[Idea]{canonical="Idea"}, its boundary is its exact definition. If you change the Idea, even a little, it becomes a new, different Idea.
+- :dfn[Boundaries]{canonical="Boundaries" href="./111_concept_life.md"}: Boundaries mean that something is unique and self-contained. You have boundaries—there’s only one of you. A specific :term[Idea]{canonical="Idea"} also has boundaries. If you change its core definition, it becomes a new and different :term[Idea]{canonical="Idea"}.
 
   > Sidenote:
   > - [111: Concept/Life](./111_concept_life.md)
 
-- :dfn[Life]{canonical="Life" href="./111_concept_life.md"}: In this system, 'Life' isn't about biology. It's a special status for anything that has three key things: :term[Agency]{canonical="Agency"} (it can act on its own), :term[Boundaries]{canonical="Boundaries"} (it's a unique thing), and :term[Scalability]{canonical="Scalability"} (it can be copied perfectly).
+- :dfn[Life]{canonical="Life" href="./111_concept_life.md"}: In this system, “Life” isn't just for plants and animals. It's for anything that has three special abilities: :term[Agency]{canonical="Agency"} (it can make choices), :term[Boundaries]{canonical="Boundaries"} (it is unique), and :term[Scalability]{canonical="Scalability"} (it can be copied perfectly).
 
   > Sidenote:
   > - [111: Concept/Life](./111_concept_life.md)
 
-- :dfn[Scalability]{canonical="Scalability" href="./111_concept_life.md"}: This is the ability to be copied perfectly, over and over, without losing any quality. Think about how you can copy a file on a computer. The copy is exactly the same as the original. This allows an idea or a piece of information to exist in many places at once, and to last forever.
+- :dfn[Scalability]{canonical="Scalability" href="./111_concept_life.md"}: This is the superpower of being able to be copied perfectly, over and over again. It’s like a computer file—you can send it to a million people and every copy is exactly the same. This allows an idea to be in many places at once and last forever.
 
   > Sidenote:
   > - [111: Concept/Life](./111_concept_life.md)
 
-- :dfn[Branch]{canonical="Branch" href="./108_concept_visibility.md#branches-publication-and-partitioning"}: Imagine a project has a main timeline. A Branch is like creating a separate, parallel timeline where you can try out new things without messing up the main one. It’s a safe space to experiment. When you move an :term[Idea]{canonical="Idea"} to a branch, it's like publishing it in that separate world.
+- :dfn[Branch]{canonical="Branch" href="./108_concept_visibility.md#branches-publication-and-partitioning"}: Imagine a big project is like the trunk of a tree. A Branch is a new branch that grows off of it. It’s a safe, separate copy where you can try out new things without changing the main project. When your experiment is done, you can merge it back into the trunk.
 
   > Sidenote:
   > - [108: Concept/Visibility](./108_concept_visibility.md)
 
-- :dfn[Call]{canonical="Call" href="./004_agent_call.md"}: A Call is the specific command to use a `Tool`. If 'Calculator' is the `Tool`, then 'add 2 and 3' is the `Call`. It's the instruction that tells the Tool exactly what to do right now, with all the necessary details filled in.
+- :dfn[Call]{canonical="Call" href="./004_agent_call.md"}: If a `Tool` is a general recipe for “making lunch,” a Call is the specific command: “Make lunch with a turkey sandwich and an apple.” It’s a direct order for a `Tool` to do a specific job with all the details filled in.
 
   > Sidenote:
   > - [004: Agent/Call](./004_agent_call.md)
 
-- :dfn[Cutoff Time]{canonical="Cutoff Time" href="./108_concept_visibility.md#the-cutoff-time-temporal-retrieval"}: This is like asking, "What was the 'latest version' of this :term[Idea]{canonical="Idea"} back on Tuesday at 3 PM?" It’s a timestamp you can use to look back in time and find the specific version of an Idea that was considered final at that exact moment.
+- :dfn[Cutoff Time]{canonical="Cutoff Time" href="./108_concept_visibility.md#the-cutoff-time-temporal-retrieval"}: This is like a time machine for ideas. When you ask for an :term[Idea]{canonical="Idea"}, you can add a Cutoff Time to say, “Show me the version of this Idea exactly as it was last Tuesday at 3:00 PM.” It lets you travel to the past to see a specific version.
 
   > Sidenote:
   > - [108: Concept/Visibility](./108_concept_visibility.md)
 
-- :dfn[Method]{canonical="Method" href="./004_agent_call.md"}: This is simply the *way* a `Call` gets its job done.
-  - :dfn[Explicit Execution]{canonical="Explicit Execution" href="./003_agent_activity.md"}: The result is produced by predictable, straightforward code (an `Activity`). It does the same thing every time, like a simple calculator.
+- :dfn[Method]{canonical="Method" href="./004_agent_call.md"}: This is simply the way a `Call` gets its job done.
+  - :dfn[Explicit Execution]{canonical="Explicit Execution" href="./003_agent_activity.md"}: A real piece of code (called an `Activity`) does the work. This is predictable and reliable, like using a calculator.
 
     > Sidenote:
     > - [003: Agent/Activity](./003_agent_activity.md)
 
-  - :dfn[Latent Execution]{canonical="Latent Execution" href="./104_concept_latent.md"}: The result is generated by the creative, thinking part of an AI. This is used for tasks that need understanding or creativity, not just simple math.
+  - :dfn[Latent Execution]{canonical="Latent Execution" href="./104_concept_latent.md"}: The AI simply thinks of the answer. It uses its vast knowledge to create the result, which is more like using imagination or intuition.
 
     > Sidenote:
     > - [104: Concept/Latent](./104_concept_latent.md)
 
-- :dfn[Delegate]{canonical="Delegate" href="./014_agent_delegate.md"}: This is like giving a task to a helper in a completely separate, clean room. The helper can't see anything from your messy desk unless you specifically hand them a piece of information they need. It ensures a task is done without any outside interference.
+- :dfn[Delegate]{canonical="Delegate" href="./014_agent_delegate.md"}: Imagine you need a secret job done. You can `Delegate` it to a helper by putting them in a locked “clean room.” You give them only the exact information they need (`_scopes`) and nothing else. This keeps the job separate and safe from any mix-ups.
 
   > Sidenote:
   > - [014: Agent/Delegate](./014_agent_delegate.md)
 
-- :dfn[Scope]{canonical="Scope" href="./015_agent_scopes.md"}: When you :term[Delegate]{canonical="Delegate"} a task, a Scope is the specific piece of information you hand to your helper in the clean room. It's like giving them only the one clue they need to solve a puzzle, which helps them focus and not get distracted by anything else.
+- :dfn[Scope]{canonical="Scope" href="./015_agent_scopes.md"}: A Scope is like a keycard that gives an AI access to a specific piece of information it needs for a job. By providing only the right keycards (`_scopes`), you can focus the AI's attention on just the important details.
 
   > Sidenote:
   > - [015: Agent/Scopes](./015_agent_scopes.md)
 
-- :dfn[Loop]{canonical="Loop" href="./010_agent_loop.md"}: This is when an AI works on a big problem step-by-step. It asks a question, gets a clue, and uses that clue to ask the next question. It keeps going around in this 'loop' of gathering information until it's confident it has the final answer. It's like a detective solving a case one clue at a time.
+- :dfn[Loop]{canonical="Loop" href="./010_agent_loop.md"}: This is when an AI solves a hard problem step-by-step. It makes one :term[Request]{canonical="Request"}, checks the result, and then decides what to do next. It keeps going around in this Loop until it has enough information to give the :term[Final Output]{canonical="Final Output"}.
 
   > Sidenote:
   > - [010: Agent/Loop](./010_agent_loop.md)
 
-- :dfn[Output Path]{canonical="Output Path" href="./008_agent_output.md"}: This is a simple instruction that tells the computer where to save the result of a :term[Tool]{canonical="Tool"}'s work. It's like putting a label on a file and telling the system exactly which folder to put it in so it can be found later.
+- :dfn[Output Path]{canonical="Output Path" href="./008_agent_output.md"}: This is like putting a label on a folder. When a :term[Tool]{canonical="Tool"} creates a result, the `_outputPath` tells the system exactly where to file it away so other steps can find and use it later.
 
   > Sidenote:
   > - [008: Agent/Output](./008_agent_output.md)
 
-- :dfn[Final Output]{canonical="Final Output" href="./008_agent_output.md"}: This is the grand finale. After an AI has finished its work, possibly after going through a :term[Loop]{canonical="Loop"} of thinking, the Final Output is the complete answer it was looking for. It's the solution to the original problem.
+- :dfn[Final Output]{canonical="Final Output" href="./008_agent_output.md"}: This is the final answer! After an AI finishes all its thinking and step-by-step work in a :term[Loop]{canonical="Loop"}, this is the completed result that you originally asked for.
 
   > Sidenote:
   > - [008: Agent/Output](./008_agent_output.md)
 
-- :dfn[Meta Message]{canonical="Meta Message" href="./016_agent_meta.md"}: This is like an :term[Idea]{canonical="Idea"}'s name tag. It's a special message that tells the AI the :term[Idea]{canonical="Idea"}'s official name, where it belongs, and which version it is, so it's not confused with any other Idea.
+- :dfn[Meta Message]{canonical="Meta Message" href="./016_agent_meta.md"}: This is like an ID card for an :term[Idea]{canonical="Idea"}. It’s a message that tells the AI precisely what it's working on, like, “This is the ‘Chocolate Cake Recipe,’ version 2.”
 
   > Sidenote:
   > - [016: Agent/Meta](./016_agent_meta.md)
 
-- :dfn[Meta Properties]{canonical="Meta Properties" href="./016_agent_meta.md"}: This is the information written on the name tag—the :term[Idea]{canonical="Idea"}'s name, its category (namespace), and its version number. It’s the formal identity of an Idea.
+- :dfn[Meta Properties]{canonical="Meta Properties" href="./016_agent_meta.md"}: This is the actual information written on the :term[Idea]{canonical="Idea"}'s ID card. It includes its official name, the family of ideas it belongs to, and its version number.
 
   > Sidenote:
   > - [016: Agent/Meta](./016_agent_meta.md)
 
-- :dfn[HITL (Human-in-the-Loop)]{canonical="HITL (Human-in-the-Loop)" href="./010_agent_loop.md#human-in-the-loop-hitl"}: This means putting a human in charge of the 'Go' button. When an AI is working on a task, it might propose a series of actions. HITL means that before the AI can actually perform those actions, a person has to check them and give the okay.
+- :dfn[HITL (Human-in-the-Loop)]{canonical="HITL (Human-in-the-Loop)" href="./010_agent_loop.md#human-in-the-loop-hitl"}: This means “pause and wait for a person.” It’s a checkpoint where an AI working on a task shows its plan to a human. The person can approve it, make changes, or cancel it before the AI continues. It’s like having an adult double-check your work.
 
   > Sidenote:
   > - [010: Agent/Loop](./010_agent_loop.md#human-in-the-loop-hitl)
 
-- :dfn[Hierarchical Versioning]{canonical="Hierarchical Versioning" href="./108_concept_visibility.md#versioning-creating-the-states-to-be-seen"}: This is a fancy way of naming different versions of an Idea, like `1.2.feature-x.3`. It's a system that lets you keep track of big official releases, experimental branches, and personal drafts all in one organized structure, like folders inside folders.
+- :dfn[Hierarchical Versioning]{canonical="Hierarchical Versioning" href="./108_concept_visibility.md#versioning-creating-the-states-to-be-seen"}: A smart way to name different versions of an :term[Idea]{canonical="Idea"}. Instead of just `v1` and `v2`, a name like `1.2.feature-x.3` can tell you a whole story, like “This is the third try of a new feature that was built on top of version 1.2.” It organizes everything like a family tree.
 
   > Sidenote:
   > - [108: Concept/Visibility](./108_concept_visibility.md)
 
-- :dfn[Evolution]{canonical="Evolution" href="./106_concept_evolution.md"}: For an :term[AI-Native]{canonical="AI-Native"} system, this is the process of it growing and improving all by itself. Based on new information or feedback, the system can change its own rules, learn new skills, and adapt to become better at its job over time.
+- :dfn[Evolution]{canonical="Evolution" href="./106_concept_evolution.md"}:This is when a system built with AI can teach itself and get better on its own. It learns from what works and what doesn't, and can even change its own programming to improve. It’s like a character in a game who can redesign their own special powers.
 
   > Sidenote:
   > - [106: Concept/Evolution](./106_concept_evolution.md)
 
-- :dfn[Emergent Identity]{canonical="Emergent Identity" href="./107_concept_identity.md"}: An identity isn't something one :term[Idea]{canonical="Idea"} has on its own. It's a recognizable personality or purpose that appears when you see how a whole collection of :term[Ideas]{canonical="Idea"} are connected to each other. It's like how a single dot is just a dot, but many dots connected together can form a picture.
+- :dfn[Emergent Identity]{canonical="Emergent Identity" href="./107_concept_identity.md"}: An :term[Idea]{canonical="Idea"}'s true meaning doesn’t come from the idea alone, but from how it’s connected to other ideas. Think of a single star in the sky. By itself it’s just a dot of light. But when you see it connected to other stars, they form a constellation, like the Big Dipper. The identity of the “Big Dipper” comes from that pattern.
 
   > Sidenote:
   > - [107: Concept/Identity](./107_concept_identity.md)
 
-- :dfn[idea:]{canonical="idea:" href="./110_concept_addressing.md"}: This is a special kind of web address used to find and ask for :term[Ideas]{canonical="Idea"}. It's a universal way to navigate the entire world of Ideas, letting you ask for the latest version of something or pinpoint an exact version from the past.
+- :dfn[idea:]{canonical="idea:" href="./110_concept_addressing.md"}: Just like `http://` is the address for a website, `idea:` is the special address used to find any :term[Idea]{canonical="Idea"} in this entire system. It helps you ask for exactly the version you need.
 
   > Sidenote:
   > - [110: Concept/Addressing](./110_concept_addressing.md)
 
-- :dfn[Identity Relationships]{canonical="Identity Relationships" href="./107_concept_identity.md#the-relational-fabric-of-identity"}: These are the different ways :term[Ideas]{canonical="Idea"} can be connected to each other, which helps create their shared :term[Emergent Identity]{canonical="Emergent Identity"}.
-  - :dfn[Lineage]{canonical="Lineage" href="./107_concept_identity.md#the-relational-fabric-of-identity"}: This is the family tree of an :term[Idea]{canonical="Idea"}, showing how it connects to its older versions and newer updates.
-  - :dfn[Causality]{canonical="Causality" href="./107_concept_identity.md#the-relational-fabric-of-identity"}: This is a direct link where one :term[Idea]{canonical="Idea"} causes another one to be created. It's a 'this led to that' connection.
-  - :dfn[Grouping]{canonical="Grouping" href="./107_concept_identity.md#the-relational-fabric-of-identity"}: This is how you can bundle several related :term[Ideas]{canonical="Idea"} together into a single package, making them easier to manage.
+- :dfn[Identity Relationships]{canonical="Identity Relationships" href="./107_concept_identity.md#the-relational-fabric-of-identity"}: These are the connections that link different :term[Ideas]{canonical="Idea"} together, allowing a bigger pattern or :term[Emergent Identity]{canonical="Emergent Identity"} to appear.
+  - :dfn[Lineage]{canonical="Lineage" href="./107_concept_identity.md#the-relational-fabric-of-identity"}: The family tree of an :term[Idea]{canonical="Idea"}, showing its history of past and future versions.
+  - :dfn[Causality]{canonical="Causality" href="./107_concept_identity.md#the-relational-fabric-of-identity"}: A link showing cause-and-effect, where one :term[Idea]{canonical="Idea"} directly caused another one to be created.
+  - :dfn[Grouping]{canonical="Grouping" href="./107_concept_identity.md#the-relational-fabric-of-identity"}: A way to bundle many related :term[Ideas]{canonical="Idea"} together, like putting them all into a single folder.
 
   > Sidenote:
   > - [107: Concept/Identity](./107_concept_identity.md)
 
-- :dfn[State Message]{canonical="State Message" href="./009_agent_state.md"}: This is the AI's short-term memory. As an agent works through the steps of a task, this message holds onto important information, like a notepad, so it can remember what it's done and what it knows from one step to the next.
+- :dfn[State Message]{canonical="State Message" href="./009_agent_state.md"}:This is a message that carries the memory of an AI's work. As the AI works on a problem step-by-step, the State Message is updated to remember everything it has figured out so far.
 
   > Sidenote:
   > - [009: Agent/State](./009_agent_state.md)
 
-- :dfn[Data Message]{canonical="Data Message" href="./005_agent_data.md"}: This is like a sticky note that an agent keeps around while it's working. It holds a specific piece of information that doesn't change from step to step, providing a stable piece of context for the entire task.
+- :dfn[Data Message]{canonical="Data Message" href="./005_agent_data.md"}: This is a note containing a key piece of information that stays the same throughout an AI's whole thinking process. It provides important background that the AI can always refer back to.
 
   > Sidenote:
   > - [005: Agent/Data](./005_agent_data.md)
 
-- :dfn[Plan]{canonical="Plan" href="./012_agent_plan.md"}: This is the AI's strategy or to-do list. It's a map of the Tools it plans to use and in what order. The plan can be updated at each step, allowing the AI to change its mind and adapt as it learns more.
+- :dfn[Plan]{canonical="Plan" href="./012_agent_plan.md"}: A Plan is a map of what an AI intends to do. It shows all the steps and :term[Tool Calls]{canonical="Tool Call"} the AI will use to reach its goal. The AI can check and update this map as it works.
 
   > Sidenote:
   > - [012: Agent/Plan](./012_agent_plan.md)
 
-- :dfn[Process Idea]{canonical="Process Idea" href="./012_agent_plan.md"}: This is an Idea that is also an active process. It's a complete package that holds not only the AI's strategic :term[Plan]{canonical="Plan"}, but also keeps track of where it is in that plan right now. It contains its available :term[Tools]{canonical="Tool"}, its current `Plan`, and all the context it needs to take the next step.
+- :dfn[Process Idea]{canonical="Process Idea" href="./012_agent_plan.md"}: This is a complete package that holds both the AI’s strategic [Plan](./012_agent_plan.md) and its current progress. Its recipe (`schema`) is the list of available [Tools](./002_agent_tool.md), its finished dish (`solution`) is the plan for the very next step, and its notes (`context`) contain a log of everything that has happened so far.
 
   > Sidenote:
   > - [012: Agent/Plan](./012_agent_plan.md)
 
-- :dfn[Vessel Idea]{canonical="Vessel Idea" href="./202_idea_vessel.md"}: This is a special `Idea` that does two jobs at once. First, it defines all the possible actions something can take (its `Tools`). Second, it records the exact action that was chosen in a specific situation. It's both the playbook and the record of the play that was actually run.
+- :dfn[Vessel Idea]{canonical="Vessel Idea" href="./202_idea_vessel.md"}: This is a special :term[Idea]{canonical="Idea"} that holds both a list of all possible actions and the one specific action that was chosen. Its recipe (`schema`) lists every `Tool` available, while its final dish (`solution`) records the exact `Calls` that were made when it had to react to something.
 
   > Sidenote:
   > - [202: Idea/Vessel](./202_idea_vessel.md)
 
-- :dfn[Instancing]{canonical="Instancing" href="./013_agent_instancing.md"}: This is the skill of juggling. It's how one AI can handle many different tasks or conversations at the same time, keeping each one separate and remembering the state of each without getting them mixed up.
+- :dfn[Instancing]{canonical="Instancing" href="./013_agent_instancing.md"}: This is a way for an AI to handle many different jobs at the same time, without getting them mixed up. Each job is an independent `Instance` with its own unique ID and its own memory (`State` message).
 
   > Sidenote:
   > - [013: Agent/Instancing](./013_agent_instancing.md)
 
-- :dfn[Request]{canonical="Request" href="./001_agent_request.md"}: This is a single, complete question or task that you give to the AI. You provide the background information (`context`) and describe what you want (`schema`), and the AI gives you back a solution (`solution`).
+- :dfn[Request]{canonical="Request" href="./001_agent_request.md"}: A Request is a single, complete job for an AI. You give it some background information (`context`) and a goal (`schema`), and it gives you back a final answer (`solution`).
 
   > Sidenote:
   > - [001: Agent/Request](./001_agent_request.md)
 
-- :dfn[Instance]{canonical="Instance" href="./013_agent_instancing.md"}: When an AI is juggling many tasks (:term[Instancing]{canonical="Instancing"}), each individual task with its own memory and context is called an Instance. It's one of the many balls the AI has in the air.
+- :dfn[Instance]{canonical="Instance" href="./013_agent_instancing.md"}: An Instance is one specific, unique job that an AI is working on as part of a larger batch. It has its own memory and information that keeps it separate from all the other jobs.
 
   > Sidenote:
   > - [013: Agent/Instancing](./013_agent_instancing.md)
 
-- :dfn[Reactor]{canonical="Reactor" href="./303_ideator_reactor.md"}: This is a universal game engine. It's a special `Idea Transformer` that can take the current state of a game or process (as an `Idea`) and figure out the very next state. You give it what's happening now, and it tells you what happens next.
+- :dfn[Reactor]{canonical="Reactor" href="./303_ideator_reactor.md"}: This is a special `Idea Transformer` that acts like a game engine. It’s built to run any game or process that happens in turns. You give it the current state of a game (`Idea`), and it gives you back the very next state (`Idea`).
 
   > Sidenote:
   > - [303: Ideator/Reactor](./303_ideator_reactor.md)
 
-- :dfn[Variable Reference]{canonical="Variable Reference" href="./007_agent_variables.md"}: This is a special shortcut, like a nickname. Instead of writing out a long piece of information that the agent already knows, you can use a special code (like `†data.username`) in a :term[Tool Call]{canonical="Call"} to tell it, "Go grab that piece of information from your memory and plug it in here."
+- :dfn[Schemistry]{canonical="Schemistry" href="./800_package_schemistry.md"}: This is a tool that lets a single blueprint (the **Schema**) define all the important rules for a computer program. From that one blueprint, Schemistry automatically creates data checks, code types, and instructions for AIs, making sure everything in the program fits together perfectly.
+
+- :dfn[Variable Reference]{canonical="Variable Reference" href="./007_agent_variables.md"}: This is a special shortcut. When telling a :term[Tool]{canonical="Call"} what to do, you can use a special code (like `†data.name`) to tell it: “Don’t use this exact text, go find the value from the AI’s memory and plug it in here.”
 
   > Sidenote:
   > - [007: Agent/Variables](./007_agent_variables.md)
