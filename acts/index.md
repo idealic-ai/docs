@@ -77,6 +77,7 @@ This document is the bridge between high-level vision and ground-level implement
 
 - [800: Package/Schemistry](./800_package_schemistry.md)
 - [801: Package/Agent](./801_package_agent.md)
+- [802: Package/UI](./802_package_ui.md)
 - [850: Package/Game Service](./850_package_game_service.md)
 - [851: Package/Poker Engine](./851_package_poker_engine.md)
 - [852: Package/Poker UI](./852_package_poker_ui.md)
@@ -85,4 +86,5 @@ This document is the bridge between high-level vision and ground-level implement
 
 [Read the full glossary](./000_glossary.md)
 
-Before contributing, please review the LLM-friendly [Style Guide for Acts](./000_style_guide.md).
+> [!TIP]
+> Before contributing, please review the LLM-friendly [Style Guide for Acts](./000_style_guide.md).

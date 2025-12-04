@@ -1,7 +1,7 @@
 # 851: Package/Poker Engine
 
 > [!DEFINITION] [Poker Engine](./000_glossary.md)
-> A comprehensive, game-agnostic software system for managing the lifecycle of turn-based games. It implements a protocol-based architecture (`State`, `Game`, `Command`) to decouple game logic from state representation.
+> A rigorous, game-agnostic architecture implementing the specific rules of Poker (Texas Hold'em, etc.). It serves as the logic kernel for the ecosystem, utilizing a protocol-based design (`State`, `Game`, `Command`) to decouple complex poker mechanics from the runtime environment.
 
 > Sidenote:
 >

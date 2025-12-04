@@ -1,123 +1,123 @@
 # 851: Package/Poker Engine
 
 > [!DEFINITION] [Poker Engine](./000_glossary.md)
-> A complete software toolkit that can run any turn-based game from start to finish. It's built like a set of building blocks with clear rules (`State`, `Game`, `Command`) so that the game's logic isn't tied to how the game's story is stored.
+> Think of the Poker Engine as the super-smart "brain" for a poker game. It's a solid set of rules for games like Texas Hold'em, but it's built so flexibly that it could run almost any game. It keeps everything organized by using a special language for the game's `State` (the memory), the `Game` (the live action), and the `Commands` (the player moves).
 
 > Sidenote:
-> - Used by:
+> - Brought to life by:
 >   - :term[850: Package/Game Service]{href="./850_package_game_service.md"}
-> - Shown by:
+> - Shown on screen by:
 >   - :term[852: Package/Poker UI]{href="./852_package_poker_ui.md"}
 
-The **Poker Engine** (`@idealic/poker-engine`) is a toolbox for building and running poker games. It’s like a car engine, but for poker—it has all the specialized parts needed to make a game start, run, and finish. Even though it's designed for poker, its clever design could be used to run any game where players take turns, like chess or checkers.
+The **Poker Engine** (`@idealic/poker-engine`) is a toolbox for building and managing poker games. It provides all the specialized tools needed to start a game, play through it, and finish it. While it's focused on poker right now, the way it's designed could be used to create any game where players take turns.
 
 ## Reliability
 
-The engine is incredibly reliable because we wrote down every single rule very carefully before building it. It's checked by about **3,000 tests** that cover all kinds of situations, from normal plays to very tricky and rare ones. This makes sure the engine is super stable and always does the right thing.
+The engine is built like a high-precision watch. Every single rule was written down and defined before any code was created. It's checked by about **3,000 automatic tests** that cover every situation you can imagine—from normal betting to really weird and complicated scenarios—to make sure it's always fair and never crashes.
 
 Also:
 
-- **Chaos Testing:** We have a special test that acts like a crazy player, trying to do random things to break the game. This helps us ensure the engine can handle anything that might happen in the real world.
-- **Proven Design:** The engine's core logic is based on a system used by the famous site **PokerStars**. That system was tested with over **10 million real games**, so we know our foundation is rock-solid.
+- **Chaos Testing:** We constantly test the engine by throwing random, messy situations at it, like a real-world game where anything can happen, to make sure it stays stable.
+- **Battle-Tested:** The engine's core logic comes from a system that's already been proven to work with the same format used by **PokerStars**. It has been tested against a library of over **10 million real poker hands** from the past.
 
 ## Design Principles
 
-The engine follows six main rules to make sure it works perfectly:
+The engine is built on six main rules that it never breaks:
 
-1.  **It Never Forgets:** Every time something changes, the engine saves a new copy of the game's story instead of erasing the old one. This means you can always go back and see exactly what happened.
-2.  **It's Predictable:** If you start a game with the same secret code, the exact same cards will be dealt every time. This is great for replaying a game to study it.
-3.  **It Checks Before It Acts:** Before a player’s move is accepted, the engine checks to make sure it's a legal move. This stops the game from ever getting into a broken state.
-4.  **Everything Has Its Own Job:** The game's information (the `State`), the rules (the `Game`), and the decision-making parts are all kept separate. This makes the whole system cleaner and easier to work on.
-5.  **Everything is a Command:** Every single thing that happens in the game is recorded as a simple, clear text command. This creates a perfect transcript of the entire game.
-6.  **Everyone Speaks the Same Language:** All the different parts of the engine use a shared set of names and commands, so they always understand each other perfectly.
+1.  **Never Erase History:** Every time something changes, the engine saves a new copy instead of changing the old one. This gives you a perfect, preserved history of the entire game.
+2.  **Perfectly Replayable:** If you have the starting 'seed' (a secret number), you can replay any game exactly as it happened, card for card. It's like having a perfect video recording.
+3.  **Check First, Act Second:** The engine always checks if a move is legal *before* it lets it happen. This prevents anyone from accidentally or intentionally breaking the rules and corrupting the game.
+4.  **Everyone Has One Job:** Different parts of the engine do different things. The `State` just holds data, the `Game` runs the live action, and the `Processors` think about the rules. This keeps everything clean and organized.
+5.  **A Story of Actions:** Everything that happens in the game is just a simple, clear command. This creates a step-by-step history of the game that's easy to follow.
+6.  **A Common Language:** All parts of the engine use the same set of commands and messages to talk to each other, so there's no confusion.
 
-## The Building Block Pattern
+## The Four Departments Pattern
 
-The engine is designed with four main building blocks that work together. Think of them like a team making a movie.
+Think of the engine as a TV studio control room with four main departments that work together.
 
-### 1. The State (The Script)
+### 1. The State Department (The Official Script)
 
-**`Poker.State`** is like the movie script. It’s a complete record of everything that has happened in the game, written down as a series of actions.
+**`Poker.State`** is the official record of the game.
 
-- **A Universal Script:** It can describe the history of *any* turn-based game, not just poker.
-- **The Official Record:** It's the one true source of what happened in the game.
-- **Just the Facts:** It's a pure data file. It doesn't *do* anything; it just holds the story.
-- **Personalized Views:** It can create a special version of the script for each player that hides other players' secret cards.
+- **A Universal Story:** It's written in a way that could describe any turn-based game, like Chess or Checkers, not just Poker.
+- **The Single Source of Truth:** This is the one and only true history of everything that's happened in the game.
+- **A Read-Only Record:** It's like a history book. You can't change what's already written; you can only add a new page.
+- **Different Viewpoints:** It can show different versions of the script to different players. It will show you your secret cards, but keep them hidden from everyone else.
 
-### 2. The Game (The Director)
+### 2. The Game Department (The Live Studio)
 
-**`Poker.Game`** is like the film director. It takes the script (`State`) and brings it to life.
+**`Poker.Game`** is the director running the live show.
 
-- **Running the Show:** It turns the static script into a live, active game that you can interact with.
-- **The Rule Enforcer:** It applies all the rules, checks if moves are legal, and keeps the game moving forward.
-- **A Handy Helper:** It manages things like timers, keeps track of who's who, and can answer questions about the current game situation.
-- **Making Things Happen:** The `applyAction` command is how the director moves the story forward. You give it a command, and it updates the game.
+- **The Live Game:** It takes the official script (`State`) and turns it into an active, live game that you can interact with.
+- **The Referee:** It enforces all the rules, checks if your moves are legal, and manages the flow of the game.
+- **A Multi-Tool:** It's like a Swiss-army knife for the game, keeping track of time, who the players are, and what's happening right now.
+- **Making it Happen:** The `applyAction(game, action)` command is the main 'GO' button. When you make a move, this department updates the live game for everyone.
 
-### 3. The Command (The Assistant Director)
+### 3. The Command Department (The Player's Remote)
 
-**`Poker.Command`** is like the assistant director who communicates with the actors.
+**`Poker.Command`** is how you tell the game what to do.
 
-- **The Translator:** When you click a button on the screen (like "Bet"), it translates your simple wish into an official command string that the director (`Game`) can understand.
-- **Smart Suggestions:** It looks at the current game situation to figure out what commands are possible. For example, it calculates the right amount for you to bet if you want to go "all in."
-- **Keeps Things Tidy:** It separates what the user sees and clicks from the deep-down engine logic.
+- **The Translator:** When you click a button like 'Bet' or 'Fold', this department translates your click into a simple command the engine understands.
+- **Smart Suggestions:** It's smart. It looks at the live game to figure out your options. If you click 'All-In', it knows exactly how much money that is for you.
+- **Keeps Things Separate:** This keeps the buttons you see on the screen separate from the game's brain, which makes everything easier to manage.
 
-### 4. The Format (The Post-Production Crew)
+### 4. The Format Department (The Packer & Shipper)
 
-**`Poker.Format`** is like the crew that packages the movie for theaters or streaming.
+**`Poker.Format`** is in charge of packaging and sending data.
 
-- **Packaging and Unpacking:** It's really good at taking the game's data, packing it into a tiny file to send over the internet, and then unpacking it on the other side.
-- **Reading History:** It can take a text file of an old poker game and turn it back into a structured `State` object, so you can study or replay it.
+- **Packing & Unpacking:** It's an expert at shrinking game data into a tiny package to send over the internet and then unpacking it perfectly on the other side.
+- **Reading History:** It can also read the text files from old poker games (like the ones from PokerStars) and turn them back into game data the engine can use.
 
 ## Statistics & Analytics
 
-The engine has a special part, **`Poker.Stats`**, just for tracking numbers and helping you get better.
+The engine has a dedicated **`Poker.Stats`** department for tracking everything.
 
-- **The Idea:** It separates **Stats** (simple counts of what happened, like "you tried to bluff 3 times") from **Metrics** (smarter calculations, like "you bluff 15% of the time").
-- **Knows Your Position:** It's smart enough to track your moves based on where you were sitting at the table, which is very important for poker strategy.
-- **Big Picture Reports:** It can group all this data together to create reports about a single player, a single part of the game, or a whole tournament.
+- **The Big Idea:** It separates **Stats** (simple counts, like 'how many times you raised') from **Metrics** (smarter calculations, like 'the *percentage* of times you raised').
+- **Location, Location, Location:** It knows *where* you were sitting when you made a move. Raising when you're first to act is different than when you're last, and it tracks that difference.
+- **Creating Reports:** It can gather all this data to create reports on a single player, a specific part of the game, or the entire table.
 
-## How It's Built
+## System Architecture
 
-### Your Screen vs. The Main Computer
+### Where the Engine Lives
 
-The Poker Engine runs in two places at once.
+The Poker Engine runs in two places at once: your device and the main server.
 
-- **On Your Device:** It runs on your computer or phone to make the game feel instant. It predicts what will happen next so you don't have to wait.
-- **On the Server:** It also runs on a main computer that has the final say. This is the official referee that checks every move to make sure no one is cheating.
+- **On Your Device:** A copy runs on your computer or phone to make the game feel instant. When you make a move, you see it happen right away.
+- **On the Server:** The main engine lives on the server. The server is the final judge that checks every move, makes sure the game is fair, and controls the randomness of the cards.
 
 ### How It Connects
 
-- **Backend:** **[@idealic/game-service](../game-service/README.md)** — This is the main computer that manages game sessions, saves progress, and connects all the players.
-- **Frontend:** **[@idealic/poker-ui](../poker-ui/README.md)** — This is what you see. It takes the information from the `Game` object and draws the table, cards, and buttons on your screen.
+- **Backend:** The **[@idealic/game-service](../game-service/README.md)** handles saving games, connecting players, and managing the online parts.
+- **Frontend:** The **[@idealic/poker-ui](../poker-ui/README.md)** is what draws the game on your screen.
 
-## A Game's Life Story
+## How a Game Plays Out
 
-A game in the Poker Engine follows these steps:
+The Poker Engine works like a step-by-step assembly line.
 
-1.  **Getting a Seat:** Players ask to join a game. The system finds a table for them and waits until at least two people are ready to play.
-2.  **The Deal:** The main computer creates the official game story (`State`) with a secret random code, deals the first cards, saves the game, and tells everyone what happened.
-3.  **Taking Turns:** A player sends a move -> The engine checks it -> The game story is updated, saved, and sent out to all players.
-4.  **And The Winner Is...:** When the hand is over, the engine figures out who wins, moves the dealer button, and gets the next hand ready.
-5.  **Taking a Break:** If a player wants to quit or pause, the engine waits until the current hand is over to let them go.
-6.  **Waiting for Players:** If there's only one person left, the game pauses until someone else joins.
-7.  **Handling Timeouts:** The engine has a timer. If a player takes too long, it will automatically make a move for them (like folding) to keep the game from getting stuck.
+1.  **Getting Started:** Players ask to join. The system finds a table for them. The game waits until at least two people are ready to play.
+2.  **The Deal:** The server starts a new game with a secure, random shuffle. It deals the cards, saves the game's state, and sends it to all the players.
+3.  **Taking Turns:** A player sends a move. The engine checks it, updates the game for everyone, and saves the new state. This loop continues until the hand is over.
+4.  **The Finish Line:** The hand ends. The engine figures out the winner, moves the dealer button, and gets the next hand ready.
+5.  **Coming and Going:** If a player wants to leave or take a break, the engine waits until the current hand is over before processing their request.
+6.  **Waiting Around:** If there are fewer than two players at the table, the game pauses.
+7.  **Time's Up:** A timer makes sure the game keeps moving. If someone takes too long to act, the engine will make a default move for them (like folding).
 
-## What It Can Do
+## Core Abilities
 
-- **Manage the Game:** It can deal cards predictably, keep track of complicated betting situations, and correctly split the money when there are multiple winners.
-- **Enforce the Rules:** It makes sure everyone follows the rules for betting, moving through the game rounds, and showing their cards at the end.
-- **Manage Players:** It keeps track of everyone's position (like Dealer, Small Blind, Big Blind), how much money they have, and every move they've made.
-- **Run the Show:**
-  - A **Croupier** acts as the game coordinator.
-  - A **Dealer** is like a robot that handles all the automatic stuff, like dealing cards.
-  - The **Showdown** part is a super-fast system that instantly knows which poker hand is best to decide the winner.
+- **Game Tracking:** It perfectly keeps track of the cards, all the bets, and even really tricky situations like side pots.
+- **Rule Following:** It strictly enforces all the rules for betting, moving to the next round, and figuring out the winner at the end.
+- **Player Tracking:** It knows where everyone is sitting (like who is the Dealer or Big Blind), how much money they have, and everything they've done.
+- **Game Flow:**
+  - **The Coordinator:** A part of the engine called the 'Croupier' coordinates the game's flow.
+  - **The Auto-Dealer:** Another part acts as an automatic 'Dealer' that handles dealing cards and moving from one round to the next.
+  - **The Showdown:** It uses a super-fast lookup system to instantly compare everyone's cards and know who won.
 
 ## The Action Language
 
-The engine uses a simple text format for every event:
+The engine uses a simple, text-based language for every event:
 
-- **Player Actions:** `'p1 f'` (Player 1 folds), `'p2 cc 20'` (Player 2 calls a 20-chip bet), `'p3 cbr 100'` (Player 3 raises the bet to 100).
-- **Dealer Actions:** `'d dh p1 AsKs'` (Dealer deals hole cards Ace of Spades and King of Spades to Player 1), `'d db AhKhQh'` (Dealer deals the board cards: Ace, King, and Queen of Hearts).
-- **Messages:** `'p4 m Hello!'` (Player 4 sends the message 'Hello!').
+- **Player Moves:** `'p1 f'` (Player 1 folds), `'p2 cc 20'` (Player 2 calls 20), `'p3 cbr 100'` (Player 3 raises to 100).
+- **Dealer Actions:** `'d dh p1 AsKs'` (Dealer deals hole cards Ace of Spades, King of Spades to Player 1), `'d db AhKhQh'` (Dealer deals the board: Ace, King, Queen of Hearts).
+- **Chat:** `'p4 m Hello!'` (Player 4 sends a message).
 
-This simple, human-readable language is used for everything—it's how the different parts talk to each other and how the game's entire history is recorded.
+This simple format is easy for people to read (which helps for checking game history) and is the exact same language computers use to send commands to the engine.
