@@ -2,7 +2,7 @@
 
 > [!DEFINITION] Standard Process
 > The operational protocol for converting abstract vision into concrete execution through shared responsibility, iterative synthesis, and high-frequency synchronization.
->
+
 > Sidenote:
 >
 > - Paired with: :term[00: Company/Truth]{href="./00_truth.md"}
@@ -85,3 +85,4 @@ Working directly with documents and strict processes is not administrative overh
 ## Summary
 
 We trade the illusion of freedom for the reality of progress. By constraining _how_ we decide, we liberate _what_ we can achieve. We write to align, we align to trust, and we trust to execute.
+npm

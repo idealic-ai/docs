@@ -2,8 +2,9 @@
 
 > [!DEFINITION] Standard Process
 > How we turn big ideas into real things we can use. It’s our method for working together, building on our ideas step-by-step, and checking in with each other often.
->
+
 > Sidenote:
+>
 > - Related document: :term[00: Company/Truth]{href="./00_truth.md"}
 
 We’re at a point where we need to stop just exploring and start building amazing things. To do that, we need a clear set of rules to follow.
@@ -40,7 +41,7 @@ Because our master plan is so important, we can't just change it on a whim. We n
 > [!DEFINITION] Pull Request
 > The official way we check, improve, and agree on everything we make—from documents and plans to computer code.
 
-A Pull Request (PR) isn't just for programmers. For us, it’s the main way we build agreement. We use it for everything: big ideas, quick proposals, and the code itself. Think of a PR as putting an idea up for a team vote. Before any work starts, we make sure everyone signs off on the *plan*. This turns one person's idea into the whole team's commitment.
+A Pull Request (PR) isn't just for programmers. For us, it’s the main way we build agreement. We use it for everything: big ideas, quick proposals, and the code itself. Think of a PR as putting an idea up for a team vote. Before any work starts, we make sure everyone signs off on the _plan_. This turns one person's idea into the whole team's commitment.
 
 - **More Than Code:** The PR process is for all our work. We use it to agree on what words mean, how the system should be built, and what our goals are. It’s how 'my idea' becomes 'our plan.'
 - **Comments are for Improving, Not Chatting:** When someone leaves feedback on a plan, it isn't a text message conversation. It's valuable information that the author needs to use to make the plan better.
@@ -64,7 +65,7 @@ We check in with each other every day to make sure we don't drift apart while wo
 > [!DEFINITION] AI Augmentation
 > Using AI to boost our ideas, organize our plans, and carry out the detailed work.
 
-We don't use AI to think *for* us. We use it to put our thoughts into action. Our clear plans (the Evolution Documents) are the instructions, and the AI is the powerful tool that follows them.
+We don't use AI to think _for_ us. We use it to put our thoughts into action. Our clear plans (the Evolution Documents) are the instructions, and the AI is the powerful tool that follows them.
 
 - **Speak Your Mind:** We often start by just talking out our ideas. Then, we use AI to help organize those messy thoughts into a clear, structured plan.
 - **A Clear Plan for the AI:** The Evolution Document is the main instruction we give the AI. If the document is clear, the AI can write code, create tests, and even update the master plan for us, and it will do it correctly.
@@ -77,7 +78,7 @@ We don't use AI to think *for* us. We use it to put our thoughts into action. Ou
 
 Following these rules and writing these documents isn't just boring paperwork. It's training for how people will work in the future. This system teaches us to think like the architects and inventors who guide AI, showing us how to give great directions to any kind of intelligence, whether it's human or machine.
 
-- **Working with AI:** By learning to make our thoughts clear enough for a machine to understand, we are learning the language of the future. We stop being people who just *use* AI and become people who *direct* AI.
+- **Working with AI:** By learning to make our thoughts clear enough for a machine to understand, we are learning the language of the future. We stop being people who just _use_ AI and become people who _direct_ AI.
 - **Skills for Life:** Being able to explain a big idea in a clear, detailed plan is the most valuable skill you can have in the world of AI. The work we do here gives us amazing experience that will help us throughout our careers.
 - **Becoming Better Thinkers:** This whole process makes us think more clearly and carefully. It teaches us to see things from the reader's point of view (whether that reader is a person or an AI). We become sharper thinkers and better teammates.
 
