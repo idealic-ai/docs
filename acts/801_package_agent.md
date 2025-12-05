@@ -168,3 +168,48 @@ This architecture is designed to be open.
 - **Schema Registry:** Schemas can be registered via `Schemistry` and referenced using `$ref` (e.g., `"$ref": "MySchema"`), allowing for reusable types across the system.
 
 By treating the schema as the single source of truth and allowing the type system to flow downstream from it, we ensure that if it compiles, it adheres to the protocol.
+
+## Observability & Standardization Vision
+
+We aim to bring rigorous standardization to the operational aspects of agent execution, ensuring consistency across different LLM providers.
+
+### Token Normalization
+
+Different providers report usage differently. We plan to normalize these statistics into a unified interface that tracks:
+
+- **Input Tokens**: Context window usage.
+- **Output Tokens**: Generated content.
+- **Thinking Tokens**: Chain-of-thought reasoning budgets.
+
+### Thinking Process Exposure
+
+As models increasingly expose their internal reasoning (CoT), we treat this as a first-class citizen of the protocol:
+
+- **Access**: Exposing the raw thinking process stream to the application layer.
+- **Budgeting**: Standardizing "thinking budget" parameters across providers, allowing agents to request specific depth of reasoning regardless of the underlying model.
+
+## Cache-Aware Architecture
+
+We are introducing explicit support for **Context Caching** to drastically reduce latency and cost for long-running agents.
+
+### Token Metrics
+
+We will track specific cache usage metrics to quantify savings:
+
+- **Cache Read Tokens**: Tokens retrieved from the cache.
+- **Cache Write Tokens**: New tokens added to the cache.
+
+### Append-Only Optimization
+
+To maximize **Prefix Caching**, the library introduces specific operation modes that avoid invalidating the cache:
+
+- **Append-Over-Overwrite**: Preferring to append new `Data` or `Message` deltas rather than replacing the entire context.
+- **Merge Logic**: Utilizing the natural merging behavior of `Data` and `Advisors` to update state additively.
+- **Output Mode**: Structuring outputs to extend the conversation history linearly.
+
+### Context Management
+
+To balance cache hits with context window limits, we will provide configurable **Context Compaction**:
+
+- **Lazy Compaction**: An optimized routine that collapses the append-only log into a snapshot only when necessary, preserving the cache prefix for as long as possible.
+- **Configuration**: A "Cache-Optimized" knob to toggle these behaviors based on the specific latency/cost requirements of the workload.

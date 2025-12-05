@@ -82,6 +82,12 @@ This document is the bridge between high-level vision and ground-level implement
 - [851: Package/Poker Engine](./851_package_poker_engine.md)
 - [852: Package/Poker UI](./852_package_poker_ui.md)
 
+### Apps
+
+> Sidenote: Documentation for the end-user applications.
+
+- [950: App/Game Browser](./950_app_game_browser.md)
+
 ### Extras
 
 [Read the full glossary](./000_glossary.md)
