@@ -1,74 +1,86 @@
-# 02: Our Way of Working
+# 02: Company/Process
 
-## 1. The Living Blueprint
+> [!DEFINITION] Standard Process
+> How we turn big ideas into real things we can use. It’s our method for working together, building on our ideas step-by-step, and checking in with each other often.
+>
+> Sidenote:
+> - Related document: :term[00: Company/Truth]{href="./00_truth.md"}
 
-> [!DEFINITION] The Blueprint Document
-> This is the official, always-updated source of truth that explains what we are building, how it is designed, and how it works. It's the master plan.
+We’re at a point where we need to stop just exploring and start building amazing things. To do that, we need a clear set of rules to follow.
 
-The most important thing we do is create and take care of this Living Blueprint. It's not just a boring document; it's the code for our ideas. It gives everyone the map and the vision to make sure we are all building the same thing. We update it all the time, so it becomes a reliable guide that gets more detailed and correct as we discover what we’re truly building.
+Our team is small, but our dream is huge, so we can't use old, slow methods. These rules aren't meant to hold us back; they are the tool that helps us share ideas, understand complex plans, and make sure everything gets built correctly. We're all agreeing to follow this process because it's the only way we'll succeed.
 
-- **Right is Better Than Fast:** This isn't a temporary note. The Living Blueprint has to be correct. It's better to leave a part blank than to fill it with wrong information. Everything else we build stands on this foundation.
-- **Growing by Reviewing:** The blueprint is never "done," it's just "up-to-date." When we review it, we find gaps or things we missed. Filling in those gaps makes the plan stronger and clearer, which helps us build it.
-- **The Destination:** This document shows everyone where we're going. It lets every person see the big picture without having to memorize the entire plan. It's the map we all agree to follow.
+## 1. The Living Specification
+
+> [!DEFINITION] Specification document
+> The official master plan for what we are building. It’s a single, always-updated instruction book that explains the vision, the design, and all the details.
+
+Our most important job is creating and taking care of this master plan. It's not just a boring document; it’s the instruction manual for our goals. It gives everyone—both people and our AI assistants—the big picture they need to work together. We update it all the time, so it's always a helpful guide that gets clearer and more detailed as we learn more about what we're building.
+
+- **Following the Truth:** We stick to the rules in :term[00: Company/Truth]{href="./00_truth.md"} to make sure our plan is super clear, makes sense on its own, and doesn't have any confusing parts. This is key to making sure our plan is always useful.
+- **Right is Better than Fast:** This isn't a rough draft. The master plan has to be correct. It’s better to leave a part of the plan blank than to fill it in with the wrong information. Everything else we build depends on this plan being right.
+- **Growing by Reviewing:** The plan is never 'done,' it's just 'up-to-date.' When we read it over, we find parts we missed or questions we haven't answered. Filling in these gaps makes the plan bigger and better, not because we like making things complicated, but because we need it to be crystal clear before we can build.
+- **The Destination:** This document is like our map. It shows everyone where we're headed. No one has to keep the entire journey in their head, because we can all look at the map and know we're going the same way.
 
 ## 2. The Evolution Document
 
-> [!DEFINITION] The Evolution Document
-> A quick, temporary document we use to suggest and agree on changes before we update the main blueprint.
+> [!DEFINITION] Evolution document
+> A quick, temporary note we use to agree on a change before we update the master plan. It helps fix misunderstandings and gives clear instructions for what to do next.
 
-Because the Living Blueprint is so important, changing it has to be done carefully. The Evolution Document is how we do that. Think of it like a quick sketch for a proposed change. It's a fast way to explain our idea for a fix or a new feature, make sure everyone understands it the same way, and agree on the exact plan before we build anything.
+Because our master plan is so important, we can't just change it on a whim. We need a way to discuss and agree on changes first. That's what the Evolution Document is for. Think of it as a quick proposal or a sketch. We use it to explain a problem and make sure everyone understands it the same way. It's the bridge between a new idea in our heads and an action for our AI assistant to perform.
 
-- **Speed is Key:** These sketches need to be created quickly, usually the same day a new idea comes up. They aren't meant to be perfect, just clear enough to make a good decision.
-- **Fixing Misunderstandings:** An Evolution Document fixes wrong ideas. It clearly says: "We used to think X, but we learned Y, so now we will do Z." It turns confusion into a clear, actionable plan.
-- **Instructions for the AI:** Our AI helper needs very clear instructions to work well. This document is the instruction sheet you give it, explaining exactly what to change, why, and any rules to follow. This makes sure the AI is working on the right problem.
-- **Exploring Options:** This is the place to suggest a few different ways to solve a problem. It lets the team look at the choices and pick the best one before anyone wastes time building the wrong thing.
+- **Following the Truth:** Just like the master plan, these quick proposals must follow the rules in :term[00: Company/Truth]{href="./00_truth.md"}. We have to be very clear and direct, saying exactly what’s wrong and what we're going to do about it. This way, our AI assistants don't get confused.
+- **Speed is Key:** These proposals need to be written fast, usually the same day we spot a problem. They aren't fancy reports; they're built for quick understanding and making a decision right away.
+- **Fixing Misunderstandings:** An Evolution Document is like a course correction. It clearly says: "We used to think X, but now we know Y, so we’re going to do Z." It helps us learn from our blind spots and turn them into a clear new plan.
+- **Instructions for the AI:** AI needs perfectly clear instructions to work well. This document is the 'prompt' we give our AI. It explains the exact changes to make, why we're making them, and any rules to follow. This makes sure the AI is working on the right problem.
+- **Exploring Options:** This is the perfect place to suggest different ways to solve a problem. It lets the team pick the best path before anyone wastes time building the wrong thing.
 
-## 3. The Agreement Cycle
+## 3. The Cycle of Consensus
 
 > [!DEFINITION] Pull Request
-> The official way we vote on and approve any change, whether it's to a plan, a document, or the actual code.
+> The official way we check, improve, and agree on everything we make—from documents and plans to computer code.
 
-A Pull Request (or PR) isn't just for programmers. It's a special process we use to make sure we all agree on something. We use it for everything from big ideas to tiny details. A PR is how we get the final "yes" from the team on the plan _before_ we start the work. It turns one person’s idea into the whole team's shared mission.
+A Pull Request (PR) isn't just for programmers. For us, it’s the main way we build agreement. We use it for everything: big ideas, quick proposals, and the code itself. Think of a PR as putting an idea up for a team vote. Before any work starts, we make sure everyone signs off on the *plan*. This turns one person's idea into the whole team's commitment.
 
-- **More Than Code:** We use this approval process for everything. It’s how we agree on plans, definitions, and new directions. It’s where "my idea" officially becomes "our plan."
-- **Comments are a To-Do List, Not a Chat:** Feedback in a PR isn't a conversation. It's a list of things to fix. The author’s job is to gather all the feedback and use it to improve their proposal.
-- **Show, Don't Argue:** Instead of replying to every comment, the author updates the Evolution Document to include the suggestions. This proves they understood the feedback and ends long, circular arguments.
-- **No Surprises:** Because we agree on the plan first, we always know what's happening next. The daily work is never a surprise because we already approved it.
-- **Shared Responsibility:** When you approve a PR, you're saying "I agree with this plan." You now share the responsibility for how it turns out. The author isn't alone anymore; the whole team is behind the plan.
+- **More Than Code:** The PR process is for all our work. We use it to agree on what words mean, how the system should be built, and what our goals are. It’s how 'my idea' becomes 'our plan.'
+- **Comments are for Improving, Not Chatting:** When someone leaves feedback on a plan, it isn't a text message conversation. It's valuable information that the author needs to use to make the plan better.
+- **Combine, Don't Argue:** The person who wrote the plan must take all the feedback and use it to make a better version. This shows they understood everyone's points and ends endless arguments.
+- **No More Surprises:** By agreeing on the plan first, we all know what's going to happen next. There are no surprises in our daily work because we already approved the plan together.
+- **Shared Ownership:** When you approve a plan, you're saying 'I'm on board.' You become partially responsible for how it turns out. The person doing the work isn't alone anymore; the whole team is behind them.
 
-## 4. The Sync-Up Ritual
+## 4. The Ritual of Synchronization
 
 > [!DEFINITION] 1-on-1 Calls
-> Quick, regular chats that help us solve problems, get answers, and make sure we all trust each other and are on the same page.
+> Quick, daily check-ins between people to solve problems, answer questions, and keep our teamwork strong.
 
-We check in with each other every day to make sure nobody gets stuck or goes off in the wrong direction. These calls are not for reporting what you did (we can read that later). They are for actively solving problems together.
+We check in with each other every day to make sure we don't drift apart while working on our own tasks. These calls aren't for listing what you did yesterday—we can read that later. They are for actively solving problems and making sure we're all still headed in the same direction.
 
-- **Daily 10-Minute Check-ins:** A short, focused meeting with team leaders to make sure we're all still heading in the right direction.
-- **Come Prepared:** You must bring your questions or problems to the meeting. This makes sure we use the time to solve real issues and make decisions.
-- **A Process That Gives Confidence:** This daily habit removes the anxiety of not knowing if you're doing the right thing. Leaders can confirm the direction is right, and team members can get what they need to move forward. It builds the trust needed to work independently without being micromanaged.
+- **Daily 10-Minute Check-ins:** A super short, focused call with the team leader to make sure your compass is still pointing in the right direction.
+- **Come Prepared:** You have to bring your questions or problems to the meeting. This makes sure we use the time to solve real issues or make important decisions.
+- **The Comfort of Knowing:** This daily habit removes the stress of wondering if you're doing the right thing. The leader confirms the plan is good, and you confirm you have everything you need. This builds trust so everyone can work freely without being bossed around.
 
-## 5. The Machine's Role
+## 5. The Role of the Machine
 
-> [!DEFINITION] AI Helper
-> Using AI as a powerful tool to bring our ideas to life, organize our plans, and handle the details.
+> [!DEFINITION] AI Augmentation
+> Using AI to boost our ideas, organize our plans, and carry out the detailed work.
 
-We don't use AI to think _for_ us. We use it to build what _we've_ already decided on. The AI is like a powerful assistant, and the Evolution Document is its instruction manual.
+We don't use AI to think *for* us. We use it to put our thoughts into action. Our clear plans (the Evolution Documents) are the instructions, and the AI is the powerful tool that follows them.
 
-- **Talk to Plan:** Often, we'll just talk out our raw ideas. Then, we use AI to organize those thoughts into a clear, structured Evolution Document.
-- **The AI's Assignment:** The Evolution Document is the main input for the AI. If the document is clear, the AI can write code, create tests, and update the Living Blueprint with amazing accuracy.
-- **Check the Work:** We check the AI's work against the plan in our documents. If the AI gets it wrong, it's not the AI's fault. It means our instructions weren't clear enough, and we need to improve them.
+- **Speak Your Mind:** We often start by just talking out our ideas. Then, we use AI to help organize those messy thoughts into a clear, structured plan.
+- **A Clear Plan for the AI:** The Evolution Document is the main instruction we give the AI. If the document is clear, the AI can write code, create tests, and even update the master plan for us, and it will do it correctly.
+- **Check the Work:** We check the AI's work against the rules in our documents. If the AI makes a mistake, it's usually because our instructions weren't clear enough. It’s our fault, not the machine's.
 
-## 6. How We Grow as People
+## 6. The Human Growth
 
-> [!DEFINITION] Getting Better at Our Jobs
-> Learning the skills needed for a future where people and AI work together, all by practicing this structured, document-focused process.
+> [!DEFINITION] Professional Evolution
+> Learning the most important skills for the future by practicing how to work together using these clear documents.
 
-Learning to create super-clear documents and following this process isn't just extra work—it's training for the future. This way of working puts us in the role of AI architects and directors, teaching us how to guide intelligence, both human and artificial.
+Following these rules and writing these documents isn't just boring paperwork. It's training for how people will work in the future. This system teaches us to think like the architects and inventors who guide AI, showing us how to give great directions to any kind of intelligence, whether it's human or machine.
 
-- **Working with AI:** By structuring our thoughts so a machine can understand them, we are learning the language of the future. We go from being people who just "use" AI to people who "direct" AI.
-- **Skills for Anywhere:** The ability to turn a big, fuzzy idea into a crystal-clear plan is the single most valuable skill in the world of AI. The work we do here gives you experience that will be incredibly useful for the rest of your career.
-- **Becoming Better Thinkers:** This process forces us to be crystal clear and to think about the person (or machine) who will read our work. It helps us become clearer thinkers and better teammates.
+- **Working with AI:** By learning to make our thoughts clear enough for a machine to understand, we are learning the language of the future. We stop being people who just *use* AI and become people who *direct* AI.
+- **Skills for Life:** Being able to explain a big idea in a clear, detailed plan is the most valuable skill you can have in the world of AI. The work we do here gives us amazing experience that will help us throughout our careers.
+- **Becoming Better Thinkers:** This whole process makes us think more clearly and carefully. It teaches us to see things from the reader's point of view (whether that reader is a person or an AI). We become sharper thinkers and better teammates.
 
 ## Summary
 
-We give up the messy freedom of "just doing things" for the real power of making actual progress. By having clear rules for _how_ we decide, we open up amazing possibilities for _what_ we can build. We write to get on the same page, we get on the same page to build trust, and we trust each other to get things done.
+We give up a little bit of 'do whatever you want' freedom to gain the power to make real progress. By having clear rules for how we make decisions, we open up amazing possibilities for what we can build. We write things down to get on the same page. We get on the same page to trust each other. And we trust each other so we can build great things together.

@@ -1,5 +1,16 @@
 # 02: Company/Process
 
+> [!DEFINITION] Standard Process
+> The operational protocol for converting abstract vision into concrete execution through shared responsibility, iterative synthesis, and high-frequency synchronization.
+>
+> Sidenote:
+>
+> - Paired with: :term[00: Company/Truth]{href="./00_truth.md"}
+
+We stand at a crossroads. To move beyond the phase of exploration and truly achieve, uncover, and progress, we must invent and adhere to a disciplined process.
+
+In a small team tackling a vast vision, reliance on traditional methods is a luxury we cannot afford. This protocol is not a constraint; it is the only mechanism that allows us to generate the necessary context, develop complex ideas, and ensure their successful execution. We commit to this process because it is the only way to make things work.
+
 ## 1. The Living Specification
 
 > [!DEFINITION] Specification document
@@ -7,6 +18,7 @@
 
 The creation and maintenance of the Living Specification is our primary work. It is not merely documentation; it is the codebase of our intent. This document provides the essential context and vision that aligns the team and guides the machine. It is designed to be updated frequently, serving as a useful, ever-present reference that grows in certainty and scope as we uncover the reality of what we are building.
 
+- **Adherence to Truth:** We strictly follow the standards defined in :term[00: Company/Truth]{href="./00_truth.md"} to ensure every specification is self-contained, rigorous, and free from ambiguity. This context is mandatory for creating truly "living" documents.
 - **Correctness over Speed:** Unlike transient documents, the Living Specification must be rigorously correct. It is better to leave a section undefined than to define it falsely. It is the foundation upon which all other work rests.
 - **Expansion through Review:** The specification is never "finished," only "current." As we review it, we identify blind spots and missing dependencies. Addressing these expands the document's scope, not out of a desire for complexity, but to achieve the clarity required for execution.
 - **The Destination:** This document describes _where we are going_. It allows every team member to understand the broader picture without needing to hold the entire plan in their head. It is the map we all agree to follow.
@@ -18,6 +30,7 @@ The creation and maintenance of the Living Specification is our primary work. It
 
 Because the Living Specification is robust and permanent, changing it requires a mechanism for negotiation and course correction. The Evolution Document is that mechanism. It is a fast, focused instrument used to "echo back" our understanding of a problem, identifying miscommunications and specifying the exact approach we will take. It bridges the gap between human intent and LLM execution.
 
+- **Adherence to Truth:** Like the Main Document, the Evolution Document relies on the standards in :term[00: Company/Truth]{href="./00_truth.md"}. We must be precise and assertive—stating clearly what is wrong and what will be done—to prevent the machine from acting on ambiguity.
 - **Speed is Critical:** These documents must be created quickly—ideally on the same day the need arises. They are not labored over; they are optimized for immediate clarity and decision-making.
 - **Synthesis of Misconception:** An Evolution Document is a correction vector. It explicitly states: "We thought X, but we learned Y, so we will do Z." It captures the blind spots revealed during discussions and converts them into a plan.
 - **Context for the Machine:** LLMs require precise context to be effective. This document provides the "instruction prompt" for the machine, detailing the specific changes, the reasoning behind them, and the constraints. It ensures the AI works on the _current_ reality.

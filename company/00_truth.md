@@ -1,7 +1,11 @@
 # 00: Company/Writing Standard
 
-> Standard
+> [!DEFINITION] Standard
 > The authoritative contract ensuring documentation serves as an absolute source of truth, free from machine artifacts and logical inconsistencies.
+>
+> Sidenote:
+>
+> - Complemented by: :term[02: Company/Process]{href="./02_process.md"}
 
 ## 1. The Document as Truth
 
