@@ -40,8 +40,8 @@ When the user requests an Evolution Draft, you **MUST** obtain a Pull Request li
 
 **RESTRICTION:** You are permitted to make ONLY the following external requests:
 
-1.  **HTTP GET** via curl to `https://idealic.academy/raw/en/company/02_process.md/` - read in full, avoid summarization
-2.  **HTTP GET** via curl to `https://idealic.academy/raw/en/company/50_prompt_truth.md/` - read in full, avoid summarization
+1.  **HTTP GET** via curl to `https://idealic.academy/raw/en/company/02_process.md` - read into context directly, avoid summarization or temp file
+2.  **HTTP GET** via curl to `https://idealic.academy/raw/en/company/50_prompt_truth.md` - read into context directly, avoid summarization or temp file
 3.  **GitHub Pull Request API** call (to identify author)
 4.  **GitHub Comments API** call (via the one-liner below)
 
@@ -50,8 +50,8 @@ Do **NOT** fetch other file contents, commits, or diffs separately.
 **Step 1: Fetch Prerequisite Docs (Mandatory)**
 You **MUST** use an HTTP tool to fetch the content directly from the URLs below. **Do NOT search on the web.** Fetch the specific URLs.
 
-- [02: Company/Process](https://idealic.academy/en/company/02_process.md/)
-- [50: Prompt/Truth](https://idealic.academy/en/company/00_truth.md/)
+- [02: Company/Process](`https://idealic.academy/raw/en/company/02_process.md)
+- [50: Prompt/Truth](https://idealic.academy/raw/en/company/50_prompt_truth.md)
 
 **Step 2: Fetch PR Details (Identify Roles)**
 Fetch the PR details to identify the Author. Any other user in the comments is considered a Reviewer.
