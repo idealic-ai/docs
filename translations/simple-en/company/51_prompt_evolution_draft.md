@@ -1,9 +1,10 @@
 # 51: Prompt/Evolution Draft
 
 > [!DEFINITION] What is an Evolution Draft?
-> Think of it as a quick, temporary summary. When people are discussing changes to a project, this document is created to make sure everyone agrees on the new plan. It helps fix any misunderstandings and explains *why* a change is being made before the official documents are updated.
+> Think of it as a quick, temporary summary. When people are discussing changes to a project, this document is created to make sure everyone agrees on the new plan. It helps fix any misunderstandings and explains _why_ a change is being made before the official documents are updated.
 >
 > Sidenote:
+>
 > - To learn more about this process, see the :term[02: Company/Process]{href="./02_process.md"} document.
 
 ## What's its Purpose?
@@ -28,7 +29,7 @@ When you're asked to create an Evolution Draft, you **MUST** get two things firs
 **IMPORTANT RULE:** You are only allowed to get information from these three places:
 
 1.  **GET** this web page: `https://idealic.academy/en/company/02_process.md/`
-2.  **GET** this web page: `https://idealic.academy/en/company/50_truth.md/`
+2.  **GET** this web page: `https://idealic.academy/en/company/50_prompt_truth.md/`
 3.  **Use the special command below** to get the comments from GitHub.
 
 Do **NOT** look at other files, code changes, or commit history on your own.
@@ -63,7 +64,7 @@ Look at the file with all the comments. Your goal is to cover **everything**. Ev
 **For each conversation, figure out:**
 
 1.  **The Goal:** What does the person really want?
-2.  **The Reason Why:** *Why* is this change needed? What's the story behind it? Use the discussion to explain this so another computer helper can understand the context.
+2.  **The Reason Why:** _Why_ is this change needed? What's the story behind it? Use the discussion to explain this so another computer helper can understand the context.
 3.  **The Action:** What needs to be done?
 4.  **Big Picture Impact:** Did this discussion change our main plan for the future?
 5.  **Status:** Did everyone agree? Is someone confused?
@@ -79,7 +80,7 @@ Look at the file with all the comments. Your goal is to cover **everything**. Ev
 3.  **Check Every Comment:** Make sure every conversation (especially the first comment in each one) is mentioned in your summary.
 4.  **Check for 'Ghosts':** Make sure every goal number in your check-list table matches a real section in your summary.
     - **Fix it:** If you find a number in the table that doesn't have a matching section, you **MUST** go back and write that missing section. Don't just delete the number from the table; add the missing summary.
-5.  **Ask yourself:** "Did I miss *any* conversation?"
+5.  **Ask yourself:** "Did I miss _any_ conversation?"
 6.  If the answer is yes, go back and add it right away.
 
 ### 5. Creating the Final Document
@@ -113,7 +114,7 @@ Make a new file (for example, `evolution_{DATE}.md`).
 ### {N}. {Short Title in Russian}
 
 - **The Goal:** {What are we trying to do?}
-- **The Reason Why:** {Explain *why* this change is needed, based on the discussion.}
+- **The Reason Why:** {Explain _why_ this change is needed, based on the discussion.}
 - **What to Do:** {List the specific steps to take.}
 - **Status:** {Agreed / Misunderstanding / Needs More Info / Vision Change / Needs Acknowledgement}
 - **How we thought before (if it changed):** {Briefly describe the old plan if the new one is different.}
@@ -129,8 +130,8 @@ Make a new file (for example, `evolution_{DATE}.md`).
 
 ## Double-Check Report
 
-| Comment ID    | Title (Summary) | Goal #   | Status          |
-| ------------- | --------------- | -------- | --------------- |
-| [{ID}]({URL}) | {3-6 words}     | {N}      | Included        |
-| [{ID}]({URL}) | {3-6 words}     | -        | Skipped (Noise) |
+| Comment ID    | Title (Summary) | Goal # | Status          |
+| ------------- | --------------- | ------ | --------------- |
+| [{ID}]({URL}) | {3-6 words}     | {N}    | Included        |
+| [{ID}]({URL}) | {3-6 words}     | -      | Skipped (Noise) |
 ```

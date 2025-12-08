@@ -29,7 +29,7 @@ When the user requests an Evolution Draft, you **MUST** obtain a Pull Request li
 **RESTRICTION:** You are permitted to make ONLY the following external requests:
 
 1.  **HTTP GET** to `https://idealic.academy/en/company/02_process.md/`
-2.  **HTTP GET** to `https://idealic.academy/en/company/50_truth.md/`
+2.  **HTTP GET** to `https://idealic.academy/en/company/50_prompt_truth.md/`
 3.  **GitHub Comments API** call (via the one-liner below)
 
 Do **NOT** fetch other file contents, commits, or diffs separately.
