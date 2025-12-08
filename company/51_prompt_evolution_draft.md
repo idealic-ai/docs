@@ -230,6 +230,7 @@ You must generate the document by **systematically replacing placeholders** in a
     - **Подход автора:** {The initial approach or code taken by the author before feedback.}
     - **Предложение ревьюера:** {The suggestion or concern raised by the reviewer.}
     - **Решение автора:** {The final decision or solution adopted by the author.}
+    - **Реакция ревьюера:** {The follow-up reaction to author's decision if applicable.}
     - **Отклоненные альтернативы:** {Options discussed but rejected (if any).}
     - **Обоснование:** {Explanation of _why_ this change is needed}
     - **Принцип:** {What core principle dictated this decision? (if applicable)}
