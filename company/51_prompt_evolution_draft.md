@@ -29,22 +29,22 @@ When the user requests an Evolution Draft, you **MUST** obtain a Pull Request li
 **RESTRICTION:** You are permitted to make ONLY the following external requests:
 
 1.  **HTTP GET** to `https://idealic.academy/en/company/02_process.md/`
-2.  **HTTP GET** to `https://idealic.academy/en/company/00_truth.md/`
+2.  **HTTP GET** to `https://idealic.academy/en/company/50_truth.md/`
 3.  **GitHub Comments API** call (via the one-liner below)
 
 Do **NOT** fetch other file contents, commits, or diffs separately.
 
 **Step 1: Fetch Prerequisite Docs (Mandatory)**
-Use `web_search` or an HTTP tool to read the full content of these standards:
+You **MUST** use an HTTP tool to fetch the content directly from the URLs below. **Do NOT search on the web.** Fetch the specific URLs.
 
 - [02: Company/Process](https://idealic.academy/en/company/02_process.md/)
 - [50: Prompt/Truth](https://idealic.academy/en/company/00_truth.md/)
 
 **Step 2: Fetch Comments (One-Liner)**
-Execute this exact command. Replace `{PR_NUMBER}` (e.g., 123) and `{SINCE_DATE}` (e.g., 2025-01-01).
+Execute this exact command. Replace `{PR_NUMBER}` (e.g., 123) and `{SINCE_DATE}` (e.g., 2025-01-01). NOTE: IT's important to fetch all comments in one go per_page=200 does it. Do not attempt to split these calls.
 
 ```bash
-gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}/comments?since={SINCE_DATE}&per_page=100" --paginate --jq 'map({id, body, user: .user.login, created_at, html_url, diff_hunk, in_reply_to_id}) | group_by(.in_reply_to_id // .id) | map(sort_by(.created_at) | .[0] as $root | [$root] + (.[1:] | map(del(.diff_hunk))))' | jq '.' > "comments_{SINCE_DATE}.json"
+gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}/comments?since={SINCE_DATE}&per_page=200" --paginate --jq 'map({id, body, user: .user.login, created_at, html_url, diff_hunk, in_reply_to_id}) | group_by(.in_reply_to_id // .id) | map(sort_by(.created_at) | .[0] as $root | [$root] + (.[1:] | map(del(.diff_hunk))))' | jq '.' > "comments_{SINCE_DATE}.json"
 ```
 
 ### 3. Analysis & Synthesis (Language: Russian)
@@ -68,7 +68,7 @@ Analyze the JSON. Your goal is **Completeness**. Every distinct thread or discus
 3.  **Action:** What needs to change?
 4.  **Vision Impact:** Did the long-term vision change?
 5.  **Agreement Status:** Is it agreed? Is there a misunderstanding?
-    - If the author **did not reply**, mark as: "Требует подтверждения (Needs acknowledgement)".
+    - If the author **did not reply**, mark as: "Needs acknowledgement".
 6.  **Context:** The proof (quotes).
 
 ### 4. Validation
