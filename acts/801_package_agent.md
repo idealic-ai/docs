@@ -166,6 +166,7 @@ This architecture is designed to be open.
 - **Activity Registry:** Implementations are registered via `Activity.register`. This defines the _execution logic_ (code) for a tool.
 - **Advisor Registry:** (Planned) Advisors will be registered globally, allowing specific personas and reasoning models to be plugged into any agent.
 - **Schema Registry:** Schemas can be registered via `Schemistry` and referenced using `$ref` (e.g., `"$ref": "MySchema"`), allowing for reusable types across the system.
+- **Presets:** Reusable configurations that bundle messages, transformers, and settings. Presets can be registered via `Preset.register` and invoked declaratively within the message stream using `{ type: 'preset', preset: 'Name' }`. This allows for powerful composition of agent behaviors (like a "Council" of advisors or a specific game-playing persona) without complex setup code.
 
 By treating the schema as the single source of truth and allowing the type system to flow downstream from it, we ensure that if it compiles, it adheres to the protocol.
 

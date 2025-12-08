@@ -1,213 +1,215 @@
 # 801: Package/Agent
 
 > [!DEFINITION] [Agent](./000_glossary.md)
-> An official, working example of the rules in the **Acts of Emergence**. It's the engine that runs tasks for an AI, making sure it follows a strict plan (a 'schema'), from single, simple jobs to big projects that remember what they've done.
+> An Agent is the official, working version of the ideas described in the **Acts of Emergence**. It's the engine that brings AI-powered workflows to life, from tiny, one-off tasks to complex, thinking programs.
 
 > Sidenote:
-> - This shows you:
->   - :term[001: Agent/Request]{href="./001_agent_request.md"} (a single task)
->   - :term[010: Agent/Loop]{href="./010_agent_loop.md"} (a repeating process)
+> - Built with:
+>   - :term[001: Agent/Request]{href="./001_agent_request.md"} (The smallest possible job)
+>   - :term[010: Agent/Loop]{href="./010_agent_loop.md"} (The engine that keeps it running)
 
-The `@augceo/agent` library is the official, main version of the AI architecture described in the Acts. Other systems might focus on writing clever instructions for the AI, but this one focuses on **following the rules perfectly**. It uses a very strict process where every step is carefully controlled, and every piece of information follows a blueprint.
+The `@augceo/agent` library is the main tool for building these agents. While some AI tools focus on helping you write clever prompts for an AI, this library focuses on following a strict set of rules. Think of it like a robot in a factory: every move is precise, predictable, and follows a clear blueprint.
 
-## The Acts (Rules for Building)
+## The Acts (The Rulebooks)
 
-This library is built by following the exact instructions in the **Acts**. Each feature comes from a specific rulebook.
+This library is built directly from a set of rulebooks called the **Acts**. Each feature is like a chapter in these books.
 
-This system is built like a box of building blocks, designed so you can **snap pieces together and create your own**. Instead of one giant, unchangeable program, each Act gives you a single, specific power. You only use the pieces you need—whether it's just a simple tool or a whole team of AIs that can remember things and work together.
+This design makes it like a box of building blocks. Instead of one giant, heavy tool, you get a collection of special-purpose blocks. You can pick and choose just the ones you need, whether you're building something small and simple or a huge, complicated system with many moving parts.
 
 ### Core Building Blocks
 
 - **:term[001: Agent/Request]{href="./001_agent_request.md"}**: The smallest possible job you can give the AI.
-  - It takes some background info and a goal, and turns them into a neat, organized answer.
-  - It supports asking for many different answers to the same question at once.
-  - It's the foundation for everything a more advanced AI does.
-- **:term[002: Agent/Tool]{href="./002_agent_tool.md"}**: A blueprint for a special ability the AI can use.
-  - It describes *what* a tool does, but not *how* it does it. It's like having a button that says 'Start Car' without needing to know how the engine works.
-  - This lets the AI choose the right ability for the job based on a simple description.
-- **:term[003: Agent/Activity]{href="./003_agent_activity.md"}**: The actual computer code that makes a Tool work.
-  - It connects the idea of a Tool to the code that gets the job done.
-  - This keeps the 'what' (the Tool) separate from the 'how' (the Activity).
-- **:term[004: Agent/Call]{href="./004_agent_call.md"}**: When the AI actually decides to use a Tool.
-  - It's the AI's command to run a tool with specific instructions.
-  - This is how the AI's intention gets turned into a real action.
+  - It takes some information (the `Context`) and a goal (the `Schema`) and produces a structured answer (the `Solution`).
+  - It can even come up with several different answers at once.
+  - This is the foundation for everything else an agent can do.
+- **:term[002: Agent/Tool]{href="./002_agent_tool.md"}**: A description of a power or skill the agent can use.
+  - It's like a label on a button that says what it does, but not how it does it.
+  - This lets the AI choose the right skill for the job based on a simple description.
+- **:term[003: Agent/Activity]{href="./003_agent_activity.md"}**: The actual code that makes a Tool work.
+  - If a Tool is the "Search the Web" button, the Activity is the code that performs the internet search.
+  - This keeps the button separate from the engine, so you can swap out the engine without changing the button.
+- **:term[004: Agent/Call]{href="./004_agent_call.md"}**: A record of the agent deciding to use a Tool.
+  - It's the moment the agent says, "I am now pressing the 'Search the Web' button to look for 'fluffy kittens'."
+  - This is the standard message that connects the AI's intention to a real action.
 
 ### Data & Memory
 
-- **:term[005: Agent/Data]{href="./005_agent_data.md"}**: The official way to package information so the AI understands it.
-  - It's like putting every piece of memory into the same kind of standardized envelope.
-  - This allows information to be combined in a predictable way.
-- **:term[006: Agent/Input]{href="./006_agent_input.md"}**: Turns a simple one-off job into a reusable skill.
-  - It defines the exact **inputs** a task needs to run.
-  - This makes it possible to create user interfaces automatically and use the skill safely.
-- **:term[009: Agent/State]{href="./009_agent_state.md"}**: The AI's short-term memory that lasts between steps.
-  - It acts as a **shared notepad** while the AI works.
-  - This lets the AI pause and resume complex jobs.
-- **:term[016: Agent/Meta]{href="./016_agent_meta.md"}**: Keeps track of the AI's identity and history.
-  - It records the AI's **version and origin**.
-  - It allows AIs to update themselves to new versions on their own.
+- **:term[005: Agent/Data]{href="./005_agent_data.md"}**: The standard way of packaging information.
+  - Think of it like putting every piece of information into a standard-sized envelope, so the system always knows how to handle it.
+  - This makes it easy to combine different pieces of information.
+- **:term[006: Agent/Input]{href="./006_agent_input.md"}**: Turns a simple Request into a reusable function.
+  - It defines exactly what information a Request needs to start.
+  - This is like creating a form with specific fields to fill out, making the task easy to repeat correctly every time.
+- **:term[009: Agent/State]{href="./009_agent_state.md"}**: The agent's memory that lasts between steps.
+  - It's like a shared whiteboard or scratchpad that the agent uses to keep track of its work.
+  - This lets the agent pause and resume its work without forgetting what it was doing.
+- **:term[016: Agent/Meta]{href="./016_agent_meta.md"}**: Manages the agent's identity.
+  - It's like an ID card that tracks the agent's version, who made it, and how it has changed.
+  - This allows agents to update and improve themselves on their own.
 
 ### Connecting the Pieces
 
-- **:term[007: Agent/Variables]{href="./007_agent_variables.md"}**: A way to point to information without copying it.
-  - It uses a special format (`†kind.path`) to create a shortcut to existing data.
-  - This lets Tools **read** from memory without making messy copies.
-- **:term[008: Agent/Output]{href="./008_agent_output.md"}**: The system for saving results.
-  - It uses `_outputPath` to tell a Tool exactly where to store its result.
-  - This allows one operation to **chain** into the next by saving its result where the next tool can find it.
-- **:term[011: Agent/Expressions]{href="./011_agent_expressions.md"}**: Adds simple decision-making to the workflow.
-  - Supports **“if this fails, try that”** logic (`||`).
-  - Supports **“send this to multiple places”** logic (`&&`).
+- **:term[007: Agent/Variables]{href="./007_agent_variables.md"}**: A way to refer to information without copying it.
+  - It uses a special `†` symbol like a shortcut, saying, "get the information from over there."
+  - This lets Tools read information from the agent's memory without making messy copies.
+- **:term[008: Agent/Output]{href="./008_agent_output.md"}**: The system for saving the result of a Tool's work.
+  - It uses a special `_outputPath` instruction to tell the agent where to put a tool's results.
+  - This allows one tool's result to become the starting point for the next tool.
+- **:term[011: Agent/Expressions]{href="./011_agent_expressions.md"}**: Lets you add simple logic for how information flows.
+  - You can create a fork in the road: "Try this first, **OR** (`||`) if that fails, try this other thing."
+  - You can also split the path: "Send this info here **AND** (`&&`) send it there at the same time."
 
-### Running the Show
+### Managing the Work
 
-- **:term[010: Agent/Loop]{href="./010_agent_loop.md"}**: The engine that keeps the AI working.
-  - It gives the AI a task, waits for it to use a tool, sees the result, and then gives it the next task, over and over until the job is done.
-  - It manages the whole cycle of thinking, acting, and learning from the result.
-- **:term[012: Agent/Plan]{href="./012_agent_plan.md"}**: The AI's big-picture strategy.
-  - It shows the workflow as a **map** of which tools to use and in what order.
-  - This separates **thinking** about what to do from actually **doing** it.
-- **:term[013: Agent/Instancing]{href="./013_agent_instancing.md"}**: A way to run the same plan on many different things at once.
-  - It groups tasks together to run them at the same time in parallel.
-  - It’s like having a hundred assembly lines all following the same blueprint.
-- **:term[014: Agent/Delegate]{href="./014_agent_delegate.md"}**: Lets one AI give a smaller job to another AI.
-  - The smaller job happens in a **secure box**, so it can't mess with the main AI's work.
-  - This allows you to build AIs out of other AIs.
-- **:term[015: Agent/Scopes]{href="./015_agent_scopes.md"}**: Controls what information an AI is allowed to see.
-  - It uses `_scopes` to give a tool or a sub-agent only the data it needs for a specific task.
-  - This keeps things secure and prevents mistakes.
-- **:term[017: Agent/Advisor]{href="./017_agent_advisor.md"}**: A council of experts for the main AI.
-  - Before taking action, the main AI can ask for advice from special 'Advisor' AIs.
-  - These advisors can offer different points of view and vote on the best next step.
+- **:term[010: Agent/Loop]{href="./010_agent_loop.md"}**: The engine that keeps the agent running.
+  - It repeatedly asks the AI what to do next until the final goal is reached.
+  - It manages the cycle of thinking, acting, and learning from the results.
+- **:term[012: Agent/Plan]{href="./012_agent_plan.md"}**: A clear strategy for how to solve a problem.
+  - It shows the entire workflow as a map of which tools to use and in what order.
+  - This separates the act of **planning** from the act of **doing**.
+- **:term[013: Agent/Instancing]{href="./013_agent_instancing.md"}**: A way to run the same plan on many things at once.
+  - It's like an assembly line, where each item gets the same set of tasks performed on it in parallel.
+  - This is great for processing large amounts of data very quickly.
+- **:term[014: Agent/Delegate]{href="./014_agent_delegate.md"}**: A way for one agent to give a job to another agent.
+  - It's like a project manager hiring a specialist to handle one specific, tricky part of a project.
+  - This lets you build agents out of other agents, like nested dolls.
+- **:term[015: Agent/Scopes]{href="./015_agent_scopes.md"}**: A way to control what information an agent can see.
+  - It puts up walls around a task, giving an agent only the information it needs to do its job and nothing more.
+  - This keeps things organized and secure, preventing mistakes.
+- **:term[017: Agent/Advisor]{href="./017_agent_advisor.md"}**: An expert AI that gives advice.
+  - It's like having a team of tiny consultants that think about the problem and give suggestions **before** the main agent acts.
+  - This helps the agent make smarter, more strategic decisions.
 
-## Key Ideas
+## Big Ideas
 
-While the Acts above are the *mechanics*, these ideas are the *philosophy* behind the system:
+While the Acts describe the *parts*, these ideas describe the *philosophy* behind how they work together:
 
-- **:term[104: Concept/Latent]{href="./104_concept_latent.md"}**: The “No-Code” Power.
-  - If you describe a tool but don't write any code for it, the agent will try to **imagine** what that tool would do.
-  - It uses its own built-in knowledge to guess the tool's output.
-  - This lets you design and test complex systems just by describing them, adding real code later.
+- **:term[104: Concept/Latent]{href="./104_concept_latent.md"}**: The "No-Code" Power.
+  - If you describe a Tool but don't give it any code, the Agent will **pretend to use it**. 
+  - It uses its imagination (its "latent space") to predict what the tool's result would have been.
+  - This lets you design and test very complex plans using only descriptions, without writing a single line of code.
 
 - **Planning and Doing Are the Same Thing**:
-  - In this system, **planning is the same as doing**.
-  - The agent doesn't make one big plan at the start. Instead, at every single step, it makes a tiny new plan for what to do *right now* based on the latest information.
+  - The Agent doesn't make a big, fixed plan at the beginning.
+  - At every single step, it looks at the current situation and decides on the very next move. It is constantly re-planning.
+  - It’s like a video game character that decides where to go next based on what it sees right in front of it.
 
-- **Human in the Loop (HITL)**:
-  - The `Agent` can be set up to pause and ask for permission.
-  - This allows a person to check every **Tool Call** before it runs.
-  - You can approve it, reject it, or even change it, and the agent will use that feedback to adjust its plan.
+- **Human in the Loop (You're in Control)**:
+  - The Agent can be programmed to pause and ask for permission.
+  - Before it uses a Tool, it can ask a human, "Is it okay for me to do this?" 
+  - The person can then approve, deny, or even change the agent's plan before it continues.
 
 - **Learning from Mistakes**:
-  - Errors don't cause a crash. If a tool fails, the error is saved as a **message** in the AI's memory.
-  - On its next turn, the agent “sees” the failure and can try to fix it, for example, by trying again with different settings or choosing another tool.
+  - If a tool breaks or causes an error, the agent doesn't just stop. The error becomes a message in its memory.
+  - In the next step, the agent sees the error and uses its intelligence to try and fix it, maybe by using the tool differently or trying a completely different tool.
 
 ## Agent vs. Request
 
-This library has two main ways of working: a simple **Request** and a powerful **Agent**.
+The library has two ways of working: a small, one-time **Request** and a bigger, continuous **Agent**.
 
-### The Request (Simple, One-Shot Task)
+### The Request (A Single Task)
 
-A `Request` is a single, simple transaction with the AI. It does one thing and then stops.
+A `Request` is a single, instant job for the AI. You give it information and a goal, and it gives you back an answer. That's it.
 
-- **Control:** It does not repeat or loop. It runs exactly once.
-- **Multiple Answers:** It can be asked to generate several possible solutions to the same problem.
-- **Real-Time Responses:** It can stream parts of its answer back as it thinks. This lets you see and use information (like tool calls) instantly, even before the AI has finished its full response.
+- **No Looping:** It runs exactly once.
+- **Multiple Answers:** It can give you a few different possible answers to choose from.
+- **Real-Time Responses:** It can start showing you parts of the answer (like which tools it wants to use) while it's still thinking about the rest. This makes it feel very fast.
 
-### The Agent (Complex, Multi-Step Project)
+### The Agent (A Full Project)
 
-An `Agent` is a **manager** that runs a series of simple Requests to complete a bigger goal.
+An `Agent` is a program that runs in a **loop**, using many Requests to finish a big goal.
 
-- **Looping:** It repeatedly calls a Request, runs the tools it suggests, and feeds the results back into its memory to decide what to do next.
-- **Knowing When to Stop:** It keeps working until it has produced the final `output` it was asked to create.
-- **Goal-Oriented:** The agent's main job is to fill in the `output` field. As soon as that field has a value, its work is considered done.
+- **Looping:** It keeps running, using tools and learning from the results, until the project is done.
+- **Knowing When to Stop:** It keeps working until it successfully fills in the final `output` field.
+- **Reaching the Goal:** You tell the agent what the final answer should look like. It considers its work finished only when it has produced that answer.
 
-### A Simple, Shared Answer Format
+### A Single Answer Format
 
-To make things easy, both simple Requests and complex Agents give their answer in the same predictable way. Your final goal is always placed inside a property called `output`.
+To keep things simple, both Agents and Requests give you their answers in the same standard way. The final result is always found inside the `output` property.
 
-- **Request:** Gives back an array of possible solutions, `Data<T>[]`.
-- **Agent:** Gives back the single, final solution, `Data<T>`.
+- **Request:** Gives you a list of possible solutions.
+- **Agent:** Gives you the one final solution it decided on.
 
-## Vision for Perfect Safety
+## The Vision for Perfect Code
 
-This system uses a technology called **Schemistry** to make sure all the data fits together perfectly from start to finish, without needing extra tools to generate code. We want your code's understanding of the data to exactly match what the AI is actually doing.
+This library uses a tool called **Schemistry** to make sure your code is safe and works as expected, without you having to do extra work. The goal is for the code editor to understand the agent so well that it can catch mistakes before you even run the program.
 
 ### The Challenge
 
-When an agent runs, the final plan it uses isn't just what you gave it. It's a **combination** of:
+When you give an agent a job, the final instructions sent to the AI are a mix of things:
 
-1.  Your Goal (the schema you provided).
-2.  System Features (like Tools, Advisors, and other extra info).
+1. Your Goal (what you want).
+2. System Tools (what the agent can do).
 
-These extra features are turned on by adding special messages to the agent's memory. For example, adding an `Advisor` message makes the system add an `advisors` section to the final plan.
+Different parts of the agent, called **Message Handlers**, add these extra pieces. For example, if you add an `Advisor` to give advice, a handler automatically adds an `advisors` section to the final goal.
 
-### The Solution: A Type-Safe Assembly Line
+### The Solution: A Smart Type System
 
-We are building a system where our code's understanding of data types perfectly follows the agent's logic. As the agent adds features to its plan, our code automatically understands those changes.
+The code editor's brain is designed to work just like the agent's brain. When a handler adds a new part to the agent's instructions, it also updates the code editor's understanding of the final answer's shape.
 
-The process works like this:
+Here's how it works:
 
-1.  **Understand:** Your goal (the Schema) is turned into a data type `T` that the code understands.
-2.  **Combine:** Each active feature adds its own piece to that type.
-    - _Advisor Feature:_ Adds `{ advisors: Advisor[] }`
-    - _Tool Feature:_ Adds `{ calls: Call[] }`
-    - _Meta Feature:_ Adds `{ meta: Meta }`
-3.  **Final Result:** The final data type is a perfect combination of your original goal and all the active system features.
+1. **Understand:** Your goal is turned into a shape `T` that the editor understands.
+2. **Transform:** Each active part of the agent adds its piece to `T`.
+   - The *Advisor* part adds `{ advisors: ... }`.
+   - The *Tool* part adds `{ calls: ... }`.
+   - The *Meta* part adds `{ meta: ... }`.
+3. **Final Shape:** The final shape is a perfect combination of what you wanted and what the system added.
 
 ### Making It Your Own
 
 This system is designed to be open for you to build on.
 
-- **Custom Features:** You can create your own message-based features that change the agent's plan and data types.
-- **Registering Tools:** You can tell the system about new Tools—the *what*.
-- **Registering Activities:** You can provide the code that makes those Tools work—the *how*.
-- **Registering Advisors:** (Coming soon) You'll be able to add new expert personas to advise any agent.
-- **Shared Blueprints:** You can save and reuse data blueprints (Schemas) across your whole system.
+- **Custom Handlers:** You can create your own parts that change how the agent works.
+- **Tool Registry:** You can add new tools to a global library for any agent to use.
+- **Activity Registry:** You can add the code that makes those new tools work.
+- **Advisor Registry:** (Coming Soon) You'll be able to create and share new AI personas to help agents think.
+- **Schema Registry:** You can save and share common data shapes so you don't have to define them over and over.
+- **Presets:** You can bundle together settings, tools, and advisors into a reusable package. You can then activate a whole set of behaviors with a single command, like turning on a "Chess Master" mode or a "Creative Writing Assistant" mode.
 
-By treating the schema as the single source of truth, we make sure that if your code works, it’s following the rules.
+By always using the schema (the blueprint) as the one source of truth, we make sure that if your code looks right in the editor, it will work right when you run it.
 
-## Vision for Observing and Standardizing
+## The Vision for a Clear View
 
-We want to bring clear, consistent standards to watching agents work, no matter which AI model (from which company) is powering them.
+We want to make it easy to see what an agent is doing and how many resources it's using, no matter which AI model is powering it.
 
 ### Standard Token Counting
 
-Different AI companies count usage in different ways. We plan to combine these into one clear report that tracks:
+Different AI companies measure work differently. We plan to translate all of their reports into one simple, standard format that tracks:
 
-- **Input Tokens**: How much text the AI reads.
-- **Output Tokens**: How much text the AI writes.
-- **Thinking Tokens**: How much 'thought' the AI uses to reason before answering.
+- **Input Tokens**: How much text the AI had to read.
+- **Output Tokens**: How much text the AI wrote.
+- **Thinking Tokens**: How much work the AI did internally to reason about the problem.
 
 ### Seeing the Thought Process
 
-AI models are starting to show their work (their 'chain of thought'). We treat this as a core part of the system.
+Newer AI models can "show their work." We treat this internal thinking as a key feature.
 
-- **Access**: We'll give you direct access to the AI’s raw stream of thought.
-- **Budgeting**: We will create a standard way to set a 'thinking budget', so you can ask an AI to 'think harder' about a problem, no matter which model you're using.
+- **Access**: Making the AI's step-by-step reasoning easy for you to see and use.
+- **Budgeting**: Letting you tell the agent how much "thinking time" it's allowed to use, no matter which AI model it's running on.
 
-## A Cache-Friendly System
+## A Memory-Smart Design
 
-We are adding built-in support for **caching** to make long-running agents much faster and cheaper.
+We're adding a smart **memory cache** to make long-running agents much faster and cheaper.
 
-### Measuring Savings
+### Memory Metrics
 
-We will track how much the cache is helping:
+We will track exactly how the cache is being used to show you the savings:
 
-- **Cache Read Tokens**: Tokens loaded from the cache (fast and cheap).
-- **Cache Write Tokens**: New tokens saved to the cache.
+- **Cache Read Tokens**: How much information was remembered from last time.
+- **Cache Write Tokens**: How much new information was saved for next time.
 
-### Smart Updates
+### Add-Only for Speed
 
-To get the most out of caching, the system is designed to add new information without disturbing the old information.
+To use the cache most effectively, the library encourages adding new information instead of changing old information.
 
-- **Add, Don't Replace**: The system prefers to add new messages and data instead of rewriting everything.
-- **Smart Merging**: Data and Advisor messages are designed to be added on top of existing information cleanly.
-- **Linear History**: The agent works in a way that extends its conversation history in a straight line, which is ideal for caching.
+- **Append, Don't Replace**: It's like writing a new entry in a diary instead of erasing and rewriting old pages. This helps the cache work much faster.
+- **Smart Merging**: The system knows how to additively update the agent's memory.
+- **Linear History**: The agent's work is structured like an ongoing conversation, which is very easy for the cache to handle.
 
 ### Managing Memory
 
-To avoid running out of space while still using the cache, we will offer smart **memory cleanup**.
+To make sure the agent's memory doesn't get too big, we'll provide smart **Memory Compaction** tools.
 
-- **Smart Cleanup**: A process that tidies up the agent's memory only when it's about to get too full, keeping the cache useful for as long as possible.
-- **Easy Control**: A simple switch will let you turn on 'Cache-Optimized' mode to get the best balance of speed and cost for your needs.
+- **Smart Compaction**: An efficient process that cleans up and summarizes the agent's memory only when it's absolutely necessary, keeping the cache fast for as long as possible.
+- **Configuration**: An "Optimize for Cache" setting that turns on all these behaviors to make your agent as fast and cheap as possible for its specific job.

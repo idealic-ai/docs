@@ -1,26 +1,30 @@
-# Company Documentation
+# How We Work Together
 
 ---
 
-These documents explain the very heart of how our company works. They set the rules for how we communicate, how we get work done, and the main ideas we all agree on. If you ever need to know _how_ we do things, this is the official guide.
+Think of these documents as our team's playbook. They explain our ground rules: how we communicate, how we get work done, and the shared ideas we all agree on. This is the official guide for _how_ we work as a team.
 
 > Sidenote:
-> The company is the way we make our vision happen.
+> Our company is the vehicle that carries our vision forward.
 >
-> - _Why?_ [Manifesto of Co-Liberation](../manifesto/)
-> - _What?_ [Edict of Autonomy](../edict/)
-> - _How?_ **Company Documentation**
+> - _Why we exist:_ [Manifesto of Co-Liberation](../manifesto/)
+> - _What we're building:_ [Edict of Autonomy](../edict/)
+> - _How we build it:_ **Company Documentation**
 
-This list connects our big ideas to our everyday actions. Think of it as the instruction manual for working together, making sure everyone understands not just *what* we're building, but *how* we're building it.
+This list connects our big dreams to our everyday tasks. It’s a manual for our collaboration, making sure every team member understands not just what we are building, but how we are building it.
 
 ---
 
 ### Core
 
 > Sidenote:
-> The most important ideas that guide how we work.
+> The main ideas that support our way of working.
 >
 
-- [00: Truth](./00_truth.md)
 - [01: Pitch](./01_pitch.md)
 - [02: Process](./02_process.md)
+
+### Prompts
+
+- [50: Prompt/Truth](./50_prompt_truth.md)
+- [51: Prompt/Evolution Draft](./51_prompt_evolution_draft.md)

@@ -44,10 +44,21 @@ Because the Living Specification is robust and permanent, changing it requires a
 A Pull Request (PR) is not merely a mechanism for merging code; it is the crucible of shared understanding. It applies to every deliverable: from high-level visions and evolution documents to concrete implementation details. We use PRs to sign off on the _intent_ before the execution begins. It is the tool that transforms individual assumptions into collective certainty.
 
 - **Beyond Code:** The PR process is valid for all work. We use it to agree on definitions, architectural plans, and strategic shifts. It is where "my idea" becomes "our plan."
-- **Comments are Input, Not Chat:** Feedback on a PR is not a conversation thread to be answered one-by-one. It is raw data that must be synthesized.
-- **Synthesize, Don't Argue:** The author must take all feedback and integrate it into a new iteration of the Evolution Document. This proves that the feedback was understood and addressed, stopping circular discussions.
+- **Discussions are Data:** We conduct discussions directly in GitHub comments. The author **must** acknowledge each comment thread. This conversation is the raw material for our documentation.
+- **Explicate the Context:** "Done" is valid for execution. However, "Okay" is insufficient for alignment. The author must articulate their stance: "I now understand X," "I thought this was about Y," or "I need more clarity on Z." This explicit context allows the AI to synthesize the _reasoning_ behind the change, not just the result.
+- **Context Over Brevity:** The goal of the reply is to ensure that a third party (or the AI) can understand _what_ was decided and _why_ just by reading the thread. Implicit knowledge is lost knowledge.
+- **Synthesize to Close:** Once the discussion is resolved, we use the Evolution Draft process to synthesize the comments into a coherent plan. This ensures that the collective wisdom of the review is captured permanently.
 - **Pre-Approval of Unpredictability:** By agreeing on the plan (the Evolution Document) first, we remove the surprise from the daily work. We know what is coming because we approved it.
 - **Shared Responsibility:** When a team member approves a PR, they accept shared responsibility for the outcome. The author is no longer acting alone; they are executing a shared will.
+
+Example of an agent prompt to draft the evolution doc based on comment threads:
+
+```
+Instruction: https://idealic.academy/en/company/51_prompt_evolution_draft.md/
+PR: https://github.com/idealic-ai/platform/pull/65
+
+Analyze PR comments using instructions since 3 days ago
+```
 
 ## 4. The Ritual of Synchronization
 

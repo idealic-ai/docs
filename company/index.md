@@ -24,5 +24,5 @@ This index bridges the gap between our abstract values and our daily actions. It
 
 ### Prompts
 
-- [50: Truth](./50_prompt_truth.md)
-- [51: Evolution Draft](./51_prompt_evolution_draft.md)
+- [50: Prompt/Truth](./50_prompt_truth.md)
+- [51: Prompt/Evolution Draft](./51_prompt_evolution_draft.md)

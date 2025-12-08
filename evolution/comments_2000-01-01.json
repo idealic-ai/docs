@@ -1,0 +1,16 @@
+{
+  "review_threads": [
+    [
+      {
+        "body": "коменты опять какие-то исторические. Мы можем пересмотреть что мы ни на что не ссылаемся такое эзотерическое уже ушедшее? хотя бы формулировочки. Тут как будто ответ на вопрос, который никто не задавал",
+        "created_at": "2025-12-03T23:47:25Z",
+        "diff_hunk": "@@ -700,16 +700,8 @@ export namespace Hand {\n       return false;\n     }\n \n-    // Check for invalid state: active player (_inactive: 0) with dead blinds (_deadBlinds > 0)\n-    for (let i = 0; i < hand._inactive.length; i++) {\n-      const isActive = hand._inactive[i] === 0;\n-      const hasDeadBlinds = hand._deadBlinds[i] > 0;\n-\n-      if (isActive && hasDeadBlinds) {\n-        // Invalid state: active player cannot have dead blinds\n-        return false;\n-      }\n-    }\n+    // Note: Active players CAN have dead blinds when returning from pause.\n+    // Game() constructor charges the debt when hand starts.",
+        "html_url": "https://github.com/idealic-ai/platform/pull/73#discussion_r2586955452",
+        "id": 2586955452,
+        "in_reply_to_id": null,
+        "user": "Inviz"
+      }
+    ]
+  ],
+  "issue_comments": []
+}
