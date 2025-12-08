@@ -29,7 +29,7 @@ When the user requests an Evolution Draft, you **MUST** obtain a Pull Request li
 **RESTRICTION:** You are permitted to make ONLY the following external requests:
 
 1.  **HTTP GET** to `https://idealic.academy/en/company/02_process.md/`
-2.  **HTTP GET** to `https://idealic.academy/en/company/50_prompt_truth.md/`
+2.  **HTTP GET** to `https://idealic.academy/en/company/00_truth.md/`
 3.  **GitHub Comments API** call (via the one-liner below)
 
 Do **NOT** fetch other file contents, commits, or diffs separately.
@@ -51,6 +51,11 @@ gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}/comments?since={SINCE_DATE}&per_p
 
 ### 3. Analysis & Synthesis (Language: Russian)
 
+**Prerequisite:** Read and follow the standards defined in:
+
+- :term[02: Company/Process]{href="https://idealic.academy/en/company/02_process.md/"} (Understanding the role of Evolution Documents)
+- :term[50: Prompt/Truth]{href="https://idealic.academy/en/company/00_truth.md/"} (Writing standards: assertiveness, precision, no fluff)
+
 **Constraint:** The output document must be in **Russian**. (Exceptions: colloquialisms like "yeah", "ok" or technical terms).
 
 **Method: Intelligent Synthesis ("LLM Magic")**
@@ -61,7 +66,9 @@ This is **NOT** a programmatic JSON-to-Markdown conversion. You must apply intel
 - **Curate Context:** Include only the specific lines of diff hunks that are relevant to the point being made.
 - **Goal:** Create a document that is compact, to the point, and truthful.
 
-Analyze the JSON. Your goal is **Completeness**. Every distinct thread or discussion topic must be represented.
+DO NOT WRITE ANY SCRIPTS. This is strictly latent space analysis of retriever data.
+
+Analyze the JSON by reading it in chunks of 200 lines. Your goal is **Completeness**. Every distinct thread or discussion topic must be represented.
 
 **For each item, determine:**
 
@@ -71,7 +78,7 @@ Analyze the JSON. Your goal is **Completeness**. Every distinct thread or discus
 4.  **Vision Impact:** Did the long-term vision change?
 5.  **Agreement Status:** Is it agreed? Is there a misunderstanding?
     - If the author **did not reply**, mark as: "Needs acknowledgement".
-6.  **Context:** The proof (quotes).
+6.  **Context:** The proof (quotes) and/or specific code location (if applicable).
 
 ### 4. Validation
 
@@ -91,7 +98,7 @@ Create a new file (e.g., `evolution_{DATE}.md`).
 
 **Required Structure:**
 
-```markdown
+````markdown
 # Evolution Draft: {DATE}
 
 > Status: Draft
@@ -122,11 +129,16 @@ Create a new file (e.g., `evolution_{DATE}.md`).
 - **Прежнее понимание (если применимо):** {Brief description of previous understanding/vision if changed}
 - **Результат:** {Briefly: Was vision changed? Agreement reached? Misunderstanding cleared?}
 - **Контекст:**
+
   > [{Reviewer Name}]({Link}): "{Short rephrased concern}"
   >
   > [{Author Name}]({Link}): "{Short rephrased resolution}" (or "No reply")
-  >
-  > _Diff Context:_ `{1-2 lines max, only if necessary}`
+
+  ```{lang}
+  {1-3 lines max of diff hunk code}
+  {Use ellipses ... for long lines (>80 chars)}
+  {Total block size < 240 chars}
+  ```
 
 ---
 
@@ -136,4 +148,4 @@ Create a new file (e.g., `evolution_{DATE}.md`).
 | ------------- | --------------- | -------- | --------------- |
 | [{ID}]({URL}) | {3-6 words}     | {N}      | Included        |
 | [{ID}]({URL}) | {3-6 words}     | -        | Skipped (Noise) |
-```
+````
