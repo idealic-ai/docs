@@ -48,6 +48,7 @@ A Pull Request (PR) is not merely a mechanism for merging code; it is the crucib
 - **Explicate the Context:** "Done" is valid for execution. However, "Okay" is insufficient for alignment. The author must articulate their stance: "I now understand X," "I thought this was about Y," or "I need more clarity on Z." This explicit context allows the AI to synthesize the _reasoning_ behind the change, not just the result.
 - **Context Over Brevity:** The goal of the reply is to ensure that a third party (or the AI) can understand _what_ was decided and _why_ just by reading the thread. Implicit knowledge is lost knowledge.
 - **Synthesize to Close:** Once the discussion is resolved, we use the Evolution Draft process to synthesize the comments into a coherent plan. This ensures that the collective wisdom of the review is captured permanently.
+- **The Draft is a Starting Point:** The generated Evolution Draft is a malleable artifact. If the AI summarizes incorrectly or misses nuance, we do not discard it; we adjust it. We refine the draft through conversation with the agent or manual edits until it accurately reflects our shared intent.
 - **Pre-Approval of Unpredictability:** By agreeing on the plan (the Evolution Document) first, we remove the surprise from the daily work. We know what is coming because we approved it.
 - **Shared Responsibility:** When a team member approves a PR, they accept shared responsibility for the outcome. The author is no longer acting alone; they are executing a shared will.
 
