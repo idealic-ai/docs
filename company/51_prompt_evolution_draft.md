@@ -78,7 +78,7 @@ gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}" --jq '{author: .user.login, titl
       - **Termination:** Continue strictly until the tool returns "File is empty" or "out of range". Do NOT stop early.
       - **Expectation:** The file may be large (1000+ lines). You might need 20+ iterations. This is normal. Continue until the end.
 
-### 3. Analysis & Synthesis (Language: Russian)
+### 3. Execution Management
 
 **Step 0: Initialize Plan**
 
@@ -96,10 +96,15 @@ Before starting the analysis, you **MUST** create a Todo list using the `todo_wr
     - **Rule:** Split complex threads into atomic intents.
 4.  **Phase 4: Coverage Report** (pending)
     - Analyze Coverage & Write Table
-5.  **Phase 5: Verification & Cleanup** (pending)
+5.  **Phase 5: LLM Assessment** (pending)
+    - Analyze Quality & Opinion
+    - Write Assessment
+6.  **Phase 6: Verification & Cleanup** (pending)
     - Run Self-Check
     - Fix Issues (if any)
     - Finalize Document
+
+### 4. Methodology: Intelligent Synthesis
 
 **Method: Intelligent Synthesis ("LLM Magic")**
 
@@ -108,7 +113,6 @@ Before starting the analysis, you **MUST** create a Todo list using the `todo_wr
 
 **Constraint:** The output document must be in **Russian**. (Exceptions: colloquialisms like "yeah", "ok" or technical terms).
 
-**Method: Intelligent Synthesis ("LLM Magic")**
 This is **NOT** a programmatic JSON-to-Markdown conversion. You must apply intelligence to create a truthful summary, but **Completeness** is the priority:
 
 - **Capture Detail:** Do not over-compress. If a comment contains specific technical instructions, logic changes, or multiple distinct points, preserve them.
@@ -119,40 +123,11 @@ This is **NOT** a programmatic JSON-to-Markdown conversion. You must apply intel
 - **Curate Context:** Include only the specific lines of diff hunks that are relevant to the point being made.
 - **Goal:** Create a document that is **complete** and **comprehensive**. Completeness and clarity take precedence over compactness.
 
-Important: Analyze the JSON output directly from the context.
-
-DO NOT WRITE ANY SCRIPTS. This is strictly latent space analysis of retriever data.
-
-Your goal is **Completeness**. Every distinct thread or discussion topic must be represented.
-
-**For each item, determine:**
-
-1.  **Intent:** What is the core desire?
-2.  **Explanation:** _Why_ is this change happening? What is the underlying reasoning or meaning? Synthesize this from the discussion to provide context for the LLM.
-3.  **Action:** What needs to change?
-4.  **Vision Impact:** Did the long-term vision change?
-5.  **Agreement Status:** Is it agreed? Is there a misunderstanding?
-    - If the author **did not reply**, mark as: "Needs acknowledgement".
-6.  **Context:** The proof (quotes) and/or specific code location (if applicable).
-
-### 4. Audit & Coverage Check
-
-**CRITICAL STEP:** Before finalizing the document, you must perform a self-audit to ensure complete coverage:
-
-1.  Read the generated list of items.
-2.  Compare against the JSON output.
-3.  **Map Every Comment:** Ensure every comment (referencing its `index`, e.g. `§1`) is mapped to a specific Intent Number.
-4.  **Consistency Check:** Verify that every Intent number referenced in the coverage table corresponds to an actual section in the text.
-    - **Fix:** If you find a "ghost reference" (an Intent number in the table that doesn't exist in the text), you **MUST** go back and generate that missing Intent section. Do not just delete the reference; add the content.
-5.  **Question:** "Did I miss _any_ thread?"
-6.  **Technical Check:** Did I miss any important flags or parameters mentioned in the comments?
-7.  If yes, add details to the relevant Intent.
-
-### 5. Document Generation (Five Phases)
+### 5. Document Generation Workflow
 
 You must generate the document by **systematically replacing placeholders** in a pre-created file.
 
-**Phase 1: Setup & Data**
+#### 5.1. Phase 1: Setup & Data
 
 1.  **Fetch Data:**
     - Fetch Prerequisite Docs (Truth, Process).
@@ -190,33 +165,74 @@ You must generate the document by **systematically replacing placeholders** in a
     ## Отчет о покрытии
 
     {{COVERAGE_PLACEHOLDER}}
+
+    ---
+
+    ## Мнение и Рекомендации AI
+
+    {{OPINION_PLACEHOLDER}}
     ```
 
 3.  Stop and say: "**Phase 1 Complete: Data fetched & File initialized.**"
 
-**Phase 2: Overview**
+#### 5.2. Phase 2: Overview
+
+**Analysis:**
+
+Synthesize the Overview content by answering these 8 questions.
+**Content Requirements:** You **MUST** explicitly answer these 8 questions in the output using a bulleted list. Do not merge them into a paragraph or skip any.
+
+1.  **Чего хотел ревьюер:** {Main themes of feedback/criticism}
+2.  **С чем согласился автор:** {Key concessions or strategic shifts}
+3.  **С чем автор НЕ согласился:** {Points where the author pushed back or disagreed, and why}
+4.  **Общий контекст:** {Any misunderstandings cleared or vision changes confirmed}
+5.  **Недопонимания (если есть):** {List specific points of confusion}
+6.  **Открытые вопросы (если есть):** {Points discussed but not resolved}
+7.  **Новые открытия:** {Insights gained during discussion}
+8.  **Связанные документы:** {Links to related docs mentioned}
+
+**Generation:**
 
 1.  **Generate & Apply:**
-    - Synthesize the Overview content (answers to the 8 questions).
-    - **Content Requirements:** You **MUST** explicitly answer these 8 questions in the output using a bulleted list. Do not merge them into a paragraph or skip any.
-      1.  **Чего хотел ревьюер:** {Main themes of feedback/criticism}
-      2.  **С чем согласился автор:** {Key concessions or strategic shifts}
-      3.  **С чем автор НЕ согласился:** {Points where the author pushed back or disagreed, and why}
-      4.  **Общий контекст:** {Any misunderstandings cleared or vision changes confirmed}
-      5.  **Недопонимания (если есть):** {List specific points of confusion}
-      6.  **Открытые вопросы (если есть):** {Points discussed but not resolved}
-      7.  **Новые открытия:** {Insights gained during discussion}
-      8.  **Связанные документы:** {Links to related docs mentioned}
     - **Immediately** call `search_replace` to swap `{{OVERVIEW_PLACEHOLDER}}` with the generated text.
     - **Do NOT** output the text to chat first. The tool call is the generation.
 
 2.  Stop and say: "**Phase 2 Complete: Overview inserted.**"
 
-**Phase 3: Intents**
+#### 5.3. Phase 3: Intents
+
+**Analysis:**
+
+Your goal is **Hyper-Granular Atomicity**.
+
+**THE "AND" RULE (STRICT):**
+If you are tempted to write a Title or Intent that contains "AND" or commas to list multiple features (e.g., "Network Architecture AND Edge Routing"), you are **WRONG**. Stop. Split it into two items immediately.
+
+**Examples of splitting:**
+
+- **Bad:** "Optimization and Testing of CI/CD"
+- **Good:** "Adding Test Step to CI/CD"
+- **Good:** "Enabling Parallel Build Flags"
+- **Bad:** "Network Isolation and Routing"
+- **Good:** "Network Isolation Strategy"
+- **Good:** "Routing via Host Ports"
+
+**For each item, determine:**
+
+1.  **Intent:** What is the SINGLE core desire? (If there are two desires, create two items).
+2.  **Explanation:** _Why_ is this change happening? What is the underlying reasoning or meaning? Synthesize this from the discussion to provide context for the LLM.
+3.  **Action:** What needs to change?
+4.  **Vision Impact:** Did the long-term vision change?
+5.  **Agreement Status:** Is it agreed? Is there a misunderstanding?
+    - If the author **did not reply**, mark as: "Needs acknowledgement".
+6.  **Context:** The proof (quotes) and/or specific code location (if applicable).
+7.  **Questions:** What specifically should the author clarify or answer about this intent?
+
+**Generation:**
 
 1.  **Generate & Apply:**
     - Analyze threads and formulate the list of intents.
-    - **Split Rule:** If a single comment or thread proposes multiple distinct technical actions (e.g. "Add --parallel flag" AND "Split deploy into steps"), you **MUST** generate **two separate Intents**. Do not merge them.
+    - **Split Rule:** Apply the "AND" Rule rigorously. Better to have 20 small intents than 5 large ones.
     - **Immediately** call `search_replace` to swap `{{INTENTS_PLACEHOLDER}}` with the full markdown list.
     - **Do NOT** output the text to chat first.
 
@@ -226,31 +242,29 @@ You must generate the document by **systematically replacing placeholders** in a
     ### {N}. {Short Title in Russian}
 
     - **Категория:** {Логика / Архитектура / Стиль / Документация / Процесс / etc}
-    - **Намерение:** {What do we want to achieve?}
+    - **Намерение:** {What do we want to achieve? SINGLE thing.}
     - **Подход автора:** {The initial approach or code taken by the author before feedback.}
     - **Предложение ревьюера:** {The suggestion or concern raised by the reviewer.}
     - **Решение автора:** {The final decision or solution adopted by the author.}
     - **Реакция ревьюера:** {The follow-up reaction to author's decision if applicable.}
     - **Отклоненные альтернативы:** {Options discussed but rejected (if any).}
     - **Обоснование:** {Explanation of _why_ this change is needed}
+    - **Ожидание**: {What is expected of author to do which was not acked?}
+    - **Неучтенные детали**: {What has author missed when implementing in their decision?}
+    - **Вопросы от ллм**: {Questions from LLM to author regarding this intent}
     - **Принцип:** {What core principle dictated this decision? (if applicable)}
     - **Статус:** {Согласовано / Недопонимание / Требует уточнения / ...}
     - **Прежнее понимание (если применимо):** {Brief description if changed}
     - **Результат:** {Briefly: Was vision changed? Agreement reached?}
-    - **Контекст:**
-
+    - **Дискуссия:**
       > [{Reviewer Name}]({Link}): "{Short rephrased concern}"
       >
       > [{Author Name}]({Link}): "{Short rephrased resolution}"
-
+    - **Контекст**
       ```{lang}
       {1-3 lines max of diff hunk code}
       ```
     ````
-
-    ```
-
-    ```
 
 2.  **Generate & Apply (Questions):**
     - Formulate open questions (if any).
@@ -258,12 +272,28 @@ You must generate the document by **systematically replacing placeholders** in a
 
 3.  Stop and say: "**Phase 3 Complete: Intents and Questions inserted.**"
 
-**Phase 4: Coverage Report**
+#### 5.4. Phase 4: Coverage Report
+
+**Analysis (Audit & Coverage Check):**
+
+**CRITICAL STEP:** Before finalizing the document, you must perform a self-audit to ensure complete coverage:
+
+1.  Read the generated list of items.
+2.  Compare against the JSON output.
+3.  **Map Every Comment:** Ensure every comment (referencing its `index`, e.g. `§1`) is mapped to a specific Intent Number.
+4.  **Consistency Check:** Verify that every Intent number referenced in the coverage table corresponds to an actual section in the text.
+    - **Fix:** If you find a "ghost reference" (an Intent number in the table that doesn't exist in the text), you **MUST** go back and generate that missing Intent section. Do not just delete the reference; add the content.
+5.  **Question:** "Did I miss _any_ thread?"
+6.  **Technical Check:** Did I miss any important flags or parameters mentioned in the comments?
+7.  If yes, add details to the relevant Intent.
+
+**Generation:**
 
 1.  **Generate & Apply:**
     - Audit intents against JSON context.
     - **Immediately** call `search_replace` to swap `{{COVERAGE_PLACEHOLDER}}` with the generated table.
     - **Do NOT** output the text to chat first.
+    - **Do NOT** write helper scripts because you need to do summary yourself.
 
     **Content Template:**
 
@@ -287,11 +317,36 @@ You must generate the document by **systematically replacing placeholders** in a
 
 2.  Stop and say: "**Phase 4 Complete: Coverage table inserted.**"
 
-**Phase 5: Verification & Cleanup**
+#### 5.5. Phase 5: LLM Assessment
+
+**Analysis:**
+
+Reflect on the generated content and the original discussion.
+
+**Generation:**
+
+1.  **Generate & Apply:**
+    - Synthesize your opinion and assessment.
+    - **Immediately** call `search_replace` to swap `{{OPINION_PLACEHOLDER}}` with the generated text.
+
+    **Content Requirements:**
+    1.  **Качество документа:** Is the document generated correctly? Are all details and nuances acknowledged?
+    2.  **Мнение о дискуссии:** What does the LLM think about the discussion and the ongoing practical advice?
+        - **Conflict Analysis:** Was the conflict resolved constructively?
+        - **Risk Assessment:** Are there hidden risks in the agreed solution?
+        - **Process Adherence:** Did the participants follow the process (Truth/Process docs)?
+        - **Completeness of solution:** Is the solution "half-baked"?
+    3.  **Что изучить:** Is there anything we can read or learn to get more details about?
+    4.  **Вопросы:** Are there any questions that need to be answered before we can move on?
+
+2.  Stop and say: "**Phase 5 Complete: LLM Assessment inserted.**"
+
+#### 5.6. Phase 6: Verification & Cleanup
 
 1.  **Deep Reconsideration:**
     - Stop and think. Re-read the JSON comments and your generated Intents.
     - Ask: "Did I over-simplify any point? Did I miss a subtle constraint? Is the Todo plan fully complete?"
+    - Ask: "Are any intents bunched up (containing 'AND')? If so, split them."
     - If the discussion was complex, err on the side of adding more Intents rather than merging them.
     - If yes, use `search_replace` to add the missing details (create new Intents if needed).
 
@@ -305,9 +360,9 @@ You must generate the document by **systematically replacing placeholders** in a
     - [ ] **Technical Details Preserved**: Flags, args, types, preserved in text.
     - [ ] **Cleanup**: `evolution_{DATE}.json` deleted.
 
-5.  Stop and say: "**Phase 5 Complete: Document finalized and cleanup done.**"
+5.  Stop and say: "**Phase 6 Complete: Document finalized and cleanup done.**"
 
-### 6. Final Checklist (Mandatory Output)
+### 6. Final Output
 
 At the very end of your response (after generating the file), you **MUST** output this checklist:
 
