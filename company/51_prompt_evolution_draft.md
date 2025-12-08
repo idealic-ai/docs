@@ -82,21 +82,21 @@ gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}" --jq '{author: .user.login, titl
 
 **Step 0: Initialize Plan**
 
-Before starting the analysis, you **MUST** create a Todo list using the `todo_write` tool to track your progress through the phases.
+Before starting the analysis, you **MUST** create a Todo list using the `todo_write` tool to track your progress through the phases. As you complete each phase, you **MUST** update the specific item to `completed` using `todo_write`. By the end of the execution, all items in the plan MUST be marked as `completed`.
 
 **Required Plan Structure:**
 
-1.  **Phase 1: Intro** (pending)
-    - Synthesize Overview
+1.  **Phase 1: Setup & Data** (pending)
+    - Fetch Data
     - Create File
-2.  **Phase 2: Intents** (pending)
-    - Analyze Threads
-    - Write Intents
-3.  **Phase 3: Validation** (pending)
-    - Count Comments
-    - Map Comments to Intents
-    - Write Validation Table
-4.  **Phase 4: Finalize** (pending)
+2.  **Phase 2: Overview** (pending)
+    - Analyze Narrative & Write Overview
+3.  **Phase 3: Intents** (pending)
+    - Analyze Threads & Write Intents
+    - **Rule:** Split complex threads into atomic intents.
+4.  **Phase 4: Coverage Report** (pending)
+    - Analyze Coverage & Write Table
+5.  **Phase 5: Verification & Cleanup** (pending)
     - Run Self-Check
     - Fix Issues (if any)
     - Finalize Document
@@ -109,13 +109,15 @@ Before starting the analysis, you **MUST** create a Todo list using the `todo_wr
 **Constraint:** The output document must be in **Russian**. (Exceptions: colloquialisms like "yeah", "ok" or technical terms).
 
 **Method: Intelligent Synthesis ("LLM Magic")**
-This is **NOT** a programmatic JSON-to-Markdown conversion. You must apply intelligence to create a compact, truthful summary:
+This is **NOT** a programmatic JSON-to-Markdown conversion. You must apply intelligence to create a truthful summary, but **Completeness** is the priority:
 
-- **Paraphrase & Shorten:** Compress comments to their essence while retaining the meaning. Avoid copy-pasting long blocks.
+- **Capture Detail:** Do not over-compress. If a comment contains specific technical instructions, logic changes, or multiple distinct points, preserve them.
+- **Atomicity (Critical):** One Intent = One Distinct Technical Change. **NEVER** bundle unrelated changes (e.g., "Optimization flags" AND "Deployment steps") into one item, even if they were discussed in the same thread. Split them into separate intents (e.g., "CI/CD Parallel Flags" and "Deployment Step Refactoring").
+- **Separation:** If a discussion branches into multiple topics, create separate Intents. Better to have more granular intents than to lose detail in a merged one.
 - **Technical Fidelity:** If a comment mentions parameters, types, flags, arguments, or environment variables, you **MUST** include them. Do not abstract them away.
 - **Filter Noise:** Omit comments that do not add value or context to the intent.
 - **Curate Context:** Include only the specific lines of diff hunks that are relevant to the point being made.
-- **Goal:** Create a document that is compact, to the point, and truthful.
+- **Goal:** Create a document that is **complete** and **comprehensive**. Completeness and clarity take precedence over compactness.
 
 Important: Analyze the JSON output directly from the context.
 
@@ -192,19 +194,29 @@ You must generate the document by **systematically replacing placeholders** in a
 
 3.  Stop and say: "**Phase 1 Complete: Data fetched & File initialized.**"
 
-**Phase 2: The Intro**
+**Phase 2: Overview**
 
 1.  **Generate & Apply:**
     - Synthesize the Overview content (answers to the 8 questions).
+    - **Content Requirements:** You **MUST** explicitly answer these 8 questions in the output using a bulleted list. Do not merge them into a paragraph or skip any.
+      1.  **Чего хотел ревьюер:** {Main themes of feedback/criticism}
+      2.  **С чем согласился автор:** {Key concessions or strategic shifts}
+      3.  **С чем автор НЕ согласился:** {Points where the author pushed back or disagreed, and why}
+      4.  **Общий контекст:** {Any misunderstandings cleared or vision changes confirmed}
+      5.  **Недопонимания (если есть):** {List specific points of confusion}
+      6.  **Открытые вопросы (если есть):** {Points discussed but not resolved}
+      7.  **Новые открытия:** {Insights gained during discussion}
+      8.  **Связанные документы:** {Links to related docs mentioned}
     - **Immediately** call `search_replace` to swap `{{OVERVIEW_PLACEHOLDER}}` with the generated text.
     - **Do NOT** output the text to chat first. The tool call is the generation.
 
 2.  Stop and say: "**Phase 2 Complete: Overview inserted.**"
 
-**Phase 3: The Intents**
+**Phase 3: Intents**
 
 1.  **Generate & Apply:**
     - Analyze threads and formulate the list of intents.
+    - **Split Rule:** If a single comment or thread proposes multiple distinct technical actions (e.g. "Add --parallel flag" AND "Split deploy into steps"), you **MUST** generate **two separate Intents**. Do not merge them.
     - **Immediately** call `search_replace` to swap `{{INTENTS_PLACEHOLDER}}` with the full markdown list.
     - **Do NOT** output the text to chat first.
 
@@ -213,9 +225,14 @@ You must generate the document by **systematically replacing placeholders** in a
     ````markdown
     ### {N}. {Short Title in Russian}
 
+    - **Категория:** {Логика / Архитектура / Стиль / Документация / Процесс / etc}
     - **Намерение:** {What do we want to achieve?}
+    - **Подход автора:** {The initial approach or code taken by the author before feedback.}
+    - **Предложение ревьюера:** {The suggestion or concern raised by the reviewer.}
+    - **Решение автора:** {The final decision or solution adopted by the author.}
+    - **Отклоненные альтернативы:** {Options discussed but rejected (if any).}
     - **Обоснование:** {Explanation of _why_ this change is needed}
-    - **Действие:** {Concrete steps to take.}
+    - **Принцип:** {What core principle dictated this decision? (if applicable)}
     - **Статус:** {Согласовано / Недопонимание / Требует уточнения / ...}
     - **Прежнее понимание (если применимо):** {Brief description if changed}
     - **Результат:** {Briefly: Was vision changed? Agreement reached?}
@@ -253,8 +270,10 @@ You must generate the document by **systematically replacing placeholders** in a
     | Index | User   | Comment ID    | Title (Summary) | Intent/Reason |
     | ----- | ------ | ------------- | --------------- | ------------- |
     | {Idx} | {User} | [{ID}]({URL}) | {3-6 words}     | #{N}          |
+    | {Idx} | {User} | [{ID}]({URL}) | {3-6 words}     | #{M},#{N}     |
     | {Idx} | {User} | [{ID}]({URL}) | {3-6 words}     | Skipped       |
     | {Idx} | {User} | [{ID}]({URL}) | {3-6 words}     | Noise         |
+    | {Idx} | {User} | [{ID}]({URL}) | {3-6 words}     | Ack           |
     | {Idx} | {User} | [{ID}]({URL}) | {3-6 words}     | Wontfix       |
     | {Idx} | {User} | [{ID}]({URL}) | {3-6 words}     | Discussion    |
     | {Idx} | {User} | [{ID}]({URL}) | {3-6 words}     | Question      |
@@ -269,9 +288,15 @@ You must generate the document by **systematically replacing placeholders** in a
 
 **Phase 5: Verification & Cleanup**
 
-1.  **Read File:** Read the final `evolution_{DATE}.md` to verify all placeholders are gone.
-2.  **Cleanup:** Delete `evolution_{DATE}.json`.
-3.  **Final Checklist:** Output this checklist:
+1.  **Deep Reconsideration:**
+    - Stop and think. Re-read the JSON comments and your generated Intents.
+    - Ask: "Did I over-simplify any point? Did I miss a subtle constraint? Is the Todo plan fully complete?"
+    - If the discussion was complex, err on the side of adding more Intents rather than merging them.
+    - If yes, use `search_replace` to add the missing details (create new Intents if needed).
+
+2.  **Read File:** Read the final `evolution_{DATE}.md` to verify all placeholders are gone.
+3.  **Cleanup:** Delete `evolution_{DATE}.json`.
+4.  **Final Checklist:** Output this checklist:
     - [ ] **Data Fetched**: All comments retrieved.
     - [ ] **Placeholders Replaced**: No {{...}} tags remain.
     - [ ] **Comments Validated**: All relevant comments mapped.
@@ -279,7 +304,7 @@ You must generate the document by **systematically replacing placeholders** in a
     - [ ] **Technical Details Preserved**: Flags, args, types, preserved in text.
     - [ ] **Cleanup**: `evolution_{DATE}.json` deleted.
 
-4.  Stop and say: "**Phase 5 Complete: Document finalized and cleanup done.**"
+5.  Stop and say: "**Phase 5 Complete: Document finalized and cleanup done.**"
 
 ### 6. Final Checklist (Mandatory Output)
 
