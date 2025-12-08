@@ -41,12 +41,12 @@ You **MUST** use an HTTP tool to fetch the content directly from the URLs below.
 - [50: Prompt/Truth](https://idealic.academy/en/company/00_truth.md/)
 
 **Step 2: Fetch Comments (One-Liner)**
-Execute this exact command. Replace `{PR_NUMBER}` (e.g., 123) and `{SINCE_DATE}` (e.g., 2025-01-01). NOTE: IT's important to fetch all comments in one go per_page=200 does it. Do not attempt to split these calls.
+Execute this exact command. Replace `{PR_NUMBER}` (e.g., 123) and `{SINCE_DATE}` (e.g., 2025-01-01). NOTE: It's important to fetch all comments in one go; `per_page=200` does it. Do not attempt to split these calls.
 
-**SUPER IMPORTANT**: This is a very step, it groups comments by threads, respects diff hunks on the first comment in thread, and fetches 200 comments at once. Do not attempt to modify this, because this will yield incorrect results.
+**SUPER IMPORTANT**: This is a very important step. It groups comments by threads, respects diff hunks on the first comment in thread, and fetches 200 comments at once. Do not attempt to modify this. The output will appear directly in the context.
 
 ```bash
-gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}/comments?since={SINCE_DATE}&per_page=200" --paginate --jq 'map({id, body, user: .user.login, created_at, html_url, diff_hunk, in_reply_to_id}) | group_by(.in_reply_to_id // .id) | map(sort_by(.created_at) | .[0] as $root | [$root] + (.[1:] | map(del(.diff_hunk))))' | jq '.' > "comments_{SINCE_DATE}.json"
+gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}/comments?since={SINCE_DATE}&per_page=200" --paginate --jq 'map({id, body, user: .user.login, created_at, html_url, diff_hunk, in_reply_to_id}) | group_by(.in_reply_to_id // .id) | map(sort_by(.created_at) | .[0] as $root | [$root] + (.[1:] | map(del(.diff_hunk))))'
 ```
 
 ### 3. Analysis & Synthesis (Language: Russian)
@@ -67,7 +67,7 @@ This is **NOT** a programmatic JSON-to-Markdown conversion. You must apply intel
 - **Curate Context:** Include only the specific lines of diff hunks that are relevant to the point being made.
 - **Goal:** Create a document that is compact, to the point, and truthful.
 
-Important: Analyze the JSON by reading it in chunks of 200 lines. Do NOT attempt to read more than 200 lines at once. The files are too big!
+Important: Analyze the JSON output directly from the context.
 
 DO NOT WRITE ANY SCRIPTS. This is strictly latent space analysis of retriever data.
 
@@ -88,7 +88,7 @@ Your goal is **Completeness**. Every distinct thread or discussion topic must be
 **CRITICAL STEP:** Before finalizing the document, you must perform a self-validation:
 
 1.  Read the generated list of items.
-2.  Compare against the `comments_{DATE}.json`.
+2.  Compare against the JSON output.
 3.  **Map Every Comment:** Ensure every comment ID (especially root comments of threads) is mapped to a specific Intent Number.
 4.  **Consistency Check:** Verify that every Intent number referenced in the validation table corresponds to an actual section in the text.
     - **Fix:** If you find a "ghost reference" (an Intent number in the table that doesn't exist in the text), you **MUST** go back and generate that missing Intent section. Do not just delete the reference; add the content.
