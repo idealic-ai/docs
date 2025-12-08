@@ -26,7 +26,8 @@
     "remark-gfm": "^4.0.1",
     "remark-rehype": "^11.1.2",
     "vike": "^0.4.241-commit-60b0676",
-    "vike-react": "^0.6.4"
+    "vike-react": "^0.6.4",
+    "vite-node": "^5.2.0"
   },
   "devDependencies": {
     "@types/react": "^19.1.8",
