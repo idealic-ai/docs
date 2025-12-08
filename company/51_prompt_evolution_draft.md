@@ -253,6 +253,11 @@ You must generate the document by **systematically replacing placeholders** in a
     | Index | User   | Comment ID    | Title (Summary) | Intent/Reason |
     | ----- | ------ | ------------- | --------------- | ------------- |
     | {Idx} | {User} | [{ID}]({URL}) | {3-6 words}     | #{N}          |
+    | {Idx} | {User} | [{ID}]({URL}) | {3-6 words}     | Skipped       |
+    | {Idx} | {User} | [{ID}]({URL}) | {3-6 words}     | Noise         |
+    | {Idx} | {User} | [{ID}]({URL}) | {3-6 words}     | Wontfix       |
+    | {Idx} | {User} | [{ID}]({URL}) | {3-6 words}     | Discussion    |
+    | {Idx} | {User} | [{ID}]({URL}) | {3-6 words}     | Question      |
     ```
 
     **Rules:**
@@ -262,17 +267,19 @@ You must generate the document by **systematically replacing placeholders** in a
 
 2.  Stop and say: "**Phase 4 Complete: Coverage table inserted.**"
 
-**Phase 5: Verification**
+**Phase 5: Verification & Cleanup**
 
 1.  **Read File:** Read the final `evolution_{DATE}.md` to verify all placeholders are gone.
-2.  **Final Checklist:** Output this checklist:
+2.  **Cleanup:** Delete `evolution_{DATE}.json`.
+3.  **Final Checklist:** Output this checklist:
     - [ ] **Data Fetched**: All comments retrieved.
     - [ ] **Placeholders Replaced**: No {{...}} tags remain.
     - [ ] **Comments Validated**: All relevant comments mapped.
     - [ ] **Ghost References Fixed**: Verified every Intent # in table has a corresponding section.
     - [ ] **Technical Details Preserved**: Flags, args, types, preserved in text.
+    - [ ] **Cleanup**: `evolution_{DATE}.json` deleted.
 
-3.  Stop and say: "**Phase 5 Complete: Document finalized.**"
+4.  Stop and say: "**Phase 5 Complete: Document finalized and cleanup done.**"
 
 ### 6. Final Checklist (Mandatory Output)
 
