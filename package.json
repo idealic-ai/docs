@@ -1,7 +1,8 @@
 {
   "scripts": {
-    "dev": "vike dev",
-    "build": "vike build",
+    "dev": "npm run copy-raw && vike dev",
+    "build": "npm run copy-raw && vike build",
+    "copy-raw": "vite-node scripts/copy-raw.ts",
     "preview": "vike preview",
     "deploy": "npm run build && touch dist/.nojekyll && node scripts/push-to-docs-repo.js",
     "translate": "vite-node scripts/translate.ts",

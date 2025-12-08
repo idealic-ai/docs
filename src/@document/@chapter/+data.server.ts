@@ -9,6 +9,7 @@ import { processMarkdown, replaceRelativeLinks } from '../../utils/markdown';
 interface PageData {
   content: string | null;
   currentChapter: string | null;
+  rawUrl: string | null;
   sitemap: Sitemap;
   title: string;
   description: string;
