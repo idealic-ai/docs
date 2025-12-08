@@ -7,6 +7,16 @@
 >
 > - See: :term[02: Company/Process]{href="./02_process.md"} for the process definition.
 
+## Invariance Rules
+
+> **STRICTLY MAINTAIN THESE RULES:**
+>
+> 1. **Transient Storage:** You MAY create `evolution_{DATE}.json` to store raw comments. Do NOT create other temporary files.
+> 2. **One-Pass Fetching:** Fetch all necessary data (comments) in a single API call per resource. Do NOT paginate manually or loop.
+> 3. **Validation Source:** Always validate against the **existing context** (JSON), never re-fetch for validation.
+> 4. **Language:** The output document MUST be in **Russian** (except for code/technical terms).
+> 5. **Completeness:** Every single comment must be accounted for in the Coverage Report.
+
 ## Purpose
 
 The Evolution Draft bridges the gap between discussion (Pull Requests) and permanent specification (Living Specification). It captures the "changed understanding" or "new intent" that emerges during review.
@@ -48,15 +58,19 @@ Fetch the PR details to identify the Author. Any other user in the comments is c
 gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}" --jq '{author: .user.login, title: .title}'
 ```
 
-**Step 3: Fetch Comments (One-Liner)**
+**Step 3: Fetch & Read Comments**
 
-Execute this exact command. Replace `{PR_NUMBER}` (e.g., 123) and `{SINCE_DATE}` (e.g., 2025-01-01). NOTE: It's important to fetch all comments in one go; `per_page=200` does it. Do not attempt to split these calls.
+1.  **Fetch to File:** Execute this exact command to save comments to `evolution_{DATE}.json`. Replace `{PR_NUMBER}`, `{SINCE_DATE}`, and `{DATE}`.
 
-**SUPER IMPORTANT**: This is a very important step. It groups comments by threads, respects diff hunks on the first comment in thread, and fetches 200 comments at once. Do not attempt to modify this. The output will appear directly in the context.
+    ```bash
+    gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}/comments?since={SINCE_DATE}&per_page=200" --paginate --jq 'map({id, body, user: .user.login, created_at, html_url, diff_hunk, in_reply_to_id}) | sort_by(.created_at) | to_entries | map({index: ("§" + (.key + 1 | tostring)), comment: .value}) | map(.comment + {index: .index}) | group_by(.in_reply_to_id // .id) | map(.[0] as $root | [$root] + (.[1:] | map(del(.diff_hunk))))' | jq '.' > evolution_{DATE}.json
+    ```
 
-```bash
-gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}/comments?since={SINCE_DATE}&per_page=200" --paginate --jq 'map({id, body, user: .user.login, created_at, html_url, diff_hunk, in_reply_to_id}) | sort_by(.created_at) | to_entries | map({index: ("§" + (.key + 1 | tostring)), comment: .value}) | map(.comment + {index: .index}) | group_by(.in_reply_to_id // .id) | map(.[0] as $root | [$root] + (.[1:] | map(del(.diff_hunk))))'
-```
+2.  **Read into Context:** Use standard agent tools to read `evolution_{DATE}.json`.
+    - Read in chunks of 100 lines (in parallel if possible).
+    - **Do NOT** count comments or process data during reading.
+    - **Do NOT** massage the data.
+    - Simply read the raw content "out loud" into the context.
 
 ### 3. Analysis & Synthesis (Language: Russian)
 
@@ -113,50 +127,56 @@ Your goal is **Completeness**. Every distinct thread or discussion topic must be
     - If the author **did not reply**, mark as: "Needs acknowledgement".
 6.  **Context:** The proof (quotes) and/or specific code location (if applicable).
 
-### 4. Validation
+### 4. Audit & Coverage Check
 
-**CRITICAL STEP:** Before finalizing the document, you must perform a self-validation:
+**CRITICAL STEP:** Before finalizing the document, you must perform a self-audit to ensure complete coverage:
 
 1.  Read the generated list of items.
 2.  Compare against the JSON output.
 3.  **Map Every Comment:** Ensure every comment (referencing its `index`, e.g. `§1`) is mapped to a specific Intent Number.
-4.  **Consistency Check:** Verify that every Intent number referenced in the validation table corresponds to an actual section in the text.
+4.  **Consistency Check:** Verify that every Intent number referenced in the coverage table corresponds to an actual section in the text.
     - **Fix:** If you find a "ghost reference" (an Intent number in the table that doesn't exist in the text), you **MUST** go back and generate that missing Intent section. Do not just delete the reference; add the content.
 5.  **Question:** "Did I miss _any_ thread?"
 6.  **Technical Check:** Did I miss any important flags or parameters mentioned in the comments?
 7.  If yes, add details to the relevant Intent.
 
-### 5. Document Generation (Four Phases)
+### 5. Document Generation (Five Phases)
 
-You must generate the document in **four separate phases**. In Phases 1-3, you will output the content to the chat. You will **only write to the file in Phase 4**, combining all parts.
+You must generate the document in **five separate phases**. In Phases 1-4, you will output the content to the chat. You will **only write to the file in Phase 5**, combining all parts.
 
-**Phase 1: The Intro**
+**Phase 1: Roles & Data**
+
+1.  Fetch PR details and Comments.
+2.  Identify Author vs Reviewers.
+3.  Stop and say: "**Phase 1 Complete: Roles identified. Reviewing {N} comments.**"
+
+**Phase 2: The Intro**
 
 1.  Generate the Header and Overview sections.
-2.  **Output to Chat:** Display the generated Markdown content.
+2.  **Output to Chat:** Display the generated content directly as normal text (do not wrap the entire section in a markdown code block).
 3.  Stop and say: "**Phase 1 Complete: Overview generated.**"
 
-**Phase 2: The Intents**
+**Phase 3: The Intents**
 
 1.  Generate the "List of Intents" section.
-2.  **Output to Chat:** Display the generated Markdown content.
-3.  Stop and say: "**Phase 2 Complete: Intents generated.**"
+2.  **Output to Chat:** Display the generated content directly as normal text (do not wrap the entire section in a markdown code block).
+3.  Stop and say: "**Phase 3 Complete: Intents generated.**"
 
-**Phase 3: Validation Table**
+**Phase 4: Coverage Report**
 
-1.  **Status Update:** Count the total comments in the JSON context and say: "**Validating {N} comments...**"
-    > **NOTE:** Do NOT re-fetch comments. Validation **MUST** be performed against the JSON data already loaded in the context.
-2.  Generate the "Validation Report" table.
-3.  **Output to Chat:** Display the generated Markdown content.
-4.  Stop and say: "**Phase 3 Complete: Validation table generated.**"
+1.  **Status Update:** Count the total comments in the JSON context and say: "**Checking coverage for {N} comments...**"
+    > **NOTE:** Do NOT re-fetch comments. Audit **MUST** be performed against the JSON data already loaded in the context.
+2.  Generate the "Coverage Report" table.
+3.  **Output to Chat:** Display the generated content directly as normal text (do not wrap the entire section in a markdown code block).
+4.  Stop and say: "**Phase 4 Complete: Coverage table generated.**"
 
-**Phase 4: Finalize & Write**
+**Phase 5: Finalize & Write**
 
-1.  Combine all generated parts (Intro + Intents + Validation + Checklist).
+1.  Combine all generated parts (Intro + Intents + Coverage + Checklist).
 2.  **Write to File:** Create/Overwrite `evolution_{DATE}.md` with the **FULL** content.
 3.  Review the file against the checklist criteria.
 4.  **CRITICAL:** If you find any issues, **Go Back**, fix the content, and overwrite the file again.
-5.  If everything is correct, stop and say: "**Phase 4 Complete: Document finalized.**"
+5.  If everything is correct, stop and say: "**Phase 5 Complete: Document finalized.**"
 
 **Required Structure for the Complete File:**
 
@@ -203,15 +223,16 @@ You must generate the document in **four separate phases**. In Phases 1-3, you w
   {Total block size < 240 chars}
   ```
 
-  ***
+---
 
-  ## Открытые вопросы и Риски (если есть)
-  1. **{Question/Threat}**: {Description}
-     - **Контекст**: {Link or explanation}
+## Открытые вопросы и Риски (если есть)
 
-  ***
+1. **{Question/Threat}**: {Description}
+   - **Контекст**: {Link or explanation}
 
-  ## Отчет о валидации
+---
+
+## Отчет о покрытии
 
 | Index | User   | Comment ID    | Title (Summary) | Intent/Reason   |
 | ----- | ------ | ------------- | --------------- | --------------- |
@@ -224,10 +245,11 @@ You must generate the document in **four separate phases**. In Phases 1-3, you w
 1. Use the `index` field (e.g. `§1`) from the JSON for the **Index** column.
 2. The table must contain **ALL** comments from the JSON data, ensuring that every index (from §1 to §Max) has a corresponding row.
 3. The count of rows in this table must equal the maximum index number found in the JSON.
+4. **Monotonic Order:** The rows must be sorted by Index (1, 2, 3...) with **NO GAPS**. Do not skip any numbers.
 
-4. **Root Comments** (start of a thread)
-5. **Replies** (responses within a thread)
-6. **Standalone Comments**
+5. **Root Comments** (start of a thread)
+6. **Replies** (responses within a thread)
+7. **Standalone Comments**
 
 Do not exclude any comment ID found in the JSON.
 ````
