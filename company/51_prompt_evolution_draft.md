@@ -26,10 +26,16 @@ When the user requests an Evolution Draft, you **MUST** obtain a Pull Request li
 
 ### 2. Data Retrieval
 
-**RESTRICTION:** You are permitted to make only **ONE** API request to GitHub. Do **NOT** fetch file contents, commits, or diffs separately. Use the exact command below.
+**RESTRICTION:** You are permitted to make ONLY the following external requests:
 
-**Step 1: Fetch Prerequisite Docs (HTTP Only)**
-Before anything else, read these standards:
+1.  **HTTP GET** to `https://idealic.academy/en/company/02_process.md/`
+2.  **HTTP GET** to `https://idealic.academy/en/company/00_truth.md/`
+3.  **GitHub Comments API** call (via the one-liner below)
+
+Do **NOT** fetch other file contents, commits, or diffs separately.
+
+**Step 1: Fetch Prerequisite Docs (Mandatory)**
+Use `web_search` or an HTTP tool to read the full content of these standards:
 
 - [02: Company/Process](https://idealic.academy/en/company/02_process.md/)
 - [50: Prompt/Truth](https://idealic.academy/en/company/00_truth.md/)
