@@ -67,9 +67,11 @@ This is **NOT** a programmatic JSON-to-Markdown conversion. You must apply intel
 - **Curate Context:** Include only the specific lines of diff hunks that are relevant to the point being made.
 - **Goal:** Create a document that is compact, to the point, and truthful.
 
+Important: Analyze the JSON by reading it in chunks of 200 lines. Do NOT attempt to read more than 200 lines at once. The files are too big!
+
 DO NOT WRITE ANY SCRIPTS. This is strictly latent space analysis of retriever data.
 
-Analyze the JSON by reading it in chunks of 200 lines. Your goal is **Completeness**. Every distinct thread or discussion topic must be represented.
+Your goal is **Completeness**. Every distinct thread or discussion topic must be represented.
 
 **For each item, determine:**
 
@@ -131,23 +133,33 @@ Create a new file (e.g., `evolution_{DATE}.md`).
 - **Прежнее понимание (если применимо):** {Brief description of previous understanding/vision if changed}
 - **Результат:** {Briefly: Was vision changed? Agreement reached? Misunderstanding cleared?}
 - **Контекст:**
+
   > [{Reviewer Name}]({Link}): "{Short rephrased concern}"
   >
   > [{Author Name}]({Link}): "{Short rephrased resolution}" (or "No reply")
+
   ```{lang}
   {1-3 lines max of diff hunk code}
   {Use ellipses ... for long lines (>80 chars)}
   {Total block size < 240 chars}
   ```
 
----
+  ***
 
-## Отчет о валидации
+  ## Открытые вопросы и Риски (если есть)
+  1. **{Question/Threat}**: {Description}
+     - **Контекст**: {Link or explanation}
+
+  ***
+
+  ## Отчет о валидации
 
 | Comment ID    | Title (Summary) | Intent # | Status          |
 | ------------- | --------------- | -------- | --------------- |
 | [{ID}]({URL}) | {3-6 words}     | {N}      | Included        |
 | [{ID}]({URL}) | {3-6 words}     | -        | Skipped (Noise) |
+
+**IMPORTANT:** The table must contain ALL comments by reviewer (root and replies) from the JSON. Do not exclude any.
 ````
 
 ### 6. Final Checklist (Mandatory Output)
@@ -158,4 +170,4 @@ At the very end of your response (after generating the file), you **MUST** outpu
 - [ ] **Document Generated**: Markdown file created.
 - [ ] **Comments Validated**: All relevant comments mapped.
 - [ ] **Ghost References Fixed**: Verified every Intent # in table has a corresponding section. Add more intents if necessary.
-- [ ] **Technical Details Preserved**: Flags, args, types, proposed function names, etc included in text.
+- [ ] **Technical Details Preserved**: Flags, args, types, proposed function names, and other technical details need to be preserved in text.
