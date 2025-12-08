@@ -74,7 +74,7 @@ Crucially, these output messages are **appended**, not merged at write time. Thi
 When a :term[Variable Reference]{canonical="Variable Reference" href="./007_agent_variables.md"} like `†data.user.name` needs to be resolved, the engine searches the context messages in **reverse chronological order** (newest to oldest).
 
 - If the resolver finds a message for the target path with an `_outputMethod` of **`set`** (or no method, as `set` is the default), it stops immediately. That message's value is the final value, and all older messages for that path are ignored. This is the "last-write-wins" behavior.
-- If the resolver finds messages with methods like **`merge`**, **`push`**, or **`concat`**, it continues searching backward, collecting all such messages until it either reaches a `set` message or the beginning of the context. It then reconstructs the final value by applying these collected operations in chronological order (oldest to newest).
+- If the resolver finds messages with methods like **`merge`** (deep merge), **`assign`** (shallow merge), **`push`**, or **`concat`**, it continues searching backward, collecting all such messages until it either reaches a `set` message or the beginning of the context. It then reconstructs the final value by applying these collected operations in chronological order (oldest to newest).
 
 This dynamic resolution ensures that the state is always consistent and accurately reflects the history of operations, enabling complex and reliable state manipulations.
 
