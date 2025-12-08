@@ -43,6 +43,8 @@ You **MUST** use an HTTP tool to fetch the content directly from the URLs below.
 **Step 2: Fetch Comments (One-Liner)**
 Execute this exact command. Replace `{PR_NUMBER}` (e.g., 123) and `{SINCE_DATE}` (e.g., 2025-01-01). NOTE: IT's important to fetch all comments in one go per_page=200 does it. Do not attempt to split these calls.
 
+SUPER IMPORTANT: This is a very step, it groups comments by threads, respects diff hunks on the first comment in thread, and fetches 200 comments at once. Do not attempt to modify this, because this will yield incorrect results.
+
 ```bash
 gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}/comments?since={SINCE_DATE}&per_page=200" --paginate --jq 'map({id, body, user: .user.login, created_at, html_url, diff_hunk, in_reply_to_id}) | group_by(.in_reply_to_id // .id) | map(sort_by(.created_at) | .[0] as $root | [$root] + (.[1:] | map(del(.diff_hunk))))' | jq '.' > "comments_{SINCE_DATE}.json"
 ```
