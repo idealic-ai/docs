@@ -16,6 +16,8 @@
 > 3. **Validation Source:** Always validate against the **existing context** (JSON), never re-fetch for validation.
 > 4. **Language:** The output document MUST be in **Russian** (except for code/technical terms).
 > 5. **Completeness:** Every single comment must be accounted for in the Coverage Report.
+> 6. **No Restarts:** If issues are detected (e.g., missing items, coverage gaps), do NOT restart the process. Fix the specific issue (add intent, correct wording) and continue. This is a large task; restarts are forbidden.
+> 7. **Latent Analysis (No Scripts):** Do NOT use scripts (Python/Shell) for analysis, counting, or synthesis. All processing MUST be done "in context" using the LLM's latent capabilities. Read the data, then think.
 
 ## Purpose
 
@@ -63,14 +65,18 @@ gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}" --jq '{author: .user.login, titl
 1.  **Fetch to File:** Execute this exact command to save comments to `evolution_{DATE}.json`. Replace `{PR_NUMBER}`, `{SINCE_DATE}`, and `{DATE}`.
 
     ```bash
-    gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}/comments?since={SINCE_DATE}&per_page=200" --paginate --jq 'map({id, body, user: .user.login, created_at, html_url, diff_hunk, in_reply_to_id}) | sort_by(.created_at) | to_entries | map({index: ("§" + (.key + 1 | tostring)), comment: .value}) | map(.comment + {index: .index}) | group_by(.in_reply_to_id // .id) | map(.[0] as $root | [$root] + (.[1:] | map(del(.diff_hunk))))' | jq '.' > evolution_{DATE}.json
+    gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}/comments?since={SINCE_DATE}&per_page=200" --paginate --jq 'map({id, body, user: .user.login, created_at, html_url, diff_hunk: (.diff_hunk | if length > 200 then .[:200] + "..." else . end), in_reply_to_id}) | sort_by(.created_at) | to_entries | map({index: ("§" + (.key + 1 | tostring)), comment: .value}) | map(.comment + {index: .index}) | group_by(.in_reply_to_id // .id) | map(.[0] as $root | [$root] + (.[1:] | map(del(.diff_hunk))))' | jq '.' > evolution_{DATE}.json
     ```
 
 2.  **Read into Context:** Use standard agent tools to read `evolution_{DATE}.json`.
-    - Read in chunks of 100 lines (in parallel if possible).
-    - **Do NOT** count comments or process data during reading.
-    - **Do NOT** massage the data.
-    - Simply read the raw content "out loud" into the context.
+    - **Read Loop (Mandatory):** You MUST read the file in strict 100-line chunks.
+      - Start: `offset=0`, `limit=100`
+      - Next: `offset=100`, `limit=100`
+      - Next: `offset=200`, `limit=100`
+      - ...continue until EOF.
+      - **Prohibited:** Do NOT guess limits, do NOT read "all at once", do NOT let the tool decide. You must explicitly iterate.
+      - **Termination:** Continue strictly until the tool returns "File is empty" or "out of range". Do NOT stop early.
+      - **Expectation:** The file may be large (1000+ lines). You might need 20+ iterations. This is normal. Continue until the end.
 
 ### 3. Analysis & Synthesis (Language: Russian)
 
@@ -142,117 +148,131 @@ Your goal is **Completeness**. Every distinct thread or discussion topic must be
 
 ### 5. Document Generation (Five Phases)
 
-You must generate the document in **five separate phases**. In Phases 1-4, you will output the content to the chat. You will **only write to the file in Phase 5**, combining all parts.
+You must generate the document by **systematically replacing placeholders** in a pre-created file.
 
-**Phase 1: Roles & Data**
+**Phase 1: Setup & Data**
 
-1.  Fetch PR details and Comments.
-2.  Identify Author vs Reviewers.
-3.  Stop and say: "**Phase 1 Complete: Roles identified. Reviewing {N} comments.**"
+1.  **Fetch Data:**
+    - Fetch Prerequisite Docs (Truth, Process).
+    - Fetch PR Details (Identify Author/Reviewers).
+    - Fetch Comments (save to JSON and read into context).
+    - **Initialize Plan:** Create Todo list.
+
+2.  **Initialize File:**
+    - Create `evolution_{DATE}.md` with the skeleton **EXACTLY**:
+
+    ```markdown
+    # Evolution Draft: {DATE}
+
+    > Status: Draft
+    > Author: {PR_AUTHOR}
+    > Source: {PR_LINK}
+    > Range: {SINCE_DATE} - {NOW}
+
+    ## Обзор
+
+    {{OVERVIEW_PLACEHOLDER}}
+
+    ## Список Намерений
+
+    {{INTENTS_PLACEHOLDER}}
+
+    ---
+
+    ## Открытые вопросы и Риски (если есть)
+
+    {{QUESTIONS_PLACEHOLDER}}
+
+    ---
+
+    ## Отчет о покрытии
+
+    {{COVERAGE_PLACEHOLDER}}
+    ```
+
+3.  Stop and say: "**Phase 1 Complete: Data fetched & File initialized.**"
 
 **Phase 2: The Intro**
 
-1.  Generate the Header and Overview sections.
-2.  **Output to Chat:** Display the generated content directly as normal text (do not wrap the entire section in a markdown code block).
-3.  Stop and say: "**Phase 1 Complete: Overview generated.**"
+1.  **Generate & Apply:**
+    - Synthesize the Overview content (answers to the 8 questions).
+    - **Immediately** call `search_replace` to swap `{{OVERVIEW_PLACEHOLDER}}` with the generated text.
+    - **Do NOT** output the text to chat first. The tool call is the generation.
+
+2.  Stop and say: "**Phase 2 Complete: Overview inserted.**"
 
 **Phase 3: The Intents**
 
-1.  Generate the "List of Intents" section.
-2.  **Output to Chat:** Display the generated content directly as normal text (do not wrap the entire section in a markdown code block).
-3.  Stop and say: "**Phase 3 Complete: Intents generated.**"
+1.  **Generate & Apply:**
+    - Analyze threads and formulate the list of intents.
+    - **Immediately** call `search_replace` to swap `{{INTENTS_PLACEHOLDER}}` with the full markdown list.
+    - **Do NOT** output the text to chat first.
+
+    **Content Template (Repeat for each Intent):**
+
+    ````markdown
+    ### {N}. {Short Title in Russian}
+
+    - **Намерение:** {What do we want to achieve?}
+    - **Обоснование:** {Explanation of _why_ this change is needed}
+    - **Действие:** {Concrete steps to take.}
+    - **Статус:** {Согласовано / Недопонимание / Требует уточнения / ...}
+    - **Прежнее понимание (если применимо):** {Brief description if changed}
+    - **Результат:** {Briefly: Was vision changed? Agreement reached?}
+    - **Контекст:**
+
+      > [{Reviewer Name}]({Link}): "{Short rephrased concern}"
+      >
+      > [{Author Name}]({Link}): "{Short rephrased resolution}"
+
+      ```{lang}
+      {1-3 lines max of diff hunk code}
+      ```
+    ````
+
+    ```
+
+    ```
+
+2.  **Generate & Apply (Questions):**
+    - Formulate open questions (if any).
+    - **Immediately** call `search_replace` to swap `{{QUESTIONS_PLACEHOLDER}}` (or remove it if empty).
+
+3.  Stop and say: "**Phase 3 Complete: Intents and Questions inserted.**"
 
 **Phase 4: Coverage Report**
 
-1.  **Status Update:** Count the total comments in the JSON context and say: "**Checking coverage for {N} comments...**"
-    > **NOTE:** Do NOT re-fetch comments. Audit **MUST** be performed against the JSON data already loaded in the context.
-2.  Generate the "Coverage Report" table.
-3.  **Output to Chat:** Display the generated content directly as normal text (do not wrap the entire section in a markdown code block).
-4.  Stop and say: "**Phase 4 Complete: Coverage table generated.**"
+1.  **Generate & Apply:**
+    - Audit intents against JSON context.
+    - **Immediately** call `search_replace` to swap `{{COVERAGE_PLACEHOLDER}}` with the generated table.
+    - **Do NOT** output the text to chat first.
 
-**Phase 5: Finalize & Write**
+    **Content Template:**
 
-1.  Combine all generated parts (Intro + Intents + Coverage + Checklist).
-2.  **Write to File:** Create/Overwrite `evolution_{DATE}.md` with the **FULL** content.
-3.  Review the file against the checklist criteria.
-4.  **CRITICAL:** If you find any issues, **Go Back**, fix the content, and overwrite the file again.
-5.  If everything is correct, stop and say: "**Phase 5 Complete: Document finalized.**"
+    ```markdown
+    | Index | User   | Comment ID    | Title (Summary) | Intent/Reason |
+    | ----- | ------ | ------------- | --------------- | ------------- |
+    | {Idx} | {User} | [{ID}]({URL}) | {3-6 words}     | #{N}          |
+    ```
 
-**Required Structure for the Complete File:**
+    **Rules:**
+    1.  Use `index` (e.g. `§1`) from JSON.
+    2.  Include **ALL** comments.
+    3.  **Monotonic Order:** Sorted by Index with NO GAPS.
 
-````markdown
-# Evolution Draft: {DATE}
+2.  Stop and say: "**Phase 4 Complete: Coverage table inserted.**"
 
-> Status: Draft
-> Source: {PR_LINK}
+**Phase 5: Verification**
 
-## Обзор
+1.  **Read File:** Read the final `evolution_{DATE}.md` to verify all placeholders are gone.
+2.  **Final Checklist:** Output this checklist:
+    - [ ] **Data Fetched**: All comments retrieved.
+    - [ ] **Placeholders Replaced**: No {{...}} tags remain.
+    - [ ] **Comments Validated**: All relevant comments mapped.
+    - [ ] **Ghost References Fixed**: Verified every Intent # in table has a corresponding section.
+    - [ ] **Technical Details Preserved**: Flags, args, types, preserved in text.
 
-{A high-level synthesis of the review cycle in Russian. Answer the following:}
-
-1.  **Чего хотел ревьюер:** {Main themes of feedback/criticism}
-2.  **С чем согласился автор:** {Key concessions or strategic shifts}
-3.  **С чем автор НЕ согласился:** {Points where the author pushed back or disagreed, and why}
-4.  **Общий контекст:** {Any misunderstandings cleared or vision changes confirmed}
-5.  **Недопонимания (если есть):** {List specific points of confusion}
-6.  **Открытые вопросы (если есть):** {Points discussed but not resolved}
-7.  **Новые открытия:** {Insights gained during discussion}
-8.  **Связанные документы:** {Links to related docs mentioned}
-
-## Список Намерений
-
-<!-- Repeat for EVERY distinct topic/thread found in JSON -->
-
-### {N}. {Short Title in Russian}
-
-- **Намерение:** {What do we want to achieve?}
-- **Обоснование:** {Explanation of _why_ this change is needed, synthesizing the reasoning from the comments}
-- **Действие:** {Concrete steps to take.}
-- **Статус:** {Согласовано / Недопонимание / Требует уточнения / Изменение видения / Требует подтверждения}
-- **Прежнее понимание (если применимо):** {Brief description of previous understanding/vision if changed}
-- **Результат:** {Briefly: Was vision changed? Agreement reached? Misunderstanding cleared?}
-- **Контекст:**
-
-  > [{Reviewer Name}]({Link}): "{Short rephrased concern}"
-  >
-  > [{Author Name}]({Link}): "{Short rephrased resolution}" (or "No reply")
-
-  ```{lang}
-  {1-3 lines max of diff hunk code}
-  {Use ellipses ... for long lines (>80 chars)}
-  {Total block size < 240 chars}
-  ```
-
----
-
-## Открытые вопросы и Риски (если есть)
-
-1. **{Question/Threat}**: {Description}
-   - **Контекст**: {Link or explanation}
-
----
-
-## Отчет о покрытии
-
-| Index | User   | Comment ID    | Title (Summary) | Intent/Reason   |
-| ----- | ------ | ------------- | --------------- | --------------- |
-| {Idx} | {User} | [{ID}]({URL}) | {3-6 words}     | #{N}            |
-| {Idx} | {User} | [{ID}]({URL}) | {3-6 words}     | Skipped (Noise) |
-| {Idx} | {User} | [{ID}]({URL}) | {3-6 words}     | Duplicate       |
-
-**IMPORTANT:**
-
-1. Use the `index` field (e.g. `§1`) from the JSON for the **Index** column.
-2. The table must contain **ALL** comments from the JSON data, ensuring that every index (from §1 to §Max) has a corresponding row.
-3. The count of rows in this table must equal the maximum index number found in the JSON.
-4. **Monotonic Order:** The rows must be sorted by Index (1, 2, 3...) with **NO GAPS**. Do not skip any numbers.
-
-5. **Root Comments** (start of a thread)
-6. **Replies** (responses within a thread)
-7. **Standalone Comments**
-
-Do not exclude any comment ID found in the JSON.
-````
+3.  Stop and say: "**Phase 5 Complete: Document finalized.**"
 
 ### 6. Final Checklist (Mandatory Output)
 
