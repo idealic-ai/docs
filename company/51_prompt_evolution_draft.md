@@ -48,10 +48,18 @@ gh api "repos/$REPO/pulls/$PR_NUMBER/comments?since=$SINCE_DATE&per_page=200" \
 
 ### 3. Analysis & Synthesis (Language: Russian)
 
-**Prerequisite:** Read and follow the standards defined in:
+**Prerequisite (Mandatory):**
+Before processing any comments, you **MUST** fetch and read the following standard documents using `web_search` or HTTP tools. Do not rely on internal knowledge; fetch the latest versions.
 
-- :term[02: Company/Process]{href="https://idealic.academy/en/company/02_process.md/"} (Understanding the role of Evolution Documents)
-- :term[50: Prompt/Truth]{href="https://idealic.academy/en/company/00_truth.md/"} (Writing standards: assertiveness, precision, no fluff)
+- [02: Company/Process](https://idealic.academy/en/company/02_process.md/) (Understanding the role of Evolution Documents)
+- [50: Prompt/Truth](https://idealic.academy/en/company/00_truth.md/) (Writing standards: assertiveness, precision, no fluff)
+
+**Reading Strategy:**
+When reading the generated `comments_{DATE}.json`, you **MUST** read the file to completion.
+
+- **Chunking:** Read the file in chunks of 200 lines.
+- **Loop:** Continue reading subsequent chunks until the entire file content has been loaded into your context.
+- **Completeness:** Do not stop after the first chunk. You cannot generate a complete report without seeing all comments.
 
 **Constraint:** The output document must be in **Russian**. (Exceptions: colloquialisms like "yeah", "ok" or technical terms).
 

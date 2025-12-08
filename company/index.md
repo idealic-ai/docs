@@ -19,6 +19,10 @@ This index bridges the gap between our abstract values and our daily actions. It
 
 > Sidenote: The foundational pillars of our operational philosophy.
 
-- [00: Truth](./00_truth.md)
 - [01: Pitch](./01_pitch.md)
 - [02: Process](./02_process.md)
+
+### Prompts
+
+- [50: Truth](./50_prompt_truth.md)
+- [51: Evolution Draft](./51_prompt_evolution_draft.md)
