@@ -62,6 +62,7 @@ gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}/comments?since={SINCE_DATE}&per_p
 This is **NOT** a programmatic JSON-to-Markdown conversion. You must apply intelligence to create a compact, truthful summary:
 
 - **Paraphrase & Shorten:** Compress comments to their essence while retaining the meaning. Avoid copy-pasting long blocks.
+- **Technical Fidelity:** If a comment mentions parameters, types, flags, arguments, or environment variables, you **MUST** include them. Do not abstract them away.
 - **Filter Noise:** Omit comments that do not add value or context to the intent.
 - **Curate Context:** Include only the specific lines of diff hunks that are relevant to the point being made.
 - **Goal:** Create a document that is compact, to the point, and truthful.
@@ -90,7 +91,8 @@ Analyze the JSON by reading it in chunks of 200 lines. Your goal is **Completene
 4.  **Consistency Check:** Verify that every Intent number referenced in the validation table corresponds to an actual section in the text.
     - **Fix:** If you find a "ghost reference" (an Intent number in the table that doesn't exist in the text), you **MUST** go back and generate that missing Intent section. Do not just delete the reference; add the content.
 5.  **Question:** "Did I miss _any_ thread?"
-6.  If yes, add it immediately.
+6.  **Technical Check:** Did I miss any important flags or parameters mentioned in the comments?
+7.  If yes, add details to the relevant Intent.
 
 ### 5. Document Generation
 
@@ -129,11 +131,9 @@ Create a new file (e.g., `evolution_{DATE}.md`).
 - **Прежнее понимание (если применимо):** {Brief description of previous understanding/vision if changed}
 - **Результат:** {Briefly: Was vision changed? Agreement reached? Misunderstanding cleared?}
 - **Контекст:**
-
   > [{Reviewer Name}]({Link}): "{Short rephrased concern}"
   >
   > [{Author Name}]({Link}): "{Short rephrased resolution}" (or "No reply")
-
   ```{lang}
   {1-3 lines max of diff hunk code}
   {Use ellipses ... for long lines (>80 chars)}
@@ -149,3 +149,13 @@ Create a new file (e.g., `evolution_{DATE}.md`).
 | [{ID}]({URL}) | {3-6 words}     | {N}      | Included        |
 | [{ID}]({URL}) | {3-6 words}     | -        | Skipped (Noise) |
 ````
+
+### 6. Final Checklist (Mandatory Output)
+
+At the very end of your response (after generating the file), you **MUST** output this checklist:
+
+- [ ] **Data Fetched**: All comments retrieved.
+- [ ] **Document Generated**: Markdown file created.
+- [ ] **Comments Validated**: All relevant comments mapped.
+- [ ] **Ghost References Fixed**: Verified every Intent # in table has a corresponding section. Add more intents if necessary.
+- [ ] **Technical Details Preserved**: Flags, args, types, proposed function names, etc included in text.
