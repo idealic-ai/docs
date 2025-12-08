@@ -26,40 +26,22 @@ When the user requests an Evolution Draft, you **MUST** obtain a Pull Request li
 
 ### 2. Data Retrieval
 
-Generate and execute the following terminal commands to fetch discussion history.
+**RESTRICTION:** You are permitted to make only **ONE** API request to GitHub. Do **NOT** fetch file contents, commits, or diffs separately. Use the exact command below.
 
-- **Goal:** Capture all comments to ensure **100% completeness**.
-- **Optimization:** Remove `diff_hunk` from reply comments (keep only on thread root) to save context window.
-- **Output:** Save to `docs/evolution/comments_{DATE}.json`.
+**Step 1: Fetch Prerequisite Docs (HTTP Only)**
+Before anything else, read these standards:
+
+- [02: Company/Process](https://idealic.academy/en/company/02_process.md/)
+- [50: Prompt/Truth](https://idealic.academy/en/company/00_truth.md/)
+
+**Step 2: Fetch Comments (One-Liner)**
+Execute this exact command. Replace `{PR_NUMBER}` (e.g., 123) and `{SINCE_DATE}` (e.g., 2025-01-01).
 
 ```bash
-# Variables
-PR_NUMBER={PR_NUMBER} # Extract from link
-SINCE_DATE="{DATE}"   # YYYY-MM-DD or 2000-01-01 for 'All'
-OUTPUT_FILE="docs/evolution/comments_${SINCE_DATE}.json"
-REPO=$(gh repo view --json owner,name --jq '.owner.login + "/" + .name')
-
-# 1. Fetch, Group & Optimize
-# Fetch reviews, group by thread, sort by date, and remove diff_hunk from non-root comments
-mkdir -p docs/evolution
-gh api "repos/$REPO/pulls/$PR_NUMBER/comments?since=$SINCE_DATE&per_page=200" \
-  --jq 'map({id, body, user: .user.login, created_at, html_url, diff_hunk, in_reply_to_id}) | group_by(.in_reply_to_id // .id) | map(sort_by(.created_at) | .[0] as $root | [$root] + (.[1:] | map(del(.diff_hunk))))' | jq '.' > "$OUTPUT_FILE"
+gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}/comments?since={SINCE_DATE}&per_page=100" --paginate --jq 'map({id, body, user: .user.login, created_at, html_url, diff_hunk, in_reply_to_id}) | group_by(.in_reply_to_id // .id) | map(sort_by(.created_at) | .[0] as $root | [$root] + (.[1:] | map(del(.diff_hunk))))' | jq '.' > "comments_{SINCE_DATE}.json"
 ```
 
 ### 3. Analysis & Synthesis (Language: Russian)
-
-**Prerequisite (Mandatory):**
-Before processing any comments, you **MUST** fetch and read the following standard documents using `web_search` or HTTP tools. Do not rely on internal knowledge; fetch the latest versions.
-
-- [02: Company/Process](https://idealic.academy/en/company/02_process.md/) (Understanding the role of Evolution Documents)
-- [50: Prompt/Truth](https://idealic.academy/en/company/00_truth.md/) (Writing standards: assertiveness, precision, no fluff)
-
-**Reading Strategy:**
-When reading the generated `comments_{DATE}.json`, you **MUST** read the file to completion.
-
-- **Chunking:** Read the file in chunks of 200 lines.
-- **Loop:** Continue reading subsequent chunks until the entire file content has been loaded into your context.
-- **Completeness:** Do not stop after the first chunk. You cannot generate a complete report without seeing all comments.
 
 **Constraint:** The output document must be in **Russian**. (Exceptions: colloquialisms like "yeah", "ok" or technical terms).
 
@@ -97,7 +79,7 @@ Analyze the JSON. Your goal is **Completeness**. Every distinct thread or discus
 
 ### 5. Document Generation
 
-Create a new file (e.g., `docs/evolution/evolution_{DATE}.md`).
+Create a new file (e.g., `evolution_{DATE}.md`).
 
 **Required Structure:**
 
