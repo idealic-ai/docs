@@ -36,6 +36,7 @@ export async function data(pageContext: PageContextServer): Promise<PageData> {
       sitemap,
       content: null,
       currentChapter: null,
+      rawUrl: null,
       nextChapter: null,
       prevChapter: null,
       ui: uiStrings,
@@ -77,12 +78,14 @@ export async function data(pageContext: PageContextServer): Promise<PageData> {
 
     const nextChapter = chapterIndex < chapters.length - 1 ? chapters[chapterIndex + 1] : null;
     const prevChapter = chapterIndex > 0 ? chapters[chapterIndex - 1] : null;
+    const rawUrl = `/raw/${lang}/${document}/${chapter.path}`;
 
     return {
       ...commonData,
       sitemap,
       content: htmlContent,
       currentChapter: chapter.name,
+      rawUrl,
       title,
       description,
       nextChapter: nextChapter ? nextChapter : null,
