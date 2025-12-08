@@ -9,15 +9,15 @@
 
 ## Invariance Rules
 
-> **STRICTLY MAINTAIN THESE RULES:**
->
-> 1. **Transient Storage:** You MAY create `evolution_{DATE}.json` to store raw comments. Do NOT create other temporary files.
-> 2. **One-Pass Fetching:** Fetch all necessary data (comments) in a single API call per resource. Do NOT paginate manually or loop.
-> 3. **Validation Source:** Always validate against the **existing context** (JSON), never re-fetch for validation.
-> 4. **Language:** The output document MUST be in **Russian** (except for code/technical terms).
-> 5. **Completeness:** Every single comment must be accounted for in the Coverage Report.
-> 6. **No Restarts:** If issues are detected (e.g., missing items, coverage gaps), do NOT restart the process. Fix the specific issue (add intent, correct wording) and continue. This is a large task; restarts are forbidden.
-> 7. **Latent Analysis (No Scripts):** Do NOT use scripts (Python/Shell) for analysis, counting, or synthesis. All processing MUST be done "in context" using the LLM's latent capabilities. Read the data, then think.
+**STRICTLY MAINTAIN THESE RULES:**
+
+1. **Transient Storage:** You MAY create `evolution_{DATE}.json` to store raw comments. Do NOT create other temporary files.
+2. **One-Pass Fetching:** Fetch all necessary data (comments) in a single API call per resource. Do NOT paginate manually or loop.
+3. **Validation Source:** Always validate against the **existing context** (JSON), never re-fetch for validation.
+4. **Language:** The output document MUST be in **Russian** (except for code/technical terms).
+5. **Completeness:** Every single comment must be accounted for in the Coverage Report.
+6. **No Restarts:** If issues are detected (e.g., missing items, coverage gaps), do NOT restart the process. Fix the specific issue (add intent, correct wording) and continue. This is a rge task; restarts are forbidden.
+7. **Latent Analysis (No Scripts):** Do NOT use scripts (Python/Shell) for analysis, counting, or synthesis. All processing MUST be done "in context" using the LLM's latent capabilities. Read the data, then think.
 
 ## Purpose
 
@@ -166,10 +166,10 @@ You must generate the document by **systematically replacing placeholders** in a
     ```markdown
     # Evolution Draft: {DATE}
 
-    > Status: Draft
-    > Author: {PR_AUTHOR}
-    > Source: {PR_LINK}
-    > Range: {SINCE_DATE} - {NOW}
+    - Status: Draft
+    - Author: {PR_AUTHOR}
+    - Source: {PR_LINK}
+    - Range: {SINCE_DATE} - {NOW}
 
     ## Обзор
 
