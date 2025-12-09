@@ -22,7 +22,17 @@ This index bridges the gap between our abstract values and our daily actions. It
 - [01: Pitch](./01_pitch.md)
 - [02: Process](./02_process.md)
 
+### Artifacts
+
+> Sidenote: The definitions of the documents we produce.
+
+- [20: Specification](./20_document_spec.md)
+- [21: Proposal](./21_document_proposal.md)
+- [22: Alignment](./22_document_alignment.md)
+
 ### Prompts
 
+> Sidenote: Instructions for AI agents.
+
 - [50: Prompt/Truth](./50_prompt_truth.md)
-- [51: Prompt/Evolution Draft](./51_prompt_evolution_draft.md)
+- [51: Prompt/Alignment](./51_prompt_alignment.md)

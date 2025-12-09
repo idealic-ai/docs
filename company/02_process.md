@@ -2,99 +2,92 @@
 
 > [!DEFINITION] Standard Process
 > The operational protocol for converting abstract vision into concrete execution through shared responsibility, iterative synthesis, and high-frequency synchronization.
-
+>
 > Sidenote:
 >
 > - Paired with: :term[00: Company/Truth]{href="./50_prompt_truth.md"}
 
 We stand at a crossroads. To move beyond the phase of exploration and truly achieve, uncover, and progress, we must invent and adhere to a disciplined process.
 
-In a small team tackling a vast vision, reliance on traditional methods is a luxury we cannot afford. This protocol is not a constraint; it is the only mechanism that allows us to generate the necessary context, develop complex ideas, and ensure their successful execution. We commit to this process because it is the only way to make things work.
+Our process is defined by three distinct artifacts that guide ideas from inception to reality.
 
-## 1. The Living Specification
+## 1. The Artifacts
 
-> [!DEFINITION] Specification document
-> The permanent, evolving source of truth that defines the product vision, architecture, and implementation details.
+We separate our work into three specific stages to ensure clarity, safety, and alignment.
 
-The creation and maintenance of the Living Specification is our primary work. It is not merely documentation; it is the codebase of our intent. This document provides the essential context and vision that aligns the team and guides the machine. It is designed to be updated frequently, serving as a useful, ever-present reference that grows in certainty and scope as we uncover the reality of what we are building.
+### :term[20: Specification]{href="./20_document_spec.md"} (The Truth)
 
-- **Adherence to Truth:** We strictly follow the standards defined in :term[00: Company/Truth]{href="./50_prompt_truth.md"} to ensure every specification is self-contained, rigorous, and free from ambiguity. This context is mandatory for creating truly "living" documents.
-- **Correctness over Speed:** Unlike transient documents, the Living Specification must be rigorously correct. It is better to leave a section undefined than to define it falsely. It is the foundation upon which all other work rests.
-- **Expansion through Review:** The specification is never "finished," only "current." As we review it, we identify blind spots and missing dependencies. Addressing these expands the document's scope, not out of a desire for complexity, but to achieve the clarity required for execution.
-- **The Destination:** This document describes _where we are going_. It allows every team member to understand the broader picture without needing to hold the entire plan in their head. It is the map we all agree to follow.
+The permanent destination. This is the rigorous, ever-evolving specification of our system. It is the only source of truth.
 
-## 2. The Evolution Document
+- **Adherence to Truth:** It strictly follows the standards defined in :term[00: Company/Truth]{href="./50_prompt_truth.md"}. It must be self-contained and free from ambiguity.
+- **Correctness over Speed:** Unlike transient documents, the Specification must be rigorously correct. It is better to leave a section undefined than to define it falsely.
+- **The Map:** It describes _where we are going_. It allows every team member to understand the broader picture without needing to hold the entire plan in their head.
+- **Evergreen:** It is the absolute **Source of Truth for the System** (Code, Presentation, Architecture).
 
-> [!DEFINITION] Evolution document
-> A transient, rapid-response artifact used to align on changes, correct misconceptions, and provide context for execution before updating the Main Document.
+### :term[21: Proposal]{href="./21_document_proposal.md"} (The Proposal)
 
-Because the Living Specification is robust and permanent, changing it requires a mechanism for negotiation and course correction. The Evolution Document is that mechanism. It is a fast, focused instrument used to "echo back" our understanding of a problem, identifying miscommunications and specifying the exact approach we will take. It bridges the gap between human intent and LLM execution.
+The transient proposal. This is where we safely articulate what we _want_ to do. It allows us to explore changes without corrupting the truth.
 
-- **Adherence to Truth:** Like the Main Document, the Evolution Document relies on the standards in :term[00: Company/Truth]{href="./50_prompt_truth.md"}. We must be precise and assertive—stating clearly what is wrong and what will be done—to prevent the machine from acting on ambiguity.
-- **Speed is Critical:** These documents must be created quickly—ideally on the same day the need arises. They are not labored over; they are optimized for immediate clarity and decision-making.
-- **Synthesis of Misconception:** An Evolution Document is a correction vector. It explicitly states: "We thought X, but we learned Y, so we will do Z." It captures the blind spots revealed during discussions and converts them into a plan.
-- **Context for the Machine:** LLMs require precise context to be effective. This document provides the "instruction prompt" for the machine, detailing the specific changes, the reasoning behind them, and the constraints. It ensures the AI works on the _current_ reality.
-- **Options and Approaches:** This document is the place to propose different solutions or approaches for a specific problem. It allows the team to choose a path before significant effort is wasted on implementation.
+- **Source of Tickets:** This document is the seed from which specific engineering tickets are derived. It is the **Source of Truth for Jira**.
+- **Separation of Concerns:** It separates "What we want" from "How we implement it." This allows us to debate the value of the idea without getting bogged down in syntax.
+- **Safe Exploration:** It allows us to propose radical changes without breaking the source of truth. If a Proposal is rejected, nothing is lost but a text file.
+- **Context for the Machine:** LLMs require precise context. This document provides the "instruction prompt" for the machine.
 
-## 3. The Cycle of Consensus
+### :term[22: Alignment]{href="./22_document_alignment.md"} (The Contract)
 
-> [!DEFINITION] Pull Request
-> The universal instrument for validating intent, refining meaning, and securing agreement on all artifacts—documents, plans, and code.
+The synthesized agreement. This is the auto-generated summary of our debate. It ensures that every voice is heard and every decision is explicitly recorded before execution begins.
 
-A Pull Request (PR) is not merely a mechanism for merging code; it is the crucible of shared understanding. It applies to every deliverable: from high-level visions and evolution documents to concrete implementation details. We use PRs to sign off on the _intent_ before the execution begins. It is the tool that transforms individual assumptions into collective certainty.
+- **Synthesized Wisdom:** It converts a threaded conversation into a flat list of technical requirements. It filters out the noise and keeps the signal.
+- **Dynamic Consensus:** It is not just a log; it is a workspace where the author and reviewer align on the _new_ plan that emerged from the discussion.
+- **Machine Instruction:** It serves as the verified input for the AI to execute the changes.
+- **Disposable:** It is a one-time artifact that serves as the **Source of Truth for the Review**.
 
-- **Beyond Code:** The PR process is valid for all work. We use it to agree on definitions, architectural plans, and strategic shifts. It is where "my idea" becomes "our plan."
-- **Discussions are Data:** We conduct discussions directly in GitHub comments. The author **must** acknowledge each comment thread. This conversation is the raw material for our documentation.
-- **Explicate the Context:** "Done" is valid for execution. However, "Okay" is insufficient for alignment. The author must articulate their stance: "I now understand X," "I thought this was about Y," or "I need more clarity on Z." This explicit context allows the AI to synthesize the _reasoning_ behind the change, not just the result.
-- **Context Over Brevity:** The goal of the reply is to ensure that a third party (or the AI) can understand _what_ was decided and _why_ just by reading the thread. Implicit knowledge is lost knowledge.
-- **Synthesize to Close:** Once the discussion is resolved, we use the Evolution Draft process to synthesize the comments into a coherent plan. This ensures that the collective wisdom of the review is captured permanently.
-- **The Draft is a Starting Point:** The generated Evolution Draft is a malleable artifact. If the AI summarizes incorrectly or misses nuance, we do not discard it; we adjust it. We refine the draft through conversation with the agent or manual edits until it accurately reflects our shared intent.
-- **Pre-Approval of Unpredictability:** By agreeing on the plan (the Evolution Document) first, we remove the surprise from the daily work. We know what is coming because we approved it.
-- **Shared Responsibility:** When a team member approves a PR, they accept shared responsibility for the outcome. The author is no longer acting alone; they are executing a shared will.
+## 2. The Cycle of Consensus
 
-Example of an agent prompt to draft the evolution doc based on comment threads:
+We do not just "write code." We follow a cycle:
 
+```mermaid
+flowchart TD
+    %% Artifacts
+    Proposal[📄 Proposal]
+    Alignment[📄 Alignment]
+    Spec[📘 Specification]
+
+    %% Flow
+    Author([Author]) -->|1. Drafts| Proposal
+    Proposal -->|2. Discuss via PR| Team([Team])
+    Team -->|3. Comments| AI([AI Agent])
+    AI -->|4. Synthesizes| Alignment
+    Alignment -->|5. Confirms| Team
+    Team -- "Consensus" --> Exec(Execution)
+    Exec -->|6. Updates| Spec
 ```
-Instruction: https://idealic.academy/en/company/51_prompt_evolution_draft.md/
-PR: https://github.com/idealic-ai/platform/pull/65
 
-Analyze PR comments using instructions since 3 days ago
-```
+1.  **Draft Proposal:** An author creates a :term[Proposal Document]{href="./21_document_proposal.md"} describing the problem and proposed solution.
+2.  **Discuss:** The team reviews the Proposal via a Pull Request. Comments, questions, and debates occur here.
+3.  **Synthesize Alignment:** We use AI to generate an :term[Alignment Document]{href="./22_document_alignment.md"} from the discussion. This converts "comments" into "requirements."
+4.  **Confirm:** The team verifies the Alignment Document. Once merged, the plan is locked.
+5.  **Execute:** We update the :term[Specification]{href="./20_document_spec.md"} and the codebase based on the Alignment.
 
-## 4. The Ritual of Synchronization
+## 3. The Ritual of Synchronization
 
 > [!DEFINITION] 1-on-1 Calls
 > High-frequency human touchpoints designed to unblock execution, answer questions, and maintain mutual trust.
 
-We synchronize daily to prevent the drift that occurs when people work in isolation. These calls are not status updates—which can be read asynchronously—but active sessions for problem-solving and alignment.
+We synchronize daily to prevent the drift that occurs when people work in isolation.
 
 - **Daily 10-Minute One-on-Ones:** A brief, high-intensity touchpoint with leadership to ensure the compass is still pointing true.
-- **Preparation is Mandatory:** Participants must come with prepared topics. This ensures the time is used to solve actual problems, make decisions, or clarify the vision.
-- **The Safety of Process:** This ritual eliminates the anxiety of the unknown. The leader confirms the direction is correct, and the team member confirms they have what they need to proceed. It builds the trust necessary to work autonomously without micromanagement.
+- **Preparation is Mandatory:** Participants must come with prepared topics.
+- **The Safety of Process:** This ritual eliminates the anxiety of the unknown.
 
-## 5. The Role of the Machine
+## 4. The Role of the Machine
 
-> [!DEFINITION] AI Augmentation
-> The utilization of AI to amplify human intent, refine structure, and execute the details of the plan.
+We use AI not to replace our thinking, but to enforce it. The machine is the lever; the Alignment Document is the fulcrum.
 
-We use AI not to replace our thinking, but to enforce it. The machine is the lever; the Evolution Document is the fulcrum.
-
-- **Dictate to Define:** We often dictate our raw thoughts to capture the nuance of intent, then use LLMs to structure that intent into a coherent Evolution Document.
-- **Input for Execution:** The Evolution Document serves as the primary input for the LLM. If the document is clear, the LLM can generate code, tests, and updates to the Living Specification with high accuracy.
-- **Verify the Output:** We judge the LLM's output against the standard defined in our documents. If the output is wrong, it is a failure of our specification, not the machine.
-
-## 6. The Human Growth
-
-> [!DEFINITION] Professional Evolution
-> The acquisition of transferable skills for the AI era through the disciplined practice of document-driven collaboration.
-
-Working directly with documents and strict processes is not administrative overhead; it is training for the future of work. This workflow places us in the shoes of AI architects and innovators, teaching us how to effectively direct intelligence—both biological and artificial.
-
-- **Collaborating with AI:** By structuring our thoughts for machines, we learn the language of the future. We move from being "users" of AI to being "directors" of AI.
-- **Transferable Experience:** The ability to articulate abstract intent into concrete specifications is the single most valuable skill in the AI industry. This work provides invaluable experience that will define our future careers.
-- **Growth as Thinkers:** This process forces us to be rigorous, clear, and empathetic to the reader (human or machine). It fosters our growth as clearer thinkers and better colleagues.
+- **Dictate to Define:** We often dictate our raw thoughts to capture the nuance of intent.
+- **Input for Execution:** The Alignment Document serves as the primary input for the LLM.
+- **Verify the Output:** We judge the LLM's output against the standard defined in our documents.
 
 ## Summary
 
-We trade the illusion of freedom for the reality of progress. By constraining _how_ we decide, we liberate _what_ we can achieve. We write to align, we align to trust, and we trust to execute.
-npm
+We trade the illusion of freedom for the reality of progress. By constraining _how_ we decide, we liberate _what_ we can achieve.
