@@ -2,7 +2,7 @@
 
 > [!DEFINITION] Alignment Document
 > An auto-generated synthesis of the review process that captures shared consensus, resolved conflicts, and precise instructions for execution.
->
+
 > Sidenote:
 >
 > - See: :term[22: Company/Alignment]{href="./22_document_alignment.md"} for the definition.

@@ -4,7 +4,7 @@
 > The permanent, evolving source of truth that defines the product vision, architecture, and implementation details.
 >
 > Sidenote:
->
+
 > - Part of: :term[02: Company/Process]{href="./02_process.md"}
 > - Preceded by: :term[22: Company/Alignment]{href="./22_document_alignment.md"}
 

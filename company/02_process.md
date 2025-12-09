@@ -2,7 +2,7 @@
 
 > [!DEFINITION] Standard Process
 > The operational protocol for converting abstract vision into concrete execution through shared responsibility, iterative synthesis, and high-frequency synchronization.
->
+
 > Sidenote:
 >
 > - Paired with: :term[00: Company/Truth]{href="./50_prompt_truth.md"}

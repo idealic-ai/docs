@@ -2,7 +2,7 @@
 
 > [!DEFINITION] Alignment Document
 > An auto-generated synthesis of the review process that captures shared consensus, resolved conflicts, and precise instructions for execution.
->
+
 > Sidenote:
 >
 > - Part of: :term[02: Company/Process]{href="./02_process.md"}

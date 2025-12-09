@@ -15,7 +15,7 @@ This index bridges the gap between our abstract values and our daily actions. It
 
 ---
 
-### Core
+### Theory
 
 > Sidenote: The foundational pillars of our operational philosophy.
 

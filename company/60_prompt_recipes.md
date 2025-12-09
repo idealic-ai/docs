@@ -4,7 +4,7 @@
 > A collection of ready-to-use prompt patterns for driving the Company Process. Use these to instruct the agent.
 >
 > Sidenote:
->
+
 > - Part of: :term[02: Company/Process]{href="./02_process.md"}
 
 ## 1. Create a Proposal

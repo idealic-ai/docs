@@ -2,7 +2,7 @@
 
 > [!DEFINITION] Standard
 > The authoritative contract ensuring documentation serves as an absolute source of truth, free from machine artifacts and logical inconsistencies.
->
+
 > Sidenote:
 >
 > - Complemented by: :term[02: Company/Process]{href="./02_process.md"}
@@ -51,7 +51,7 @@ We build documents as modular primitives designed for synthesis.
 - **Generative Utility:** Value is created at the intersection of documents. Combining distinct contexts (e.g., Technical Guidelines + Feature Spec) generates novel solutions or targeted pitches on demand.
 - **LLM Optimization:** We structure information for machine composition. LLMs excel at joining contexts; our role is to provide distinct, high-fidelity nodes that can be assembled into larger, cohesive truths.
 
-## Summary
+## Afterword
 
 We write to think. We write to bind ourselves to truth. We write to build.
 

@@ -2,7 +2,7 @@
 
 > [!DEFINITION] Proposal Document
 > A transient proposal artifact used to outline a desire for change, improvement, or expansion before execution begins.
->
+
 > Sidenote:
 >
 > - Part of: :term[02: Company/Process]{href="./02_process.md"}

@@ -2,7 +2,7 @@
 
 > [!DEFINITION] Proposal Generator
 > A structural engine that synthesizes raw context (dictation, notes, chats) into a rigorous Proposal Document (RFC).
->
+
 > Sidenote:
 >
 > - See: :term[21: Company/Proposal]{href="./21_document_proposal.md"} for the definition.
