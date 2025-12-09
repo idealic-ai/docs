@@ -3,8 +3,8 @@
 > [!DEFINITION] Документ Согласования
 > Это отчёт, который компьютер создаёт автоматически. Он изучает всё обсуждение, находит общие решения, улаживает споры и составляет точный план действий.
 
-
 > Sidenote:
+>
 > - Смотри определение в документе :term[22: Компания/Согласование]{href="./22_document_alignment.md"}.
 > - Раньше этот документ назывался: Черновик Эволюции.
 
@@ -93,13 +93,13 @@
 > **НЕЛЬЗЯ** сохранять скачанную информацию во временные файлы (вроде `process.md` или `pr.json`), если на это нет прямого разрешения.
 > **Почему?** Временные файлы создают беспорядок, а это запрещено Железным правилом №1.
 > **Исключение:** Единственный разрешённый временный файл — это `{OUTPUT_DIR}/{FILENAME}.ndjson` для комментариев.
-> 
+>
 > Все остальные команды (curl, gh api) должны выводить результат напрямую, без сохранения в файлы.
 
 **ОГРАНИЧЕНИЕ:** Тебе разрешено делать ТОЛЬКО следующие запросы в интернет:
 
-1.  **HTTP GET** через curl на `https://idealic.academy/raw/simple-ru/company/02_process.md`
-2.  **HTTP GET** через curl на `https://idealic.academy/raw/simple-ru/company/50_prompt_truth.md`
+1.  **HTTP GET** через curl на `https://idealic.academy/raw/en/company/02_process.md`
+2.  **HTTP GET** через curl на `https://idealic.academy/raw/en/company/50_prompt_truth.md`
 3.  **Запрос к GitHub API** для Pull Request (чтобы узнать автора)
 4.  **Запрос к GitHub API** для комментариев (с помощью команды ниже)
 
@@ -109,18 +109,18 @@
 1.  **Процесс:**
 
     ```bash
-    curl -s https://idealic.academy/raw/simple-ru/company/02_process.md
+    curl -s https://idealic.academy/raw/en/company/02_process.md
     ```
 
 2.  **Истина:**
 
     ```bash
-    curl -s https://idealic.academy/raw/simple-ru/company/50_prompt_truth.md
+    curl -s https://idealic.academy/raw/en/company/50_prompt_truth.md
     ```
 
 3.  **Определение Согласования:**
     ```bash
-    curl -s https://idealic.academy/raw/simple-ru/company/22_document_alignment.md
+    curl -s https://idealic.academy/raw/en/company/22_document_alignment.md
     ```
 
 **Шаг 2: Получение деталей PR (чтобы узнать роли)**
@@ -221,8 +221,8 @@ gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}" --jq '{author: .user.login, titl
     >
     > **НЕ ДОБАВЛЯЙ ЭТОТ ФАЙЛ В GIT.**
     >
-    > - Подробнее: [22: Согласование](https://idealic.academy/raw/simple-ru/company/22_document_alignment.md)
-    > - В Git попадают только: [Предложение (Proposal)](https://idealic.academy/raw/simple-ru/company/21_document_proposal.md) и [Спецификация (Specification)](https://idealic.academy/raw/simple-ru/company/20_document_spec.md).
+    > - Подробнее: [22: Согласование](https://idealic.academy/raw/en/company/22_document_alignment.md)
+    > - В Git попадают только: [Предложение (Proposal)](https://idealic.academy/raw/en/company/21_document_proposal.md) и [Спецификация (Specification)](https://idealic.academy/raw/en/company/20_document_spec.md).
 
     ## Обзор
 
@@ -243,11 +243,11 @@ gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}" --jq '{author: .user.login, titl
     > [!IMPORTANT] Загрузка контекста
     > Прежде чем обновлять Предложение или Спецификацию, ты **ОБЯЗАН** загрузить эти файлы с контекстом, чтобы убедиться, что всё соответствует стандартам компании:
     >
-    > 1. `curl https://idealic.academy/raw/simple-ru/company/02_process.md` (Процесс)
-    > 2. `curl https://idealic.academy/raw/simple-ru/company/50_prompt_truth.md` (Истина)
-    > 3. `curl https://idealic.academy/raw/simple-ru/company/20_document_spec.md` (Спецификация)
-    > 4. `curl https://idealic.academy/raw/simple-ru/company/21_document_proposal.md` (Предложение)
-    > 5. `curl https://idealic.academy/raw/simple-ru/company/22_document_alignment.md` (Согласование)
+    > 1. `curl https://idealic.academy/raw/en/company/02_process.md` (Процесс)
+    > 2. `curl https://idealic.academy/raw/en/company/50_prompt_truth.md` (Истина)
+    > 3. `curl https://idealic.academy/raw/en/company/20_document_spec.md` (Спецификация)
+    > 4. `curl https://idealic.academy/raw/en/company/21_document_proposal.md` (Предложение)
+    > 5. `curl https://idealic.academy/raw/en/company/22_document_alignment.md` (Согласование)
     ```
 
 #### 5.2. Этап 2: Загрузка контекста
@@ -335,16 +335,16 @@ gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}" --jq '{author: .user.login, titl
 
   ## Отчет о покрытии
 
-  | Индекс        | Дата/Время     | Автор  | Заголовок (кратко) | Намерение | Реакция  |
-  | ------------- | -------------- | ------ | --------------- | --------- | -------- |
-  |               | **{Дата}**     |        |                 |           |          |
-  | [{Инд}]({ID}) | {дд.ММ ЧЧ:мм}  | {Имя}  | {4-6 слов}     | #{N}      | {Эмодзи} |
-  | [{Инд}]({ID}) | {дд.ММ ЧЧ:мм}  | {Имя}  | └ {4-6 слов}   | #{M},#{N} | {Эмодзи} |
-  |               | **{След.Дата}**|        |                 |           |          |
-  | [{Инд}]({ID}) | {дд.ММ ЧЧ:мм}  | {Имя}  | {4-6 слов}     | -         | {Эмодзи} |
-  | [{Инд}]({ID}) | {дд.ММ ЧЧ:мм}  | {Имя}  | ├ {4-6 слов}   | #{N}      | {Эмодзи} |
-  | [{Инд}]({ID}) | {дд.ММ ЧЧ:мм}  | {Имя}  | └ {4-6 слов}   | #{N}      | {Эмодзи} |
-  | [{Инд}]({ID}) | {дд.ММ ЧЧ:мм}  | {Имя}  | {4-6 слов}     | -         | {Эмодзи} |
+  | Индекс        | Дата/Время      | Автор | Заголовок (кратко) | Намерение | Реакция  |
+  | ------------- | --------------- | ----- | ------------------ | --------- | -------- |
+  |               | **{Дата}**      |       |                    |           |          |
+  | [{Инд}]({ID}) | {дд.ММ ЧЧ:мм}   | {Имя} | {4-6 слов}         | #{N}      | {Эмодзи} |
+  | [{Инд}]({ID}) | {дд.ММ ЧЧ:мм}   | {Имя} | └ {4-6 слов}       | #{M},#{N} | {Эмодзи} |
+  |               | **{След.Дата}** |       |                    |           |          |
+  | [{Инд}]({ID}) | {дд.ММ ЧЧ:мм}   | {Имя} | {4-6 слов}         | -         | {Эмодзи} |
+  | [{Инд}]({ID}) | {дд.ММ ЧЧ:мм}   | {Имя} | ├ {4-6 слов}       | #{N}      | {Эмодзи} |
+  | [{Инд}]({ID}) | {дд.ММ ЧЧ:мм}   | {Имя} | └ {4-6 слов}       | #{N}      | {Эмодзи} |
+  | [{Инд}]({ID}) | {дд.ММ ЧЧ:мм}   | {Имя} | {4-6 слов}         | -         | {Эмодзи} |
   ```
 
   **Правила:**

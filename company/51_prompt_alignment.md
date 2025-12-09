@@ -98,8 +98,8 @@ Starting analysis...
 
 **RESTRICTION:** You are permitted to make ONLY the following external requests:
 
-1.  **HTTP GET** via curl to `https://idealic.academy/raw/simple-ru/company/02_process.md`
-2.  **HTTP GET** via curl to `https://idealic.academy/raw/simple-ru/company/50_prompt_truth.md`
+1.  **HTTP GET** via curl to `https://idealic.academy/raw/en/company/02_process.md`
+2.  **HTTP GET** via curl to `https://idealic.academy/raw/en/company/50_prompt_truth.md`
 3.  **GitHub Pull Request API** call (to identify author)
 4.  **GitHub Comments API** call (via the one-liner below)
 
@@ -109,18 +109,18 @@ Fetch the specific URLs. **Process each document separately.**
 1.  **Process:**
 
     ```bash
-    curl -s https://idealic.academy/raw/simple-ru/company/02_process.md
+    curl -s https://idealic.academy/raw/en/company/02_process.md
     ```
 
 2.  **Truth:**
 
     ```bash
-    curl -s https://idealic.academy/raw/simple-ru/company/50_prompt_truth.md
+    curl -s https://idealic.academy/raw/en/company/50_prompt_truth.md
     ```
 
 3.  **Alignment Definition:**
     ```bash
-    curl -s https://idealic.academy/raw/simple-ru/company/22_document_alignment.md
+    curl -s https://idealic.academy/raw/en/company/22_document_alignment.md
     ```
 
 **Step 2: Fetch PR Details (Identify Roles)**
@@ -221,8 +221,8 @@ You **MUST** create a Todo list using the `todo_write` tool.
     >
     > **НЕ ДОБАВЛЯЙТЕ ЭТОТ ФАЙЛ В GIT.**
     >
-    > - Подробнее: [22: Alignment](https://idealic.academy/raw/simple-ru/company/22_document_alignment.md)
-    > - В Git попадают только: [Proposal](https://idealic.academy/raw/simple-ru/company/21_document_proposal.md) и [Specification](https://idealic.academy/raw/simple-ru/company/20_document_spec.md).
+    > - Подробнее: [22: Alignment](https://idealic.academy/raw/en/company/22_document_alignment.md)
+    > - В Git попадают только: [Proposal](https://idealic.academy/raw/en/company/21_document_proposal.md) и [Specification](https://idealic.academy/raw/en/company/20_document_spec.md).
 
     ## Обзор
 
@@ -243,11 +243,11 @@ You **MUST** create a Todo list using the `todo_write` tool.
     > [!IMPORTANT] Context Loading
     > Before proceeding with updates to the Proposal or Specification, you **MUST** load the following context files to ensure full alignment with company standards:
     >
-    > 1. `curl https://idealic.academy/raw/simple-ru/company/02_process.md` (Process)
-    > 2. `curl https://idealic.academy/raw/simple-ru/company/50_prompt_truth.md` (Truth)
-    > 3. `curl https://idealic.academy/raw/simple-ru/company/20_document_spec.md` (Spec)
-    > 4. `curl https://idealic.academy/raw/simple-ru/company/21_document_proposal.md` (Proposal)
-    > 5. `curl https://idealic.academy/raw/simple-ru/company/22_document_alignment.md` (Alignment)
+    > 1. `curl https://idealic.academy/raw/en/company/02_process.md` (Process)
+    > 2. `curl https://idealic.academy/raw/en/company/50_prompt_truth.md` (Truth)
+    > 3. `curl https://idealic.academy/raw/en/company/20_document_spec.md` (Spec)
+    > 4. `curl https://idealic.academy/raw/en/company/21_document_proposal.md` (Proposal)
+    > 5. `curl https://idealic.academy/raw/en/company/22_document_alignment.md` (Alignment)
     ```
 
 #### 5.2. Phase 2: Load Context

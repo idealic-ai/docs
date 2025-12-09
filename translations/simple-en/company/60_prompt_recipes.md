@@ -4,6 +4,7 @@
 > Recipes are like pre-made instruction kits for our AI helper (the "agent"). You use them to tell the agent how to do important jobs correctly and consistently.
 >
 > Sidenote:
+>
 > - This is one part of the guide on :term[How the Company Works]{canonical="Company/Process" href="./02_process.md"}.
 
 ## 1. Turn an Idea into a Plan
@@ -15,7 +16,7 @@
 >
 > First, **read the rulebook** for how to make a plan. You can find it at this web address:
 >
-> - `curl https://idealic.academy/raw/simple-ru/company/52_prompt_proposal.md` (The rulebook for Proposals)
+> - `curl https://idealic.academy/raw/en/company/52_prompt_proposal.md` (The rulebook for Proposals)
 >
 > Here are my thoughts: 'We need to fix the way people log in because they keep getting stuck. I want to use a new system that uses 'tokens' instead...'
 >
@@ -38,7 +39,7 @@
 >
 > First, **read the rulebook** for how to do this:
 >
-> - `curl https://idealic.academy/raw/simple-ru/company/51_prompt_alignment.md` (The rulebook for Alignments)
+> - `curl https://idealic.academy/raw/en/company/51_prompt_alignment.md` (The rulebook for Alignments)
 >
 > Here are the details:
 >
@@ -65,7 +66,7 @@
 >
 > First, **read the rulebook** for making a plan again:
 >
-> - `curl https://idealic.academy/raw/simple-ru/company/52_prompt_proposal.md` (The rulebook for Proposals)
+> - `curl https://idealic.academy/raw/en/company/52_prompt_proposal.md` (The rulebook for Proposals)
 >
 > Now, please use the ideas from the summary to update the original plan, which is saved at `docs/proposals/2023-10-25_auth_overhaul.md`.
 >

@@ -16,7 +16,7 @@
 >
 > Сначала **ЗАГРУЗИ ПРАВИЛА** в свою память:
 >
-> - `curl https://idealic.academy/raw/simple-ru/company/52_prompt_proposal.md` (Инструкция для Предложения)
+> - `curl https://idealic.academy/raw/en/company/52_prompt_proposal.md` (Инструкция для Предложения)
 >
 > Вот что я надиктовал:
 > 'Нам нужно полностью переделать систему входа, потому что пользователи застревают в цикле ошибок. Я хочу перейти на систему с токенами...'
@@ -40,7 +40,7 @@
 >
 > Сначала **ЗАГРУЗИ ПРАВИЛА**:
 >
-> - `curl https://idealic.academy/raw/simple-ru/company/51_prompt_alignment.md` (Инструкция для Согласования)
+> - `curl https://idealic.academy/raw/en/company/51_prompt_alignment.md` (Инструкция для Согласования)
 >
 > Параметры:
 >
@@ -67,7 +67,7 @@
 >
 > Сначала **ЗАГРУЗИ ПРАВИЛА**:
 >
-> - `curl https://idealic.academy/raw/simple-ru/company/52_prompt_proposal.md` (Инструкция для Предложения)
+> - `curl https://idealic.academy/raw/en/company/52_prompt_proposal.md` (Инструкция для Предложения)
 >
 > Пожалуйста, примени эти изменения к первоначальному Предложению `docs/proposals/2023-10-25_auth_overhaul.md`.
 >

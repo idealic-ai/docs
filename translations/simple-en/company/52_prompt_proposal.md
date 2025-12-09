@@ -4,6 +4,7 @@
 > A smart helper that takes messy notes (like voice recordings or chat messages) and organizes them into a clear, official plan called a Proposal.
 >
 > Sidenote:
+>
 > - See: :term[21: Company/Proposal]{href="./21_document_proposal.md"} to learn what a Proposal is.
 > - Its Purpose: To turn a stream of thoughts into a clear plan.
 
@@ -15,15 +16,15 @@
 2.  **Make the Voice Clear:** Keep a little of the author's personality, but your main job is to make it **clear** and **confident**. Read [50: Instruction/Truth](./50_prompt_truth.md) to understand this. Remove filler words, guessing, and emotional complaining.
 3.  **Use the Right Words:** Use words that fit the topic. For example, if it's about **Design**, talk about the "user's experience." If it's about **Code**, talk about the "plan for how it works." If it's about **Business**, talk about "what we gain."
 4.  **Say What You're NOT Doing:** You have to explain what goals are **outside** the plan. This is just as important as saying what's inside the plan.
-5.  **Show Other Options:** In the "Options" section, don't just show the path you picked. You must also show the paths you decided *not* to take and explain *why*.
+5.  **Show Other Options:** In the "Options" section, don't just show the path you picked. You must also show the paths you decided _not_ to take and explain _why_.
 6.  **No Code Allowed:** A proposal is for the **Big Idea** and the **Vision**. Do not include any actual code. If you need to explain technical parts, use simple diagrams or sketches instead.
 
 ## Instructions for the AI Helper
 
 **RULE:** You are only allowed to ask for information from the following web addresses:
 
-1.  **HTTP GET** using curl to `https://idealic.academy/raw/simple-ru/company/02_process.md`
-2.  **HTTP GET** using curl to `https://idealic.academy/raw/simple-ru/company/50_prompt_truth.md`
+1.  **HTTP GET** using curl to `https://idealic.academy/raw/en/company/02_process.md`
+2.  **HTTP GET** using curl to `https://idealic.academy/raw/en/company/50_prompt_truth.md`
 
 **Step 1: Get the Rulebooks First (You Must Do This)**
 You **MUST** get these documents to understand the company's rules and writing style before you start making the proposal.
@@ -33,24 +34,24 @@ You **MUST** get these documents to understand the company's rules and writing s
 
 ```bash
 # 1. Read about our process and writing style (the foundation)
-curl https://idealic.academy/raw/simple-ru/company/02_process.md
+curl https://idealic.academy/raw/en/company/02_process.md
 ```
 
 ```bash
-curl https://idealic.academy/raw/simple-ru/company/50_prompt_truth.md
+curl https://idealic.academy/raw/en/company/50_prompt_truth.md
 ```
 
 ```bash
 # 2. Read about our different document types (the context)
-curl https://idealic.academy/raw/simple-ru/company/20_document_spec.md
+curl https://idealic.academy/raw/en/company/20_document_spec.md
 ```
 
 ```bash
-curl https://idealic.academy/raw/simple-ru/company/21_document_proposal.md
+curl https://idealic.academy/raw/en/company/21_document_proposal.md
 ```
 
 ```bash
-curl https://idealic.academy/raw/simple-ru/company/22_document_alignment.md
+curl https://idealic.academy/raw/en/company/22_document_alignment.md
 ```
 
 ### 1. Understanding the User's Notes
@@ -186,7 +187,7 @@ The [Team Feedback Document](./22_document_alignment.md) is a temporary summary 
 - **When an Idea Was Rejected:**
   - If the team said no to the author's original idea:
     1.  Don't delete it! Move the original idea from the **Solution** section to the **Options We Considered (and rejected)** section.
-    2.  Write the *new* idea that the team agreed on in the **Solution** section.
+    2.  Write the _new_ idea that the team agreed on in the **Solution** section.
     3.  Add the team's reason for rejecting the old idea.
 - **When New Rules Were Added:**
   - If the team added a new requirement (like, "This must work on phones"), add it to the **Problem** or **Scope** sections.

@@ -4,6 +4,7 @@
 > Коллекция готовых шаблонов :term[промптов]{canonical="prompt"} для управления :term[Процессом Компании]{canonical="Company Process"}. Используйте их, чтобы давать инструкции :term[агенту]{canonical="agent"}.
 >
 > Sidenote:
+>
 > - Часть: :term[02: Компания/Процесс]{canonical="Company/Process" href="./02_process.md"}
 
 ## 1. Создать Предложение
@@ -15,7 +16,7 @@
 >
 > Сначала **ЗАГРУЗИ ПРАВИЛА** в свой контекст:
 >
-> - `curl https://idealic.academy/raw/simple-ru/company/52_prompt_proposal.md` (Промпт для Предложения)
+> - `curl https://idealic.academy/raw/en/company/52_prompt_proposal.md` (Промпт для Предложения)
 >
 > Вот моя диктовка:
 > 'Нам нужно переработать систему аутентификации, потому что пользователи застревают в цикле. Я хочу перейти на подход с использованием токенов...'
@@ -39,7 +40,7 @@
 >
 > Сначала **ЗАГРУЗИ ПРАВИЛА**:
 >
-> - `curl https://idealic.academy/raw/simple-ru/company/51_prompt_alignment.md` (Промпт для Согласования)
+> - `curl https://idealic.academy/raw/en/company/51_prompt_alignment.md` (Промпт для Согласования)
 >
 > Параметры:
 >
@@ -66,7 +67,7 @@
 >
 > Сначала **ЗАГРУЗИ ПРАВИЛА**:
 >
-> - `curl https://idealic.academy/raw/simple-ru/company/52_prompt_proposal.md` (Промпт для Предложения)
+> - `curl https://idealic.academy/raw/en/company/52_prompt_proposal.md` (Промпт для Предложения)
 >
 > Пожалуйста, примени эти изменения к исходному :term[Предложению]{canonical="Proposal"} `docs/proposals/2023-10-25_auth_overhaul.md`.
 >

@@ -16,7 +16,7 @@
 >
 > First, **LOAD THE RULES** into your context:
 >
-> - `curl https://idealic.academy/raw/simple-ru/company/52_prompt_proposal.md` (Proposal Prompt)
+> - `curl https://idealic.academy/raw/en/company/52_prompt_proposal.md` (Proposal Prompt)
 >
 > Here is my dictation:
 > 'We need to overhaul the authentication system because users are getting stuck in a loop. I want to switch to a token-based approach...'
@@ -40,7 +40,7 @@
 >
 > First, **LOAD THE RULES**:
 >
-> - `curl https://idealic.academy/raw/simple-ru/company/51_prompt_alignment.md` (Alignment Prompt)
+> - `curl https://idealic.academy/raw/en/company/51_prompt_alignment.md` (Alignment Prompt)
 >
 > Parameters:
 >
@@ -67,7 +67,7 @@
 >
 > First, **LOAD THE RULES**:
 >
-> - `curl https://idealic.academy/raw/simple-ru/company/52_prompt_proposal.md` (Proposal Prompt)
+> - `curl https://idealic.academy/raw/en/company/52_prompt_proposal.md` (Proposal Prompt)
 >
 > Please apply these changes to the original Proposal `docs/proposals/2023-10-25_auth_overhaul.md`.
 >

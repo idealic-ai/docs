@@ -4,6 +4,7 @@
 > Структурный движок, который синтезирует сырой контекст (диктовку, заметки, чаты) в строгий Документ Предложения (RFC).
 >
 > Sidenote:
+>
 > - См. определение в :term[21: Компания/Предложение]{href="./21_document_proposal.md"}.
 > - Цель: Превращает «поток сознания» в «стратегию».
 
@@ -22,8 +23,8 @@
 
 **ОГРАНИЧЕНИЕ:** Вам разрешено делать ТОЛЬКО следующие внешние :term[запросы]{canonical="Request"}:
 
-1.  **HTTP GET** через curl на `https://idealic.academy/raw/simple-ru/company/02_process.md`
-2.  **HTTP GET** через curl на `https://idealic.academy/raw/simple-ru/company/50_prompt_truth.md`
+1.  **HTTP GET** через curl на `https://idealic.academy/raw/en/company/02_process.md`
+2.  **HTTP GET** через curl на `https://idealic.academy/raw/en/company/50_prompt_truth.md`
 
 **Шаг 1: Загрузите необходимые документы (обязательно)**
 Вы **ДОЛЖНЫ** загрузить эти документы, чтобы понять Процесс Компании и Стандарты Написания перед созданием :term[Предложения]{canonical="Proposal"}.
@@ -33,24 +34,24 @@
 
 ```bash
 # 1. Процесс и Истина (Основа)
-curl https://idealic.academy/raw/simple-ru/company/02_process.md
+curl https://idealic.academy/raw/en/company/02_process.md
 ```
 
 ```bash
-curl https://idealic.academy/raw/simple-ru/company/50_prompt_truth.md
+curl https://idealic.academy/raw/en/company/50_prompt_truth.md
 ```
 
 ```bash
 # 2. Определения артефактов (Контекст)
-curl https://idealic.academy/raw/simple-ru/company/20_document_spec.md
+curl https://idealic.academy/raw/en/company/20_document_spec.md
 ```
 
 ```bash
-curl https://idealic.academy/raw/simple-ru/company/21_document_proposal.md
+curl https://idealic.academy/raw/en/company/21_document_proposal.md
 ```
 
 ```bash
-curl https://idealic.academy/raw/simple-ru/company/22_document_alignment.md
+curl https://idealic.academy/raw/en/company/22_document_alignment.md
 ```
 
 ### 1. Анализ входных данных

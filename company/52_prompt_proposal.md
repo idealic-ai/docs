@@ -23,8 +23,8 @@
 
 **RESTRICTION:** You are permitted to make ONLY the following external requests:
 
-1.  **HTTP GET** via curl to `https://idealic.academy/raw/simple-ru/company/02_process.md`
-2.  **HTTP GET** via curl to `https://idealic.academy/raw/simple-ru/company/50_prompt_truth.md`
+1.  **HTTP GET** via curl to `https://idealic.academy/raw/en/company/02_process.md`
+2.  **HTTP GET** via curl to `https://idealic.academy/raw/en/company/50_prompt_truth.md`
 
 **Step 1: Fetch Prerequisite Docs (Mandatory)**
 You **MUST** fetch these documents to understand the Company Process and Writing Standards before generating the Proposal.
@@ -34,24 +34,24 @@ You **MUST** fetch these documents to understand the Company Process and Writing
 
 ```bash
 # 1. Process & Truth (The Foundation)
-curl https://idealic.academy/raw/simple-ru/company/02_process.md
+curl https://idealic.academy/raw/en/company/02_process.md
 ```
 
 ```bash
-curl https://idealic.academy/raw/simple-ru/company/50_prompt_truth.md
+curl https://idealic.academy/raw/en/company/50_prompt_truth.md
 ```
 
 ```bash
 # 2. Artifact Definitions (The Context)
-curl https://idealic.academy/raw/simple-ru/company/20_document_spec.md
+curl https://idealic.academy/raw/en/company/20_document_spec.md
 ```
 
 ```bash
-curl https://idealic.academy/raw/simple-ru/company/21_document_proposal.md
+curl https://idealic.academy/raw/en/company/21_document_proposal.md
 ```
 
 ```bash
-curl https://idealic.academy/raw/simple-ru/company/22_document_alignment.md
+curl https://idealic.academy/raw/en/company/22_document_alignment.md
 ```
 
 ### 1. Input Analysis
