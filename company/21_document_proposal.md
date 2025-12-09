@@ -87,8 +87,11 @@ Alternatives that were rejected, and _why_.
 1.  **Draft:** Created by an author via Dictation or AI Prompt.
 2.  **PR:** Submitted as a Pull Request.
 3.  **Discussion:** Debated by the team.
-4.  **Refinement:** Updated based on context from :term[22: Company/Alignment]{href="./22_document_alignment.md"}.
-5.  **Obsolescence:** Preserved as history, but superseded by the Specification.
+4.  **Consensus:** :term[Alignment Document]{href="./22_document_alignment.md"} generated and verified.
+5.  **Patching:** The Proposal is updated to match the Alignment (Consensus).
+6.  **Freeze:** The Proposal is marked "Accepted" and becomes immutable.
+7.  **Execution:** The Proposal drives updates to the Specification.
+8.  **Archive:** Preserved as history.
 
 ## 5. Characteristics
 

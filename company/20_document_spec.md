@@ -31,7 +31,18 @@ Why do we maintain this document?
 2.  **Expansion through Review:** The specification is never "finished," only "current." As we review it, we identify blind spots. Addressing these expands the document's scope to achieve the clarity required for execution.
 3.  **Source of Truth:** If there is a conflict between the code and the Specification, the Document is correct, and the code is a bug (or the Document needs an update via the Proposal process).
 
-## 4. Characteristics
+## 4. Domain Mapping
+
+The "System" is not always code. The Specification adapts to the domain:
+
+| Domain           | Specification (The Truth)   | Artifact (The Output)       |
+| :--------------- | :-------------------------- | :-------------------------- |
+| **Engineering**  | Architecture Doc / API Spec | Typescript Code / DB Schema |
+| **Presentation** | Narrative Outline / Script  | Slides / Figma              |
+| **Process**      | Policy Document             | The Team's Actions          |
+| **Design**       | User Flow / Wireframe       | UI Components               |
+
+## 5. Characteristics
 
 - **Timeframe:** Weeks to create, continuous updates.
 - **Rounds:** Multiple iterations and refinements.

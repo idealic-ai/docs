@@ -98,9 +98,10 @@ sequenceDiagram
 2.  **Discuss:** The team reviews the Proposal via a Pull Request. Comments, questions, and debates occur here.
 3.  **Synthesize Alignment:** We use AI to generate an :term[Alignment Document]{href="./22_document_alignment.md"} from the discussion. This converts "comments" into "requirements."
 4.  **Review & Regenerate:** The author reviews the Alignment Document. If it is inaccurate, **do not edit it**. Add clarifying comments to the PR and regenerate the document until it passes the "Test of Understanding."
-5.  **Update Specification:** Once aligned, we update the :term[Specification]{href="./20*document_spec.md"} to reflect the new design \_before* writing code. This is a creative step where the "What" becomes the "How".
-6.  **Ticketize:** We create **Jira Tickets** based on the updated Specification.
-7.  **Create Artifact:** We build the final output (Code, Presentation, etc.).
+5.  **Patch Proposal:** The author applies the :term[Alignment]{href="./22_document_alignment.md"} back to the :term[Proposal]{href="./21_document_proposal.md"}. This ensures the Proposal captures the **final agreed intent**, not just the initial idea. The Proposal is then "Frozen."
+6.  **Update Specification:** Using the frozen Proposal as the guide, we update the :term[Specification]{href="./20*document_spec.md"} to reflect the new design \_before* writing code. This is a creative step where the "What" becomes the "How".
+7.  **Ticketize:** We create **Jira Tickets** based on the **Intents** outlined in the :term[Proposal]{href="./21_document_proposal.md"} and the new state of the :term[Specification]{href="./20_document_spec.md"}.
+8.  **Create Artifact:** We build the final output (Code, Presentation, etc.).
 
 > [!NOTE] Not Bureaucracy, But Clarity
 > This process is not about restriction; it is about preservation.
@@ -115,8 +116,13 @@ sequenceDiagram
 > [!NOTE] Creative Freedom & Implementation Plans
 > During the **Execute** phase, the engineer/LLM may generate an internal **Implementation Plan** (step-by-step technical instructions). This is a personal artifact used to bridge the gap between the Proposal and the Code. It does **not** require team review. As long as the outcome matches the agreed Proposal, the "how" is left to the creator's discretion.
 
-> [!WARNING] Handling Deviations
-> If, during execution, you discover a flaw in the plan or a need to deviate from the agreed approach, you **MUST** loop back. Update the Proposal or create a new one. Do not silently diverge from the consensus.
+> [!WARNING] Handling Deviations (The Micro-Cycle)
+> If, during execution, you discover a flaw in the plan or a need to deviate from the agreed approach (e.g., "I need 5 more slides," "This architecture won't work"), you **MUST** loop back.
+>
+> - **Pending PR:** If the PR is still open, update the existing Proposal and request re-review.
+> - **Closed PR / Execution:** If execution has begun, **do not reopen the Proposal**. Create a new Micro-Proposal for the specific addition.
+>
+> **Do not silently diverge from the consensus.** Unapproved deviations corrupt the Source of Truth.
 
 ## 4. The Ritual of Synchronization
 
