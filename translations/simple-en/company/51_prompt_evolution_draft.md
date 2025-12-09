@@ -4,6 +4,7 @@
 > Think of this as a quick, temporary sketch of a plan. It’s used to make sure everyone agrees on changes and understands why they’re happening before the official plan is updated. It catches new ideas right after they're discussed.
 >
 > Sidenote:
+>
 > - See the :term[02: Company/Process]{href="./02_process.md"} document to understand the full process.
 
 ## Purpose
@@ -28,7 +29,7 @@ When a user asks you to create an Evolution Draft, you **MUST** get a link to th
 **RULE:** You are only allowed to get information from these three places:
 
 1.  **HTTP GET** to `https://idealic.academy/en/company/02_process.md/`
-2.  **HTTP GET** to `https://idealic.academy/en/company/00_truth.md/`
+2.  **HTTP GET** to `https://idealic.academy/en/company/50_prompt_truth.md/`
 3.  **A GitHub API call** to get comments (using the command below).
 
 You are **NOT** allowed to look at any other files, commit histories, or code changes.
@@ -37,7 +38,7 @@ You are **NOT** allowed to look at any other files, commit histories, or code ch
 You **MUST** use a tool to download the content from these exact web addresses. **Do NOT search the web for them.**
 
 - [02: Company/Process](https://idealic.academy/en/company/02_process.md/)
-- [50: Prompt/Truth](https://idealic.academy/en/company/00_truth.md/)
+- [50: Prompt/Truth](https://idealic.academy/en/company/50_prompt_truth.md/)
 
 **Step 2: Get the Comments (Using a Single Command)**
 Run this exact command. You'll need to replace `{PR_NUMBER}` with the project number (like 123) and `{SINCE_DATE}` with the date (like 2025-01-01). This command is specially designed to grab up to 200 comments at once and group them into conversation threads. It’s important not to change it.
@@ -53,7 +54,7 @@ gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}/comments?since={SINCE_DATE}&per_p
 **First:** You need to read and understand the rules in these two documents:
 
 - :term[02: Company/Process]{href="https://idealic.academy/en/company/02_process.md/"} (This explains the purpose of an Evolution Draft.)
-- :term[50: Prompt/Truth]{href="https://idealic.academy/en/company/00_truth.md/"} (This explains how to write clearly and directly.)
+- :term[50: Prompt/Truth]{href="https://idealic.academy/en/company/50_prompt_truth.md/"} (This explains how to write clearly and directly.)
 
 **Rule:** The final report you create must be in **Russian**. (You can keep common English words like "yeah" or "ok," or technical terms.)
 
@@ -69,11 +70,11 @@ Read through the file of comments you downloaded. Your goal is to cover **everyt
 **For each conversation, figure out:**
 
 1.  **Intent:** What does the person really want?
-2.  **Explanation:** *Why* do they want this change? What's the bigger reason? Use the whole discussion to figure this out and give context.
+2.  **Explanation:** _Why_ do they want this change? What's the bigger reason? Use the whole discussion to figure this out and give context.
 3.  **Action:** What needs to be done now?
 4.  **Vision Impact:** Did this change the project's main goal or long-term plan?
 5.  **Agreement Status:** Did people agree? Or was there a misunderstanding?
-    -   If the original author **never replied** to a comment, mark it as: "Needs acknowledgement."
+    - If the original author **never replied** to a comment, mark it as: "Needs acknowledgement."
 6.  **Context:** Show your proof. Include short quotes from the conversation and the piece of code they were talking about.
 
 ### 4. Double-Checking Your Work
@@ -84,8 +85,8 @@ Read through the file of comments you downloaded. Your goal is to cover **everyt
 2.  Compare it against the original `comments_{DATE}.json` file.
 3.  **Check Every Comment:** Make sure every conversation thread from the original file is mentioned in your summary.
 4.  **Check Your References:** Make sure every point in your summary (like "Intent #3") actually exists. If you mention it in your final checklist, the section has to be in the report.
-    -   **Fix it:** If you find a reference to a point that you forgot to write about, you **MUST** go back and add the missing section. Don't just delete the reference from the checklist; write the summary for it.
-5.  **Ask yourself:** "Did I miss *any* conversation thread?"
+    - **Fix it:** If you find a reference to a point that you forgot to write about, you **MUST** go back and add the missing section. Don't just delete the reference from the checklist; write the summary for it.
+5.  **Ask yourself:** "Did I miss _any_ conversation thread?"
 6.  If the answer is yes, add it right away.
 
 ### 5. Creating the Document
@@ -119,7 +120,7 @@ Create a new file, for example: `evolution_{DATE}.md`.
 ### {N}. {A Short Title in Russian}
 
 - **Intent:** {What do we want to do?}
-- **Reasoning:** {Explain *why* this change is needed, based on the conversation.}
+- **Reasoning:** {Explain _why_ this change is needed, based on the conversation.}
 - **Action:** {What are the exact steps to take?}
 - **Status:** {Agreed / Misunderstanding / Needs More Info / Vision Change / Needs Acknowledgement}
 - **Old Understanding (if it changed):** {Briefly describe the old plan if it's different now.}
@@ -140,8 +141,8 @@ Create a new file, for example: `evolution_{DATE}.md`.
 
 ## Validation Report
 
-| Comment ID    | Title (Summary) | Intent # | Status          |
-| ------------- | --------------- | -------- | --------------- |
+| Comment ID    | Title (Summary)    | Intent # | Status          |
+| ------------- | ------------------ | -------- | --------------- |
 | [{ID}]({URL}) | {3-6 word summary} | {N}      | Included        |
 | [{ID}]({URL}) | {3-6 word summary} | -        | Skipped (Noise) |
 ````

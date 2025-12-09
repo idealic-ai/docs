@@ -42,8 +42,9 @@ When the user requests an Evolution Draft, you **MUST** first resolve the input 
     },
     "repo": {
       "type": "string",
-      "description": "Repository name. Defaults to current repo if not provided.",
-      "default": "{CURRENT_REPO}"
+      "description": "Repository name/org combination. Defaults to current repo if not provided.",
+      "default": "{CURRENT_REPO}",
+      "example": "idealic-ai/platform"
     },
     "pr_number": {
       "type": "integer",
@@ -93,6 +94,8 @@ Do **NOT** fetch other file contents, commits, or diffs separately.
 **Step 1: Fetch Prerequisite Docs (Mandatory)**
 You **MUST** use an HTTP tool to fetch the content directly from the URLs below. **Do NOT search on the web.** Fetch the specific URLs.
 
+**CRITICAL:** Process each document separately. Fetch one, read it into context, then fetch the next. Do NOT fetch all at once or combine outputs to avoid truncation.
+
 - [02: Company/Process](https://idealic.academy/raw/en/company/02_process.md)
 - [50: Prompt/Truth](https://idealic.academy/raw/en/company/50_prompt_truth.md)
 
@@ -108,7 +111,7 @@ gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}" --jq '{author: .user.login, titl
 1.  **Fetch to File:** Execute this exact command to save comments to `{OUTPUT_DIR}/{DATE}.json`. Replace `{PR_NUMBER}`, `{SINCE_DATE}`, and `{DATE}`.
 
     ```bash
-    gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}/comments?since={SINCE_DATE}&per_page=200" --paginate --jq 'map({id, body, user: .user.login, created_at, html_url, diff_hunk: (.diff_hunk | if length > 200 then .[:200] + "..." else . end), in_reply_to_id}) | sort_by(.created_at) | to_entries | map({index: ("§" + (.key + 1 | tostring)), comment: .value}) | map(.comment + {index: .index}) | group_by(.in_reply_to_id // .id) | map(.[0] as $root | [$root] + (.[1:] | map(del(.diff_hunk))))' | jq '.' > {OUTPUT_DIR}/{DATE}.json
+    gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}/comments?since={SINCE_DATE}&per_page=200" --paginate --jq 'map({id, body, user: .user.login, created_at, html_url, diff_hunk: (.diff_hunk | if length > 200 then .[:200] + "..." else . end), in_reply_to_id, reactions}) | sort_by(.created_at) | to_entries | map({index: ("§" + (.key + 1 | tostring)), comment: .value}) | map(.comment + {index: .index}) | group_by(.in_reply_to_id // .id) | map(.[0] as $root | [$root] + (.[1:] | map(del(.diff_hunk))))' | jq '.' > {OUTPUT_DIR}/{DATE}.json
     ```
 
 2.  **Read into Context:** Use standard agent tools to read `{OUTPUT_DIR}/{DATE}.json`.
@@ -152,7 +155,7 @@ Before starting the analysis, you **MUST** create a Todo list using the `todo_wr
 **Method: Intelligent Synthesis ("LLM Magic")**
 
 - :term[02: Company/Process]{href="https://idealic.academy/en/company/02_process.md/"} (Understanding the role of Evolution Documents)
-- :term[50: Prompt/Truth]{href="https://idealic.academy/en/company/00_truth.md/"} (Writing standards: assertiveness, precision, no fluff)
+- :term[50: Prompt/Truth]{href="https://idealic.academy/en/company/50_prompt_truth.md/"} (Writing standards: assertiveness, precision, no fluff)
 
 **Constraint:** The output document must be in **Russian**. (Exceptions: colloquialisms like "yeah", "ok" or technical terms).
 
@@ -197,21 +200,9 @@ You must generate the document by **systematically replacing placeholders** in a
 
     {{INTENTS_PLACEHOLDER}}
 
-    ---
-
-    ## Открытые вопросы и Риски (если есть)
-
     {{QUESTIONS_PLACEHOLDER}}
 
-    ---
-
-    ## Отчет о покрытии
-
     {{COVERAGE_PLACEHOLDER}}
-
-    ---
-
-    ## Мнение и Рекомендации AI
 
     {{OPINION_PLACEHOLDER}}
     ```
@@ -276,6 +267,7 @@ If you are tempted to write a Title or Intent that contains "AND" or commas to l
 1.  **Generate & Apply:**
     - Analyze threads and formulate the list of intents.
     - **Split Rule:** Apply the "AND" Rule rigorously. Better to have 20 small intents than 5 large ones.
+    - **Atomicity (Critical):** One Intent = One Distinct Technical Change. **NEVER** bundle unrelated changes (e.g., "Optimization flags" AND "Deployment steps") into one item, even if they were discussed in the same thread. Split them into separate intents (e.g., "CI/CD Parallel Flags" and "Deployment Step Refactoring").
     - **Immediately** call `search_replace` to swap `{{INTENTS_PLACEHOLDER}}` with the full markdown list.
     - **Do NOT** output the text to chat first.
 
@@ -299,19 +291,30 @@ If you are tempted to write a Title or Intent that contains "AND" or commas to l
     - **Статус:** {Согласовано / Недопонимание / Требует уточнения / ...}
     - **Прежнее понимание (если применимо):** {Brief description if changed}
     - **Результат:** {Briefly: Was vision changed? Agreement reached?}
-    - **Дискуссия:**
-      > [{Reviewer Name}]({Link}): "{Short rephrased concern}"
-      >
-      > [{Author Name}]({Link}): "{Short rephrased resolution}"
-    - **Контекст**
-      ```{lang}
-      {1-3 lines max of diff hunk code}
-      ```
+
+    > [{Reviewer Name}]({Link}): "{Short rephrased concern}"
+    >
+    > [{Author Name}]({Link}): "{Short rephrased resolution}"
+
+    ```{lang}
+    {1-3 lines max of diff hunk code}
+    ```
     ````
 
 2.  **Generate & Apply (Questions):**
     - Formulate open questions (if any).
-    - **Immediately** call `search_replace` to swap `{{QUESTIONS_PLACEHOLDER}}` (or remove it if empty).
+    - If there are questions, format them with the heading:
+
+      ```markdown
+      ---
+      ## Открытые вопросы и Риски
+      ...
+
+      questions...
+      ```
+
+    - If there are NO questions, return an empty string.
+    - **Immediately** call `search_replace` to swap `{{QUESTIONS_PLACEHOLDER}}`.
 
 3.  Stop and say: "**Phase 3 Complete: Intents and Questions inserted.**"
 
@@ -340,23 +343,40 @@ If you are tempted to write a Title or Intent that contains "AND" or commas to l
 
     **Content Template:**
 
+    Create a **SINGLE** table. Group comments by Date. Insert a "Header Row" for each new date. Precede the table with the section heading:
+
     ```markdown
-    | Index | User   | Comment ID    | Title (Summary) | Intent/Reason |
-    | ----- | ------ | ------------- | --------------- | ------------- |
-    | {Idx} | {User} | [{ID}]({URL}) | {3-6 words}     | #{N}          |
-    | {Idx} | {User} | [{ID}]({URL}) | {3-6 words}     | #{M},#{N}     |
-    | {Idx} | {User} | [{ID}]({URL}) | {3-6 words}     | Skipped       |
-    | {Idx} | {User} | [{ID}]({URL}) | {3-6 words}     | Noise         |
-    | {Idx} | {User} | [{ID}]({URL}) | {3-6 words}     | Ack           |
-    | {Idx} | {User} | [{ID}]({URL}) | {3-6 words}     | Wontfix       |
-    | {Idx} | {User} | [{ID}]({URL}) | {3-6 words}     | Discussion    |
-    | {Idx} | {User} | [{ID}]({URL}) | {3-6 words}     | Question      |
+    ---
+
+    ## Отчет о покрытии
+
+    | Index          | Time           | User   | Title (Summary) | Intent     | Reaction |
+    | -------------- | -------------- | ------ | --------------- | ---------- | -------- |
+    |                | **{Date}**     |        |                 |            |          |
+    | [{Idx}]({URL}) | {Time}         | {User} | {3-6 words}     | #{N}       | {Emojis} |
+    | [{Idx}]({URL}) | {Time}         | {User} | {3-6 words}     | #{M},#{N}  | {Emojis} |
+    |                | **{NextDate}** |        |                 |            |          |
+    | [{Idx}]({URL}) | {Time}         | {User} | {3-6 words}     | Skipped    | {Emojis} |
+    | [{Idx}]({URL}) | {Time}         | {User} | {3-6 words}     | Noise      | {Emojis} |
+    | [{Idx}]({URL}) | {Time}         | {User} | {3-6 words}     | Ack        | {Emojis} |
+    | [{Idx}]({URL}) | {Time}         | {User} | {3-6 words}     | Wontfix    | {Emojis} |
+    | [{Idx}]({URL}) | {Time}         | {User} | {3-6 words}     | Discussion | {Emojis} |
+    | [{Idx}]({URL}) | {Time}         | {User} | {3-6 words}     | Question   | {Emojis} |
     ```
 
     **Rules:**
     1.  Use `index` (e.g. `§1`) from JSON.
-    2.  Include **ALL** comments.
-    3.  **Monotonic Order:** Sorted by Index with NO GAPS.
+    2.  Extract `Time` (HH:MM) from `created_at`.
+    3.  **Date Headers:** Insert a row `| | **MMM DD** | | | | | |` when the date changes (e.g. `Dec 02`).
+    4.  **Reactions:** Combine real reactions + Status Indicators (EMOJIS ONLY):
+        - Start with existing `reactions` (convert `+1`=👍, `heart`=❤️, etc.).
+        - **Status Indicators (If NO 👍 present):**
+          - Add ❓ if a question was never answered.
+          - Add ⚠️ if the comment contains important instructions/warnings.
+          - Add 🚧 if the comment requested an action that is PENDING.
+        - **CONSTRAINT:** This column must contain **ONLY EMOJIS**. No text.
+    5.  Include **ALL** comments.
+    6.  **Monotonic Order:** Sorted by Index with NO GAPS.
 
 2.  Stop and say: "**Phase 4 Complete: Coverage table inserted.**"
 
@@ -370,6 +390,16 @@ Reflect on the generated content and the original discussion.
 
 1.  **Generate & Apply:**
     - Synthesize your opinion and assessment.
+    - Format with the heading:
+
+      ```markdown
+      ---
+      ## Мнение и Рекомендации AI
+      ...
+
+      content...
+      ```
+
     - **Immediately** call `search_replace` to swap `{{OPINION_PLACEHOLDER}}` with the generated text.
 
     **Content Requirements:**
@@ -414,3 +444,7 @@ At the very end of your response (after generating the file), you **MUST** outpu
 - [ ] **Comments Validated**: All relevant comments mapped.
 - [ ] **Ghost References Fixed**: Verified every Intent # in table has a corresponding section. Add more intents if necessary.
 - [ ] **Technical Details Preserved**: Flags, args, types, proposed function names, and other technical details need to be preserved in text.
+
+```
+
+```

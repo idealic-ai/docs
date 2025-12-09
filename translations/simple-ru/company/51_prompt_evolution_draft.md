@@ -29,7 +29,7 @@
 **ОГРАНИЧЕНИЕ:** Тебе разрешено делать ТОЛЬКО следующие внешние запросы:
 
 1.  **HTTP GET** на адрес `https://idealic.academy/en/company/02_process.md/`
-2.  **HTTP GET** на адрес `https://idealic.academy/en/company/00_truth.md/`
+2.  **HTTP GET** на адрес `https://idealic.academy/en/company/50_prompt_truth.md/`
 3.  **Вызов API комментариев GitHub** (с помощью команды ниже)
 
 **Не загружай** другие файлы, коммиты или изменения (diffs) по отдельности.
@@ -38,7 +38,7 @@
 Ты **ОБЯЗАН** использовать HTTP-инструмент, чтобы скачать содержимое прямо по этим ссылкам. **Не ищи их в интернете.** Просто скачай по указанным URL.
 
 - [02: Компания/Процесс](https://idealic.academy/en/company/02_process.md/)
-- [50: Запрос/Истина](https://idealic.academy/en/company/00_truth.md/)
+- [50: Запрос/Истина](https://idealic.academy/en/company/50_prompt_truth.md/)
 
 **Шаг 2: Загрузи комментарии (одной командой)**
 Выполни именно эту команду. Замени `{PR_NUMBER}` (например, 123) и `{SINCE_DATE}` (например, 2025-01-01). ВАЖНО: нужно загрузить все комментарии за один раз, `per_page=200` как раз для этого. Не пытайся разбивать этот вызов на части.
@@ -75,7 +75,7 @@ gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}/comments?since={SINCE_DATE}&per_p
 **Подготовка:** Прочитай и следуй правилам, которые описаны в этих документах:
 
 - :term[02: Компания/Процесс]{href="https://idealic.academy/en/company/02_process.md/" canonical="02: Company/Process"} (Чтобы понять роль Эволюционных Документов)
-- :term[50: Запрос/Истина]{href="https://idealic.academy/en/company/00_truth.md/" canonical="50: Prompt/Truth"} (Там описаны правила написания: уверенно, точно и без «воды»)
+- :term[50: Запрос/Истина]{href="https://idealic.academy/en/company/50_prompt_truth.md/" canonical="50: Prompt/Truth"} (Там описаны правила написания: уверенно, точно и без «воды»)
 
 **Ограничение:** Итоговый документ должен быть на **русском языке**. (Исключения: простые слова вроде «yeah», «ok» или технические термины).
 

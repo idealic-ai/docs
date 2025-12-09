@@ -4,7 +4,8 @@
 > This is our team's instruction manual. It explains how we turn big ideas into real, working things by sharing the work, constantly improving our plans, and talking to each other often.
 
 > Sidenote:
-> - Goes together with: :term[00: Company/Truth]{href="./00_truth.md"}
+>
+> - Goes together with: :term[00: Company/Truth]{href="./50_prompt_truth.md"}
 
 We’re at a point where we need to move from just exploring ideas to actually building things. To do that successfully, we need a clear, organized process to follow.
 
@@ -17,7 +18,7 @@ For a small team with a huge goal, we can't afford to just figure things out as 
 
 The most important thing we do is create and take care of this master plan. It’s more than just notes; it's the blueprint for our goals. This document gives everyone on the team—and the AI we work with—the big picture and keeps us all moving in the same direction. It's made to be updated all the time, becoming clearer and more detailed as we learn more about what we're building.
 
-- **Following the Rules of Truth:** We have a strict set of rules, found in :term[00: Company/Truth]{href="./00_truth.md"}, that make sure every plan is clear, complete, and can't be misunderstood. This is essential for making our documents truly "living" and useful.
+- **Following the Rules of Truth:** We have a strict set of rules, found in :term[00: Company/Truth]{href="./50_prompt_truth.md"}, that make sure every plan is clear, complete, and can't be misunderstood. This is essential for making our documents truly "living" and useful.
 - **Getting It Right is More Important Than Being Fast:** Unlike a quick note, the master plan has to be 100% correct. It's better to leave a part of the plan blank than to write down the wrong information. Everything we build rests on this foundation.
 - **Growing Through Teamwork:** The plan is never truly "finished," it's just "up-to-date." When we review it together, we often find gaps or things we missed. Filling in those gaps makes the document grow, not to make it complicated, but to make it crystal clear so we know exactly what to build.
 - **The Map to Our Goal:** This document shows everyone where we're headed. It lets any team member understand the final goal without having to remember every single step. It's the map we all agree to use.
@@ -29,7 +30,7 @@ The most important thing we do is create and take care of this master plan. It�
 
 Because the master plan is so important, we can't just change it whenever we want. The Evolution Document is how we discuss and agree on any changes. Think of it like a quick meeting memo. We use it to make sure we all understand a problem the same way and agree on exactly how we'll fix it. It closes the gap between what we want to do and what the AI will actually build.
 
-- **Following the Rules of Truth:** Just like the master plan, this document has to follow our rules for clarity (:term[00: Company/Truth]{href="./00_truth.md"}). We have to be very direct—stating clearly what's wrong and what we're going to do about it. If we're vague, the AI might get confused and do the wrong thing.
+- **Following the Rules of Truth:** Just like the master plan, this document has to follow our rules for clarity (:term[00: Company/Truth]{href="./50_prompt_truth.md"}). We have to be very direct—stating clearly what's wrong and what we're going to do about it. If we're vague, the AI might get confused and do the wrong thing.
 - **Move Fast:** These documents need to be written quickly, usually on the same day we realize we need one. They’re not meant to be perfect works of art; they're designed for quick decisions so we can keep moving.
 - **Learning from Mistakes:** An Evolution Document is like a course correction. It clearly says: "We used to think X, but we learned Y, so now we're going to do Z." It turns our misunderstandings into a solid plan of action.
 - **Instructions for the AI:** This document is basically the instruction manual we give to the AI. It explains the exact changes we want, why we want them, and any rules it needs to follow. This makes sure the AI is working on the right problem with the right information.
@@ -40,15 +41,15 @@ Because the master plan is so important, we can't just change it whenever we wan
 > [!DEFINITION] Pull Request
 > A Pull Request (or "PR") is how we get a final "yes" on any piece of work. Whether it's a plan, a document, or code, a PR is our official way of checking our work, making sure we all agree on it, and getting final approval.
 
-A Pull Request (PR) isn't just for code; it's how we make sure we're all on the same page. It applies to everything we produce, from big ideas to tiny details. We use PRs to get everyone to sign off on the *idea* before the work begins. It’s the tool that turns one person's suggestion into the entire team's official plan.
+A Pull Request (PR) isn't just for code; it's how we make sure we're all on the same page. It applies to everything we produce, from big ideas to tiny details. We use PRs to get everyone to sign off on the _idea_ before the work begins. It’s the tool that turns one person's suggestion into the entire team's official plan.
 
 - **For More Than Just Code:** This approval process is for all our work. We use it to agree on definitions, plans, and big decisions. It’s how "my idea" officially becomes "our plan."
 - **Discussions are Important:** We have all our discussions in the comments section on GitHub. The author of the PR must read and respond to every comment. This conversation is a valuable record of how and why we made our decisions.
-- **Explain Your Thinking:** Saying "Okay" isn't enough. The author needs to explain their thought process, like, "Oh, now I understand what you meant," or "I thought we were talking about something else." This helps our AI understand *why* a change was made, not just *what* was changed.
+- **Explain Your Thinking:** Saying "Okay" isn't enough. The author needs to explain their thought process, like, "Oh, now I understand what you meant," or "I thought we were talking about something else." This helps our AI understand _why_ a change was made, not just _what_ was changed.
 - **Details Matter More Than Being Quick:** The goal of a reply is to be so clear that anyone (even an AI) can read the conversation later and understand exactly what we decided and why. If it's not written down, that knowledge is lost.
 - **Turn Talk into a Plan:** Once the discussion is over and we all agree, we use the Evolution Document process to summarize all the comments into one clear plan. This makes sure all the smart ideas from the review are saved and used.
 - **The First Draft Is Just the Beginning:** The AI might create a first draft of that plan. If it gets something wrong or misses a detail, we don't throw it away; we fix it. We improve the draft through more conversation or by editing it directly until it perfectly matches what we all agreed on.
-- **No Surprises:** By agreeing on the plan (the Evolution Document) *before* we start working, there are no surprises later. Everyone knows what's being built because we all approved it.
+- **No Surprises:** By agreeing on the plan (the Evolution Document) _before_ we start working, there are no surprises later. Everyone knows what's being built because we all approved it.
 - **We're All in This Together:** When a team member approves a PR, they accept shared responsibility for how it turns out. The author isn't on their own anymore; they're carrying out a plan the whole team agreed on.
 
 Example of a prompt for an agent to draft an evolution doc from comments:
@@ -95,5 +96,5 @@ Working with detailed documents and a strict process isn't just boring paperwork
 
 ## Summary
 
-It might feel like these rules limit our freedom, but they actually give us real progress. By being disciplined about *how* we decide things, we free ourselves up to achieve amazing *whats*. We write to get on the same page, we get on the same page to build trust, and we build trust to get things done.
+It might feel like these rules limit our freedom, but they actually give us real progress. By being disciplined about _how_ we decide things, we free ourselves up to achieve amazing _whats_. We write to get on the same page, we get on the same page to build trust, and we build trust to get things done.
 npm
