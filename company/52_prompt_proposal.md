@@ -2,7 +2,7 @@
 
 > [!DEFINITION] Proposal Generator
 > A structural engine that synthesizes raw context (dictation, notes, chats) into a rigorous Proposal Document (RFC).
-
+>
 > Sidenote:
 >
 > - See: :term[21: Company/Proposal]{href="./21_document_proposal.md"} for the definition.
@@ -29,14 +29,28 @@
 **Step 1: Fetch Prerequisite Docs (Mandatory)**
 You **MUST** fetch these documents to understand the Company Process and Writing Standards before generating the Proposal.
 
+> [!IMPORTANT] Separate Requests
+> You must fetch each document in a **separate** bash block/tool call. This prevents the output from being truncated, ensuring you receive the full context of every file.
+
 ```bash
 # 1. Process & Truth (The Foundation)
 curl https://idealic.academy/raw/simple-ru/company/02_process.md
-curl https://idealic.academy/raw/simple-ru/company/50_prompt_truth.md
+```
 
+```bash
+curl https://idealic.academy/raw/simple-ru/company/50_prompt_truth.md
+```
+
+```bash
 # 2. Artifact Definitions (The Context)
 curl https://idealic.academy/raw/simple-ru/company/20_document_spec.md
+```
+
+```bash
 curl https://idealic.academy/raw/simple-ru/company/21_document_proposal.md
+```
+
+```bash
 curl https://idealic.academy/raw/simple-ru/company/22_document_alignment.md
 ```
 
@@ -46,9 +60,24 @@ curl https://idealic.academy/raw/simple-ru/company/22_document_alignment.md
 
 ```json
 {
-  "context": "Raw text, dictation, or pasted chat logs.",
-  "author": "Name of the proposer (optional).",
-  "domain": "Hint: 'Design', 'Engineering', 'Process' (optional - auto-detect)."
+  "type": "object",
+  "properties": {
+    "context": {
+      "type": "string",
+      "description": "Raw text, dictation, or pasted chat logs containing the user's thoughts."
+    },
+    "author": {
+      "type": "string",
+      "description": "Name of the proposer (optional).",
+      "default": "User"
+    },
+    "domain": {
+      "type": "string",
+      "enum": ["Design", "Engineering", "Process", "Business"],
+      "description": "The primary domain of the proposal. If not provided, infer from context."
+    }
+  },
+  "required": ["context"]
 }
 ```
 
@@ -77,47 +106,50 @@ Generate a markdown file named `{YYYY-MM-DD}_proposal_{topic_slug}.md`.
 > Derived from raw context via [52: Prompt/Proposal](./52_prompt_proposal.md).
 ```
 
-#### Section 2: The Context (The Story)
+#### Section 2: Context (The Evolution)
 
 _Instruction: Synthesize the background. Why are we talking about this now?_
 
-- **Pattern:** "Historically, we approached {Subject} by doing {Old Way}. However, recent events/findings ({Trigger}) have revealed that {Insight}."
+- **Pattern:** "We thought X, but we learned Y, so we must do Z."
 
-#### Section 3: The Problem (The Gap)
+#### Section 3: Problem & Scope (The Contract)
 
 _Instruction: Be specific. Use bullet points._
 
-- **Constraint:** Avoid complaining. State facts.
-- **Example:** "The current implementation of X causes Y latency, which is unacceptable for Z use case."
+- **Problem:** What is broken?
+- **Scope (Negative Space):** What are we **NOT** doing?
+- **Comparison:** Current vs. Proposed table.
 
-#### Section 4: The Scope (Negative Space)
+#### Section 4: Intents (Atomic Changes)
 
-_Instruction: Define the boundaries. To prevent scope creep, explicitly list what is OUT of scope._
+_Instruction: Breakdown the solution into granular units. This is the CORE of the proposal._
 
-- **Format:**
-  - **WE ARE:** {Specific Action}
-  - **WE ARE NOT:** {Related but excluded action}
+- **Structure per Intent:**
+  - **Title**
+  - **Type** (Bug Fix/Feature/etc)
+  - **Target** (File/Module)
+  - **Rationale**
+  - **Diff/Logic** (Abstract only)
 
-#### Section 5: The Proposed Solution (The Vision)
+#### Section 5: Visual Model (Optional)
 
-_Instruction: High-level architectural or design view. Strictly NO implementation code. Focus on the "What" and "Why", not the "How"._
+_Instruction: Recommended if the flow is complex. Use Mermaid._
 
-- **Core Concept:** The "Big Idea."
-- **Mechanism:** How it works (briefly).
-- **Benefit:** What do we gain?
+#### Section 6: Usage Patterns (Optional)
 
-#### Section 6: Options (Alternatives Considered)
+_Instruction: Show how the new system is consumed (UX/DX)._
 
-_Instruction: This is critical for RFCs. List 1-2 alternatives that were (or could be) considered and why the proposed solution is superior._
+#### Section 7: Safety & Risks (Optional)
 
-- **Option A (Rejected):** {Description}
-  - _Why Rejected:_ {Reason: e.g., "Too complex," "Technical debt," "Bad UX"}
-- **Option B (Rejected):** {Description}
-  - _Why Rejected:_ {Reason}
+_Instruction: Risks, Mitigations, and Invariants._
 
-#### Section 7: Target
+#### Section 8: Completion Criteria
 
-_Instruction: List files, modules, or documents that will need to change._
+_Instruction: Checklist for "Definition of Done"._
+
+#### Section 9: Options Considered
+
+_Instruction: List 1-2 alternatives that were rejected and why._
 
 ### 3. Final Polish
 

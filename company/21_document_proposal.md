@@ -2,7 +2,7 @@
 
 > [!DEFINITION] Proposal Document
 > A transient proposal artifact used to outline a desire for change, improvement, or expansion before execution begins.
-
+>
 > Sidenote:
 >
 > - Part of: :term[02: Company/Process]{href="./02_process.md"}
@@ -25,20 +25,66 @@ Why do we write a Proposal Document instead of just coding?
 - **Safe Exploration:** It allows us to propose radical changes without breaking the source of truth. If a Proposal is rejected, nothing is lost but a text file.
 - **Context for the Machine:** LLMs require precise context. This document provides the "instruction prompt" for the machine (and the team).
 
-## 3. Structure
+## 3. Structure (Template)
 
-A Proposal Document typically contains:
+A Proposal Document follows a rigorous narrative structure designed to validate logic and safety. The following sections are the **Standard**, but can be adapted if a different structure better serves the truth.
 
-1.  **The Context:** "We thought X, but we learned Y."
-2.  **The Problem:** What is broken, missing, or inefficient?
-3.  **The Scope (Negative Space):** Explicitly state **what we are NOT doing**. This prevents scope creep (e.g., "We are fixing the presentation layer, NOT re-architecting the backend").
-4.  **The Proposed Solution:** A high-level view of the change.
-5.  **Options:** Alternative approaches (if applicable).
-6.  **Target:** Specific files or modules in the Specification that will be affected.
+### 3.1. Context (The Evolution)
+
+_Narrative Pattern:_ "We thought X, but we learned Y, so we must do Z."
+
+1.  **Original Assumption:** What did we believe before?
+2.  **The Pivot (Discovery):** What changed? (Bug found, new requirement, insight).
+3.  **The Conclusion:** Why is change necessary now?
+
+### 3.2. Problem & Scope (The Contract)
+
+1.  **The Problem:** Specific, falsifiable statement of what is broken.
+2.  **The Scope (Negative Space):** Explicit list of what we are **NOT** doing.
+3.  **Comparison:** A "Before vs. After" table to highlight the delta.
+
+### 3.3. Intents (Atomic Changes)
+
+**The Core.** Decomposition of the solution into granular, independent units of change.
+
+_Format per Intent:_
+
+- **Title:** Concise summary.
+- **Type:** {Bug Fix / Feature / Cleanup / Refactor}
+- **Target:** {Module / File / Component}
+- **Rationale:** Why this specific change is needed (historical context).
+- **Diff/Logic:** Abstract representation of the change (Pseudo-code, Interface, or Logic description). **No implementation code.**
+
+### 3.4. Visual Model (Optional)
+
+_Recommended:_ A **Mermaid Diagram** representing the workflow, state machine, or interaction. Use if the text is insufficient to capture the complexity.
+
+### 3.5. Usage Patterns (Optional)
+
+_Recommended:_ Concrete examples of how the new system will be _consumed_. Prove that the design is ergonomic.
+
+### 3.6. Safety & Risks (Optional)
+
+1.  **Risks:** What could break?
+2.  **Mitigations:** How do we prevent it?
+3.  **Invariance:** What must remain true (e.g., "Performance must not drop below X").
+
+### 3.7. Completion Criteria
+
+A checklist of verification steps (Tests, Docs, Integration) defining "Done."
+
+### 3.8. Options Considered
+
+Alternatives that were rejected, and _why_.
+
+---
+
+> [!NOTE] Partial Completion
+> If generating a proposal from dictation or limited context, it is acceptable to mark sections as `(TBD)` or `(Placeholder)`. The structure serves as a guide for what _should_ be known, even if it is not yet known.
 
 ## 4. Lifecycle
 
-1.  **Draft:** Created by an author. **Tip:** Dictate your thoughts to generate the first draft quickly.
+1.  **Draft:** Created by an author via Dictation or AI Prompt.
 2.  **PR:** Submitted as a Pull Request.
 3.  **Discussion:** Debated by the team.
 4.  **Refinement:** Updated based on context from :term[22: Company/Alignment]{href="./22_document_alignment.md"}.
