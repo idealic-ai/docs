@@ -55,7 +55,7 @@ When the user requests an Alignment Document, you **MUST** first resolve the inp
     "output_dir": {
       "type": "string",
       "description": "Directory to save output. Defaults to 'docs'.",
-      "default": "evolution"
+      "default": "alignments"
     },
     "filename": {
       "type": "string",
@@ -91,16 +91,22 @@ Starting analysis...
 
 **RESTRICTION:** You are permitted to make ONLY the following external requests:
 
-1.  **HTTP GET** via curl to `https://idealic.academy/raw/en/company/02_process.md`
-2.  **HTTP GET** via curl to `https://idealic.academy/raw/en/company/50_prompt_truth.md`
+1.  **HTTP GET** via curl to `https://idealic.academy/raw/simple-ru/company/02_process.md`
+2.  **HTTP GET** via curl to `https://idealic.academy/raw/simple-ru/company/50_prompt_truth.md`
 3.  **GitHub Pull Request API** call (to identify author)
 4.  **GitHub Comments API** call (via the one-liner below)
 
 **Step 1: Fetch Prerequisite Docs (Mandatory)**
 Fetch the specific URLs. Process each document separately.
 
-- [02: Company/Process](https://idealic.academy/raw/en/company/02_process.md)
-- [50: Prompt/Truth](https://idealic.academy/raw/en/company/50_prompt_truth.md)
+```bash
+# 1. Process & Truth
+curl https://idealic.academy/raw/simple-ru/company/02_process.md
+curl https://idealic.academy/raw/simple-ru/company/50_prompt_truth.md
+
+# 2. Alignment Definition
+curl https://idealic.academy/raw/simple-ru/company/22_document_alignment.md
+```
 
 **Step 2: Fetch PR Details (Identify Roles)**
 Fetch the PR details to identify the Author.
@@ -118,10 +124,16 @@ gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}" --jq '{author: .user.login, titl
     --paginate \
     | jq -s '
         add
-        | sort_by(.created_at)
+        | group_by(.in_reply_to_id // .id)
+        | map(sort_by(.created_at))
+        | sort_by(.[0].created_at)
+        | flatten
         | to_entries
         | map(.value + {index: ("§" + ((.key + 1) | tostring))} | del(.html_url))
-        | map({
+        | group_by(.in_reply_to_id // .id)
+        | sort_by(.[0].index | ltrimstr("§") | tonumber)
+        | map(.[0] as $root | [$root] + (.[1:] | map(del(.diff_hunk))))
+        | map(map({
         id,
         body,
         user: .user.login,
@@ -130,11 +142,7 @@ gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}" --jq '{author: .user.login, titl
         in_reply_to_id,
         reactions: (.reactions | del(.total_count, .url) | with_entries(select(.value > 0))),
         index
-        })
-        | group_by(.in_reply_to_id // .id)
-        | map(sort_by(.created_at))
-        | sort_by(.[0].created_at)
-        | map(.[0] as $root | [$root] + (.[1:] | map(del(.diff_hunk))))
+        }))
         | map(map(del(.in_reply_to_id)))
         | .[]
     ' -c > {OUTPUT_DIR}/{FILENAME}.ndjson
@@ -187,6 +195,20 @@ You **MUST** create a Todo list using the `todo_write` tool.
     - Source: {PR_LINK}
     - Range: {SINCE_DATE} - {NOW}
 
+    > [!WARNING] АВТО-ГЕНЕРАЦИЯ: НЕ ПРАВИТЬ, НЕ КОММИТИТЬ
+    > Этот документ — **инструмент синхронизации**. Он служит:
+    >
+    > 1. **Валидатором:** Проверяет, что 100% комментариев услышаны.
+    > 2. **Синтезатором:** Превращает дискуссию в готовый план (Consensus).
+    > 3. **Промптом:** Дает инструкции для обновления Proposal.
+    >
+    > Если документ неверен, **не правьте текст руками**. Добавьте комментарии в PR и **перегенерируйте**, чтобы замкнуть цикл обратной связи.
+    >
+    > **НЕ ДОБАВЛЯЙТЕ ЭТОТ ФАЙЛ В GIT.**
+    >
+    > - Подробнее: [22: Alignment](https://idealic.academy/raw/simple-ru/company/22_document_alignment.md)
+    > - В Git попадают только: [Proposal](https://idealic.academy/raw/simple-ru/company/21_document_proposal.md) и [Specification](https://idealic.academy/raw/simple-ru/company/20_document_spec.md).
+
     ## Обзор
 
     {{OVERVIEW_PLACEHOLDER}}
@@ -200,12 +222,27 @@ You **MUST** create a Todo list using the `todo_write` tool.
     {{COVERAGE_PLACEHOLDER}}
 
     {{OPINION_PLACEHOLDER}}
+
+    ## Инструкции для Агента (Next Step)
+
+    > [!IMPORTANT] Context Loading
+    > Before proceeding with updates to the Proposal or Specification, you **MUST** load the following context files to ensure full alignment with company standards:
+    >
+    > 1. `curl https://idealic.academy/raw/simple-ru/company/02_process.md` (Process)
+    > 2. `curl https://idealic.academy/raw/simple-ru/company/50_prompt_truth.md` (Truth)
+    > 3. `curl https://idealic.academy/raw/simple-ru/company/20_document_spec.md` (Spec)
+    > 4. `curl https://idealic.academy/raw/simple-ru/company/21_document_proposal.md` (Proposal)
+    > 5. `curl https://idealic.academy/raw/simple-ru/company/22_document_alignment.md` (Alignment)
     ```
 
 #### 5.2. Phase 2: Load Context
 
-1.  **Read into Context:** Use standard agent tools to read `{OUTPUT_DIR}/{FILENAME}.ndjson`.
-    - **Count Lines (Mandatory):** `wc -l`
+1.  **Analyze Data:**
+    - **Count Threads:** Run `wc -l {OUTPUT_DIR}/{FILENAME}.ndjson` (Each line is one thread).
+    - **Count Comments:** Run `jq 'length' {OUTPUT_DIR}/{FILENAME}.ndjson | awk '{s+=$1} END {print s}'`.
+    - **Report:** Output these numbers clearly (e.g., "Found 45 threads containing 150 comments").
+
+2.  **Read into Context:** Use standard agent tools to read `{OUTPUT_DIR}/{FILENAME}.ndjson`.
     - **Read Loop (Mandatory):** Read in 25-line chunks until end.
 
 #### 5.3. Phase 3: Overview
@@ -273,6 +310,7 @@ Goal: **Hyper-Granular Atomicity**.
 **Generation:**
 
 - Swap `{{COVERAGE_PLACEHOLDER}}`.
+- **CRITICAL:** Do NOT generate the table in parts. You must generate the **entire** table in a single `search_replace` call after all context has been loaded.
 - **Content Template:**
 
   Create a **SINGLE** table. Group comments by Date. Insert a "Header Row" for each new date. Precede the table with the section heading:
@@ -299,7 +337,8 @@ Goal: **Hyper-Granular Atomicity**.
   2.  **Exhaustive:** Every single comment must have its own row. Do not summarize into ranges (e.g. `§1-§5`).
   3.  **Visualization:** Use `├` and `└` to show replies.
   4.  **Status Indicators (Emojis):** ❓(Unanswered), ⚠️(Warning), 🚧(Pending), 🗑️(Deleted), 🗣️(Reply), 💡(Idea), 🤝(Agreed).
-  5.  **Sorting:** By Date/Time.
+  5.  **Sorting:** **Strictly by Index (§1, §2...).** The input is already grouped by thread and sorted. You MUST preserve this order.
+  6.  **Grouping:** Insert a Date Header `| | **{Date}** | | | | |` ONLY when the **Thread Start Date** changes. Do NOT split a thread across multiple date headers, even if replies span multiple days. Keep the entire thread under the date the thread started.
 
 #### 5.6. Phase 6: LLM Assessment
 

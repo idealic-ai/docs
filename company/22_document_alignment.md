@@ -13,23 +13,36 @@
 
 The Alignment Document is the **contract**. It summarizes the comments and decisions made during the Pull Request review of an :term[21: Proposal Document]{href="./21_document_proposal.md"}.
 
-It is **Disposable**. It is a one-time artifact used to establish understanding and improve the process. It serves as the context for modifying the Proposal Document (to reflect agreed changes) and is the **Source of Truth for the Review**.
+It is **Disposable**. It acts as a "context extractor," filtering the noise of the discussion into a clean set of actionable **Intents**. These intents serve as a **Validation Test**:
+
+- Did we understand the feedback?
+- Is the reaction to the feedback clear?
+
+If the Alignment Document is accurate, the author uses it to **semi-automatically patch** the Proposal Document.
+
+> [!WARNING] DO NOT EDIT MANUALLY & DO NOT COMMIT
+> This document is **auto-generated**. If the Alignment Document is incorrect or fails to capture the nuance of the discussion, **do not edit it**. Instead, add clarification comments to the Pull Request and **regenerate** the document. This ensures the machine fully understands the context.
+>
+> **DO NOT COMMIT THIS FILE.** This is a local validation artifact between the machine and the author. Only Proposals and Specifications are committed to the repository.
 
 ## 2. The Need
 
 Why do we generate this document?
 
+- **Test of Understanding:** It proves that the feedback loop is closed. If the AI cannot summarize the consensus correctly, it means the humans were not clear.
+- **Local Verification:** It acts as a local test for the author to ensure the machine (and thus the team) has a complete understanding of the feedback before moving to execution.
 - **Synthesized Wisdom:** It converts a threaded conversation into a flat list of technical requirements. It filters out the noise and keeps the signal.
-- **Dynamic Consensus:** It is not just a log; it is a workspace where the author and reviewer align on the _new_ plan that emerged from the discussion.
 - **Machine Instruction:** It serves as the verified input for the AI to execute the changes.
 
 ## 3. The Process
 
 1.  **Discussion:** Team discusses the :term[21: Company/Proposal]{href="./21_document_proposal.md"} in a Pull Request.
 2.  **Generation:** An AI agent scans the comments and generates the Alignment Document (Time: ~5 mins via Prompt).
-3.  **Refinement:** The author and reviewer use this document to confirm: "Yes, this is what we agreed to change."
-4.  **Sign-Off:** Merging the Alignment Document signals "Consensus Achieved."
-5.  **Update Proposal:** Use the Alignment details to update the Proposal Document (so tickets are accurate).
+3.  **Review (Self-Test):** The author reviews the generated Intents.
+    - _Is the feedback captured?_
+    - _Is the resolution correct?_
+4.  **Patching:** The author uses the verified Alignment Document to update the :term[21: Company/Proposal]{href="./21_document_proposal.md"}. This ensures the Proposal remains the single source of intent.
+5.  **Sign-Off:** Marking the PR as ready signals "Consensus Achieved." The Alignment Document is discarded, and the agreed changes are committed to the Proposal/Spec.
 
 ## 4. Structure
 
@@ -43,6 +56,6 @@ The Alignment Document (Review Summary) contains:
 ## 5. Characteristics
 
 - **Timeframe:** ~5 minutes to generate via Prompt.
-- **Role:** Context for changing the Proposal Document.
-- **Nature:** Disposable / One-time use.
+- **Role:** Validation Test & Patch Source for the Proposal.
+- **Nature:** Disposable / One-time use (Local Artifact).
 - **Source of Truth:** **For the Review** (Consensus).

@@ -36,3 +36,5 @@ This index bridges the gap between our abstract values and our daily actions. It
 
 - [50: Prompt/Truth](./50_prompt_truth.md)
 - [51: Prompt/Alignment](./51_prompt_alignment.md)
+- [52: Prompt/Proposal](./52_prompt_proposal.md)
+- [60: Prompt/Recipes](./60_prompt_recipes.md)

@@ -14,6 +14,8 @@ The Specification is the **destination**. It is a major labor of love—a docume
 
 It is **Evergreen**. It is the absolute **Source of Truth for the System** (Code, Presentation, Architecture). In a system where we build complex, autonomous agents, we cannot rely on tribal knowledge or transient chats.
 
+**The Vision:** We believe that with a correct and complete Specification, the rest of the work (code generation, presentation design) can be automated. We write this document to eventually feed it into the machine.
+
 ## 2. The Need
 
 Why do we maintain this document?
@@ -21,6 +23,7 @@ Why do we maintain this document?
 - **Adherence to Truth:** It strictly follows the standards defined in :term[00: Company/Truth]{href="./50_prompt_truth.md"}. It must be self-contained and free from ambiguity.
 - **Correctness over Speed:** Unlike transient documents (Proposal/Alignment), the Specification must be rigorously correct. It is better to leave a section undefined than to define it falsely.
 - **The Map:** It describes _where we are going_. It allows every team member to understand the broader picture without needing to hold the entire plan in their head.
+- **Handling Complexity:** For large systems with a "large surface area," it is impossible to hold the entire context in memory. The Specification allows the system to evolve while maintaining a coherent source of truth.
 
 ## 3. The Rules of Maintenance
 
