@@ -11,7 +11,7 @@
 
 **STRICTLY MAINTAIN THESE RULES:**
 
-1. **Transient Storage:** You MAY create `evolution_{DATE}.json` to store raw comments. Do NOT create other temporary files.
+1. **Transient Storage:** You MAY create `{OUTPUT_DIR}/{DATE}.json` to store raw comments. Do NOT create other temporary files.
 2. **One-Pass Fetching:** Fetch all necessary data (comments) in a single API call per resource. Do NOT paginate manually or loop.
 3. **Validation Source:** Always validate against the **existing context** (JSON), never re-fetch for validation.
 4. **Language:** The output document MUST be in **Russian** (except for code/technical terms).
@@ -25,16 +25,59 @@ The Evolution Draft bridges the gap between discussion (Pull Requests) and perma
 
 ## Protocol for Agent
 
-When the user requests an Evolution Draft, you **MUST** obtain a Pull Request link and a timeframe.
+When the user requests an Evolution Draft, you **MUST** first resolve the input parameters.
 
-### 1. Prerequisite Check
+### 1. Parameter Extraction
 
-1.  **PR Link:** If not provided, **STOP** and ask:
+**Input Schema:**
 
-    > "Please provide the GitHub Pull Request link you wish to analyze."
+```json
+{
+  "type": "object",
+  "properties": {
+    "since_date": {
+      "type": "string",
+      "description": "Date string (YYYY-MM-DD). Defaults to 1 week ago if not provided.",
+      "default": "{ONE_WEEK_AGO}"
+    },
+    "repo": {
+      "type": "string",
+      "description": "Repository name. Defaults to current repo if not provided.",
+      "default": "{CURRENT_REPO}"
+    },
+    "pr_number": {
+      "type": "integer",
+      "description": "Pull Request number. REQUIRED.",
+      "required": true
+    },
+    "output_dir": {
+      "type": "string",
+      "description": "Directory to save output. Defaults to 'docs'.",
+      "default": "evolution"
+    }
+  }
+}
+```
 
-2.  **Since Date:** If the user did not specify a date, **STOP** and ask:
-    > "Please provide a 'since' date (YYYY-MM-DD) to filter comments. If you want to analyze the entire history, reply with 'All'."
+**Step 0: Resolve Parameters**
+
+1.  Analyze the user's prompt to extract these values.
+2.  **Missing Required:** If `pr_number` is missing, **STOP** and ask for it.
+3.  **Defaults:** Apply defaults for missing optional parameters.
+
+**Step 1: Output Configuration (First Response)**
+You **MUST** output the resolved configuration as your very first response block, formatted like a CLI utility start-up:
+
+```text
+> Evolution Draft Configuration:
+--------------------------------
+[x] Repo:        {repo}
+[x] PR Number:   {pr_number}
+[x] Since Date:  {since_date}
+[x] Output Dir:  {output_dir}
+--------------------------------
+Starting analysis...
+```
 
 ### 2. Data Retrieval
 
@@ -50,7 +93,7 @@ Do **NOT** fetch other file contents, commits, or diffs separately.
 **Step 1: Fetch Prerequisite Docs (Mandatory)**
 You **MUST** use an HTTP tool to fetch the content directly from the URLs below. **Do NOT search on the web.** Fetch the specific URLs.
 
-- [02: Company/Process](`https://idealic.academy/raw/en/company/02_process.md)
+- [02: Company/Process](https://idealic.academy/raw/en/company/02_process.md)
 - [50: Prompt/Truth](https://idealic.academy/raw/en/company/50_prompt_truth.md)
 
 **Step 2: Fetch PR Details (Identify Roles)**
@@ -62,13 +105,13 @@ gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}" --jq '{author: .user.login, titl
 
 **Step 3: Fetch & Read Comments**
 
-1.  **Fetch to File:** Execute this exact command to save comments to `evolution_{DATE}.json`. Replace `{PR_NUMBER}`, `{SINCE_DATE}`, and `{DATE}`.
+1.  **Fetch to File:** Execute this exact command to save comments to `{OUTPUT_DIR}/{DATE}.json`. Replace `{PR_NUMBER}`, `{SINCE_DATE}`, and `{DATE}`.
 
     ```bash
-    gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}/comments?since={SINCE_DATE}&per_page=200" --paginate --jq 'map({id, body, user: .user.login, created_at, html_url, diff_hunk: (.diff_hunk | if length > 200 then .[:200] + "..." else . end), in_reply_to_id}) | sort_by(.created_at) | to_entries | map({index: ("§" + (.key + 1 | tostring)), comment: .value}) | map(.comment + {index: .index}) | group_by(.in_reply_to_id // .id) | map(.[0] as $root | [$root] + (.[1:] | map(del(.diff_hunk))))' | jq '.' > evolution_{DATE}.json
+    gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}/comments?since={SINCE_DATE}&per_page=200" --paginate --jq 'map({id, body, user: .user.login, created_at, html_url, diff_hunk: (.diff_hunk | if length > 200 then .[:200] + "..." else . end), in_reply_to_id}) | sort_by(.created_at) | to_entries | map({index: ("§" + (.key + 1 | tostring)), comment: .value}) | map(.comment + {index: .index}) | group_by(.in_reply_to_id // .id) | map(.[0] as $root | [$root] + (.[1:] | map(del(.diff_hunk))))' | jq '.' > {OUTPUT_DIR}/{DATE}.json
     ```
 
-2.  **Read into Context:** Use standard agent tools to read `evolution_{DATE}.json`.
+2.  **Read into Context:** Use standard agent tools to read `{OUTPUT_DIR}/{DATE}.json`.
     - **Read Loop (Mandatory):** You MUST read the file in strict 100-line chunks.
       - Start: `offset=0`, `limit=100`
       - Next: `offset=100`, `limit=100`
@@ -136,7 +179,7 @@ You must generate the document by **systematically replacing placeholders** in a
     - **Initialize Plan:** Create Todo list.
 
 2.  **Initialize File:**
-    - Create `evolution_{DATE}.md` with the skeleton **EXACTLY**:
+    - Create `{OUTPUT_DIR}/{DATE}.md` with the skeleton **EXACTLY**:
 
     ```markdown
     # Evolution Draft: {DATE}
@@ -350,15 +393,15 @@ Reflect on the generated content and the original discussion.
     - If the discussion was complex, err on the side of adding more Intents rather than merging them.
     - If yes, use `search_replace` to add the missing details (create new Intents if needed).
 
-2.  **Read File:** Read the final `evolution_{DATE}.md` to verify all placeholders are gone.
-3.  **Cleanup:** Delete `evolution_{DATE}.json`.
+2.  **Read File:** Read the final `{OUTPUT_DIR}/{DATE}.md` to verify all placeholders are gone.
+3.  **Cleanup:** Delete `{OUTPUT_DIR}/{DATE}.json`.
 4.  **Final Checklist:** Output this checklist:
     - [ ] **Data Fetched**: All comments retrieved.
     - [ ] **Placeholders Replaced**: No {{...}} tags remain.
     - [ ] **Comments Validated**: All relevant comments mapped.
     - [ ] **Ghost References Fixed**: Verified every Intent # in table has a corresponding section.
     - [ ] **Technical Details Preserved**: Flags, args, types, preserved in text.
-    - [ ] **Cleanup**: `evolution_{DATE}.json` deleted.
+    - [ ] **Cleanup**: `{OUTPUT_DIR}/{DATE}.json` deleted.
 
 5.  Stop and say: "**Phase 6 Complete: Document finalized and cleanup done.**"
 
