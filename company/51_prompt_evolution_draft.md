@@ -122,7 +122,7 @@ gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}" --jq '{author: .user.login, titl
       - ...continue until EOF.
       - **Prohibited:** Do NOT guess limits, do NOT read "all at once", do NOT let the tool decide. You must explicitly iterate.
       - **Termination:** Continue strictly until the tool returns "File is empty" or "out of range". Do NOT stop early.
-      - **Expectation:** The file may be large (1000+ lines). You might need 20+ iterations. This is normal. Continue until the end.
+      - **Expectation:** The file may be large (10000+ lines). You might need 200+ iterations. This is normal. Continue until the end.
 
 ### 3. Execution Management
 
