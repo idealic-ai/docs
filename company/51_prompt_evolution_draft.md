@@ -11,7 +11,7 @@
 
 **STRICTLY MAINTAIN THESE RULES:**
 
-1. **Transient Storage:** You MAY create `{OUTPUT_DIR}/{DATE}.json` to store raw comments. Do NOT create other temporary files.
+1. **Transient Storage:** You MAY create `{OUTPUT_DIR}/{FILENAME}.ndjson` to store raw comments. Do NOT create other temporary files.
 2. **One-Pass Fetching:** Fetch all necessary data (comments) in a single API call per resource. Do NOT paginate manually or loop.
 3. **Validation Source:** Always validate against the **existing context** (JSON), never re-fetch for validation.
 4. **Language:** The output document MUST be in **Russian** (except for code/technical terms).
@@ -55,6 +55,11 @@ When the user requests an Evolution Draft, you **MUST** first resolve the input 
       "type": "string",
       "description": "Directory to save output. Defaults to 'docs'.",
       "default": "evolution"
+    },
+    "filename": {
+      "type": "string",
+      "description": "Filename for the output file. Defaults to the since_date. Omit extension.",
+      "default": "{SINCE_DATE}"
     }
   }
 }
@@ -108,21 +113,40 @@ gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}" --jq '{author: .user.login, titl
 
 **Step 3: Fetch & Read Comments**
 
-1.  **Fetch to File:** Execute this exact command to save comments to `{OUTPUT_DIR}/{DATE}.json`. Replace `{PR_NUMBER}`, `{SINCE_DATE}`, and `{DATE}`.
+1.  **Fetch to File:** Execute this exact command to save comments to `{OUTPUT_DIR}/{FILENAME}.ndjson`. Replace `{PR_NUMBER}`, `{SINCE_DATE}`, and `{DATE}`.
 
     ```bash
-    gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}/comments?since={SINCE_DATE}&per_page=200" --paginate --jq 'map({id, body, user: .user.login, created_at, html_url, diff_hunk: (.diff_hunk | if length > 200 then .[:200] + "..." else . end), in_reply_to_id, reactions}) | sort_by(.created_at) | to_entries | map({index: ("§" + (.key + 1 | tostring)), comment: .value}) | map(.comment + {index: .index}) | group_by(.in_reply_to_id // .id) | map(.[0] as $root | [$root] + (.[1:] | map(del(.diff_hunk))))' | jq '.' > {OUTPUT_DIR}/{DATE}.json
+    gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}/comments?since={SINCE_DATE}&per_page=200" \
+    --paginate \
+    --jq '
+        map({
+        id,
+        body,
+        user: .user.login,
+        created_at,
+        html_url,
+        diff_hunk: (.diff_hunk | if length > 200 then .[:200] + "..." else . end),
+        in_reply_to_id,
+        reactions
+        })
+        | sort_by(.created_at)
+        | to_entries
+        | map(.value + {index: ("§" + ((.key + 1) | tostring))})
+        | group_by(.in_reply_to_id // .id)
+        | map(.[0] as $root | [$root] + (.[1:] | map(del(.diff_hunk))))
+    ' \
+    | jq -c '.[]' > {OUTPUT_DIR}/{FILENAME}.ndjson
     ```
 
-2.  **Read into Context:** Use standard agent tools to read `{OUTPUT_DIR}/{DATE}.json`.
-    - **Read Loop (Mandatory):** You MUST read the file in strict 100-line chunks.
-      - Start: `offset=0`, `limit=100`
-      - Next: `offset=100`, `limit=100`
-      - Next: `offset=200`, `limit=100`
+2.  **Read into Context:** Use standard agent tools to read `{OUTPUT_DIR}/{FILENAME}.ndjson`.
+    - **Read Loop (Mandatory):** You MUST read the file in strict 15-line chunks.
+      - Start: `offset=0`, `limit=15`
+      - Next: `offset=15`, `limit=15`
+      - Next: `offset=30`, `limit=15`
       - ...continue until EOF.
       - **Prohibited:** Do NOT guess limits, do NOT read "all at once", do NOT let the tool decide. You must explicitly iterate.
       - **Termination:** Continue strictly until the tool returns "File is empty" or "out of range". Do NOT stop early.
-      - **Expectation:** The file may be large (10000+ lines). You might need 200+ iterations. This is normal. Continue until the end.
+      - **Expectation:** The file may be large (300+ lines). You might need 30+ iterations. This is normal. Continue until the end.
 
 ### 3. Execution Management
 
@@ -182,7 +206,7 @@ You must generate the document by **systematically replacing placeholders** in a
     - **Initialize Plan:** Create Todo list.
 
 2.  **Initialize File:**
-    - Create `{OUTPUT_DIR}/{DATE}.md` with the skeleton **EXACTLY**:
+    - Create `{OUTPUT_DIR}/{FILENAME}.md` with the skeleton **EXACTLY**:
 
     ```markdown
     # Evolution Draft: {DATE}
@@ -423,15 +447,15 @@ Reflect on the generated content and the original discussion.
     - If the discussion was complex, err on the side of adding more Intents rather than merging them.
     - If yes, use `search_replace` to add the missing details (create new Intents if needed).
 
-2.  **Read File:** Read the final `{OUTPUT_DIR}/{DATE}.md` to verify all placeholders are gone.
-3.  **Cleanup:** Delete `{OUTPUT_DIR}/{DATE}.json`.
+2.  **Read File:** Read the final `{OUTPUT_DIR}/{FILENAME}.md` to verify all placeholders are gone.
+3.  **Cleanup:** Delete `{OUTPUT_DIR}/{FILENAME}.ndjson`.
 4.  **Final Checklist:** Output this checklist:
     - [ ] **Data Fetched**: All comments retrieved.
     - [ ] **Placeholders Replaced**: No {{...}} tags remain.
     - [ ] **Comments Validated**: All relevant comments mapped.
     - [ ] **Ghost References Fixed**: Verified every Intent # in table has a corresponding section.
     - [ ] **Technical Details Preserved**: Flags, args, types, preserved in text.
-    - [ ] **Cleanup**: `{OUTPUT_DIR}/{DATE}.json` deleted.
+    - [ ] **Cleanup**: `{OUTPUT_DIR}/{FILENAME}.ndjson` deleted.
 
 5.  Stop and say: "**Phase 6 Complete: Document finalized and cleanup done.**"
 
