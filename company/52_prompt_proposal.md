@@ -112,15 +112,22 @@ _Instruction: Synthesize the background. Why are we talking about this now?_
 
 - **Pattern:** "We thought X, but we learned Y, so we must do Z."
 
-#### Section 3: Problem & Scope (The Contract)
+#### Section 3: The Problem (The Trigger)
 
 _Instruction: Be specific. Use bullet points._
 
 - **Problem:** What is broken?
-- **Scope (Negative Space):** What are we **NOT** doing?
+- **Why Now:** The cost of doing nothing.
+
+#### Section 4: The Scope (The Contract)
+
+_Instruction: Define boundaries._
+
+- **Invariants:** What must remain true?
+- **Negative Space:** What are we **NOT** doing?
 - **Comparison:** Current vs. Proposed table.
 
-#### Section 4: Intents (Atomic Changes)
+#### Section 5: Intents (Atomic Changes)
 
 _Instruction: Breakdown the solution into granular units. This is the CORE of the proposal._
 
@@ -131,23 +138,23 @@ _Instruction: Breakdown the solution into granular units. This is the CORE of th
   - **Rationale**
   - **Diff/Logic** (Abstract only)
 
-#### Section 5: Visual Model (Optional)
+#### Section 6: Visual Model (Optional)
 
 _Instruction: Recommended if the flow is complex. Use Mermaid._
 
-#### Section 6: Usage Patterns (Optional)
+#### Section 7: Usage Patterns (Optional)
 
 _Instruction: Show how the new system is consumed (UX/DX)._
 
-#### Section 7: Safety & Risks (Optional)
+#### Section 8: Safety & Risks (Optional)
 
 _Instruction: Risks, Mitigations, and Invariants._
 
-#### Section 8: Completion Criteria
+#### Section 9: Completion Criteria
 
 _Instruction: Checklist for "Definition of Done"._
 
-#### Section 9: Options Considered
+#### Section 10: Options Considered
 
 _Instruction: List 1-2 alternatives that were rejected and why._
 

@@ -60,56 +60,58 @@ The synthesized agreement. This is the auto-generated summary of our debate. It 
 
 ## 3. The Cycle of Consensus
 
-We do not just "write code." We follow a cycle:
+We do not just "write code" or "make slides." We follow a cycle that prioritizes intent over implementation. We do not jump to the final chapter.
 
 ```mermaid
 sequenceDiagram
     autonumber
     actor Author
     participant Proposal as 📄 Proposal (RFC)
-    participant Team
+    participant PR as PR Review
     participant Alignment as 📄 Alignment
+    participant Spec as 📘 Specification
     participant Jira as 🎫 Jira Tickets
     participant Artifact as Artifact
-    participant Spec as 📘 Specification
 
     Note over Proposal: Source of Truth for Intent
     Author->>Proposal: 1. Drafts Proposal
 
     loop Feedback Cycle
-        Proposal->>Team: 2. Discuss via PR
-        Team->>Alignment: 3. Review Comments & Generate Alignment
-
+        Proposal->>PR: 2. Discuss
+        Note over PR: Source of Truth for Feedback
+        PR->>Alignment: 3. Synthesize Alignment
         Note over Alignment: Source of Truth for Consensus
-        Alignment->>Author: 4. Validation: Is everything captured?
-        Author->>Proposal: 5. Applies Changes / Refines Intent
+        Alignment->>Author: 4. Review
+        Author->>Proposal: 5. Patch Proposal
     end
 
     Note over Spec: Source of Truth for System
     Proposal->>Spec: 6. Update Spec (Creative Freedom)
 
     Note over Jira: Source of Truth for Priorities
-    Spec->>Jira: 7. Create Tickets from Spec
-    Jira->>Artifact: 8. Create Artifact (Creative Freedom)
-    Artifact->>Spec: 9. Verify Reality matches Spec
+    Spec->>Jira: 7. Create Tickets
+    Jira->>Artifact: 8. Execute
 ```
 
 1.  **Draft Proposal:** An author creates a :term[Proposal Document]{href="./21_document_proposal.md"} describing the problem and proposed solution.
 2.  **Discuss:** The team reviews the Proposal via a Pull Request. Comments, questions, and debates occur here.
 3.  **Synthesize Alignment:** We use AI to generate an :term[Alignment Document]{href="./22_document_alignment.md"} from the discussion. This converts "comments" into "requirements."
-4.  **Review & Regenerate:** The author reviews the Alignment Document. If it is inaccurate, **do not edit it**. Add clarifying comments to the PR and regenerate the document until it passes the "Test of Understanding."
+4.  **Review:** The author reviews the Alignment Document. If it is inaccurate, **do not edit it**. Add clarifying comments to the PR and regenerate the document until it passes the "Test of Understanding."
 5.  **Patch Proposal:** The author applies the :term[Alignment]{href="./22_document_alignment.md"} back to the :term[Proposal]{href="./21_document_proposal.md"}. This ensures the Proposal captures the **final agreed intent**, not just the initial idea. The Proposal is then "Frozen."
-6.  **Update Specification:** Using the frozen Proposal as the guide, we update the :term[Specification]{href="./20*document_spec.md"} to reflect the new design \_before* writing code. This is a creative step where the "What" becomes the "How".
-7.  **Ticketize:** We create **Jira Tickets** based on the **Intents** outlined in the :term[Proposal]{href="./21_document_proposal.md"} and the new state of the :term[Specification]{href="./20_document_spec.md"}.
-8.  **Create Artifact:** We build the final output (Code, Presentation, etc.).
+6.  **Update Spec:** Using the frozen Proposal as the guide, we update the :term[Specification]{href="./20*document_spec.md"} to reflect the new design \_before* writing code. This is a creative step where the "What" becomes the "How".
+7.  **Create Tickets:** We create **Jira Tickets** based on the **Intents** outlined in the :term[Proposal]{href="./21_document_proposal.md"} and the new state of the :term[Specification]{href="./20_document_spec.md"}.
+8.  **Execute:** We build the final output (Code, Presentation, etc.).
 
 > [!NOTE] Not Bureaucracy, But Clarity
 > This process is not about restriction; it is about preservation.
 >
-> - **Proposal** preserves the intent (Source of Truth for Intent).
-> - **Alignment** preserves the consensus (Source of Truth for Review).
-> - **Jira** tracks the priority (Source of Truth for Priorities).
-> - **Specification** tracks the reality (Source of Truth for System).
+> | Artifact          | Source of Truth for... | Role                                 |
+> | :---------------- | :--------------------- | :----------------------------------- |
+> | **Proposal**      | **Intent**             | Preserves the Authorial Vision.      |
+> | **PR Review**     | **Feedback**           | Provides the raw input and critique. |
+> | **Alignment**     | **Consensus**          | Synthesizes the agreement.           |
+> | **Jira**          | **Priorities**         | Tracks the order of execution.       |
+> | **Specification** | **System**             | Tracks the reality.                  |
 >
 > By fixing communication and understanding _before_ execution, we liberate the engineer to work with confidence.
 
@@ -119,7 +121,7 @@ sequenceDiagram
 > [!WARNING] Handling Deviations (The Micro-Cycle)
 > If, during execution, you discover a flaw in the plan or a need to deviate from the agreed approach (e.g., "I need 5 more slides," "This architecture won't work"), you **MUST** loop back.
 >
-> - **Pending PR:** If the PR is still open, update the existing Proposal and request re-review.
+> - **Pending PR:** If the PR is still open, update the existing Proposal and request re-review. (You can regenerate the Alignment Document to capture only the new feedback).
 > - **Closed PR / Execution:** If execution has begun, **do not reopen the Proposal**. Create a new Micro-Proposal for the specific addition.
 >
 > **Do not silently diverge from the consensus.** Unapproved deviations corrupt the Source of Truth.

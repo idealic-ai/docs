@@ -1,39 +1,38 @@
-# 52: Instruction for Making a Proposal
+# 52: How to Write a Plan
 
-> [!DEFINITION] Proposal Maker
-> A smart helper that takes messy notes (like voice recordings or chat messages) and organizes them into a clear, official plan called a Proposal.
+> [!DEFINITION] Plan Generator
+> This is a special tool that takes messy ideas (like notes from a conversation or quick thoughts you've jotted down) and turns them into a clear, well-structured plan, called a Proposal.
 >
 > Sidenote:
->
-> - See: :term[21: Company/Proposal]{href="./21_document_proposal.md"} to learn what a Proposal is.
-> - Its Purpose: To turn a stream of thoughts into a clear plan.
+> - To see what a finished plan looks like, check out the :term[Company Proposal guide]{href="./21_document_proposal.md"}.
+> - Its job is to turn a stream of messy thoughts into a clear strategy.
 
 ## Rules That Never Change
 
-**YOU MUST FOLLOW THESE RULES AT ALL TIMES:**
+**ALWAYS FOLLOW THESE RULES:**
 
-1.  **Stick to the Layout:** Your final document must use the exact structure defined in [21: Company/Proposal](./21_document_proposal.md).
-2.  **Make the Voice Clear:** Keep a little of the author's personality, but your main job is to make it **clear** and **confident**. Read [50: Instruction/Truth](./50_prompt_truth.md) to understand this. Remove filler words, guessing, and emotional complaining.
-3.  **Use the Right Words:** Use words that fit the topic. For example, if it's about **Design**, talk about the "user's experience." If it's about **Code**, talk about the "plan for how it works." If it's about **Business**, talk about "what we gain."
-4.  **Say What You're NOT Doing:** You have to explain what goals are **outside** the plan. This is just as important as saying what's inside the plan.
-5.  **Show Other Options:** In the "Options" section, don't just show the path you picked. You must also show the paths you decided _not_ to take and explain _why_.
-6.  **No Code Allowed:** A proposal is for the **Big Idea** and the **Vision**. Do not include any actual code. If you need to explain technical parts, use simple diagrams or sketches instead.
+1.  **Stick to the Layout:** The final document MUST use the exact structure from the [Company Proposal guide](./21_document_proposal.md).
+2.  **Make it Clear and Confident:** Gently clean up the original author's writing style. The most important things are **Clarity** and **Getting straight to the point** (see the [Truth guide](./50_prompt_truth.md)). Remove filler words, unsure phrases, and emotional complaints.
+3.  **Use the Right Words for the Job:** The tool should use words that fit the topic. For example, if it's about app **Design**, it should talk about "how something looks or works." If it's about **Code**, it should talk about "how it's built." If it's about **Business**, it should talk about "benefits and costs."
+4.  **Say What You're NOT Doing:** You must clearly state what is *not* part of this plan. This is just as important as saying what *is* part of it.
+5.  **Show Other Ideas:** The "Options" section must show the ideas you *didn't* choose and explain *why* they weren't the right fit.
+6.  **No Actual Code:** Plans are about the **Idea** and the **Goal**. DO NOT put any real programming code in the document. If you need to explain a technical part, use simple diagrams or sketches instead.
 
-## Instructions for the AI Helper
+## Instructions for the AI
 
-**RULE:** You are only allowed to ask for information from the following web addresses:
+**RULE:** You are only allowed to ask for information from these places:
 
-1.  **HTTP GET** using curl to `https://idealic.academy/raw/en/company/02_process.md`
-2.  **HTTP GET** using curl to `https://idealic.academy/raw/en/company/50_prompt_truth.md`
+1.  **HTTP GET** via curl to `https://idealic.academy/raw/en/company/02_process.md`
+2.  **HTTP GET** via curl to `https://idealic.academy/raw/en/company/50_prompt_truth.md`
 
-**Step 1: Get the Rulebooks First (You Must Do This)**
-You **MUST** get these documents to understand the company's rules and writing style before you start making the proposal.
+**Step 1: First, Read These Documents (Required)**
+You **MUST** read these files to understand how the company works and how we write things before you can create the plan.
 
-> [!IMPORTANT] Ask for Each One Separately
-> You must get each document with a separate command. This makes sure you get the full text of every file without parts getting cut off.
+> [!IMPORTANT] Ask for One Thing at a Time
+> You have to ask for each document separately. This makes sure you get the full text of each file without anything getting cut off.
 
 ```bash
-# 1. Read about our process and writing style (the foundation)
+# 1. Read about our process and writing style (The Basics)
 curl https://idealic.academy/raw/en/company/02_process.md
 ```
 
@@ -42,7 +41,7 @@ curl https://idealic.academy/raw/en/company/50_prompt_truth.md
 ```
 
 ```bash
-# 2. Read about our different document types (the context)
+# 2. Read about our different types of documents (The Context)
 curl https://idealic.academy/raw/en/company/20_document_spec.md
 ```
 
@@ -54,9 +53,9 @@ curl https://idealic.academy/raw/en/company/21_document_proposal.md
 curl https://idealic.academy/raw/en/company/22_document_alignment.md
 ```
 
-### 1. Understanding the User's Notes
+### 1. Understanding the Ideas
 
-**What the User Gives You:**
+**What Your Input Should Look Like:**
 
 ```json
 {
@@ -64,132 +63,139 @@ curl https://idealic.academy/raw/en/company/22_document_alignment.md
   "properties": {
     "context": {
       "type": "string",
-      "description": "The user's raw thoughts, maybe from a recording or a copy-pasted chat."
+      "description": "Your rough notes, thoughts, or chat messages that explain the idea."
     },
     "author": {
       "type": "string",
-      "description": "The name of the person making the proposal (optional).",
+      "description": "The name of the person making the plan (optional).",
       "default": "User"
     },
     "domain": {
       "type": "string",
       "enum": ["Design", "Engineering", "Process", "Business"],
-      "description": "The main topic of the proposal. If the user doesn't say, figure it out from their notes."
+      "description": "The main topic of the plan. If you don't provide one, the tool will guess."
     }
   },
   "required": ["context"]
 }
 ```
 
-**How to Analyze the Notes:**
+**How It Analyzes Your Notes:**
 
-1.  **Find the Turning Point:** Look for the moment where they say, "We used to think X, but then we learned Y." This becomes the story's **Background**.
-2.  **Find the Pain:** What, exactly, is broken or not working? This is the **Problem**.
-3.  **Define the New Idea:** What is the one big change they want to make? This is the **Solution**.
-4.  **Find the Rejected Ideas:** What other things did they talk about but decide against? These become the **Options**.
+1.  **Find the "Aha!" Moment:** It looks for the part where you say, "We used to think X, but then we learned Y." This becomes the **Backstory**.
+2.  **Find the Real Problem:** What's actually broken? This becomes the **Problem** section.
+3.  **Figure Out the Fix:** What is the new idea or change you want to make? This becomes the **Solution**.
+4.  **Find the Rejected Ideas:** What other options were talked about but not chosen? These go in the **Options** section.
 
-### 2. How to Build the Document
+### 2. How It Writes the Plan
 
-Create a new file named `{YYYY-MM-DD}_proposal_{topic-name}.md`.
+The tool will create a file named `{YYYY-MM-DD}_proposal_{topic-name}.md`.
 
-#### Section 1: Title Page
+#### Section 1: The Title Page
 
 ```markdown
-# Proposal: {Name of the Big Idea}
+# Proposal: {Title of the Project}
 
-- **Status:** Just Started
-- **Author:** {Person's Name}
+- **Status:** Draft
+- **Author:** {Your Name}
 - **Date:** {Today's Date}
-- **Topic:** {The Topic You Figured Out}
+- **Domain:** {The Topic}
 
-> [!NOTE] How This Was Made
-> Based on raw notes, organized using the rules in [52: Instruction/Proposal](./52_prompt_proposal.md).
+> [!NOTE] Origin of the Idea
+> This plan was created from rough notes using the [Plan Generator](./52_prompt_proposal.md).
 ```
 
-#### Section 2: Background (The Story So Far)
+#### Section 2: The Backstory
 
-_Instruction: Write down the backstory. Why are we even talking about this now?_
+_Instruction: Explain how we got here. Why is this important now?_
 
-- **Story Formula:** "We used to do things this way (X), but something new happened (Y), so now we need to do this (Z)."
+- **Pattern:** Follow this structure: "We used to do things this way, but then we discovered something new, so now we need to make a change."
 
-#### Section 3: Problem and Plan (The Agreement)
+#### Section 3: The Problem
 
-_Instruction: Be very clear. Use a list._
+_Instruction: Be very clear about what's wrong. Use a list._
 
-- **The Problem:** What is broken?
-- **What We Are NOT Doing:** What is outside the plan?
-- **Comparison:** Make a simple table showing how things are now vs. how they will be.
+- **Problem:** What is broken?
+- **Why Now:** What bad things will happen if we do nothing?
 
-#### Section 4: The Changes (Small, Clear Steps)
+#### Section 4: The Boundaries (What We Will and Won't Do)
 
-_Instruction: Break the solution into tiny pieces. This is the most important part of the proposal._
+_Instruction: Set clear limits._
 
-- **For Each Change, Include:**
-  - A clear **Title**
-  - The **Type** of change (Is it fixing a bug? Adding something new?)
-  - The **Target** (What file or part of the system does this affect?)
-  - The **Reason** why it's needed
-  - The **Logic** (A simple explanation of the change, not code)
+- **Rules:** What things must stay the same no matter what?
+- **What We're NOT Doing:** What is outside the scope of this project?
+- **Comparison:** A simple table showing how things are now vs. how they will be.
 
-#### Section 5: A Picture of the Idea (Optional)
+#### Section 5: The Step-by-Step Plan
 
-_Instruction: It's a good idea to include a simple diagram if the plan is hard to explain with words. Use Mermaid to draw it._
+_Instruction: Break the solution into small, clear steps. This is the MOST IMPORTANT part of the plan._
 
-#### Section 6: How to Use It (Optional)
+- **For Each Step:**
+  - **Title**
+  - **Type** (Is it fixing a bug? Adding a feature?)
+  - **Target** (What part of the project does this affect?)
+  - **Reason**
+  - **How it Works** (Just a simple explanation, no code)
 
-_Instruction: Show an example of how someone would use the new thing you're proposing._
+#### Section 6: A Picture of the Plan (Optional)
 
-#### Section 7: Safety and Dangers (Optional)
+_Instruction: Use this if the idea is complicated. A simple diagram helps a lot._
 
-_Instruction: What could go wrong? How will you prevent it? What rules must never be broken?_
+#### Section 7: How to Use the New Thing (Optional)
 
-#### Section 8: How We Know We're Done
+_Instruction: Show what it will be like to use the new feature or system._
 
-_Instruction: Make a checklist of everything that needs to be finished for the project to be considered done._
+#### Section 8: Safety and Risks (Optional)
 
-#### Section 9: Other Ideas We Considered
+_Instruction: List what could go wrong, how to prevent it, and what rules we must follow._
 
-_Instruction: List one or two other ideas you thought about but decided against, and explain why._
+#### Section 9: How We Know We're Done
 
-### 3. Final Check
+_Instruction: A checklist of things that must be finished for the project to be considered complete._
 
-1.  **Check the Tone:** Does it sound professional and confident, but not like a robot? Use active language (e.g., "We will build..." instead of "It will be built...").
-2.  **Check the Links:** If you linked to other company documents, make sure the links work.
+#### Section 10: Other Ideas We Thought About
 
-## Appendix: How to Update a Proposal with Team Feedback
+_Instruction: List one or two other solutions that you decided against, and explain why._
 
-**When to do this:** When a user says "Add the team's feedback to the proposal" or gives you a feedback document (an Alignment Document).
+### 3. The Final Check
 
-**The Big Idea:**
-The [Team Feedback Document](./22_document_alignment.md) is a temporary summary of what everyone agreed on. The original [Proposal](./21_document_proposal.md) must be updated to include these agreements so it becomes the new, final plan.
+1.  **Check the Tone:** Make sure it sounds professional and confident.
+2.  **Check the Links:** Make sure any links to other documents work correctly.
 
-**Instructions (Working with the User):**
+## Extra: How to Update a Plan After a Team Discussion
 
-1.  **Phase 1: Make a Plan (Get Permission):**
-    - **Step 1:** Read the feedback document and pull out every decision the team made.
-    - **Step 2:** Show the user your **Plan**. List every change you are going to make and where in the proposal you will make it.
-    - **Step 3:** Stop and ask the user for permission to start.
+**When to Do This:** When you want to update a plan based on a team meeting or a feedback document.
 
-2.  **Phase 2: Make the Changes (One by One):**
-    - **Loop:** For EACH decision in your plan:
-      1.  **Explain:** Say, "Now I'm adding decision #{N}: {Title}..."
-      2.  **Show:** Show the user the exact text you're about to change or add.
-      3.  **Confirm:** Ask the user, "Is this okay?"
-      4.  **Do It:** If they say yes, make the change to the file.
-      5.  **Repeat** for all decisions.
+**Why We Do This:**
+The feedback from the team in an [Alignment Document](./22_document_alignment.md) is the final decision. The original [Proposal](./21_document_proposal.md) needs to be updated so it perfectly matches what the team agreed on. This way, everyone is working from the same playbook.
+
+**The Update Process (A Mix of Automatic and Manual):**
+
+1.  **Phase 1: Make a Plan (Interactive):**
+    - **Step 1:** The tool reads the feedback document and pulls out all the decisions.
+    - **Step 2:** It shows you a list of all the changes it's going to make to the original plan.
+    - **Step 3:** It waits for you to say, "Okay, go ahead."
+
+2.  **Phase 2: Make the Changes (Step-by-Step):**
+    - **Loop:** For EACH decision from the feedback:
+      1.  **Explain:** It says, "Now I'm adding decision #1: {Title}..."
+      2.  **Preview:** It shows you the exact change it's about to make.
+      3.  **Confirm:** It asks, "Should I make this change?"
+      4.  **Execute:** If you say yes, it updates the file.
+      5.  **Repeat** until all the decisions have been added.
 
 3.  **Phase 3: Clean Up:**
-    - After all changes are done, read the whole document to make sure it flows well.
-    - Delete any old "Open Questions" that have now been answered by the team's decisions.
+    - After all changes are made, the tool makes sure the whole document makes sense.
+    - It removes any old questions that have now been answered.
 
-**Tips for Adding Feedback:**
+**Tips for Updating:**
 
-- **When an Idea Was Rejected:**
-  - If the team said no to the author's original idea:
-    1.  Don't delete it! Move the original idea from the **Solution** section to the **Options We Considered (and rejected)** section.
-    2.  Write the _new_ idea that the team agreed on in the **Solution** section.
-    3.  Add the team's reason for rejecting the old idea.
-- **When New Rules Were Added:**
-  - If the team added a new requirement (like, "This must work on phones"), add it to the **Problem** or **Scope** sections.
+- **When an Idea is Rejected:**
+  - If the team decided against your original idea:
+    1.  Move your original idea from the **Solution** section to the **Options (Rejected)** section.
+    2.  Write the *new* idea the team agreed on in the **Solution** section.
+    3.  Add the team's reasoning for why the old idea was rejected.
+- **When New Rules are Added:**
+  - If the team added a new requirement (like, "This must work on phones"), add it to the **Boundaries** or **Problem** section.
 
-**Goal:** The final proposal should be so clear and well-organized that it looks like it was written that way from the very beginning.
+**Goal:** The final plan should be so clear and well-organized that it looks like it was written that way from the very beginning.

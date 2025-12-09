@@ -1,103 +1,106 @@
-# 21: The Company/Making a Proposal
+# 21: Company/Proposal
 
 > [!DEFINITION] Proposal Document
-> A Proposal is a plan you write down when you want to change, improve, or add something new. You make this plan before you start building anything.
+> A plan written down before starting a big project. It explains an idea for a change or a new feature before anyone starts building it.
 >
 > Sidenote:
-> - Part of: :term[02: The Company/How We Work]{href="./02_process.md"}
-> - Followed by: :term[22: The Company/Getting on the Same Page]{href="./22_document_alignment.md"}
-> - Used to be called: Intent Document, Evolution Document
+> - Part of: :term[02: Company/Process]{href="./02_process.md"}
+> - Followed by: :term[22: Company/Alignment]{href="./22_document_alignment.md"}
+> - Formerly known as: Intent Document, Evolution Document
 
 ## 1. The Core Idea
 
-A Proposal Document is basically like asking your friends for their opinions on an idea before you start working on it (this is often called a "Request for Comments" or RFC).
+A Proposal is like a **"Request for Ideas" (or RFC)**. It's written **one time** for each new project to announce that you want to make a change. We need proposals because big projects are too complicated to figure out all at once; this helps break the larger problem into smaller steps. Each proposal is like one big task, or **one 'Act'** of a project.
 
-You write **one** for each new project to let everyone know you want to make a change. You need a plan because you can't solve a big problem all at once; you have to break it down into smaller steps. One Proposal is like **one big step** in a project.
-
-This plan is **saved forever**. It becomes the official story of why we decided to change things and what we wanted to achieve.
+This document is **saved forever**. It becomes the official story of *why* we decided to make a change, serving as the **main source for understanding our original goal**.
 
 ## 2. Why We Need It
 
-Why write a plan instead of just starting to code right away?
+Why write a plan instead of just starting to code?
 
-- **Getting Past the 'Blank Page' Problem:** A computer can't read your mind. Writing a proposal helps you pull ideas out of your head and put them into words. The best way to start is just to **talk about your idea out loud** and have it written down. This helps when you feel stuck.
-- **A To-Do List for Coders:** This plan is where all the small coding tasks come from. It makes sure every task is a small, clear job that someone can finish in about a day.
-- **Separating 'What' from 'How':** It lets us talk about *what* we want to build separately from *how* we're going to build it. This way, we can agree on the big idea first without arguing about the tiny details of the code.
-- **A Safe Place to Try New Ideas:** You can suggest big, new ideas without messing anything up. If people don't like the idea, no problem! All you have is a text file that you can just throw away.
-- **Instructions for the AI Helper:** Our AI helpers (and our human teammates) need clear instructions. This plan gives them the exact information they need to understand what to do.
+- **To Beat the 'Blank Page' Feeling:** People have ideas, but you can't just tell a computer to "build something cool." A proposal forces us to pull those thoughts out of our heads and put them on paper. **Talking out the idea** is the best way to get started when you feel stuck.
+- **To Create a To-Do List:** This document is the starting point for all the small tasks (or "tickets") that engineers will work on. It makes sure every little job is part of the bigger plan.
+- **To Separate 'What' from 'How':** It keeps the discussion about an idea ("What we want") separate from the technical details ("How we'll build it"). This lets the team agree on the goal first, without getting bogged down in how it will work.
+- **To Safely Explore Big Ideas:** It lets you suggest big, ambitious changes without breaking anything. If the team decides against the idea, you just get rid of the document. No harm done.
+- **To Give Clear Instructions:** AI helpers need very specific instructions to be useful. This document acts as the perfect "prompt" or command that tells the AI (and the human team) exactly what the goal is.
 
 ## 3. The Structure (A Template)
 
-A proposal follows a strict story format to make sure the idea makes sense and is safe to build. These are the usual parts of the story, but you can change them if it helps explain your idea better.
+A Proposal follows a clear, story-like structure to make sure the idea is logical and safe. The sections below are the standard, but you can change them if it helps explain your idea better.
 
-### 3.1. The backstory (How We Got Here)
+### 3.1. The Story So Far (The Evolution)
 
-_The story goes like this:_ "We used to think X, but we learned Y, so now we need to do Z."
+_The storytelling pattern:_ "We used to think X, but then we learned Y, so now we need to do Z."
 
-1.  **What We First Believed:** What was our old way of thinking?
-2.  **The Turning Point:** What new thing did we discover? (Did we find a bug? Get a new idea?)
-3.  **The New Plan:** Why do we have to make a change now?
+1.  **What We Used to Believe:** What was our old way of thinking?
+2.  **The Turning Point:** What new thing did we discover? (A bug, a new request, a new insight).
+3.  **The New Plan:** Why is it important to make this change now?
 
-### 3.2. The Problem and Its Boundaries (Our Agreement)
+### 3.2. The Problem (What Started This)
 
-1.  **The Problem:** Explain exactly what's wrong, in a way that can be proven true or false.
-2.  **What We're *Not* Doing:** Make a clear list of all the things this plan will *not* change. This is super important so nobody gets confused.
-3.  **Before and After:** A simple chart showing how things were before and how they'll be after the change.
+1.  **The Problem:** A simple, clear statement of what is broken or missing.
+2.  **Why It's Urgent:** What might go wrong if we don't fix this now?
 
-### 3.3. The Smallest Steps (The Plan of Attack)
+### 3.3. The Boundaries (The Agreement)
 
-**This is the most important part.** Here, you break your big solution down into tiny, separate pieces of work.
+1.  **Rules We Can't Break:** What things must stay the same? (For example, speed, or working with older versions).
+2.  **What We're NOT Doing:** A clear list of things this project will *not* do.
+3.  **Before vs. After:** A simple chart showing the difference between the old way and the new way.
 
-_How to describe each small step:_
+### 3.4. The Steps (The Small Changes)
 
-- **Title:** A short name for the step.
-- **Type:** Is it fixing a bug, adding something new, cleaning up old code, or reorganizing things?
-- **Where:** Which part of the code does this step affect?
-- **Why:** A quick reason for this specific change.
-- **The Plan:** A simple sketch of the change, like a recipe or a simple drawing. No real code yet!
+**The most important part.** This is where thebig solution is broken down into small, separate steps.
 
-### 3.4. A Picture (Optional)
+_How to write each step:_
 
-_Good idea:_ Include a simple diagram to show how things will work. Use this if words aren't enough to explain your idea.
+- **Title:** A short summary.
+- **Type:** {Fixing a Bug / New Feature / Tidying Up / Reorganizing}
+- **Where:** {Which part of the system / Which file}
+- **Reason:** Why this specific step is needed.
+- **The Plan:** A simple sketch of the change (like a flowchart or an outline). **Do not write actual code here.**
 
-### 3.5. How People Will Use It (Optional)
+### 3.5. A Picture (Optional)
 
-_Good idea:_ Show real examples of how someone will use the new feature. This proves that your design is easy and comfortable to use.
+_Good to have:_ A **diagram** (made with a tool called Mermaid) that shows how things will work, like a flowchart or a map. Use this if words aren't enough to explain a complex idea.
 
-### 3.6. Safety and Risks (Optional)
+### 3.6. Examples of Use (Optional)
 
-1.  **Risks:** What could go wrong?
-2.  **Safeguards:** How will we stop it from going wrong?
-3.  **Golden Rules:** What must NOT change? (For example, "The app must not get any slower.").
+_Good to have:_ Real-life examples of how people will use the new system. This helps prove that the new design is easy to use and makes sense.
 
-### 3.7. How We Know We're Done
+### 3.7. Safety Check (Optional)
 
-A checklist to prove the work is finished (like checking that all tests pass, the instructions are updated, and everything works together).
+1.  **Risks:** What could possibly go wrong?
+2.  **How We'll Prevent Problems:** Our plan to stop those bad things from happening.
+3.  **Guarantees:** What must stay true (for example, "The app must not get any slower").
 
-### 3.8. Other Ideas We Had
+### 3.8. When Are We 'Done'?
 
-List the other ways you thought about solving the problem and explain why you didn't choose them.
+A checklist to prove the work is truly finished (for example, all tests pass, the user guide is updated, etc.).
+
+### 3.9. Other Ideas We Considered
+
+A list of different solutions we thought about and why we decided not to use them.
 
 ---
 
-> [!NOTE] It's Okay to Not Have All the Answers
-> If you're just starting, it's fine to mark some sections with `(Not Sure Yet)` or `(Coming Soon)`. The structure is there to show you what you *need* to figure out eventually.
+> [!NOTE] It's Okay to Start Small
+> If you're just writing down an idea from a conversation, it's fine to leave some sections blank or mark them as `(To be decided)`. The structure is just a guide to help you think everything through.
 
 ## 4. The Life of a Proposal
 
-1.  **Write a Draft:** Someone writes the first version, maybe by talking it out or using an AI helper.
-2.  **Share for Review:** The draft is shared with the team so they can look at it.
-3.  **Discussion:** Everybody talks about the idea and gives feedback.
-4.  **Agreement:** The team agrees on the final plan and writes it down in a special "Agreement" document.
-5.  **Update:** The original proposal is updated to match what everyone agreed on.
-6.  **Lock it in:** The proposal is marked "Accepted" and can't be changed anymore.
-7.  **Build it:** The plan is used to update the main project blueprints.
-8.  **Save it:** The proposal is saved forever as part of the project's history.
+1.  **Draft:** Someone writes the first version, maybe by talking it out or using an AI helper.
+2.  **Review:** It's shared with the team so everyone can see it.
+3.  **Discussion:** The team talks about the plan and gives feedback.
+4.  **Agreement:** Everyone agrees on the final plan in a separate document.
+5.  **Final Polish:** The Proposal is updated with any changes from the discussion.
+6.  **Freeze:** The Proposalis marked as "Accepted" and can't be changed anymore.
+7.  **Action:** The plan is now used to update the main project blueprints.
+8.  **Archive:** The Proposal is saved as part of the project's history.
 
 ## 5. Quick Facts
 
-- **How long it takes:** Usually written in about a day.
-- **How often it's changed:** You only write it once to capture the new idea.
-- **Its purpose:** It's saved forever as a record of the past.
-- **What it's the boss of:** It's the official record of *why* we did something.
-- **Think of it as:** Asking for comments, or one big step in our project.
+- **Time to Create:** About a day.
+- **How Often It's Updated:** It's written once to capture the main idea.
+- **Purpose:** Saved as a historical record.
+- **It Defines:** The *reason* why we did something.
+- **Think of it as:** A request for ideas, or one 'Act' of a bigger story.

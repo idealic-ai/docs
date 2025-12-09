@@ -1,60 +1,60 @@
 # 22: Company/Alignment
 
 > [!DEFINITION] Alignment Document
-> A summary that a computer creates automatically after a team review. It brings together everyone's shared agreements, solved problems, and the exact steps to take next.
->
+> A summary that a computer automatically creates after a team discussion. It writes down what everyone agreed on, how they solved disagreements, and gives clear instructions on what to do next.
+
 > Sidenote:
-> - Part of: :term[02: Company/Process]{href="./02_process.md"}
-> - Made by: :term[51: Prompt/Alignment]{href="./51_prompt_alignment.md"}
-> - Comes before: Updating the :term[20: Company/Specification]{href="./20_document_spec.md"}
+> - Part of: The team's official way of working, the :term[02: Company/Process]{href="./02_process.md"}
+> - Made by: An AI using a :term[51: Prompt/Alignment]{href="./51_prompt_alignment.md"}
+> - Happens Before: Updating the final blueprint, the :term[20: Company/Specification]{href="./20_document_spec.md"}
 
-## 1. The Core Idea
+## 1. What It's For
 
-The Alignment Document is like a **contract** or a final handshake. It summarizes all the comments and decisions made when the team reviewed a new idea (a :term[21: Proposal Document]{href="./21_document_proposal.md"}).
+The Alignment Document is like a **contract**. It summarizes all the comments and decisions the team made when they reviewed a new idea, which is called a :term[21: Proposal Document]{href="./21_document_proposal.md"}.
 
-It's also **disposable**. Think of it like scratch paper. Its job is to filter a messy conversation down to a clean to-do list of **Intents**. This list works like a quick **test** to check a couple of things:
+It’s also **disposable**, meaning you throw it away after you use it. It acts like a filter for a conversation, taking all the messy back-and-forth talk and turning it into a clean list of simple instructions, which we call **Intents**. These instructions are used as a quick check:
 
-- Did we correctly understand all the feedback?
+- Did we correctly understand what everyone said?
 - Is our plan for what to do next perfectly clear?
 
-If the Alignment Document is accurate, the original author uses it to help them **automatically update** the Proposal Document with the team's changes.
+If the Alignment Document is correct, the person who wrote the original idea uses it to help the computer **automatically update** the main plan.
 
-> [!WARNING] DO NOT EDIT MANUALLY & DO NOT COMMIT
-> A computer creates this document. If it's wrong or doesn't quite get what the team meant, **do not edit it**. Instead, add more comments to the team discussion to make things clearer, and then ask the computer to **create the document again**. This makes sure the computer fully understands what's going on.
+> [!WARNING] DON'T EDIT THIS BY HAND & DON'T SAVE IT
+> This document is made by a computer. If it's wrong or misses an important point from the discussion, **do not fix it yourself**. Instead, go back to the original conversation, add more comments to make things clearer, and tell the computer to **make a new one**. This makes sure the computer really understands what the team decided.
 >
-> **DO NOT SAVE THIS FILE** to the project's main history. It's just a temporary tool for the author and the computer to check their understanding. Only the main Proposals and Specifications are saved permanently.
+> **DO NOT SAVE THIS FILE** to the main project. It's just a temporary tool for the author and the computer to check their work. Only the official Proposals and final plans get saved permanently.
 
 ## 2. Why We Need It
 
-Why do we have the computer create this document?
+Why do we have the computer make this document?
 
-- **To Test Understanding:** It proves that the team and the AI are on the same page. If the AI can't summarize the agreement correctly, it means the humans weren't clear enough.
-- **For a Quick Self-Check:** It lets the author quickly check that the computer (and by extension, the team) understood all the feedback before they start making changes.
-- **To Find the Important Stuff:** It turns a long, threaded conversation into a simple list of instructions. It cuts out the noise and keeps the important signals.
-- **To Instruct the Computer:** It gives the AI a verified, final set of instructions for making the changes.
+- **To Check Our Understanding:** It proves that we're all on the same page. If the AI can't write a good summary, it's a sign that the people in the discussion weren't being clear enough.
+- **A Quick Personal Check:** The author can use it to double-check that the computer (and therefore the whole team) understood all the feedback before they start working on the changes.
+- **Clear Instructions:** It turns a long conversation into a simple to-do list. It gets rid of all the extra talk and just keeps the important action items.
+- **A Recipe for the Computer:** Once everyone agrees the summary is right, it becomes the set of instructions the AI uses to make the changes to the plan.
 
-## 3. How It Works
+## 3. The Process
 
-1.  **Discussion:** The team discusses a new idea (the :term[21: Company/Proposal]{href="./21_document_proposal.md"}) in a shared review space.
-2.  **Creation:** An AI agent reads all the comments and creates the Alignment Document (This takes about 5 minutes).
-3.  **Review (Self-Test):** The original author reads the AI's list of tasks.
-    - _Did it capture all the feedback?_
-    - _Is the plan for fixing it correct?_
-4.  **Updating:** The author uses the checked Alignment Document to update the :term[21: Company/Proposal]{href="./21_document_proposal.md"}. This keeps the main Proposal document as the one true source of the plan.
-5.  **Sign-Off:** When the author marks the review as ready, it means "We all agree." The Alignment Document can now be thrown away, and the final changes are saved to the main project files.
+1.  **Talk:** The team discusses a new :term[21: Company/Proposal]{href="./21_document_proposal.md"} online.
+2.  **Summarize:** An AI reads all the comments and creates the Alignment Document (this takes about 5 minutes).
+3.  **Review:** The person who wrote the original idea reads the computer’s summary to see if it’s right.
+    - _Did it include all the feedback?_
+    - _Are the solutions the right ones?_
+4.  **Update:** The author uses the approved summary to update the original :term[21: Company/Proposal]{href="./21_document_proposal.md"}. This makes sure the Proposal is always the one true source for the plan.
+5.  **Finish:** Once everyone agrees the plan is ready, the Alignment Document is thrown away. The final, agreed-upon changes are saved to the official plan.
 
 ## 4. What's Inside
 
-The Alignment Document (the review summary) includes:
+The Alignment Document contains:
 
-- **Overview:** A quick summary of the discussion (what people agreed on, disagreed on, and any cool new ideas).
-- **List of Intents:** A list of small, specific jobs that came from the comments.
-- **Coverage Report:** A checklist proving that every single comment was read and turned into a task, so nothing gets lost.
-- **AI's Opinion:** A fair analysis from the AI about the quality of the team's idea and how well they discussed it.
+- **Overview:** A quick summary of the conversation—what people agreed on, disagreed on, and any new discoveries.
+- **To-Do List:** A list of small, specific tasks based on the comments.
+- **Checklist:** A report that shows how every single comment was turned into a task, so we know nothing was forgotten.
+- **AI's Opinion:** A fair review from the AI about how good the final plan is and how well the team discussed it.
 
-## 5. Key Qualities
+## 5. Key Facts
 
-- **Time:** It takes about 5 minutes for the AI to create it.
-- **Job:** It's a quick test and a guide for updating the main Proposal.
-- **Lifespan:** It's temporary / for one-time use (like a note you throw away).
-- **It's the Truth...:** **...for the review only.** It represents what everyone agreed on at that moment.
+- **How long to make?** About 5 minutes, using an AI command.
+- **What's its job?** To check everyone's understanding and to help update the main plan.
+- **How long does it last?** It's temporary. You use it once and then get rid of it.
+- **What is it the official record of?** The **Team's Agreement**.

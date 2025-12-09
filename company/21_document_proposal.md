@@ -37,13 +37,18 @@ _Narrative Pattern:_ "We thought X, but we learned Y, so we must do Z."
 2.  **The Pivot (Discovery):** What changed? (Bug found, new requirement, insight).
 3.  **The Conclusion:** Why is change necessary now?
 
-### 3.2. Problem & Scope (The Contract)
+### 3.2. The Problem (The Trigger)
 
-1.  **The Problem:** Specific, falsifiable statement of what is broken.
-2.  **The Scope (Negative Space):** Explicit list of what we are **NOT** doing.
-3.  **Comparison:** A "Before vs. After" table to highlight the delta.
+1.  **The Problem:** Specific, falsifiable statement of what is broken or missing.
+2.  **Why Now:** The cost of doing nothing.
 
-### 3.3. Intents (Atomic Changes)
+### 3.3. The Scope (The Contract)
+
+1.  **Invariants:** What must remain true? (Performance, Compatibility, etc.)
+2.  **Negative Space:** Explicit list of what we are **NOT** doing.
+3.  **Comparison:** A "Before vs. After" table.
+
+### 3.4. Intents (Atomic Changes)
 
 **The Core.** Decomposition of the solution into granular, independent units of change.
 
@@ -55,25 +60,25 @@ _Format per Intent:_
 - **Rationale:** Why this specific change is needed (historical context).
 - **Diff/Logic:** Abstract representation of the change (Pseudo-code, Interface, or Logic description). **No implementation code.**
 
-### 3.4. Visual Model (Optional)
+### 3.5. Visual Model (Optional)
 
 _Recommended:_ A **Mermaid Diagram** representing the workflow, state machine, or interaction. Use if the text is insufficient to capture the complexity.
 
-### 3.5. Usage Patterns (Optional)
+### 3.6. Usage Patterns (Optional)
 
 _Recommended:_ Concrete examples of how the new system will be _consumed_. Prove that the design is ergonomic.
 
-### 3.6. Safety & Risks (Optional)
+### 3.7. Safety & Risks (Optional)
 
 1.  **Risks:** What could break?
 2.  **Mitigations:** How do we prevent it?
 3.  **Invariance:** What must remain true (e.g., "Performance must not drop below X").
 
-### 3.7. Completion Criteria
+### 3.8. Completion Criteria
 
 A checklist of verification steps (Tests, Docs, Integration) defining "Done."
 
-### 3.8. Options Considered
+### 3.9. Options Considered
 
 Alternatives that were rejected, and _why_.
 

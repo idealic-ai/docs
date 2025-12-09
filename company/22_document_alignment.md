@@ -58,4 +58,4 @@ The Alignment Document (Review Summary) contains:
 - **Timeframe:** ~5 minutes to generate via Prompt.
 - **Role:** Validation Test & Patch Source for the Proposal.
 - **Nature:** Disposable / One-time use (Local Artifact).
-- **Source of Truth:** **For the Review** (Consensus).
+- **Source of Truth:** **For Consensus**.
