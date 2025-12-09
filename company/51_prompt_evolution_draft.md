@@ -81,6 +81,7 @@ You **MUST** output the resolved configuration as your very first response block
 [x] PR Number:   {pr_number}
 [x] Since Date:  {since_date}
 [x] Output Dir:  {output_dir}
+[x] Filename:    {filename}
 --------------------------------
 Starting analysis...
 ```
@@ -99,7 +100,7 @@ Do **NOT** fetch other file contents, commits, or diffs separately.
 **Step 1: Fetch Prerequisite Docs (Mandatory)**
 You **MUST** use an HTTP tool to fetch the content directly from the URLs below. **Do NOT search on the web.** Fetch the specific URLs.
 
-**CRITICAL:** Process each document separately. Fetch one, read it into context, then fetch the next. Do NOT fetch all at once or combine outputs to avoid truncation.
+**CRITICAL:** Process each document separately. Fetch one, read it into context, then fetch the next. Do NOT fetch all at once or combine outputs to avoid truncation. Dont combine curl commands - run them individually in each tool call.
 
 - [02: Company/Process](https://idealic.academy/raw/en/company/02_process.md)
 - [50: Prompt/Truth](https://idealic.academy/raw/en/company/50_prompt_truth.md)
@@ -111,15 +112,16 @@ Fetch the PR details to identify the Author. Any other user in the comments is c
 gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}" --jq '{author: .user.login, title: .title}'
 ```
 
-**Step 3: Fetch & Read Comments**
+**Step 3: Fetch Comments**
 
 1.  **Fetch to File:** Execute this exact command to save comments to `{OUTPUT_DIR}/{FILENAME}.ndjson`. Replace `{PR_NUMBER}`, `{SINCE_DATE}`, and `{DATE}`.
 
     ```bash
-    gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}/comments?since={SINCE_DATE}&per_page=200" \
+    gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}/comments?since={SINCE_DATE}&per_page=100" \
     --paginate \
-    --jq '
-        map({
+    | jq -s '
+        add
+        | map({
         id,
         body,
         user: .user.login,
@@ -127,26 +129,17 @@ gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}" --jq '{author: .user.login, titl
         html_url,
         diff_hunk: (.diff_hunk | if length > 200 then .[:200] + "..." else . end),
         in_reply_to_id,
-        reactions
+        reactions: (.reactions | del(.total_count, .url) | with_entries(select(.value > 0)))
         })
         | sort_by(.created_at)
         | to_entries
         | map(.value + {index: ("§" + ((.key + 1) | tostring))})
         | group_by(.in_reply_to_id // .id)
         | map(.[0] as $root | [$root] + (.[1:] | map(del(.diff_hunk))))
-    ' \
-    | jq -c '.[]' > {OUTPUT_DIR}/{FILENAME}.ndjson
+        | map(map(del(.in_reply_to_id)))
+        | .[]
+    ' -c > {OUTPUT_DIR}/{FILENAME}.ndjson
     ```
-
-2.  **Read into Context:** Use standard agent tools to read `{OUTPUT_DIR}/{FILENAME}.ndjson`.
-    - **Read Loop (Mandatory):** You MUST read the file in strict 15-line chunks.
-      - Start: `offset=0`, `limit=15`
-      - Next: `offset=15`, `limit=15`
-      - Next: `offset=30`, `limit=15`
-      - ...continue until EOF.
-      - **Prohibited:** Do NOT guess limits, do NOT read "all at once", do NOT let the tool decide. You must explicitly iterate.
-      - **Termination:** Continue strictly until the tool returns "File is empty" or "out of range". Do NOT stop early.
-      - **Expectation:** The file may be large (300+ lines). You might need 30+ iterations. This is normal. Continue until the end.
 
 ### 3. Execution Management
 
@@ -159,17 +152,20 @@ Before starting the analysis, you **MUST** create a Todo list using the `todo_wr
 1.  **Phase 1: Setup & Data** (pending)
     - Fetch Data
     - Create File
-2.  **Phase 2: Overview** (pending)
+2.  **Phase 2: Load Context** (pending)
+    - Count Lines
+    - Read Comments Loop
+3.  **Phase 3: Overview** (pending)
     - Analyze Narrative & Write Overview
-3.  **Phase 3: Intents** (pending)
+4.  **Phase 4: Intents** (pending)
     - Analyze Threads & Write Intents
     - **Rule:** Split complex threads into atomic intents.
-4.  **Phase 4: Coverage Report** (pending)
+5.  **Phase 5: Coverage Report** (pending)
     - Analyze Coverage & Write Table
-5.  **Phase 5: LLM Assessment** (pending)
+6.  **Phase 6: LLM Assessment** (pending)
     - Analyze Quality & Opinion
     - Write Assessment
-6.  **Phase 6: Verification & Cleanup** (pending)
+7.  **Phase 7: Verification & Cleanup** (pending)
     - Run Self-Check
     - Fix Issues (if any)
     - Finalize Document
@@ -202,7 +198,7 @@ You must generate the document by **systematically replacing placeholders** in a
 1.  **Fetch Data:**
     - Fetch Prerequisite Docs (Truth, Process).
     - Fetch PR Details (Identify Author/Reviewers).
-    - Fetch Comments (save to JSON and read into context).
+    - Fetch Comments (save to NDJSON).
     - **Initialize Plan:** Create Todo list.
 
 2.  **Initialize File:**
@@ -231,9 +227,24 @@ You must generate the document by **systematically replacing placeholders** in a
     {{OPINION_PLACEHOLDER}}
     ```
 
-3.  Stop and say: "**Phase 1 Complete: Data fetched & File initialized.**"
+3.  Stop and say: "**Phase 1 Complete: Data fetched & File initialized.**" - add some summary about number of fetched comments and docs
 
-#### 5.2. Phase 2: Overview
+#### 5.2. Phase 2: Load Context
+
+1.  **Read into Context:** Use standard agent tools to read `{OUTPUT_DIR}/{FILENAME}.ndjson`.
+    - **Count Lines (Mandatory):** First, run `wc -l {OUTPUT_DIR}/{FILENAME}.ndjson` to get the total number of lines. Each line represents one thread.
+    - **Read Loop (Mandatory):** Use the line count to calculate the exact number of iterations required (Total Lines / 50). You MUST read the file in strict 50-line chunks.
+      - Start: `offset=0`, `limit=50`
+      - Next: `offset=50`, `limit=50`
+      - Next: `offset=100`, `limit=50`
+      - ...continue until you reach the calculated end.
+      - **Prohibited:** Do NOT read "all at once". Do NOT stop early.
+      - **Termination:** Continue strictly until you have read all lines reported by `wc`.
+      - **Expectation:** The file may be large (500+ lines). You might need 20+ iterations. This is normal. Continue until the end. You need to read at least number of lines returned by wc. Dont stop arbitarily.
+
+2.  Stop and say: "**Phase 2 Complete: Context loaded.**" - add summary about number of lines read
+
+#### 5.3. Phase 3: Overview
 
 **Analysis:**
 
@@ -255,9 +266,9 @@ Synthesize the Overview content by answering these 8 questions.
     - **Immediately** call `search_replace` to swap `{{OVERVIEW_PLACEHOLDER}}` with the generated text.
     - **Do NOT** output the text to chat first. The tool call is the generation.
 
-2.  Stop and say: "**Phase 2 Complete: Overview inserted.**"
+2.  Stop and say: "**Phase 2 Complete: Overview inserted.**" - add a small summary about character of PR
 
-#### 5.3. Phase 3: Intents
+#### 5.4. Phase 4: Intents
 
 **Analysis:**
 
@@ -340,9 +351,9 @@ If you are tempted to write a Title or Intent that contains "AND" or commas to l
     - If there are NO questions, return an empty string.
     - **Immediately** call `search_replace` to swap `{{QUESTIONS_PLACEHOLDER}}`.
 
-3.  Stop and say: "**Phase 3 Complete: Intents and Questions inserted.**"
+3.  Stop and say: "**Phase 4 Complete: Intents and Questions inserted.**" - add summary about intents, how many need attention and how many were addressed
 
-#### 5.4. Phase 4: Coverage Report
+#### 5.5. Phase 5: Coverage Report
 
 **Analysis (Audit & Coverage Check):**
 
@@ -402,9 +413,9 @@ If you are tempted to write a Title or Intent that contains "AND" or commas to l
     5.  Include **ALL** comments.
     6.  **Monotonic Order:** Sorted by Index with NO GAPS.
 
-2.  Stop and say: "**Phase 4 Complete: Coverage table inserted.**"
+2.  Stop and say: "**Phase 5 Complete: Coverage table inserted.**" - add summary
 
-#### 5.5. Phase 5: LLM Assessment
+#### 5.6. Phase 6: LLM Assessment
 
 **Analysis:**
 
@@ -436,9 +447,9 @@ Reflect on the generated content and the original discussion.
     3.  **Что изучить:** Is there anything we can read or learn to get more details about?
     4.  **Вопросы:** Are there any questions that need to be answered before we can move on?
 
-2.  Stop and say: "**Phase 5 Complete: LLM Assessment inserted.**"
+2.  Stop and say: "**Phase 6 Complete: LLM Assessment inserted.**" - add short summary about your opinion
 
-#### 5.6. Phase 6: Verification & Cleanup
+#### 5.7. Phase 7: Verification & Cleanup
 
 1.  **Deep Reconsideration:**
     - Stop and think. Re-read the JSON comments and your generated Intents.
@@ -457,7 +468,7 @@ Reflect on the generated content and the original discussion.
     - [ ] **Technical Details Preserved**: Flags, args, types, preserved in text.
     - [ ] **Cleanup**: `{OUTPUT_DIR}/{FILENAME}.ndjson` deleted.
 
-5.  Stop and say: "**Phase 6 Complete: Document finalized and cleanup done.**"
+5.  Stop and say: "**Phase 7 Complete: Document finalized and cleanup done.**" - add summary, incl time passed
 
 ### 6. Final Output
 
@@ -468,7 +479,3 @@ At the very end of your response (after generating the file), you **MUST** outpu
 - [ ] **Comments Validated**: All relevant comments mapped.
 - [ ] **Ghost References Fixed**: Verified every Intent # in table has a corresponding section. Add more intents if necessary.
 - [ ] **Technical Details Preserved**: Flags, args, types, proposed function names, and other technical details need to be preserved in text.
-
-```
-
-```
