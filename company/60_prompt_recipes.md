@@ -14,7 +14,7 @@
 > **User:**
 > "I want to write a new proposal.
 >
-> First, **LOAD THE RULES** into your context:
+> First, **LOAD THE RULES** into your context and **FOLLOW THEM EXACTLY**
 >
 > - `curl https://idealic.academy/raw/en/company/52_prompt_proposal.md` (Proposal Prompt)
 >
@@ -38,7 +38,7 @@
 > **User:**
 > "Generate an Alignment Document for PR #123.
 >
-> First, **LOAD THE RULES**:
+> First, **LOAD THE RULES** and **FOLLOW THEM EXACTLY**:
 >
 > - `curl https://idealic.academy/raw/en/company/51_prompt_alignment.md` (Alignment Prompt)
 >
@@ -65,7 +65,7 @@
 > **User:**
 > "I have verified the Alignment Document at `specs/alignments/2023-11-04_auth_review.md`.
 >
-> First, **LOAD THE RULES**:
+> First, **LOAD THE RULES** and **FOLLOW THEM EXACTLY**:
 >
 > - `curl https://idealic.academy/raw/en/company/52_prompt_proposal.md` (Proposal Prompt)
 >
