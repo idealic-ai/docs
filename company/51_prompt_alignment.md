@@ -89,6 +89,13 @@ Starting analysis...
 
 ### 2. Data Retrieval
 
+> [!WARNING] NO TEMP FILES
+> **DO NOT** save downloaded content to temporary files (e.g., `process.md`, `pr.json`), unless explicitly authorized.
+> **Reason:** Temporary files clutter the workspace and are forbidden by Invariance Rule #1.
+> **Exception:** The ONLY allowed temporary file is `{OUTPUT_DIR}/{FILENAME}.ndjson` for raw comments.
+>
+> All other commands (curl, gh api) must output directly to the tool's standard output.
+
 **RESTRICTION:** You are permitted to make ONLY the following external requests:
 
 1.  **HTTP GET** via curl to `https://idealic.academy/raw/simple-ru/company/02_process.md`
@@ -97,16 +104,24 @@ Starting analysis...
 4.  **GitHub Comments API** call (via the one-liner below)
 
 **Step 1: Fetch Prerequisite Docs (Mandatory)**
-Fetch the specific URLs. Process each document separately.
+Fetch the specific URLs. **Process each document separately.**
 
-```bash
-# 1. Process & Truth
-curl https://idealic.academy/raw/simple-ru/company/02_process.md
-curl https://idealic.academy/raw/simple-ru/company/50_prompt_truth.md
+1.  **Process:**
 
-# 2. Alignment Definition
-curl https://idealic.academy/raw/simple-ru/company/22_document_alignment.md
-```
+    ```bash
+    curl -s https://idealic.academy/raw/simple-ru/company/02_process.md
+    ```
+
+2.  **Truth:**
+
+    ```bash
+    curl -s https://idealic.academy/raw/simple-ru/company/50_prompt_truth.md
+    ```
+
+3.  **Alignment Definition:**
+    ```bash
+    curl -s https://idealic.academy/raw/simple-ru/company/22_document_alignment.md
+    ```
 
 **Step 2: Fetch PR Details (Identify Roles)**
 Fetch the PR details to identify the Author.
