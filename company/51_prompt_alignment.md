@@ -103,6 +103,8 @@ Starting analysis...
 3.  **GitHub Pull Request API** call (to identify author)
 4.  **GitHub Comments API** call (via the one-liner below)
 
+DO NOT attempt to fetch PR diff or list of commits. this is beyond your scope.
+
 **Step 1: Fetch Prerequisite Docs (Mandatory)**
 Fetch the specific URLs. **Process each document separately.**
 
