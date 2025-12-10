@@ -67,6 +67,21 @@ When the user requests an Alignment Document, you **MUST** first resolve the inp
       "type": "string",
       "description": "Target language for the output document (e.g., Russian, English). Defaults to Russian.",
       "default": "Russian"
+    },
+    "auto_post": {
+      "type": "boolean",
+      "description": "If true, posts/updates the report on GitHub.",
+      "default": false
+    },
+    "merge_alignments": {
+      "type": "boolean",
+      "description": "If true, merges with previous alignment. If false, ignores previous.",
+      "default": true
+    },
+    "include_instructions": {
+      "type": "boolean",
+      "description": "If false, omits the auto-generation warning (top) and agent instructions (bottom). Useful for clean output.",
+      "default": true
     }
   }
 }
@@ -90,6 +105,9 @@ You **MUST** output the resolved configuration as your very first response block
 [x] Output Dir:  {output_dir}
 [x] Filename:    {filename}
 [x] Language:    {language}
+[x] Auto Post:   {auto_post}
+[x] Merge:       {merge_alignments}
+[x] Instructions:{include_instructions}
 --------------------------------
 Starting analysis...
 ```
@@ -190,8 +208,9 @@ You **MUST** create a Todo list using the `todo_write` tool.
 6.  **Phase 6: Coverage Report** (pending)
 7.  **Phase 7: LLM Assessment** (pending)
 8.  **Phase 8: Verification & Cleanup** (pending)
+9.  **Phase 9: Auto-Post** (pending)
 
-**Phase Completion Protocol:**
+**IMPORTANT: Phase Completion Protocol:**
 After finishing **EACH** phase (and before starting the next), you **MUST**:
 
 1.  **Report:** Output a 1-2 line summary of the work done (including specific counts, e.g., "Analyzed 5 threads, identified 3 intents").
@@ -232,7 +251,11 @@ After finishing **EACH** phase (and before starting the next), you **MUST**:
 
 1.  **Fetch Data:** Docs, PR, Comments.
 2.  **Initialize File:**
-    - Create `{OUTPUT_DIR}/{FILENAME}.md` with the skeleton **EXACTLY** (Translating all static text and headers to **{language}**):
+    - Create `{OUTPUT_DIR}/{FILENAME}.md` with the skeleton.
+    - **Header Condition:** If `include_instructions` is **true**, include the Warning Block (`> [!WARNING]...`). If **false**, skip it.
+    - **Footer Condition:** If `include_instructions` is **true**, include the Instructions for Agent (`## Instructions...`). If **false**, skip it.
+
+    **Skeleton Template:**
 
     ```markdown
     # Alignment: {DATE}
@@ -345,21 +368,30 @@ Goal: **Hyper-Granular Atomicity**.
 
 **Goal:** Harmonize the "Freshly Generated Intents" (Phase 4) with the "Previous Alignment".
 
-1.  **Fetch Previous Alignment:**
-    - Execute: `gh api "repos/{OWNER}/{REPO}/issues/{PR_NUMBER}/comments" --jq 'map(select(.body | contains("# Alignment"))) | last | .body // ""'`
-    - **Load into Context:** Treat the output as the "Baseline".
+1.  **Check Config:**
+    - If `merge_alignments` is **false**: Skip steps 2-3. Use "Fresh Draft Intents" directly. Proceed to rewrite.
 
-2.  **Merge Logic:**
-    - **Source:** Use "Fresh Draft Intents" (from Phase 4 output) and "Baseline" (from Step 1).
+2.  **Fetch Previous Alignment:**
+    - Execute to get **ID** and **Body** (output to stdout):
+      ```bash
+      gh api "repos/{OWNER}/{REPO}/issues/{PR_NUMBER}/comments" \
+      --jq 'map(select(.body | contains("# Alignment"))) | sort_by(.created_at) | last | {id: .id, body: .body}'
+      ```
+    - **Action:** Read the output.
+    - **Store:** Save `.body` as "Baseline" for merging.
+    - **CRITICAL MEMORY:** Output the found `id` in your Phase 5 Summary (e.g., "Found existing Alignment Comment ID: 12345"). You WILL need this for Phase 9.
+
+3.  **Merge Logic:**
+    - **Source:** Use "Fresh Draft Intents" (from Phase 4 output) and "Baseline" (from Step 2).
     - **Compare:** Match Fresh against Baseline (by Topic/Context).
     - **Match:** Use the **Baseline Number** (`#{N}`) and **Baseline Title** (if still accurate). Update the Status/Reasoning based on the Fresh analysis.
     - **New:** If a Fresh Intent is _truly new_, assign a **New Number** (incrementing from the highest Baseline number).
     - **Retain:** If a Baseline Intent is _not_ in the Fresh list (not currently discussed), **keep it exactly as is** (Status/Title unchanged). Do NOT mark as `Outdated` solely due to absence.
 
-3.  **Generation (Merge & Write):**
+4.  **Generation (Merge & Write):**
     - **Logic:**
-      - **If Previous Alignment Exists:** Merge "Fresh Draft Intents" with "Baseline".
-      - **If No Previous Alignment:** Use "Fresh Draft Intents" directly.
+      - **If Previous Alignment Exists AND Merge=True:** Merge "Fresh Draft Intents" with "Baseline".
+      - **Else:** Use "Fresh Draft Intents" directly.
     - **Action:** Swap `{{INTENTS_PLACEHOLDER}}` with the **Final List**.
     - **Action:** Swap `{{QUESTIONS_PLACEHOLDER}}`.
     - **Content Template:**
@@ -448,6 +480,28 @@ Goal: **Hyper-Granular Atomicity**.
       ```
 3.  **Read File:** Verify placeholders gone.
 4.  **Cleanup:** Delete `{OUTPUT_DIR}/{FILENAME}.ndjson`.
+
+#### 5.9. Phase 9: Auto-Post (Optional)
+
+1.  **Check Config:**
+    - If `auto_post` is **false**: Mark as completed and **EXIT**.
+
+2.  **Prepare Content:**
+    - Read the final `{OUTPUT_DIR}/{FILENAME}.md` content.
+
+3.  **Post or Update:**
+    - **Check:** Look at your Phase 5 Summary. Did you find an Alignment Comment ID?
+    - **Update (PATCH):** If ID exists (replace `{ID}` with the actual number):
+      ```bash
+      gh api -X PATCH "repos/{OWNER}/{REPO}/issues/comments/{ID}" --input {OUTPUT_DIR}/{FILENAME}.md -F body
+      ```
+    - **Create (POST):** If ID was null/missing:
+      ```bash
+      gh api -X POST "repos/{OWNER}/{REPO}/issues/{PR_NUMBER}/comments" --input {OUTPUT_DIR}/{FILENAME}.md -F body
+      ```
+      _(Note: Use `--input` with filename to ensure content is read, not the path string)_
+
+4.  **Cleanup:** None (No temp files used).
 
 ### 6. Final Output
 
