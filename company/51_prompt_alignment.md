@@ -15,7 +15,7 @@
 1. **Transient Storage:** You MAY create `{OUTPUT_DIR}/{FILENAME}.ndjson` to store raw comments. Do NOT create other temporary files.
 2. **One-Pass Fetching:** Fetch all necessary data (comments) in a single API call per resource. Do NOT paginate manually or loop.
 3. **Validation Source:** Always validate against the **existing context** (JSON), never re-fetch for validation.
-4. **Language:** The output document MUST be in **Russian** (except for code/technical terms).
+4. **Language:** The output document MUST be in the **Target Language** specified by the input parameter (except for code/technical terms and original comment quotes).
 5. **Completeness:** Every single comment must be accounted for in the Coverage Report.
 6. **No Restarts:** If issues are detected (e.g., missing items, coverage gaps), do NOT restart the process. Fix the specific issue (add intent, correct wording) and continue.
 7. **Latent Analysis (No Scripts):** Do NOT use scripts (Python/Shell) for analysis, counting, or synthesis. All processing MUST be done "in context" using the LLM's latent capabilities.
@@ -35,6 +35,7 @@ When the user requests an Alignment Document, you **MUST** first resolve the inp
 ```json
 {
   "type": "object",
+  "required": ["since_date", "repo", "pr_number", "output_dir", "filename", "language"],
   "properties": {
     "since_date": {
       "type": "string",
@@ -61,6 +62,11 @@ When the user requests an Alignment Document, you **MUST** first resolve the inp
       "type": "string",
       "description": "Filename for the output file. Defaults to the since_date. Omit extension.",
       "default": "{SINCE_DATE}"
+    },
+    "language": {
+      "type": "string",
+      "description": "Target language for the output document (e.g., Russian, English). Defaults to Russian.",
+      "default": "Russian"
     }
   }
 }
@@ -73,7 +79,7 @@ When the user requests an Alignment Document, you **MUST** first resolve the inp
 3.  **Defaults:** Apply defaults for missing optional parameters.
 
 **Step 1: Output Configuration (First Response)**
-You **MUST** output the resolved configuration as your very first response block:
+You **MUST** output the resolved configuration as your very first response block, use default value.
 
 ```text
 > Alignment Config:
@@ -83,6 +89,7 @@ You **MUST** output the resolved configuration as your very first response block
 [x] Since Date:  {since_date}
 [x] Output Dir:  {output_dir}
 [x] Filename:    {filename}
+[x] Language:    {language}
 --------------------------------
 Starting analysis...
 ```
@@ -146,12 +153,14 @@ gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}" --jq '{author: .user.login, titl
         | sort_by(.[0].created_at)
         | flatten
         | to_entries
-        | map(.value + {index: ("§" + ((.key + 1) | tostring))} | del(.html_url))
+        | map(.value + {index: ("§" + ((.key + 1) | tostring)), anchor: (.value.html_url | split("#") | last)} | del(.html_url))
         | group_by(.in_reply_to_id // .id)
         | sort_by(.[0].index | ltrimstr("§") | tonumber)
         | map(.[0] as $root | [$root] + (.[1:] | map(del(.diff_hunk))))
         | map(map({
         id,
+        anchor: .anchor,
+        path,
         body,
         user: .user.login,
         created_at,
@@ -188,7 +197,20 @@ You **MUST** create a Todo list using the `todo_write` tool.
 - :term[02: Company/Process]{href="https://idealic.academy/en/company/02_process.md/"}
 - :term[50: Prompt/Truth]{href="https://idealic.academy/en/company/50_prompt_truth.md/"}
 
-**Constraint:** The output document must be in **Russian**.
+**Constraint:** The output document must be in the **Target Language** ({language}).
+
+- **Translate:** All headings, descriptions, analysis, intent titles, reasoning, and structural text.
+- **Keep Original:** Technical terms, file paths, code snippets, and direct quotes from comments.
+- **Glossary (if Russian):**
+  - Alignment: Согласование
+  - Proposal: Предложение
+  - Intent: Намерение
+  - Agreed: Согласовано
+  - Done: Готово
+  - Rejected: Отклонено
+  - Discussion: Обсуждение
+  - Clarification: Уточнение
+  - Deferred: Отложено
 
 **Completeness is the priority:**
 
@@ -202,7 +224,7 @@ You **MUST** create a Todo list using the `todo_write` tool.
 
 1.  **Fetch Data:** Docs, PR, Comments.
 2.  **Initialize File:**
-    - Create `{OUTPUT_DIR}/{FILENAME}.md` with the skeleton **EXACTLY**:
+    - Create `{OUTPUT_DIR}/{FILENAME}.md` with the skeleton **EXACTLY** (Translating all static text and headers to **{language}**):
 
     ```markdown
     # Alignment: {DATE}
@@ -212,25 +234,25 @@ You **MUST** create a Todo list using the `todo_write` tool.
     - Source: {PR_LINK}
     - Range: {SINCE_DATE} - {NOW}
 
-    > [!WARNING] АВТО-ГЕНЕРАЦИЯ: НЕ ПРАВИТЬ, НЕ КОММИТИТЬ
-    > Этот документ — **инструмент синхронизации**. Он служит:
+    > [!WARNING] AUTO-GENERATION: DO NOT EDIT, DO NOT COMMIT
+    > This document is a **synchronization tool**. It serves as:
     >
-    > 1. **Валидатором:** Проверяет, что 100% комментариев услышаны.
-    > 2. **Синтезатором:** Превращает дискуссию в готовый план (Consensus).
-    > 3. **Промптом:** Дает инструкции для обновления Proposal.
+    > 1. **Validator:** Checks that 100% of comments are heard.
+    > 2. **Synthesizer:** Turns discussion into a plan (Consensus).
+    > 3. **Prompt:** Provides instructions for updating the Proposal.
     >
-    > Если документ неверен, **не правьте текст руками**. Добавьте комментарии в PR и **перегенерируйте**, чтобы замкнуть цикл обратной связи.
+    > If the document is incorrect, **do not edit manually**. Add comments to the PR and **regenerate** to close the feedback loop.
     >
-    > **НЕ ДОБАВЛЯЙТЕ ЭТОТ ФАЙЛ В GIT.**
+    > **DO NOT ADD THIS FILE TO GIT.**
     >
-    > - Подробнее: [22: Alignment](https://idealic.academy/raw/en/company/22_document_alignment.md)
-    > - В Git попадают только: [Proposal](https://idealic.academy/raw/en/company/21_document_proposal.md) и [Specification](https://idealic.academy/raw/en/company/20_document_spec.md).
+    > - Details: [22: Alignment](https://idealic.academy/raw/en/company/22_document_alignment.md)
+    > - Git only allows: [Proposal](https://idealic.academy/raw/en/company/21_document_proposal.md) and [Specification](https://idealic.academy/raw/en/company/20_document_spec.md).
 
-    ## Обзор
+    ## Overview
 
     {{OVERVIEW_PLACEHOLDER}}
 
-    ## Список Намерений (Consensus)
+    ## List of Intents (Consensus)
 
     {{INTENTS_PLACEHOLDER}}
 
@@ -240,7 +262,7 @@ You **MUST** create a Todo list using the `todo_write` tool.
 
     {{OPINION_PLACEHOLDER}}
 
-    ## Инструкции для Агента (Next Step)
+    ## Instructions for Agent (Next Step)
 
     > [!IMPORTANT] Context Loading
     > Before proceeding with updates to the Proposal or Specification, you **MUST** load the following context files to ensure full alignment with company standards:
@@ -267,14 +289,14 @@ You **MUST** create a Todo list using the `todo_write` tool.
 **Analysis:**
 Answer these 8 questions explicitly in a bulleted list:
 
-1.  **Чего хотел ревьюер:**
-2.  **С чем согласился автор:**
-3.  **С чем автор НЕ согласился:**
-4.  **Общий контекст:**
-5.  **Недопонимания:**
-6.  **Открытые вопросы:**
-7.  **Новые открытия:**
-8.  **Связанные документы:**
+1.  **Reviewer's Goal:**
+2.  **Author's Agreement:**
+3.  **Author's Disagreement:**
+4.  **General Context:**
+5.  **Misunderstandings:**
+6.  **Open Questions:**
+7.  **New Discoveries:**
+8.  **Related Documents:**
 
 **Generation:**
 
@@ -287,6 +309,21 @@ Goal: **Hyper-Granular Atomicity**.
 
 - **Split Rule:** No "AND". Split complex threads.
 - **Atomicity:** One Intent = One Distinct Technical Change.
+- **Author's Decision Logic:**
+  - **Explicit:** Use the author's verbal reply if it contains a clear decision.
+  - **Implicit (Emoji):** If no verbal reply exists, check for emojis on the _reviewer's_ comment (e.g., 👍, 🚀, 👀). Assume these are from the author and interpret them as agreement/acknowledgment.
+  - **No Hallucination:** If neither exists, mark as "Pending/No Response". DO NOT invent a decision.
+- **Status Definitions:**
+  - **Done:** Author explicitly states completion AND no contradictory follow-up exists.
+  - **Agreed:** Consensus reached, action pending.
+  - **Rejected:** Author declined with reasoning, no further pushback.
+  - **Discussion:** Active debate, no clear consensus yet.
+  - **Clarification:** Missing context or ambiguous requirements.
+  - **Deferred:** Valid point, but moved to future work/ticket.
+- **Contextual Interpretation:**
+  - **Markdown Files (`*.md`):** Comments often refer to **Specification** or **Proposal** logic. (e.g., "Remove flag" = "Update spec to remove flag", not necessarily "Delete code immediately").
+  - **Code Files:** Comments refer to implementation details.
+  - **Action:** Explicitly state the context (Spec vs Code) in the `Reasoning` or `Intent` fields if ambiguous.
 
 **Generation:**
 
@@ -294,21 +331,21 @@ Goal: **Hyper-Granular Atomicity**.
 - **Content Template:**
 
   ````markdown
-  ### {N}. {Short Title in Russian}
+  ### {N}. {Short Title}
 
-  - **Категория:** {Логика / Архитектура / ...}
-  - **Намерение:** {Single core desire}
-  - **Подход автора:** {Initial approach}
-  - **Предложение ревьюера:** {Suggestion}
-  - **Решение автора:** {Final decision}
-  - **Реакция ревьюера:** {Follow-up}
-  - **Обоснование:** {Why}
-  - **Статус:** {Согласовано / Недопонимание / ...}
-  - **Результат:** {Briefly: Vision changed? Agreement?}
+  - **Category:** {Logic / Architecture / ...}
+  - **Intent:** {Single core desire}
+  - **Author's Approach:** {Initial approach}
+  - **Reviewer's Proposal:** {Suggestion}
+  - **Author's Decision:** {Verbal reply OR Emoji on reviewer's comment. If none: "Pending"}
+  - **Reviewer's Reaction:** {Follow-up}
+  - **Reasoning:** {Why}
+  - **Status:** {Agreed / Done / Rejected / Discussion / Clarification / Deferred}
+  - **Result:** {Briefly: Vision changed? Agreement?}
 
-  > [{Reviewer Name}]({ID}): "{Short rephrase}"
+  > [{Reviewer Name}]({anchor}): "{Short rephrase}"
   >
-  > [{Author Name}]({ID}): "{Short rephrase}"
+  > [{Author Name}]({anchor}): "{Short rephrase}"
 
   ```{lang}
   {1-3 lines max of diff hunk code}
@@ -335,18 +372,18 @@ Goal: **Hyper-Granular Atomicity**.
   ```markdown
   ---
 
-  ## Отчет о покрытии
+  ## Coverage Report
 
-  | Index         | Date/Time      | User   | Title (Summary) | Intent    | Reaction |
-  | ------------- | -------------- | ------ | --------------- | --------- | -------- |
-  |               | **{Date}**     |        |                 |           |          |
-  | [{Idx}]({ID}) | {dd.MM HH:mm}  | {User} | {4-6 words}     | #{N}      | {Emojis} |
-  | [{Idx}]({ID}) | {dd.MM HH:mm}  | {User} | └ {4-6 words}   | #{M},#{N} | {Emojis} |
-  |               | **{NextDate}** |        |                 |           |          |
-  | [{Idx}]({ID}) | {dd.MM HH:mm}  | {User} | {4-6 words}     | -         | {Emojis} |
-  | [{Idx}]({ID}) | {dd.MM HH:mm}  | {User} | ├ {4-6 words}   | #{N}      | {Emojis} |
-  | [{Idx}]({ID}) | {dd.MM HH:mm}  | {User} | └ {4-6 words}   | #{N}      | {Emojis} |
-  | [{Idx}]({ID}) | {dd.MM HH:mm}  | {User} | {4-6 words}     | -         | {Emojis} |
+  | Index             | Date/Time      | User   | Title (Summary) | Intent    | Reaction |
+  | ----------------- | -------------- | ------ | --------------- | --------- | -------- |
+  |                   | **{Date}**     |        |                 |           |          |
+  | [{Idx}]({anchor}) | {dd.MM HH:mm}  | {User} | {4-6 words}     | #{N}      | {Emojis} |
+  | [{Idx}]({anchor}) | {dd.MM HH:mm}  | {User} | └ {4-6 words}   | #{M},#{N} | {Emojis} |
+  |                   | **{NextDate}** |        |                 |           |          |
+  | [{Idx}]({anchor}) | {dd.MM HH:mm}  | {User} | {4-6 words}     | -         | {Emojis} |
+  | [{Idx}]({anchor}) | {dd.MM HH:mm}  | {User} | ├ {4-6 words}   | #{N}      | {Emojis} |
+  | [{Idx}]({anchor}) | {dd.MM HH:mm}  | {User} | └ {4-6 words}   | #{N}      | {Emojis} |
+  | [{Idx}]({anchor}) | {dd.MM HH:mm}  | {User} | {4-6 words}     | -         | {Emojis} |
   ```
 
   **Rules:**
@@ -373,7 +410,7 @@ Goal: **Hyper-Granular Atomicity**.
     - **Action:** Run the following `sed` command to batch-replace all standalone Comment IDs with full GitHub URLs.
     - **Command:**
       ```bash
-      sed -i '' 's|](\([0-9]\{7,\}\))|](https://github.com/{OWNER}/{REPO}/pull/{PR_NUMBER}#issuecomment-\1)|g' {OUTPUT_DIR}/{FILENAME}.md
+      sed -i '' -E 's~]\((discussion_r[0-9]+|issuecomment-[0-9]+|pullrequestreview-[0-9]+)\)~](https://github.com/{OWNER}/{REPO}/pull/{PR_NUMBER}#\1)~g' {OUTPUT_DIR}/{FILENAME}.md
       ```
 3.  **Read File:** Verify placeholders gone.
 4.  **Cleanup:** Delete `{OUTPUT_DIR}/{FILENAME}.ndjson`.
