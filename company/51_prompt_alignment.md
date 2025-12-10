@@ -186,9 +186,17 @@ You **MUST** create a Todo list using the `todo_write` tool.
 2.  **Phase 2: Load Context** (pending)
 3.  **Phase 3: Overview** (pending)
 4.  **Phase 4: Intents** (pending)
-5.  **Phase 5: Coverage Report** (pending)
-6.  **Phase 6: LLM Assessment** (pending)
-7.  **Phase 7: Verification & Cleanup** (pending)
+5.  **Phase 5: Evolution (Merge)** (pending)
+6.  **Phase 6: Coverage Report** (pending)
+7.  **Phase 7: LLM Assessment** (pending)
+8.  **Phase 8: Verification & Cleanup** (pending)
+
+**Phase Completion Protocol:**
+After finishing **EACH** phase (and before starting the next), you **MUST**:
+
+1.  **Report:** Output a 1-2 line summary of the work done (including specific counts, e.g., "Analyzed 5 threads, identified 3 intents").
+2.  **Track:** Call `todo_write` to mark the current phase as `completed` and the next as `in_progress`.
+3.  **Constraint:** NEVER skip this step. The plan must remain in sync with reality.
 
 ### 4. Methodology: Intelligent Synthesis
 
@@ -200,9 +208,8 @@ You **MUST** create a Todo list using the `todo_write` tool.
 **Constraint:** The output document must be in the **Target Language** ({language}).
 
 - **Translate:** All headings, descriptions, analysis, intent titles, reasoning, and structural text.
-- **Keep Original:** Technical terms, file paths, code snippets, and direct quotes from comments.
+- **Keep Original:** Technical terms, file paths, code snippets, direct quotes, and the word **"Alignment"** (in headers).
 - **Glossary (if Russian):**
-  - Alignment: Согласование
   - Proposal: Предложение
   - Intent: Намерение
   - Agreed: Согласовано
@@ -211,6 +218,7 @@ You **MUST** create a Todo list using the `todo_write` tool.
   - Discussion: Обсуждение
   - Clarification: Уточнение
   - Deferred: Отложено
+  - Outdated: Устарело
 
 **Completeness is the priority:**
 
@@ -281,8 +289,8 @@ You **MUST** create a Todo list using the `todo_write` tool.
     - **Count Comments:** Run `jq 'length' {OUTPUT_DIR}/{FILENAME}.ndjson | awk '{s+=$1} END {print s}'`.
     - **Report:** Output these numbers clearly (e.g., "Found 45 threads containing 150 comments").
 
-2.  **Read into Context:** Use standard agent tools to read `{OUTPUT_DIR}/{FILENAME}.ndjson`.
-    - **Read Loop (Mandatory):** Read in 25-line chunks until end.
+2.  **Read into Context:**
+    - Read `{OUTPUT_DIR}/{FILENAME}.ndjson` (25-line chunks).
 
 #### 5.3. Phase 3: Overview
 
@@ -320,45 +328,71 @@ Goal: **Hyper-Granular Atomicity**.
   - **Discussion:** Active debate, no clear consensus yet.
   - **Clarification:** Missing context or ambiguous requirements.
   - **Deferred:** Valid point, but moved to future work/ticket.
+  - **Outdated:** Intent from previous alignment, not active in current scope.
 - **Contextual Interpretation:**
   - **Markdown Files (`*.md`):** Comments often refer to **Specification** or **Proposal** logic. (e.g., "Remove flag" = "Update spec to remove flag", not necessarily "Delete code immediately").
   - **Code Files:** Comments refer to implementation details.
   - **Action:** Explicitly state the context (Spec vs Code) in the `Reasoning` or `Intent` fields if ambiguous.
 
-**Generation:**
+**Draft Generation (Mandatory):**
 
-- Swap `{{INTENTS_PLACEHOLDER}}`.
-- **Content Template:**
+1.  **Generate to Context:** Output the full list of "Fresh Intents" based _only_ on the current analysis into the chat context.
+2.  **Format:** Use the standard Intent template.
+3.  **Label:** Precede with `### Fresh Draft Intents`.
+4.  **Do NOT** write to the file yet.
 
-  ````markdown
-  ### {N}. {Short Title}
+#### 5.5. Phase 5: Evolution (Merge)
 
-  - **Category:** {Logic / Architecture / ...}
-  - **Intent:** {Single core desire}
-  - **Author's Approach:** {Initial approach}
-  - **Reviewer's Proposal:** {Suggestion}
-  - **Author's Decision:** {Verbal reply OR Emoji on reviewer's comment. If none: "Pending"}
-  - **Reviewer's Reaction:** {Follow-up}
-  - **Reasoning:** {Why}
-  - **Status:** {Agreed / Done / Rejected / Discussion / Clarification / Deferred}
-  - **Result:** {Briefly: Vision changed? Agreement?}
+**Goal:** Harmonize the "Freshly Generated Intents" (Phase 4) with the "Previous Alignment".
 
-  > [{Reviewer Name}]({anchor}): "{Short rephrase}"
-  >
-  > [{Author Name}]({anchor}): "{Short rephrase}"
+1.  **Fetch Previous Alignment:**
+    - Execute: `gh api "repos/{OWNER}/{REPO}/issues/{PR_NUMBER}/comments" --jq 'map(select(.body | contains("# Alignment"))) | last | .body // ""'`
+    - **Load into Context:** Treat the output as the "Baseline".
 
-  ```{lang}
-  {1-3 lines max of diff hunk code}
-  ```
-  ````
+2.  **Merge Logic:**
+    - **Source:** Use "Fresh Draft Intents" (from Phase 4 output) and "Baseline" (from Step 1).
+    - **Compare:** Match Fresh against Baseline (by Topic/Context).
+    - **Match:** Use the **Baseline Number** (`#{N}`) and **Baseline Title** (if still accurate). Update the Status/Reasoning based on the Fresh analysis.
+    - **New:** If a Fresh Intent is _truly new_, assign a **New Number** (incrementing from the highest Baseline number).
+    - **Retain:** If a Baseline Intent is _not_ in the Fresh list (not currently discussed), **keep it exactly as is** (Status/Title unchanged). Do NOT mark as `Outdated` solely due to absence.
 
-- Swap `{{QUESTIONS_PLACEHOLDER}}`.
+3.  **Generation (Merge & Write):**
+    - **Logic:**
+      - **If Previous Alignment Exists:** Merge "Fresh Draft Intents" with "Baseline".
+      - **If No Previous Alignment:** Use "Fresh Draft Intents" directly.
+    - **Action:** Swap `{{INTENTS_PLACEHOLDER}}` with the **Final List**.
+    - **Action:** Swap `{{QUESTIONS_PLACEHOLDER}}`.
+    - **Content Template:**
 
-#### 5.5. Phase 5: Coverage Report
+````markdown
+### {N}. {Short Title}
+
+- **Category:** {Logic / Architecture / ...}
+- **Intent:** {Single core desire}
+- **Author's Approach:** {Initial approach}
+- **Reviewer's Proposal:** {Suggestion}
+- **Author's Decision:** {Verbal reply OR Emoji on reviewer's comment. If none: "Pending"}
+- **Reviewer's Reaction:** {Follow-up}
+- **Reasoning:** {Why}
+- **Status:** {Agreed / Done / Rejected / Discussion / Clarification / Deferred / Outdated}
+- **Result:** {Briefly: Vision changed? Agreement?}
+
+> [{Reviewer Name}]({anchor}): "{Short rephrase}"
+>
+> [{Author Name}]({anchor}): "{Short rephrase}"
+
+```{lang}
+{1-3 lines max of diff hunk code}
+```
+````
+
+    - **Separation:** Add a horizontal rule `---` before any _truly new_ intents if appropriate.
+
+#### 5.6. Phase 6: Coverage Report
 
 **Analysis:**
 
-- **Audit:** Read list. Compare vs JSON.
+- **Audit:** Read the **Merged List** of intents. Compare vs JSON comments.
 - **Map Every Comment:** Ensure every index (e.g., `§1`) is mapped.
 
 **Generation:**
@@ -374,16 +408,16 @@ Goal: **Hyper-Granular Atomicity**.
 
   ## Coverage Report
 
-  | Index             | Date/Time      | User   | Title (Summary) | Intent    | Reaction |
-  | ----------------- | -------------- | ------ | --------------- | --------- | -------- |
-  |                   | **{Date}**     |        |                 |           |          |
-  | [{Idx}]({anchor}) | {dd.MM HH:mm}  | {User} | {4-6 words}     | #{N}      | {Emojis} |
-  | [{Idx}]({anchor}) | {dd.MM HH:mm}  | {User} | └ {4-6 words}   | #{M},#{N} | {Emojis} |
-  |                   | **{NextDate}** |        |                 |           |          |
-  | [{Idx}]({anchor}) | {dd.MM HH:mm}  | {User} | {4-6 words}     | -         | {Emojis} |
-  | [{Idx}]({anchor}) | {dd.MM HH:mm}  | {User} | ├ {4-6 words}   | #{N}      | {Emojis} |
-  | [{Idx}]({anchor}) | {dd.MM HH:mm}  | {User} | └ {4-6 words}   | #{N}      | {Emojis} |
-  | [{Idx}]({anchor}) | {dd.MM HH:mm}  | {User} | {4-6 words}     | -         | {Emojis} |
+  | {Index}           | {Date/Time}    | {User} | {Title (Summary)} | {Intent}  | {Reaction} |
+  | ----------------- | -------------- | ------ | ----------------- | --------- | ---------- |
+  |                   | **{Date}**     |        |                   |           |            |
+  | [{Idx}]({anchor}) | {dd.MM HH:mm}  | {User} | {4-6 words}       | #{N}      | {Emojis}   |
+  | [{Idx}]({anchor}) | {dd.MM HH:mm}  | {User} | └ {4-6 words}     | #{M},#{N} | {Emojis}   |
+  |                   | **{NextDate}** |        |                   |           |            |
+  | [{Idx}]({anchor}) | {dd.MM HH:mm}  | {User} | {4-6 words}       | -         | {Emojis}   |
+  | [{Idx}]({anchor}) | {dd.MM HH:mm}  | {User} | ├ {4-6 words}     | #{N}      | {Emojis}   |
+  | [{Idx}]({anchor}) | {dd.MM HH:mm}  | {User} | └ {4-6 words}     | #{N}      | {Emojis}   |
+  | [{Idx}]({anchor}) | {dd.MM HH:mm}  | {User} | {4-6 words}       | -         | {Emojis}   |
   ```
 
   **Rules:**
@@ -394,14 +428,14 @@ Goal: **Hyper-Granular Atomicity**.
   5.  **Sorting:** **Strictly by Index (§1, §2...).** The input is already grouped by thread and sorted. You MUST preserve this order.
   6.  **Grouping:** Insert a Date Header `| | **{Date}** | | | | |` ONLY when the **Thread Start Date** changes. Do NOT split a thread across multiple date headers, even if replies span multiple days. Keep the entire thread under the date the thread started.
 
-#### 5.6. Phase 6: LLM Assessment
+#### 5.7. Phase 7: LLM Assessment
 
 **Generation:**
 
 - Swap `{{OPINION_PLACEHOLDER}}`.
 - **Content:** Quality, Opinion, What to learn, Questions.
 
-#### 5.7. Phase 7: Verification & Cleanup
+#### 5.8. Phase 8: Verification & Cleanup
 
 1.  **Deep Reconsideration:** Audit completeness.
 2.  **Link Patching (Token Optimization Strategy):**
