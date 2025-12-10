@@ -22,7 +22,7 @@ export async function processMarkdown(markdownContent: string): Promise<string> 
     .use(rehypeDirectiveRehype)
     .use(myRemarkPlugin)
     .use(remarkRehype)
-    .use(rehypeHighlight)
+    .use(rehypeHighlight, { plainText: ['markdown', 'md'] })
     .use(rehypeCallouts, {
       callouts: {
         NOTE: {

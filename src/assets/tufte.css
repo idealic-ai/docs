@@ -394,8 +394,9 @@ html.dark-scheme {
   font-style: italic;
 }
 
+.dark-scheme .hljs-emphasis,
 .dark-scheme .hljs-strong {
-  font-weight: 700;
+  color: #fff;
 }
 
 .dark-scheme .hljs-link {
