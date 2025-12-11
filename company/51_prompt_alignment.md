@@ -60,8 +60,8 @@ When the user requests an Alignment Document, you **MUST** first resolve the inp
     },
     "filename": {
       "type": "string",
-      "description": "Filename for the output file. Defaults to the since_date. Omit extension.",
-      "default": "{SINCE_DATE}"
+      "description": "Filename for the output file. Defaults to PR number + date. Omit extension.",
+      "default": "pr{PR_NUMBER}_{SINCE_DATE}"
     },
     "language": {
       "type": "string",
@@ -164,11 +164,49 @@ gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}" --jq '{author: .user.login, titl
 1.  **Fetch to File:** Execute this exact command to save comments to `{OUTPUT_DIR}/{FILENAME}.ndjson`.
 
     ```bash
-    gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}/comments?since={SINCE_DATE}&per_page=100" \
-    --paginate \
-    | jq -s '
-        add
-        | group_by(.in_reply_to_id // .id)
+    gh api graphql -F owner='{OWNER}' -F repo='{REPO}' -F pr={PR_NUMBER} -f query='
+      query($owner:String!, $repo:String!, $pr:Int!) {
+        repository(owner:$owner, name:$repo) {
+          pullRequest(number:$pr) {
+            reviewThreads(first: 100) {
+              nodes {
+                isResolved
+                comments(first: 50) {
+                  nodes {
+                    databaseId
+                    body
+                    author { login }
+                    createdAt
+                    path
+                    diffHunk
+                    replyTo { databaseId }
+                    url
+                    reactions(first: 10) { nodes { content } }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ' --jq '
+      .data.repository.pullRequest.reviewThreads.nodes[]
+      | .isResolved as $resolved
+      | .comments.nodes[]
+      | {
+          id: .databaseId,
+          body,
+          user: (.author.login // "ghost"),
+          created_at: .createdAt,
+          path,
+          diff_hunk: .diffHunk,
+          in_reply_to_id: .replyTo.databaseId,
+          html_url: .url,
+          reactions: ((.reactions.nodes | map({(.content): 1}) | add) // {}),
+          is_resolved: $resolved
+        }
+    ' | jq -s '
+        group_by(.in_reply_to_id // .id)
         | map(sort_by(.created_at))
         | sort_by(.[0].created_at)
         | flatten
@@ -176,19 +214,20 @@ gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}" --jq '{author: .user.login, titl
         | map(.value + {index: ("§" + ((.key + 1) | tostring)), anchor: (.value.html_url | split("#") | last)} | del(.html_url))
         | group_by(.in_reply_to_id // .id)
         | sort_by(.[0].index | ltrimstr("§") | tonumber)
-        | map(.[0] as $root | [$root] + (.[1:] | map(del(.diff_hunk))))
         | map(map({
         id,
         anchor: .anchor,
         path,
         body,
-        user: .user.login,
+        user,
         created_at,
-        diff_hunk: (.diff_hunk | if length > 200 then .[:200] + "..." else . end),
+        diff_hunk: (.diff_hunk | if length > 350 then .[:350] + "..." else . end),
         in_reply_to_id,
-        reactions: (.reactions | del(.total_count, .url) | with_entries(select(.value > 0))),
-        index
+        reactions: (.reactions | with_entries(select(.value > 0))),
+        index,
+        is_resolved
         }))
+        | map(.[0] as $root | [$root] + (.[1:] | map(del(.diff_hunk, .is_resolved, .path))))
         | map(map(del(.in_reply_to_id)))
         | .[]
     ' -c > {OUTPUT_DIR}/{FILENAME}.ndjson
@@ -306,7 +345,7 @@ After finishing **EACH** phase (and before starting the next), you **MUST** perf
 #### 5.3. Phase 3: Overview
 
 **Analysis:**
-Answer these 8 questions explicitly in a bulleted list:
+**IMPORTANT**: Answer these 8 questions explicitly in a bulleted list so that it becomes OVERVIEW.
 
 1.  **Reviewer's Goal:**
 2.  **Author's Agreement:**
@@ -404,7 +443,7 @@ Goal: **Hyper-Granular Atomicity**.
 - **Author's Decision:** {Verbal reply OR Emoji on reviewer's comment. If none: "Pending"}
 - **Reviewer's Reaction:** {Follow-up}
 - **Reasoning:** {Why}
-- **Status:** {Agreed / Done / Rejected / Discussion / Clarification / Deferred / Outdated}
+- **Status:** {Agreed / Done / Rejected / Discussion / Clarification / Deferred / Outdated} {Add ✅ if Resolved/Closed}
 - **Result:** {Briefly: Vision changed? Agreement?}
 
 > [{Reviewer Name}]({anchor}): "{Short rephrase}"
@@ -462,7 +501,18 @@ _(If diff_hunk exists, include it here. If NOT, omit this code block entirely.)_
   1.  Use `index` (e.g. `§1`) from JSON.
   2.  **Exhaustive:** Every single comment must have its own row. Do not summarize into ranges (e.g. `§1-§5`).
   3.  **Visualization:** Use `├` and `└` to show replies.
-  4.  **Status Indicators (Emojis):** ❓(Unanswered), ⚠️(Warning), 🚧(Pending), 🗑️(Deleted), 🗣️(Reply), 💡(Idea), 🤝(Agreed).
+  4.  **Reaction Priority Protocol (Strict Hierarchy):**
+      - **Tier 1 (Resolved):** If `is_resolved: true` -> **MUST** use `✅` (Overrides everything else).
+      - **Tier 2 (Explicit):** If GitHub reactions exist (e.g., `+1`, `heart`, `rocket`) -> Use that emoji.
+      - **Tier 3 (Inferred):** If neither above applies, infer from text:
+        - `❓` (Unanswered/Question)
+        - `⚠️` (Warning/Risk)
+        - `🚧` (Pending/WIP)
+        - `🗑️` (Deleted/Rejected)
+        - `💡` (Idea/Suggestion)
+        - `🤝` (Agreed text)
+        - `🗣️` (Standard Reply)
+        - `✅` (Done acknowledgement)
   5.  **Sorting:** **Strictly by Index (§1, §2...).** The input is already grouped by thread and sorted. You MUST preserve this order.
   6.  **Grouping:** Insert a Date Header `| | **{Date}** | | | | |` ONLY when the **Thread Start Date** changes. Do NOT split a thread across multiple date headers, even if replies span multiple days. Keep the entire thread under the date the thread started.
 
@@ -471,7 +521,13 @@ _(If diff_hunk exists, include it here. If NOT, omit this code block entirely.)_
 **Generation:**
 
 - Swap `{{OPINION_PLACEHOLDER}}`.
-- **Content:** Quality, Opinion, What to learn, Questions.
+- **Content Requirements:**
+  1.  **Collaboration Health:** Assess tone, constructive feedback, and alignment.
+  2.  **Process Quality:** Was the review atomic? Were instructions clear?
+  3.  **Risk Analysis:** Identify threads showing confusion, high complexity, or potential technical debt.
+  4.  **Key Blockers:** List 1-2 critical open issues preventing merge (if any).
+  5.  **Learning:** What pattern/anti-pattern appeared here? (Educational moment).
+  6.  **Additional Observations (Optional):** Add up to 10 more points if you have unique, meaningful insights. **SKIP** if no new value to add.
 
 #### 5.8. Phase 8: Verification & Cleanup
 
@@ -479,10 +535,10 @@ _(If diff_hunk exists, include it here. If NOT, omit this code block entirely.)_
 2.  **Link Patching (Token Optimization Strategy):**
     - **Context:** During generation, we intentionally used short Comment IDs (e.g., `12345678`) in markdown links (e.g. `[Index](12345678)`) instead of full URLs to save context window tokens. Now we must "hydrate" them back into clickable links.
     - **Direction:** Replace `(ID)` with `(https://github.com/...#issuecomment-ID)`.
-    - **Action:** Run the following `sed` command to batch-replace all standalone Comment IDs with full GitHub URLs.
+    - **Action:** Run the following `sed` command (using temp file for cross-platform compatibility) to batch-replace all standalone Comment IDs.
     - **Command:**
       ```bash
-      sed -i '' -E 's~]\((discussion_r[0-9]+|issuecomment-[0-9]+|pullrequestreview-[0-9]+)\)~](https://github.com/{OWNER}/{REPO}/pull/{PR_NUMBER}#\1)~g' {OUTPUT_DIR}/{FILENAME}.md
+      sed -E 's~]\((discussion_r[0-9]+|issuecomment-[0-9]+|pullrequestreview-[0-9]+)\)~](https://github.com/{OWNER}/{REPO}/pull/{PR_NUMBER}#\1)~g' {OUTPUT_DIR}/{FILENAME}.md > {OUTPUT_DIR}/{FILENAME}.tmp && mv {OUTPUT_DIR}/{FILENAME}.tmp {OUTPUT_DIR}/{FILENAME}.md
       ```
 3.  **Read File:** Verify placeholders gone.
 4.  **Cleanup:** Delete `{OUTPUT_DIR}/{FILENAME}.ndjson`.
