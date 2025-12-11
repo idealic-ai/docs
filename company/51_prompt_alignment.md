@@ -6,7 +6,6 @@
 > Sidenote:
 >
 > - See: :term[22: Company/Alignment]{href="./22_document_alignment.md"} for the definition.
-> - Formerly: Evolution Draft
 
 ## Invariance Rules
 
@@ -215,6 +214,7 @@ gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}" --jq '{author: .user.login, titl
         | group_by(.in_reply_to_id // .id)
         | sort_by(.[0].index | ltrimstr("§") | tonumber)
         | map(map({
+        index,
         id,
         anchor: .anchor,
         path,
@@ -224,7 +224,6 @@ gh api "repos/{OWNER}/{REPO}/pulls/{PR_NUMBER}" --jq '{author: .user.login, titl
         diff_hunk: (.diff_hunk | if length > 350 then .[:350] + "..." else . end),
         in_reply_to_id,
         reactions: (.reactions | with_entries(select(.value > 0))),
-        index,
         is_resolved
         }))
         | map(.[0] as $root | [$root] + (.[1:] | map(del(.diff_hunk, .is_resolved, .path))))
@@ -420,7 +419,7 @@ Goal: **Hyper-Granular Atomicity**.
 3.  **Merge Logic:**
     - **Source:** Use "Fresh Draft Intents" (from Phase 4 output) and "Baseline" (from Step 2).
     - **Compare:** Match Fresh against Baseline (by Topic/Context).
-    - **Match:** Retain the **Baseline Number** (`#{N}`). **UPDATE** the Title, Context, and Details and other fields (including diff hunk) with the Fresh analysis. Do NOT preserve old wording if new info is better.
+    - **Match:** Retain the **Baseline Number** (`#{N}`). **UPDATE** the Title, Context, and Details, Reaction, diff hunk and other fields with the Fresh analysis. Do NOT preserve old wording if new info is better.
     - **New:** If a Fresh Intent is _truly new_, assign a **New Number** (incrementing from the highest Baseline number).
     - **Retain:** If a Baseline Intent is _not_ in the Fresh list (not currently discussed), **keep it exactly as is** (Status/Title unchanged). Do NOT mark as `Outdated` solely due to absence.
 
@@ -501,10 +500,10 @@ _(If diff_hunk exists, include it here. If NOT, omit this code block entirely.)_
   1.  Use `index` (e.g. `§1`) from JSON.
   2.  **Exhaustive:** Every single comment must have its own row. Do not summarize into ranges (e.g. `§1-§5`).
   3.  **Visualization:** Use `├` and `└` to show replies.
-  4.  **Reaction Priority Protocol (Strict Hierarchy):**
-      - **Tier 1 (Resolved):** If `is_resolved: true` -> **MUST** use `✅` (Overrides everything else).
-      - **Tier 2 (Explicit):** If GitHub reactions exist (e.g., `+1`, `heart`, `rocket`) -> Use that emoji.
-      - **Tier 3 (Inferred):** If neither above applies, infer from text:
+  4.  **Resolved Indicator:** If the thread has `is_resolved: true`, you **MUST** prepend `✅ ` to the **Title (Summary)**. (e.g., `✅ Fix typo...`).
+  5.  **Reaction Priority Protocol (Hierarchy):**
+      - **Tier 1 (Explicit):** If GitHub reactions exist (e.g., `+1`, `heart`, `rocket`) -> Use that emoji.
+      - **Tier 2 (Inferred):** If no reactions, infer from text:
         - `❓` (Unanswered/Question)
         - `⚠️` (Warning/Risk)
         - `🚧` (Pending/WIP)
@@ -512,9 +511,10 @@ _(If diff_hunk exists, include it here. If NOT, omit this code block entirely.)_
         - `💡` (Idea/Suggestion)
         - `🤝` (Agreed text)
         - `🗣️` (Standard Reply)
-        - `✅` (Done acknowledgement)
-  5.  **Sorting:** **Strictly by Index (§1, §2...).** The input is already grouped by thread and sorted. You MUST preserve this order.
-  6.  **Grouping:** Insert a Date Header `| | **{Date}** | | | | |` ONLY when the **Thread Start Date** changes. Do NOT split a thread across multiple date headers, even if replies span multiple days. Keep the entire thread under the date the thread started.
+        - `✅` (Done ackknowlegement)
+        - `👍` (Approving)
+  6.  **Sorting:** **Strictly by Index (§1, §2...).** The input is already grouped by thread and sorted. You MUST preserve this order.
+  7.  **Grouping:** Insert a Date Header `| | **{Date}** | | | | |` ONLY when the **Thread Start Date** changes. Do NOT split a thread across multiple date headers, even if replies span multiple days. Keep the entire thread under the date the thread started.
 
 #### 5.7. Phase 7: LLM Assessment
 

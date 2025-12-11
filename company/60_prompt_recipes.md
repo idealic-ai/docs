@@ -60,7 +60,7 @@
 
 ## 3. Apply Alignment to Proposal
 
-**Goal:** Update the :term[21: Proposal]{href="./21_document_proposal.md"} based on the validated Intents from the Alignment Document.
+**Goal:** Update the :term[21: Proposal]{href="./21_document_proposal.md"} based on the validated Intents from the Alignment Document
 
 > **User:**
 > "I have verified the Alignment Document at `specs/alignments/2023-11-04_auth_review.md`.

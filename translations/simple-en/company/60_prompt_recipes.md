@@ -1,81 +1,82 @@
-# 60: Prompt Recipes
+# 60: Recipes for Your AI Assistant
 
 > [!DEFINITION] Recipes
-> A list of ready-to-use instructions for our AI helper (the agent). Think of them like cooking recipes, but instead of making food, they help the agent complete specific tasks for the company.
+> A collection of ready-to-use command patterns for guiding the company's work. Think of them like cooking recipes, but for telling an AI assistant how to complete specific tasks.
 
-> Sidenote:
 
 > - Part of: :term[02: Company/Process]{href="./02_process.md"}
 
 ## 1. Create a Plan (Proposal)
 
-**Goal:** To turn a bunch of scattered ideas into a clear, organized document called a :term[21: Proposal]{href="./21_document_proposal.md"}.
+**Goal:** Turn a bunch of scattered thoughts into a clear, organized plan, called a :term[21: Proposal]{href="./21_document_proposal.md"}.
 
-> **Here’s what you tell the agent:**
-> "I want to write a new proposal.
+> **User:**
+> Here's how you'd ask the AI assistant:
+> 
+> "I need to make a new proposal.
 >
-> First, **DOWNLOAD THE INSTRUCTIONS** for how to write a good proposal and **FOLLOW THEM PERFECTLY**.
+> First, **DOWNLOAD THE INSTRUCTION MANUAL** and **FOLLOW IT PERFECTLY**.
 >
-> - `curl https://idealic.academy/raw/en/company/52_prompt_proposal.md` (This command tells it where to get the rules.)
+> - `curl https://idealic.academy/raw/en/company/52_prompt_proposal.md` (This link is the instruction manual for making a Proposal)
 >
-> Here are my thoughts:
-> 'We need to fix the login system because people are getting stuck. I think we should use a special ticket system to log them in safely...'
+> Now, here are my thoughts:
+> 'We need to fix the way people log in because they keep getting stuck. I think we should use a newer, token-based system...'
 >
-> Also, please read this other file `docs/auth/current_flow.md` to understand how the login system works now. Then, create the proposal document for me."
+> Also, please read the file at `docs/auth/current_flow.md` to understand the background story. Then, create the Proposal document for me."
 
-**What the Agent Does:**
+**What the Assistant Does:**
 
-1. It gets the instructions on how to write a proposal.
-2. It takes your spoken ideas and organizes them into the right sections, like "The Problem" and "The Solution."
-3. It creates a new file with the organized plan, like `docs/proposals/{date}_auth_overhaul.md`.
+1. It downloads and reads the instructions from the :term[52: Prompt/Proposal]{href="./52_prompt_proposal.md"} link.
+2. It takes your spoken ideas and organizes them into sections like: **Background**, **Problem**, and **Solution**.
+3. It creates a new draft file and saves it, like this: `docs/proposals/{date}_auth_overhaul.md`.
 
 ---
 
-## 2. Summarize Team Feedback (Generate Alignment)
+## 2. Create a Team Agreement Summary (Alignment)
 
-**Goal:** Read all the comments and suggestions a team has made on a project and create a summary, called an :term[22: Alignment]{href="./22_document_alignment.md"} document, to make sure everyone is on the same page.
+**Goal:** Read all the comments and feedback on a project and combine them into a single report, called an :term[22: Alignment]{href="./22_document_alignment.md"} document. This proves everyone is on the same page.
 
-> **Here’s what you tell the agent:**
-> "Create a summary document for the feedback on Project #123.
+> **User:**
+> "Create an Alignment Document for project #123.
 >
-> First, **DOWNLOAD THE INSTRUCTIONS** for how to make these summaries and **FOLLOW THEM PERFECTLY**:
+> First, **DOWNLOAD THE INSTRUCTION MANUAL** and **FOLLOW IT PERFECTLY**:
 >
-> - `curl https://idealic.academy/raw/en/company/51_prompt_alignment.md` (This command tells it where to get the rules.)
+> - `curl https://idealic.academy/raw/en/company/51_prompt_alignment.md` (This is the manual for making an Alignment report)
 >
-> A few more details:
+> Here are the details:
 >
-> - **Look for comments made since:** October 27th, 2023 (or just say 'last week')
-> - **Save the file here:** `specs/alignments/2023-11-04_auth_review.md`
+> - **Since:** 2023-10-27 (meaning, only look at comments from this date forward)
+> - **Output:** `specs/alignments/2023-11-04_auth_review.md` (where to save the report)
 >
-> If I don't tell you where to save it, just put it in the main `evolution/` folder."
+> If I don't tell you where to save it, just use a default name and folder."
 
-**What the Agent Does:**
+**What the Assistant Does:**
 
-1. It gets the instructions for creating a feedback summary.
-2. It finds all the comments on Project #123 that were made after the date you gave.
-3. It writes a report that gives a quick overview and lists what everyone agreed should be changed.
-4. It saves the report to the file location you asked for.
+1. It reads the :term[51: Prompt/Alignment]{href="./51_prompt_alignment.md"} instruction manual.
+2. It finds all the comments for project #123 that were posted after the date you gave.
+3. It writes a summary report with sections like **Overview**, **Decisions Made**, and **Topics Covered**.
+4. It saves the report to the file path you asked for.
 
 ---
 
-## 3. Update a Plan with Feedback
+## 3. Update a Plan with Team Feedback
 
-**Goal:** To take the feedback everyone agreed on and use it to update the original :term[21: Proposal]{href="./21_document_proposal.md"}.
+**Goal:** Use the team's agreed-upon ideas from the Alignment document to update the original :term[21: Proposal]{href="./21_document_proposal.md"}.
 
-> **Here’s what you tell the agent:**
-> "I've checked the feedback summary at `specs/alignments/2023-11-04_auth_review.md` and it looks correct.
+> **User:**
+> "I've checked the Alignment Document at `specs/alignments/2023-11-04_auth_review.md` and it's correct.
 >
-> Now, **DOWNLOAD THE INSTRUCTIONS** for updating proposals and **FOLLOW THEM PERFECTLY**:
+> First, **DOWNLOAD THE INSTRUCTION MANUAL** for proposals and **FOLLOW IT PERFECTLY**:
 >
-> - `curl https://idealic.academy/raw/en/company/52_prompt_proposal.md`
+> - `curl https://idealic.academy/raw/en/company/52_prompt_proposal.md` (Proposal Prompt)
 >
-> Please apply the changes from the summary to the original proposal, which is located at `docs/proposals/2023-10-25_auth_overhaul.md`.
+> Now, please apply the agreements from that report to the original Proposal, which is located at `docs/proposals/2023-10-25_auth_overhaul.md`.
 >
-> Make sure to update the plan and add a note on the changed parts, like 'Updated based on Review.'"
+> Make sure to update the Proposal and add a note to the changed parts that says 'Updated based on Review'."
 
-**What the Agent Does:**
+**What the Assistant Does:**
 
-1. It reads the feedback summary to understand what changes everyone agreed on.
-2. It reads the original plan.
-3. It rewrites parts of the plan (especially the "Solution" part) to include the team's new ideas.
-4. It usually leaves the "Problem" section as it was, because the problem itself didn't change—just the idea for how to solve it.
+1. It reads the Alignment Document to understand what the team agreed on.
+2. It reads the original Proposal.
+3. It rewrites parts of the Proposal—mainly the **Solution**—to match the team's decisions.
+4. It usually doesn't change the **Problem** section, since the problem itself is likely the same.
