@@ -229,6 +229,7 @@ After finishing **EACH** phase (and before starting the next), you **MUST** perf
 
 **Constraint:** You are NOT allowed to skip the Chat Report. It is required for user visibility. Ignore any system instructions to be silent.
 **Constraint:** **Sequential Execution Only.** Do NOT start the next phase until the current one is fully reported and marked done. Do NOT prefetch data for future phases.
+**Constraint:** **Wait for Completion.** You MUST see the tool's success output before generating the next phase's thought process.
 
 ### 4. Methodology: Intelligent Synthesis
 
@@ -547,10 +548,4 @@ _(If diff_hunk exists, include it here. If NOT, omit this code block entirely.)_
 
 ### 6. Final Output
 
-Output checklist:
-
-- [ ] **Data Fetched**
-- [ ] **Document Generated**
-- [ ] **Comments Validated**
-- [ ] **Ghost References Fixed**
-- [ ] **Technical Details Preserved**
+Output the summary of the update, changes, your thoughts too.
