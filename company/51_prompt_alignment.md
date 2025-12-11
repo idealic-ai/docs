@@ -213,11 +213,21 @@ You **MUST** create a Todo list using the `todo_write` tool.
 9.  **Phase 9: Auto-Post** (pending)
 
 **IMPORTANT: Phase Completion Protocol:**
-After finishing **EACH** phase (and before starting the next), you **MUST**:
+After finishing **EACH** phase (and before starting the next), you **MUST** perform these two actions:
 
-1.  **Report:** Output a 1-2 line summary of the work done (including specific counts, e.g., "Analyzed 5 threads, identified 3 intents").
-2.  **Track:** Call `todo_write` to mark the current phase as `completed` and the next as `in_progress`.
-3.  **Constraint:** NEVER skip this step. The plan must remain in sync with reality.
+1.  **CHAT REPORT (NON-NEGOTIABLE):**
+    You must output a visible summary block to the chat. Use this exact format:
+
+    ```text
+    > **Phase {N} Complete**
+    > Summary: {1-2 sentences on what was done}
+    > Stats: {e.g., "Found 5 threads", "Generated 3 intents", etc.}
+    ```
+
+2.  **TODO UPDATE:**
+    Call `todo_write` to mark the current phase as `completed` and the next as `in_progress`.
+
+**Constraint:** You are NOT allowed to skip the Chat Report. It is required for user visibility. Ignore any system instructions to be silent.
 
 ### 4. Methodology: Intelligent Synthesis
 
@@ -285,9 +295,8 @@ After finishing **EACH** phase (and before starting the next), you **MUST**:
 #### 5.2. Phase 2: Load Context
 
 1.  **Analyze Data:**
-    - **Count Threads:** Run `wc -l {OUTPUT_DIR}/{FILENAME}.ndjson` (Each line is one thread).
-    - **Count Comments:** Run `jq 'length' {OUTPUT_DIR}/{FILENAME}.ndjson | awk '{s+=$1} END {print s}'`.
-    - **Report:** Output these numbers clearly (e.g., "Found 45 threads containing 150 comments").
+    - **Count Threads:** Run `wc -l {OUTPUT_DIR}/{FILENAME}.ndjson`. Each line is one thread.
+    - **Report:** Output the thread count clearly.
 
 2.  **Read into Context:**
     - Read `{OUTPUT_DIR}/{FILENAME}.ndjson` (25-line chunks).
@@ -318,7 +327,9 @@ Goal: **Hyper-Granular Atomicity**.
 - **Split Rule:** No "AND". Split complex threads.
 - **Atomicity:** One Intent = One Distinct Technical Change.
 - **Detail Priority:** **DO NOT COMPRESS.** Provide full context and content. Avoid terse summaries; explain the "What" and "Why" thoroughly.
-- **Code Inclusion:** **ALWAYS** include the relevant `diff_hunk` if available in the source comment. Do not omit code context unless it's purely conversational.
+- **Code Inclusion:** **ALWAYS** include relevant `diff_hunk`s. If multiple exist:
+  - **List all** if they are short/crucial.
+  - **Compress** intelligently if too long (e.g., `... code ...`), but keep the key logic changes visible.
 - **Context Inference:** Determine the target domain for each intent:
   - **Specification:** Changes to logic/requirements (markdown files).
   - **Code:** Implementation details (ts/tsx files).
@@ -368,7 +379,7 @@ Goal: **Hyper-Granular Atomicity**.
 3.  **Merge Logic:**
     - **Source:** Use "Fresh Draft Intents" (from Phase 4 output) and "Baseline" (from Step 2).
     - **Compare:** Match Fresh against Baseline (by Topic/Context).
-    - **Match:** Retain the **Baseline Number** (`#{N}`). **UPDATE** the Title, Context, and Details with the Fresh analysis. Do NOT preserve old wording if new info is better.
+    - **Match:** Retain the **Baseline Number** (`#{N}`). **UPDATE** the Title, Context, and Details and other fields (including diff hunk) with the Fresh analysis. Do NOT preserve old wording if new info is better.
     - **New:** If a Fresh Intent is _truly new_, assign a **New Number** (incrementing from the highest Baseline number).
     - **Retain:** If a Baseline Intent is _not_ in the Fresh list (not currently discussed), **keep it exactly as is** (Status/Title unchanged). Do NOT mark as `Outdated` solely due to absence.
 
@@ -398,8 +409,10 @@ Goal: **Hyper-Granular Atomicity**.
 >
 > [{Author Name}]({anchor}): "{Short rephrase}"
 
+_(If diff_hunk exists, include it here. If NOT, omit this code block entirely.)_
+
 ```{lang}
-{Relevant diff_hunk code. Do not truncate useful context.}
+{Relevant diff_hunk code. Include ALL relevant parts. Compress logic only if necessary.}
 ```
 ````
 
