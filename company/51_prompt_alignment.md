@@ -80,8 +80,8 @@ When the user requests an Alignment Document, you **MUST** first resolve the inp
     },
     "include_instructions": {
       "type": "boolean",
-      "description": "If false, omits the auto-generation warning (top) and agent instructions (bottom). Useful for clean output.",
-      "default": true
+      "description": "Include agent instructions/warnings in output. Defaults to !auto_post.",
+      "default": null
     }
   }
 }
@@ -91,7 +91,8 @@ When the user requests an Alignment Document, you **MUST** first resolve the inp
 
 1.  Analyze the user's prompt to extract these values.
 2.  **Missing Required:** If `pr_number` is missing, **STOP** and ask for it.
-3.  **Defaults:** Apply defaults for missing optional parameters.
+3.  **Defaults:** Apply defaults.
+    - If `include_instructions` is null: Set to `false` if `auto_post` is true; otherwise `true`.
 
 **Step 1: Output Configuration (First Response)**
 You **MUST** output the resolved configuration as your very first response block, use default value.
@@ -99,15 +100,15 @@ You **MUST** output the resolved configuration as your very first response block
 ```text
 > Alignment Config:
 --------------------------------
-[x] Repo:        {repo}
-[x] PR Number:   {pr_number}
-[x] Since Date:  {since_date}
-[x] Output Dir:  {output_dir}
-[x] Filename:    {filename}
-[x] Language:    {language}
-[x] Auto Post:   {auto_post}
-[x] Merge:       {merge_alignments}
-[x] Instructions:{include_instructions}
+- Repo:         {repo}
+- PR Number:    {pr_number}
+- Since Date:   {since_date}
+- Output Dir:   {output_dir}
+- Filename:     {filename}
+- Language:     {language}
+- Auto Post:    {auto_post}
+- Merge:        {merge_alignments}
+- Instructions: {include_instructions}
 --------------------------------
 Starting analysis...
 ```
@@ -132,6 +133,7 @@ DO NOT attempt to fetch PR diff or list of commits. this is beyond your scope.
 
 **Step 1: Fetch Prerequisite Docs (Mandatory)**
 Fetch the specific URLs. **Process each document separately.**
+**Constraint:** IMPORTANT: You must use **separate tool calls** for each document. DO NOT chain commands with `&&` or `;`.
 
 1.  **Process:**
 
@@ -251,11 +253,7 @@ After finishing **EACH** phase (and before starting the next), you **MUST**:
 
 1.  **Fetch Data:** Docs, PR, Comments.
 2.  **Initialize File:**
-    - Create `{OUTPUT_DIR}/{FILENAME}.md` with the skeleton.
-    - **Header Condition:** If `include_instructions` is **true**, include the Warning Block (`> [!WARNING]...`). If **false**, skip it.
-    - **Footer Condition:** If `include_instructions` is **true**, include the Instructions for Agent (`## Instructions...`). If **false**, skip it.
-
-    **Skeleton Template:**
+    - Create `{OUTPUT_DIR}/{FILENAME}.md` with the skeleton **EXACTLY** (Translating all static text and headers to **{language}**):
 
     ```markdown
     # Alignment: {DATE}
@@ -265,19 +263,7 @@ After finishing **EACH** phase (and before starting the next), you **MUST**:
     - Source: {PR_LINK}
     - Range: {SINCE_DATE} - {NOW}
 
-    > [!WARNING] AUTO-GENERATION: DO NOT EDIT, DO NOT COMMIT
-    > This document is a **synchronization tool**. It serves as:
-    >
-    > 1. **Validator:** Checks that 100% of comments are heard.
-    > 2. **Synthesizer:** Turns discussion into a plan (Consensus).
-    > 3. **Prompt:** Provides instructions for updating the Proposal.
-    >
-    > If the document is incorrect, **do not edit manually**. Add comments to the PR and **regenerate** to close the feedback loop.
-    >
-    > **DO NOT ADD THIS FILE TO GIT.**
-    >
-    > - Details: [22: Alignment](https://idealic.academy/raw/en/company/22_document_alignment.md)
-    > - Git only allows: [Proposal](https://idealic.academy/raw/en/company/21_document_proposal.md) and [Specification](https://idealic.academy/raw/en/company/20_document_spec.md).
+    {{WARNING_PLACEHOLDER}}
 
     ## Overview
 
@@ -293,16 +279,7 @@ After finishing **EACH** phase (and before starting the next), you **MUST**:
 
     {{OPINION_PLACEHOLDER}}
 
-    ## Instructions for Agent (Next Step)
-
-    > [!IMPORTANT] Context Loading
-    > Before proceeding with updates to the Proposal or Specification, you **MUST** load the following context files to ensure full alignment with company standards:
-    >
-    > 1. `curl https://idealic.academy/raw/en/company/02_process.md` (Process)
-    > 2. `curl https://idealic.academy/raw/en/company/50_prompt_truth.md` (Truth)
-    > 3. `curl https://idealic.academy/raw/en/company/20_document_spec.md` (Spec)
-    > 4. `curl https://idealic.academy/raw/en/company/21_document_proposal.md` (Proposal)
-    > 5. `curl https://idealic.academy/raw/en/company/22_document_alignment.md` (Alignment)
+    {{INSTRUCTIONS_PLACEHOLDER}}
     ```
 
 #### 5.2. Phase 2: Load Context
@@ -340,6 +317,13 @@ Goal: **Hyper-Granular Atomicity**.
 
 - **Split Rule:** No "AND". Split complex threads.
 - **Atomicity:** One Intent = One Distinct Technical Change.
+- **Detail Priority:** **DO NOT COMPRESS.** Provide full context and content. Avoid terse summaries; explain the "What" and "Why" thoroughly.
+- **Code Inclusion:** **ALWAYS** include the relevant `diff_hunk` if available in the source comment. Do not omit code context unless it's purely conversational.
+- **Context Inference:** Determine the target domain for each intent:
+  - **Specification:** Changes to logic/requirements (markdown files).
+  - **Code:** Implementation details (ts/tsx files).
+  - **Tests:** Test cases/suites.
+  - **Process:** Workflow/docs changes.
 - **Author's Decision Logic:**
   - **Explicit:** Use the author's verbal reply if it contains a clear decision.
   - **Implicit (Emoji):** If no verbal reply exists, check for emojis on the _reviewer's_ comment (e.g., 👍, 🚀, 👀). Assume these are from the author and interpret them as agreement/acknowledgment.
@@ -384,7 +368,7 @@ Goal: **Hyper-Granular Atomicity**.
 3.  **Merge Logic:**
     - **Source:** Use "Fresh Draft Intents" (from Phase 4 output) and "Baseline" (from Step 2).
     - **Compare:** Match Fresh against Baseline (by Topic/Context).
-    - **Match:** Use the **Baseline Number** (`#{N}`) and **Baseline Title** (if still accurate). Update the Status/Reasoning based on the Fresh analysis.
+    - **Match:** Retain the **Baseline Number** (`#{N}`). **UPDATE** the Title, Context, and Details with the Fresh analysis. Do NOT preserve old wording if new info is better.
     - **New:** If a Fresh Intent is _truly new_, assign a **New Number** (incrementing from the highest Baseline number).
     - **Retain:** If a Baseline Intent is _not_ in the Fresh list (not currently discussed), **keep it exactly as is** (Status/Title unchanged). Do NOT mark as `Outdated` solely due to absence.
 
@@ -400,7 +384,8 @@ Goal: **Hyper-Granular Atomicity**.
 ### {N}. {Short Title}
 
 - **Category:** {Logic / Architecture / ...}
-- **Intent:** {Single core desire}
+- **Context:** {Specification / Code / Tests / ...}
+- **Intent:** {Single core desire - detailed}
 - **Author's Approach:** {Initial approach}
 - **Reviewer's Proposal:** {Suggestion}
 - **Author's Decision:** {Verbal reply OR Emoji on reviewer's comment. If none: "Pending"}
@@ -414,11 +399,17 @@ Goal: **Hyper-Granular Atomicity**.
 > [{Author Name}]({anchor}): "{Short rephrase}"
 
 ```{lang}
-{1-3 lines max of diff hunk code}
+{Relevant diff_hunk code. Do not truncate useful context.}
 ```
 ````
 
     - **Separation:** Add a horizontal rule `---` before any _truly new_ intents if appropriate.
+
+    **Phase Report Requirement:**
+    In your Phase Completion Report, you **MUST** explicitly state:
+    - Count of **New** Intents created.
+    - Count of **Existing** Intents updated.
+    - Count of **Outdated** Intents retained.
 
 #### 5.6. Phase 6: Coverage Report
 
@@ -493,15 +484,52 @@ Goal: **Hyper-Granular Atomicity**.
     - **Check:** Look at your Phase 5 Summary. Did you find an Alignment Comment ID?
     - **Update (PATCH):** If ID exists (replace `{ID}` with the actual number):
       ```bash
-      gh api -X PATCH "repos/{OWNER}/{REPO}/issues/comments/{ID}" --input {OUTPUT_DIR}/{FILENAME}.md -F body
+      jq -n --rawfile content {OUTPUT_DIR}/{FILENAME}.md '{body: $content}' | \
+      gh api -X PATCH "repos/{OWNER}/{REPO}/issues/comments/{ID}" --input -
       ```
     - **Create (POST):** If ID was null/missing:
       ```bash
-      gh api -X POST "repos/{OWNER}/{REPO}/issues/{PR_NUMBER}/comments" --input {OUTPUT_DIR}/{FILENAME}.md -F body
+      jq -n --rawfile content {OUTPUT_DIR}/{FILENAME}.md '{body: $content}' | \
+      gh api -X POST "repos/{OWNER}/{REPO}/issues/{PR_NUMBER}/comments" --input -
       ```
-      _(Note: Use `--input` with filename to ensure content is read, not the path string)_
 
-4.  **Cleanup:** None (No temp files used).
+4.  **Final Cleanup (Conditional):**
+    - If `include_instructions` is **true**:
+      - Swap `{{WARNING_PLACEHOLDER}}` with:
+        ```markdown
+        > [!WARNING] AUTO-GENERATION: DO NOT EDIT, DO NOT COMMIT
+        > This document is a **synchronization tool**. It serves as:
+        >
+        > 1. **Validator:** Checks that 100% of comments are heard.
+        > 2. **Synthesizer:** Turns discussion into a plan (Consensus).
+        > 3. **Prompt:** Provides instructions for updating the Proposal.
+        >
+        > If the document is incorrect, **do not edit manually**. Add comments to the PR and **regenerate** to close the feedback loop.
+        >
+        > **DO NOT ADD THIS FILE TO GIT.**
+        >
+        > - Details: [22: Alignment](https://idealic.academy/raw/en/company/22_document_alignment.md)
+        > - Git only allows: [Proposal](https://idealic.academy/raw/en/company/21_document_proposal.md) and [Specification](https://idealic.academy/raw/en/company/20_document_spec.md).
+        ```
+      - Swap `{{INSTRUCTIONS_PLACEHOLDER}}` with:
+
+        ```markdown
+        ## Instructions for Agent (Next Step)
+
+        > [!IMPORTANT] Context Loading
+        > Before proceeding with updates to the Proposal or Specification, you **MUST** load the following context files to ensure full alignment with company standards:
+        >
+        > 1. `curl https://idealic.academy/raw/en/company/02_process.md` (Process)
+        > 2. `curl https://idealic.academy/raw/en/company/50_prompt_truth.md` (Truth)
+        > 3. `curl https://idealic.academy/raw/en/company/20_document_spec.md` (Spec)
+        > 4. `curl https://idealic.academy/raw/en/company/21_document_proposal.md` (Proposal)
+        > 5. `curl https://idealic.academy/raw/en/company/22_document_alignment.md` (Alignment)
+        ```
+
+    - If `include_instructions` is **false**:
+      - Remove `{{WARNING_PLACEHOLDER}}` and `{{INSTRUCTIONS_PLACEHOLDER}}` (replace with empty string).
+
+5.  **Cleanup:** None (No temp files used).
 
 ### 6. Final Output
 
